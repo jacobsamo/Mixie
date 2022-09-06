@@ -1,14 +1,48 @@
 .nav {
-  @apply bg-slate-400 text-black flex flex-row justify-between items-center;
-  height: 54px;
+  @apply flex flex-row items-center;
+  height: 56px;
+  position: relative;
 }
-
+.branding {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  left: 5px;
+}
 .links {
-    @apply flex flex-row gap-2;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  left: 50%;
+  right: 50%;
+  top: 5px;
 }
-
-@media (min-width: 768px) {
-    .links {
-        outline: 3px solid red;
-    }
+.link {
+  max-width: 120px;
+  max-height: 24px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 23px;
+  text-align: center;
+}
+.logo {
+  max-width: 42px;
+  max-height: 42px;
+}
+.user {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  gap: 7px;
+  right: 5px;
+}
+.user img {
+  max-width: 48px;
+  max-height: 48px;
 }
