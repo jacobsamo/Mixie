@@ -1,0 +1,14 @@
+.nav {
+  @apply bg-slate-400 text-black flex flex-row justify-between items-center;
+  height: 54px;
+}
+
+.links {
+    @apply flex flex-row gap-2;
+}
+
+@media (min-width: 768px) {
+    .links {
+        outline: 3px solid red;
+    }
+}
