@@ -1,10 +1,11 @@
 .nav {
-  @apply flex flex-row items-center;
+  @apply flex flex-row items-center justify-center;
   height: 56px;
   position: relative;
+  z-index: 5;
 }
 .branding {
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -16,10 +17,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
-  left: 50%;
-  right: 50%;
-  top: 5px;
+  gap: 20px;
 }
 .link {
   max-width: 120px;

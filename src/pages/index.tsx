@@ -11,10 +11,17 @@ const Home: NextPage = () => {
   return (
     <>
       <Navbar />
-      <main>
-        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" 
+        <img src="./images/background.jpg" 
           alt="" 
           className={styles.heroImg}
+        />
+      <main className={styles.heroSection}>
+        <h1 className={styles.heroTitle}>Want Tasty Recipes</h1>
+        <h2 className={styles.heroParagraph}>We offer a way to find good recipes without having to read all the information that isn’t important all free and open source</h2>
+        <input 
+          type="text" 
+          placeholder='Find your next meal' 
+          className={styles.heroSearch}
         />
       </main>
     </>
