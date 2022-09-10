@@ -1,6 +1,7 @@
 import firebase, { initializeApp } from "firebase/app";
 import { getAnalytics } from 'firebase/analytics';
-const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
+import { getAuth } from "firebase/auth";
+import { getFirestore, Timestamp, FieldValue } from 'firebase-admin/firestore'
 
 
 const firebaseConfig = {
@@ -16,9 +17,10 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+const auth = getAuth(app);
 const db = getFirestore();
     
 
 
 
-export { db };
+export { db, auth, analytics };

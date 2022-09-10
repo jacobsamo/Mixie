@@ -1,5 +1,5 @@
 import React from 'react'
-import { Recipe } from '../common/shared/libs/types';
+import { Recipe } from '../common/shared/libs/types/recipe';
 
 interface Props {
     post: Recipe;
