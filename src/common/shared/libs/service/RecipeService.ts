@@ -16,7 +16,13 @@ import { db } from '../config/firebase';
 
 class RecipeService {
   createRecipe(post: Recipe) {
-    return '';
+    return db.collection('recipes').doc(post.id).set(post);
+  }
+
+  async getAllRecipes() {
+    return {
+      
+    }
   }
 
   async getRecipe(id: string) {
