@@ -1,7 +1,7 @@
-import firebase, { initializeApp } from "firebase/app";
+import { initializeApp} from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics';
 import { getAuth } from "firebase/auth";
-import { getFirestore, Timestamp, FieldValue } from 'firebase-admin/firestore'
+import { getFirestore, Timestamp, FieldValue } from 'firebase/firestore'
 
 
 const firebaseConfig = {
@@ -14,13 +14,16 @@ const firebaseConfig = {
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// Initialize Firebase\
+const analytics = undefined;
+if (typeof window !== 'undefined') {
+  const analytics = getAnalytics(app);
+}
+
+
+const db = getFirestore(app);
 const auth = getAuth(app);
-const db = getFirestore();
     
 
-
-
-export { db, auth, analytics };
+export { db, auth, analytics};

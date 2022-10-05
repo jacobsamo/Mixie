@@ -9,6 +9,7 @@ import {
   query,
   orderBy,
   limit,
+  connectFirestoreEmulator,
 } from 'firebase/firestore';
 
 import { Recipe } from '../types/recipe';
@@ -16,18 +17,25 @@ import { db } from '../config/firebase';
 
 class RecipeService {
   createRecipe(post: Recipe) {
-    return db.collection('recipes').doc(post.id).set(post);
+    return setDoc(doc(db, "recipes", post.id), post);
+  }
+
+  async getRecipe() {
+    return getDocs(collection(db, "recipes"))
   }
 
   async getAllRecipes() {
-    return {
-      
-    }
-  }
-
-  async getRecipe(id: string) {
-    return '';
-  }
+    const recipes = query(
+      collection(db, "recipes"),
+    )
+    let docs: any = []
+    const querySnapshot = await getDocs(recipes)
+    const allRecipes = querySnapshot.forEach(recipe => {
+      docs.push(recipe.data())
+    })  
+    // console.log(docs)
+    return docs
+}
 
   async updateRecipe(id: string) {
     return '';
