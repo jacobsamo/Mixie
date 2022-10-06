@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import RecipeService from '../common/shared/libs/service/RecipeService';
 import { Recipe } from '../common/shared/libs/types/recipe';
 import axios from 'axios';
+import SignupPage from '../common/components/templates/Singup/Signup';
 
 const testData = {
   id: 'testDoc',
@@ -70,7 +71,7 @@ const Testing: NextPage = (recipes) => {
     });
   };
 
-  console.log(recipeData);
+
 
   const Recipes = () => {
     if (recipeData.length === 0) {
@@ -93,9 +94,7 @@ const Testing: NextPage = (recipes) => {
 
   return (
     <>
-      <button onClick={onSendData}>Send data</button>
-
-      <Recipes />
+      <SignupPage />
     </>
   );
 };

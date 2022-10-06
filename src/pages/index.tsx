@@ -5,7 +5,7 @@ import styles from '../common/styles/modules/Home.module.scss';
 
 
 //import components
-import Navbar from '../common/components/modules/Navbar';
+import Navbar from '../common/components/modules/Navbar/Navbar';
 
 const Home: NextPage = () => {
   return (
