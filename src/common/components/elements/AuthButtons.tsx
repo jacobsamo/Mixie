@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './AuthButton.module.scss';
 
 const GoogleSignIn = (handleClick: any) => {
   return (
@@ -12,7 +13,9 @@ const GoogleSignIn = (handleClick: any) => {
           alt="Google Logo"
           className=" w-10 h-10 ml-4"
         />
-        <h1 className="text-black">Continue with Google</h1>
+        <h1 className="text-black  ml-3.8 font-semibold font-Roboto">
+          Continue with Google
+        </h1>
       </button>
     </>
   );
@@ -22,15 +25,17 @@ const GithubSignIn = (handleClick: any) => {
   return (
     <>
       <button
-        className="relative w-72 h-14 bg-Github flex flex-row items-center rounded-xl"
+        className={`relative w-72 bg-Github h-14 flex flex-row items-center rounded-xl`}
         onClick={() => handleClick}
       >
-        <img
+        <img //TODO: Get SVG logos
           src="/images/GithubLogo.svg"
           alt="Github Logo"
-          className="w-10 h-10 ml-4"
+          className="w-10 h-10 ml-4 text-white"
         />
-        <h1 className="text-white">Continue with Github</h1>
+        <h1 className="text-white ml-3.8 font-semibold font-Roboto text-lg ">
+          Continue with Github
+        </h1>
       </button>
     </>
   );
@@ -46,13 +51,14 @@ const FacebookSignIn = (handleClick: any) => {
         <img
           src="/images/FacebookLogo.svg"
           alt="Facebook Logo"
-          className=" w-10 h-10 ml-4"
+          className="w-10 h-10 ml-4 bg-Facebook"
         />
-        <h1 className="text-black ">Continue with Facebook</h1>
+        <h1 className="text-black   ml-3.8 font-semibold font-Roboto">
+          Continue with Facebook
+        </h1>
       </button>
     </>
   );
 };
 
-
-export {GoogleSignIn, GithubSignIn, FacebookSignIn}
+export { GoogleSignIn, GithubSignIn, FacebookSignIn };

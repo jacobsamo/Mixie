@@ -1,11 +1,1 @@
-<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_284_186)">
-<rect y="0.645142" width="40" height="38.7097" rx="19.3548" fill="#FAFFFE"/>
-<path d="M27.7852 25.5947L28.6719 20H23.125V16.371C23.125 14.84 23.8984 13.3468 26.3828 13.3468H28.9062V8.58365C28.9062 8.58365 26.6172 8.20563 24.4297 8.20563C19.8594 8.20563 16.875 10.8858 16.875 15.7359V20H11.7969V25.5947H16.875V39.1204C17.8945 39.2754 18.9375 39.3548 20 39.3548C21.0625 39.3548 22.1055 39.2754 23.125 39.1204V25.5947H27.7852Z" fill="#1877F2"/>
-</g>
-<defs>
-<clipPath id="clip0_284_186">
-<rect y="0.645142" width="40" height="38.7097" rx="19.3548" fill="white"/>
-</clipPath>
-</defs>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
