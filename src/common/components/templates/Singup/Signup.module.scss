@@ -6,7 +6,7 @@
 
 }
 .usernameField:focus {
-  box-shadow: 8px 8px 16px #cdd1d0, -8px -8px 16px #fafffe;
+  outline: none;
 }
 
 .emailField {
@@ -16,7 +16,7 @@
   animation: ease-in-out
 }
 .emailField:focus {
-  box-shadow: 8px 8px 16px #cdd1d0, -8px -8px 16px #fafffe;
+  outline: none;
 }
 
 .passwordField {
@@ -26,6 +26,17 @@
   animation: ease-in-out
 }
 .passwordField:focus {
-  box-shadow: 8px 8px 16px #cdd1d0, -8px -8px 16px #fafffe;
+
+  outline: none;
 }
 
+.mainImg {
+  width: 50%;
+  border-radius: 40px 0px 0px 40px;
+}
+
+
+.login {
+  
+  border-radius: 0px 40px 40px 0px;
+}

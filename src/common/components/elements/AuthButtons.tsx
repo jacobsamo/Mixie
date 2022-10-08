@@ -51,7 +51,7 @@ const FacebookSignIn = (handleClick: any) => {
         <img
           src="/images/FacebookLogo.svg"
           alt="Facebook Logo"
-          className="w-10 h-10 ml-4 bg-Facebook"
+          className="w-10 h-10 ml-4 text-white"
         />
         <h1 className="text-black   ml-3.8 font-semibold font-Roboto">
           Continue with Facebook
