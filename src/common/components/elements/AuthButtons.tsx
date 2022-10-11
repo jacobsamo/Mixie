@@ -6,7 +6,7 @@ const GoogleSignIn = (handleClick: any) => {
     <>
       <button
         className="relative w-72 h-14 bg-white flex flex-row items-center rounded-xl"
-        onClick={() => handleClick}
+        onClick={handleClick}
       >
         <img
           src="/images/GoogleLogo.svg"
@@ -26,9 +26,9 @@ const GithubSignIn = (handleClick: any) => {
     <>
       <button
         className={`relative w-72 bg-Github h-14 flex flex-row items-center rounded-xl`}
-        onClick={() => handleClick}
+        onClick={handleClick}
       >
-        <img //TODO: Get SVG logos
+        <img 
           src="/images/GithubLogo.svg"
           alt="Github Logo"
           className="w-10 h-10 ml-4 text-white"
@@ -46,7 +46,7 @@ const FacebookSignIn = (handleClick: any) => {
     <>
       <button
         className="relative w-72 h-14 bg-Facebook flex flex-row items-center rounded-xl"
-        onClick={() => handleClick}
+        onClick={handleClick}
       >
         <img
           src="/images/FacebookLogo.svg"

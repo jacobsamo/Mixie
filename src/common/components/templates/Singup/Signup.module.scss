@@ -30,13 +30,42 @@
   outline: none;
 }
 
-.mainImg {
-  width: 50%;
-  border-radius: 40px 0px 0px 40px;
+.Background {
+  background: linear-gradient(to bottom right, #188FA7 , #fafffe )
 }
 
 
-.login {
+@media (max-width: 1024px) {
+  .mainImg {
+    display: none;
+  }
+  .formContainer {
+    @apply flex flex-col justify-center items-center w-full max-h-full;
+  }
+  .login {
+    @apply w-full h-full;
+  }
+}
+
+@media (min-width: 600px) {
+  .login {
+    border-radius: 40px;
+  }
+}
+
+
+@media (min-width: 1024px) {
+  .mainImg {
+    width: 50%;
+    border-radius: 40px 0px 0px 40px;
+  }
   
-  border-radius: 0px 40px 40px 0px;
+  .formContainer {
+    @apply flex flex-row w-3/4 h-3/4;
+  }
+  
+  .login {
+    width: 50%;
+    border-radius: 0px 40px 40px 0px;
+  }
 }
