@@ -23,7 +23,6 @@ const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 //   let analytics = getAnalytics(app);
 // }
 
-
 const db = getFirestore(app);
 const auth = getAuth(app);
     
