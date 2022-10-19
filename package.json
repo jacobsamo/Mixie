@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@heroicons/react": "^2.0.10",
+    "@heroicons/react": "^2.0.12",
     "axios": "^1.0.0",
     "cypress": "^10.6.0",
     "dotenv": "^16.0.3",

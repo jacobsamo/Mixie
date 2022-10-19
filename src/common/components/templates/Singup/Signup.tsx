@@ -1,17 +1,20 @@
 import type { NextPage } from 'next';
+import { useRouter } from "next/router";
 import React, { useState, useEffect } from 'react';
-import styles from './Signup.module.scss';
-import { auth } from '../../../shared/libs/config/firebase';
+import styles from 'Signup.module.scss';
+import { auth } from '@lib/config/firebase'
 import {
   getAuth,
+  signInWithPopup, 
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   FacebookAuthProvider,
   GithubAuthProvider,
-  signInWithPopup
 } from 'firebase/auth';
 
-const googleprovider = new GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider();
+const facebookProvider = new FacebookAuthProvider();
+const githubProvider = new GithubAuthProvider();
 
 
 const SignupPage: NextPage = () => {
@@ -19,19 +22,49 @@ const SignupPage: NextPage = () => {
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(false);
+  const router = useRouter();
+  
+  useEffect(() => {
+    if (loggedInUser) {
+      router.push('/')
+    }
+  }, [loggedInUser])
 
   const handleGithubClick = () => {
     console.log('Github');
+    signInWithPopup(auth, githubProvider)
+      .then((result) => {
+        // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+        const credential = GithubAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+
+        // The signed-in user info.
+        const user = result.user;
+        console.log(user)
+        setLoggedInUser(true);
+        // ...
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GithubAuthProvider.credentialFromError(error);
+        // ...
+      });
   };
   const handleGoogleClick = () => {
     console.log('Google');
-    signInWithPopup(auth, googleprovider)
+    signInWithPopup(auth, googleProvider)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential?.accessToken;
         // The signed-in user info.
         const user = result.user;
+        if (user != null) setLoggedInUser(true);
         // ...
       }).catch((error) => {
         // Handle Errors here.
@@ -46,6 +79,28 @@ const SignupPage: NextPage = () => {
   };
   const handleFacebookClick = () => {
     console.log('Facebook');
+    signInWithPopup(auth, facebookProvider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
+        if (user != null) setLoggedInUser(true);
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        const credential = FacebookAuthProvider.credentialFromResult(result);
+        const accessToken = credential?.accessToken;
+
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = FacebookAuthProvider.credentialFromError(error);
+
+        // ...
+      });
   };
 
   const handleEmailSignup = async () => {
