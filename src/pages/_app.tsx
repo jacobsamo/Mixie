@@ -2,7 +2,7 @@
 import type { AppProps } from 'next/app'
 
 //import styles
-import '../common/shared/styles/globals.scss'
+import '../common/styles/globals.scss'
 import "tailwindcss/tailwind.css";
 
 
