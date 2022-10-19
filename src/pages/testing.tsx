@@ -1,9 +1,14 @@
 import { NextPage } from 'next/types';
 import React, { useState, useEffect } from 'react';
 import RecipeService from '../common/shared/libs/service/RecipeService';
-import { Recipe } from '../common/shared/libs/types/recipe';
 import axios from 'axios';
+import { auth } from '@lib/config/firebase';
 import SignupPage from '../common/components/templates/Singup/Signup';
+import AuthService from '@lib/service/Authservice';
+import RecipeCard from '@components/modules/RecipeCard';
+import type {Recipe} from '@lib/types/recipe';
+import { HeartIcon } from '@heroicons/react/24/outline';
+import styles from '@component_styles/recipeCard.module.scss';
 
 const testData = {
   id: 'testDoc',
@@ -47,14 +52,14 @@ export async function getStaticProps() {
   };
 }
 
-const Testing: NextPage = (recipes) => {
+const Testing: NextPage = () => {
   const [recipeData, setRecipeData] = useState<any[]>([]);
   
-
   useEffect(() => {
-    setRecipeData([recipes]);
-  }, []);
+    setRecipeData([testData]);
+  }, [])
 
+  
   const onSendData = async () => {
     await fetch('/api/recipe/create', {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -81,8 +86,18 @@ const Testing: NextPage = (recipes) => {
       return (
         <>
           <div>
-            {recipeData.map((recipe) => (
-              <div key={recipe.id}>{recipe.recipeName}</div>
+            {recipeData.map((recipe: Recipe) => (
+              <>
+                <div key={recipe.id} className='relative w-46 h-58 dark:bg-grey bg-white rounded-xl'>
+                  <img src={recipe.imageUrl} alt={recipe.recipeName} className={styles.image}/>
+                  <h1 className='dark:text-white text-black text-sm font-Roboto font-bold absolute left-2 top-36'>{recipe.recipeName}</h1>
+                  <h1 className='dark:text-white text-black absolute bottom-1 left-3'>{recipe.id}</h1>
+                  <HeartIcon 
+                    className='dark:text-white text-black cursor-pointer absolute bottom-1 right-1 w-6 h-6'
+                    onClick={() => console.log('heart icon clicked')}
+                  />
+                </div>
+              </>  
             ))}
           </div>
         </>
@@ -92,9 +107,15 @@ const Testing: NextPage = (recipes) => {
     }
   };
 
+
   return (
     <>
-      <SignupPage />
+      <h1>Testing</h1>
+      <button onClick={() => {
+        AuthService.signOutUser()
+        console.log(auth.currentUser)
+      }}>Sign out</button>
+      <Recipes />
     </>
   );
 };

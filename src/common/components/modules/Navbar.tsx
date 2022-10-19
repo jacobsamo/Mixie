@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import React from 'react';
-import styles from './Navbar.module.scss';
+import styles from './styles/Navbar.module.scss';
 import { BookmarkIcon } from '@heroicons/react/24/outline';
 
 const Navbar: NextPage = () => {
