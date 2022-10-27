@@ -3,7 +3,7 @@ import { getAnalytics, initializeAnalytics } from 'firebase/analytics';
 import { getAuth } from "firebase/auth";
 import { getFirestore } from 'firebase/firestore'
 
-
+//TODO: turn this into an environment variable
 const firebaseConfig = {
   apiKey: "AIzaSyCWd8dGb1ZMvKRqFiVfm8xI5ke4IFsnrnQ",
   authDomain: "recipe-webapp-a2a71.firebaseapp.com",
@@ -33,6 +33,7 @@ const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore(app);
 const auth = getAuth(app);
 
+//TODO: Add analytics 
     
 
 export { db, auth};

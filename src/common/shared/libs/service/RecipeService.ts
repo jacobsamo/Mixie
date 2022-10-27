@@ -9,7 +9,6 @@ import {
   query,
   orderBy,
   limit,
-  connectFirestoreEmulator,
 } from 'firebase/firestore';
 
 import { Recipe } from '../types/recipe';

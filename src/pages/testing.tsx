@@ -116,6 +116,7 @@ const Testing: NextPage = () => {
         console.log(auth.currentUser)
       }}>Sign out</button>
       <Recipes />
+      
     </>
   );
 };

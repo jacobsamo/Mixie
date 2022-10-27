@@ -33,7 +33,7 @@ const SignupPage: NextPage = () => {
     console.log(`${email} ${password}`);
   };
 
-  //TODO: Add functionality to sign in form
+  
 
   return (
     <>

@@ -113,7 +113,6 @@ const SignupPage: NextPage = () => {
     }  
   };
 
-  //TODO: Add functionality to sign in form
 
   return (
     <>
