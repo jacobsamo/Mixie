@@ -4,6 +4,7 @@ class CustomDocument extends Document {
   return = (): JSX.Element => (
     <Html>
       <Head>
+        <link rel="manifest" href="/manifest.json"/>
       </Head>
       <body>
         <Main />
