@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore";
 
 export type Recipe = {
     id: string;
@@ -9,7 +10,7 @@ export type Recipe = {
     steps: Step[];
     madeRecipe: number;
     savedRecipe: number;
-    createdAt: string;
+    createdAt: Timestamp | string;
     createdBy: string;
 }
 

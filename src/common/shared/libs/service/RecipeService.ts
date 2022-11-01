@@ -20,16 +20,18 @@ class RecipeService {
   }
 
   async getRecipe(id: string) {
-    return getDocs(collection(db, 'recipes'));
+    const recipe = await getDoc(doc(db, 'recipes', id))
+    const data = await recipe.data() as Recipe;
+    return data;
   }
 
   async getAllRecipes() {
+    const querySnapshot = await getDocs(collection(db, "recipes"));
     const recipes: Recipe[] = [];
-    const querySnapshot = await getDocs(query(collection(db, 'recipes')));
-    const allRecipes = querySnapshot.forEach((recipe) => {
+    querySnapshot.forEach((recipe) => {
       const data = recipe.data() as Recipe;
-      recipes.push(data)
-    });
+      recipes.push(...recipes, data)
+    })
     return recipes;
   }
 
