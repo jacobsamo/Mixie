@@ -3,12 +3,12 @@ import { Head } from 'next/document';
 import React, { useState, useEffect } from 'react';
 import styles from '@styles/RecipePage.module.scss';
 
-const RecipePage: NextPage = () => {
+const RecipesPages: NextPage = () => {
   return (
     <>
-      <h1>Recipe page</h1>
+      <h1>Recipes page</h1>
     </>
   )
 }
 
-export default RecipePage
+export default RecipesPages
