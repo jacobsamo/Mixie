@@ -4,27 +4,21 @@ import styles from '@styles/Home.module.scss';
 
 //import components
 import Navbar from '@components/modules/Navbar';
-
+import LandingPageSEO from '@components/seo/LandingPageSEO';
 
 
 const Home: NextPage = () => {
-
-  // useEffect(() => {
-  //   localStorage.setItem("visited", Date.now.toString());
-  // }, [])  
-
-  
-
   return (
     <>
+      <LandingPageSEO />
       <Navbar />
-      <div className=''>
+        <div className=''>
           <h1 className={styles.heroTitle}>Want Tasty Recipes</h1>
           <input 
-              type="text" 
-              placeholder='Find your next meal' 
-              className={styles.heroSearch}
-            />
+            type="text" 
+            placeholder='Find your next meal' 
+            className={styles.heroSearch}
+          />
         </div>
     </>
   )

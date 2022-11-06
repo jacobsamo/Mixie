@@ -1,0 +1,41 @@
+"filename", "language", "TypeScript React", "TypeScript", "SCSS", "JavaScript", "comment", "blank", "total"
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/components/elements/AuthButton.module.scss", "SCSS", 0, 0, 0, 0, 0, 1, 1
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/components/elements/AuthButtons.tsx", "TypeScript React", 60, 0, 0, 0, 0, 5, 65
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/components/elements/recipe_elemnts/IngredientCard.module.scss", "SCSS", 0, 0, 0, 0, 0, 1, 1
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/components/elements/recipe_elemnts/IngredientCard.tsx", "TypeScript React", 10, 0, 0, 0, 0, 2, 12
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/components/elements/recipe_elemnts/StepCard.module.scss", "SCSS", 0, 0, 0, 0, 0, 1, 1
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/components/elements/recipe_elemnts/StepCard.tsx", "TypeScript React", 0, 0, 0, 0, 0, 1, 1
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/components/modules/Navbar.tsx", "TypeScript React", 39, 0, 0, 0, 0, 3, 42
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/components/modules/RecipeCard.tsx", "TypeScript React", 20, 0, 0, 0, 0, 3, 23
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/components/seo/LandingPageSEO.tsx", "TypeScript React", 26, 0, 0, 0, 0, 9, 35
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/components/seo/RecipeSEO.tsx", "TypeScript React", 42, 0, 0, 0, 0, 9, 51
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/components/styles/Navbar.module.scss", "SCSS", 0, 0, 46, 0, 0, 1, 47
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/components/styles/recipeCard.module.scss", "SCSS", 0, 0, 6, 0, 0, 1, 7
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/components/templates/Singup/Signup.tsx", "TypeScript React", 179, 0, 0, 0, 21, 14, 214
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/shared/jsons/CustomRecipes.js", "JavaScript", 0, 0, 0, 32, 0, 1, 33
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/shared/jsons/user.js", "JavaScript", 0, 0, 0, 12, 0, 1, 13
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/shared/libs/config/firebase.ts", "TypeScript", 0, 18, 0, 0, 12, 10, 40
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/shared/libs/config/index.ts", "TypeScript", 0, 3, 0, 0, 0, 2, 5
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/shared/libs/service/Authservice.ts", "TypeScript", 0, 28, 0, 0, 0, 6, 34
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/shared/libs/service/RecipeService.ts", "TypeScript", 0, 40, 0, 0, 0, 8, 48
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/shared/libs/service/UserOptionsService.ts", "TypeScript", 0, 35, 0, 0, 0, 5, 40
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/shared/libs/types/bookmark.ts", "TypeScript", 0, 4, 0, 0, 0, 0, 4
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/shared/libs/types/recipe.ts", "TypeScript", 0, 27, 0, 0, 0, 3, 30
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/styles/globals.scss", "SCSS", 0, 0, 27, 0, 0, 6, 33
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/styles/modules/Home.module.scss", "SCSS", 0, 0, 26, 0, 0, 0, 26
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/styles/modules/RecipePage.module.scss", "SCSS", 0, 0, 0, 0, 0, 1, 1
+"/Users/jacob/Documents/GitHub/Recipe_app/src/common/styles/modules/Signup.module.scss", "SCSS", 0, 0, 59, 0, 0, 12, 71
+"/Users/jacob/Documents/GitHub/Recipe_app/src/pages/404.tsx", "TypeScript React", 11, 0, 0, 0, 0, 3, 14
+"/Users/jacob/Documents/GitHub/Recipe_app/src/pages/_app.tsx", "TypeScript React", 7, 0, 0, 0, 2, 5, 14
+"/Users/jacob/Documents/GitHub/Recipe_app/src/pages/_document.tsx", "TypeScript React", 15, 0, 0, 0, 0, 2, 17
+"/Users/jacob/Documents/GitHub/Recipe_app/src/pages/account/signin.tsx", "TypeScript React", 121, 0, 0, 0, 0, 14, 135
+"/Users/jacob/Documents/GitHub/Recipe_app/src/pages/account/signup.tsx", "TypeScript React", 121, 0, 0, 0, 0, 14, 135
+"/Users/jacob/Documents/GitHub/Recipe_app/src/pages/api/hello.ts", "TypeScript", 0, 10, 0, 0, 1, 3, 14
+"/Users/jacob/Documents/GitHub/Recipe_app/src/pages/api/recipes/[id].ts", "TypeScript", 0, 19, 0, 0, 0, 3, 22
+"/Users/jacob/Documents/GitHub/Recipe_app/src/pages/api/recipes/create.ts", "TypeScript", 0, 21, 0, 0, 1, 3, 25
+"/Users/jacob/Documents/GitHub/Recipe_app/src/pages/api/recipes/index.ts", "TypeScript", 0, 13, 0, 0, 1, 3, 17
+"/Users/jacob/Documents/GitHub/Recipe_app/src/pages/index.tsx", "TypeScript React", 22, 0, 0, 0, 1, 5, 28
+"/Users/jacob/Documents/GitHub/Recipe_app/src/pages/recipes/[id].tsx", "TypeScript React", 71, 0, 0, 0, 3, 14, 88
+"/Users/jacob/Documents/GitHub/Recipe_app/src/pages/recipes/index.tsx", "TypeScript React", 22, 0, 0, 0, 0, 3, 25
+"/Users/jacob/Documents/GitHub/Recipe_app/src/pages/testing.tsx", "TypeScript React", 109, 0, 0, 0, 1, 15, 125
+"Total", "-", 875, 218, 164, 44, 43, 193, 1537
