@@ -1,10 +1,10 @@
 import { NextPage } from 'next/types';
-import Navbar from '@components/modules/Navbar';
+
 
 const Custom404: NextPage = () => {
+  //TODO: make prettier for users
   return (
     <>
-      <Navbar /> 
       <div>404 Page not Found</div>
     </>
   );

@@ -3,13 +3,14 @@ import Image from 'next/image';
 import { Head } from 'next/document';
 import React, { useState, useEffect, ReactHTMLElement } from 'react';
 //types
-import type { NextPage } from 'next';
-import type { Recipe, Info, Step } from '@lib/types/recipe';
+import type { Recipe, Info } from '@lib/types/recipe';
 //services
 import RecipeService from '@lib/service/RecipeService';
+import styles from '@styles/RecipePage.module.scss';
 //components
 import RecipeSEO from '@components/seo/RecipeSEO';
 import StepCard from '@components/elements/recipe_elemnts/StepCard';
+
 
 interface Props {
   recipe: Recipe;
@@ -17,8 +18,6 @@ interface Props {
 
 export default function RecipePage({ recipe }: Props) {
   const info = recipe.info as Info;
-  const items = recipe.ingredients as string[];
-  
 
   if (recipe !== undefined) {
     return (
@@ -32,34 +31,47 @@ export default function RecipePage({ recipe }: Props) {
           info=""
           createdAt={recipe.createdAt}
         />
-        <h1>Recipe</h1>
-        <Image
-          src={recipe.imageUrl}
-          alt={recipe.recipeName}
-          width={800}
-          height={500}
-        />
-        <div>
-          <ul>
-            <li>{info.rating}</li>
-            <li>{info.serves}</li>
-            <li>{info.cook}</li>
-            <li>{info.prep}</li>
-            <li>{info.total}</li>
+        <main className={styles.mainContainer}>
+          <h1 className={styles.recipeTitle}>Recipe</h1>
+          <Image
+            src={recipe.imageUrl}
+            alt={recipe.recipeName}
+            className={styles.recipeImage}
+            width={800}
+            height={500}
+          />
+          <h1>{recipe.recipeDescription}</h1>
+          <h1>{recipe.createdBy}</h1>
+          <ul className={styles.info}>
+            <li>Rating {info.rating}</li>
+            <li>Serves {info.serves}</li>
+            <li>Cook {info.cook}</li>
+            <li>Prep {info.prep}</li>
+            <li>Total {info.total}</li>
           </ul>
-        </div>
-        <div>
-          <input type="checkbox" />
-          <h1>{recipe.ingredients}</h1>
-        </div>
-        <div>
-                {recipe.steps.forEach(step => {
-                    <>
-                        <h1>{step.number.toString()}</h1>
-                        <p>{step.body}</p>
-                    </>
-                })}
-        </div>
+          <div className={styles.IngredientMethodContainer}>
+            <div className={styles.recipeIngredients}>
+              <h1>Ingredients</h1>
+              {recipe.ingredients.map((ingredient) => (
+                <div className="flex gap-1">
+                  <input type="checkbox" />
+                  <h1>{ingredient}</h1>
+                </div>
+              ))}
+            </div>
+            <div className={styles.method}>
+              {recipe.steps.map((step) => {
+                return (
+                  <div className={styles.steps}>
+                    <h1 className="">{step.number}</h1>
+                    <h1>{step.body}</h1>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          
+        </main>
       </>
     );
   }

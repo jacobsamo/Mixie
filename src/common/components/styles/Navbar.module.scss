@@ -1,5 +1,6 @@
 .nav {
-  @apply flex flex-row items-center justify-center;
+  @apply flex flex-row items-center justify-center text-black dark:text-white;
+  background-color: transparent;
   height: 56px;
   position: relative;
   z-index: 5;

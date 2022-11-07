@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import RecipeService from '../../../common/shared/libs/service/RecipeService'
-import { Recipe } from '../../../common/shared/libs/types/recipe'
+import RecipeService from '@lib/service/RecipeService'
+import { Recipe } from '@lib/types/recipe'
 
 const handler = async (
   req: NextApiRequest,

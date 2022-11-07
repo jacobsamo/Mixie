@@ -1,11 +1,13 @@
 import Head from "next/head";
 import React from "react";
 
-export default function LandingPageSEO() {
-    const description = "A directory of folder full things.";
-    const url = ''
-    const title = "Meally — Find your next meal"
+interface PagesSeo {
+    title: string;
+    url: string;
+    description: string;
+}
 
+export default function PageSEO({title, url, description}: PagesSeo) {
     return (
         <>
             <Head>

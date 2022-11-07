@@ -8,13 +8,19 @@ import AuthService from '@lib/service/Authservice';
 
 
 const SignupPage: NextPage = () => {
+  //TODO: add option to sign up with email and password - have a look at dailwebcoding for example
+  //TODo: turn into a popup dialog instead of a route
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const router = useRouter();
   
-  
+  useEffect(() => {
+    if (auth.currentUser != null) {
+      router.push('/')
+    }
+  }, [auth.onAuthStateChanged]);
 
   const handleGithubClick = () => {
     AuthService.signInWithGithub()
