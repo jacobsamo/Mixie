@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import styles from '../styles/Navbar.module.scss';
-import { BookmarkIcon } from '@heroicons/react/24/outline';
+import { BookmarkIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import AuthService from '@lib/service/Authservice';
 import { auth } from '@lib/config/firebase';
 import RecipeSEO from '@components/seo/RecipeSEO';
@@ -41,6 +41,9 @@ const Navbar = () => {
           </li>
         </ul>
         <div className={styles.user}>
+          <button>
+            <MagnifyingGlassIcon className='h-8 w-8' />
+          </button>
           <button>
             <BookmarkIcon className="h-8 w-8" />
           </button>

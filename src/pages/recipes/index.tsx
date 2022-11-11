@@ -26,22 +26,21 @@ const RecipesPages: NextPage = ({ recipes }: any) => {
       <PageSEO
         title="Browse all recipes"
         url=""
-        description="recipes for the best meal ideas out there"
+        description="recipes for the best meals"
       />
       <Navbar />
       <div>
         {recipes.map((recipe: Recipe) => {
           return (
-            <Link
-              href={`/recipes/${encodeURIComponent(recipe.recipeName)}`}
-              key={recipe.id}
-            >
-              <RecipeCard
-                id={recipe.id.toString()}
-                imageUrl={recipe.imageUrl}
-                recipeName={recipe.recipeName}
-                recipeDescription={recipe.recipeDescription}
-              />
+            <Link href={`/recipes/${recipe.id}`} key={recipe.id}>
+              <div>
+                <RecipeCard
+                  id={recipe.id.toString()}
+                  imageUrl={recipe.imageUrl}
+                  recipeName={recipe.recipeName}
+                  recipeDescription={recipe.recipeDescription}
+                />
+              </div>
             </Link>
           );
         })}

@@ -11,7 +11,6 @@ import styles from '@styles/RecipePage.module.scss';
 import RecipeSEO from '@components/seo/RecipeSEO';
 import StepCard from '@components/elements/recipe_elemnts/StepCard';
 
-
 interface Props {
   recipe: Recipe;
 }
@@ -32,7 +31,7 @@ export default function RecipePage({ recipe }: Props) {
           createdAt={recipe.createdAt}
         />
         <main className={styles.mainContainer}>
-          <h1 className={styles.recipeTitle}>Recipe</h1>
+          <h1 className={styles.recipeTitle}>{recipe.recipeName}</h1>
           <Image
             src={recipe.imageUrl}
             alt={recipe.recipeName}
@@ -41,7 +40,7 @@ export default function RecipePage({ recipe }: Props) {
             height={500}
           />
           <h1>{recipe.recipeDescription}</h1>
-          <h1>{recipe.createdBy}</h1>
+          <h1>Recipe by: {recipe.createdBy}</h1>
           <ul className={styles.info}>
             <li>Rating {info.rating}</li>
             <li>Serves {info.serves}</li>
@@ -70,7 +69,6 @@ export default function RecipePage({ recipe }: Props) {
               })}
             </div>
           </div>
-          
         </main>
       </>
     );
