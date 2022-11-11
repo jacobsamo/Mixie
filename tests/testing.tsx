@@ -1,9 +1,9 @@
 import { NextPage } from 'next/types';
 import React, { useState, useEffect } from 'react';
-import RecipeService from '../common/shared/libs/service/RecipeService';
+import RecipeService from '../src/common/shared/libs/service/RecipeService';
 import axios from 'axios';
 import { auth } from '@lib/config/firebase';
-import SignupPage from '../common/components/templates/Singup/Signup';
+import SignupPage from '../src/common/components/templates/Singup/Signup';
 import AuthService from '@lib/service/Authservice';
 import RecipeCard from '@components/modules/RecipeCard';
 import type {Recipe} from '@lib/types/recipe';
@@ -116,6 +116,7 @@ const Testing: NextPage = () => {
         console.log(auth.currentUser)
       }}>Sign out</button>
       <Recipes />
+      
     </>
   );
 };

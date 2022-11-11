@@ -1,15 +1,18 @@
+import { Timestamp } from "firebase/firestore";
 
 export type Recipe = {
     id: string;
-    imageUrl?: string;
+    recipeUrl: string;
+    imageUrl: string;
     recipeName: string;
     recipeDescription: string;
     info: Info,
     ingredients: string[];
     steps: Step[];
+    keywords: string[];
     madeRecipe: number;
     savedRecipe: number;
-    createdAt: string;
+    createdAt: Timestamp | string;
     createdBy: string;
 }
 

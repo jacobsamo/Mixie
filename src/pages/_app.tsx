@@ -1,7 +1,7 @@
-//import types
+//types
 import type { AppProps } from 'next/app'
 
-//import styles
+//styles
 import '../common/styles/globals.scss'
 import "tailwindcss/tailwind.css";
 

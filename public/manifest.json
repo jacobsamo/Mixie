@@ -1,0 +1,12 @@
+{
+    "name": "Meally Recipe app",
+    "short_name": "Meally",
+    "theme_color": "",
+    "background_color": "",
+    "display": "browser",
+    "orientation": "lanscape",
+    "scope": "/",
+    "start_url": "/",
+    "icons": [],
+    "splash_pages": null
+}

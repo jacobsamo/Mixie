@@ -28,6 +28,13 @@ class AuthService {
     async signOutUser() {
         await signOut(auth)
     }    
+    async getUserInfo() {
+      if (auth.currentUser === null) {
+        return 'https://unsplash.com/photos/K4mSJ7kc0As'
+      } else {
+        return auth.currentUser.photoURL
+      }
+    }
 }
 
 export default new AuthService();
