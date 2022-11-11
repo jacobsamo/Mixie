@@ -9,33 +9,31 @@ import {
   query,
   orderBy,
   limit,
-  connectFirestoreEmulator,
 } from 'firebase/firestore';
 
-import { Recipe } from '../types/recipe';
+import type { Recipe } from '../types/recipe';
 import { db } from '../config/firebase';
 
 class RecipeService {
   createRecipe(post: Recipe) {
-    return setDoc(doc(db, "recipes", post.id), post);
+    return setDoc(doc(db, 'recipes', post.id), post);
   }
 
-  async getRecipe() {
-    return getDocs(collection(db, "recipes"))
+  async getRecipe(id: string) {
+    const recipe = await getDoc(doc(db, 'recipes', id))
+    const data = await recipe.data() as Recipe;
+    return data;
   }
 
   async getAllRecipes() {
-    const recipes = query(
-      collection(db, "recipes"),
-    )
-    let docs: any = []
-    const querySnapshot = await getDocs(recipes)
-    const allRecipes = querySnapshot.forEach(recipe => {
-      docs.push(recipe.data())
-    })  
-    // console.log(docs)
-    return docs
-}
+    const querySnapshot = await getDocs(collection(db, "recipes"));
+    const recipes: Recipe[] = [];
+    querySnapshot.forEach((recipe) => {
+      const data = recipe.data() as Recipe;
+      recipes.push(...recipes, data)
+    })
+    return recipes;
+  }
 
   async updateRecipe(id: string) {
     return '';
