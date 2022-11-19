@@ -6,6 +6,7 @@ const recipes = [
     recipeName: 'Chocolate fudge Brownies',
     recipeDescription:
       'This is my own recipe that has been changed from another recipe to make it fuggy ',
+    keywords: ['chocolate', 'fudge', 'brownies'],
     info: {
       total: '30min',
       prep: '10min',
