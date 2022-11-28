@@ -8,17 +8,16 @@ import {
   Highlight,
 } from 'react-instantsearch-hooks-web';
 import { is } from 'cypress/types/bluebird';
+import { handleAlgoliaSearchClick } from '@lib/service/Algolia';
 
 interface Search {
   search_placeholder: string;
   collection: string;
-  clicked: boolean;
 }
 
-const searchClient = algoliasearch(
-  'ZKJ2IQ1M9Y',
-  '799c88bf6f889e72af4c7ccceafa8f7b'
-);
+
+
+
 
 const Hit = ({ hit }: any) => {
   return (
@@ -35,16 +34,12 @@ const Hit = ({ hit }: any) => {
 const Algolia_Search_Dialog = ({
   search_placeholder,
   collection,
-  clicked,
 }: Search) => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    if (clicked) {
-      setIsOpen(true);
-    }
-  }, [clicked]);
-  
+    setIsOpen(handleAlgoliaSearchClick('checkState') ? true : false);
+  }, [handleAlgoliaSearchClick('checkState')]);
 
   function closeModal() {
     setIsOpen(false);
