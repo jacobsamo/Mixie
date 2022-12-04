@@ -7,20 +7,10 @@ import styles from '@styles/Home.module.scss';
 import PageSeo from '@components/seo/PageSEO';
 import Navbar from '@components/modules/Navbar';
 import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
-import { handleAlgoliaSearchClick } from '@lib/service/Algolia';
+
 
 const Home: NextPage = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  function Popup() {
-    console.log('clicked');
-    return (
-      <>
-        
-      </>
-    );
-  }
-
+  const [dialogOpen, setDialogOpen] = useState(true);
   return (
     <>
       <PageSeo
@@ -31,15 +21,7 @@ const Home: NextPage = () => {
       <Navbar />
       <div className="">
         <h1 className={styles.heroTitle}>Want Tasty Recipes</h1>
-        <button
-          onClick={() => handleAlgoliaSearchClick('clickEvent')}
-        >
-          Button
-        </button>
-        <Algolia_Search_Dialog
-          collection="recipes"
-          search_placeholder="Search for recipes"
-        />
+        <Algolia_Search_Dialog buttonType='searchBar' />
       </div>
     </>
   );

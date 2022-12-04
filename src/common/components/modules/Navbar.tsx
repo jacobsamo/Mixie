@@ -6,6 +6,7 @@ import AuthService from '@lib/service/Authservice';
 import { auth } from '@lib/config/firebase';
 import RecipeSEO from '@components/seo/RecipeSEO';
 import type { UserCredential } from 'firebase/auth'
+import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
 
 const Navbar = () => {
   const [userImage, setUserImage] = useState('/favicon.ico'); //TODO: change this to a proper thing or a sign in form
@@ -41,9 +42,7 @@ const Navbar = () => {
           </li>
         </ul>
         <div className={styles.user}>
-          <button>
-            <MagnifyingGlassIcon className='h-8 w-8' />
-          </button>
+          <Algolia_Search_Dialog buttonType='searchIcon'/>
           <button>
             <BookmarkIcon className="h-8 w-8" />
           </button>

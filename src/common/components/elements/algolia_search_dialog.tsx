@@ -1,22 +1,26 @@
 import { Dialog, Transition } from '@headlessui/react';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import algoliasearch from 'algoliasearch/lite';
 import {
   InstantSearch,
   SearchBox,
   Hits,
   Highlight,
+  Configure,
 } from 'react-instantsearch-hooks-web';
 import { is } from 'cypress/types/bluebird';
-import { handleAlgoliaSearchClick } from '@lib/service/Algolia';
+import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
+import styles from './algolia_search_dialog.module.scss';
 
-interface Search {
-  search_placeholder: string;
-  collection: string;
+
+interface SearchDialogType {
+  buttonType: string;
 }
 
-
-
+const searchClient = algoliasearch(
+  "ZKJ2IQ1M9Y",
+  "799c88bf6f889e72af4c7ccceafa8f7b"
+);
 
 
 const Hit = ({ hit }: any) => {
@@ -31,27 +35,51 @@ const Hit = ({ hit }: any) => {
   );
 };
 
-const Algolia_Search_Dialog = ({
-  search_placeholder,
-  collection,
-}: Search) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    setIsOpen(handleAlgoliaSearchClick('checkState') ? true : false);
-  }, [handleAlgoliaSearchClick('checkState')]);
+export default function Algolia_Search_Dialog({
+  buttonType,
+}: SearchDialogType) {
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   function closeModal() {
-    setIsOpen(false);
+    setDialogOpen(false);
   }
 
-  function openModal() {
-    setIsOpen(true);
-  }
+  const searchBarStyles = {
+    width: '28rem',
+    height: '2.8rem',
+  };
+
+  const Button = () => {
+    if (buttonType === 'searchBar') {
+      return (
+        <>
+          <button
+            onClick={() => setDialogOpen(true)}
+            style={searchBarStyles}
+            className="dark:bg-dark_grey dark:text-white bg-white shadow-searchBarShadow relative flex items-center rounded-xl"
+          >
+            <MagnifyingGlassIcon className="h-5 w-5 ml-5" />
+            <span className="m-1">
+              Search by keyword, ingredient or recipes
+            </span>
+          </button>
+        </>
+      );
+    }
+    if (buttonType === 'searchIcon') {
+      return (
+        <button onClick={() => setDialogOpen(true)}>
+          <MagnifyingGlassIcon className="h-8 w-8" />
+        </button>
+      );
+    }
+    return <></>;
+  };
 
   return (
     <>
-      <Transition appear show={isOpen} as={Fragment}>
+      <Button />
+      <Transition appear show={dialogOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
@@ -76,29 +104,12 @@ const Algolia_Search_Dialog = ({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-blue p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
-                  >
-                    Payment successful
-                  </Dialog.Title>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Your payment has been successfully submitted. We’ve sent
-                      you an email with all of the details of your order.
-                    </p>
-                  </div>
-
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
-                    >
-                      Got it, thanks!
-                    </button>
-                  </div>
+                <Dialog.Panel className={styles.dialogContainer}>
+                  <InstantSearch searchClient={searchClient} indexName="recipes">
+                    <Configure hitsPerPage={10} />
+                    <SearchBox />
+                    <Hits hitComponent={Hit} />
+                  </InstantSearch>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
@@ -107,6 +118,4 @@ const Algolia_Search_Dialog = ({
       </Transition>
     </>
   );
-};
-
-export default Algolia_Search_Dialog;
+}
