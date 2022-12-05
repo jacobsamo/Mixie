@@ -10,3 +10,5 @@ A few big things setting us aside from everyone else is a feature added into the
 
 ### Things i have learnt throughout this project
 All the things i have learnt throughout this [project](./things_i_learnt.md)
+Helpful links:
+- [How to add keyboard shortcuts to your React app](https://devtrium.com/posts/how-keyboard-shortcut)

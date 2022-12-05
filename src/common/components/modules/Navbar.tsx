@@ -5,21 +5,19 @@ import { BookmarkIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import AuthService from '@lib/service/Authservice';
 import { auth } from '@lib/config/firebase';
 import RecipeSEO from '@components/seo/RecipeSEO';
-import type { UserCredential } from 'firebase/auth'
+import type { UserCredential } from 'firebase/auth';
 import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
 
 const Navbar = () => {
   const [userImage, setUserImage] = useState('/favicon.ico'); //TODO: change this to a proper thing or a sign in form
 
-
   //TODO: fix issue with image flickering when reloading or navigating to a different route
   auth.onAuthStateChanged((user) => {
     if (auth.currentUser != null) {
-      setUserImage(auth.currentUser.photoURL!)
+      setUserImage(auth.currentUser.photoURL!);
     }
-  })
+  });
 
-  
   return (
     <>
       <nav className={styles.nav}>
@@ -42,20 +40,23 @@ const Navbar = () => {
           </li>
         </ul>
         <div className={styles.user}>
-          <Algolia_Search_Dialog buttonType='searchIcon'/>
-          <button>
-            <BookmarkIcon className="h-8 w-8" />
-          </button>
-          <button>
-            <Image
-              src={userImage}
-              alt="Profile Picture"
-              width={48}
-              height={48}
-              className="rounded-full relative"
-              priority
-            /> {/*TODO: change this to open up the sign in / sign up dialog if user isn't logged in */}
-          </button>
+          <Algolia_Search_Dialog buttonType="searchIcon" />
+          <div className='comingSoon w-24 h-24'>
+            Coming soon
+            {/* <button>
+              <BookmarkIcon className="h-8 w-8x" />
+            </button>
+            <button>
+              <Image
+                src={userImage}
+                alt="Profile Picture"
+                width={48}
+                height={48}
+                className="rounded-full relative"
+                priority
+              />{' '}
+            </button> */}
+          </div>
         </div>
       </nav>
     </>

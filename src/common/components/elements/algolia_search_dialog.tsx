@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useCallback, useEffect } from 'react';
 import algoliasearch from 'algoliasearch/lite';
 import {
   InstantSearch,
@@ -12,16 +12,14 @@ import { is } from 'cypress/types/bluebird';
 import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
 import styles from './algolia_search_dialog.module.scss';
 
-
 interface SearchDialogType {
   buttonType: string;
 }
 
 const searchClient = algoliasearch(
-  "ZKJ2IQ1M9Y",
-  "799c88bf6f889e72af4c7ccceafa8f7b"
+  'ZKJ2IQ1M9Y',
+  '799c88bf6f889e72af4c7ccceafa8f7b'
 );
-
 
 const Hit = ({ hit }: any) => {
   return (
@@ -39,6 +37,23 @@ export default function Algolia_Search_Dialog({
   buttonType,
 }: SearchDialogType) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+
+  const handleKeyPress = useCallback((event: any) => {
+    // check if the Shift key is pressed
+    if (event.ctrlKey === true && event.key.toLowerCase() === 'k') {
+      setDialogOpen(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    // attach the event listener
+    document.addEventListener('keydown', handleKeyPress);
+
+    // remove the event listener
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [handleKeyPress]);
 
   function closeModal() {
     setDialogOpen(false);
@@ -79,43 +94,38 @@ export default function Algolia_Search_Dialog({
   return (
     <>
       <Button />
-      <Transition appear show={dialogOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className={styles.dialogContainer}>
-                  <InstantSearch searchClient={searchClient} indexName="recipes">
-                    <Configure hitsPerPage={10} />
-                    <SearchBox />
-                    <Hits hitComponent={Hit} />
-                  </InstantSearch>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
+      <Dialog
+        as="div"
+        className="relative z-10 w-full h-full"
+        onClose={closeModal}
+        open={dialogOpen}
+      >
+        <div className="fixed inset-0 overflow-y-auto">
+          <div className={styles.container}>
+            <Dialog.Panel className="w-3/4 h-3/4">
+              <InstantSearch searchClient={searchClient} indexName="recipes">
+                <Configure hitsPerPage={10} />
+                <SearchBox
+                  placeholder="Search by keyword, ingredient or recipes"
+                  submitIconComponent={({ classNames }) => (
+                    <MagnifyingGlassIcon className={classNames.submitIcon} />
+                  )}
+                  classNames={{
+                    root: styles.searchContainer,
+                    form: styles.searchForm,
+                    input: styles.searchField,
+                    submitIcon: styles.searchIcon,
+                    resetIcon: 'hidden',
+                  }}
+                  autoFocus={true}
+                  searchAsYouType={true}
+                />
+                <Hits hitComponent={Hit} />
+              </InstantSearch>
+            </Dialog.Panel>
           </div>
-        </Dialog>
-      </Transition>
+        </div>
+      </Dialog>
     </>
   );
 }

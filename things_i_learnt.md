@@ -29,3 +29,6 @@ This happens due to not setting an array type and as the data is being fetched f
     </>
  })}
 ```
+
+
+When i was creating the [search dialog](./src/common/components/elements/algolia_search_dialog.tsx) i found out that there is no easy way to pass down click events from parent to a child element so instead i am now handling them in the child element.

@@ -2,8 +2,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: Roboto, Arial, -apple-system, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Roboto, Arial, -apple-system, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
@@ -20,7 +20,6 @@ a {
   height: 100%;
 }
 
-
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
@@ -29,3 +28,20 @@ a {
     @apply bg-black text-white;
   }
 }
+
+.comingSoon {
+  position: relative;
+  z-index: 10;
+  color: #D2D2D2;
+  background: linear-gradient(
+    116.74deg,
+    #4e4e4e -8.91%,
+    rgba(97, 97, 97, 0) 99.15%
+  );
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+

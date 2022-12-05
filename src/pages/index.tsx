@@ -10,7 +10,6 @@ import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
 
 
 const Home: NextPage = () => {
-  const [dialogOpen, setDialogOpen] = useState(true);
   return (
     <>
       <PageSeo
