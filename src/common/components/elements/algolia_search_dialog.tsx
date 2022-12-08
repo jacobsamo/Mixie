@@ -11,6 +11,7 @@ import {
 import { is } from 'cypress/types/bluebird';
 import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
 import styles from './algolia_search_dialog.module.scss';
+import { Hit } from '@lib/types/algolia';
 
 interface SearchDialogType {
   buttonType: string;
@@ -22,13 +23,14 @@ const searchClient = algoliasearch(
 );
 
 const Hit = ({ hit }: any) => {
+  const info: Hit = hit;
   return (
     <article>
-      <img src="#" alt="" />
+      <img src={info.imgUrl} alt="" />
       <h1>
         <Highlight attribute="recipeName" hit={hit} />
       </h1>
-      <p>Ingredients: {hit.ingredients}</p>
+      <p>Ingredients: {info.ingredients}</p>
     </article>
   );
 };
@@ -120,7 +122,13 @@ export default function Algolia_Search_Dialog({
                   autoFocus={true}
                   searchAsYouType={true}
                 />
-                <Hits hitComponent={Hit} />
+                <Hits 
+                  classNames={{
+                    root: '',
+                    item: styles.hitComponent,
+                  }}
+                  hitComponent={Hit} 
+                />
               </InstantSearch>
             </Dialog.Panel>
           </div>

@@ -20,6 +20,8 @@ a {
   height: 100%;
 }
 
+//Dark mode preferences
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
@@ -32,7 +34,7 @@ a {
 .comingSoon {
   position: relative;
   z-index: 10;
-  color: #D2D2D2;
+  color: #d2d2d2;
   background: linear-gradient(
     116.74deg,
     #4e4e4e -8.91%,

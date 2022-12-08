@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { Head } from 'next/document';
 import React, { useState, useEffect } from 'react';
-import styles from '@styles/RecipePage.module.scss';
+import styles from '@styles/modules/RecipePage.module.scss';
 import RecipeService from '@lib/service/RecipeService';
 import { Recipe } from '@lib/types/recipe';
 import RecipeCard from '@components/modules/RecipeCard';
