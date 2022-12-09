@@ -1,77 +1,15 @@
 // Responsive type space
 :root {
-  --fluid-min-width: 320;
-  --fluid-max-width: 1500;
-
-  --fluid-screen: 100vw;
-  --fluid-bp: calc(
-    (var(--fluid-screen) - var(--fluid-min-width) / 16 * 1rem) /
-      (var(--fluid-max-width) - var(--fluid-min-width))
-  );
-}
-
-@media screen and (min-width: 1500px) {
-  :root {
-    --fluid-screen: calc(var(--fluid-max-width) * 1px);
-  }
-}
-
-:root {
-  --f--2-min: 12.5;
-  --f--2-max: 20.48;
-  --step--2: calc(
-    ((var(--f--2-min) / 16) * 1rem) + (var(--f--2-max) - var(--f--2-min)) *
-      var(--fluid-bp)
-  );
-
-  --f--1-min: 15;
-  --f--1-max: 25.6;
-  --step--1: calc(
-    ((var(--f--1-min) / 16) * 1rem) + (var(--f--1-max) - var(--f--1-min)) *
-      var(--fluid-bp)
-  );
-
-  --f-0-min: 18;
-  --f-0-max: 32;
-  --step-0: calc(
-    ((var(--f-0-min) / 16) * 1rem) + (var(--f-0-max) - var(--f-0-min)) *
-      var(--fluid-bp)
-  );
-
-  --f-1-min: 21.6;
-  --f-1-max: 40;
-  --step-1: calc(
-    ((var(--f-1-min) / 16) * 1rem) + (var(--f-1-max) - var(--f-1-min)) *
-      var(--fluid-bp)
-  );
-
-  --f-2-min: 25.92;
-  --f-2-max: 50;
-  --step-2: calc(
-    ((var(--f-2-min) / 16) * 1rem) + (var(--f-2-max) - var(--f-2-min)) *
-      var(--fluid-bp)
-  );
-
-  --f-3-min: 31.1;
-  --f-3-max: 62.5;
-  --step-3: calc(
-    ((var(--f-3-min) / 16) * 1rem) + (var(--f-3-max) - var(--f-3-min)) *
-      var(--fluid-bp)
-  );
-
-  --f-4-min: 37.32;
-  --f-4-max: 78.13;
-  --step-4: calc(
-    ((var(--f-4-min) / 16) * 1rem) + (var(--f-4-max) - var(--f-4-min)) *
-      var(--fluid-bp)
-  );
-
-  --f-5-min: 44.79;
-  --f-5-max: 97.66;
-  --step-5: calc(
-    ((var(--f-5-min) / 16) * 1rem) + (var(--f-5-max) - var(--f-5-min)) *
-      var(--fluid-bp)
-  );
+  --step--4: clamp(0.48rem, calc(0.45rem + 0.18vw), 0.61rem);
+  --step--3: clamp(0.58rem, calc(0.53rem + 0.26vw), 0.77rem);
+  --step--2: clamp(0.69rem, calc(0.62rem + 0.36vw), 0.96rem);
+  --step--1: clamp(0.83rem, calc(0.73rem + 0.50vw), 1.20rem);
+  --step-0: clamp(1.00rem, calc(0.86rem + 0.68vw), 1.50rem);
+  --step-1: clamp(1.20rem, calc(1.02rem + 0.92vw), 1.88rem);
+  --step-2: clamp(1.44rem, calc(1.19rem + 1.23vw), 2.34rem);
+  --step-3: clamp(1.73rem, calc(1.40rem + 1.63vw), 2.93rem);
+  --step-4: clamp(2.07rem, calc(1.64rem + 2.15vw), 3.66rem);
+  --step-5: clamp(2.49rem, calc(1.92rem + 2.83vw), 4.58rem);
 }
 
 //classes that can be used across files

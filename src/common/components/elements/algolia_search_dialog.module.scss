@@ -1,12 +1,31 @@
 .container {
-    @apply flex justify-center text-center;
-    position: fixed;
-    top: 3rem;
-    backdrop-filter: blur(4px);
-    min-height: 100%;
-    min-width: 100%;
-    padding: 1rem;
+  @apply flex justify-center text-center;
+  top: 3rem;
+  backdrop-filter: blur(4px);
+  min-height: 100%;
+  min-width: 100%;
+  padding: 1rem;
 }
+
+.dialogPanel {
+  width: 80%;
+  height: 80%;
+}
+
+@media screen and (min-width: 320px) and (max-width: 500px) {
+  .dialogPanel{
+    width: 100%;
+    height: 100%;
+  }
+  .searchContainer {
+  
+    padding: 0;
+    backdrop-filter: none;
+    top: 0;
+  }
+}
+
+
 
 .dialogContainer {
   width: 80%;
@@ -16,6 +35,12 @@
   align-items: center;
   justify-content: center;
 }
+
+
+
+  
+
+
 .searchContainer {
   @apply dark:bg-dark_grey dark:shadow-none bg-white shadow-searchBarShadow;
   border-radius: 1rem;
@@ -40,11 +65,53 @@
 }
 
 .searchField {
-  @apply flex justify-center items-center text-2xl dark:bg-dark_grey bg-white ;
+  @apply flex justify-center items-center text-2xl dark:bg-dark_grey bg-white;
+  font-size: var(--step-0);
   outline: none;
   width: 90%;
   height: 3.5rem;
   order: 2;
 }
 
+.hitContainer {
+  @apply dark:bg-dark_grey dark:shadow-none bg-white shadow-searchBarShadow;
+  position: relative;
+  border-radius: 0.5rem;
+  width: 95%;
+  height: 5rem;
+}
 
+.hitImage {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  border-radius: 0 0 0.5rem 0.5rem;
+  width: 8rem;
+  height: 100%;
+}
+
+.hitName {
+  position: absolute;
+  left: 8.5rem;
+  top: 0.5rem;
+  order: 1;
+  font-size: var(--step-0);
+}
+
+.hitDietary {
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 0.20rem;
+  position: absolute;
+  left: 8.25rem;
+  bottom: 0.75rem;
+}
+
+.hitDietary li {
+  @apply bg-blue;
+  font-size: var(--step--2);
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  list-style: none;
+}

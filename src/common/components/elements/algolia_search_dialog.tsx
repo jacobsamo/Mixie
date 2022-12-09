@@ -1,6 +1,10 @@
-import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useState, useCallback, useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Dialog } from '@headlessui/react';
+import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
 import algoliasearch from 'algoliasearch/lite';
+import styles from './algolia_search_dialog.module.scss';
 import {
   InstantSearch,
   SearchBox,
@@ -8,9 +12,6 @@ import {
   Highlight,
   Configure,
 } from 'react-instantsearch-hooks-web';
-import { is } from 'cypress/types/bluebird';
-import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
-import styles from './algolia_search_dialog.module.scss';
 import { Hit } from '@lib/types/algolia';
 
 interface SearchDialogType {
@@ -24,14 +25,34 @@ const searchClient = algoliasearch(
 
 const Hit = ({ hit }: any) => {
   const info: Hit = hit;
+  const DietaryNeeds = () => {
+    if (hit.dietary.length == 0) {
+      return <></>;
+    }
+    return (
+      <ul className={styles.hitDietary}>
+        {info.dietary.map((dietary) => {
+          return (
+            <li key={dietary.length} >
+              {dietary}
+            </li>
+          );
+        })}
+      </ul>
+    );
+  };
   return (
-    <article>
-      <img src={info.imgUrl} alt="" />
-      <h1>
-        <Highlight attribute="recipeName" hit={hit} />
-      </h1>
-      <p>Ingredients: {info.ingredients}</p>
-    </article>
+    <a className='relative' href={info.path}>
+      <img
+        src={info.imgUrl}
+        alt={info.recipeName}
+        className='h-full w-10 left-0'
+      />
+        <Highlight attribute="recipeName" hit={hit} classNames={{
+          root: styles.hitName,
+        }}/>
+      <DietaryNeeds />
+    </a>
   );
 };
 
@@ -104,31 +125,34 @@ export default function Algolia_Search_Dialog({
       >
         <div className="fixed inset-0 overflow-y-auto">
           <div className={styles.container}>
-            <Dialog.Panel className="w-3/4 h-3/4">
+            <Dialog.Panel className={styles.dialogPanel}>
               <InstantSearch searchClient={searchClient} indexName="recipes">
                 <Configure hitsPerPage={10} />
-                <SearchBox
-                  placeholder="Search by keyword, ingredient or recipes"
-                  submitIconComponent={({ classNames }) => (
-                    <MagnifyingGlassIcon className={classNames.submitIcon} />
-                  )}
-                  classNames={{
-                    root: styles.searchContainer,
-                    form: styles.searchForm,
-                    input: styles.searchField,
-                    submitIcon: styles.searchIcon,
-                    resetIcon: 'hidden',
-                  }}
-                  autoFocus={true}
-                  searchAsYouType={true}
-                />
-                <Hits 
-                  classNames={{
-                    root: '',
-                    item: styles.hitComponent,
-                  }}
-                  hitComponent={Hit} 
-                />
+                <div className="flex flex-col gap-2 justify-center">
+                  <SearchBox
+                    placeholder="Search by keyword, ingredient or recipes"
+                    submitIconComponent={({ classNames }) => (
+                      <MagnifyingGlassIcon className={classNames.submitIcon} />
+                    )}
+                    classNames={{
+                      root: styles.searchContainer,
+                      form: styles.searchForm,
+                      input: styles.searchField,
+                      submitIcon: styles.searchIcon,
+                      resetIcon: 'hidden',
+                    }}
+                    autoFocus={true}
+                    searchAsYouType={true}
+                  />
+                  <Hits
+                    classNames={{
+                      root: 'flex flex-col gap-2 h-full w-full',
+                      list: 'h-full w-full',
+                      item: styles.hitContainer,
+                    }}
+                    hitComponent={Hit}
+                  />
+                </div>
               </InstantSearch>
             </Dialog.Panel>
           </div>
