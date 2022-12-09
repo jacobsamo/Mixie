@@ -32,25 +32,26 @@ const Hit = ({ hit }: any) => {
     return (
       <ul className={styles.hitDietary}>
         {info.dietary.map((dietary) => {
-          return (
-            <li key={dietary.length} >
-              {dietary}
-            </li>
-          );
+          return <li key={dietary.length}>{dietary}</li>;
         })}
       </ul>
     );
   };
+  //TODO: Make this faster and responsive for mobile and any other device just giving me the shits atm (9th, Dec, 2022)
   return (
-    <a className='relative' href={info.path}>
+    <a className="relative" href={info.path}>
       <img
         src={info.imgUrl}
         alt={info.recipeName}
-        className='h-full w-10 left-0'
+        className="h-full w-10 left-0"
       />
-        <Highlight attribute="recipeName" hit={hit} classNames={{
+      <Highlight
+        attribute="recipeName"
+        hit={hit}
+        classNames={{
           root: styles.hitName,
-        }}/>
+        }}
+      />
       <DietaryNeeds />
     </a>
   );
@@ -61,6 +62,7 @@ export default function Algolia_Search_Dialog({
 }: SearchDialogType) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
+  //TODO: Make this faster
   const handleKeyPress = useCallback((event: any) => {
     // check if the Shift key is pressed
     if (event.ctrlKey === true && event.key.toLowerCase() === 'k') {
@@ -123,6 +125,7 @@ export default function Algolia_Search_Dialog({
         onClose={closeModal}
         open={dialogOpen}
       >
+        {/*TODO: Fix styling and fix up load speeds*/}
         <div className="fixed inset-0 overflow-y-auto">
           <div className={styles.container}>
             <Dialog.Panel className={styles.dialogPanel}>
