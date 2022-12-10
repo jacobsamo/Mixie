@@ -1,0 +1,50 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Roboto, Arial, -apple-system, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#__next {
+  width: 100%;
+  height: 100%;
+}
+
+//Dark mode preferences
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-black text-white;
+  }
+}
+
+.comingSoon {
+  position: relative;
+  z-index: 10;
+  color: #d2d2d2;
+  background: linear-gradient(
+    116.74deg,
+    #4e4e4e -8.91%,
+    rgba(97, 97, 97, 0) 99.15%
+  );
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+

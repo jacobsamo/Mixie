@@ -1,13 +1,14 @@
-//import types
-import type { AppProps } from 'next/app'
+//types
+import type { AppProps } from 'next/app';
+import { useCallback, useEffect } from 'react';
 
-//import styles
-import '../common/shared/styles/globals.scss'
-import "tailwindcss/tailwind.css";
-
+//styles
+import '@styles/globals.scss';
+import '@styles/responsive_design.scss';
+import 'tailwindcss/tailwind.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return <Component {...pageProps} />;
 }
 
-export default MyApp
+export default MyApp;

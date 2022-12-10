@@ -1,11 +1,18 @@
-FROM node:16
+#base image
+FROM node:16-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package*.json yarn.locak ./
 
 RUN npm install
 
 COPY . .
 
-CMD ["npm", "run", "dev"]
+RUN npm test
+
+EXPOSE 3000
+
+
+CMD [ "npm", "run", "dev" ]
+
