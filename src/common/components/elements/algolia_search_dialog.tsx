@@ -118,7 +118,6 @@ export default function Algolia_Search_Dialog({
         </>
       );
     }
-
     if (buttonType === 'searchIcon') {
       return (
         <button onClick={() => setDialogOpen(true)}>
