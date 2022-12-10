@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useCallback, useEffect } from 'react';
+import React, { Fragment, useState, useCallback, useEffect, useRef, createRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Dialog } from '@headlessui/react';
@@ -61,23 +61,39 @@ export default function Algolia_Search_Dialog({
   buttonType,
 }: SearchDialogType) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const dialog = useRef(undefined);
 
   const handleKeyPress = useCallback((event: any) => {
     if (event.ctrlKey === true && event.key.toLowerCase() === 'k') {
       setDialogOpen(true);
     }
-    if (event.key.toLowerCase() === 'escape') setDialogOpen(false);
+    if (event.key === 'escape') setDialogOpen(false);
   }, []);
 
-  useEffect(() => {
-    // attach the event listener
-    document.addEventListener('keydown', handleKeyPress);
+  
 
-    // remove the event listener
-    return () => {
-      document.removeEventListener('keydown', handleKeyPress);
-    };
+  useEffect(() => {
+
+    document.addEventListener('keydown', handleKeyPress);
+    return () => document.removeEventListener('keydown', handleKeyPress);
+
   }, [handleKeyPress]);
+
+  useEffect(() => {
+    // only add the event listener when the dropdown is opened
+    if (!dialogOpen) return;
+    function handleClick(event: any) {
+      if (dialog.current && !dialog.current.contains(event.target as Node)) {
+        setDialogOpen(false);
+      }
+    }
+    window.addEventListener("click", handleClick);
+    // clean up
+    return () => window.removeEventListener("click", handleClick);
+  }, [dialogOpen]);
+
+
+  
 
   const Button = () => {
     if (buttonType === 'searchBar') {
