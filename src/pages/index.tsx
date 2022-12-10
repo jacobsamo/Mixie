@@ -1,11 +1,13 @@
 import type { NextPage } from 'next';
 import React, { useState, useEffect } from 'react';
-import styles from '@styles/Home.module.scss';
+import styles from '@styles/modules/Home.module.scss';
 
 //import components
 
 import PageSeo from '@components/seo/PageSEO';
 import Navbar from '@components/modules/Navbar';
+import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
+
 
 const Home: NextPage = () => {
   return (
@@ -18,11 +20,7 @@ const Home: NextPage = () => {
       <Navbar />
       <div className="">
         <h1 className={styles.heroTitle}>Want Tasty Recipes</h1>
-        <input
-          type="text"
-          placeholder="Find your next meal"
-          className={styles.heroSearch}
-        />
+        <Algolia_Search_Dialog buttonType='searchBar' />
       </div>
     </>
   );

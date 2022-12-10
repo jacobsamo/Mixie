@@ -35,12 +35,14 @@ class RecipeService {
     return recipes;
   }
 
-  async updateRecipe(id: string) {
-    return '';
+  async updateRecipe(id: string, data: any) {
+    const docRef = doc(db, "recipes", id);
+    const updatedDoc = await updateDoc(docRef, data);
+    return updatedDoc;
   }
 
   async deleteRecipe(id: string) {
-    return '';
+    return "can't delete recipe";
   }
 }
 
