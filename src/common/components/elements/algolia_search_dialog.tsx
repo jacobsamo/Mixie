@@ -62,12 +62,11 @@ export default function Algolia_Search_Dialog({
 }: SearchDialogType) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
-  //TODO: Make this faster
   const handleKeyPress = useCallback((event: any) => {
-    // check if the Shift key is pressed
     if (event.ctrlKey === true && event.key.toLowerCase() === 'k') {
       setDialogOpen(true);
     }
+    if (event.key.toLowerCase() === 'escape') setDialogOpen(false);
   }, []);
 
   useEffect(() => {
@@ -80,22 +79,13 @@ export default function Algolia_Search_Dialog({
     };
   }, [handleKeyPress]);
 
-  function closeModal() {
-    setDialogOpen(false);
-  }
-
-  const searchBarStyles = {
-    width: '28rem',
-    height: '2.8rem',
-  };
-
   const Button = () => {
     if (buttonType === 'searchBar') {
       return (
         <>
           <button
             onClick={() => setDialogOpen(true)}
-            style={searchBarStyles}
+            style={{ width: '28rem', height: '2.8rem' }}
             className="dark:bg-dark_grey dark:text-white bg-white shadow-searchBarShadow relative flex items-center rounded-xl"
           >
             <MagnifyingGlassIcon className="h-5 w-5 ml-5" />
@@ -116,51 +106,50 @@ export default function Algolia_Search_Dialog({
     return <></>;
   };
 
+
+  //TODO: handle clicking outside of the dialog to close
   return (
     <>
       <Button />
-      <Dialog
-        as="div"
-        className="relative z-10 w-full h-full"
-        onClose={closeModal}
-        open={dialogOpen}
+      <div
+        style={{
+          display: dialogOpen ? 'block' : 'none',
+        }}
+        className="fixed inset-0 z-50 overflow-y-auto backdrop-blur-sm"
       >
-        {/*TODO: Fix styling and fix up load speeds*/}
-        <div className="fixed inset-0 overflow-y-auto">
-          <div className={styles.container}>
-            <Dialog.Panel className={styles.dialogPanel}>
-              <InstantSearch searchClient={searchClient} indexName="recipes">
-                <Configure hitsPerPage={10} />
-                <div className="flex flex-col gap-2 justify-center">
-                  <SearchBox
-                    placeholder="Search by keyword, ingredient or recipes"
-                    submitIconComponent={({ classNames }) => (
-                      <MagnifyingGlassIcon className={classNames.submitIcon} />
-                    )}
-                    classNames={{
-                      root: styles.searchContainer,
-                      form: styles.searchForm,
-                      input: styles.searchField,
-                      submitIcon: styles.searchIcon,
-                      resetIcon: 'hidden',
-                    }}
-                    autoFocus={true}
-                    searchAsYouType={true}
-                  />
-                  <Hits
-                    classNames={{
-                      root: 'flex flex-col gap-2 h-full w-full',
-                      list: 'h-full w-full',
-                      item: styles.hitContainer,
-                    }}
-                    hitComponent={Hit}
-                  />
-                </div>
-              </InstantSearch>
-            </Dialog.Panel>
+        <InstantSearch searchClient={searchClient} indexName="recipes">
+          <Configure hitsPerPage={10} />
+          <div className={styles.searchBox}>
+            {/*TODO: (not urgent) center this element in the middle for desktop */}
+            <span>
+              <SearchBox
+                placeholder="Search by keyword, ingredient or recipes"
+                submitIconComponent={({ classNames }) => (
+                  <MagnifyingGlassIcon className={classNames.submitIcon} />
+                )}
+                classNames={{
+                  root: styles.searchContainer,
+                  form: styles.searchForm,
+                  input: styles.searchField,
+                  submitIcon: styles.searchIcon,
+                  resetIcon: 'hidden',
+                }}
+                autoFocus={true}
+                searchAsYouType={true}
+              />
+              <button className='absolute right-2 top-4' onClick={() => setDialogOpen(false)}>Esc</button>
+            </span>
+            <Hits
+              classNames={{
+                root: 'flex flex-col gap-2 h-full w-full',
+                list: 'h-full w-full flex justify-center pt-1',
+                item: styles.hitContainer,
+              }}
+              hitComponent={Hit}
+            />
           </div>
-        </div>
-      </Dialog>
+        </InstantSearch>
+      </div>
     </>
   );
 }
