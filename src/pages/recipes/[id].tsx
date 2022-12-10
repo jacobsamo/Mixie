@@ -6,7 +6,7 @@ import React, { useState, useEffect, ReactHTMLElement } from 'react';
 import type { Recipe, Info } from '@lib/types/recipe';
 //services
 import RecipeService from '@lib/service/RecipeService';
-import styles from '@styles/RecipePage.module.scss';
+import styles from '@styles/modules/RecipePage.module.scss';
 //components
 import RecipeSEO from '@components/seo/RecipeSEO';
 import StepCard from '@components/elements/recipe_elemnts/StepCard';
