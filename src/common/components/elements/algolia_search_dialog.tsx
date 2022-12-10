@@ -61,7 +61,7 @@ export default function Algolia_Search_Dialog({
   buttonType,
 }: SearchDialogType) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-  const dialog = useRef(undefined);
+  const dialog = useRef<any>(null);
 
   const handleKeyPress = useCallback((event: any) => {
     if (event.ctrlKey === true && event.key.toLowerCase() === 'k') {
@@ -70,7 +70,9 @@ export default function Algolia_Search_Dialog({
     if (event.key === 'escape') setDialogOpen(false);
   }, []);
 
-  
+  const handleClickOuside = (e) => {
+    if (!dialog.current.contains?(e.target as Node)) setDialogOpen(false)
+  }
 
   useEffect(() => {
 
@@ -80,17 +82,10 @@ export default function Algolia_Search_Dialog({
   }, [handleKeyPress]);
 
   useEffect(() => {
-    // only add the event listener when the dropdown is opened
-    if (!dialogOpen) return;
-    function handleClick(event: any) {
-      if (dialog.current && !dialog.current.contains(event.target as Node)) {
-        setDialogOpen(false);
-      }
-    }
-    window.addEventListener("click", handleClick);
+    window.addEventListener("click", handleClick, true);
     // clean up
-    return () => window.removeEventListener("click", handleClick);
-  }, [dialogOpen]);
+    return () => window.removeEventListener("click", handleClick, true);
+  }, [handleClickOuside]);
 
 
   
@@ -136,6 +131,7 @@ export default function Algolia_Search_Dialog({
         <InstantSearch searchClient={searchClient} indexName="recipes">
           <Configure hitsPerPage={10} />
           <div className={styles.searchBox}>
+  ref={dialog}
             {/*TODO: (not urgent) center this element in the middle for desktop */}
             <span>
               <SearchBox
