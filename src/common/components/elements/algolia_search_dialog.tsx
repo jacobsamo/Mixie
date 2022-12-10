@@ -1,4 +1,12 @@
-import React, { Fragment, useState, useCallback, useEffect, useRef, createRef } from 'react';
+import React, {
+  Fragment,
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  createRef,
+  MutableRefObject,
+} from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Dialog } from '@headlessui/react';
@@ -61,35 +69,45 @@ export default function Algolia_Search_Dialog({
   buttonType,
 }: SearchDialogType) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-  const dialog = useRef<any>(null);
+  const ref = useRef()
 
   const handleKeyPress = useCallback((event: any) => {
-    if (event.ctrlKey === true && event.key.toLowerCase() === 'k') {
-      setDialogOpen(true);
-    }
-    if (event.key === 'escape') setDialogOpen(false);
+    if (event.ctrlKey == true && event.key == 'k') setDialogOpen(true);
   }, []);
 
-  const handleClickOuside = (e) => {
-    if (!dialog.current.contains?(e.target as Node)) setDialogOpen(false)
-  }
+  const handleKeyEscape = useCallback((event: any) => {
+    if (event.key === 'Escape') setDialogOpen(false);
+  }, []);
+
+  //TODO: make it so you can click out side of the dialog to close it
+  // useEffect(() => {
+  //   const checkIfClickedOutside = (e: any) => {
+  //     // If the menu is open and the clicked target is not within the menu,
+  //     // then close the menu
+  //     if (ref.current && !ref.current.contains(e.target as Node)) {
+  //       setDialogOpen(false)
+  //     }
+  //   }
+
+  //   document.addEventListener("mousedown", checkIfClickedOutside)
+
+  //   return () => {
+  //     // Cleanup the event listener
+  //     document.removeEventListener("mousedown", checkIfClickedOutside)
+  //   }
+  // }, [dialogOpen])
 
   useEffect(() => {
-
     document.addEventListener('keydown', handleKeyPress);
     return () => document.removeEventListener('keydown', handleKeyPress);
-
   }, [handleKeyPress]);
 
   useEffect(() => {
-    window.addEventListener("click", handleClick, true);
-    // clean up
-    return () => window.removeEventListener("click", handleClick, true);
-  }, [handleClickOuside]);
-
+    document.addEventListener('keydown', handleKeyEscape);
+    return () => document.removeEventListener('keydown', handleKeyEscape);
+  }, [handleKeyEscape]);
 
   
-
   const Button = () => {
     if (buttonType === 'searchBar') {
       return (
@@ -117,7 +135,6 @@ export default function Algolia_Search_Dialog({
     return <></>;
   };
 
-
   //TODO: handle clicking outside of the dialog to close
   return (
     <>
@@ -131,7 +148,6 @@ export default function Algolia_Search_Dialog({
         <InstantSearch searchClient={searchClient} indexName="recipes">
           <Configure hitsPerPage={10} />
           <div className={styles.searchBox}>
-  ref={dialog}
             {/*TODO: (not urgent) center this element in the middle for desktop */}
             <span>
               <SearchBox
@@ -149,7 +165,12 @@ export default function Algolia_Search_Dialog({
                 autoFocus={true}
                 searchAsYouType={true}
               />
-              <button className='absolute right-2 top-4' onClick={() => setDialogOpen(false)}>Esc</button>
+              <button
+                className="absolute right-2 top-4"
+                onClick={() => setDialogOpen(false)}
+              >
+                Esc
+              </button>
             </span>
             <Hits
               classNames={{
