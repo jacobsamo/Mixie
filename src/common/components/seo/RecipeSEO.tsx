@@ -15,7 +15,7 @@ interface seo {
 }
 
 
-export default function BlogDetailSEO({ recipeDescription, recipeName, imageUrl, info, recipeUrl, createdAt, keywords}: seo) {
+export default function RecipeSEO({ recipeDescription, recipeName, imageUrl, info, recipeUrl, createdAt, keywords}: seo) {
     return (
         <Head>
             <meta http-equiv="X-UA-Compatible" content="IE=edge" />
