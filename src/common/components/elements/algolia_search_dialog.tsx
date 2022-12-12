@@ -1,15 +1,6 @@
-import React, {
-  Fragment,
-  useState,
-  useCallback,
-  useEffect,
-  useRef,
-  createRef,
-  MutableRefObject,
-} from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Dialog } from '@headlessui/react';
 import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
 import algoliasearch from 'algoliasearch/lite';
 import styles from './algolia_search_dialog.module.scss';
@@ -46,6 +37,7 @@ const Hit = ({ hit }: any) => {
     );
   };
   //TODO: Make this faster and responsive for mobile and any other device just giving me the shits atm (9th, Dec, 2022)
+  //TODO: Make highlighting to also cover over measures of searching
   return (
     <a className="relative" href={info.path}>
       <img
@@ -69,7 +61,7 @@ export default function Algolia_Search_Dialog({
   buttonType,
 }: SearchDialogType) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-  const ref = useRef()
+  const ref = useRef();
 
   const handleKeyPress = useCallback((event: any) => {
     if (event.ctrlKey == true && event.key == 'k') setDialogOpen(true);
@@ -107,7 +99,7 @@ export default function Algolia_Search_Dialog({
     return () => document.removeEventListener('keydown', handleKeyEscape);
   }, [handleKeyEscape]);
 
-  
+
   const Button = () => {
     if (buttonType === 'searchBar') {
       return (
@@ -125,6 +117,7 @@ export default function Algolia_Search_Dialog({
         </>
       );
     }
+    
     if (buttonType === 'searchIcon') {
       return (
         <button onClick={() => setDialogOpen(true)}>
