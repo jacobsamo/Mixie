@@ -22,29 +22,43 @@ const Navbar = () => {
   return (
     <>
       <nav className={styles.nav}>
-        <Link href="/" >
+        <Link href="/">
           <a className={styles.branding}>
-            <img src="favicon.ico" alt="Logo" className={styles.logo} />
+            <Image
+              width={42}
+              height={42}
+              src="favicon.ico"
+              alt="Logo"
+              className={styles.logo}
+            />
             <h1>Recipe</h1>
           </a>
         </Link>
         <ul className={styles.links}>
           <li className={styles.link}>
-            <Link data-testid="link" href="/recipes">Recipes</Link>
+            <Link data-testid="link" href="/recipes">
+              Recipes
+            </Link>
           </li>
           <li className={styles.link}>
-            <Link data-testid="link" href="#">Dinners</Link>
+            <Link data-testid="link" href="#">
+              Dinners
+            </Link>
           </li>
           <li className={styles.link}>
-            <Link data-testid="link" href="#">Breakfasts</Link>
+            <Link data-testid="link" href="#">
+              Breakfasts
+            </Link>
           </li>
           <li className={styles.link}>
-            <Link data-testid="link" href="#">More options</Link>
+            <Link data-testid="link" href="#">
+              More options
+            </Link>
           </li>
         </ul>
         <div className={styles.user}>
           <Algolia_Search_Dialog buttonType="searchIcon" />
-          <div className='comingSoon w-24 h-24'>
+          <div className="comingSoon w-24 h-24">
             Coming soon
             {/* <button>
               <BookmarkIcon className="h-8 w-8x" />
