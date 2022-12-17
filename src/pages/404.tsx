@@ -3,7 +3,9 @@ import Navbar from '@components/modules/Navbar';
 import Footer from '@components/modules/Footer';
 
 
+
 const Custom404: NextPage = () => {
+  //TODO: make prettier for users
   return (
     <>
       <Navbar />
