@@ -1,6 +1,6 @@
 import { NextPage } from 'next/types';
 import Navbar from '@components/modules/Navbar';
-import Footer from '@components/modules/footer';
+import Footer from '@components/modules/Footer';
 
 
 const Custom404: NextPage = () => {
