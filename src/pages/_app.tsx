@@ -1,6 +1,5 @@
 //types
 import type { AppProps } from 'next/app';
-import { useCallback, useEffect } from 'react';
 
 //styles
 import '@styles/globals.scss';

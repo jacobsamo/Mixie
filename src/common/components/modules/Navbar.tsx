@@ -7,6 +7,7 @@ import { auth } from '@lib/config/firebase';
 import RecipeSEO from '@components/seo/RecipeSEO';
 import type { UserCredential } from 'firebase/auth';
 import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
+import Link from 'next/link';
 
 const Navbar = () => {
   const [userImage, setUserImage] = useState('/favicon.ico'); //TODO: change this to a proper thing or a sign in form
@@ -21,27 +22,43 @@ const Navbar = () => {
   return (
     <>
       <nav className={styles.nav}>
-        <a href="/" className={styles.branding}>
-          <img src="favicon.ico" alt="Logo" className={styles.logo} />
-          <h1>Recipe</h1>
-        </a>
+        <Link href="/">
+          <a className={styles.branding}>
+            <Image
+              width={42}
+              height={42}
+              src="/favicon.ico"
+              alt="Logo"
+              className={styles.logo}
+            />
+            <h1>Recipe</h1>
+          </a>
+        </Link>
         <ul className={styles.links}>
           <li className={styles.link}>
-            <a href="/recipes">Recipes</a>
+            <Link data-testid="link" href="/recipes">
+              Recipes
+            </Link>
           </li>
           <li className={styles.link}>
-            <a href="#">Dinners</a>
+            <Link data-testid="link" href="#">
+              Dinners
+            </Link>
           </li>
           <li className={styles.link}>
-            <a href="#">Breakfasts</a>
+            <Link data-testid="link" href="#">
+              Breakfasts
+            </Link>
           </li>
           <li className={styles.link}>
-            <a href="#">More options</a>
+            <Link data-testid="link" href="#">
+              More options
+            </Link>
           </li>
         </ul>
         <div className={styles.user}>
           <Algolia_Search_Dialog buttonType="searchIcon" />
-          <div className='comingSoon w-24 h-24'>
+          <div className="comingSoon w-24 h-24">
             Coming soon
             {/* <button>
               <BookmarkIcon className="h-8 w-8x" />

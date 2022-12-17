@@ -2,8 +2,6 @@ import React from 'react'
 import type { Step } from '@lib/types/recipe';
 
 const StepCard = ({number, body}: Step) => {
-    console.log(number)
-    console.log(body)
   return (
     <>
         <div className='h-23 w-98 bg-white text-black dark:bg-grey dark:text-white'>

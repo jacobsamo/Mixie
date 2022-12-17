@@ -1,3 +1,4 @@
+const units = ['g', 'kg', 'cup', 'ml', 'l', 'teaspoon', 'table spoon'];
 const recipes = [
   {
     id: 'testDoc',
@@ -7,7 +8,14 @@ const recipes = [
     recipeDescription:
       'This is my own recipe that has been changed from another recipe to make it fuggy ',
     keywords: ['chocolate', 'fudge', 'brownies'],
-    ingredients: ['flour', 'vanilla essene', 'co co powder', 'butter', 'brown sugar', 'eggs',],
+    ingredients: [
+      ['butter', '200', 'g'],
+      ['coca powder', '1/2', 'cup'],
+      ['brown sugar', '2', 'cups'],
+      ['vanilla  essence', '1', 'teaspoon'],
+      ['whisked eggs', '2', ''],
+      ['plain flour', '1', 'cup'],
+    ],
     dietary: ['vegetarian'],
     Allergens: ['gluten', 'dairy'],
     version: '1.0',
@@ -31,29 +39,28 @@ const recipes = [
       },
       {
         number: 3,
-        body: 'Add eggs and stir till the mixture is glossy'
+        body: 'Add eggs and stir till the mixture is glossy',
       },
       {
         number: 4,
-        body: 'Sift flour and mix'
+        body: 'Sift flour and mix',
       },
       {
         number: 5,
-        body: 'Spread evenly on tray, bake for 20-25 minutes'
+        body: 'Spread evenly on tray, bake for 20-25 minutes',
       },
       {
         number: 6,
-        body: 'Once cool, Dust with icing sugar'
+        body: 'Once cool, Dust with icing sugar',
       },
       {
         number: 7,
-        body: 'Cut to size'
-      }
+        body: 'Cut to size',
+      },
     ],
     madeRecipe: 5,
     savedRecipe: 20,
   },
 ];
 
-
-module.exports = {recipes};
+module.exports = { recipes };
