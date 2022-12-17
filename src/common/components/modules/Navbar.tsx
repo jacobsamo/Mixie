@@ -27,7 +27,7 @@ const Navbar = () => {
             <Image
               width={42}
               height={42}
-              src="favicon.ico"
+              src="/favicon.ico"
               alt="Logo"
               className={styles.logo}
             />
