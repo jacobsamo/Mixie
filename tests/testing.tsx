@@ -1,7 +1,6 @@
 import { NextPage } from 'next/types';
 import React, { useState, useEffect } from 'react';
 import RecipeService from '../src/common/shared/libs/service/RecipeService';
-import axios from 'axios';
 import { auth } from '@lib/config/firebase';
 import SignupPage from '../src/common/components/templates/Singup/Signup';
 import AuthService from '@lib/service/Authservice';

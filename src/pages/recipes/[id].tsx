@@ -1,6 +1,4 @@
-import Link from 'next/link';
 import Image from 'next/image';
-import { Head } from 'next/document';
 import React, { useState, useEffect, ReactHTMLElement } from 'react';
 //types
 import type { Recipe, Info } from '@lib/types/recipe';
@@ -52,7 +50,7 @@ export default function RecipePage({ recipe }: Props) {
             <div className={styles.recipeIngredients}>
               <h1>Ingredients</h1>
               {recipe.ingredients.map((ingredient) => (
-                <div className="flex gap-1">
+                <div key={ingredient.length} className="flex gap-1">
                   <input type="checkbox" />
                   <h1>{ingredient}</h1>
                 </div>
@@ -61,7 +59,7 @@ export default function RecipePage({ recipe }: Props) {
             <div className={styles.method}>
               {recipe.steps.map((step) => {
                 return (
-                  <div className={styles.steps}>
+                  <div key={step.number} className={styles.steps}>
                     <h1 className="">{step.number}</h1>
                     <h1>{step.body}</h1>
                   </div>
