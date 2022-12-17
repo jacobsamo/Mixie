@@ -1,11 +1,10 @@
 name: Continuous integration
 
-on: 
+on:
   pull_request:
-    branches: [ master ]
+    branches: [master]
   push:
-    branches: [ master ]
-
+    branches: [master]
 
 jobs:
   test_pull_request:
@@ -16,15 +15,17 @@ jobs:
 
       - name: Use Node.js 16.x
         uses: actions/setup-node@v3
-        with: 
+        with:
           node-version: 16.x
-      
-      - name: "Install dependencies"
+
+      - name: 'Install dependencies'
+        run: npm install
+
+      - name: 'Run npm ci'
         run: npm ci
 
-      - name: "Run tests"
+      - name: 'Run tests'
         run: npm test
 
-      - name: "Build"
+      - name: 'Build'
         run: npm run build
-    
