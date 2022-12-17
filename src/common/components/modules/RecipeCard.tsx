@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { Recipe } from '@lib/types/recipe';
+import Image from 'next/image';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import styles from '@component_styles/recipeCard.module.scss';
 
@@ -20,9 +21,15 @@ const RecipeCard = ({
     <>
       <div
         key={id}
-        className="relative w-46 h-58 dark:bg-grey bg-white rounded-xl"
+        className="relative w-46 h-58 dark:bg-grey bg-white rounded-xl cursor-pointer"
       >
-        <img src={imageUrl} alt={recipeName} className={styles.image} />
+        <Image
+          width={180}
+          height={135}
+          src={imageUrl}
+          alt={recipeName}
+          className={styles.image}
+        />
         <h1 className="dark:text-white text-black text-sm font-Roboto font-bold absolute left-2 top-36">
           {recipeName}
         </h1>

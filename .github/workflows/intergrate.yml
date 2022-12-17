@@ -1,20 +1,31 @@
-name: Continuous integration in Node
+name: Continuous integration
 
-on: 
+on:
   pull_request:
-    branches: [ master ]
+    branches: [master]
   push:
-    branches: [ master ]
-
+    branches: [master]
 
 jobs:
   test_pull_request:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with: 
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
           node-version: 16.x
-      - run: npm ci
-      - run: npm test
-      - run: npm run build
+
+      - name: 'Install dependencies'
+        run: npm install
+
+      - name: 'Run npm ci'
+        run: npm ci
+
+      - name: 'Run tests'
+        run: npm test
+
+      - name: 'Build'
+        run: npm run build
