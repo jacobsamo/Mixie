@@ -12,6 +12,7 @@ import {
   Configure,
 } from 'react-instantsearch-hooks-web';
 import { Hit } from '@lib/types/algolia';
+import Loader from '@components/modules/loader';
 
 interface SearchDialogType {
   buttonType: string;
@@ -41,11 +42,6 @@ const Hit = ({ hit }: any) => {
   return (
     <Link className="relative" href={info.path.toString()}>
       <a>
-        <Image
-          src={info.imgUrl}
-          alt={info.recipeName}
-          className="h-full w-10 left-0"
-        />
         <Highlight
           attribute="recipeName"
           hit={hit}

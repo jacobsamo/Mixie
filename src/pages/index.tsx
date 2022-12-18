@@ -7,13 +7,18 @@ import styles from '@styles/modules/Home.module.scss';
 import PageSeo from '@components/seo/PageSEO';
 import Navbar from '@components/modules/Navbar';
 import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
+import AdBanner from '@components/modules/AdBanner';
+
+
+
 
 const Home: NextPage = () => {
   return (
     <>
       <PageSeo
         title="Meally — Find your next meal"
-        url=""
+        url="meally.com.au"
+        imgUrl=''
         description="A directory of folder full things."
       />
       <Navbar />
@@ -23,6 +28,9 @@ const Home: NextPage = () => {
           <Algolia_Search_Dialog buttonType="searchBar" />
         </div>
       </main>
+      <div>
+        <AdBanner />
+      </div>
     </>
   );
 };

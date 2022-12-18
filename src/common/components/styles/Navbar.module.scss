@@ -1,6 +1,6 @@
 .nav {
-  @apply flex flex-row items-center justify-center text-black dark:text-white;
-  background-color: transparent;
+  @apply flex flex-row items-center justify-center text-black dark:text-white bg-blue;
+  // background-color: transparent;
   height: 56px;
   position: relative;
   z-index: 5;
@@ -30,7 +30,7 @@
   line-height: 23px;
   text-align: center;
 }
-.logo {
+.brand_logo {
   max-width: 42px;
   max-height: 42px;
 }
@@ -44,4 +44,24 @@
 .user img {
   max-width: 48px;
   max-height: 48px;
+}
+
+.hamburger {
+  position: absolute;
+  left: 200px;
+}
+
+  .hamburger_line {
+    @apply bg-black dark:bg-white;
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+  }
+@media screen and (max-width: 700) {
+  .hamburger {
+    display: block;
+  }
 }

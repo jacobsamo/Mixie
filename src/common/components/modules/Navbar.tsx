@@ -11,6 +11,7 @@ import Link from 'next/link';
 
 const Navbar = () => {
   const [userImage, setUserImage] = useState('/favicon.ico'); //TODO: change this to a proper thing or a sign in form
+  const [isOpen, setIsOpen] = useState(false);
 
   //TODO: fix issue with image flickering when reloading or navigating to a different route
   auth.onAuthStateChanged((user) => {
@@ -29,36 +30,48 @@ const Navbar = () => {
               height={42}
               src="/favicon.ico"
               alt="Logo"
-              className={styles.logo}
+              className={styles.brand_logo}
             />
-            <h1>Recipe</h1>
+            <h1 className={styles.brand_name}>Meally</h1>
           </a>
         </Link>
-        <ul className={styles.links}>
-          <li className={styles.link}>
-            <Link data-testid="link" href="/recipes">
-              Recipes
-            </Link>
-          </li>
-          <li className={styles.link}>
-            <Link data-testid="link" href="#">
-              Dinners
-            </Link>
-          </li>
-          <li className={styles.link}>
-            <Link data-testid="link" href="#">
-              Breakfasts
-            </Link>
-          </li>
-          <li className={styles.link}>
-            <Link data-testid="link" href="#">
-              More options
-            </Link>
-          </li>
+        <div className="container">
+          <Link href="/recipes">
+            <a>Recipes</a>
+          </Link>
+          <Link href="/#">
+            <a>Sweet</a>
+          </Link>
+          <Link href="/#">
+            <a>Savoury</a>
+          </Link>
+          <Link href="/#">
+            <a>Categories</a>
+          </Link>
+          <Link href="/#">
+            <a>:</a>
+          </Link>
+          <button onClick={() => setIsOpen(!isOpen)}>
+            <i className="fas fa-bars"></i>
+          </button>
+        </div>
+        <ul className={`nav-links ${isOpen ? 'show-nav' : ''}`}>
+          <Link href="/about">
+            <a onClick={() => setIsOpen(false)}>Recipes</a>
+          </Link>
+          <Link href="/#">
+            <a onClick={() => setIsOpen(false)}>Sweet</a>
+          </Link>
+          <Link href="/#">
+            <a onClick={() => setIsOpen(false)}>Savoury</a>
+          </Link>
+          <Link href="/contact">
+            <a onClick={() => setIsOpen(false)}>Categories</a>
+          </Link>
         </ul>
         <div className={styles.user}>
           <Algolia_Search_Dialog buttonType="searchIcon" />
-          <div className="comingSoon w-24 h-24">
+          <div className="comingSoon w-24 h-14">
             Coming soon
             {/* <button>
               <BookmarkIcon className="h-8 w-8x" />
