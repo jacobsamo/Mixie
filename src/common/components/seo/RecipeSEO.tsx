@@ -4,7 +4,7 @@ import React from 'react';
 import type { Recipe } from '@lib/types/recipe';
 import type { Timestamp } from 'firebase/firestore';
 
-interface seo {
+interface recipeSeo {
   recipeDescription: string;
   recipeName: string;
   imageUrl: string;
@@ -22,7 +22,7 @@ export default function RecipeSEO({
   recipeUrl,
   createdAt,
   keywords,
-}: seo) {
+}: recipeSeo) {
   return (
     <Head>
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />

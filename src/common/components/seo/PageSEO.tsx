@@ -13,7 +13,7 @@ export default function PageSEO({ title, url, imgUrl, description }: PagesSeo) {
     <>
       <Head>
         <title>{title}</title>
-        <meta name="title" content="Meally — Find your next meal" />
+        <meta name="title" content="Meally — Cook, Collaborate & Create" />
         <meta
           name="description"
           content="Find recipes you love all free and open source, completely powered by the community "
