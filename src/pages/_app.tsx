@@ -6,7 +6,7 @@ import Script from 'next/script';
 import '@styles/globals.scss';
 import '@styles/responsive_design.scss';
 import 'tailwindcss/tailwind.css';
-import '@styles/Navbar.scss';
+
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

@@ -14,15 +14,17 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   //TODO: fix issue with image flickering when reloading or navigating to a different route
-  auth.onAuthStateChanged((user) => {
-    if (auth.currentUser != null) {
-      setUserImage(auth.currentUser.photoURL!);
-    }
-  });
+  // auth.onAuthStateChanged((user) => {
+  //   if (auth.currentUser != null) {
+  //     setUserImage(auth.currentUser.photoURL!);
+  //   }
+  // });
+
+  console.log(isOpen)
 
   return (
     <>
-      <nav className={styles.nav}>
+      <nav className={`${isOpen ? styles.show_nav : ''} ${styles.nav}`}>
         <Link href="/">
           <a className={styles.branding}>
             <Image
@@ -35,55 +37,54 @@ const Navbar = () => {
             <h1 className={styles.brand_name}>Meally</h1>
           </a>
         </Link>
-        <div className="container">
+        <div
+          className={styles.nav_links}
+        >
           <Link href="/recipes">
-            <a>Recipes</a>
+            <a className={styles.nav_link} onClick={() => setIsOpen(false)}>
+              Recipes
+            </a>
           </Link>
-          <Link href="/#">
-            <a>Sweet</a>
+          <Link href="/sweet">
+            <a className={styles.nav_link} onClick={() => setIsOpen(false)}>
+              Sweet
+            </a>
           </Link>
-          <Link href="/#">
-            <a>Savoury</a>
+          <Link href="/savoury">
+            <a className={styles.nav_link} onClick={() => setIsOpen(false)}>
+              Savoury
+            </a>
           </Link>
-          <Link href="/#">
-            <a>Categories</a>
+          <Link href="/categories">
+            <a className={styles.nav_link} onClick={() => setIsOpen(false)}>
+              Categories
+            </a>
           </Link>
-          <Link href="/#">
-            <a>:</a>
-          </Link>
-          <button onClick={() => setIsOpen(!isOpen)}>
-            <i className="fas fa-bars"></i>
-          </button>
         </div>
-        <ul className={`nav-links ${isOpen ? 'show-nav' : ''}`}>
-          <Link href="/about">
-            <a onClick={() => setIsOpen(false)}>Recipes</a>
-          </Link>
-          <Link href="/#">
-            <a onClick={() => setIsOpen(false)}>Sweet</a>
-          </Link>
-          <Link href="/#">
-            <a onClick={() => setIsOpen(false)}>Savoury</a>
-          </Link>
-          <Link href="/contact">
-            <a onClick={() => setIsOpen(false)}>Categories</a>
-          </Link>
-        </ul>
-        <div className={styles.user}>
+        <div className={styles.utility}>
           <Algolia_Search_Dialog buttonType="searchIcon" />
-          <div className="comingSoon w-24 h-14">
+          <button 
+            type='button'
+            className={styles.hamburger}
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <span className={styles.hamburger_bar}></span>
+            <span className={styles.hamburger_bar}></span>
+            <span className={styles.hamburger_bar}></span>
+          </button>
+          <div className={styles.comingSoon}>
             Coming soon
             {/* <button>
               <BookmarkIcon className="h-8 w-8x" />
-            </button>
-            <button>
+              </button>
+              <button>
               <Image
-                src={userImage}
-                alt="Profile Picture"
-                width={48}
-                height={48}
-                className="rounded-full relative"
-                priority
+              src={userImage}
+              alt="Profile Picture"
+              width={48}
+              height={48}
+              className="rounded-full relative"
+              priority
               />{' '}
             </button> */}
           </div>
