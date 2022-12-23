@@ -20,7 +20,7 @@ const Navbar = () => {
   //   }
   // });
 
-  console.log(isOpen)
+
 
   return (
     <>

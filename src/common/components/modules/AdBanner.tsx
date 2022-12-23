@@ -29,6 +29,7 @@ const AdBanner = () => {
           client="ca-pub-1553721231977629"
           slot="7630248475"
           responsive="true"
+
         />
       </>
     );

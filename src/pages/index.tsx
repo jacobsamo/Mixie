@@ -16,7 +16,7 @@ const Home: NextPage = () => {
   return (
     <>
       <PageSeo
-        title="Meally — Find your next meal"
+        title="Meally Cook, Collaborate & Create"
         url="meally.com.au"
         imgUrl=''
         description="A directory of folder full things."

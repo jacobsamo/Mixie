@@ -10,17 +10,17 @@ module.exports = {
       Roboto: [
         'Roboto',
         'Helvetica Neue',
-        "'-apple-system'",
+        '-apple-system',
         'Oxygen',
         'Ubuntu',
         'Cantarell',
         'Fira Sans',
         'Droid Sans',
       ],
-      Arial: [
-        'Arial',
-        "'sans-serif'",
-        "'-apple-system'",
+      Calibri: [
+        'Calibri',
+        'sans-serif',
+        '-apple-system',
         'Oxygen',
         'Ubuntu',
         'Cantarell',

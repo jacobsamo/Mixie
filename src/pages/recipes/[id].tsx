@@ -8,10 +8,39 @@ import styles from '@styles/modules/RecipePage.module.scss';
 //components
 import RecipeSEO from '@components/seo/RecipeSEO';
 import StepCard from '@components/elements/recipe_elemnts/StepCard';
+import AddBatch from '@components/elements/recipe_elemnts/Addbatch';
+import Navbar from '@components/modules/Navbar';
 
 interface Props {
   recipe: Recipe;
 }
+
+const Step = ({ steps, step }: { steps: string[]; step: string }) => {
+  return (
+    <>
+      <section key={steps.indexOf(step)} className={styles.steps}>
+        <div className={styles.step_text}>
+          <h1 className="font-medium font-Roboto text-sm">
+            Step {steps.indexOf(step) + 1}
+          </h1>
+          <h1 className={styles.step_method}>{step}</h1>
+        </div>
+      </section>
+    </>
+  );
+};
+
+const Ingredient = ({ ingredient }: { ingredient: string }) => {
+  return (
+    <div
+      key={ingredient.length}
+      className="flex flex-row items-center py-1 gap-1"
+    >
+      <input type="checkbox" />
+      <h1>{ingredient}</h1>
+    </div>
+  );
+};
 
 export default function RecipePage({ recipe }: Props) {
   const info = recipe.info as Info;
@@ -20,14 +49,15 @@ export default function RecipePage({ recipe }: Props) {
     return (
       <>
         <RecipeSEO
-          recipeUrl=""
+          recipeUrl={recipe.imageUrl}
           recipeName={recipe.recipeName}
           recipeDescription={recipe.recipeDescription}
           imageUrl={recipe.imageUrl}
-          keywords=""
+          keywords={recipe.keywords.join(', ')}
           info=""
           createdAt={recipe.createdAt}
         />
+        <Navbar />
         <main className={styles.mainContainer}>
           <h1 className={styles.recipeTitle}>{recipe.recipeName}</h1>
           <Image
@@ -35,7 +65,7 @@ export default function RecipePage({ recipe }: Props) {
             alt={recipe.recipeName}
             className={styles.recipeImage}
             width={800}
-            height={500}
+            height={600}
           />
           <h1>{recipe.recipeDescription}</h1>
           <h1>Recipe by: {recipe.createdBy}</h1>
@@ -47,25 +77,26 @@ export default function RecipePage({ recipe }: Props) {
             <li>Total {info.total}</li>
           </ul>
           <div className={styles.IngredientMethodContainer}>
-            <div className={styles.recipeIngredients}>
-              <h1>Ingredients</h1>
-              {recipe.ingredients.map((ingredient) => (
-                <div key={ingredient.length} className="flex gap-1">
-                  <input type="checkbox" />
-                  <h1>{ingredient}</h1>
-                </div>
-              ))}
+            <div className="flex flex-col w-fit gap-3">
+              <h1 className="flex items-center flex-row justify-center underline underline-offset-4">
+                {recipe.ingredients.length} Ingredients
+              </h1>
+              <section className={styles.recipeIngredients}>
+                <AddBatch />
+                {recipe.ingredients.map((ingredient) => (
+                  <Ingredient ingredient={ingredient} />
+                ))}
+              </section>
             </div>
-            <div className={styles.method}>
+
+            <section className={styles.method}>
+              <h1 className="underline underline-offset-4 ">
+                {recipe.steps.length} Steps
+              </h1>
               {recipe.steps.map((step) => {
-                return (
-                  <div key={step.number} className={styles.steps}>
-                    <h1 className="">{step.number}</h1>
-                    <h1>{step.body}</h1>
-                  </div>
-                );
+                return <Step steps={recipe.steps} step={step} />;
               })}
-            </div>
+            </section>
           </div>
         </main>
       </>
