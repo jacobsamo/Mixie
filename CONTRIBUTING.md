@@ -9,5 +9,6 @@ Due to me being a solo Dev Please make sure when writing code it is readable or 
 ### Requirements
 - Node >= 16
 - Git >= 2.38
+- Firebase-cli >= 11.19.0
 
 ### 

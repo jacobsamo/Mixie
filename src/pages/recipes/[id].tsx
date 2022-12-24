@@ -5,6 +5,11 @@ import type { Recipe, Info } from '@lib/types/recipe';
 //services
 import RecipeService from '@lib/service/RecipeService';
 import styles from '@styles/modules/RecipePage.module.scss';
+//icons
+import Timelapse from '@material-design-icons/svg/outlined/timelapse.svg';
+import Timer from '@material-design-icons/svg/outlined/timer.svg';
+import { ClockIcon } from '@heroicons/react/24/outline';
+import Pie from './icons/svgs/pie.svg';
 //components
 import RecipeSEO from '@components/seo/RecipeSEO';
 import StepCard from '@components/elements/recipe_elemnts/StepCard';
@@ -74,7 +79,7 @@ export default function RecipePage({ recipe }: Props) {
             <li>Serves {info.serves}</li>
             <li>Cook {info.cook}</li>
             <li>Prep {info.prep}</li>
-            <li>Total {info.total}</li>
+            <li><Pie /> Total {info.total}</li>
           </ul>
           <div className={styles.IngredientMethodContainer}>
             <div className="flex flex-col w-fit gap-3">

@@ -3,8 +3,14 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['img.taste.com.au', "lh3.googleusercontent.com"],
+    domains: [
+      'img.taste.com.au',
+      'lh3.googleusercontent.com',
+      'firebasestorage.googleapis.com',
+      'images.unsplash.com',
+      'media4.giphy.com',
+    ],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
