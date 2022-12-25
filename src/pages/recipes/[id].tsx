@@ -6,10 +6,10 @@ import type { Recipe, Info } from '@lib/types/recipe';
 import RecipeService from '@lib/service/RecipeService';
 import styles from '@styles/modules/RecipePage.module.scss';
 //icons
-import Timelapse from '@material-design-icons/svg/outlined/timelapse.svg';
-import Timer from '@material-design-icons/svg/outlined/timer.svg';
-import { ClockIcon } from '@heroicons/react/24/outline';
-import Pie from './icons/svgs/pie.svg';
+import TimelapseOutlinedIcon from '@mui/icons-material/TimelapseOutlined';
+import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
+import { ClockIcon, StarIcon } from '@heroicons/react/24/outline';
+
 //components
 import RecipeSEO from '@components/seo/RecipeSEO';
 import StepCard from '@components/elements/recipe_elemnts/StepCard';
@@ -24,12 +24,10 @@ const Step = ({ steps, step }: { steps: string[]; step: string }) => {
   return (
     <>
       <section key={steps.indexOf(step)} className={styles.steps}>
-        <div className={styles.step_text}>
-          <h1 className="font-medium font-Roboto text-sm">
-            Step {steps.indexOf(step) + 1}
-          </h1>
-          <h1 className={styles.step_method}>{step}</h1>
-        </div>
+        <h1 className="font-medium font-Roboto text-sm">
+          Step {steps.indexOf(step) + 1}
+        </h1>
+        <h1 className={styles.step_method}>{step}</h1>
       </section>
     </>
   );
@@ -64,7 +62,16 @@ export default function RecipePage({ recipe }: Props) {
         />
         <Navbar />
         <main className={styles.mainContainer}>
-          <h1 className={styles.recipeTitle}>{recipe.recipeName}</h1>
+          <section className="flex flex-row items-center">
+            <h1 className={styles.recipeTitle}>{recipe.recipeName}</h1>
+            <span className="flex flex-row pl-4">
+              <StarIcon className="w-6 h-6" />
+              <StarIcon className="w-6 h-6" />
+              <StarIcon className="w-6 h-6" />
+              <StarIcon className="w-6 h-6" />
+              <StarIcon className="w-6 h-6" />
+            </span>
+          </section>
           <Image
             src={recipe.imageUrl}
             alt={recipe.recipeName}
@@ -75,11 +82,35 @@ export default function RecipePage({ recipe }: Props) {
           <h1>{recipe.recipeDescription}</h1>
           <h1>Recipe by: {recipe.createdBy}</h1>
           <ul className={styles.info}>
-            <li>Rating {info.rating}</li>
-            <li>Serves {info.serves}</li>
-            <li>Cook {info.cook}</li>
-            <li>Prep {info.prep}</li>
-            <li><Pie /> Total {info.total}</li>
+            <li>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                className="w-8 h-8 dark:fill-white fill-black"
+              >
+                <g data-name="Layer 2">
+                  <g data-name="pie-chart">
+                    <rect width="24" height="24" opacity="0" />
+                    <path d="M13 2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1 9 9 0 0 0-9-9zm1 8V4.07A7 7 0 0 1 19.93 10z" />
+                    <path d="M20.82 14.06a1 1 0 0 0-1.28.61A8 8 0 1 1 9.33 4.46a1 1 0 0 0-.66-1.89 10 10 0 1 0 12.76 12.76 1 1 0 0 0-.61-1.27z" />
+                  </g>
+                </g>
+              </svg>
+              {info.serves} {recipe.recipeName}
+            </li>
+            <li>
+              <ClockIcon className="w-8 h-8" /> Cook {info.cook}
+            </li>
+            <li>
+              <TimelapseOutlinedIcon
+                style={{ width: '2rem', height: '2rem' }}
+              />
+              Prep {info.prep}
+            </li>
+            <li>
+              <TimerOutlinedIcon style={{ width: '2rem', height: '2rem' }} />
+              Total {info.total}
+            </li>
           </ul>
           <div className={styles.IngredientMethodContainer}>
             <div className="flex flex-col w-fit gap-3">

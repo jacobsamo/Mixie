@@ -7,6 +7,8 @@
 
 <p align="center">
     <img alt="Website" src="https://img.shields.io/website?down_color=red&down_message=Offline&label=Website&up_message=Online&url=https%3A%2F%2Fwww.meally.com.au">
+    <img alt="GitHub" src="https://img.shields.io/github/license/eirfire/meally?color=blue">
+    <img alt="GitHub Workflow Status (with branch)" src="https://img.shields.io/github/actions/workflow/status/eirfire/meally/intergrate.yml?branch=master">
 </p>
 
 Meally is an open source recipe website to easily find recipes you love. 
