@@ -20,17 +20,17 @@ const AddBatch = () => {
   return (
     <>
       <div className="flex flew-row items-center py-1">
-        <button onClick={addBatch}>
+        <button data-testid="plus_button"  onClick={addBatch}>
           <PlusCircleIcon className="w-8 h-8 w-" />
         </button>
-        <button onClick={minusBatch}>
+        <button data-testid="minus_button" onClick={minusBatch}>
           <MinusCircleIcon
             className={`w-8 h-8 ${
               add < 2 ? 'pointer-events-none bg-none opacity-20 text-white' : ''
             }`}
           />
         </button>
-        <p>
+        <p data-testid="title">
           {add} {batchTitle}
         </p>
       </div>

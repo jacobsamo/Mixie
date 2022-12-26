@@ -15,6 +15,7 @@ import RecipeSEO from '@components/seo/RecipeSEO';
 import StepCard from '@components/elements/recipe_elemnts/StepCard';
 import AddBatch from '@components/elements/recipe_elemnts/Addbatch';
 import Navbar from '@components/modules/Navbar';
+import Link from 'next/link';
 
 interface Props {
   recipe: Recipe;
@@ -45,7 +46,55 @@ const Ingredient = ({ ingredient }: { ingredient: string }) => {
   );
 };
 
+const InfoComponent = ({
+  info,
+  recipeName,
+}: {
+  info: Info;
+  recipeName: string;
+}) => {
+  return (
+    <>
+      <ul className={`flex flex-row flex-wrap gap-2  p-1 pb-2 pl-0 items-start`}>
+        <li className="flex flex-row items-center gap-1">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            className=" dark:fill-white fill-black"
+            style={{ width: '1.5rem', height: '1.5rem' }}
+          >
+            <g data-name="Layer 2">
+              <g data-name="pie-chart">
+                <rect width="24" height="24" opacity="0" />
+                <path d="M13 2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1 9 9 0 0 0-9-9zm1 8V4.07A7 7 0 0 1 19.93 10z" />
+                <path d="M20.82 14.06a1 1 0 0 0-1.28.61A8 8 0 1 1 9.33 4.46a1 1 0 0 0-.66-1.89 10 10 0 1 0 12.76 12.76 1 1 0 0 0-.61-1.27z" />
+              </g>
+            </g>
+          </svg>
+          {info.serves} {recipeName}
+        </li>
+        <li className="flex flex-row items-center gap-1">
+          <TimelapseOutlinedIcon
+            style={{ width: '1.5rem', height: '1.5rem' }}
+          />
+          Prep {info.prep}
+        </li>
+        <li className="flex flex-row items-center gap-1">
+          <ClockIcon style={{ width: '1.5rem', height: '1.5rem' }} /> Cook{' '}
+          {info.cook}
+        </li>
+        <li className="flex flex-row items-center gap-1">
+          <TimerOutlinedIcon style={{ width: '1.5rem', height: '1.5rem' }} />
+          Total {info.total}
+        </li>
+      </ul>
+    </>
+  );
+};
+
 export default function RecipePage({ recipe }: Props) {
+  const [methodOpen, setMethodOpen] = useState(false);
+
   const info = recipe.info as Info;
 
   if (recipe !== undefined) {
@@ -62,16 +111,47 @@ export default function RecipePage({ recipe }: Props) {
         />
         <Navbar />
         <main className={styles.mainContainer}>
-          <section className="flex flex-row items-center">
+          <section className="flex flex-row items-center flex-wrap">
             <h1 className={styles.recipeTitle}>{recipe.recipeName}</h1>
             <span className="flex flex-row pl-4">
-              <StarIcon className="w-6 h-6" />
-              <StarIcon className="w-6 h-6" />
-              <StarIcon className="w-6 h-6" />
-              <StarIcon className="w-6 h-6" />
-              <StarIcon className="w-6 h-6" />
+              <StarIcon
+                className={`${
+                  info.rating >= 1
+                    ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
+                    : 'text-[#3e3e3e]'
+                } w-6 h-6`}
+              />
+              <StarIcon
+                className={`${
+                  info.rating >= 2
+                    ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
+                    : 'text-[#3e3e3e]'
+                } w-6 h-6`}
+              />
+              <StarIcon
+                className={`${
+                  info.rating >= 3
+                    ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
+                    : 'text-[#3e3e3e]'
+                } w-6 h-6`}
+              />
+              <StarIcon
+                className={`${
+                  info.rating >= 4
+                    ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
+                    : 'text-[#3e3e3e]'
+                } w-6 h-6`}
+              />
+              <StarIcon
+                className={`${
+                  info.rating >= 5
+                    ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
+                    : 'text-[#3e3e3e]'
+                } w-6 h-6`}
+              />
             </span>
           </section>
+          <InfoComponent info={recipe.info} recipeName={recipe.recipeName} />
           <Image
             src={recipe.imageUrl}
             alt={recipe.recipeName}
@@ -79,60 +159,51 @@ export default function RecipePage({ recipe }: Props) {
             width={800}
             height={600}
           />
-          <h1>{recipe.recipeDescription}</h1>
-          <h1>Recipe by: {recipe.createdBy}</h1>
-          <ul className={styles.info}>
-            <li>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                className="w-8 h-8 dark:fill-white fill-black"
-              >
-                <g data-name="Layer 2">
-                  <g data-name="pie-chart">
-                    <rect width="24" height="24" opacity="0" />
-                    <path d="M13 2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1 9 9 0 0 0-9-9zm1 8V4.07A7 7 0 0 1 19.93 10z" />
-                    <path d="M20.82 14.06a1 1 0 0 0-1.28.61A8 8 0 1 1 9.33 4.46a1 1 0 0 0-.66-1.89 10 10 0 1 0 12.76 12.76 1 1 0 0 0-.61-1.27z" />
-                  </g>
-                </g>
-              </svg>
-              {info.serves} {recipe.recipeName}
-            </li>
-            <li>
-              <ClockIcon className="w-8 h-8" /> Cook {info.cook}
-            </li>
-            <li>
-              <TimelapseOutlinedIcon
-                style={{ width: '2rem', height: '2rem' }}
-              />
-              Prep {info.prep}
-            </li>
-            <li>
-              <TimerOutlinedIcon style={{ width: '2rem', height: '2rem' }} />
-              Total {info.total}
-            </li>
-          </ul>
-          <div className={styles.IngredientMethodContainer}>
-            <div className="flex flex-col w-fit gap-3">
-              <h1 className="flex items-center flex-row justify-center underline underline-offset-4">
-                {recipe.ingredients.length} Ingredients
-              </h1>
-              <section className={styles.recipeIngredients}>
-                <AddBatch />
-                {recipe.ingredients.map((ingredient) => (
-                  <Ingredient ingredient={ingredient} />
-                ))}
-              </section>
-            </div>
+          <h1 className="mt-2">{recipe.recipeDescription}</h1>
+          <h1>
+            Recipe by:
+            <Link href="#">
+              <a> {recipe.createdBy}</a>
+            </Link>
+          </h1>
+          <span className="w-full h-[0.125rem] my-2 mb-4 dark:bg-white bg-dark_grey rounded-md "></span>
 
-            <section className={styles.method}>
-              <h1 className="underline underline-offset-4 ">
+          <div
+            className={`${
+              methodOpen ? styles.methodOpen : styles.ingredientOpen
+            } flex justify-center flex-col`}
+          >
+            <span className={styles.titles}>
+              <button
+                className={`${styles.ingredientTitle}`}
+                onClick={() => setMethodOpen(false)}
+              >
+                {recipe.ingredients.length} Ingredients
+              </button>
+              <button
+                className={styles.methodTitle}
+                onClick={() => setMethodOpen(true)}
+              >
                 {recipe.steps.length} Steps
-              </h1>
-              {recipe.steps.map((step) => {
-                return <Step steps={recipe.steps} step={step} />;
-              })}
-            </section>
+              </button>
+            </span>
+            <article className={`${styles.IngredientMethodContainer}`}>
+              <article className="">
+                <section className={`${styles.recipeIngredients} flex flex-col w-[12.5rem] gap-3`}>
+                  <AddBatch />
+                  {recipe.ingredients.map((ingredient) => (
+                    <Ingredient ingredient={ingredient} />
+                  ))}
+                </section>
+              </article>
+              <article className={` ${styles.method_container}`}>
+                <div className={styles.step_container}>
+                  {recipe.steps.map((step) => {
+                    return <Step steps={recipe.steps} step={step} />;
+                  })}
+                </div>
+              </article>
+            </article>
           </div>
         </main>
       </>
