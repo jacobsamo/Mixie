@@ -3,18 +3,8 @@ import { getAnalytics, initializeAnalytics } from 'firebase/analytics';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
-//TODO: turn this into an environment variable
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCWd8dGb1ZMvKRqFiVfm8xI5ke4IFsnrnQ",
-//   authDomain: "recipe-webapp-a2a71.firebaseapp.com",
-//   databaseURL: "https://recipe-webapp-a2a71-default-rtdb.asia-southeast1.firebasedatabase.app",
-//   projectId: "recipe-webapp-a2a71",
-//   storageBucket: "recipe-webapp-a2a71.appspot.com",
-//   messagingSenderId: "764527990838",
-//   appId: "1:764527990838:web:d507765a4a546369e8e097",
-//   measurementId: "G-K5JTJY5HP2"
-// };
 
+//TODO: turn this into an environment variable
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
