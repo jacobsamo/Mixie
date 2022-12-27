@@ -45,5 +45,3 @@ const recipes = [
 ];
 
 module.exports = { recipes };
-
-module.exports = {recipes};

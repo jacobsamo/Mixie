@@ -11,7 +11,6 @@ import AdBanner from '@components/modules/AdBanner';
 
 
 
-
 const Home: NextPage = () => {
   return (
     <>
@@ -28,9 +27,6 @@ const Home: NextPage = () => {
           <Algolia_Search_Dialog buttonType="searchBar" />
         </div>
       </main>
-      <div>
-        <AdBanner />
-      </div>
     </>
   );
 };
