@@ -1,8 +1,7 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getAnalytics, initializeAnalytics } from 'firebase/analytics';
+import { getAnalytics, isSupported } from 'firebase/analytics';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-
 
 //TODO: turn this into an environment variable
 const firebaseConfig = {
@@ -21,6 +20,7 @@ const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore(app);
 const auth = getAuth(app);
 
+const analytics = isSupported().then(yes => yes ? getAnalytics(app) : null);
 //TODO: Add analytics
 
-export { db, auth };
+export { db, auth, analytics };

@@ -25,6 +25,7 @@ const RecipesPages: NextPage = ({ recipes }: any) => {
       <PageSEO
         title="Browse all recipes"
         url=""
+        imgUrl=''
         description="recipes for the best meals"
       />
       <Navbar />

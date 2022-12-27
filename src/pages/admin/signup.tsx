@@ -14,7 +14,9 @@ const SignupPage: NextPage = () => {
   const [passwordError, setPasswordError] = useState(false);
   const router = useRouter();
   
-  
+  if (auth.currentUser != null) {
+    router.push('/admin')
+  }
 
   const handleGithubClick = () => {
     AuthService.signInWithGithub()
