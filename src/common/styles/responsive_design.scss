@@ -14,26 +14,26 @@
 
 // Responsive type space
 :root {
-  --space-3xs: clamp(0.13rem, calc(0.01rem + 0.56vw), 0.5rem);
-  --space-2xs: clamp(0.25rem, calc(0.03rem + 1.11vw), 1rem);
-  --space-xs: clamp(0.38rem, calc(0.04rem + 1.67vw), 1.5rem);
-  --space-s: clamp(0.5rem, calc(0.06rem + 2.22vw), 2rem);
-  --space-m: clamp(0.75rem, calc(0.08rem + 3.33vw), 3rem);
-  --space-l: clamp(1rem, calc(0.11rem + 4.44vw), 4rem);
-  --space-xl: clamp(1.5rem, calc(0.17rem + 6.67vw), 6rem);
-  --space-2xl: clamp(2rem, calc(0.22rem + 8.89vw), 8rem);
-  --space-3xl: clamp(3rem, calc(0.33rem + 13.33vw), 12rem);
+  --space-3xs: clamp(0.13rem, calc(0.02rem + 0.54vw), 0.50rem);
+  --space-2xs: clamp(0.25rem, calc(0.04rem + 1.07vw), 1.00rem);
+  --space-xs: clamp(0.38rem, calc(0.05rem + 1.61vw), 1.50rem);
+  --space-s: clamp(0.50rem, calc(0.07rem + 2.14vw), 2.00rem);
+  --space-m: clamp(0.75rem, calc(0.11rem + 3.21vw), 3.00rem);
+  --space-l: clamp(1.00rem, calc(0.14rem + 4.29vw), 4.00rem);
+  --space-xl: clamp(1.50rem, calc(0.21rem + 6.43vw), 6.00rem);
+  --space-2xl: clamp(2.00rem, calc(0.29rem + 8.57vw), 8.00rem);
+  --space-3xl: clamp(3.00rem, calc(0.43rem + 12.86vw), 12.00rem);
 
   /* One-up pairs */
-  --space-3xs-2xs: clamp(0.13rem, calc(-0.13rem + 1.3vw), 1rem);
-  --space-2xs-xs: clamp(0.25rem, calc(-0.12rem + 1.85vw), 1.5rem);
-  --space-xs-s: clamp(0.38rem, calc(-0.11rem + 2.41vw), 2rem);
-  --space-s-m: clamp(0.5rem, calc(-0.24rem + 3.7vw), 3rem);
-  --space-m-l: clamp(0.75rem, calc(-0.21rem + 4.81vw), 4rem);
-  --space-l-xl: clamp(1rem, calc(-0.48rem + 7.41vw), 6rem);
-  --space-xl-2xl: clamp(1.5rem, calc(-0.43rem + 9.63vw), 8rem);
-  --space-2xl-3xl: clamp(2rem, calc(-0.96rem + 14.81vw), 12rem);
+  --space-3xs-2xs: clamp(0.13rem, calc(-0.12rem + 1.25vw), 1.00rem);
+  --space-2xs-xs: clamp(0.25rem, calc(-0.11rem + 1.79vw), 1.50rem);
+  --space-xs-s: clamp(0.38rem, calc(-0.09rem + 2.32vw), 2.00rem);
+  --space-s-m: clamp(0.50rem, calc(-0.21rem + 3.57vw), 3.00rem);
+  --space-m-l: clamp(0.75rem, calc(-0.18rem + 4.64vw), 4.00rem);
+  --space-l-xl: clamp(1.00rem, calc(-0.43rem + 7.14vw), 6.00rem);
+  --space-xl-2xl: clamp(1.50rem, calc(-0.36rem + 9.29vw), 8.00rem);
+  --space-2xl-3xl: clamp(2.00rem, calc(-0.86rem + 14.29vw), 12.00rem);
 
   /* Custom pairs */
-  --space-s-l: clamp(0.5rem, calc(-0.54rem + 5.19vw), 4rem);
+  --space-s-l: clamp(0.50rem, calc(-0.50rem + 5.00vw), 4.00rem);
 }

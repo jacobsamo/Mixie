@@ -159,8 +159,8 @@ export default function RecipePage({ recipe }: Props) {
             width={800}
             height={600}
           />
-          <h1 className="mt-2">{recipe.recipeDescription}</h1>
-          <h1>
+          <h1 className={styles.recipeDescription}>{recipe.recipeDescription}</h1>
+          <h1 className={styles.madeBy}>
             Recipe by:
             <Link href="#">
               <a> {recipe.createdBy}</a>
