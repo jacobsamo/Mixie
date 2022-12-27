@@ -12,7 +12,6 @@ import { ClockIcon, StarIcon } from '@heroicons/react/24/outline';
 
 //components
 import RecipeSEO from '@components/seo/RecipeSEO';
-import StepCard from '@components/elements/recipe_elemnts/StepCard';
 import AddBatch from '@components/elements/recipe_elemnts/Addbatch';
 import Navbar from '@components/modules/Navbar';
 import Link from 'next/link';
@@ -158,6 +157,7 @@ export default function RecipePage({ recipe }: Props) {
             className={styles.recipeImage}
             width={800}
             height={600}
+            priority
           />
           <h1 className={styles.recipeDescription}>{recipe.recipeDescription}</h1>
           <h1 className={styles.madeBy}>
@@ -192,14 +192,14 @@ export default function RecipePage({ recipe }: Props) {
                 <section className={`${styles.recipeIngredients} flex flex-col w-[12.5rem] gap-3`}>
                   <AddBatch />
                   {recipe.ingredients.map((ingredient) => (
-                    <Ingredient ingredient={ingredient} />
+                    <Ingredient key={ingredient.length} ingredient={ingredient} />
                   ))}
                 </section>
               </article>
               <article className={` ${styles.method_container}`}>
                 <div className={styles.step_container}>
                   {recipe.steps.map((step) => {
-                    return <Step steps={recipe.steps} step={step} />;
+                    return <Step key={recipe.steps.indexOf(step)} steps={recipe.steps} step={step} />;
                   })}
                 </div>
               </article>
@@ -237,5 +237,6 @@ export async function getStaticProps(context: any) {
     props: {
       recipe,
     },
+    revalidate: 24 * 60 * 60 * 1000, // 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
   };
 }

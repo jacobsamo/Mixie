@@ -52,7 +52,6 @@ const index = () => {
       <button
         onClick={() => {
           console.log(updatedRecipe);
-          RecipeService.createRecipe(updatedRecipe);
         }}
       >
         Send info to database
