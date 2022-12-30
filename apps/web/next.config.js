@@ -10,7 +10,7 @@ const nextConfig = {
       'images.unsplash.com',
       'media4.giphy.com',
     ],
-  },
+  },\
 };
 
 module.exports = nextConfig;

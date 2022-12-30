@@ -38,13 +38,11 @@ export default function RecipeSEO({
       <meta property="og:url" content={recipeUrl} />
       <meta property="og:description" content={recipeName} />
       <meta property="fb:app_id" content="668390526646215" />{' '}
-      {/*TODO: change latter */}
+
       <meta property="article:published_time" content={createdAt.toString()} />
       <meta name="keywords" content={keywords?.toString()} />
       <meta name="twitter:site" content="@meallyAu" />{' '}
-      {/*TODO: change when twitter account is up */}
       <meta name="twitter:creator" content="@meallyAu" />{' '}
-      {/*TODO: change when twitter account is up */}
       <meta name="twitter:title" content={recipeName} />
       <meta name="twitter:description" content={recipeDescription} />
       <meta name="twitter:card" content="summary_large_image" />

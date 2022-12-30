@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from 'react';
-import styles from '../../common/styles/modules/Signup.module.scss';
-import { auth } from '@lib/config/firebase';
-import AuthService from '@lib/service/Authservice'; 
+import styles from '../../styles/modules/Signup.module.scss';
+import { auth } from 'libs';
+import {AuthService} from 'libs'; 
 
 
 
