@@ -8,9 +8,14 @@ Then install the dependencies
 ```bash
     npm install
 ```
-Then start the project
+Then start the all apps
 ```bash
     npm run dev
+```
+start just the one you want
+```bash
+    npm run dev --filter *app name*
+    // e.g npm run dev --filter meally.com.au
 ```
 ## Contributing
 Please see our [contributing guide](./CONTRIBUTING.md) for more information on how to contribute to the project.

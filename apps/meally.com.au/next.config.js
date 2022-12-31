@@ -10,7 +10,10 @@ const nextConfig = {
       'images.unsplash.com',
       'media4.giphy.com',
     ],
-  },\
+    experimental: {
+      transpilePackages: ["ui", "libs"],
+    },
+  },
 };
 
 module.exports = nextConfig;

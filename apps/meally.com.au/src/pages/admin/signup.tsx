@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React, { useState, useEffect } from 'react';
 import styles from '../../styles/modules/Signup.module.scss';
 import { auth } from 'libs';
-import {AuthService} from 'libs'; 
+import {AuthService} from ''; 
 
 
 
