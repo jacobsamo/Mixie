@@ -2,10 +2,10 @@ import type { NextPage } from 'next';
 import React, { useState, useEffect } from 'react';
 import styles from '@styles/modules/RecipePage.module.scss';
 import RecipeService from '@lib/service/RecipeService';
-import { Recipe } from '@lib/types/recipe';
-import RecipeCard from '@components/modules/RecipeCard';
-import PageSEO from '@components/seo/PageSEO';
-import Navbar from '@components/modules/Navbar';
+import { Recipe } from 'libs/types/';
+import RecipeCard from 'ui/modules/RecipeCard';
+import PageSEO from 'ui/seo/PageSEO';
+import Navbar from '@components/elements/Navbar';
 import Link from 'next/link';
 
 export async function getStaticProps() {

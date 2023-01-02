@@ -4,10 +4,10 @@ import styles from '@styles/modules/Home.module.scss';
 
 //import components
 
-import PageSeo from '@components/seo/PageSEO';
-import Navbar from '@components/modules/Navbar';
+import PageSeo from 'ui/seo/PageSEO';
+import Navbar from '@components/elements/Navbar';
 import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
-import AdBanner from '@components/modules/AdBanner';
+import AdBanner from 'ui/modules/AdBanner';
 
 
 

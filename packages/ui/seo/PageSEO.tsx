@@ -1,16 +1,9 @@
 import Head from 'next/head';
 import React from 'react';
 
-interface PagesSeo {
-  title: string;
-  url: string;
-  imgUrl: string;
-  description: string;
-}
 
-export default function PageSEO({ title, url, imgUrl, description }: PagesSeo) {
+export default function PageSEO({ title, url, imgUrl, description }: { title: string, url: string, imgUrl: string, description: string }) {
   return (
-    <>
       <Head>
         <title>{title}</title>
         <meta name="title" content="Meally — Cook, Collaborate & Create" />
@@ -41,6 +34,5 @@ export default function PageSEO({ title, url, imgUrl, description }: PagesSeo) {
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         <link rel="apple-touch-icon" href="favicon.png" />
       </Head>
-    </>
   );
 }

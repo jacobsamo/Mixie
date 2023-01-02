@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { Recipe } from '../../../common/shared/libs/types/recipe'
-import RecipeService from '../../../common/shared/libs/service/RecipeService'
+import type { Recipe } from 'libs/types'
+import RecipeService from '@lib/service/RecipeService'
 import { auth } from '@lib/config/firebase';
 
 export default function handler(

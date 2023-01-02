@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React, { useState, useEffect, ReactHTMLElement } from 'react';
 //types
-import type { Recipe, Info } from '@lib/types/recipe';
+import type { Recipe, Info } from 'libs/types';
 //services
 import RecipeService from '@lib/service/RecipeService';
 import styles from '@styles/modules/RecipePage.module.scss';
@@ -11,9 +11,9 @@ import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
 import { ClockIcon, StarIcon } from '@heroicons/react/24/outline';
 
 //components
-import RecipeSEO from '@components/seo/RecipeSEO';
+import RecipeSEO from 'ui/seo/RecipeSEO';
+import Navbar from '@components/elements/Navbar';
 import AddBatch from '@components/elements/recipe_elemnts/Addbatch';
-import Navbar from '@components/modules/Navbar';
 import Link from 'next/link';
 
 interface Props {

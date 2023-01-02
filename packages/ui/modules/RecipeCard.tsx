@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import type { Recipe } from '@lib/types/recipe';
+import type { Recipe } from 'libs/types';
 import Image from 'next/image';
 import { HeartIcon } from '@heroicons/react/24/outline';
-import styles from '@component_styles/recipeCard.module.scss';
+
 
 interface RecipeCard {
   id: string;
@@ -28,7 +28,7 @@ const RecipeCard = ({
           height={135}
           src={imageUrl}
           alt={recipeName}
-          className={styles.image}
+          className="width-[180px] height-[135px] rounded-[12px 12px 0 0] absolute"
         />
         <h1 className="dark:text-white text-black text-sm font-Roboto font-bold absolute left-2 top-36">
           {recipeName}

@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import RecipeService from '@lib/service/RecipeService'
-import { Recipe } from '@lib/types/recipe'
+import { Recipe } from 'libs/types'
 
 const handler = async (
   req: NextApiRequest,

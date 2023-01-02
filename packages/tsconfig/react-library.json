@@ -5,6 +5,7 @@
   "compilerOptions": {
     "jsx": "react",
     "lib": ["ES2015"],
+    "allowJs": true,
     "module": "ESNext",
     "target": "es6"
   }

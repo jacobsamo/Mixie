@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         id="Absence-banner"
         async
         strategy="afterInteractive"
-        onError={(e) => {
+        onError={(e: any) => {
           console.error('Script failed to load', e);
         }}
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1553721231977629"

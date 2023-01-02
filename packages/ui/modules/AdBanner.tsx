@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { GoogleAdsenseWidget } from 'next-google-ads';
 import Script from 'next/script';
+import React from 'react';
 
 const AdBanner = () => {
   const [loading, setLoading] = useState(true);
@@ -10,7 +11,7 @@ const AdBanner = () => {
 
   if (!loading) {
     return (
-      <>
+      <div>
         <Script
           id="google-adsense"
           src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
@@ -30,7 +31,7 @@ const AdBanner = () => {
           responsive="true"
 
         />
-      </>
+      </div>
     );
   }
 

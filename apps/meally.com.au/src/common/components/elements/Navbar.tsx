@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import styles from '../styles/Navbar.module.scss';
+import styles from '@styles/modules/Navbar.module.scss';
 import { BookmarkIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import AuthService from '@lib/service/Authservice';
-import { auth } from '@lib/config/firebase';
-import RecipeSEO from '@components/seo/RecipeSEO';
+
+
+import RecipeSEO from 'ui/seo/RecipeSEO';
 import type { UserCredential } from 'firebase/auth';
 import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
 import Link from 'next/link';

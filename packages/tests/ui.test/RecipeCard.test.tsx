@@ -1,7 +1,8 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
-import RecipeCard from '../../src/common/components/modules/RecipeCard';
-import {Recipe}  from '../../src/common/shared/libs/types/recipe';
-import recipes from '../../src/common/shared/jsons/recipes.json';
+import RecipeCard from 'ui/modules/RecipeCard';
+import {Recipe}  from 'libs/types';
+
 
 describe('RecipeCard', () => {
   it('renders a card', async () => {

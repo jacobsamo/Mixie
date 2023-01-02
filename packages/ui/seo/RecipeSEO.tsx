@@ -1,18 +1,8 @@
-import { url } from 'inspector';
-import Head from 'next/head';
-import React from 'react';
-import type { Recipe } from '@lib/types/recipe';
-import type { Timestamp } from 'firebase/firestore';
-
-interface recipeSeo {
-  recipeDescription: string;
-  recipeName: string;
-  imageUrl: string;
-  info: string;
-  recipeUrl: string;
-  createdAt: Timestamp | string;
-  keywords?: string;
-}
+import { url } from "inspector";
+import Head from "next/head";
+import React from "react";
+import type { Recipe } from "libs/types";
+import type { Timestamp } from "firebase/firestore";
 
 export default function RecipeSEO({
   recipeDescription,
@@ -22,7 +12,15 @@ export default function RecipeSEO({
   recipeUrl,
   createdAt,
   keywords,
-}: recipeSeo) {
+}: {
+  recipeDescription: string;
+  recipeName: string;
+  imageUrl: string;
+  info: string;
+  recipeUrl: string;
+  createdAt: Timestamp | string;
+  keywords: string;
+}) {
   return (
     <Head>
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -37,12 +35,11 @@ export default function RecipeSEO({
       <meta property="og:type" content="article" />
       <meta property="og:url" content={recipeUrl} />
       <meta property="og:description" content={recipeName} />
-      <meta property="fb:app_id" content="668390526646215" />{' '}
-
+      <meta property="fb:app_id" content="668390526646215" />{" "}
       <meta property="article:published_time" content={createdAt.toString()} />
       <meta name="keywords" content={keywords?.toString()} />
-      <meta name="twitter:site" content="@meallyAu" />{' '}
-      <meta name="twitter:creator" content="@meallyAu" />{' '}
+      <meta name="twitter:site" content="@meallyAu" />{" "}
+      <meta name="twitter:creator" content="@meallyAu" />{" "}
       <meta name="twitter:title" content={recipeName} />
       <meta name="twitter:description" content={recipeDescription} />
       <meta name="twitter:card" content="summary_large_image" />
@@ -50,7 +47,6 @@ export default function RecipeSEO({
       <meta property="og:image" content={imageUrl} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-
       <link rel="manifest" href="manifest.json" />
       <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
       <link rel="apple-touch-icon" href="favicon.png" />

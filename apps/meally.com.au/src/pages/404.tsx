@@ -1,6 +1,6 @@
 import { NextPage } from 'next/types';
-import {Navbar} from 'ui';
-import {Footer} from 'ui';
+import Navbar from '@components/elements/Navbar';
+import Footer from 'ui/modules/Footer';
 
 
 
