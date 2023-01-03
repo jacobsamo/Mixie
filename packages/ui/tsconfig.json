@@ -1,5 +1,5 @@
 {
-  "extends": "tsconfig/react-library.json",
+  "extends": "tsconfig/nextjs.json",
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
@@ -7,6 +7,6 @@
       "@styles/*": ["styles/*"]
     }
   },
-  "include": [".", "../tests", "modules", "**/*.ts", "**/*.tsx",],
+  "include": [".", "../tests", "**/*.ts", "**/*.tsx"],
   "exclude": ["dist", "build", "node_modules"]
 }

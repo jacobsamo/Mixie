@@ -11,8 +11,8 @@ import {
   limit,
 } from 'firebase/firestore';
 
-import type { Recipe } from '../types/recipe';
-import { db } from '../config/firebase';
+import type { Recipe } from 'libs/types';
+import { db } from '@lib/config/firebase';
 
 class RecipeService {
   createRecipe(post: Recipe) {

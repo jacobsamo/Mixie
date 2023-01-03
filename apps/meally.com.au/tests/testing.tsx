@@ -1,11 +1,10 @@
 import { NextPage } from 'next/types';
 import React, { useState, useEffect } from 'react';
-import RecipeService from '../src/common/shared/libs/service/RecipeService';
+import RecipeService from '@lib/service/RecipeService';
 import { auth } from '@lib/config/firebase';
-import SignupPage from '../src/common/components/templates/Singup/Signup';
 import AuthService from '@lib/service/Authservice';
-import RecipeCard from '@components/modules/RecipeCard';
-import type {Recipe} from '@lib/types/recipe';
+import RecipeCard from 'ui/modules/RecipeCard';
+import type {Recipe} from 'libs/types';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import styles from '@component_styles/recipeCard.module.scss';
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import type { Recipe } from 'libs/types';
 import Image from 'next/image';
 import { HeartIcon } from '@heroicons/react/24/outline';
-
+import 'tailwindcss/tailwind.css';
 
 interface RecipeCard {
   id: string;

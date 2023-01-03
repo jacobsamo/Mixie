@@ -54,7 +54,9 @@ const InfoComponent = ({
 }) => {
   return (
     <>
-      <ul className={`flex flex-row flex-wrap gap-2  p-1 pb-2 pl-0 items-start`}>
+      <ul
+        className={`flex flex-row flex-wrap gap-2  p-1 pb-2 pl-0 items-start`}
+      >
         <li className="flex flex-row items-center gap-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -159,12 +161,12 @@ export default function RecipePage({ recipe }: Props) {
             height={600}
             priority
           />
-          <h1 className={styles.recipeDescription}>{recipe.recipeDescription}</h1>
+          <h1 className={styles.recipeDescription}>
+            {recipe.recipeDescription}
+          </h1>
           <h1 className={styles.madeBy}>
             Recipe by:
-            <Link href="#">
-              <a> {recipe.createdBy}</a>
-            </Link>
+            <Link href="#">{recipe.createdBy}</Link>
           </h1>
           <span className="w-full h-[0.125rem] my-2 mb-4 dark:bg-white bg-dark_grey rounded-md "></span>
 
@@ -189,17 +191,28 @@ export default function RecipePage({ recipe }: Props) {
             </span>
             <article className={`${styles.IngredientMethodContainer}`}>
               <article className="">
-                <section className={`${styles.recipeIngredients} flex flex-col w-[12.5rem] gap-3`}>
+                <section
+                  className={`${styles.recipeIngredients} flex flex-col w-[12.5rem] gap-3`}
+                >
                   <AddBatch />
                   {recipe.ingredients.map((ingredient) => (
-                    <Ingredient key={ingredient.length} ingredient={ingredient} />
+                    <Ingredient
+                      key={ingredient.length}
+                      ingredient={ingredient}
+                    />
                   ))}
                 </section>
               </article>
               <article className={` ${styles.method_container}`}>
                 <div className={styles.step_container}>
                   {recipe.steps.map((step) => {
-                    return <Step key={recipe.steps.indexOf(step)} steps={recipe.steps} step={step} />;
+                    return (
+                      <Step
+                        key={recipe.steps.indexOf(step)}
+                        steps={recipe.steps}
+                        step={step}
+                      />
+                    );
                   })}
                 </div>
               </article>

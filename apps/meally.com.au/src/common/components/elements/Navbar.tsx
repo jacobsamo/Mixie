@@ -1,16 +1,12 @@
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from '@styles/modules/Navbar.module.scss';
-import { BookmarkIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-
-
-import RecipeSEO from 'ui/seo/RecipeSEO';
-import type { UserCredential } from 'firebase/auth';
+import { BookmarkIcon } from '@heroicons/react/24/outline';
 import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
 import Link from 'next/link';
 
 const Navbar = () => {
-  const [userImage, setUserImage] = useState('/favicon.ico'); //TODO: change this to a proper thing or a sign in form
+  const [userImage, setUserImage] = useState('/favicon.ico');
   const [isOpen, setIsOpen] = useState(false);
 
   //TODO: fix issue with image flickering when reloading or navigating to a different route
@@ -20,51 +16,53 @@ const Navbar = () => {
   //   }
   // });
 
-
-
   return (
     <>
       <nav className={`${isOpen ? styles.show_nav : ''} ${styles.nav}`}>
-        <Link href="/">
-          <a className={styles.branding}>
-            <Image
-              width={42}
-              height={42}
-              src="/favicon.ico"
-              alt="Logo"
-              className={styles.brand_logo}
-            />
-            <h1 className={styles.brand_name}>Meally</h1>
-          </a>
+        <Link href="/" className={styles.branding}>
+          <Image
+            width={42}
+            height={42}
+            src="/favicon.ico"
+            alt="Logo"
+            className={styles.brand_logo}
+          />
+          <h1 className={styles.brand_name}>Meally</h1>
         </Link>
-        <div
-          className={styles.nav_links}
-        >
-          <Link href="/recipes">
-            <a className={styles.nav_link} onClick={() => setIsOpen(false)}>
-              Recipes
-            </a>
+        <div className={styles.nav_links}>
+          <Link
+            href="/recipes"
+            className={styles.nav_link}
+            onClick={() => setIsOpen(false)}
+          >
+            Recipes
           </Link>
-          <Link href="/sweet">
-            <a className={styles.nav_link} onClick={() => setIsOpen(false)}>
-              Sweet
-            </a>
+          <Link
+            href="/sweet"
+            className={styles.nav_link}
+            onClick={() => setIsOpen(false)}
+          >
+            Sweet
           </Link>
-          <Link href="/savoury">
-            <a className={styles.nav_link} onClick={() => setIsOpen(false)}>
-              Savoury
-            </a>
+          <Link
+            href="/savoury"
+            className={styles.nav_link}
+            onClick={() => setIsOpen(false)}
+          >
+            Savoury
           </Link>
-          <Link href="/categories">
-            <a className={styles.nav_link} onClick={() => setIsOpen(false)}>
-              Categories
-            </a>
+          <Link
+            href="/categories"
+            className={styles.nav_link}
+            onClick={() => setIsOpen(false)}
+          >
+            Categories
           </Link>
         </div>
         <div className={styles.utility}>
           <Algolia_Search_Dialog buttonType="searchIcon" />
-          <button 
-            type='button'
+          <button
+            type="button"
             className={styles.hamburger}
             onClick={() => setIsOpen(!isOpen)}
           >

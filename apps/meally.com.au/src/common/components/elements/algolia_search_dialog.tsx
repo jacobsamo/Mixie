@@ -11,8 +11,8 @@ import {
   Highlight,
   Configure,
 } from 'react-instantsearch-hooks-web';
-import { Hit } from '@lib/types/algolia';
-import Loader from '@components/modules/loader';
+import { Hit } from 'libs/types';
+
 
 interface SearchDialogType {
   buttonType: string;
@@ -31,7 +31,7 @@ const Hit = ({ hit }: any) => {
     }
     return (
       <ul className={styles.hitDietary}>
-        {info.dietary.map((dietary) => {
+        {info.dietary.map((dietary: any) => {
           return <li key={dietary.length}>{dietary}</li>;
         })}
       </ul>
@@ -41,7 +41,6 @@ const Hit = ({ hit }: any) => {
   //TODO: Make highlighting to also cover over measures of searching
   return (
     <Link className="relative" href={info.path.toString()}>
-      <a>
         <Highlight
           attribute="recipeName"
           hit={hit}
@@ -50,7 +49,6 @@ const Hit = ({ hit }: any) => {
           }}
         />
         <DietaryNeeds />
-      </a>
     </Link>
   );
 };

@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  transpilePackages: ['ui', 'libs'],
   images: {
     domains: [
       'img.taste.com.au',
@@ -10,9 +11,6 @@ const nextConfig = {
       'images.unsplash.com',
       'media4.giphy.com',
     ],
-    experimental: {
-      transpilePackages: ["ui", "libs"],
-    },
   },
 };
 

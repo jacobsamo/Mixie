@@ -1,6 +1,6 @@
 import { NextPage } from 'next/types';
 import Navbar from '@components/elements/Navbar';
-import Footer from 'ui/modules/Footer';
+
 
 
 
@@ -10,7 +10,6 @@ const Custom404: NextPage = () => {
     <>
       <Navbar />
       <div className='w-full h-full flex justify-center items-center'>404</div>
-      <Footer />
     </>
   );
 };

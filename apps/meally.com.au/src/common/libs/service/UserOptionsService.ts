@@ -11,9 +11,9 @@ import {
   limit,
 } from 'firebase/firestore';
 
-import { Recipe } from '../types/recipe';
-import { db, auth } from '../config/firebase';
-import type { Bookmark } from '@lib/types/bookmark';
+import { Recipe } from 'libs/types';
+import { db, auth } from '@lib/config/firebase';
+import type { Bookmark } from 'libs/types';
 
 class UserOptions {
   async createBookmark(id: string) {}
