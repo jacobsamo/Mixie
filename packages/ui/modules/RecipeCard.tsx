@@ -17,9 +17,6 @@ const RecipeCard = ({
   recipeName,
   recipeDescription,
 }: recipeCardProps) => {
-
-  console.log('id: ', id)
-
   return (
     <>
       <div
