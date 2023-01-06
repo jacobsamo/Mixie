@@ -11,11 +11,8 @@
     <img alt="GitHub Workflow Status (with branch)" src="https://img.shields.io/github/actions/workflow/status/eirfire/meally/intergrate.yml?branch=master">
 </p>
 
-Meally is an open source recipe website to easily find recipes you love. 
-
-
 ## Getting started
-Please read our [getting started guide](./GETTING_STARTED.md) for more information on how to get started with the project.
+Please read our [getting started guide](./GETTING_STARTED.md) for more information.
 
 ### About the project
 - [Contributing](./CONTRIBUTING.md)

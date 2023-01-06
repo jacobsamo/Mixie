@@ -9,3 +9,4 @@ When reporting a vulnerability please [Email Me](jacob35422@gmail.com) straight 
 3. Steps to replicate the issue
 
 
+Thankyou for taking your time to read this and help keep Meally safe

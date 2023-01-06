@@ -23,7 +23,7 @@ If applicable please add some screen shots of the bug.
 
 **Device information (please complete the following information):**
  - Device (mobile only): [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
+ - OS: [e.g. iOS15.1, windows 10, ubuntu 18.04, etc]
  - Browser [e.g. chrome , safari]
  - Version [e.g. 22]
 
