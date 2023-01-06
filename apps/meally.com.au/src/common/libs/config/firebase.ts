@@ -3,7 +3,7 @@ import { getAnalytics, isSupported } from 'firebase/analytics';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
-//TODO: turn this into an environment variable
+
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -21,6 +21,6 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 const analytics = isSupported().then(yes => yes ? getAnalytics(app) : null);
-//TODO: Add analytics
+
 
 export { db, auth, analytics };

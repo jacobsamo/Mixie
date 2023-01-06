@@ -17,6 +17,13 @@
     },
     "test": {
       "outputs": []
+    },
+    "test:watch": {
+      "cache": false
     }
-  }
+  },
+  "globalDependencies": [
+    ".env",
+    "tsconfig.json"
+  ]
 }

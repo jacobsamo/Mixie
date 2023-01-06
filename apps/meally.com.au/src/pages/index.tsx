@@ -4,12 +4,10 @@ import styles from '@styles/modules/Home.module.scss';
 
 //import components
 
-import PageSeo from 'ui/seo/PageSEO';
+import { PageSeo } from 'ui';
 import Navbar from '@components/elements/Navbar';
 import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
-import AdBanner from 'ui/modules/AdBanner';
-
-
+import { AdBanner } from 'ui';
 
 const Home: NextPage = () => {
   return (
@@ -17,7 +15,7 @@ const Home: NextPage = () => {
       <PageSeo
         title="Meally Cook, Collaborate & Create"
         url="meally.com.au"
-        imgUrl=''
+        imgUrl=""
         description="A directory of folder full things."
       />
       <Navbar />

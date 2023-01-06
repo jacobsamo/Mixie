@@ -11,7 +11,7 @@ import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
 import { ClockIcon, StarIcon } from '@heroicons/react/24/outline';
 
 //components
-import RecipeSEO from 'ui/seo/RecipeSEO';
+import { RecipeSeo } from 'ui';
 import Navbar from '@components/elements/Navbar';
 import AddBatch from '@components/elements/recipe_elemnts/Addbatch';
 import Link from 'next/link';
@@ -101,7 +101,7 @@ export default function RecipePage({ recipe }: Props) {
   if (recipe !== undefined) {
     return (
       <>
-        <RecipeSEO
+        <RecipeSeo
           recipeUrl={recipe.imageUrl}
           recipeName={recipe.recipeName}
           recipeDescription={recipe.recipeDescription}

@@ -3,12 +3,34 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@lib/*": ["src/common/libs/*"],
-      "@components/*": ["src/common/components/*"],
-      "@component_styles/*": ["src/common/components/styles/*"],
-      "@styles/*": ["src/common/styles/*"]
-    }
+      "@lib/*": [
+        "src/common/libs/*"
+      ],
+      "@components/*": [
+        "src/common/components/*"
+      ],
+      "@component_styles/*": [
+        "src/common/components/styles/*"
+      ],
+      "@styles/*": [
+        "src/common/styles/*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../../packages/tests/ui.test/RecipeCard.test.tsx", "src/common/libs/service/Authservice.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "../../packages/tests/ui.test/RecipeCard.test.tsx",
+    "../../packages/ui/modules/RecipeCard.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

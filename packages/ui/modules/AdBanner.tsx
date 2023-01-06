@@ -3,11 +3,12 @@ import { GoogleAdsenseWidget } from 'next-google-ads';
 import Script from 'next/script';
 import React from 'react';
 
-const AdBanner = () => {
+export default function AdBanner() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(false);
   }, []);
+
 
   if (!loading) {
     return (
@@ -38,4 +39,3 @@ const AdBanner = () => {
   return <h1>Loading..</h1>;
 };
 
-export default AdBanner;

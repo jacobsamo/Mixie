@@ -7,6 +7,6 @@
       "@styles/*": ["styles/*"]
     }
   },
-  "include": [".", "../tests", "**/*.ts", "**/*.tsx"],
+  "include": [".", "../tests", "**/*.ts", "**/*.tsx", "modules/RecipeCard.tsx"],
   "exclude": ["dist", "build", "node_modules"]
 }

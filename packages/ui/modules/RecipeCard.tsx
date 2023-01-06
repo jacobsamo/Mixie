@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import type { Recipe } from 'libs/types';
 import Image from 'next/image';
 import { HeartIcon } from '@heroicons/react/24/outline';
-import 'tailwindcss/tailwind.css';
 
-interface RecipeCard {
+
+interface recipeCardProps {
   id: string;
   imageUrl: string;
   recipeName: string;
@@ -16,12 +16,15 @@ const RecipeCard = ({
   imageUrl,
   recipeName,
   recipeDescription,
-}: RecipeCard) => {
+}: recipeCardProps) => {
+
+  console.log('id: ', id)
+
   return (
     <>
       <div
         key={id}
-        className="relative w-46 h-58 dark:bg-grey bg-white rounded-xl cursor-pointer"
+        className="relative w-46 h-58 dark:bg-grey bg-white rounded-xl cursor-pointer text-blue2"
       >
         <Image
           width={180}
