@@ -30,3 +30,22 @@ The repo uses a custom Nextjs 13 file structure with [Turborepo](https://turbo.b
 ## Workspaces
 If you aren't familiar with Workspaces they are pretty much ways of separating where things are in a project. so when installing into a certain workspace it will only install into that workspace and not the others, E.x `npm i <package_name> --workspace=meally.com.au`.
 
+## Consistent coding style
+Through this project there is mostly a consistent code style so it is easy to follow and understand no matter where you are in the project. When working on the project it would be greatly appreciated if you could follow this style. 
+
+### Passing props
+When passing props to a component i like to have this sort of structure:
+```jsx
+    interface componentProps {
+        prop1: string;
+        prop2: string;
+        prop3: string;
+    }
+
+    const Component = ({prop1, prop2, prop3}: componentProps) => {
+        return (
+            ...
+        )
+    }
+```
+A interface is used to define the props types named with camelCase fashion E.g (`interface <component_name>Props {}`). 

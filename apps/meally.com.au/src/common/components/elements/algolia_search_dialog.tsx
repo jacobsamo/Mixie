@@ -14,7 +14,7 @@ import {
 import { Hit } from 'libs/types';
 
 
-interface SearchDialogType {
+interface algoliaSearchDialogProps {
   buttonType: string;
 }
 
@@ -55,7 +55,7 @@ const Hit = ({ hit }: any) => {
 
 export default function Algolia_Search_Dialog({
   buttonType,
-}: SearchDialogType) {
+}: algoliaSearchDialogProps) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const ref = useRef();
 

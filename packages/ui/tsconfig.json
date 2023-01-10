@@ -7,6 +7,13 @@
       "@styles/*": ["styles/*"]
     }
   },
-  "include": [".", "../tests", "**/*.ts", "**/*.tsx", "modules/RecipeCard.tsx"],
+  "include": [
+    ".",
+    "../tests",
+    "**/*.ts",
+    "**/*.tsx",
+    "modules/RecipeCard.tsx",
+    "../../apps/meally.com.au/src/common/components/elements/Navbar.tsx"
+  ],
   "exclude": ["dist", "build", "node_modules"]
 }

@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import type { Recipe } from 'libs/types';
-import Image from 'next/image';
-import { HeartIcon } from '@heroicons/react/24/outline';
-
+import React from "react";
+import type { Recipe } from "libs/types";
+import Image from "next/image";
+import { HeartIcon } from "@heroicons/react/24/outline";
 
 interface recipeCardProps {
   id: string;
@@ -38,7 +37,7 @@ const RecipeCard = ({
         </h1>
         <HeartIcon
           className="dark:text-white text-black cursor-pointer absolute bottom-1 right-1 w-6 h-6"
-          onClick={() => console.log('heart icon clicked')}
+          onClick={() => console.log("heart icon clicked")}
         />
       </div>
     </>

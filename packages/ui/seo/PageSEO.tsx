@@ -1,7 +1,7 @@
 import Head from "next/head";
 import * as React from "react";
 
-interface PageSEOProps {
+interface pageSEOProps {
   title: string;
   url: string;
   imgUrl: string;
@@ -15,7 +15,7 @@ export default function PageSeo({
   description,
 
   
-}: PageSEOProps) {
+}: pageSEOProps) {
   return (
     <Head>
       <title>{title}</title>

@@ -12,14 +12,8 @@
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
     "autoprefixer": "^10.4.13",
-    "css-loader": "^6.7.3",
     "eslint-config-custom": "*",
-    "mini-css-extract-plugin": "^2.7.2",
-    "postcss": "^8.4.20",
-    "postcss-cli": "^10.1.0",
-    "postcss-loader": "^7.0.2",
     "prettier": "2.7.1",
-    "style-loader": "^3.3.1",
     "tailwindcss": "^3.2.4",
     "tsconfig": "*",
     "typescript": "4.7.4",
@@ -37,7 +31,6 @@
     "next-google-ads": "^0.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sass": "^1.57.1",
-    "storybook": "^6.5.15"
+    "sass": "^1.57.1"
   }
 }
