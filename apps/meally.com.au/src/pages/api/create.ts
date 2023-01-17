@@ -10,8 +10,9 @@ export default function handler(
 ) {
   if (req.method === 'POST') {
     try {
-      const recipe = req.body
-      // RecipeService.createRecipe(recipe)
+      const recipe = JSON.parse(JSON.stringify(req.body))
+      console.log(recipe)
+      RecipeService.createRecipe(recipe)
       res.status(201).send('data is valid')
     }
     catch (err: any) {

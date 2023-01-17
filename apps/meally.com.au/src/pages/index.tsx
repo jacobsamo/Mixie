@@ -24,6 +24,7 @@ const Home: NextPage = () => {
           <h1 className={styles.heroTitle}>Want Tasty Recipes</h1>
           <Algolia_Search_Dialog buttonType="searchBar" />
         </div>
+        <button className='bg-blue text-black w-20 h-28'>Button</button>
       </main>
     </>
   );
