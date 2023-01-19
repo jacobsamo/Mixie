@@ -77,6 +77,10 @@ function recipeReducer(state: any, action: any) {
   }
 }
 
+
+
+
+
 const Form = () => {
   const [recipe, dispatch] = useReducer(recipeReducer, initialRecipeState);
 
@@ -101,6 +105,8 @@ const Form = () => {
     await dispatch({ type: 'SET_ID', payload: recipe.recipeName });
     console.log(recipe);
   }
+
+  
 
   return (
     <>
@@ -153,6 +159,7 @@ const Form = () => {
           name="recipe_description"
           onChange={handleChange}
         />
+        
         <button type="submit">Submit</button>
       </form>
     </>

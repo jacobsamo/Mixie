@@ -7,6 +7,6 @@ When reporting a vulnerability please [Email Me](jacob35422@gmail.com) straight 
 1. How it occurred, 
 2. What is compromised, 
 3. Steps to replicate the issue
-
+    
 
 Thankyou for taking your time to read this and help keep Meally safe

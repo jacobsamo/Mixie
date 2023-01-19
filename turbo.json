@@ -15,9 +15,7 @@
     "dev": {
       "cache": false
     },
-    "test": {
-      "outputs": []
-    },
+    "test": {},
     "test:watch": {
       "cache": false
     }
