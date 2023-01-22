@@ -8,14 +8,7 @@ interface pageSEOProps {
   description: string;
 }
 
-export default function PageSeo({
-  title,
-  url,
-  imgUrl,
-  description,
-
-  
-}: pageSEOProps) {
+function PageSeo({ title, url, imgUrl, description }: pageSEOProps) {
   return (
     <Head>
       <title>{title}</title>
@@ -44,8 +37,10 @@ export default function PageSeo({
       <meta property="twitter:image" content={imgUrl}></meta>
 
       <link rel="manifest" href="manifest.json" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-        <link rel="apple-touch-icon" href="favicon.png" />
+      <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+      <link rel="apple-touch-icon" href="favicon.png" />
     </Head>
   );
 }
+
+export { PageSeo };

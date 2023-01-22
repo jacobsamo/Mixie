@@ -9,10 +9,15 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
-    "lint": {
-      "outputs": []
-    },
+    "lint": {},
     "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "clean": {
+      "cache": false
+    },
+    "clean:node_modules": {
       "cache": false
     },
     "test": {},
@@ -20,8 +25,5 @@
       "cache": false
     }
   },
-  "globalDependencies": [
-    ".env",
-    "tsconfig.json"
-  ]
+  "globalDependencies": [".env", "tsconfig.json"]
 }

@@ -14,4 +14,4 @@ const AddButton = ({ name, onClick }: addButtonProps) => {
   );
 };
 
-export default AddButton;
+export  {AddButton};
