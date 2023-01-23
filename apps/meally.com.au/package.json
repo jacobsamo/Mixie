@@ -6,7 +6,7 @@
     
     "build": "next build",
     "dev": "next dev",
-    "dev-local": "firebase emulators:start --import=./seed --export-on-exit=./seed & next dev",
+    "dev-local": "next dev & firebase emulators:start --import=./seed --export-on-exit=./seed",
     "lint": "next lint",
     "start": "next start",
     "test": "jest",

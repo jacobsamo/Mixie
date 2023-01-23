@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
-import "@styles/InputFields.scss";
+import "@styles/InputFields.css";
 
-function TextField(props: any) {
+function InputField(props: any) {
   const [value, setValue] = useState("");
 
   function handleChange(event: any) {
@@ -13,44 +13,19 @@ function TextField(props: any) {
     <label>
       {props.label}
       <input
-        type="text"
+        type={props.type || "text"}
         name={props.name}
         id={props.name || props.id}
         placeholder={props.placeholder}
         value={props.value}
+        aria-required={props.required}
         onChange={handleChange}
         required={props.required}
         autoComplete={props.autoComplete}
-        className="inputField textField"
+        className={`input-field`}
       />
     </label>
   );
 }
 
-function NumberField(props: any) {
-  const [value, setValue] = useState(0);
-
-  function handleChange(event: any) {
-    setValue(event.target.value);
-    props.onChange(event.target.value);
-  }
-
-  return (
-    <label>
-      {props.label}
-      <input
-        type="number"
-        name={props.name}
-        id={props.name || props.id}
-        placeholder={props.placeholder}
-        value={props.value}
-        onChange={handleChange}
-        required={props.required}
-        autoComplete={props.autoComplete}
-        className="inputField numberField"
-      />
-    </label>
-  );
-}
-
-export { TextField, NumberField };
+export { InputField };
