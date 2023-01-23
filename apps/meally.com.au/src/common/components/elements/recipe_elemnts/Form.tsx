@@ -1,6 +1,8 @@
 'use client';
 import { Recipe, Info } from 'libs/types';
 import React, { useEffect, useReducer } from 'react';
+import localStorageService from 'libs/utils/localStorage';
+import RecipeService from '@lib/service/RecipeService';
 
 const initialRecipeState: Recipe = {
   id: '',
@@ -79,14 +81,11 @@ function recipeReducer(state: any, action: any) {
 
 
 
-
-
 const Form = () => {
   const [recipe, dispatch] = useReducer(recipeReducer, initialRecipeState);
 
   useEffect(() => {
-    window.localStorage &&
-      window.localStorage.setItem('recipe', JSON.stringify(recipe));
+    localStorageService.setLocal('recipe', recipe);
   }, [recipe]);
 
   function handleChange(event: any) {
@@ -96,17 +95,21 @@ const Form = () => {
     });
   }
 
-  async function handleSubmit(event: any) {
-    event.preventDefault();
-    await dispatch({
+  async function setAdditionalInformation() {
+    dispatch({ type: 'SET_ID', payload: recipe.recipeName });
+    dispatch({ type: 'SET_CREATED_BY', payload: 'Meally' });
+    dispatch({ type: 'SET_CREATED_AT', payload: new Date() });
+    dispatch({
       type: 'SET_TOTAL',
       payload: parseInt(recipe.info.prep) + parseInt(recipe.info.cook),
     });
-    await dispatch({ type: 'SET_ID', payload: recipe.recipeName });
-    console.log(recipe);
   }
 
-  
+  async function handleSubmit(event: any) {
+    await event.preventDefault();
+    await setAdditionalInformation();
+    RecipeService.createRecipe(recipe);
+  }
 
   return (
     <>
@@ -159,7 +162,7 @@ const Form = () => {
           name="recipe_description"
           onChange={handleChange}
         />
-        
+
         <button type="submit">Submit</button>
       </form>
     </>

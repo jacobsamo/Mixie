@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    
     "build": "next build",
     "dev": "next dev",
+    "dev-local": "firebase emulators:start --import=./seed --export-on-exit=./seed & next dev",
     "lint": "next lint",
     "start": "next start",
     "test": "jest",
@@ -39,7 +41,6 @@
     "react-svg": "^15.1.17",
     "sass": "^1.54.8",
     "storybook": "^6.5.15",
-    
     "ui": "*",
     "web-vitals": "^3.0.1"
   },
