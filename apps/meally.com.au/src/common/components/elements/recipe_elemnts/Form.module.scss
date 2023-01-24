@@ -1,0 +1,24 @@
+.recipeForm {
+    @apply flex flex-col gap-1 w-1/2;
+
+}
+
+.recipeForm input {
+    width: 18.75rem;
+    height: 2.5rem;
+    border-radius: 5px;
+    padding: 0.5rem;
+    font-size: var(--step--1);
+}
+
+.recipeForm input:focus {
+    @apply border-black;
+}
+
+.recipeForm select {
+    width: 18.75rem;
+    height: 2.5rem;
+    border-radius: 5px;
+    padding: 0.5rem;
+    font-size: var(--step--1);
+}

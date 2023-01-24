@@ -120,6 +120,35 @@ var Loader = () => {
   </div>;
 };
 
+// src/modules/InputFields.tsx
+import { useState as useState2 } from "react";
+function InputField(props) {
+  const [value, setValue] = useState2("");
+  function handleChange(event) {
+    setValue(event.target.value);
+    props.onChange(event);
+  }
+  return <label>
+    {props.label}
+    <input
+      type={props.type || "text"}
+      name={props.name}
+      id={props.name || props.id}
+      placeholder={props.placeholder}
+      value={props.value}
+      aria-required={props.required}
+      onChange={handleChange}
+      required={props.required}
+      autoComplete={props.autoComplete}
+      className={props.className}
+      min={props.min}
+      minLength={props.minLength}
+      max={props.max}
+      maxLength={props.maxLength}
+    />
+  </label>;
+}
+
 // src/seo/PageSEO.tsx
 import Head from "next/head";
 function PageSeo({ title, url, imgUrl, description }) {
@@ -198,6 +227,7 @@ function RecipeSeo({
 }
 export {
   AdBanner,
+  InputField,
   Loader,
   PageSeo,
   RecipeCard,

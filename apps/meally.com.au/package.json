@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    
     "build": "next build",
     "dev": "next dev",
     "dev-local": "next dev & firebase emulators:start --import=./seed --export-on-exit=./seed",

@@ -1,6 +1,5 @@
-import React from 'react';
-import './loader.css'
-
+import React from "react";
+import "./loader.css";
 
 const Loader = () => {
   return (
@@ -15,4 +14,4 @@ const Loader = () => {
   );
 };
 
-export {Loader};
+export { Loader };

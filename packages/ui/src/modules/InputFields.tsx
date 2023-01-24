@@ -1,16 +1,16 @@
-import React, { useEffect, useReducer, useState } from "react";
-import "@styles/InputFields.css";
+import React, { useState } from "react";
+import "../styles/InputFields.css";
 
 function InputField(props: any) {
   const [value, setValue] = useState("");
 
   function handleChange(event: any) {
     setValue(event.target.value);
-    props.onChange(event.target.value);
+    props.onChange(event);
   }
 
   return (
-    <label>
+    <label >
       {props.label}
       <input
         type={props.type || "text"}
@@ -22,7 +22,11 @@ function InputField(props: any) {
         onChange={handleChange}
         required={props.required}
         autoComplete={props.autoComplete}
-        className={`input-field`}
+        className={props.className}
+        min={props.min}
+        minLength={props.minLength}
+        max={props.max}
+        maxLength={props.maxLength}
       />
     </label>
   );

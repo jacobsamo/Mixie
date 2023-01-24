@@ -41,6 +41,7 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 var src_exports = {};
 __export(src_exports, {
   AdBanner: () => AdBanner,
+  InputField: () => InputField,
   Loader: () => Loader,
   PageSeo: () => PageSeo,
   RecipeCard: () => RecipeCard,
@@ -154,6 +155,35 @@ var Loader = () => {
   </div>;
 };
 
+// src/modules/InputFields.tsx
+var import_react2 = require("react");
+function InputField(props) {
+  const [value, setValue] = (0, import_react2.useState)("");
+  function handleChange(event) {
+    setValue(event.target.value);
+    props.onChange(event);
+  }
+  return <label>
+    {props.label}
+    <input
+      type={props.type || "text"}
+      name={props.name}
+      id={props.name || props.id}
+      placeholder={props.placeholder}
+      value={props.value}
+      aria-required={props.required}
+      onChange={handleChange}
+      required={props.required}
+      autoComplete={props.autoComplete}
+      className={props.className}
+      min={props.min}
+      minLength={props.minLength}
+      max={props.max}
+      maxLength={props.maxLength}
+    />
+  </label>;
+}
+
 // src/seo/PageSEO.tsx
 var import_head = __toESM(require("next/head"));
 function PageSeo({ title, url, imgUrl, description }) {
@@ -233,6 +263,7 @@ function RecipeSeo({
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   AdBanner,
+  InputField,
   Loader,
   PageSeo,
   RecipeCard,

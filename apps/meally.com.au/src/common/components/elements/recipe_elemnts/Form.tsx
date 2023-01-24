@@ -3,9 +3,12 @@ import { Recipe, Info } from 'libs/types';
 import React, { useEffect, useReducer, useState } from 'react';
 import localStorageService from 'libs/utils/localStorage';
 import RecipeService from '@lib/service/RecipeService';
-import {} from 'ui'
+import { dietaryRequirements } from '@lib/service/data';
+import styles from './Form.module.scss';
+import { InputField } from 'ui'
 
-const initialRecipeState: Recipe = {
+
+const initialRecipeState =  {
   id: '',
   imageUrl: '',
   recipeName: '',
@@ -80,49 +83,7 @@ function recipeReducer(state: any, action: any) {
   }
 }
 
-const TextArea = () => {
-  const [textareaValue, setTextareaValue] = useState('');
-  const [tags, setTags] = useState([]);
 
-  const handleKeyDown = (e: any) => {
-    if (e.key === ',' || e.key === 'Enter') {
-      e.preventDefault();
-      setTags([...tags, textareaValue]);
-      setTextareaValue('');
-    }
-  };
-
-  const handleChange = (e: any) => {
-    setTags(e.target.value.split(','));
-  };
-
-  return (
-    <label>
-      textarea
-      <div className="relative resize-none w-10 h-3">
-        <ul className="absolute left-0">
-          {tags.map((tag, index) => (
-            <li key={index}>
-              {tag}
-              <button
-                onClick={() => {
-                  setTags(tags.filter((_, i) => i !== index));
-                }}
-              >
-                X
-              </button>
-            </li>
-          ))}
-        </ul>
-        <textarea
-          value={textareaValue}
-          onChange={(e) => setTextareaValue(e.target.value)}
-          onKeyDown={handleKeyDown}
-        />
-      </div>
-    </label>
-  );
-};
 
 const Form = () => {
   const [recipe, dispatch] = useReducer(recipeReducer, initialRecipeState);
@@ -151,31 +112,36 @@ const Form = () => {
   async function handleSubmit(event: any) {
     await event.preventDefault();
     await setAdditionalInformation();
-    RecipeService.createRecipe(recipe);
+    console.log(recipe);
   }
 
   return (
     <>
       <h1>Recipe Creation Form</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-1 w-1/2">
-        <input
+      <form onSubmit={handleSubmit} className={styles.recipeForm}>
+        <InputField
           value={recipe.recipeName}
           type="text"
           required
           placeholder="Recipe name"
           name="recipe_name"
           onChange={handleChange}
-        />
-        <TextArea />
-        <select name="dietary" id="dietary" value={recipe.dietary} onChange={handleChange}>
-          <option value="value">value</option>
-        </select>
+      />
+        <label className='flex flex-col'>
+          Dietary requirements
+          <select name="dietary" id="dietary" value={recipe.dietary} onChange={handleChange}>
+            {dietaryRequirements.map((dietaryRequirement) => (
+              <option value={dietaryRequirement}>{dietaryRequirement}</option>
+            ))}
+          </select>
+        </label>
         <select name="allergens" id="allergens" value={recipe.allergens} onChange={handleChange}>
           <option value="value">value</option>
         </select>
         <select name="sweet_savoury" id="sweet_savoury" value={recipe.sweet_savoury} onChange={handleChange}>
           <option value="sweet">sweet</option>
           <option value="savoury">savoury</option>
+          <option value="both">both sweet and savoury</option>
         </select>
         <select name="meal_time" id="meal_time" value={recipe.meal_time} onChange={handleChange}> 
           <option value="breakfast">breakfast</option>
@@ -183,7 +149,7 @@ const Form = () => {
           <option value="dinner">dinner</option>
           <option value="snack">snack</option>
         </select>
-        <input
+        <InputField
           value={recipe.info.prep}
           type="number"
           required
@@ -191,15 +157,16 @@ const Form = () => {
           name="prep"
           onChange={handleChange}
         />
-        <input
+        <InputField
           value={recipe.info.cook}
           type="number"
           required
           placeholder="Cook TIme"
           name="cook"
+          min="0"
           onChange={handleChange}
         />
-        <input
+        <InputField
           value={recipe.info.serves}
           type="number"
           required
@@ -214,7 +181,7 @@ const Form = () => {
           name="img_url"
           onChange={handleChange}
         />
-        <TextField
+        <InputField
           value={recipe.recipeDescription}
           type="text"
           required
