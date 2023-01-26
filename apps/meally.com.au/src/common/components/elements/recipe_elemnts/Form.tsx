@@ -1,38 +1,13 @@
 'use client';
 import { Recipe, Info } from 'libs/types';
+import Image from 'next/image';
 import React, { useEffect, useReducer, useState } from 'react';
 import localStorageService from 'libs/utils/localStorage';
 import RecipeService from '@lib/service/RecipeService';
-import { dietaryRequirements } from '@lib/service/data';
+import { dietaryRequirements, initialRecipeState } from '@lib/service/data';
 import styles from './Form.module.scss';
-import { InputField } from 'ui'
-
-
-const initialRecipeState =  {
-  id: '',
-  imageUrl: '',
-  recipeName: '',
-  recipeDescription: '',
-  keywords: [],
-  ingredients: [],
-  dietary: [],
-  Allergens: [],
-  sweet_savoury: '',
-  meallyTime: [],
-  version: '',
-  createdBy: '',
-  createdAt: '',
-  info: {
-    total: 0,
-    prep: 0,
-    cook: 0,
-    serves: 0,
-    rating: 0,
-  },
-  steps: [],
-  madeRecipe: 0,
-  savedRecipe: 0,
-};
+import { InputField, AddButton } from 'ui';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 
 function recipeReducer(state: any, action: any) {
   switch (action.type) {
@@ -83,14 +58,88 @@ function recipeReducer(state: any, action: any) {
   }
 }
 
+const TextArea = (props: any) => {
+  const [textareaValue, setTextareaValue] = useState('');
+  const [tags, setTags] = useState<string[]>([]);
 
-
-const Form = () => {
-  const [recipe, dispatch] = useReducer(recipeReducer, initialRecipeState);
+  const handleKeyDown = (e: any) => {
+    if (e.key === ',' || e.key === 'Enter') {
+      e.preventDefault();
+      setTags([...tags, textareaValue]);
+      setTextareaValue('');
+    }
+  };
 
   useEffect(() => {
-    localStorageService.setLocal('recipe', recipe);
-  }, [recipe]);
+    props.onTagsChange(props.name, tags);
+  }, [tags]);
+
+  const handleDeleteTag = (index: any) => {};
+
+  return (
+    <label className={styles.textarea_container}>
+      {props.label}
+      <textarea
+        value={textareaValue}
+        onChange={(e) => setTextareaValue(e.target.value)}
+        onKeyDown={handleKeyDown}
+        className={styles.textarea}
+        name={props.name}
+        placeholder={props.placeholder}
+      />
+      <div className={styles.textarea_tags}>
+        {tags.map((tag, index) => (
+          <span key={index}>
+            {tag}
+            <button
+              onClick={() => {
+                setTags(tags.filter((_, i) => i !== index));
+              }}
+              type="button"
+            >
+              <XMarkIcon className="w-4 h-4" />
+            </button>
+          </span>
+        ))}
+      </div>
+    </label>
+  );
+};
+
+const ImageFile = (props: any) => {
+  interface imgProps {
+    imgUrl: string;
+    alt: string;
+  }
+  const [img, setImg] = useState<imgProps[]>([]);
+
+  function handleImageUpload() {
+    return '';
+  }
+
+  if (img.length !== 0) {
+    return (
+      <Image
+        src={img?.imgUrl || ""}
+        alt={img?.alt || ""}
+        width={800}
+        height={600}
+        priority
+      />
+    );
+  }
+
+  return (
+    <div className={styles.fileInput}>
+      <AddButton type="button" name="Image" onClick={handleImageUpload} />
+    </div>
+  );
+};
+
+const Form = () => {
+  const [allergenTags, setAllergenTags] = useState<string[]>([]);
+  const [keywordTags, setKeywordTags] = useState<string[]>([]);
+  const [recipe, dispatch] = useReducer(recipeReducer, initialRecipeState);
 
   function handleChange(event: any) {
     dispatch({
@@ -98,6 +147,10 @@ const Form = () => {
       payload: event.target.value,
     });
   }
+
+  const handleTagsChange = (name: string, tags: string[]) => {
+    dispatch({ type: 'SET_' + name.toUpperCase(), payload: tags });
+  };
 
   async function setAdditionalInformation() {
     dispatch({ type: 'SET_ID', payload: recipe.recipeName });
@@ -111,9 +164,19 @@ const Form = () => {
 
   async function handleSubmit(event: any) {
     await event.preventDefault();
-    await setAdditionalInformation();
+    await RecipeService.createRecipe(recipe);
     console.log(recipe);
   }
+
+  useEffect(() => {
+    localStorageService.setLocal('recipe', recipe);
+  }, [recipe]);
+
+  useEffect(() => {
+    if (recipe.recipeName !== '') {
+      setAdditionalInformation();
+    }
+  }, [recipe.recipeName, recipe.info.prep, recipe.info.cook]);
 
   return (
     <>
@@ -126,29 +189,7 @@ const Form = () => {
           placeholder="Recipe name"
           name="recipe_name"
           onChange={handleChange}
-      />
-        <label className='flex flex-col'>
-          Dietary requirements
-          <select name="dietary" id="dietary" value={recipe.dietary} onChange={handleChange}>
-            {dietaryRequirements.map((dietaryRequirement) => (
-              <option value={dietaryRequirement}>{dietaryRequirement}</option>
-            ))}
-          </select>
-        </label>
-        <select name="allergens" id="allergens" value={recipe.allergens} onChange={handleChange}>
-          <option value="value">value</option>
-        </select>
-        <select name="sweet_savoury" id="sweet_savoury" value={recipe.sweet_savoury} onChange={handleChange}>
-          <option value="sweet">sweet</option>
-          <option value="savoury">savoury</option>
-          <option value="both">both sweet and savoury</option>
-        </select>
-        <select name="meal_time" id="meal_time" value={recipe.meal_time} onChange={handleChange}> 
-          <option value="breakfast">breakfast</option>
-          <option value="lunch">lunch</option>
-          <option value="dinner">dinner</option>
-          <option value="snack">snack</option>
-        </select>
+        />
         <InputField
           value={recipe.info.prep}
           type="number"
@@ -175,12 +216,42 @@ const Form = () => {
           min="0"
           onChange={handleChange}
         />
-        <input
-          value={recipe.imageUrl}
-          type="file"
-          name="img_url"
-          onChange={handleChange}
+        <label className="flex flex-col">
+          Dietary requirements
+          <select
+            name="dietary"
+            id="dietary"
+            value={recipe.dietary}
+            onChange={handleChange}
+          >
+            {dietaryRequirements.map((dietaryRequirement) => (
+              <option
+                value={dietaryRequirement}
+                key={dietaryRequirement.length * Math.random()}
+              >
+                {dietaryRequirement}
+              </option>
+            ))}
+          </select>
+        </label>
+        <TextArea
+          name="allergens"
+          label="contains:"
+          onTagsChange={handleTagsChange}
+          placeholder="E.g gluten, dairy, nuts"
         />
+        <select
+          name="sweet_savoury"
+          id="sweet_savoury"
+          value={recipe.sweet_savoury}
+          onChange={handleChange}
+        >
+          <option value="sweet">sweet</option>
+          <option value="savoury">savoury</option>
+          <option value="both">both sweet and savoury</option>
+        </select>
+
+        <ImageFile />
         <InputField
           value={recipe.recipeDescription}
           type="text"
@@ -188,6 +259,22 @@ const Form = () => {
           placeholder="Recipe Description"
           name="recipe_description"
           onChange={handleChange}
+        />
+        <select
+          name="meal_time"
+          id="meal_time"
+          value={recipe.meal_time}
+          onChange={handleChange}
+        >
+          <option value="breakfast">breakfast</option>
+          <option value="lunch">lunch</option>
+          <option value="dinner">dinner</option>
+          <option value="snack">snack</option>
+        </select>
+        <TextArea
+          name="keywords"
+          label="keywords:"
+          onTagsChange={handleTagsChange}
         />
         <button type="submit">Submit</button>
       </form>

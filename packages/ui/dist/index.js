@@ -41,6 +41,7 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 var src_exports = {};
 __export(src_exports, {
   AdBanner: () => AdBanner,
+  AddButton: () => AddButton,
   InputField: () => InputField,
   Loader: () => Loader,
   PageSeo: () => PageSeo,
@@ -81,6 +82,36 @@ function HeartIcon(_a, svgRef) {
 }
 var ForwardRef = React.forwardRef(HeartIcon);
 var HeartIcon_default = ForwardRef;
+
+// ../../node_modules/@heroicons/react/24/outline/esm/PlusCircleIcon.js
+var React2 = __toESM(require("react"), 1);
+function PlusCircleIcon(_a, svgRef) {
+  var _b = _a, {
+    title,
+    titleId
+  } = _b, props = __objRest(_b, [
+    "title",
+    "titleId"
+  ]);
+  return /* @__PURE__ */ React2.createElement("svg", Object.assign({
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    strokeWidth: 1.5,
+    stroke: "currentColor",
+    "aria-hidden": "true",
+    ref: svgRef,
+    "aria-labelledby": titleId
+  }, props), title ? /* @__PURE__ */ React2.createElement("title", {
+    id: titleId
+  }, title) : null, /* @__PURE__ */ React2.createElement("path", {
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    d: "M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+  }));
+}
+var ForwardRef2 = React2.forwardRef(PlusCircleIcon);
+var PlusCircleIcon_default = ForwardRef2;
 
 // src/modules/RecipeCard.tsx
 var RecipeCard = ({
@@ -184,6 +215,15 @@ function InputField(props) {
   </label>;
 }
 
+// src/modules/AddButton.tsx
+var AddButton = (props) => {
+  return <button type={props.type} onClick={props.onClick} className="flex flex-row w-40 h-9 rounded-lg border-2 border-solid border-black dark:border-white justify-center items-center gap-3">
+    <PlusCircleIcon_default className="w-5 h-5" />
+    {" Add "}
+    {props.name}
+  </button>;
+};
+
 // src/seo/PageSEO.tsx
 var import_head = __toESM(require("next/head"));
 function PageSeo({ title, url, imgUrl, description }) {
@@ -263,6 +303,7 @@ function RecipeSeo({
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   AdBanner,
+  AddButton,
   InputField,
   Loader,
   PageSeo,

@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.firebase-emulator-warning {
+  display: none;
+}
+
 html,
 body {
   padding: 0;
