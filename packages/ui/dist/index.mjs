@@ -156,7 +156,7 @@ function InputField(props) {
   const [value, setValue] = useState2("");
   function handleChange(event) {
     setValue(event.target.value);
-    props.onChange(event);
+    props.onChange ? props.onChange(event) : null;
   }
   return <label>
     {props.label}
@@ -187,6 +187,55 @@ var AddButton = (props) => {
     {props.name}
   </button>;
 };
+
+// src/modules/Dialog.tsx
+import { useCallback, useEffect as useEffect2, useState as useState3 } from "react";
+function Dialog(props) {
+  const [dialogOpen, setDialogOpen] = useState3(false);
+  const handleKeyOpen = useCallback((event) => {
+    if (event.key in props.keyOpen)
+      setDialogOpen(true);
+  }, []);
+  const handleKeyClose = useCallback((event) => {
+    if (event.key in props.keyClose)
+      setDialogOpen(false);
+  }, []);
+  useEffect2(() => {
+    if (props.keyOpen) {
+      document.addEventListener("keyup", handleKeyOpen);
+      return () => document.removeEventListener("keyup", handleKeyOpen);
+    }
+  }, [handleKeyOpen]);
+  useEffect2(() => {
+    if (props.keyClose) {
+      document.addEventListener("keyup", handleKeyClose);
+      return () => document.removeEventListener("keyup", handleKeyClose);
+    }
+  }, [handleKeyClose]);
+  useEffect2(() => {
+    if (props.open) {
+      setDialogOpen(props.open);
+    }
+  }, [props.open]);
+  const handleOpen = () => {
+    setDialogOpen(true);
+    props.setOpen(true);
+  };
+  const handleClose = () => {
+    setDialogOpen(false);
+    props.setOpen(false);
+  };
+  const handleToggle = () => {
+    setDialogOpen(!dialogOpen);
+    props.setOpen(!dialogOpen);
+  };
+  return <div
+    style={{
+      display: dialogOpen ? "block" : "none"
+    }}
+    className={`fixed inset-0 z-50 overflow-y-auto backdrop-blur-sm w-full h-full ${props.className}`}
+  ><section className={props.className}>{props.children}</section></div>;
+}
 
 // src/seo/PageSEO.tsx
 import Head from "next/head";
@@ -267,6 +316,7 @@ function RecipeSeo({
 export {
   AdBanner,
   AddButton,
+  Dialog,
   InputField,
   Loader,
   PageSeo,

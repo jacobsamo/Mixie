@@ -2,8 +2,10 @@ const units = ["g", "kg", "cup", "ml", "l", "teaspoon", "table spoon"];
 const recipes = [
   {
     id: 'chocolate-fudge-brownies',
-    imageUrl:
-      'https://img.taste.com.au/gOpVgvz8/taste/2016/11/classic-chewy-brownie-102727-1.jpeg',
+    image: {
+      imgUrl: 'https://img.taste.com.au/gOpVgvz8/taste/2016/11/classic-chewy-brownie-102727-1.jpeg',
+      imgAlt: 'Chocolate fudge brownies',
+    },
     recipeName: 'Chocolate fudge Brownies',
     recipeDescription:
       'This is my own recipe that has been changed from another recipe to make it fuggy ',

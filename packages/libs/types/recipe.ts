@@ -5,7 +5,7 @@ import { Timestamp } from "firebase/firestore";
 
 export interface Recipe {
   id: string;
-  imageUrl: string;
+  image: Image;
   recipeName: string;
   recipeDescription: string;
   keywords: string[];
@@ -29,4 +29,9 @@ export interface Info {
   cook: number;
   serves: number;
   rating: number;
+}
+
+export interface Image {
+  imgUrl: string;
+  imgAlt: string;
 }

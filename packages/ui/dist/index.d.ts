@@ -16,6 +16,8 @@ declare function InputField(props: any): JSX.Element;
 
 declare const AddButton: (props: any) => JSX.Element;
 
+declare function Dialog(props: any): JSX.Element;
+
 interface pageSEOProps {
     title: string;
     url: string;
@@ -35,4 +37,4 @@ interface recipeSEOProps {
 }
 declare function RecipeSeo({ recipeDescription, recipeName, imageUrl, info, recipeUrl, createdAt, keywords, }: recipeSEOProps): JSX.Element;
 
-export { AdBanner, AddButton, InputField, Loader, PageSeo, RecipeCard, RecipeSeo };
+export { AdBanner, AddButton, Dialog, InputField, Loader, PageSeo, RecipeCard, RecipeSeo };

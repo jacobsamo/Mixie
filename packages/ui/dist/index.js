@@ -42,6 +42,7 @@ var src_exports = {};
 __export(src_exports, {
   AdBanner: () => AdBanner,
   AddButton: () => AddButton,
+  Dialog: () => Dialog,
   InputField: () => InputField,
   Loader: () => Loader,
   PageSeo: () => PageSeo,
@@ -192,7 +193,7 @@ function InputField(props) {
   const [value, setValue] = (0, import_react2.useState)("");
   function handleChange(event) {
     setValue(event.target.value);
-    props.onChange(event);
+    props.onChange ? props.onChange(event) : null;
   }
   return <label>
     {props.label}
@@ -223,6 +224,55 @@ var AddButton = (props) => {
     {props.name}
   </button>;
 };
+
+// src/modules/Dialog.tsx
+var import_react3 = require("react");
+function Dialog(props) {
+  const [dialogOpen, setDialogOpen] = (0, import_react3.useState)(false);
+  const handleKeyOpen = (0, import_react3.useCallback)((event) => {
+    if (event.key in props.keyOpen)
+      setDialogOpen(true);
+  }, []);
+  const handleKeyClose = (0, import_react3.useCallback)((event) => {
+    if (event.key in props.keyClose)
+      setDialogOpen(false);
+  }, []);
+  (0, import_react3.useEffect)(() => {
+    if (props.keyOpen) {
+      document.addEventListener("keyup", handleKeyOpen);
+      return () => document.removeEventListener("keyup", handleKeyOpen);
+    }
+  }, [handleKeyOpen]);
+  (0, import_react3.useEffect)(() => {
+    if (props.keyClose) {
+      document.addEventListener("keyup", handleKeyClose);
+      return () => document.removeEventListener("keyup", handleKeyClose);
+    }
+  }, [handleKeyClose]);
+  (0, import_react3.useEffect)(() => {
+    if (props.open) {
+      setDialogOpen(props.open);
+    }
+  }, [props.open]);
+  const handleOpen = () => {
+    setDialogOpen(true);
+    props.setOpen(true);
+  };
+  const handleClose = () => {
+    setDialogOpen(false);
+    props.setOpen(false);
+  };
+  const handleToggle = () => {
+    setDialogOpen(!dialogOpen);
+    props.setOpen(!dialogOpen);
+  };
+  return <div
+    style={{
+      display: dialogOpen ? "block" : "none"
+    }}
+    className={`fixed inset-0 z-50 overflow-y-auto backdrop-blur-sm w-full h-full ${props.className}`}
+  ><section className={props.className}>{props.children}</section></div>;
+}
 
 // src/seo/PageSEO.tsx
 var import_head = __toESM(require("next/head"));
@@ -304,6 +354,7 @@ function RecipeSeo({
 0 && (module.exports = {
   AdBanner,
   AddButton,
+  Dialog,
   InputField,
   Loader,
   PageSeo,

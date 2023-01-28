@@ -41,14 +41,14 @@ const Hit = ({ hit }: any) => {
   //TODO: Make highlighting to also cover over measures of searching
   return (
     <Link className="relative" href={info.path.toString()}>
-        <Highlight
-          attribute="recipeName"
-          hit={hit}
-          classNames={{
-            root: styles.hitName,
-          }}
-        />
-        <DietaryNeeds />
+      <Highlight
+        attribute="recipeName"
+        hit={hit}
+        classNames={{
+          root: styles.hitName,
+        }}
+      />
+      <DietaryNeeds />
     </Link>
   );
 };
@@ -63,9 +63,10 @@ export default function Algolia_Search_Dialog({
     if (event.ctrlKey == true && event.key == 'k') setDialogOpen(true);
   }, []);
 
-  const handleKeyEscape = useCallback((event: any) => {
-    if (event.key === 'Escape') setDialogOpen(false);
+  const handleKeyClose = useCallback((event: any) => {
+    if (event.key == 'Escape') setDialogOpen(false);
   }, []);
+
 
   //TODO: make it so you can click out side of the dialog to close it
   // useEffect(() => {
@@ -91,9 +92,9 @@ export default function Algolia_Search_Dialog({
   }, [handleKeyPress]);
 
   useEffect(() => {
-    document.addEventListener('keydown', handleKeyEscape);
-    return () => document.removeEventListener('keydown', handleKeyEscape);
-  }, [handleKeyEscape]);
+    document.addEventListener('keydown', handleKeyClose);
+    return () => document.removeEventListener('keydown', handleKeyClose);
+  }, [handleKeyClose]);
 
   const Button = () => {
     if (buttonType === 'searchBar') {

@@ -12,11 +12,11 @@ import InfoComponent from '@components/elements/recipe_elemnts/RecipeInfo';
 import Ingredient from '@components/elements/recipe_elemnts/RecipeIngredientCard';
 import Step from '@components/elements/recipe_elemnts/RecipeStep';
 
-interface recipePageProps {
+interface recipePageLayoutProps {
   recipe: Recipe;
 }
 
-function RecipePageLayout({ recipe }: recipePageProps) {
+function RecipePageLayout({ recipe }: recipePageLayoutProps) {
   const [methodOpen, setMethodOpen] = useState(false);
 
   const info = recipe.info as Info;
@@ -67,8 +67,8 @@ function RecipePageLayout({ recipe }: recipePageProps) {
           </section>
           <InfoComponent info={recipe.info} recipeName={recipe.recipeName} />
           <Image
-            src={recipe.imageUrl}
-            alt={recipe.recipeName}
+            src={recipe.image.imgUrl}
+            alt={recipe.image.imgAlt || recipe.recipeName}
             className={styles.recipeImage}
             width={800}
             height={600}

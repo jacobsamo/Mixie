@@ -10,7 +10,10 @@ export const dietaryRequirements = [
 
 export const initialRecipeState = {
     id: '',
-    imageUrl: '',
+    image: {
+      imgUrl: '',
+      imgAlt: '',
+    },
     recipeName: '',
     recipeDescription: '',
     keywords: [],

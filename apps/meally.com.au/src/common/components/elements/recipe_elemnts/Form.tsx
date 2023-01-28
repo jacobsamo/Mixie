@@ -1,12 +1,12 @@
 'use client';
 import { Recipe, Info } from 'libs/types';
 import Image from 'next/image';
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import localStorageService from 'libs/utils/localStorage';
 import RecipeService from '@lib/service/RecipeService';
 import { dietaryRequirements, initialRecipeState } from '@lib/service/data';
 import styles from './Form.module.scss';
-import { InputField, AddButton } from 'ui';
+import { InputField, AddButton, Dialog } from 'ui';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 function recipeReducer(state: any, action: any) {
@@ -14,7 +14,9 @@ function recipeReducer(state: any, action: any) {
     case 'SET_ID':
       return { ...state, id: action.payload };
     case 'SET_IMAGE_URL':
-      return { ...state, imageUrl: action.payload };
+      return { ...state, image: { ...state.image, imgUrl: action.payload } };
+    case 'SET_IMAGE_ALT':
+      return { ...state, image: { ...state.image, imgAlt: action.payload } };
     case 'SET_RECIPE_NAME':
       return { ...state, recipeName: action.payload };
     case 'SET_RECIPE_DESCRIPTION':
@@ -62,19 +64,20 @@ const TextArea = (props: any) => {
   const [textareaValue, setTextareaValue] = useState('');
   const [tags, setTags] = useState<string[]>([]);
 
-  const handleKeyDown = (e: any) => {
-    if (e.key === ',' || e.key === 'Enter') {
-      e.preventDefault();
-      setTags([...tags, textareaValue]);
-      setTextareaValue('');
-    }
-  };
+  const handleKeyDown = useCallback(
+    (e: any) => {
+      if (e.key === ',' || e.key === 'Enter') {
+        e.preventDefault();
+        setTags([...tags, textareaValue]);
+        setTextareaValue('');
+      }
+    },
+    [textareaValue, tags]
+  );
 
   useEffect(() => {
     props.onTagsChange(props.name, tags);
   }, [tags]);
-
-  const handleDeleteTag = (index: any) => {};
 
   return (
     <label className={styles.textarea_container}>
@@ -109,29 +112,75 @@ const TextArea = (props: any) => {
 const ImageFile = (props: any) => {
   interface imgProps {
     imgUrl: string;
-    alt: string;
+    imgAlt: string;
   }
   const [img, setImg] = useState<imgProps[]>([]);
+  const [imgUrl, setImgUrl] = useState('');
+  const [imgAlt, setImgAlt] = useState('');
+  const [open, setOpen] = useState(false);
 
-  function handleImageUpload() {
-    return '';
+  function handleSave() {
+    setImg([{ imgUrl, imgAlt }]);
+    setOpen(false);
   }
 
-  if (img.length !== 0) {
+  const ImageUploadDialog = () => {
     return (
-      <Image
-        src={img?.imgUrl || ""}
-        alt={img?.alt || ""}
-        width={800}
-        height={600}
-        priority
-      />
+      <>
+        <Dialog
+          open={open}
+          setOpen={setOpen}
+          className="flex justify-center items-center w-full h-full"
+        >
+          <div className="flex flex-col gap-2 bg-dark_grey p-20 rounded-md">
+            <InputField
+              value={imgUrl}
+              type="text"
+              required
+              placeholder="Image url"
+              name="imgUrl"
+              onChange={(e: any) => setImgUrl(e.target.value)}
+            />
+            <InputField
+              value={imgAlt}
+              type="text"
+              placeholder="Image description e.g chocolate brownies"
+              name="imgAlt"
+              onChange={(e: any) => setImgAlt(e.target.value)}
+            />
+            <button onClick={handleSave}>Save</button>
+          </div>
+        </Dialog>
+      </>
     );
-  }
+  };
+
+  const RecipeImage = () => {
+    return (
+      <>
+        {img.map((img, index) => (
+          <Image
+            src={img?.imgUrl || ''}
+            alt={img?.imgAlt || ''}
+            width={800}
+            height={600}
+            priority
+          />
+        ))}
+      </>
+    );
+  };
 
   return (
     <div className={styles.fileInput}>
-      <AddButton type="button" name="Image" onClick={handleImageUpload} />
+      <AddButton
+        type="button"
+        name="Image"
+        onClick={() => {
+          setOpen(true);
+        }}
+      />
+      <ImageUploadDialog />
     </div>
   );
 };

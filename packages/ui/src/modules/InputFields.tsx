@@ -6,7 +6,7 @@ function InputField(props: any) {
 
   function handleChange(event: any) {
     setValue(event.target.value);
-    props.onChange(event);
+    props.onChange ? props.onChange(event) : null;
   }
 
   return (
