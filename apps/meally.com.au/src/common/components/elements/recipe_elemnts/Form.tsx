@@ -60,6 +60,88 @@ function recipeReducer(state: any, action: any) {
   }
 }
 
+const Ingredient = (props: any) => {
+  return (
+    <div className="flex flex-row items-center py-1 gap-1">
+      <input type="checkbox" />
+    </div>
+  );
+};
+
+const Step = (props: any) => {
+  const [bodyValue, setBodyValue] = useState('');
+
+  function handleChange(event: any) {
+    setBodyValue(event.target.value);
+    props.handleChange(props.index, event.target.value);
+  }
+
+  return (
+    <section
+      key={props.index}
+      className="relative flex flex-col items-start p-3 rounded-md h-fit w-96 flex-grow bg-white text-black dark:bg-gray-700 dark:text-black"
+    >
+      <h1 className="font-medium font-Roboto text-sm">Step {1}</h1>
+      <label>
+        <textarea
+          name="step_body"
+          id="step_body"
+          onChange={handleChange}
+          value={bodyValue}
+        />
+      </label>
+      <button onClick={() => props.handleDelete(props.index)}>delete</button>
+    </section>
+  );
+};
+
+const StepContainer = (props: any) => {
+  const [stepArray, setStepArray] = useState<string[]>([]);
+
+  function handleAddClick() {
+    setStepArray([...stepArray, '']);
+  }
+
+  function handleChange(index: number, event: any): void {
+    console.log('index: ', index);
+    console.log('event: ', event);
+    setStepArray((prev) => {
+      const newArray = [...prev];
+      newArray[index] = event;
+      return newArray;
+    });
+  }
+
+  function handleDelete(index: number) {
+    setStepArray(stepArray.filter((_, i) => i !== index));
+  }
+
+  useEffect(() => {
+    props.handleArrayChange(props.name, stepArray);
+  }, [stepArray]);
+
+  return (
+    <article className={styles.method_container}>
+      <div className={styles.step_container}>
+        {stepArray.map((step, index) => {
+          return (
+            <Step
+              index={index}
+              handleChange={handleChange}
+              handleDelete={handleDelete}
+            />
+          );
+        })}
+        <AddButton type="button" name="Step" />
+      </div>
+    </article>
+  );
+};
+
+const IngredientContainer = (props: any) => {
+  return <></>;
+};
+
 const TextArea = (props: any) => {
   const [textareaValue, setTextareaValue] = useState('');
   const [tags, setTags] = useState<string[]>([]);
@@ -185,10 +267,16 @@ const ImageFile = (props: any) => {
   );
 };
 
+/* 
+  =========================================
+              FORM COMPONENT
+  =========================================
+*/
+
 const Form = () => {
-  const [allergenTags, setAllergenTags] = useState<string[]>([]);
-  const [keywordTags, setKeywordTags] = useState<string[]>([]);
   const [recipe, dispatch] = useReducer(recipeReducer, initialRecipeState);
+  const [steps, setSteps] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
 
   function handleChange(event: any) {
     dispatch({
@@ -197,8 +285,8 @@ const Form = () => {
     });
   }
 
-  const handleTagsChange = (name: string, tags: string[]) => {
-    dispatch({ type: 'SET_' + name.toUpperCase(), payload: tags });
+  const handleArrayChange = (name: string, payload: string[]) => {
+    dispatch({ type: 'SET_' + name.toUpperCase(), payload: payload });
   };
 
   async function setAdditionalInformation() {
@@ -286,7 +374,7 @@ const Form = () => {
         <TextArea
           name="allergens"
           label="contains:"
-          onTagsChange={handleTagsChange}
+          onTagsChange={handleArrayChange}
           placeholder="E.g gluten, dairy, nuts"
         />
         <select
@@ -323,8 +411,23 @@ const Form = () => {
         <TextArea
           name="keywords"
           label="keywords:"
-          onTagsChange={handleTagsChange}
+          onTagsChange={handleArrayChange}
         />
+
+        <span className="w-full h-[0.125rem] my-2 mb-4 dark:bg-white bg-dark_grey rounded-md "></span>
+
+        <article className={styles.IngredientMethodContainer}>
+          <section
+            className={`${styles.recipeIngredients} flex flex-col w-[12.5rem] gap-3`}
+          >
+            <Ingredient />
+            <AddButton type="button" name="Ingredient" />
+          </section>
+        </article>
+
+        <StepContainer handleArrayChange={handleArrayChange} name="steps" />
+        <IngredientContainer handleArrayChange={handleArrayChange} />
+
         <button type="submit">Submit</button>
       </form>
     </>
