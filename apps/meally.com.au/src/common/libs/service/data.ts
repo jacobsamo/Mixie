@@ -1,3 +1,4 @@
+import localStorage from "libs/utils/localStorage";
 // file full of all data for the app like the initial state of the recipe, dietary requirements, etc.
 
 export const dietaryRequirements = [
@@ -8,7 +9,7 @@ export const dietaryRequirements = [
     'Dairy Free',
 ]
 
-export const initialRecipeState = {
+export const initialRecipeState = localStorage.readLocal('recipe') || {
     id: '',
     image: {
       imgUrl: '',
@@ -34,6 +35,6 @@ export const initialRecipeState = {
     },
     steps: [],
     madeRecipe: 0,
-    savedRecipe: 0,
+    savedRecipe: 0 
   };
 
