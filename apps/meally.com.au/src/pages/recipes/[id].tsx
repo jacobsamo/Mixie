@@ -26,10 +26,10 @@ export default function RecipePage({ recipe }: recipePageProps) {
   return (
     <>
       <RecipeSeo
-        recipeUrl={recipe.imageUrl}
+        recipeUrl={recipe.recipeName}
         recipeName={recipe.recipeName}
         recipeDescription={recipe.recipeDescription}
-        imageUrl={recipe.imageUrl}
+        imageUrl={recipe.image.imgUrl}
         keywords={recipe.keywords.join(', ')}
         info=""
         createdAt={recipe.createdAt}
@@ -66,6 +66,6 @@ export async function getStaticProps(context: any) {
     props: {
       recipe,
     },
-    revalidate: 86400000,
+    revalidate: 60 * 60 * 24,
   };
 }

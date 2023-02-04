@@ -9,8 +9,8 @@
     "./styles.css": "./dist/styles.css"
   },
   "scripts": {
-    "build": "tsup src/index.tsx --format esm,cjs --dts --external react && tailwindcss -i ./src/styles/styles.css -o ./dist/styles.css",
-    "dev": "tsup src/index.tsx --format esm,cjs --dts --external react --watch && tailwindcss -i ./src/styles/styles.css -o ./dist/styles.css --watch",
+    "build": "tsup ./src/index.tsx --format esm,cjs --dts --external react && tailwindcss -i ./src/styles/styles.css -o ./dist/styles.css",
+    "dev": "tsup ./src/index.tsx --format esm,cjs --dts --external react --watch && tailwindcss -i ./src/styles/styles.css -o ./dist/styles.css --watch",
     "clean": "rm -rf dist",
     "clean:node_modules": "rm -rf node_modules/",
     "lint": "TIMING=1 eslint \"**/*.ts*\""

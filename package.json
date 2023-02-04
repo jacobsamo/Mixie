@@ -13,6 +13,7 @@
     "dev-local": "turbo run dev-local",
     "lint": "turbo run lint",
     "clean": "turbo run clean",
+    "clean:node_modules": "turbo run clean:node_modules",
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
@@ -23,7 +24,9 @@
     "prettier": "latest",
     "turbo": "latest"
   },
-  "dependencies": {"@manypkg/cli": "latest"},
+  "dependencies": {
+    "@manypkg/cli": "latest"
+  },
   "engines": {
     "node": ">=16.12.2"
   },

@@ -7,6 +7,7 @@ const StepContainer = (props: any) => {
   const [stepArray, setStepArray] = useState<string[]>([]);
 
   function handleAddClick() {
+    console.log('fired')
     setStepArray([...stepArray, '']);
   }
 
@@ -29,8 +30,8 @@ const StepContainer = (props: any) => {
   }, [stepArray]);
 
   return (
-    <article className={styles.method_container}>
-      <div className={styles.step_container}>
+    <article>
+      <div>
         {stepArray.map((step, index) => {
           return (
             <Step
@@ -40,10 +41,13 @@ const StepContainer = (props: any) => {
             />
           );
         })}
-        <AddButton type="button" name="Step" />
+        <AddButton type="button" name="Step" onClick={() => handleAddClick()} />
       </div>
     </article>
   );
 };
+
+// className={styles.method_container}
+//className={styles.step_container}
 
 export { StepContainer };
