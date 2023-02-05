@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { dietaryRequirements, initialRecipeState } from '@lib/service/data';
 
 class RecipeForm {

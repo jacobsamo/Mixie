@@ -4,8 +4,8 @@ import Image from 'next/image';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import localStorageService from 'libs/utils/localStorage';
 import RecipeService from '@lib/service/RecipeService';
-import { dietaryRequirements, initialRecipeState } from '@lib/service/data';
-import styles from '@components/elements/recipe_elemnts/form_items/From.module.scss';
+import { dietaryRequirements } from '@lib/service/data';
+import styles from '@components/elements/recipe_elemnts/form_items/Form.module.scss';
 import { InputField, AddButton, Dialog } from 'ui';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import RecipeFrom from '@components/elements/recipe_elemnts/form_items/logic';
@@ -17,12 +17,86 @@ import {
 } from '@components/elements/recipe_elemnts/form_items';
 import ImageUpload from '@components/elements/ImageUpload';
 
+const initialRecipeState = {
+  id: '',
+  image: {
+    imgUrl: '',
+    imgAlt: '',
+  },
+  recipeName: '',
+  recipeDescription: '',
+  keywords: [],
+  ingredients: [],
+  dietary: [],
+  Allergens: [],
+  sweet_savoury: '',
+  meallyTime: [],
+  version: '',
+  createdBy: '',
+  createdAt: '',
+  info: {
+    total: 0,
+    prep: 0,
+    cook: 0,
+    serves: 0,
+    rating: 0,
+  },
+  steps: [],
+  madeRecipe: 0,
+  savedRecipe: 0,
+};
+
+function recipeReducer(state: any, action: any) {
+  switch (action.type) {
+    case 'SET_ID':
+      return { ...state, id: action.payload };
+    case 'SET_IMAGE_URL':
+      return { ...state, imageUrl: action.payload };
+    case 'SET_RECIPE_NAME':
+      return { ...state, recipeName: action.payload };
+    case 'SET_RECIPE_DESCRIPTION':
+      return { ...state, recipeDescription: action.payload };
+    case 'SET_KEYWORDS':
+      return { ...state, keywords: action.payload };
+    case 'SET_INGREDIENTS':
+      return { ...state, ingredients: action.payload };
+    case 'SET_DIETARY':
+      return { ...state, dietary: action.payload };
+    case 'SET_ALLERGENS':
+      return { ...state, Allergens: action.payload };
+    case 'SET_SWEET_SAVOURY':
+      return { ...state, sweet_savoury: action.payload };
+    case 'SET_MEAL_TIME':
+      return { ...state, meallyTime: action.payload };
+    case 'SET_VERSION':
+      return { ...state, version: action.payload };
+    case 'SET_CREATED_BY':
+      return { ...state, createdBy: action.payload };
+    case 'SET_CREATED_AT':
+      return { ...state, createdAt: action.payload };
+    case 'SET_TOTAL':
+      return { ...state, info: { ...state.info, total: action.payload } };
+    case 'SET_PREP':
+      return { ...state, info: { ...state.info, prep: action.payload } };
+    case 'SET_COOK':
+      return { ...state, info: { ...state.info, cook: action.payload } };
+    case 'SET_SERVES':
+      return { ...state, info: { ...state.info, serves: action.payload } };
+    case 'SET_RATING':
+      return { ...state, info: { ...state.info, rating: action.payload } };
+    case 'SET_STEPS':
+      return { ...state, steps: action.payload };
+    case 'SET_MADE_RECIPE':
+      return { ...state, madeRecipe: action.payload };
+    case 'SET_SAVED_RECIPE':
+      return { ...state, savedRecipe: action.payload };
+    default:
+      throw new Error();
+  }
+}
 
 const RecipeFromLayout = () => {
-  var [recipe, dispatch] = useReducer(
-    RecipeFrom.recipeReducer,
-    initialRecipeState
-  );
+  var [recipe, dispatch] = useReducer(recipeReducer, initialRecipeState);
   const [steps, setSteps] = useState([]);
   const [ingredients, setIngredients] = useState([]);
 
@@ -61,7 +135,7 @@ const RecipeFromLayout = () => {
     if (recipe.recipeName !== '') {
       setAdditionalInformation();
     }
-  }, [recipe.recipeName, recipe.info.prep, recipe.info.cook]);
+  }, [recipe.recipeName]);
 
   return (
     <>
@@ -164,20 +238,13 @@ const RecipeFromLayout = () => {
 
         <span className="w-full h-[0.125rem] my-2 mb-4 dark:bg-white bg-dark_grey rounded-md "></span>
 
-        <article className={styles.IngredientMethodContainer}>
-          <section
-            className={`${styles.recipeIngredients} flex flex-col w-[12.5rem] gap-3`}
-          >
-            <Ingredient />
-            <AddButton type="button" name="Ingredient" />
-          </section>
-        </article>
-
-        <StepContainer handleArrayChange={handleArrayChange} name="steps" />
-        <IngredientContainer
-          handleArrayChange={handleArrayChange}
-          name="ingredients"
-        />
+        <div className="flex flex-row gap-4">
+          <IngredientContainer
+            handleArrayChange={handleArrayChange}
+            name="ingredients"
+          />
+          <StepContainer handleArrayChange={handleArrayChange} name="steps" />
+        </div>
 
         <button type="submit">Submit</button>
       </form>

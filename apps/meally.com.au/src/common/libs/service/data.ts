@@ -9,7 +9,7 @@ export const dietaryRequirements = [
     'Dairy Free',
 ]
 
-export const initialRecipeState = localStorage.readLocal('recipe') || {
+export const initialRecipeState = {
     id: '',
     image: {
       imgUrl: '',

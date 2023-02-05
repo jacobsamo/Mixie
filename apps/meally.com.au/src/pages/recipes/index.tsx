@@ -36,7 +36,7 @@ const RecipesPages: NextPage = ({ recipes }: any) => {
               <div>
                 <RecipeCard
                   id={recipe.id.toString()}
-                  imageUrl={recipe.imageUrl}
+                  imageUrl={recipe.image.imgUrl}
                   recipeName={recipe.recipeName}
                   recipeDescription={recipe.recipeDescription}
                 />

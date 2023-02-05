@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AddButton, Dialog, InputField } from 'ui';
 import Image from 'next/image';
-import styles from '@components/elements/recipe_elemnts/form_items/From.module.scss';
+import styles from './recipe_elemnts/form_items/Form.module.scss';
 
 
 const ImageUpload = (props: any) => {
