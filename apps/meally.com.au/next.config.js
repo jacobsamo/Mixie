@@ -12,9 +12,9 @@ const nextConfig = {
       'media4.giphy.com',
     ],
   },
-  experimental: {
-    appDir: true,
-  },
+  // experimental: {
+  //   appDir: true,
+  // },
 };
 
 module.exports = nextConfig;

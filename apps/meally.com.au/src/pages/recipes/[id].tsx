@@ -26,10 +26,10 @@ export default function RecipePage({ recipe }: recipePageProps) {
   return (
     <>
       <RecipeSeo
-        recipeUrl={recipe.imageUrl}
+        recipeUrl={recipe.image.imgUrl}
         recipeName={recipe.recipeName}
         recipeDescription={recipe.recipeDescription}
-        imageUrl={recipe.imageUrl}
+        imageUrl={recipe.image.imgUrl}
         keywords={recipe.keywords.join(', ')}
         info=""
         createdAt={recipe.createdAt}

@@ -103,7 +103,7 @@ function RecipePageLayout({ recipe }: recipePageLayoutProps) {
               </button>
             </span>
             <article className={`${styles.IngredientMethodContainer}`}>
-              <article className="">
+              <article>
                 <section
                   className={`${styles.recipeIngredients} flex flex-col w-[12.5rem] gap-3`}
                 >

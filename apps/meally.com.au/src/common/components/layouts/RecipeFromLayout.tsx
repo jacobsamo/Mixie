@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import localStorageService from 'libs/utils/localStorage';
 import RecipeService from '@lib/service/RecipeService';
 import { dietaryRequirements, initialRecipeState } from '@lib/service/data';
-import styles from '@components/elements/recipe_elemnts/form_items/From.module.scss';
+import styles from '@components/elements/recipe_elemnts/form_items/Form.module.scss';
 import { InputField, AddButton, Dialog } from 'ui';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import RecipeFrom from '@components/elements/recipe_elemnts/form_items/logic';
@@ -17,9 +17,8 @@ import {
 } from '@components/elements/recipe_elemnts/form_items';
 import ImageUpload from '@components/elements/ImageUpload';
 
-
 const RecipeFromLayout = () => {
-  var [recipe, dispatch] = useReducer(
+  const [recipe, dispatch] = useReducer(
     RecipeFrom.recipeReducer,
     initialRecipeState
   );
@@ -164,20 +163,13 @@ const RecipeFromLayout = () => {
 
         <span className="w-full h-[0.125rem] my-2 mb-4 dark:bg-white bg-dark_grey rounded-md "></span>
 
-        <article className={styles.IngredientMethodContainer}>
-          <section
-            className={`${styles.recipeIngredients} flex flex-col w-[12.5rem] gap-3`}
-          >
-            <Ingredient />
-            <AddButton type="button" name="Ingredient" />
-          </section>
-        </article>
-
-        <StepContainer handleArrayChange={handleArrayChange} name="steps" />
-        <IngredientContainer
-          handleArrayChange={handleArrayChange}
-          name="ingredients"
-        />
+        <div className={styles.IngredientMethodContainer}>
+          <IngredientContainer
+            handleArrayChange={handleArrayChange}
+            name="ingredients"
+          />
+          <StepContainer handleArrayChange={handleArrayChange} name="steps" />
+        </div>
 
         <button type="submit">Submit</button>
       </form>

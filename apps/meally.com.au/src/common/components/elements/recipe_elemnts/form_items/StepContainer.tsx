@@ -4,15 +4,13 @@ import { Step } from './Step';
 import styles from './Form.module.scss';
 
 const StepContainer = (props: any) => {
-  const [stepArray, setStepArray] = useState<string[]>([]);
+  const [stepArray, setStepArray] = useState<string[]>(['']);
 
   function handleAddClick() {
     setStepArray([...stepArray, '']);
   }
 
   function handleChange(index: number, event: any): void {
-    console.log('index: ', index);
-    console.log('event: ', event);
     setStepArray((prev) => {
       const newArray = [...prev];
       newArray[index] = event;
@@ -40,7 +38,7 @@ const StepContainer = (props: any) => {
             />
           );
         })}
-        <AddButton type="button" name="Step" />
+        <AddButton type="button" name="Step" onClick={() => handleAddClick()} />
       </div>
     </article>
   );
