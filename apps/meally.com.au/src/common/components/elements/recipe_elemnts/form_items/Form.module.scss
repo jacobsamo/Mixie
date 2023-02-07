@@ -76,19 +76,22 @@
   @apply flex flex-row items-center py-1 gap-1 flex-grow;
 }
 .ingredient input {
-  width: 5rem;
+  width: 7rem;
   height: 2rem;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  font-size: var(--step--1);
+  // border-radius: 0.5rem;
+  padding: 0.25rem;
+  font-size: var(--step--2);
 }
+
 .ingredient select {
-  width: 3rem;
-  height: 2rem;
+  width: fit-content;
+  height: fit-content;
   border-radius: 0.5rem;
   padding: 0.5rem;
-  font-size: var(--step--1);
+  font-size: var(--step--2);
 }
+
+
 
 .IngredientMethodContainer {
   display: flex;
@@ -103,7 +106,7 @@
 .recipeIngredients {
   @apply text-black dark:text-white dark:bg-dark_grey bg-white;
   border-radius: 1rem;
-  width: 16rem;
+  width: fit-content;
   max-height: fit-content;
   display: flex;
   flex-direction: column;

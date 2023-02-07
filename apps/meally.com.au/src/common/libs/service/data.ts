@@ -38,3 +38,21 @@ export const initialRecipeState = {
     savedRecipe: 0 
   };
 
+export const units = [
+  'gram',
+  'kg',
+  'cup',
+  'ml',
+  'litre',
+  'tsp',
+  'tbsp',
+  'pinch',
+  'item'
+]
+
+// unit types e.g kg, gram, cup, item
+export const unitTypes = [
+  'mass',
+  'volume',
+  'each'
+]

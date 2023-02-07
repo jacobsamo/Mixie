@@ -4,7 +4,7 @@ import Image from 'next/image';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import localStorageService from 'libs/utils/localStorage';
 import RecipeService from '@lib/service/RecipeService';
-import { dietaryRequirements, initialRecipeState } from '@lib/service/data';
+import { dietaryRequirements, initialRecipeState, units } from '@lib/service/data';
 import styles from '@components/elements/recipe_elemnts/form_items/Form.module.scss';
 import { InputField, AddButton, Dialog } from 'ui';
 import { XMarkIcon } from '@heroicons/react/24/outline';
@@ -108,10 +108,10 @@ const RecipeFromLayout = () => {
             value={recipe.dietary}
             onChange={handleChange}
           >
-            {dietaryRequirements.map((dietaryRequirement) => (
+            {dietaryRequirements.map((dietaryRequirement, index) => (
               <option
                 value={dietaryRequirement}
-                key={dietaryRequirement.length * Math.random()}
+                key={index}
               >
                 {dietaryRequirement}
               </option>
