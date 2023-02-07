@@ -33,57 +33,43 @@ const Ingredient = ({ index, handleChange, handleDelete }: IngredientProps) => {
     handleChange(index, ingredient);
   }, [ingredientItem, amount, unit]);
 
-
-  
   const DisplayAmount = () => {
-    switch (unit) {
-      case 'gram' || 'kg' || 'ml' || 'item' || 'litre' || 'tsp' || 'tbsp':
+    let input;
+    if (units.includes(unit)) {
+      if (unit === 'cup') {
         return (
-          <>
-            <input
-              // value={recipe.recipeDescription}
-              type="number"
-              required
-              placeholder="Recipe Description"
-              name="recipe_description"
-              onChange={handleAmountChange}
-            />
-          </>
+          <select>
+            <option value="1/4">1/4 cup</option>
+            <option value="1/2">1/2 cup</option>
+            <option value="3/4">3/4 cup</option>
+            <option value="1">1 cup</option>
+          </select>
         );
-      case 'cup':
-        return <></>;
-      case 'pinch':
-        return <></>;
-      case 'custom':
+      } else if (unit === 'custom') {
         return (
-          <>
-            <input
-              // value={recipe.recipeDescription}
-              type="text"
-              required
-              placeholder="Recipe Description"
-              name="recipe_description"
-              onChange={handleAmountChange}
-            />
-          </>
+          <input type="text" value={amount} onChange={handleAmountChange} />
         );
-      default:
-        return;
+      }
     }
+
     return (
-      <div>Ingredient</div>
-    )
-  }
-  
-  
+      <input
+        type="number"
+        placeholder="Amount"
+        value={amount}
+        onChange={handleAmountChange}
+      />
+    );
+  };
+
   return (
     <section key={index} className={styles.ingredient}>
       <input
         // value={recipe.recipeDescription}
         type="text"
         required
-        placeholder="Recipe Description"
-        name="recipe_description"
+        placeholder="ingredient"
+        name="ingredient"
         onChange={handleIngredientItemChange}
       />
       <DisplayAmount />
@@ -94,8 +80,12 @@ const Ingredient = ({ index, handleChange, handleDelete }: IngredientProps) => {
         value={unit}
         onChange={(event: any) => setUnit(event?.target.value)}
       >
-        {units.map((unit) => {
-          return <option value={unit}>{unit}</option>;
+        {units.map((unit, index) => {
+          return (
+            <option value={unit} key={index}>
+              {unit}
+            </option>
+          );
         })}
       </select>
       <button onClick={() => handleDelete(index)} type="button">
@@ -140,6 +130,7 @@ const IngredientContainer = (props: any) => {
                 index={index}
                 handleChange={handleChange}
                 handleDelete={handleDelete}
+                key={index}
               />
             );
           })}

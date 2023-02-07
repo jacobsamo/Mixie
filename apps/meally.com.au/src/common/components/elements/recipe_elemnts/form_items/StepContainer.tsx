@@ -35,6 +35,7 @@ const StepContainer = (props: any) => {
               index={index}
               handleChange={handleChange}
               handleDelete={handleDelete}
+              key={index}
             />
           );
         })}
