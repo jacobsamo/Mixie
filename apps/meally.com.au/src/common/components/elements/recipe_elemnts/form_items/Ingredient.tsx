@@ -17,31 +17,50 @@ interface IngredientProps {
   handleDelete: (index: number) => void;
 }
 
+interface DisplayAmountProps {
+  unit: string;
+  handleChange: (data: any) => void;
+}
+
 /* 
 ====================================
         Amount component
 ====================================
 */
 
-const DisplayAmount = (props: any) => {
-  const [amount, setAmount] = useState('');
-  const [cup, setCup] = useState(0);
+const DisplayAmount = ({ unit, handleChange }: DisplayAmountProps) => {
+  const [amount, setAmount] = useState<string>('');
+  const [cupSelect, setCupSelect] = useState<string>('1/4');
+  const [cupAmount, setCupAmount] = useState(0);
 
   useEffect(() => {
     if (units.includes(unit)) {
-      if (unit === 'cup') {
-        setAmount(`${cup} ${amount}`);
-      } else if (unit === 'custom') {
-        setAmount(amount);
+      if (unit == 'cup') {
+        if (cupAmount <= 0) {
+          setAmount(cupSelect);
+        }
+        if (cupAmount > 0) {
+          setAmount(`${cupAmount} ${cupSelect}`);
+        }
       }
     }
-  }, [cup]);
+  }, [cupAmount, cupSelect]);
+
+  function handleCupChange(event: any) {
+    if (units.includes(unit)) {
+      if (unit === 'cup') {
+        if (event.target.name === 'amount') {
+          setCupAmount(event.target.value);
+        } else if (event.target.name === 'select') {
+          setCupSelect(event.target.value);
+        }
+      }
+    }
+  }
 
   useEffect(() => {
-    props.handleChange(amount);
+    handleChange(amount);
   }, [amount]);
-
-  const unit = props.unit;
 
   if (units.includes(unit)) {
     if (unit === 'cup') {
@@ -49,13 +68,12 @@ const DisplayAmount = (props: any) => {
         <>
           <input
             type="number"
-            value={cup}
-            onChange={(event: any) => setCup(event.target.value)}
+            value={cupAmount}
+            onChange={handleCupChange}
+            name="amount"
+            min={0}
           />
-          <select
-            value={amount}
-            onChange={(event: any) => setAmount(event.target.value)}
-          >
+          <select value={cupSelect} onChange={handleCupChange} name="select">
             <option value="1/4">1/4 cup</option>
             <option value="1/2">1/2 cup</option>
             <option value="3/4">3/4 cup</option>
@@ -73,10 +91,6 @@ const DisplayAmount = (props: any) => {
       );
     }
   }
-
-  useEffect(() => {
-    console.log(amount);
-  }, [amount]);
 
   return (
     <input
@@ -106,8 +120,11 @@ const Ingredient = ({ index, handleChange, handleDelete }: IngredientProps) => {
 
   useEffect(() => {
     setIngredientArray(`${ingredientItem} ${amount} ${unit}`);
-    console.log(`${ingredientItem} ${amount} ${unit}`);
   }, [ingredientItem, amount, unit]);
+
+  function handleAmountChange(data: any) {
+    setAmount(data);
+  }
 
   return (
     <section key={index} className={styles.ingredient}>
@@ -119,7 +136,7 @@ const Ingredient = ({ index, handleChange, handleDelete }: IngredientProps) => {
         name="ingredient"
         onChange={(event: any) => setIngredientItem(event.target.value)}
       />
-      <DisplayAmount handleChange={() => setAmount} unit={unit} />
+      <DisplayAmount handleChange={handleAmountChange} unit={unit} />
       <select
         name="unit"
         id="unit"

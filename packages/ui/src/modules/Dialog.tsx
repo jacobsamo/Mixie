@@ -6,11 +6,11 @@ function Dialog(props: any) {
   // handle key events to open or close the dialog
   const handleKeyOpen = useCallback((event: any) => {
     if (event.key in props.keyOpen) setDialogOpen(true);
-  }, []);
+  }, [props.keyOpen]);
 
   const handleKeyClose = useCallback((event: any) => {
     if (event.key in props.keyClose) setDialogOpen(false);
-  }, []);
+  }, [props.keyClose]);
 
   // add key event listeners
   useEffect(() => {
@@ -18,14 +18,14 @@ function Dialog(props: any) {
       document.addEventListener("keyup", handleKeyOpen);
       return () => document.removeEventListener("keyup", handleKeyOpen);
     }
-  }, [handleKeyOpen]);
+  }, [handleKeyOpen, props.keyOpen]);
 
   useEffect(() => {
     if (props.keyClose) {
       document.addEventListener("keyup", handleKeyClose);
       return () => document.removeEventListener("keyup", handleKeyClose);
     }
-  }, [handleKeyClose]);
+  }, [handleKeyClose, props.keyClose]);
 
   useEffect(() => {
     if (props.open) {

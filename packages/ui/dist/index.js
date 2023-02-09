@@ -232,23 +232,23 @@ function Dialog(props) {
   const handleKeyOpen = (0, import_react3.useCallback)((event) => {
     if (event.key in props.keyOpen)
       setDialogOpen(true);
-  }, []);
+  }, [props.keyOpen]);
   const handleKeyClose = (0, import_react3.useCallback)((event) => {
     if (event.key in props.keyClose)
       setDialogOpen(false);
-  }, []);
+  }, [props.keyClose]);
   (0, import_react3.useEffect)(() => {
     if (props.keyOpen) {
       document.addEventListener("keyup", handleKeyOpen);
       return () => document.removeEventListener("keyup", handleKeyOpen);
     }
-  }, [handleKeyOpen]);
+  }, [handleKeyOpen, props.keyOpen]);
   (0, import_react3.useEffect)(() => {
     if (props.keyClose) {
       document.addEventListener("keyup", handleKeyClose);
       return () => document.removeEventListener("keyup", handleKeyClose);
     }
-  }, [handleKeyClose]);
+  }, [handleKeyClose, props.keyClose]);
   (0, import_react3.useEffect)(() => {
     if (props.open) {
       setDialogOpen(props.open);

@@ -195,23 +195,23 @@ function Dialog(props) {
   const handleKeyOpen = useCallback((event) => {
     if (event.key in props.keyOpen)
       setDialogOpen(true);
-  }, []);
+  }, [props.keyOpen]);
   const handleKeyClose = useCallback((event) => {
     if (event.key in props.keyClose)
       setDialogOpen(false);
-  }, []);
+  }, [props.keyClose]);
   useEffect2(() => {
     if (props.keyOpen) {
       document.addEventListener("keyup", handleKeyOpen);
       return () => document.removeEventListener("keyup", handleKeyOpen);
     }
-  }, [handleKeyOpen]);
+  }, [handleKeyOpen, props.keyOpen]);
   useEffect2(() => {
     if (props.keyClose) {
       document.addEventListener("keyup", handleKeyClose);
       return () => document.removeEventListener("keyup", handleKeyClose);
     }
-  }, [handleKeyClose]);
+  }, [handleKeyClose, props.keyClose]);
   useEffect2(() => {
     if (props.open) {
       setDialogOpen(props.open);

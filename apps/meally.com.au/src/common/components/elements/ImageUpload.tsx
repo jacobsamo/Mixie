@@ -1,81 +1,101 @@
-import React, { useState } from 'react';
-import { AddButton, Dialog, InputField } from 'ui';
+import React, { useEffect, useState } from 'react';
+// import { AddButton, InputField } from 'ui';
 import Image from 'next/image';
 import styles from './recipe_elemnts/form_items/Form.module.scss';
 
+interface imgProps {
+  imgUrl: string;
+  imgAlt: string;
+}
 
-const ImageUpload = (props: any) => {
-  interface imgProps {
-    imgUrl: string;
-    imgAlt: string;
-  }
+// interface ImageUploadDialogProps {
+//   handleChange: (img: imgProps[]) => void;
+//   dialogOpen: boolean;
+//   setDialogOpen: (state: boolean) => void;
+// }
+
+const ImageUploadForm = (props: any) => {
   const [img, setImg] = useState<imgProps[]>([]);
   const [imgUrl, setImgUrl] = useState('');
   const [imgAlt, setImgAlt] = useState('');
-  const [open, setOpen] = useState(false);
+
+  function internalChange(event: any) {
+    if (event.target.name == 'imgUrl') setImgUrl(event.target.value);
+    if (event.target.name == 'imgAlt') setImgAlt(event.target.value);
+  }
 
   function handleSave() {
     setImg([{ imgUrl, imgAlt }]);
-    setOpen(false);
   }
 
-  const ImageUploadDialog = () => {
-    return (
-      <>
-        <Dialog
-          open={open}
-          setOpen={setOpen}
-          className="flex justify-center items-center w-full h-full"
-        >
-          <div className="flex flex-col gap-2 bg-dark_grey p-20 rounded-md">
-            <InputField
-              value={imgUrl}
-              type="text"
-              required
-              placeholder="Image url"
-              name="imgUrl"
-              onChange={(e: any) => setImgUrl(e.target.value)}
-            />
-            <InputField
-              value={imgAlt}
-              type="text"
-              placeholder="Image description e.g chocolate brownies"
-              name="imgAlt"
-              onChange={(e: any) => setImgAlt(e.target.value)}
-            />
-            <button onClick={handleSave}>Save</button>
-          </div>
-        </Dialog>
-      </>
-    );
-  };
+  useEffect(() => {
+    props.handleChange(img);
+  }, [img]);
 
-  const RecipeImage = () => {
-    return (
-      <>
-        {img.map((img, index) => (
-          <Image
-            src={img?.imgUrl || ''}
-            alt={img?.imgAlt || ''}
-            width={800}
-            height={600}
-            priority
-          />
-        ))}
-      </>
-    );
-  };
+  return (
+    <form
+      onSubmit={handleSave}
+      className="flex flex-col gap-2 bg-dark_grey p-20 rounded-md justify-center items-center w-full h-full"
+    >
+      <input
+        type="text"
+        required
+        value={imgUrl}
+        name="imgUrl"
+        placeholder='Image URL e.g. "https://www.example.com/image.jpg"'
+        onChange={internalChange}
+      />
+      <input
+        type="text"
+        required
+        value={imgAlt}
+        name="imgAlt"
+        placeholder='Image Alt e.g. "Image of a cake"'
+        onChange={internalChange}
+      />
+      <button type="submit">Save</button>
+    </form>
+  );
+};
+
+const ImageUpload = () => {
+  const [img, setImg] = useState<imgProps[]>([]);
+  const [imgUrl, setImgUrl] = useState('');
+  const [imgAlt, setImgAlt] = useState('');
+
+  function internalChange(event: any) {
+    if (event.target.name == 'imgUrl') setImgUrl(event.target.value);
+    if (event.target.name == 'imgAlt') setImgAlt(event.target.value);
+  }
+
+  useEffect(() => {
+    setImg([{ imgUrl, imgAlt }]);
+  }, [imgUrl, imgAlt]);
 
   return (
     <div className={styles.fileInput}>
-      <AddButton
-        type="button"
-        name="Image"
-        onClick={() => {
-          setOpen(true);
-        }}
-      />
-      <ImageUploadDialog />
+      {/* <AddButton
+          type="button"
+          name="Image"
+        /> */}
+      <div className="flex flex-col gap-2 bg-dark_grey p-20 rounded-md justify-center items-center w-full h-full">
+        <input
+          type="text"
+          name="imgUrl"
+          id="imgUrl"
+          placeholder="Image url"
+          value={imgUrl}
+          onChange={(event: any) => setImgUrl(event.target.value)}
+        />
+        <input
+          type="text"
+          name="imgAlt"
+          id="imgAlt"
+          placeholder="Image description"
+          value={imgAlt}
+          onChange={(event: any) => setImgAlt(event.target.value)}
+        />
+      </div>
     </div>
   );
 };
