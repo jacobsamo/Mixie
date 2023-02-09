@@ -173,6 +173,7 @@ const RecipeFromLayout = () => {
 
         <button type="submit">Submit</button>
       </form>
+      <button onClick={() => console.log(recipe)}>get data</button>
     </>
   );
 };

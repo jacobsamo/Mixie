@@ -5,62 +5,109 @@ import { AddButton, InputField } from 'ui';
 import styles from './Form.module.scss';
 import { units } from '@lib/service/data';
 
+/* 
+====================================
+          Interfaces
+====================================
+*/
+
 interface IngredientProps {
   index: number;
   handleChange: (index: number, event: any) => void;
   handleDelete: (index: number) => void;
 }
 
-const Ingredient = ({ index, handleChange, handleDelete }: IngredientProps) => {
-  const [ingredientItem, setIngredientItem] = useState<string>('');
-  const [amount, setAmount] = useState<string>('');
-  const [unit, setUnit] = useState<string>('');
+/* 
+====================================
+        Amount component
+====================================
+*/
 
-  function handleIngredientItemChange(event: any) {
-    setIngredientItem(event.target.value);
-  }
-
-  function handleAmountChange(event: any) {
-    setAmount(event.target.value);
-  }
-
-  function handleUnitChange(event: any) {
-    setUnit(event.target.value);
-  }
+const DisplayAmount = (props: any) => {
+  const [amount, setAmount] = useState('');
+  const [cup, setCup] = useState(0);
 
   useEffect(() => {
-    const ingredient = `${ingredientItem} ${amount} ${unit}`;
-    handleChange(index, ingredient);
-  }, [ingredientItem, amount, unit]);
-
-  const DisplayAmount = () => {
-    let input;
     if (units.includes(unit)) {
       if (unit === 'cup') {
-        return (
-          <select>
+        setAmount(`${cup} ${amount}`);
+      } else if (unit === 'custom') {
+        setAmount(amount);
+      }
+    }
+  }, [cup]);
+
+  useEffect(() => {
+    props.handleChange(amount);
+  }, [amount]);
+
+  const unit = props.unit;
+
+  if (units.includes(unit)) {
+    if (unit === 'cup') {
+      return (
+        <>
+          <input
+            type="number"
+            value={cup}
+            onChange={(event: any) => setCup(event.target.value)}
+          />
+          <select
+            value={amount}
+            onChange={(event: any) => setAmount(event.target.value)}
+          >
             <option value="1/4">1/4 cup</option>
             <option value="1/2">1/2 cup</option>
             <option value="3/4">3/4 cup</option>
             <option value="1">1 cup</option>
           </select>
-        );
-      } else if (unit === 'custom') {
-        return (
-          <input type="text" value={amount} onChange={handleAmountChange} />
-        );
-      }
+        </>
+      );
+    } else if (unit === 'custom') {
+      return (
+        <input
+          type="text"
+          value={amount}
+          onChange={(event: any) => setAmount(event.target.value)}
+        />
+      );
     }
+  }
 
-    return (
-      <input
-        type="number"
-        placeholder="Amount"
-        value={amount}
-        onChange={handleAmountChange}
-      />
-    );
-  };
+  useEffect(() => {
+    console.log(amount);
+  }, [amount]);
+
+  return (
+    <input
+      type="number"
+      placeholder="Amount"
+      value={amount}
+      onChange={(event: any) => setAmount(event.target.value)}
+    />
+  );
+};
+
+/* 
+====================================
+          Ingredient
+====================================
+*/
+
+const Ingredient = ({ index, handleChange, handleDelete }: IngredientProps) => {
+  const [ingredientArray, setIngredientArray] = useState<string>('');
+  const [ingredientItem, setIngredientItem] = useState<string>('');
+  const [amount, setAmount] = useState<string>('');
+  const [unit, setUnit] = useState<string>('gram');
+
+  useEffect(() => {
+    handleChange(index, ingredientArray);
+  }, [ingredientArray]);
+
+  useEffect(() => {
+    setIngredientArray(`${ingredientItem} ${amount} ${unit}`);
+    console.log(`${ingredientItem} ${amount} ${unit}`);
+  }, [ingredientItem, amount, unit]);
 
   return (
     <section key={index} className={styles.ingredient}>
@@ -70,9 +117,9 @@ const Ingredient = ({ index, handleChange, handleDelete }: IngredientProps) => {
         required
         placeholder="ingredient"
         name="ingredient"
-        onChange={handleIngredientItemChange}
+        onChange={(event: any) => setIngredientItem(event.target.value)}
       />
-      <DisplayAmount />
+      <DisplayAmount handleChange={() => setAmount} unit={unit} />
       <select
         name="unit"
         id="unit"
@@ -94,6 +141,12 @@ const Ingredient = ({ index, handleChange, handleDelete }: IngredientProps) => {
     </section>
   );
 };
+
+/* 
+====================================
+            Container
+====================================
+*/
 
 const IngredientContainer = (props: any) => {
   const [ingredientArray, setIngredientArray] = useState<string[]>(['']);
