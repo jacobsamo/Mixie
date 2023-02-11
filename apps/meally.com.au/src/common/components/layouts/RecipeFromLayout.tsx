@@ -4,7 +4,11 @@ import Image from 'next/image';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import localStorageService from 'libs/utils/localStorage';
 import RecipeService from '@lib/service/RecipeService';
-import { dietaryRequirements, initialRecipeState, units } from '@lib/service/data';
+import {
+  dietaryRequirements,
+  initialRecipeState,
+  units,
+} from '@lib/service/data';
 import styles from '@components/elements/recipe_elemnts/form_items/Form.module.scss';
 import { InputField, AddButton, Dialog } from 'ui';
 import { XMarkIcon } from '@heroicons/react/24/outline';
@@ -32,14 +36,22 @@ const RecipeFromLayout = () => {
     });
   }
 
+  function handleImageChange(payload: any) {
+    const imgUrl = payload[0]?.imgUrl;
+    const imgAlt = payload[0]?.imgAlt;
+    dispatch({ type: 'SET_IMAGE_URL', payload: imgUrl });
+    dispatch({ type: 'SET_IMAGE_ALT', payload: imgAlt });
+  }
+
   const handleArrayChange = (name: string, payload: string[]) => {
     dispatch({ type: 'SET_' + name.toUpperCase(), payload: payload });
   };
 
   async function setAdditionalInformation() {
     dispatch({ type: 'SET_ID', payload: recipe.recipeName });
-    dispatch({ type: 'SET_CREATED_BY', payload: 'Meally' });
+    // dispatch({ type: 'SET_CREATED_BY', payload: 'Meally' });
     dispatch({ type: 'SET_CREATED_AT', payload: new Date() });
+    dispatch({ type: 'SET_VERSION', payload: '1.0' });
     dispatch({
       type: 'SET_TOTAL',
       payload: parseInt(recipe.info.prep) + parseInt(recipe.info.cook),
@@ -48,8 +60,8 @@ const RecipeFromLayout = () => {
 
   async function handleSubmit(event: any) {
     await event.preventDefault();
-    await RecipeService.createRecipe(recipe);
-    console.log(recipe);
+    await RecipeService.createRecipe(recipe).then((res) => console.log(res));
+    console.log('recipe sent: ', recipe);
   }
 
   useEffect(() => {
@@ -64,7 +76,31 @@ const RecipeFromLayout = () => {
 
   return (
     <>
-      <h1>Recipe Creation Form</h1>
+      <div className="flex w-screen p-3">
+        <div className="flex flex-col justify-center items-center">
+          <h1>Recipe Creation Form</h1>
+          <p>
+            This is the recipe creation from before you start please read the
+            conditions of use and tips for a better experience:
+          </p>
+          <ul>
+            <li>
+              If you refresh the page you will lose all your work (this will be
+              change in the future)
+            </li>
+            <li>
+              If you have any problems while creating a recipe please tell me
+              before trying to submit
+            </li>
+            <li>
+              If you have any improvement ideas please add them{' '}
+              <a href="#">here</a>
+            </li>
+            <li></li>
+          </ul>
+        </div>
+      </div>
+
       <form onSubmit={handleSubmit} className={styles.recipeForm}>
         <InputField
           value={recipe.recipeName}
@@ -78,7 +114,7 @@ const RecipeFromLayout = () => {
           value={recipe.info.prep}
           type="number"
           required
-          placeholder="Prep Time"
+          placeholder="Prep Time in minutes"
           name="prep"
           onChange={handleChange}
         />
@@ -86,7 +122,7 @@ const RecipeFromLayout = () => {
           value={recipe.info.cook}
           type="number"
           required
-          placeholder="Cook TIme"
+          placeholder="Cook TIme in minutes"
           name="cook"
           min="0"
           onChange={handleChange}
@@ -109,10 +145,7 @@ const RecipeFromLayout = () => {
             onChange={handleChange}
           >
             {dietaryRequirements.map((dietaryRequirement, index) => (
-              <option
-                value={dietaryRequirement}
-                key={index}
-              >
+              <option value={dietaryRequirement} key={index}>
                 {dietaryRequirement}
               </option>
             ))}
@@ -135,10 +168,9 @@ const RecipeFromLayout = () => {
           <option value="both">both sweet and savoury</option>
         </select>
 
-        <ImageUpload />
-        <InputField
+        <ImageUpload handleChange={handleImageChange} />
+        <textarea
           value={recipe.recipeDescription}
-          type="text"
           required
           placeholder="Recipe Description"
           name="recipe_description"
@@ -160,6 +192,14 @@ const RecipeFromLayout = () => {
           label="keywords:"
           onTagsChange={handleArrayChange}
         />
+        <InputField
+          value={recipe.created_by}
+          type="email"
+          required
+          placeholder="Email"
+          name="created_by"
+          onChange={handleChange}
+        />
 
         <span className="w-full h-[0.125rem] my-2 mb-4 dark:bg-white bg-dark_grey rounded-md "></span>
 
@@ -171,9 +211,10 @@ const RecipeFromLayout = () => {
           <StepContainer handleArrayChange={handleArrayChange} name="steps" />
         </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit" className="text-xl mt-14">
+          Submit
+        </button>
       </form>
-      <button onClick={() => console.log(recipe)}>get data</button>
     </>
   );
 };

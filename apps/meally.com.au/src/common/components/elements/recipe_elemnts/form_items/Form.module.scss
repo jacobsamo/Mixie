@@ -14,14 +14,14 @@
 }
 
 .recipeForm input:focus {
-  @apply border-black;
+  @apply border-black dark:border-white;
 }
 
 .fileInput {
   @apply flex justify-center items-center;
   box-sizing: border-box;
-
-  width: 49.5rem;
+  resize: horizontal;
+  min-width: 18.75rem;
   height: 31.25rem;
 
   background: linear-gradient(
@@ -71,7 +71,6 @@
 
 // step & ingredient container
 
-
 .ingredient {
   @apply flex flex-row items-center py-1 gap-1 flex-grow;
 }
@@ -90,8 +89,6 @@
   padding: 0.5rem;
   font-size: var(--step--2);
 }
-
-
 
 .IngredientMethodContainer {
   display: flex;
@@ -144,8 +141,6 @@
   width: 100%;
   flex-grow: 1;
 }
-
-
 
 .step_method {
   // @apply font-calibri;
@@ -204,9 +199,24 @@
 }
 
 @media screen and (max-width: 600px) {
+
+  .recipeForm input {
+    width: 100%;
+    
+  }
+  .recipeForm {
+    @apply flex flex-col gap-1;
+    width: 95%;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
   .IngredientMethodContainer {
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     align-items: flex-start;
+    gap: 2rem;
   }
 
   .method_container {

@@ -58,7 +58,7 @@ const ImageUploadForm = (props: any) => {
   );
 };
 
-const ImageUpload = () => {
+const ImageUpload = (props: any) => {
   const [img, setImg] = useState<imgProps[]>([]);
   const [imgUrl, setImgUrl] = useState('');
   const [imgAlt, setImgAlt] = useState('');
@@ -71,6 +71,11 @@ const ImageUpload = () => {
   useEffect(() => {
     setImg([{ imgUrl, imgAlt }]);
   }, [imgUrl, imgAlt]);
+
+  useEffect(() => {
+    props.handleChange(img)
+  }, [img]);
+  
 
   return (
     <div className={styles.fileInput}>

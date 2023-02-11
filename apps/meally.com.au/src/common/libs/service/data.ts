@@ -27,15 +27,15 @@ export const initialRecipeState = {
     createdBy: '',
     createdAt: '',
     info: {
-      total: 0,
-      prep: 0,
-      cook: 0,
-      serves: 0,
-      rating: 0,
+      total: null,
+      prep: null,
+      cook: null,
+      serves: null,
+      rating: null,
     },
     steps: [],
-    madeRecipe: 0,
-    savedRecipe: 0 
+    madeRecipe: null,
+    savedRecipe: null 
   };
 
 export const units = [
