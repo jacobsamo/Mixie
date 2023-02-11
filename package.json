@@ -10,18 +10,22 @@
     "build": "turbo run build",
     "start": "turbo run start",
     "dev": "turbo run dev",
+    "dev-local": "turbo run dev-local",
     "lint": "turbo run lint",
+    "clean": "turbo run clean",
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "postinstall": "manypkg check"
   },
   "devDependencies": {
     "eslint-config-custom": "*",
     "prettier": "latest",
-    "turbo": "^1.6.3"
+    "turbo": "latest"
   },
+  "dependencies": {"@manypkg/cli": "latest"},
   "engines": {
     "node": ">=16.12.2"
   },
-  "packageManager": "npm@9.2.0"
+  "packageManager": "yarn@1.22.19"
 }

@@ -1,12 +1,14 @@
 # Contributing
 Thank you for your interest in making Meally a better website. 
 
-Due to me being a solo Dev Please make sure when writing code it is readable or commented properly so i can easily accept pull requests. Thank you in advance for you help.
+Due to me being a solo Dev Please make sure when writing code it is readable or commented properly so i can easily accept pull requests. Thank you in advance for you help. 
+Look to [getting started](./GETTING_STARTED.md) for more information on how to get started.
 
 
 
 ## Project structure
-This repo was migrated from Nextjs 12 to Turborepo 1.6.3 and Nextjs 13. 
+This repo was migrated from Nextjs 12 to Turborepo 1.6.3 and Nextjs 13. with huge improvements in build times and code structure. 
+All shared code is now under `packages` and all Nextjs apps are under `apps`.
 
 
 

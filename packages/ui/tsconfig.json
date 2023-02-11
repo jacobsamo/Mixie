@@ -1,12 +1,17 @@
 {
-  "extends": "tsconfig/nextjs.json",
+  "extends": "tsconfig/react-library.json",
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
       "@lib/*": ["libs/*"],
-      "@styles/*": ["styles/*"]
+      "@styles/*": ["./src/styles/*"]
     }
   },
-  "include": [".", "../tests", "**/*.ts", "**/*.tsx", "modules/RecipeCard.tsx"],
+  "include": [
+    ".",
+    "../tests",
+    "**/*.ts",
+    "**/*.tsx",
+  ],
   "exclude": ["dist", "build", "node_modules"]
 }

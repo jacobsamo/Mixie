@@ -1,9 +1,11 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { GoogleAdsenseWidget } from 'next-google-ads';
 import Script from 'next/script';
 import React from 'react';
 
-export default function AdBanner() {
+function AdBanner() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(false);
@@ -39,3 +41,4 @@ export default function AdBanner() {
   return <h1>Loading..</h1>;
 };
 
+export {AdBanner};

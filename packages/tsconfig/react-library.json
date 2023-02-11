@@ -6,7 +6,7 @@
     "jsx": "preserve",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "module": "ES2020",
+    "module": "ES2022",
     "target": "es6"
   }
 }

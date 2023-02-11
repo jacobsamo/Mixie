@@ -1,3 +1,4 @@
+"use client";
 import Image from 'next/image';
 import React, { useState } from 'react';
 import styles from '@styles/modules/Navbar.module.scss';
@@ -8,13 +9,6 @@ import Link from 'next/link';
 const Navbar = () => {
   const [userImage, setUserImage] = useState('/favicon.ico');
   const [isOpen, setIsOpen] = useState(false);
-
-  //TODO: fix issue with image flickering when reloading or navigating to a different route
-  // auth.onAuthStateChanged((user) => {
-  //   if (auth.currentUser != null) {
-  //     setUserImage(auth.currentUser.photoURL!);
-  //   }
-  // });
 
   return (
     <>

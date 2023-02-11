@@ -4,7 +4,7 @@ import React from "react";
 import type { Recipe } from "libs/types";
 import type { Timestamp } from "firebase/firestore";
 
-interface RecipeSEOProps {
+interface recipeSEOProps {
   recipeDescription: string;
   recipeName: string;
   imageUrl: string;
@@ -14,7 +14,7 @@ interface RecipeSEOProps {
   keywords: string;
 }
 
-export default function RecipeSeo({
+function RecipeSeo({
   recipeDescription,
   recipeName,
   imageUrl,
@@ -22,8 +22,7 @@ export default function RecipeSeo({
   recipeUrl,
   createdAt,
   keywords,
-
-}: RecipeSEOProps) {
+}: recipeSEOProps) {
   return (
     <Head>
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -50,11 +49,11 @@ export default function RecipeSeo({
       <meta property="og:image" content={imageUrl} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-  
-
       <link rel="manifest" href="manifest.json" />
       <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
       <link rel="apple-touch-icon" href="favicon.png" />
     </Head>
   );
 }
+
+export { RecipeSeo };

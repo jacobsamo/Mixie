@@ -3,18 +3,10 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@lib/*": [
-        "src/common/libs/*"
-      ],
-      "@components/*": [
-        "src/common/components/*"
-      ],
-      "@component_styles/*": [
-        "src/common/components/styles/*"
-      ],
-      "@styles/*": [
-        "src/common/styles/*"
-      ]
+      "@lib/*": ["src/common/libs/*"],
+      "@components/*": ["src/common/components/*"],
+      "@component_styles/*": ["src/common/components/styles/*"],
+      "@styles/*": ["src/common/styles/*"]
     },
     "plugins": [
       {
@@ -28,9 +20,8 @@
     "**/*.tsx",
     "../../packages/tests/ui.test/RecipeCard.test.tsx",
     "../../packages/ui/modules/RecipeCard.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "src/common/components/elements/Navbar.tsx"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
