@@ -87,7 +87,7 @@ const Testing: NextPage = () => {
             {recipeData.map((recipe: Recipe) => (
               <>
                 <div key={recipe.id} className='relative w-46 h-58 dark:bg-grey bg-white rounded-xl'>
-                  <img src={recipe.imageUrl} alt={recipe.recipeName} className={styles.image}/>
+                  <img src={recipe.image.imgUrl} alt={recipe.recipeName} className={styles.image}/>
                   <h1 className='dark:text-white text-black text-sm font-Roboto font-bold absolute left-2 top-36'>{recipe.recipeName}</h1>
                   <h1 className='dark:text-white text-black absolute bottom-1 left-3'>{recipe.id}</h1>
                   <HeartIcon 

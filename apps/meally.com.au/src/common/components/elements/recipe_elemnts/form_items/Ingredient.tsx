@@ -31,15 +31,15 @@ interface DisplayAmountProps {
 const DisplayAmount = ({ unit, handleChange }: DisplayAmountProps) => {
   const [amount, setAmount] = useState<string>('');
   const [cupSelect, setCupSelect] = useState<string>('1/4');
-  const [cupAmount, setCupAmount] = useState(0);
+  const [cupAmount, setCupAmount] = useState(undefined);
 
   useEffect(() => {
     if (units.includes(unit)) {
       if (unit == 'cup') {
-        if (cupAmount <= 0) {
+        if (cupAmount! <= 0 ) {
           setAmount(cupSelect);
         }
-        if (cupAmount > 0) {
+        if (cupAmount! > 0 ) {
           setAmount(`${cupAmount} ${cupSelect}`);
         }
       }
@@ -68,7 +68,7 @@ const DisplayAmount = ({ unit, handleChange }: DisplayAmountProps) => {
         <>
           <input
             type="number"
-            value={cupAmount}
+            value={cupAmount || ''}
             onChange={handleCupChange}
             name="amount"
             min={0}

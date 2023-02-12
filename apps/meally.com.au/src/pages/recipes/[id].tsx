@@ -66,6 +66,6 @@ export async function getStaticProps(context: any) {
     props: {
       recipe,
     },
-    revalidate: 86400000,
+    revalidate: 60 * 60 * 24,
   };
 }

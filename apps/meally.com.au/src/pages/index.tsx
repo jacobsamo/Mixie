@@ -1,6 +1,9 @@
 import type { NextPage } from 'next';
 import React, { useState, useEffect } from 'react';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import styles from '@styles/modules/Home.module.scss';
+import 'swiper/css';
 
 //import components
 
@@ -19,12 +22,12 @@ const Home: NextPage = () => {
         description="A directory of folder full things."
       />
       <Navbar />
-      <main>
-        <div className="">
-          <h1 className={styles.heroTitle}>Want Tasty Recipes</h1>
+      <main className="flex flex-col w-full h-full pt-2">
+        <section className="items-center flex flex-col justify-center h-52">
+          <h1 className={`${styles.heroTitle} pb-2`}>Want Tasty Recipes</h1>
           <Algolia_Search_Dialog buttonType="searchBar" />
-        </div>
-        <button className='bg-blue text-black w-20 h-28'>Button</button>
+        </section>
+        
       </main>
     </>
   );

@@ -20,23 +20,35 @@ class RecipeService {
   }
 
   async getRecipe(id: string) {
-    const recipe = await getDoc(doc(db, 'recipes', id))
-    const data = await recipe.data() as Recipe;
-    return data;
+    const docRef = doc(db, 'recipes', id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const data = docSnap.data() as Recipe;
+      const createdAt = data.createdAt as any;
+      data['createdAt'] = new Date(createdAt.toDate()).toDateString();
+      return data;
+    } else {
+      return {};
+    }
   }
 
   async getAllRecipes() {
-    const querySnapshot = await getDocs(collection(db, "recipes"));
+    const querySnapshot = await getDocs(collection(db, 'recipes'));
     const recipes: Recipe[] = [];
     querySnapshot.forEach((recipe) => {
       const data = recipe.data() as Recipe;
-      recipes.push(...recipes, data)
-    })
+      const createdAt = data.createdAt as any;
+      recipes.push({
+        ...data,
+        createdAt: new Date(createdAt.toDate()).toDateString(),
+      });
+    });
     return recipes;
   }
 
   async updateRecipe(id: string, data: any) {
-    const docRef = doc(db, "recipes", id);
+    const docRef = doc(db, 'recipes', id);
     const updatedDoc = await updateDoc(docRef, data);
     return updatedDoc;
   }
