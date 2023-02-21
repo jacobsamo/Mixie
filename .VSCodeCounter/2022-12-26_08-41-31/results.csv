@@ -1,0 +1,87 @@
+"filename", "language", "Markdown", "Docker", "JSON with Comments", "JavaScript", "TypeScript React", "YAML", "JSON", "Ignore", "SCSS", "CSS", "XML", "TypeScript", "comment", "blank", "total"
+"e:\GitHub\Meally\.dockerignore", "Ignore", 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 3
+"e:\GitHub\Meally\.eslintrc.json", "JSON", 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 1, 4
+"e:\GitHub\Meally\.github\FUNDING.yml", "YAML", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"e:\GitHub\Meally\.github\ISSUE_TEMPLATE\bug_report.md", "Markdown", 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 32
+"e:\GitHub\Meally\.github\ISSUE_TEMPLATE\feature_request.md", "Markdown", 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 18
+"e:\GitHub\Meally\.github\workflows\intergrate.yml", "YAML", 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 0, 8, 32
+"e:\GitHub\Meally\.prettierignore", "Ignore", 0, 0, 0, 0, 0, 0, 0, 36, 0, 0, 0, 0, 3, 3, 42
+"e:\GitHub\Meally\.prettierrc", "JSON", 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 1, 8
+"e:\GitHub\Meally\CONTRIBUTING.md", "Markdown", 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 14
+"e:\GitHub\Meally\Dockerfile", "Docker", 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 10, 19
+"e:\GitHub\Meally\GETTING_STARTED.md", "Markdown", 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 25
+"e:\GitHub\Meally\README.md", "Markdown", 29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 45
+"e:\GitHub\Meally\SECURITY.md", "Markdown", 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 12
+"e:\GitHub\Meally\about_the_project\Helpful_items.md", "Markdown", 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 7
+"e:\GitHub\Meally\about_the_project\Planning\Navbar.md", "Markdown", 69, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 74
+"e:\GitHub\Meally\about_the_project\things_learnt\Jacob.s.md", "Markdown", 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 34
+"e:\GitHub\Meally\jest.config.js", "JavaScript", 0, 0, 0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 25
+"e:\GitHub\Meally\jest.setup.js", "JavaScript", 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+"e:\GitHub\Meally\next.config.js", "JavaScript", 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 17
+"e:\GitHub\Meally\package-lock.json", "JSON", 0, 0, 0, 0, 0, 0, 37252, 0, 0, 0, 0, 0, 0, 1, 37253
+"e:\GitHub\Meally\package.json", "JSON", 0, 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0, 0, 1, 57
+"e:\GitHub\Meally\postcss.config.js", "JavaScript", 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 7
+"e:\GitHub\Meally\public\icons\Logo-svg.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 1, 11
+"e:\GitHub\Meally\public\icons\social\FacebookLogo.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+"e:\GitHub\Meally\public\icons\social\GithubLogo.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+"e:\GitHub\Meally\public\icons\social\GoogleLogo.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+"e:\GitHub\Meally\public\icons\social\bbburst.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+"e:\GitHub\Meally\public\icons\svgs\Pie.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+"e:\GitHub\Meally\public\manifest.json", "JSON", 0, 0, 0, 0, 0, 0, 61, 0, 0, 0, 0, 0, 0, 1, 62
+"e:\GitHub\Meally\src\common\components\elements\AuthButton.module.scss", "SCSS", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"e:\GitHub\Meally\src\common\components\elements\AuthButtons.tsx", "TypeScript React", 0, 0, 0, 0, 60, 0, 0, 0, 0, 0, 0, 0, 0, 5, 65
+"e:\GitHub\Meally\src\common\components\elements\algolia_search_dialog.module.scss", "SCSS", 0, 0, 0, 0, 0, 0, 0, 0, 76, 0, 0, 0, 0, 11, 87
+"e:\GitHub\Meally\src\common\components\elements\algolia_search_dialog.tsx", "TypeScript React", 0, 0, 0, 0, 145, 0, 0, 0, 0, 0, 0, 0, 19, 15, 179
+"e:\GitHub\Meally\src\common\components\elements\recipe_elemnts\Addbatch.tsx", "TypeScript React", 0, 0, 0, 0, 36, 0, 0, 0, 0, 0, 0, 0, 0, 6, 42
+"e:\GitHub\Meally\src\common\components\elements\recipe_elemnts\StepCard.module.scss", "SCSS", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"e:\GitHub\Meally\src\common\components\elements\recipe_elemnts\StepCard.tsx", "TypeScript React", 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 2, 15
+"e:\GitHub\Meally\src\common\components\modules\AdBanner.tsx", "TypeScript React", 0, 0, 0, 0, 36, 0, 0, 0, 0, 0, 0, 0, 0, 6, 42
+"e:\GitHub\Meally\src\common\components\modules\Footer.tsx", "TypeScript React", 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 1, 2, 13
+"e:\GitHub\Meally\src\common\components\modules\Navbar.tsx", "TypeScript React", 0, 0, 0, 0, 72, 0, 0, 0, 0, 0, 0, 0, 19, 7, 98
+"e:\GitHub\Meally\src\common\components\modules\RecipeCard.tsx", "TypeScript React", 0, 0, 0, 0, 45, 0, 0, 0, 0, 0, 0, 0, 0, 4, 49
+"e:\GitHub\Meally\src\common\components\modules\loader.css", "CSS", 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0, 0, 0, 9, 59
+"e:\GitHub\Meally\src\common\components\modules\loader.tsx", "TypeScript React", 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 4, 18
+"e:\GitHub\Meally\src\common\components\seo\PageSEO.tsx", "TypeScript React", 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 6, 47
+"e:\GitHub\Meally\src\common\components\seo\RecipeSEO.tsx", "TypeScript React", 0, 0, 0, 0, 55, 0, 0, 0, 0, 0, 0, 0, 3, 4, 62
+"e:\GitHub\Meally\src\common\components\styles\Footer.module.scss", "SCSS", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"e:\GitHub\Meally\src\common\components\styles\Navbar.module.scss", "SCSS", 0, 0, 0, 0, 0, 0, 0, 0, 167, 0, 0, 0, 1, 20, 188
+"e:\GitHub\Meally\src\common\components\styles\recipeCard.module.scss", "SCSS", 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 1, 7
+"e:\GitHub\Meally\src\common\components\templates\Singup\Signup.tsx", "TypeScript React", 0, 0, 0, 0, 179, 0, 0, 0, 0, 0, 0, 0, 21, 14, 214
+"e:\GitHub\Meally\src\common\shared\jsons\CustomRecipes.js", "JavaScript", 0, 0, 0, 47, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 49
+"e:\GitHub\Meally\src\common\shared\jsons\recipes.json", "JSON", 0, 0, 0, 0, 0, 0, 42, 0, 0, 0, 0, 0, 0, 1, 43
+"e:\GitHub\Meally\src\common\shared\jsons\turn_to_json.js", "JavaScript", 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 12
+"e:\GitHub\Meally\src\common\shared\jsons\user.js", "JavaScript", 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 13
+"e:\GitHub\Meally\src\common\shared\libs\config\firebase.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 2, 6, 27
+"e:\GitHub\Meally\src\common\shared\libs\config\index.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 2, 5
+"e:\GitHub\Meally\src\common\shared\libs\service\Algolia.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 0, 3, 15
+"e:\GitHub\Meally\src\common\shared\libs\service\Authservice.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 6, 41
+"e:\GitHub\Meally\src\common\shared\libs\service\RecipeService.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 42, 0, 8, 50
+"e:\GitHub\Meally\src\common\shared\libs\service\UserOptionsService.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 5, 40
+"e:\GitHub\Meally\src\common\shared\libs\types\algolia.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 0, 1, 13
+"e:\GitHub\Meally\src\common\shared\libs\types\bookmark.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 4
+"e:\GitHub\Meally\src\common\shared\libs\types\recipe.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 27, 2, 4, 33
+"e:\GitHub\Meally\src\common\styles\globals.scss", "SCSS", 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 1, 9, 50
+"e:\GitHub\Meally\src\common\styles\modules\Home.module.scss", "SCSS", 0, 0, 0, 0, 0, 0, 0, 0, 27, 0, 0, 0, 0, 0, 27
+"e:\GitHub\Meally\src\common\styles\modules\RecipePage.module.scss", "SCSS", 0, 0, 0, 0, 0, 0, 0, 0, 59, 0, 0, 0, 0, 12, 71
+"e:\GitHub\Meally\src\common\styles\modules\Signup.module.scss", "SCSS", 0, 0, 0, 0, 0, 0, 0, 0, 59, 0, 0, 0, 0, 12, 71
+"e:\GitHub\Meally\src\common\styles\responsive_design.scss", "SCSS", 0, 0, 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 4, 4, 40
+"e:\GitHub\Meally\src\pages\404.tsx", "TypeScript React", 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 1, 5, 19
+"e:\GitHub\Meally\src\pages\_app.tsx", "TypeScript React", 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 2, 5, 30
+"e:\GitHub\Meally\src\pages\_document.tsx", "TypeScript React", 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 3, 17
+"e:\GitHub\Meally\src\pages\admin\index.tsx", "TypeScript React", 0, 0, 0, 0, 61, 0, 0, 0, 0, 0, 0, 0, 0, 4, 65
+"e:\GitHub\Meally\src\pages\admin\signin.tsx", "TypeScript React", 0, 0, 0, 0, 126, 0, 0, 0, 0, 0, 0, 0, 2, 13, 141
+"e:\GitHub\Meally\src\pages\admin\signup.tsx", "TypeScript React", 0, 0, 0, 0, 124, 0, 0, 0, 0, 0, 0, 0, 0, 13, 137
+"e:\GitHub\Meally\src\pages\api\hello.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 1, 3, 14
+"e:\GitHub\Meally\src\pages\api\recipes\[id].ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 0, 3, 22
+"e:\GitHub\Meally\src\pages\api\recipes\create.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 2, 3, 25
+"e:\GitHub\Meally\src\pages\api\recipes\index.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 1, 3, 17
+"e:\GitHub\Meally\src\pages\index.tsx", "TypeScript React", 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 1, 8, 39
+"e:\GitHub\Meally\src\pages\recipes\[id].tsx", "TypeScript React", 0, 0, 0, 0, 206, 0, 0, 0, 0, 0, 0, 0, 4, 12, 222
+"e:\GitHub\Meally\src\pages\recipes\index.tsx", "TypeScript React", 0, 0, 0, 0, 46, 0, 0, 0, 0, 0, 0, 0, 1, 5, 52
+"e:\GitHub\Meally\tailwind.config.js", "JavaScript", 0, 0, 0, 120, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 122
+"e:\GitHub\Meally\tests\components\Addbatch.test.tsx", "TypeScript React", 0, 0, 0, 0, 38, 0, 0, 0, 0, 0, 0, 0, 0, 4, 42
+"e:\GitHub\Meally\tests\components\RecipeCard.test.tsx", "TypeScript React", 0, 0, 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 2, 25
+"e:\GitHub\Meally\tests\components\StepCard.test.tsx", "TypeScript React", 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 2, 13
+"e:\GitHub\Meally\tests\testing.tsx", "TypeScript React", 0, 0, 0, 0, 108, 0, 0, 0, 0, 0, 0, 0, 1, 15, 124
+"e:\GitHub\Meally\tsconfig.json", "JSON with Comments", 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 31
+"Total", "-", 200, 8, 22, 228, 1529, 24, 37421, 39, 466, 50, 15, 251, 107, 397, 40757
