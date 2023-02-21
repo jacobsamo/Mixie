@@ -9,6 +9,7 @@ import {
   query,
   orderBy,
   limit,
+  where,
 } from 'firebase/firestore';
 
 import type { Recipe } from 'libs/types';
@@ -17,6 +18,25 @@ import { db } from '@lib/config/firebase';
 class RecipeService {
   createRecipe(post: Recipe) {
     return setDoc(doc(db, 'recipes', post.id), post);
+  }
+
+  async getLatestRecipes() {
+    const recipeRef = collection(db, 'recipes');
+
+    const querySnapshot = await getDocs(
+      query(recipeRef, orderBy('createdAt', 'asc'), limit(9))
+    );
+
+    const recipes: Recipe[] = [];
+    querySnapshot.forEach((doc) => {
+      const data = doc.data() as Recipe;
+      const createdAt = data.createdAt as any;
+      recipes.push({
+        ...data,
+        createdAt: new Date(createdAt.toDate()).toDateString(),
+      });
+    });
+    return recipes;
   }
 
   async getRecipe(id: string) {

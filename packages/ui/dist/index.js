@@ -42,6 +42,7 @@ var src_exports = {};
 __export(src_exports, {
   AdBanner: () => AdBanner,
   AddButton: () => AddButton,
+  CardRectangleSmall: () => CardRectangleSmall,
   Dialog: () => Dialog,
   InputField: () => InputField,
   Loader: () => Loader,
@@ -274,6 +275,30 @@ function Dialog(props) {
   ><section className={props.className}>{props.children}</section></div>;
 }
 
+// src/modules/Cards.tsx
+var import_image2 = __toESM(require("next/image"));
+var CardRectangleSmall = ({
+  title,
+  totalTime,
+  handleClick,
+  image
+}) => {
+  const time = totalTime < 60 ? `${totalTime} mins` : `${totalTime / 60} hrs`;
+  return <div className="relative flex p-2 gap-36 items-center flex-col h-58 w-46 rounded-xl text-black dark:text-white">
+    <h1 className="text-center">{title}</h1>
+    <div className="flex flex-row gap-20 ">
+      <h3 className="w-fit whitespace-nowrap">{time}</h3>
+      <button onClick={handleClick} className=""><HeartIcon_default className="w-8 h-8 cursor-pointer" /></button>
+    </div>
+    <import_image2.default
+      src={image.imgUrl}
+      alt={image.imgAlt}
+      fill
+      className="rounded-xl object-cover h-58 w-46 -z-20"
+    />
+  </div>;
+};
+
 // src/seo/PageSEO.tsx
 var import_head = __toESM(require("next/head"));
 function PageSeo({ title, url, imgUrl, description }) {
@@ -300,7 +325,7 @@ function PageSeo({ title, url, imgUrl, description }) {
       content="Find recipes you love all free and open source, completely powered by the community "
     />
     <meta property="twitter:image" content={imgUrl} />
-    <link rel="manifest" href="manifest.json" />
+    <link rel="manifest" href="/manifest.json" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon" href="favicon.png" />
   </import_head.default>;
@@ -354,6 +379,7 @@ function RecipeSeo({
 0 && (module.exports = {
   AdBanner,
   AddButton,
+  CardRectangleSmall,
   Dialog,
   InputField,
   Loader,

@@ -1,3 +1,4 @@
+import { ImageProps } from 'libs/types';
 import { Timestamp } from 'firebase/firestore';
 
 interface recipeCardProps {
@@ -18,6 +19,14 @@ declare const AddButton: (props: any) => JSX.Element;
 
 declare function Dialog(props: any): JSX.Element;
 
+interface CardProps {
+    title: string;
+    totalTime: number;
+    handleClick: () => void;
+    image: ImageProps;
+}
+declare const CardRectangleSmall: ({ title, totalTime, handleClick, image, }: CardProps) => JSX.Element;
+
 interface pageSEOProps {
     title: string;
     url: string;
@@ -37,4 +46,4 @@ interface recipeSEOProps {
 }
 declare function RecipeSeo({ recipeDescription, recipeName, imageUrl, info, recipeUrl, createdAt, keywords, }: recipeSEOProps): JSX.Element;
 
-export { AdBanner, AddButton, Dialog, InputField, Loader, PageSeo, RecipeCard, RecipeSeo };
+export { AdBanner, AddButton, CardRectangleSmall, Dialog, InputField, Loader, PageSeo, RecipeCard, RecipeSeo };
