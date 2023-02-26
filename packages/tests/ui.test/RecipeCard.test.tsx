@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import RecipeCard from "ui/modules/RecipeCard";
+import { RecipeCard } from "../../ui/src/modules/RecipeCard";
 import { Recipe } from "libs/types";
 
 describe("RecipeCard", () => {

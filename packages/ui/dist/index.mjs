@@ -10424,7 +10424,11 @@ function InputField(props) {
 // src/modules/AddButton.tsx
 var import_outline2 = __toESM(require_outline());
 var AddButton = (props) => {
-  return <button type={props.type} onClick={props.onClick} className="flex flex-row w-40 h-9 rounded-lg border-2 border-solid border-black dark:border-white justify-center items-center gap-3">
+  return <button
+    type={props.type}
+    onClick={props.onClick}
+    className="flex flex-row w-40 h-9 rounded-lg border-2 border-solid border-black dark:border-white justify-center items-center gap-3"
+  >
     <import_outline2.PlusCircleIcon className="w-5 h-5" />
     {" Add "}
     {props.name}
@@ -10435,14 +10439,20 @@ var AddButton = (props) => {
 import { useCallback, useEffect as useEffect2, useState as useState3 } from "react";
 function Dialog(props) {
   const [dialogOpen, setDialogOpen] = useState3(false);
-  const handleKeyOpen = useCallback((event) => {
-    if (event.key in props.keyOpen)
-      setDialogOpen(true);
-  }, [props.keyOpen]);
-  const handleKeyClose = useCallback((event) => {
-    if (event.key in props.keyClose)
-      setDialogOpen(false);
-  }, [props.keyClose]);
+  const handleKeyOpen = useCallback(
+    (event) => {
+      if (event.key in props.keyOpen)
+        setDialogOpen(true);
+    },
+    [props.keyOpen]
+  );
+  const handleKeyClose = useCallback(
+    (event) => {
+      if (event.key in props.keyClose)
+        setDialogOpen(false);
+    },
+    [props.keyClose]
+  );
   useEffect2(() => {
     if (props.keyOpen) {
       document.addEventListener("keyup", handleKeyOpen);

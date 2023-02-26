@@ -7,7 +7,4 @@ module.exports = {
       rootDir: ["apps/*/"],
     },
   },
-  rules: {
-    "@next/next/no-html-link-for-pages": "off",
-  },
 };

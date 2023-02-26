@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import RecipeService from '@lib/service/RecipeService';
 import { auth } from '@lib/config/firebase';
 import AuthService from '@lib/service/Authservice';
-import RecipeCard from 'ui';
+import { RecipeCard } from 'ui';
 import type { Recipe } from 'libs/types';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import styles from '@component_styles/recipeCard.module.scss';

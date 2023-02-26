@@ -18,10 +18,16 @@
       "cache": false,
       "persistent": true
     },
-    "clean": {
+    "clean:build": {
       "cache": false
     },
-    "clean:node_modules": {
+    "clean:node": {
+      "cache": false
+    },
+    "clean:turbo": {
+      "cache": false
+    },
+    "clean:all": {
       "cache": false
     },
     "test": {},
