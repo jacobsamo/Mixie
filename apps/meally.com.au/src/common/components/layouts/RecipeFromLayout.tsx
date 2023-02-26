@@ -48,7 +48,8 @@ const RecipeFromLayout = () => {
   };
 
   async function setAdditionalInformation() {
-    dispatch({ type: 'SET_ID', payload: recipe.recipeName });
+    const id = recipe.recipeName.replace(/\s+/g, '-').toLowerCase();
+    dispatch({ type: 'SET_ID', payload: id });
     // dispatch({ type: 'SET_CREATED_BY', payload: 'Meally' });
     dispatch({ type: 'SET_CREATED_AT', payload: new Date() });
     dispatch({ type: 'SET_VERSION', payload: '1.0' });
@@ -59,8 +60,8 @@ const RecipeFromLayout = () => {
   }
 
   async function handleSubmit(event: any) {
-    await event.preventDefault();
-    await RecipeService.createRecipe(recipe).then((res) => console.log(res));
+    event.preventDefault();
+    await RecipeService.createRecipe(recipe);
     console.log('recipe sent: ', recipe);
   }
 

@@ -7,7 +7,7 @@ const AddBatch = () => {
 
   useEffect(() => {
     add < 1 ? setAdd(1) : null;
-    add > 1 ? setBatchTitle("Batches") : setBatchTitle('Batch');
+    add > 1 ? setBatchTitle('Batches') : setBatchTitle('Batch');
   }, [add]);
 
   function addBatch() {
@@ -20,7 +20,7 @@ const AddBatch = () => {
   return (
     <>
       <div className="flex flew-row items-center py-1">
-        <button data-testid="plus_button"  onClick={addBatch}>
+        <button data-testid="plus_button" onClick={addBatch}>
           <PlusCircleIcon className="w-10 h-10 w-" />
         </button>
         <button data-testid="minus_button" onClick={minusBatch}>

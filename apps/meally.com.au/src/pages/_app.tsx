@@ -6,7 +6,9 @@ import Script from 'next/script';
 import '@styles/globals.scss';
 import '@styles/responsive_design.scss';
 import 'tailwindcss/tailwind.css';
-
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

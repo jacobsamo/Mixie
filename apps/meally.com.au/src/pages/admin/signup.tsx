@@ -1,11 +1,10 @@
 import type { NextPage } from 'next';
-import { useRouter } from "next/router";
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import styles from '@styles/modules/Signup.module.scss';
 import { auth } from '@lib/config/firebase';
-import AuthService from '@lib/service/Authservice'; 
-
-
+import AuthService from '@lib/service/Authservice';
 
 const SignupPage: NextPage = () => {
   const [email, setEmail] = useState('');
@@ -13,29 +12,26 @@ const SignupPage: NextPage = () => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const router = useRouter();
-  
+
   if (auth.currentUser != null) {
-    router.push('/admin')
+    router.push('/admin');
   }
 
   const handleGithubClick = () => {
-    AuthService.signInWithGithub()
+    AuthService.signInWithGithub();
   };
   const handleGoogleClick = () => {
     console.log('Google');
-    const user = AuthService.signInWithGoogle()
+    const user = AuthService.signInWithGoogle();
   };
   const handleFacebookClick = () => {
     console.log('Facebook');
-    AuthService.signInWithFacebook()
-    
+    AuthService.signInWithFacebook();
   };
 
   const handleEmailSignup = async () => {
     console.log(`${email} ${password}`);
   };
-
-
 
   return (
     <>
@@ -43,17 +39,23 @@ const SignupPage: NextPage = () => {
         className={`flex lg:justify-center lg:items-center w-screen h-screen ${styles.Background}`}
       >
         <div className={styles.formContainer}>
-          <img src="/images/Recipe.jpg" alt="" className={styles.mainImg} />
+          <Image
+            fill
+            src="/images/Recipe.jpg"
+            alt=""
+            className={styles.mainImage}
+          />
           <div
             className={`flex flex-col items-center justify-center dark:bg-black bg-white ${styles.login}`}
           >
-            <img src="" alt="" />
+            <Image fill src="" alt="" />
             <div className="flex flex-col gap-3">
               <button
                 className={`relative w-72 bg-Github h-14 flex flex-row items-center rounded-xl`}
                 onClick={handleGithubClick}
               >
-                <img
+                <Image
+                  fill
                   src="/images/GithubLogo.svg"
                   alt="Github Logo"
                   className="w-10 h-10 ml-4 text-white"
@@ -66,7 +68,8 @@ const SignupPage: NextPage = () => {
                 className="relative w-72 h-14 bg-white flex flex-row items-center rounded-xl"
                 onClick={handleGoogleClick}
               >
-                <img
+                <Image
+                  fill
                   src="/images/GoogleLogo.svg"
                   alt="Google Logo"
                   className=" w-10 h-10 ml-4"
@@ -79,7 +82,8 @@ const SignupPage: NextPage = () => {
                 className="relative w-72 h-14 bg-Facebook flex flex-row items-center rounded-xl"
                 onClick={handleFacebookClick}
               >
-                <img
+                <Image
+                  fill
                   src="/images/FacebookLogo.svg"
                   alt="Facebook Logo"
                   className="w-10 h-10 ml-4 text-white"

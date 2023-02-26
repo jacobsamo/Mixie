@@ -73,9 +73,8 @@ const ImageUpload = (props: any) => {
   }, [imgUrl, imgAlt]);
 
   useEffect(() => {
-    props.handleChange(img)
+    props.handleChange(img);
   }, [img]);
-  
 
   return (
     <div className={styles.fileInput}>

@@ -13,7 +13,6 @@ import {
 } from 'react-instantsearch-hooks-web';
 import { Hit } from 'libs/types';
 
-
 interface algoliaSearchDialogProps {
   buttonType: string;
 }

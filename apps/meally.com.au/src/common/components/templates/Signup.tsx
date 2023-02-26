@@ -1,11 +1,12 @@
 import type { NextPage } from 'next';
-import { useRouter } from "next/router";
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import styles from 'Signup.module.scss';
-import { auth } from '@lib/config/firebase'
+import { auth } from '@lib/config/firebase';
 import {
   getAuth,
-  signInWithPopup, 
+  signInWithPopup,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   FacebookAuthProvider,
@@ -16,7 +17,6 @@ const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
-
 const SignupPage: NextPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,12 +24,12 @@ const SignupPage: NextPage = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(false);
   const router = useRouter();
-  
+
   useEffect(() => {
     if (loggedInUser) {
-      router.push('/')
+      router.push('/');
     }
-  }, [loggedInUser])
+  }, [loggedInUser]);
 
   const handleGithubClick = () => {
     console.log('Github');
@@ -41,10 +41,11 @@ const SignupPage: NextPage = () => {
 
         // The signed-in user info.
         const user = result.user;
-        console.log(user)
+        console.log(user);
         setLoggedInUser(true);
         // ...
-      }).catch((error) => {
+      })
+      .catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -66,7 +67,8 @@ const SignupPage: NextPage = () => {
         const user = result.user;
         if (user != null) setLoggedInUser(true);
         // ...
-      }).catch((error) => {
+      })
+      .catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -106,13 +108,16 @@ const SignupPage: NextPage = () => {
   const handleEmailSignup = async () => {
     console.log(`${email} ${password}`);
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       console.log(userCredential);
     } catch (err) {
       console.log(err);
-    }  
+    }
   };
-
 
   return (
     <>
@@ -120,17 +125,23 @@ const SignupPage: NextPage = () => {
         className={`flex lg:justify-center lg:items-center w-screen h-screen ${styles.Background}`}
       >
         <div className={styles.formContainer}>
-          <img src="/images/Recipe.jpg" alt="" className={styles.mainImg} />
+          <Image
+            fill
+            src="/images/Recipe.jpg"
+            alt=""
+            className={styles.mainImage}
+          />
           <div
             className={`flex flex-col items-center justify-center dark:bg-black bg-white ${styles.login}`}
           >
-            <img src="" alt="" />
+            <Image fill src="" alt="" />
             <div className="flex flex-col gap-3">
               <button
                 className={`relative w-72 bg-Github h-14 flex flex-row items-center rounded-xl`}
                 onClick={handleGithubClick}
               >
-                <img
+                <Image
+                  fill
                   src="/images/GithubLogo.svg"
                   alt="Github Logo"
                   className="w-10 h-10 ml-4 text-white"
@@ -143,7 +154,8 @@ const SignupPage: NextPage = () => {
                 className="relative w-72 h-14 bg-white flex flex-row items-center rounded-xl"
                 onClick={handleGoogleClick}
               >
-                <img
+                <Image
+                  fill
                   src="/images/GoogleLogo.svg"
                   alt="Google Logo"
                   className=" w-10 h-10 ml-4"
@@ -156,7 +168,8 @@ const SignupPage: NextPage = () => {
                 className="relative w-72 h-14 bg-Facebook flex flex-row items-center rounded-xl"
                 onClick={handleFacebookClick}
               >
-                <img
+                <Image
+                  fill
                   src="/images/FacebookLogo.svg"
                   alt="Facebook Logo"
                   className="w-10 h-10 ml-4 text-white"
