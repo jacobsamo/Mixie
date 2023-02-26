@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import { dietaryRequirements, initialRecipeState } from '@lib/service/data';
 
 class RecipeForm {
-
   recipeReducer(state: any, action: any) {
     switch (action.type) {
       case 'SET_ID':
@@ -53,8 +52,6 @@ class RecipeForm {
         throw new Error();
     }
   }
-
-
 }
 
 export default new RecipeForm();

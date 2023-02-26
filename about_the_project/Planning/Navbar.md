@@ -1,4 +1,5 @@
 # Creating a navbar
+
 creating a responsive navbar in Nextjs / React is a bit tricky. You can use the [react-bootstrap](https://react-bootstrap.github.io/components/navbar/) library to create a navbar. But it is not responsive. So, I have created a custom navbar component which is responsive and can be used in any Nextjs / React project.
 
 ## Navbar component
@@ -33,32 +34,32 @@ const Navbar = () => {
             </Link>
             <div className={`${styles.nav-links} ${isOpen ? styles.show_nav : ''}`}>
                 <Link href="/">
-                    <a 
-                        className={styles.nav_link} 
+                    <a
+                        className={styles.nav_link}
                         onClick={() => setIsOpen(false)}
                     >
                         Recipes
                     </a>
                 </Link>
                 <Link href="/sweet">
-                    <a 
-                        className={styles.nav_link} 
+                    <a
+                        className={styles.nav_link}
                         onClick={() => setIsOpen(false)}
                     >
                         Sweet
                     </a>
                 </Link>
                 <Link href="/savoury">
-                    <a 
-                        className={styles.nav_link} 
+                    <a
+                        className={styles.nav_link}
                         onClick={() => setIsOpen(false)}
                     >
                         Savoury
                     </a>
                 </Link>
                 <Link href="/categories">
-                    <a 
-                        className={styles.nav_link} 
+                    <a
+                        className={styles.nav_link}
                         onClick={() => setIsOpen(false)}
                     >
                         Categories

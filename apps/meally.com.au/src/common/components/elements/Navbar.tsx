@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import styles from '@styles/modules/Navbar.module.scss';
@@ -45,13 +45,14 @@ const Navbar = () => {
           >
             Savoury
           </Link>
-          <Link
+          {/*TODO: Un comment this once it exists */}
+          {/* <Link
             href="/categories"
             className={styles.nav_link}
             onClick={() => setIsOpen(false)}
           >
             Categories
-          </Link>
+          </Link> */}
         </div>
         <div className={styles.utility}>
           <Algolia_Search_Dialog buttonType="searchIcon" />

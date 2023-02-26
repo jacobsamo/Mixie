@@ -13,7 +13,6 @@ import {
 } from 'react-instantsearch-hooks-web';
 import { Hit } from 'libs/types';
 
-
 interface algoliaSearchDialogProps {
   buttonType: string;
 }
@@ -66,7 +65,6 @@ export default function Algolia_Search_Dialog({
   const handleKeyClose = useCallback((event: any) => {
     if (event.key == 'Escape') setDialogOpen(false);
   }, []);
-
 
   //TODO: make it so you can click out side of the dialog to close it
   // useEffect(() => {

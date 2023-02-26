@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "main": "index.js",
-  
   "dependencies": {},
+  "scripts": {
+    "clean:node": "rm -rf node_modules",
+    "clean:all": "yarn clean:node"
+  },
   "devDependencies": {
     "tailwindcss": "^3.2.4"
   }

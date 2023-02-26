@@ -21,7 +21,6 @@ interface recipePageProps {
   recipe: Recipe;
 }
 
-
 export default function RecipePage({ recipe }: recipePageProps) {
   return (
     <>
@@ -35,7 +34,7 @@ export default function RecipePage({ recipe }: recipePageProps) {
         createdAt={recipe.createdAt}
       />
       <Navbar />
-      <RecipePageLayout recipe={recipe}/>
+      <RecipePageLayout recipe={recipe} />
     </>
   );
 }
@@ -66,6 +65,6 @@ export async function getStaticProps(context: any) {
     props: {
       recipe,
     },
-    revalidate: 86400000,
+    revalidate: 60 * 60 * 24,
   };
 }

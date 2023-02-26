@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styles from '@styles/modules/RecipePage.module.scss';
 import RecipeService from '@lib/service/RecipeService';
 import { Recipe } from 'libs/types/';
@@ -9,15 +9,13 @@ import Navbar from '@components/elements/Navbar';
 import Link from 'next/link';
 
 export async function getStaticProps() {
-  const recipes = (await RecipeService.getAllRecipes()) as Recipe[];
+  const recipes = await RecipeService.getAllRecipes();
   return {
     props: {
       recipes: recipes,
     },
   };
 }
-
-/// With more than 600 recipe collections, get dinner ideas for tonight and everyday cooking inspiration
 
 const RecipesPages: NextPage = ({ recipes }: any) => {
   return (
@@ -36,7 +34,7 @@ const RecipesPages: NextPage = ({ recipes }: any) => {
               <div>
                 <RecipeCard
                   id={recipe.id.toString()}
-                  imageUrl={recipe.imageUrl}
+                  imageUrl={recipe.image.imgUrl}
                   recipeName={recipe.recipeName}
                   recipeDescription={recipe.recipeDescription}
                 />
