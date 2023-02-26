@@ -4,7 +4,7 @@ import RecipeService from '@lib/service/RecipeService';
 import { auth } from '@lib/config/firebase';
 import AuthService from '@lib/service/Authservice';
 import RecipeCard from 'ui';
-import type {Recipe} from 'libs/types';
+import type { Recipe } from 'libs/types';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import styles from '@component_styles/recipeCard.module.scss';
 
@@ -52,12 +52,11 @@ export async function getStaticProps() {
 
 const Testing: NextPage = () => {
   const [recipeData, setRecipeData] = useState<any[]>([]);
-  
+
   useEffect(() => {
     setRecipeData([testData]);
-  }, [])
+  }, []);
 
-  
   const onSendData = async () => {
     await fetch('/api/recipe/create', {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -74,8 +73,6 @@ const Testing: NextPage = () => {
     });
   };
 
-
-
   const Recipes = () => {
     if (recipeData.length === 0) {
       return <h1>Loading...</h1>;
@@ -86,16 +83,27 @@ const Testing: NextPage = () => {
           <div>
             {recipeData.map((recipe: Recipe) => (
               <>
-                <div key={recipe.id} className='relative w-46 h-58 dark:bg-grey bg-white rounded-xl'>
-                  <img src={recipe.image.imgUrl} alt={recipe.recipeName} className={styles.image}/>
-                  <h1 className='dark:text-white text-black text-sm font-Roboto font-bold absolute left-2 top-36'>{recipe.recipeName}</h1>
-                  <h1 className='dark:text-white text-black absolute bottom-1 left-3'>{recipe.id}</h1>
-                  <HeartIcon 
-                    className='dark:text-white text-black cursor-pointer absolute bottom-1 right-1 w-6 h-6'
+                <div
+                  key={recipe.id}
+                  className="relative w-46 h-58 dark:bg-grey bg-white rounded-xl"
+                >
+                  <img
+                    src={recipe.image.imgUrl}
+                    alt={recipe.recipeName}
+                    className={styles.image}
+                  />
+                  <h1 className="dark:text-white text-black text-sm font-Roboto font-bold absolute left-2 top-36">
+                    {recipe.recipeName}
+                  </h1>
+                  <h1 className="dark:text-white text-black absolute bottom-1 left-3">
+                    {recipe.id}
+                  </h1>
+                  <HeartIcon
+                    className="dark:text-white text-black cursor-pointer absolute bottom-1 right-1 w-6 h-6"
                     onClick={() => console.log('heart icon clicked')}
                   />
                 </div>
-              </>  
+              </>
             ))}
           </div>
         </>
@@ -105,16 +113,18 @@ const Testing: NextPage = () => {
     }
   };
 
-
   return (
     <>
       <h1>Testing</h1>
-      <button onClick={() => {
-        AuthService.signOutUser()
-        console.log(auth.currentUser)
-      }}>Sign out</button>
+      <button
+        onClick={() => {
+          AuthService.signOutUser();
+          console.log(auth.currentUser);
+        }}
+      >
+        Sign out
+      </button>
       <Recipes />
-      
     </>
   );
 };

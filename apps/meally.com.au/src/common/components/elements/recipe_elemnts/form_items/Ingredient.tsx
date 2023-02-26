@@ -36,10 +36,10 @@ const DisplayAmount = ({ unit, handleChange }: DisplayAmountProps) => {
   useEffect(() => {
     if (units.includes(unit)) {
       if (unit == 'cup') {
-        if (cupAmount! <= 0 ) {
+        if (cupAmount! <= 0) {
           setAmount(cupSelect);
         }
-        if (cupAmount! > 0 ) {
+        if (cupAmount! > 0) {
           setAmount(`${cupAmount} ${cupSelect}`);
         }
       }

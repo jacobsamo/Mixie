@@ -4,13 +4,19 @@ function Dialog(props: any) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   // handle key events to open or close the dialog
-  const handleKeyOpen = useCallback((event: any) => {
-    if (event.key in props.keyOpen) setDialogOpen(true);
-  }, [props.keyOpen]);
+  const handleKeyOpen = useCallback(
+    (event: any) => {
+      if (event.key in props.keyOpen) setDialogOpen(true);
+    },
+    [props.keyOpen]
+  );
 
-  const handleKeyClose = useCallback((event: any) => {
-    if (event.key in props.keyClose) setDialogOpen(false);
-  }, [props.keyClose]);
+  const handleKeyClose = useCallback(
+    (event: any) => {
+      if (event.key in props.keyClose) setDialogOpen(false);
+    },
+    [props.keyClose]
+  );
 
   // add key event listeners
   useEffect(() => {

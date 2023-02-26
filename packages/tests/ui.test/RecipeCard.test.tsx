@@ -1,17 +1,18 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import RecipeCard from 'ui/modules/RecipeCard';
-import {Recipe}  from 'libs/types';
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import RecipeCard from "ui/modules/RecipeCard";
+import { Recipe } from "libs/types";
 
-
-describe('RecipeCard', () => {
-  it('renders a card', async () => {
+describe("RecipeCard", () => {
+  it("renders a card", async () => {
     const mockRecipe = {
-        id: '1',
-        imageUrl: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
-        recipeDescription: 'A delicious meal that is easy to make and tastes great.',
-        recipeName: 'Spaghetti Bolognese'
-    }
+      id: "1",
+      imageUrl:
+        "https://www.themealdb.com/images/media/meals/58oia61564916529.jpg",
+      recipeDescription:
+        "A delicious meal that is easy to make and tastes great.",
+      recipeName: "Spaghetti Bolognese",
+    };
     render(
       <RecipeCard
         id={mockRecipe.id}

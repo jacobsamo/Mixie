@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com
+! tailwindcss v3.2.7 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -532,16 +532,12 @@ video {
   left: 0px;
 }
 
-.left-2 {
-  left: 0.5rem;
-}
-
-.top-36 {
-  top: 9rem;
-}
-
 .bottom-1 {
   bottom: 0.25rem;
+}
+
+.left-2 {
+  left: 0.5rem;
 }
 
 .left-3 {
@@ -550,6 +546,10 @@ video {
 
 .right-1 {
   right: 0.25rem;
+}
+
+.top-36 {
+  top: 9rem;
 }
 
 .-z-20 {
@@ -568,10 +568,6 @@ video {
   display: flex;
 }
 
-.h-9 {
-  height: 2.25rem;
-}
-
 .h-5 {
   height: 1.25rem;
 }
@@ -580,28 +576,40 @@ video {
   height: 14.375rem;
 }
 
+.h-6 {
+  height: 1.5rem;
+}
+
 .h-8 {
   height: 2rem;
+}
+
+.h-9 {
+  height: 2.25rem;
 }
 
 .h-full {
   height: 100%;
 }
 
-.h-6 {
-  height: 1.5rem;
-}
-
 .w-40 {
   width: 10rem;
+}
+
+.w-46 {
+  width: 11.25rem;
 }
 
 .w-5 {
   width: 1.25rem;
 }
 
-.w-46 {
-  width: 11.25rem;
+.w-6 {
+  width: 1.5rem;
+}
+
+.w-8 {
+  width: 2rem;
 }
 
 .w-fit {
@@ -609,16 +617,8 @@ video {
   width: fit-content;
 }
 
-.w-8 {
-  width: 2rem;
-}
-
 .w-full {
   width: 100%;
-}
-
-.w-6 {
-  width: 1.5rem;
 }
 
 .cursor-pointer {
@@ -641,16 +641,16 @@ video {
   justify-content: center;
 }
 
+.gap-20 {
+  gap: 5rem;
+}
+
 .gap-3 {
   gap: 0.75rem;
 }
 
 .gap-36 {
   gap: 9rem;
-}
-
-.gap-20 {
-  gap: 5rem;
 }
 
 .overflow-y-auto {

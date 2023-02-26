@@ -21,7 +21,6 @@ interface recipePageProps {
   recipe: Recipe;
 }
 
-
 export default function RecipePage({ recipe }: recipePageProps) {
   return (
     <>
@@ -35,7 +34,7 @@ export default function RecipePage({ recipe }: recipePageProps) {
         createdAt={recipe.createdAt}
       />
       <Navbar />
-      <RecipePageLayout recipe={recipe}/>
+      <RecipePageLayout recipe={recipe} />
     </>
   );
 }

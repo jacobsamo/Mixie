@@ -29,11 +29,15 @@ const Step = ({ index, handleChange, handleDelete }: StepProps) => {
           id="step_body"
           onChange={internalChange}
           value={bodyValue}
-          placeholder='Step body'
-          className='resize-none w-80 mt-2 p-2 rounded-md border border-gray-300 dark:border-dark_grey focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent'
+          placeholder="Step body"
+          className="resize-none w-80 mt-2 p-2 rounded-md border border-gray-300 dark:border-dark_grey focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
         />
       </label>
-      <button onClick={() => handleDelete(index)} type='button' className='absolute right-2 top-2'>
+      <button
+        onClick={() => handleDelete(index)}
+        type="button"
+        className="absolute right-2 top-2"
+      >
         <TrashIcon className="h-6 w-6" />
       </button>
     </section>
