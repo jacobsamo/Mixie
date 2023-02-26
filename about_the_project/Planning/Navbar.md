@@ -1,5 +1,4 @@
 # Creating a navbar
-
 creating a responsive navbar in Nextjs / React is a bit tricky. You can use the [react-bootstrap](https://react-bootstrap.github.io/components/navbar/) library to create a navbar. But it is not responsive. So, I have created a custom navbar component which is responsive and can be used in any Nextjs / React project.
 
 ## Navbar component

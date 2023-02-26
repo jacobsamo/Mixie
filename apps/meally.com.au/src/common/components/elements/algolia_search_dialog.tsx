@@ -66,6 +66,7 @@ export default function Algolia_Search_Dialog({
     if (event.key == 'Escape') setDialogOpen(false);
   }, []);
 
+
   //TODO: make it so you can click out side of the dialog to close it
   // useEffect(() => {
   //   const checkIfClickedOutside = (e: any) => {
