@@ -33,7 +33,7 @@ class RecipeService {
       const createdAt = data.createdAt as any;
       recipes.push({
         ...data,
-        createdAt: new Date(createdAt.toDate()).toDateString(),
+        createdAt: new Date(createdAt).toDateString(),
       });
     });
     return recipes;
@@ -61,7 +61,7 @@ class RecipeService {
       const createdAt = data.createdAt as any;
       recipes.push({
         ...data,
-        createdAt: new Date(createdAt.toDate()).toDateString(),
+        createdAt: new Date(createdAt).toDateString(),
       });
     });
     return recipes;

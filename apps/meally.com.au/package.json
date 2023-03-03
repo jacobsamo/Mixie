@@ -11,7 +11,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:ci": "jest --ci",
-    "clean:build": "rm -rf next",
+    "clean:build": "rm -rf .next",
     "clean:node": "rm -rf node_modules/",
     "clean:turbo": "rm -rf .turbo",
     "clean:all": "yarn clean:build && yarn clean:node && yarn clean:turbo",

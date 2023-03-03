@@ -35,3 +35,5 @@ export interface ImageProps {
   imgUrl: string;
   imgAlt: string;
 }
+
+

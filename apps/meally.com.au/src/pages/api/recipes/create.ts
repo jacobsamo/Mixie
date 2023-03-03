@@ -9,7 +9,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
       const recipe = JSON.parse(req.body);
       console.log(recipe);
-      RecipeService.createRecipe(recipe);
+      RecipeService.createRecipe(recipe[0]);
       res.status(201).send('data is valid');
     } catch (err: any) {
       res.status(400).send(`An error occurred: ${err.message}`);

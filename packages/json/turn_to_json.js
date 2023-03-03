@@ -7,5 +7,5 @@ fs.writeFile('./recipes.json', content, (err) => {
   if (err) {
     console.log(err);
   }
-  console.log(`Successfuly wrote ${content} to recipes.json`);
+  console.log(`Successfully wrote ${content} to recipes.json`);
 });
