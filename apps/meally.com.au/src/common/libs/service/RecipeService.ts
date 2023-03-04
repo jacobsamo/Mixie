@@ -20,11 +20,34 @@ class RecipeService {
     return setDoc(doc(db, 'recipes', post.id), post);
   }
 
-  async getLatestRecipes() {
+  async getLatestRecipes(getWhere?: string, value?: string) {
     const recipeRef = collection(db, 'recipes');
 
     const querySnapshot = await getDocs(
       query(recipeRef, orderBy('createdAt', 'asc'), limit(9))
+    );
+
+    const recipes: Recipe[] = [];
+    querySnapshot.forEach((doc) => {
+      const data = doc.data() as Recipe;
+      const createdAt = data.createdAt as any;
+      recipes.push({
+        ...data,
+        createdAt: new Date(createdAt).toDateString(),
+      });
+    });
+    return recipes;
+  }
+  async getLatestSweet_SavouryRecipes(sweet_savoury: string) {
+    const recipeRef = collection(db, 'recipes');
+
+    const querySnapshot = await getDocs(
+      query(
+        recipeRef,
+        where(sweet_savoury, '==', 'sweet_savoury'),
+        orderBy('createdAt', 'asc'),
+        limit(9)
+      )
     );
 
     const recipes: Recipe[] = [];

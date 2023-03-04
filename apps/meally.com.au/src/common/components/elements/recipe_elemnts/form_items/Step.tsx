@@ -22,7 +22,7 @@ const Step = ({ index, handleChange, handleDelete }: StepProps) => {
       key={index}
       className="relative flex flex-col items-start p-3 rounded-md h-fit w-96 flex-grow bg-white text-black dark:bg-dark_grey dark:text-white"
     >
-      <h1 className="font-medium font-Roboto text-lg">Step {index + 1}</h1>
+      <h1 className="font-medium font-Roboto text-step0">Step {index + 1}</h1>
       <label>
         <textarea
           name="step_body"

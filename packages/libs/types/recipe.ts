@@ -22,6 +22,7 @@ export interface Recipe {
   madeRecipe: number;
   savedRecipe: number;
 }
+ 
 
 export interface Info {
   total: number;

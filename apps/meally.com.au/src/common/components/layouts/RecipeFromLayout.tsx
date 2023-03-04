@@ -212,7 +212,7 @@ const RecipeFromLayout = () => {
           <StepContainer handleArrayChange={handleArrayChange} name="steps" />
         </div>
 
-        <button type="submit" className="text-xl mt-14">
+        <button type="submit" className="text-step2 mt-14">
           Submit
         </button>
       </form>

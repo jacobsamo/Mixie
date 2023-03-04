@@ -1,132 +1,30 @@
-import type { NextPage } from 'next';
-import Image from 'next/image';
-import React, { useState } from 'react';
-import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import React from 'react';
 import styles from '@styles/modules/Home.module.scss';
+import Navbar from '@components/elements/Navbar';
+import Footer from '@components/elements/Footer';
+import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
+import { CardRectangle, CardRectangleSmall } from '@components/elements/Cards';
+import RecipeService from '@lib/service/RecipeService';
+import { Recipe } from 'libs/types';
+import { PageSeo } from 'ui';
+
+//swiper
+import { Navigation, Pagination, Autoplay } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
-
 //import components
 
-import { PageSeo } from 'ui';
-import Navbar from '@components/elements/Navbar';
-import Footer from '@components/elements/Footer';
-import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
-import { Recipe } from 'libs/types';
-import RecipeService from '@lib/service/RecipeService';
-import { CardRectangle, CardRectangleSmall } from '@components/elements/Cards';
-
 interface HomeProps {
-  recipes: Recipe[];
   sweet: Recipe[];
   savoury: Recipe[];
   latestRecipes: Recipe[];
 }
 
-const Home = ({ recipes, latestRecipes, sweet, savoury }: HomeProps) => {
-  const [mapArray, setMapArray] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
-
-  const Cards = () => {
-    return (
-      <>
-        <CardRectangleSmall
-          title="test item"
-          totalTime={20}
-          key="test-item"
-          handleClick={() => console.log('clicked')}
-          image={{
-            imgUrl: '/images/background.jpg',
-            imgAlt: 'test item',
-          }}
-        />
-        <CardRectangleSmall
-          title="test item"
-          totalTime={20}
-          key="test-item"
-          handleClick={() => console.log('clicked')}
-          image={{
-            imgUrl: '/images/background.jpg',
-            imgAlt: 'test item',
-          }}
-        />
-        <CardRectangleSmall
-          title="test item"
-          totalTime={20}
-          key="test-item"
-          handleClick={() => console.log('clicked')}
-          image={{
-            imgUrl: '/images/background.jpg',
-            imgAlt: 'test item',
-          }}
-        />
-        <CardRectangleSmall
-          title="test item"
-          totalTime={20}
-          key="test-item"
-          handleClick={() => console.log('clicked')}
-          image={{
-            imgUrl: '/images/background.jpg',
-            imgAlt: 'test item',
-          }}
-        />
-        <CardRectangleSmall
-          title="test item"
-          totalTime={20}
-          key="test-item"
-          handleClick={() => console.log('clicked')}
-          image={{
-            imgUrl: '/images/background.jpg',
-            imgAlt: 'test item',
-          }}
-        />
-        <CardRectangleSmall
-          title="test item"
-          totalTime={20}
-          key="test-item"
-          handleClick={() => console.log('clicked')}
-          image={{
-            imgUrl: '/images/background.jpg',
-            imgAlt: 'test item',
-          }}
-        />
-        <CardRectangleSmall
-          title="test item"
-          totalTime={20}
-          key="test-item"
-          handleClick={() => console.log('clicked')}
-          image={{
-            imgUrl: '/images/background.jpg',
-            imgAlt: 'test item',
-          }}
-        />
-        <CardRectangleSmall
-          title="test item"
-          totalTime={20}
-          key="test-item"
-          handleClick={() => console.log('clicked')}
-          image={{
-            imgUrl: '/images/background.jpg',
-            imgAlt: 'test item',
-          }}
-        />
-        <CardRectangleSmall
-          title="test item"
-          totalTime={20}
-          key="test-item"
-          handleClick={() => console.log('clicked')}
-          image={{
-            imgUrl: '/images/background.jpg',
-            imgAlt: 'test item',
-          }}
-        />
-      </>
-    );
-  };
-
+const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
   return (
     <>
       <PageSeo
@@ -166,128 +64,24 @@ const Home = ({ recipes, latestRecipes, sweet, savoury }: HomeProps) => {
             }}
             className="w-full h-full justify-center"
           >
-            {/* {latestRecipes.map((item: Recipe) => (
-              <SwiperSlide>
-                <CardRectangle
-                  title={item.recipeName}
-                  totalTime={item.info.total}
-                  key={item.id}
-                  handleClick={() => console.log('clicked')}
-                  image={{
-                    imgUrl: item.image?.imgUrl || '',
-                    imgAlt: item.image?.imgAlt || '',
-                  }}
-                />
-              </SwiperSlide>
-            ))} */}
-            <SwiperSlide>
-              <CardRectangle
-                title="test item"
-                totalTime={20}
-                key="test-item"
-                handleClick={() => console.log('clicked')}
-                image={{
-                  imgUrl: '/images/background.jpg',
-                  imgAlt: 'test item',
-                }}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CardRectangle
-                title="test item"
-                totalTime={20}
-                key="test-item"
-                handleClick={() => console.log('clicked')}
-                image={{
-                  imgUrl: '/images/background.jpg',
-                  imgAlt: 'test item',
-                }}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CardRectangle
-                title="test item"
-                totalTime={20}
-                key="test-item"
-                handleClick={() => console.log('clicked')}
-                image={{
-                  imgUrl: '/images/background.jpg',
-                  imgAlt: 'test item',
-                }}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CardRectangle
-                title="test item"
-                totalTime={20}
-                key="test-item"
-                handleClick={() => console.log('clicked')}
-                image={{
-                  imgUrl: '/images/background.jpg',
-                  imgAlt: 'test item',
-                }}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CardRectangle
-                title="test item"
-                totalTime={20}
-                key="test-item"
-                handleClick={() => console.log('clicked')}
-                image={{
-                  imgUrl: '/images/background.jpg',
-                  imgAlt: 'test item',
-                }}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CardRectangle
-                title="test item"
-                totalTime={20}
-                key="test-item"
-                handleClick={() => console.log('clicked')}
-                image={{
-                  imgUrl: '/images/background.jpg',
-                  imgAlt: 'test item',
-                }}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CardRectangle
-                title="test item"
-                totalTime={20}
-                key="test-item"
-                handleClick={() => console.log('clicked')}
-                image={{
-                  imgUrl: '/images/background.jpg',
-                  imgAlt: 'test item',
-                }}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CardRectangle
-                title="test item"
-                totalTime={20}
-                key="test-item"
-                handleClick={() => console.log('clicked')}
-                image={{
-                  imgUrl: '/images/background.jpg',
-                  imgAlt: 'test item',
-                }}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CardRectangle
-                title="test item"
-                totalTime={20}
-                key="test-item"
-                handleClick={() => console.log('clicked')}
-                image={{
-                  imgUrl: '/images/background.jpg',
-                  imgAlt: 'test item',
-                }}
-              />
-            </SwiperSlide>
+            {latestRecipes ? (
+              latestRecipes.map((item: Recipe) => (
+                <SwiperSlide>
+                  <CardRectangle
+                    title={item.recipeName}
+                    totalTime={item.info.total}
+                    key={item.id}
+                    handleClick={() => console.log('clicked')}
+                    image={{
+                      imgUrl: item.image?.imgUrl || '',
+                      imgAlt: item.image?.imgAlt || '',
+                    }}
+                  />
+                </SwiperSlide>
+              ))
+            ) : (
+              <h1>No Recipes at this point in time</h1>
+            )}
           </Swiper>
         </section>
         <div className={styles.sweet_savouryContainer}>
@@ -295,38 +89,36 @@ const Home = ({ recipes, latestRecipes, sweet, savoury }: HomeProps) => {
             <h1 className="text-center text-step0">Sweet</h1>
             <div className={styles.gridContainer}>
               {/*TODO: un comment below */}
-              {/* {sweet.map((item) => (  
+              {sweet.map((item) => (
                 <CardRectangleSmall
                   title={item.recipeName}
                   totalTime={item.info.total}
                   key={item.id}
                   handleClick={() => console.log('clicked')}
                   image={{
-                    imgUrl: item.image.imgUrl,
-                    imgAlt: item.image.imgAlt,
+                    imgUrl: item.image.imgUrl || '',
+                    imgAlt: item.image.imgAlt || '',
                   }}
                 />
-              ))} */}
-              <Cards />
+              ))}
             </div>
           </section>
           <section className={styles.sweet_savourySection}>
             <h1 className="text-center text-step0">Savoury</h1>
             <div className={styles.gridContainer}>
               {/*TODO: un comment below */}
-              {/* {savoury.map((item) => (
+              {savoury.map((item) => (
                 <CardRectangleSmall
                   title={item.recipeName}
                   totalTime={item.info.total}
                   key={item.id}
                   handleClick={() => console.log('clicked')}
                   image={{
-                    imgUrl: item.image.imgUrl,
-                    imgAlt: item.image.imgAlt,
+                    imgUrl: item.image.imgUrl || '',
+                    imgAlt: item.image.imgAlt || '',
                   }}
                 />
-              ))} */}
-              <Cards />
+              ))}
             </div>
           </section>
         </div>
@@ -337,19 +129,16 @@ const Home = ({ recipes, latestRecipes, sweet, savoury }: HomeProps) => {
 };
 
 export async function getStaticProps() {
-  const recipes = await RecipeService.getAllRecipes();
   const latestRecipes = await RecipeService.getLatestRecipes();
+  const sweet = await RecipeService.getLatestSweet_SavouryRecipes('sweet');
+  const savoury = await RecipeService.getLatestSweet_SavouryRecipes('savoury');
   return {
     props: {
-      recipes: recipes,
       latestRecipes: latestRecipes,
-      sweet: recipes.filter((recipe) => recipe.sweet_savoury === 'sweet'),
-      savoury: recipes.filter((recipe) => recipe.sweet_savoury === 'savoury'),
+      sweet: sweet,
+      savoury: savoury,
     },
   };
 }
 
 export default Home;
-function useEffect(arg0: () => void, arg1: never[]) {
-  throw new Error('Function not implemented.');
-}

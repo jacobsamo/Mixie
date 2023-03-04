@@ -28,7 +28,7 @@ const RecipeCard = ({
         alt={recipeName}
         className="width-[180px] height-[135px] rounded-[12px 12px 0 0] absolute"
       />
-      <h1 className="dark:text-white text-black text-sm font-Roboto font-bold absolute left-2 top-36">
+      <h1 className="dark:text-white text-black text-step--2 font-Roboto font-bold absolute left-2 top-36">
         {recipeName}
       </h1>
       <h1 className="dark:text-white text-black absolute bottom-1 left-3">

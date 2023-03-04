@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: ['custom', 'next/core-web-vitals'],
+  extends: ['custom'],
   rules: {
     // Disable rules that aren't relevant to your codebase
     '@next/next/no-html-link-for-pages': 'off',
@@ -12,9 +12,8 @@ module.exports = {
     // 'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'off',
     'import/no-anonymous-default-export': 'off',
-    'turbo/no-undeclared-env-vars': 'warn',
+    'turbo/no-undeclared-env-vars': 'off',
 
     // Use autofix where possible
-
   },
 };

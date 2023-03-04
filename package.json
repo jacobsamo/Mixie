@@ -31,6 +31,6 @@
     "eslint": "^8.34.0",
     "eslint-config-custom": "*",
     "prettier": "2.7.1",
-    "turbo": "latest"
+    "turbo": "1.8.3"
   }
 }
