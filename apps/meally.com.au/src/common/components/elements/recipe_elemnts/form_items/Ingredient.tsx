@@ -13,6 +13,7 @@ import { units } from '@lib/service/data';
 
 interface IngredientProps {
   index: number;
+  value: string;
   handleChange: (index: number, event: any) => void;
   handleDelete: (index: number) => void;
 }
@@ -108,7 +109,12 @@ const DisplayAmount = ({ unit, handleChange }: DisplayAmountProps) => {
 ====================================
 */
 
-const Ingredient = ({ index, handleChange, handleDelete }: IngredientProps) => {
+const Ingredient = ({
+  index,
+  value,
+  handleChange,
+  handleDelete,
+}: IngredientProps) => {
   const [ingredientArray, setIngredientArray] = useState<string>('');
   const [ingredientItem, setIngredientItem] = useState<string>('');
   const [amount, setAmount] = useState<string>('');
@@ -178,10 +184,14 @@ const IngredientContainer = (props: any) => {
       newArray[index] = event;
       return newArray;
     });
+    console.log(event);
   }
 
   function handleDelete(index: number) {
+    console.log('Deleting step at index', index);
+    console.log('Before deleting', ingredientArray);
     setIngredientArray(ingredientArray.filter((_, i) => i !== index));
+    console.log('After deleting', ingredientArray);
   }
 
   useEffect(() => {
@@ -194,10 +204,11 @@ const IngredientContainer = (props: any) => {
         <section
           className={`${styles.recipeIngredients} flex flex-col w-[12.5rem] gap-3`}
         >
-          {ingredientArray.map((step, index) => {
+          {ingredientArray.map((value, index) => {
             return (
               <Ingredient
                 index={index}
+                value={value}
                 handleChange={handleChange}
                 handleDelete={handleDelete}
                 key={index}

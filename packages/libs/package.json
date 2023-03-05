@@ -14,7 +14,7 @@
     "eslint": "^8.34.0",
     "eslint-config-custom": "*",
     "eslint-config-next": "^13.1.1",
-    "firebase": "^9.15.0",
+    "firebase": "^9.17.2",
     "tsconfig": "*",
     "typescript": "4.7.4"
   }
