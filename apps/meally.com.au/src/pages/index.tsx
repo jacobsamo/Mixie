@@ -88,7 +88,7 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
           <section className={styles.sweet_savourySection}>
             <h1 className="text-center text-step0">Sweet</h1>
             <div className={styles.gridContainer}>
-              {/*TODO: un comment below */}
+          
               {sweet.map((item) => (
                 <CardRectangleSmall
                   title={item.recipeName}
@@ -106,7 +106,6 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
           <section className={styles.sweet_savourySection}>
             <h1 className="text-center text-step0">Savoury</h1>
             <div className={styles.gridContainer}>
-              {/*TODO: un comment below */}
               {savoury.map((item) => (
                 <CardRectangleSmall
                   title={item.recipeName}
