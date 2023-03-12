@@ -9,14 +9,8 @@ import { Recipe } from 'libs/types';
 import { PageSeo } from 'ui';
 
 //swiper
-import { Navigation, Pagination, Autoplay } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
-
-//import components
+import { SwiperSlide } from 'swiper/react';
+import SwiperTemplate from '@components/templates/SwiperTemplate';
 
 interface HomeProps {
   sweet: Recipe[];
@@ -46,24 +40,7 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
           <Algolia_Search_Dialog buttonType="searchBar" />
         </section>
         <section className="pt-9 ">
-          <Swiper
-            loop
-            grabCursor
-            slidesPerView={3}
-            spaceBetween={710}
-            centeredSlides={true}
-            centerInsufficientSlides={true}
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Pagination, Autoplay, Navigation]}
-            navigation={true}
-            autoplay={{
-              delay: 5000,
-              disableOnInteraction: false,
-            }}
-            className="w-full h-full justify-center"
-          >
+          <SwiperTemplate>
             {latestRecipes ? (
               latestRecipes.map((item: Recipe) => (
                 <SwiperSlide>
@@ -82,13 +59,12 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
             ) : (
               <h1>No Recipes at this point in time</h1>
             )}
-          </Swiper>
+          </SwiperTemplate>
         </section>
         <div className={styles.sweet_savouryContainer}>
           <section className={styles.sweet_savourySection}>
             <h1 className="text-center text-step0">Sweet</h1>
             <div className={styles.gridContainer}>
-          
               {sweet.map((item) => (
                 <CardRectangleSmall
                   title={item.recipeName}
@@ -129,8 +105,8 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
 
 export async function getStaticProps() {
   const latestRecipes = await RecipeService.getLatestRecipes();
-  const sweet = await RecipeService.getLatestSweet_SavouryRecipes('sweet');
-  const savoury = await RecipeService.getLatestSweet_SavouryRecipes('savoury');
+  const sweet = await RecipeService.getRecipesByCategory('sweet');
+  const savoury = await RecipeService.getRecipesByCategory('savoury');
   return {
     props: {
       latestRecipes: latestRecipes,

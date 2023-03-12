@@ -23,7 +23,7 @@ const recipe = {
   dietary: ['vegetarian'],
   Allergens: ['gluten', 'dairy'],
   sweet_savoury: 'sweet', // sweet or savoury
-  meallyTime: ['morning_tea', 'afternoon_tea', 'snack'], // breakfast, morning_tea, brunch, lunch, afternoon_tea, dinner, snack
+  mealTime: ['morning_tea', 'afternoon_tea', 'snack'], // breakfast, morning_tea, brunch, lunch, afternoon_tea, dinner, snack
   version: '1.0',
   createdBy: 'Jacob Samorowski',
   createdAt: Date.now().toString(),

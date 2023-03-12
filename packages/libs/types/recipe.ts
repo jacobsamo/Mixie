@@ -13,7 +13,7 @@ export interface Recipe {
   dietary: string[];
   Allergens: string[];
   sweet_savoury: string;
-  meallyTime: string[];
+  mealTime: string[];
   version: string;
   createdBy: string;
   createdAt: string;
@@ -22,7 +22,6 @@ export interface Recipe {
   madeRecipe: number;
   savedRecipe: number;
 }
- 
 
 export interface Info {
   total: number;
@@ -36,5 +35,3 @@ export interface ImageProps {
   imgUrl: string;
   imgAlt: string;
 }
-
-

@@ -10,6 +10,28 @@ interface CardProps {
   image: ImageProps;
 }
 
+const CardSquare = ({ title, totalTime, handleClick, image }: CardProps) => {
+  const time = totalTime < 60 ? `${totalTime} mins` : `${totalTime / 60} hrs`;
+  return (
+    <div className="relative flex p-2 items-center justify-between flex-col h-58 w-58 rounded-xl text-black dark:text-white">
+      <h1 className="text-center text-step--2">{title}</h1>
+      <div className="flex flex-row w-full justify-between ">
+        <h3 className="w-fit whitespace-nowrap">{time}</h3>
+        <button onClick={handleClick}>
+          <HeartIcon className="w-8 h-8 cursor-pointer" />
+          {/* Change width and height on different component types */}
+        </button>
+      </div>
+      <Image
+        src={image.imgUrl}
+        alt={image.imgAlt}
+        fill
+        className="rounded-xl object-cover h-58 w-46 -z-20"
+      />
+    </div>
+  );
+};
+
 const CardRectangleSmall = ({
   title,
   totalTime,
@@ -56,4 +78,4 @@ const CardRectangle = ({ title, totalTime, handleClick, image }: CardProps) => {
   );
 };
 
-export { CardRectangleSmall, CardRectangle };
+export { CardRectangleSmall, CardRectangle, CardSquare };
