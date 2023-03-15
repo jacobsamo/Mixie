@@ -20,7 +20,6 @@ import {
 } from '@components/elements/Cards';
 
 interface HomeProps {
-  latestRecipes: Recipe[];
   breakFast: Recipe[];
   lunch: Recipe[];
   dinner: Recipe[];
@@ -29,7 +28,6 @@ interface HomeProps {
 }
 
 const RecipesPages: NextPage<HomeProps> = ({
-  latestRecipes,
   breakFast,
   lunch,
   dinner,
@@ -45,7 +43,7 @@ const RecipesPages: NextPage<HomeProps> = ({
         description="recipes for the best meals"
       />
       <Navbar />
-      <main className='flex flex-col justify-center'>
+      <main className="flex flex-col justify-center items-center dark:text-white text-black">
         <section className={styles.heroSection}>
           {/* <Image
             src="https://images.unsplash.com/photo-1605210055810-bdd1c4d1f343?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
@@ -57,7 +55,7 @@ const RecipesPages: NextPage<HomeProps> = ({
           <Algolia_Search_Dialog buttonType="searchBar" />
         </section>
         <section className="pt-9 ">
-          <h2>Breakfast</h2>
+          <h2 className="text-step0 font-Roboto font-bold">Breakfast</h2>
           <SwiperTemplate>
             {breakFast ? (
               breakFast.map((item: Recipe) => (
@@ -80,7 +78,7 @@ const RecipesPages: NextPage<HomeProps> = ({
           </SwiperTemplate>
         </section>
         <section className="pt-9 ">
-          <h2>Lunch</h2>
+          <h2 className="text-step0 font-Roboto font-bold">Lunch</h2>
           <SwiperTemplate>
             {lunch ? (
               lunch.map((item: Recipe) => (
@@ -103,7 +101,7 @@ const RecipesPages: NextPage<HomeProps> = ({
           </SwiperTemplate>
         </section>
         <section className="pt-9 ">
-          <h2>Dinner</h2>
+          <h2 className="text-step0 font-Roboto font-bold">Dinner</h2>
           <SwiperTemplate>
             {dinner ? (
               dinner.map((item: Recipe) => (
@@ -125,14 +123,56 @@ const RecipesPages: NextPage<HomeProps> = ({
             )}
           </SwiperTemplate>
         </section>
-        <section>
-          <div>
-            <h2>Sweet</h2>
-            <Link href="/sweet">View all</Link>
+        <section className="flex flex-row w-1/2 justify-between">
+          <div className="flex flex-col justify-center p-3 dark:bg-dark_grey bg-white rounded-lg">
+            <h2 className="text-center text-step0 font-Roboto font-bold">
+              Sweet
+            </h2>
+            <div className="grid grid-rows-2 grid-cols-2 gap-4">
+              {sweet.map((item) => (
+                <CardRectangleSmall
+                  title={item.recipeName}
+                  totalTime={item.info.total}
+                  key={item.id}
+                  handleClick={() => console.log('clicked')}
+                  image={{
+                    imgUrl: item.image.imgUrl || '',
+                    imgAlt: item.image.imgAlt || '',
+                  }}
+                />
+              ))}
+            </div>
+            <Link
+              href="/sweet"
+              className="text-step--3  text-center font-normal underline underline-offset-2"
+            >
+              View all
+            </Link>
           </div>
-          <div>
-            <h2>Savoury</h2>
-            <Link href="/savoury">View all</Link>
+          <div className="flex flex-col justify-center p-3 dark:bg-dark_grey bg-white rounded-lg">
+            <h2 className="text-center text-step0 font-Roboto font-bold">
+              Savoury
+            </h2>
+            <div className="grid grid-rows-2 grid-cols-2 gap-4">
+              {savoury.map((item) => (
+                <CardRectangleSmall
+                  title={item.recipeName}
+                  totalTime={item.info.total}
+                  key={item.id}
+                  handleClick={() => console.log('clicked')}
+                  image={{
+                    imgUrl: item.image.imgUrl || '',
+                    imgAlt: item.image.imgAlt || '',
+                  }}
+                />
+              ))}
+            </div>
+            <Link
+              href="/savoury"
+              className="text-step--3  text-center font-normal underline underline-offset-2"
+            >
+              View all
+            </Link>
           </div>
         </section>
       </main>
@@ -141,21 +181,17 @@ const RecipesPages: NextPage<HomeProps> = ({
 };
 
 export async function getStaticProps() {
-  const latestRecipes = await RecipeService.getLatestRecipes();
-  const sweet = await RecipeService.getRecipesByCategory('sweet');
-  const savoury = await RecipeService.getRecipesByCategory('savoury');
+  const breakFast = await RecipeService.getLatestMealTime('breakfast');
+  const lunch = await RecipeService.getLatestMealTime('lunch');
+  const dinner = await RecipeService.getLatestMealTime('dinner');
+
+  const sweet = await RecipeService.getRecipesByCategory('sweet', 4);
+  const savoury = await RecipeService.getRecipesByCategory('savoury', 4);
   return {
     props: {
-      latestRecipes: latestRecipes,
-      breakFast: latestRecipes.filter((recipe) =>
-        recipe.mealTime.includes('breakfast')
-      ),
-      lunch: latestRecipes.filter((recipe) =>
-        recipe.mealTime.includes('lunch')
-      ),
-      dinner: latestRecipes.filter((recipe) =>
-        recipe.mealTime.includes('dinner')
-      ),
+      breakFast: breakFast,
+      lunch: lunch,
+      dinner: dinner,
       sweet: sweet,
       savoury: savoury,
     },

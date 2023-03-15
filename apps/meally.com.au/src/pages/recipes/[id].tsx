@@ -42,7 +42,7 @@ export default function RecipePage({ recipe }: recipePageProps) {
 export async function getStaticPaths() {
   const recipes = await RecipeService.getAllRecipes();
   const paths = recipes.map((recipe: any) => {
-    return { params: { id: recipe.id.toString() } };
+    return { params: { id: recipe.id?.toString() || '' } };
   });
 
   return {

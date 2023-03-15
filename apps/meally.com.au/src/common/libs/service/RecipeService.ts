@@ -20,11 +20,11 @@ class RecipeService {
     return setDoc(doc(db, 'recipes', post.id), post);
   }
 
-  async getLatestRecipes() {
+  async getLatestRecipes(limitAmount?: number) {
     const recipeRef = collection(db, 'recipes');
 
     const querySnapshot = await getDocs(
-      query(recipeRef, orderBy('createdAt', 'asc'), limit(9))
+      query(recipeRef, orderBy('createdAt', 'asc'), limit(limitAmount || 9))
     );
 
     const recipes: Recipe[] = [];
