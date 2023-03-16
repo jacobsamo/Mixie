@@ -28,8 +28,8 @@ const Savoury: NextPage<SavouryProps> = ({ savoury }: SavouryProps) => {
           <h1 className={`${styles.heroTitle} pb-2`}>Want Tasty Recipes</h1>
           <Algolia_Search_Dialog buttonType="searchBar" />
         </section>
-        <section className="grid grid-flow-dense ">
-          {/* {savoury.map((item: Recipe) => (
+        <section className="grid grid-cols-4 gap-4 w-screen h-96 overflow-scroll">
+          {savoury.map((item: Recipe) => (
             <CardSquare
               title={item.recipeName}
               totalTime={item.info.total}
@@ -38,18 +38,6 @@ const Savoury: NextPage<SavouryProps> = ({ savoury }: SavouryProps) => {
               image={{
                 imgUrl: item.image.imgUrl || '',
                 imgAlt: item.image.imgAlt || '',
-              }}
-            />
-          ))} */}
-          {Array.from({ length: 10 }).map((_, i) => (
-            <CardSquare
-              title="Recipe Name"
-              totalTime={20}
-              key={i}
-              handleClick={() => console.log('clicked')}
-              image={{
-                imgUrl: '',
-                imgAlt: '',
               }}
             />
           ))}

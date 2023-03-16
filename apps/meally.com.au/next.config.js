@@ -3,6 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   transpilePackages: ['ui', 'libs'],
+
   images: {
     domains: [
       'img.taste.com.au',

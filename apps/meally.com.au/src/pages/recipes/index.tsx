@@ -184,7 +184,6 @@ export async function getStaticProps() {
   const breakFast = await RecipeService.getLatestMealTime('breakfast');
   const lunch = await RecipeService.getLatestMealTime('lunch');
   const dinner = await RecipeService.getLatestMealTime('dinner');
-
   const sweet = await RecipeService.getRecipesByCategory('sweet', 4);
   const savoury = await RecipeService.getRecipesByCategory('savoury', 4);
   return {

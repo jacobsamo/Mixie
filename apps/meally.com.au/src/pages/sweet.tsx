@@ -28,7 +28,7 @@ const Sweet: NextPage<SweetProps> = ({ sweet }: SweetProps) => {
           <h1 className={`${styles.heroTitle} pb-2`}>Want Tasty Recipes</h1>
           <Algolia_Search_Dialog buttonType="searchBar" />
         </section>
-        <section className="grid">
+        <section className="grid grid-cols-4 gap-4 w-screen h-96 overflow-scroll">
           {sweet.map((item: Recipe) => (
             <CardSquare
               title={item.recipeName}
