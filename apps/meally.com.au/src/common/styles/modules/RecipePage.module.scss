@@ -6,7 +6,7 @@
 }
 
 .recipeTitle {
-  @apply text-3xl font-semibold;
+  @apply text-step--3 font-semibold;
   font-size: var(--step-2);
 }
 
@@ -74,7 +74,7 @@
 }
 
 .step_method {
-  // @apply font-calibri;
+  // @apply font-Arial;
   white-space: normal;
   font-size: var(--step-0);
 }

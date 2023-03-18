@@ -1,28 +1,24 @@
-import type { NextPage } from 'next';
-import Image from 'next/image';
-import React, { useState, useEffect } from 'react';
-import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import React from 'react';
 import styles from '@styles/modules/Home.module.scss';
-import 'swiper/css';
-
-//import components
-
-import { PageSeo } from 'ui';
 import Navbar from '@components/elements/Navbar';
+import Footer from '@components/elements/Footer';
 import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
-import { Recipe } from 'libs/types';
-import RecipeService from '@lib/service/RecipeService';
 import { CardRectangle, CardRectangleSmall } from '@components/elements/Cards';
+import RecipeService from '@lib/service/RecipeService';
+import { Recipe } from 'libs/types';
+import { PageSeo } from 'ui';
+
+//swiper
+import { SwiperSlide } from 'swiper/react';
+import SwiperTemplate from '@components/templates/SwiperTemplate';
 
 interface HomeProps {
-  recipes: Recipe[];
   sweet: Recipe[];
   savoury: Recipe[];
   latestRecipes: Recipe[];
 }
 
-const Home = ({ recipes, latestRecipes, sweet, savoury }: HomeProps) => {
+const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
   return (
     <>
       <PageSeo
@@ -32,7 +28,7 @@ const Home = ({ recipes, latestRecipes, sweet, savoury }: HomeProps) => {
         description="A directory of folder full things."
       />
       <Navbar />
-      <main className="flex flex-col w-screen h-screen pt-2">
+      <main className="flex flex-col gap-4 w-full h-full p-2">
         <section className={styles.heroSection}>
           {/* <Image
             src="https://images.unsplash.com/photo-1605210055810-bdd1c4d1f343?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
@@ -43,66 +39,61 @@ const Home = ({ recipes, latestRecipes, sweet, savoury }: HomeProps) => {
           <h1 className={`${styles.heroTitle} pb-2`}>Want Tasty Recipes</h1>
           <Algolia_Search_Dialog buttonType="searchBar" />
         </section>
-        <section>
-          <Swiper
-            slidesPerView={3}
-            spaceBetween={80}
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Pagination, Autoplay, Navigation]}
-            navigation={true}
-            autoplay={{
-              delay: 5000,
-              disableOnInteraction: false,
-            }}
-          >
-            {latestRecipes.map((item) => (
-              <SwiperSlide>
-                <CardRectangle
-                  title={item.recipeName}
-                  totalTime={item.info.total}
-                  key={item.id}
-                  handleClick={() => console.log('clicked')}
-                  image={{
-                    imgUrl: item.image.imgUrl,
-                    imgAlt: item.image.imgAlt,
-                  }}
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+        <section className="pt-9 ">
+          <SwiperTemplate>
+            {latestRecipes ? (
+              latestRecipes.map((item: Recipe) => (
+                <SwiperSlide>
+                  <CardRectangle
+                    title={item.recipeName}
+                    id={item.id}
+                    totalTime={item.info.total}
+                    key={item.id}
+                    handleClick={() => console.log('clicked')}
+                    image={{
+                      imgUrl: item.image?.imgUrl || '',
+                      imgAlt: item.image?.imgAlt || '',
+                    }}
+                  />
+                </SwiperSlide>
+              ))
+            ) : (
+              <h1>No Recipes at this point in time</h1>
+            )}
+          </SwiperTemplate>
         </section>
-        <div className="flex flex-row gap-90 w-full h-full justify-center">
-          <section>
-            <h1>Sweet</h1>
-            <div className={styles.gridFlow}>
+        <div className={styles.sweet_savouryContainer}>
+          <section className={styles.sweet_savourySection}>
+            <h1 className="text-center text-step0">Sweet</h1>
+            <div className={styles.gridContainer}>
               {sweet.map((item) => (
                 <CardRectangleSmall
                   title={item.recipeName}
+                  id={item.id}
                   totalTime={item.info.total}
                   key={item.id}
                   handleClick={() => console.log('clicked')}
                   image={{
-                    imgUrl: item.image.imgUrl,
-                    imgAlt: item.image.imgAlt,
+                    imgUrl: item.image.imgUrl || '',
+                    imgAlt: item.image.imgAlt || '',
                   }}
                 />
               ))}
             </div>
           </section>
-          <section>
-            <h1>Savoury</h1>
-            <div className={styles.gridFlow}>
+          <section className={styles.sweet_savourySection}>
+            <h1 className="text-center text-step0">Savoury</h1>
+            <div className={styles.gridContainer}>
               {savoury.map((item) => (
                 <CardRectangleSmall
                   title={item.recipeName}
+                  id={item.id}
                   totalTime={item.info.total}
                   key={item.id}
                   handleClick={() => console.log('clicked')}
                   image={{
-                    imgUrl: item.image.imgUrl,
-                    imgAlt: item.image.imgAlt,
+                    imgUrl: item.image.imgUrl || '',
+                    imgAlt: item.image.imgAlt || '',
                   }}
                 />
               ))}
@@ -110,19 +101,20 @@ const Home = ({ recipes, latestRecipes, sweet, savoury }: HomeProps) => {
           </section>
         </div>
       </main>
+      <Footer />
     </>
   );
 };
 
 export async function getStaticProps() {
-  const recipes = await RecipeService.getAllRecipes();
   const latestRecipes = await RecipeService.getLatestRecipes();
+  const sweet = await RecipeService.getRecipesByCategory('sweet');
+  const savoury = await RecipeService.getRecipesByCategory('savoury');
   return {
     props: {
-      recipes: recipes,
       latestRecipes: latestRecipes,
-      sweet: recipes.filter((recipe) => recipe.sweet_savoury === 'sweet'),
-      savoury: recipes.filter((recipe) => recipe.sweet_savoury === 'savoury'),
+      sweet: sweet,
+      savoury: savoury,
     },
   };
 }

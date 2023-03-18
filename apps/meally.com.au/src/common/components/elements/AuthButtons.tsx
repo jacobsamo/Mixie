@@ -36,7 +36,7 @@ const GithubSignIn = (handleClick: any) => {
           alt="Github Logo"
           className="w-10 h-10 ml-4 text-white"
         />
-        <h1 className="text-white ml-3.8 font-semibold font-Roboto text-lg ">
+        <h1 className="text-white ml-3.8 font-semibold font-Roboto text-step0 ">
           Continue with Github
         </h1>
       </button>

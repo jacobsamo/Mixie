@@ -6,10 +6,45 @@
   font-size: var(--step-1);
 }
 
-.gridFlow {
+.sweet_savouryContainer {
+  @apply flex flex-row w-full h-full justify-between p-6;
+}
+
+.sweet_savourySection {
+  @apply flex flex-col justify-center;
+}
+
+.gridContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  gap: 40px; /* optional */
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+@media screen and (max-width: 1000px) {
+  .sweet_savouryContainer {
+    @apply flex flex-col p-3;
+  }
+  .gridContainer {
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media screen and (max-width: 500px) {
+  .sweet_savouryContainer {
+    @apply flex flex-col p-0;
+  }
+  .gridContainer {
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .gridContainer {
+    grid-template-rows: repeat(2, minmax(0.4fr, 1fr));
+    overflow-y: scroll;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 

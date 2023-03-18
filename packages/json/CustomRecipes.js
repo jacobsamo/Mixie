@@ -19,9 +19,9 @@ const recipes = [
       '1 cup plain flour',
     ],
     dietary: ['vegetarian'],
-    Allergens: ['gluten', 'dairy'],
+    allergens: ['gluten', 'dairy'],
     sweet_savoury: 'sweet', // sweet or savoury
-    meallyTime: ['morning_tea', 'afternoon_tea', 'snack'], // breakfast, morning_tea, brunch, lunch, afternoon_tea, dinner, snack
+    mealTime: ['morning_tea', 'afternoon_tea', 'snack'], // breakfast, morning_tea, brunch, lunch, afternoon_tea, dinner, snack
     version: '1.0',
     createdBy: 'Jacob Samorowski',
     createdAt: Date.now().toString(),

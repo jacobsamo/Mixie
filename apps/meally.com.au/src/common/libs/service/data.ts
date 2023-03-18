@@ -22,7 +22,7 @@ export const initialRecipeState = {
   dietary: [],
   Allergens: [],
   sweet_savoury: '',
-  meallyTime: [],
+  mealTime: [],
   version: '',
   createdBy: '',
   createdAt: '',
