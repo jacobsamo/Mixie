@@ -42,6 +42,16 @@ const Savoury: NextPage<SavouryProps> = ({ savoury }: SavouryProps) => {
               }}
             />
           ))}
+          {/* <CardSquare
+            title="Want Tasty Recipes"
+            id="test-recipe"
+            totalTime={30}
+            handleClick={() => console.log('clicked')}
+            image={{
+              imgUrl: 'https://source.unsplash.com/random',
+              imgAlt: 'random image',
+            }}
+          /> */}
         </section>
       </main>
       <Footer />

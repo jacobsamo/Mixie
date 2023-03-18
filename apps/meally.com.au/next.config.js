@@ -10,6 +10,7 @@ const nextConfig = {
       'lh3.googleusercontent.com',
       'firebasestorage.googleapis.com',
       'images.unsplash.com',
+      'source.unsplash.com',
       'unsplash.com',
       'media4.giphy.com',
     ],
