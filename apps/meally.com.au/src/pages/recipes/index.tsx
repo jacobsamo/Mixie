@@ -62,6 +62,7 @@ const RecipesPages: NextPage<HomeProps> = ({
                 <SwiperSlide>
                   <CardSquare
                     title={item.recipeName}
+                    id={item.id}
                     totalTime={item.info.total}
                     key={item.id}
                     handleClick={() => console.log('clicked')}
@@ -85,6 +86,7 @@ const RecipesPages: NextPage<HomeProps> = ({
                 <SwiperSlide>
                   <CardSquare
                     title={item.recipeName}
+                    id={item.id}
                     totalTime={item.info.total}
                     key={item.id}
                     handleClick={() => console.log('clicked')}
@@ -108,6 +110,7 @@ const RecipesPages: NextPage<HomeProps> = ({
                 <SwiperSlide>
                   <CardSquare
                     title={item.recipeName}
+                    id={item.id}
                     totalTime={item.info.total}
                     key={item.id}
                     handleClick={() => console.log('clicked')}
@@ -132,6 +135,7 @@ const RecipesPages: NextPage<HomeProps> = ({
               {sweet.map((item) => (
                 <CardRectangleSmall
                   title={item.recipeName}
+                  id={item.id}
                   totalTime={item.info.total}
                   key={item.id}
                   handleClick={() => console.log('clicked')}
@@ -157,6 +161,7 @@ const RecipesPages: NextPage<HomeProps> = ({
               {savoury.map((item) => (
                 <CardRectangleSmall
                   title={item.recipeName}
+                  id={item.id}
                   totalTime={item.info.total}
                   key={item.id}
                   handleClick={() => console.log('clicked')}

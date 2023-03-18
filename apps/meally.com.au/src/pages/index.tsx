@@ -46,6 +46,7 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
                 <SwiperSlide>
                   <CardRectangle
                     title={item.recipeName}
+                    id={item.id}
                     totalTime={item.info.total}
                     key={item.id}
                     handleClick={() => console.log('clicked')}
@@ -68,6 +69,7 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
               {sweet.map((item) => (
                 <CardRectangleSmall
                   title={item.recipeName}
+                  id={item.id}
                   totalTime={item.info.total}
                   key={item.id}
                   handleClick={() => console.log('clicked')}
@@ -85,6 +87,7 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
               {savoury.map((item) => (
                 <CardRectangleSmall
                   title={item.recipeName}
+                  id={item.id}
                   totalTime={item.info.total}
                   key={item.id}
                   handleClick={() => console.log('clicked')}

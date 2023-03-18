@@ -2,16 +2,25 @@ import React from 'react';
 import Image from 'next/image';
 import type { ImageProps } from 'libs/types';
 import { HeartIcon } from '@heroicons/react/24/outline';
+import { useRouter } from 'next/router';
 
 interface CardProps {
   title: string;
+  id: string;
   totalTime: number;
   handleClick: () => void;
   image: ImageProps;
 }
 
-const CardSquare = ({ title, totalTime, handleClick, image }: CardProps) => {
+const CardSquare = ({
+  title,
+  id,
+  totalTime,
+  handleClick,
+  image,
+}: CardProps) => {
   const time = totalTime < 60 ? `${totalTime} mins` : `${totalTime / 60} hrs`;
+  const router = useRouter();
   return (
     <div className="relative flex p-2 items-center justify-between flex-col h-58 w-58 rounded-xl text-black dark:text-white">
       <h1 className="text-center text-step--2">{title}</h1>
@@ -27,6 +36,9 @@ const CardSquare = ({ title, totalTime, handleClick, image }: CardProps) => {
         alt={image.imgAlt}
         fill
         className="rounded-xl object-cover h-58 w-46 -z-20"
+        onClick={() => {
+          router.push(`/recipes/${id}}`);
+        }}
       />
     </div>
   );
@@ -34,11 +46,13 @@ const CardSquare = ({ title, totalTime, handleClick, image }: CardProps) => {
 
 const CardRectangleSmall = ({
   title,
+  id,
   totalTime,
   handleClick,
   image,
 }: CardProps) => {
   const time = totalTime < 60 ? `${totalTime} mins` : `${totalTime / 60} hrs`;
+  const router = useRouter();
   return (
     <div className="relative flex p-2 items-center justify-between flex-col h-58 w-46 rounded-xl text-black dark:text-white">
       <h1 className="text-center text-step--2">{title}</h1>
@@ -54,13 +68,23 @@ const CardRectangleSmall = ({
         alt={image.imgAlt}
         fill
         className="rounded-xl object-cover h-58 w-46 -z-20"
+        onClick={() => {
+          router.push(`/recipes/${id}}`);
+        }}
       />
     </div>
   );
 };
 
-const CardRectangle = ({ title, totalTime, handleClick, image }: CardProps) => {
+const CardRectangle = ({
+  title,
+  id,
+  totalTime,
+  handleClick,
+  image,
+}: CardProps) => {
   const time = totalTime < 60 ? `${totalTime} mins` : `${totalTime / 60} hrs`;
+  const router = useRouter();
   return (
     <div className="relative flex flex-col p-2 items-center justify-between  h-64 w-[43.75rem] resize rounded-xl text-black dark:text-white">
       <h1 className="text-center text-step1">{title}</h1>
@@ -73,6 +97,9 @@ const CardRectangle = ({ title, totalTime, handleClick, image }: CardProps) => {
         alt={image.imgAlt}
         fill
         className="rounded-xl object-cover h-58 w-46 -z-20"
+        onClick={() => {
+          router.push(`/recipes/${id}}`);
+        }}
       />
     </div>
   );

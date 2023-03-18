@@ -32,6 +32,7 @@ const Savoury: NextPage<SavouryProps> = ({ savoury }: SavouryProps) => {
           {savoury.map((item: Recipe) => (
             <CardSquare
               title={item.recipeName}
+              id={item.id}
               totalTime={item.info.total}
               key={item.id}
               handleClick={() => console.log('clicked')}
