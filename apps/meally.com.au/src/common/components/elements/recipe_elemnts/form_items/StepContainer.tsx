@@ -30,6 +30,7 @@ const StepContainer = (props: any) => {
 
   useEffect(() => {
     props.handleArrayChange(props.name, stepArray);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stepArray]);
 
   return (
