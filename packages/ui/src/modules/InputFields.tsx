@@ -10,7 +10,7 @@ function InputField(props: any) {
   }
 
   return (
-    <label >
+    <label>
       {props.label}
       <input
         type={props.type || "text"}

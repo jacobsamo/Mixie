@@ -19,7 +19,13 @@ const StepContainer = (props: any) => {
   }
 
   function handleDelete(index: number) {
+    // write a function that deletes the step from the array
+    console.log("Deleting step at index", index);
+    console.log("Before deleting", stepArray);
     setStepArray(stepArray.filter((_, i) => i !== index));
+    console.log("After deleting", stepArray);
+    
+
   }
 
   useEffect(() => {
@@ -30,10 +36,11 @@ const StepContainer = (props: any) => {
   return (
     <article className={styles.method_container}>
       <div className={styles.step_container}>
-        {stepArray.map((step, index) => {
+        {stepArray.map((value, index) => {
           return (
             <Step
               index={index}
+              value={value}
               handleChange={handleChange}
               handleDelete={handleDelete}
               key={index}

@@ -20,11 +20,11 @@ class RecipeService {
     return setDoc(doc(db, 'recipes', post.id), post);
   }
 
-  async getLatestRecipes() {
+  async getLatestRecipes(limitAmount?: number) {
     const recipeRef = collection(db, 'recipes');
 
     const querySnapshot = await getDocs(
-      query(recipeRef, orderBy('createdAt', 'asc'), limit(9))
+      query(recipeRef, orderBy('createdAt', 'asc'), limit(limitAmount || 9))
     );
 
     const recipes: Recipe[] = [];
@@ -33,11 +33,61 @@ class RecipeService {
       const createdAt = data.createdAt as any;
       recipes.push({
         ...data,
-        createdAt: new Date(createdAt.toDate()).toDateString(),
+        createdAt: new Date(createdAt).toDateString(),
       });
     });
     return recipes;
   }
+
+  async getRecipesByCategory(sweet_savoury: string, limitAmount?: number) {
+    const recipeRef = collection(db, 'recipes');
+
+    const querySnapshot = await getDocs(
+      query(
+        recipeRef,
+        where(sweet_savoury, '==', 'sweet_savoury'),
+        orderBy('createdAt', 'asc'),
+        limit(limitAmount || 9)
+      )
+    );
+
+    const recipes: Recipe[] = [];
+    querySnapshot.forEach((doc) => {
+      const data = doc.data() as Recipe;
+      const createdAt = data.createdAt as any;
+      recipes.push({
+        ...data,
+        createdAt: new Date(createdAt).toDateString(),
+      });
+    });
+    return recipes;
+  }
+
+  
+  async getLatestMealTime(time: string) {
+    const recipeRef = collection(db, 'recipes');
+
+    const querySnapshot = await getDocs(
+      query(
+        recipeRef,
+        where(time, '==', 'mealTime'),
+        orderBy('createdAt', 'asc'),
+        limit(9)
+      )
+    );
+
+    const recipes: Recipe[] = [];
+    querySnapshot.forEach((doc) => {
+      const data = doc.data() as Recipe;
+      const createdAt = data.createdAt as any;
+      recipes.push({
+        ...data,
+        createdAt: new Date(createdAt).toDateString(),
+      });
+    });
+    return recipes;
+  }
+
 
   async getRecipe(id: string) {
     const docRef = doc(db, 'recipes', id);
@@ -61,7 +111,7 @@ class RecipeService {
       const createdAt = data.createdAt as any;
       recipes.push({
         ...data,
-        createdAt: new Date(createdAt.toDate()).toDateString(),
+        createdAt: new Date(createdAt).toDateString(),
       });
     });
     return recipes;

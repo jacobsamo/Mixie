@@ -143,7 +143,7 @@
 }
 
 .step_method {
-  // @apply font-calibri;
+  // @apply font-Arial;
   white-space: normal;
   font-size: var(--step-0);
 }
@@ -199,16 +199,16 @@
 }
 
 @media screen and (max-width: 600px) {
-
   .recipeForm input {
     width: 100%;
     
   }
   .recipeForm {
     @apply flex flex-col gap-1;
-    width: 95%;
+    width: 100%;
     margin-right: 0;
     margin-left: 0;
+  
   }
 
   .IngredientMethodContainer {

@@ -77,7 +77,7 @@ const RecipeFromLayout = () => {
 
   return (
     <>
-      <div className="flex w-screen p-3">
+      <div className="flex w-full p-3">
         <div className="flex flex-col justify-center items-center">
           <h1>Recipe Creation Form</h1>
           <p>
@@ -212,7 +212,7 @@ const RecipeFromLayout = () => {
           <StepContainer handleArrayChange={handleArrayChange} name="steps" />
         </div>
 
-        <button type="submit" className="text-xl mt-14">
+        <button type="submit" className="text-step--1 mt-14">
           Submit
         </button>
       </form>

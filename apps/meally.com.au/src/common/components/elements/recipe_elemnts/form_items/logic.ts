@@ -25,7 +25,7 @@ class RecipeForm {
       case 'SET_SWEET_SAVOURY':
         return { ...state, sweet_savoury: action.payload };
       case 'SET_MEAL_TIME':
-        return { ...state, meallyTime: action.payload };
+        return { ...state, mealTime: action.payload };
       case 'SET_VERSION':
         return { ...state, version: action.payload };
       case 'SET_CREATED_BY':

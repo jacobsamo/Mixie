@@ -66,7 +66,6 @@ export default function Algolia_Search_Dialog({
     if (event.key == 'Escape') setDialogOpen(false);
   }, []);
 
-
   //TODO: make it so you can click out side of the dialog to close it
   // useEffect(() => {
   //   const checkIfClickedOutside = (e: any) => {
@@ -101,8 +100,8 @@ export default function Algolia_Search_Dialog({
         <>
           <button
             onClick={() => setDialogOpen(true)}
-            style={{ width: '28rem', height: '2.8rem' }}
-            className="dark:bg-dark_grey dark:text-white bg-white shadow-searchBarShadow relative flex items-center rounded-xl"
+            // style={{ width: '28rem', height: '2.8rem' }}
+            className="dark:bg-dark_grey dark:text-white p-1 pr-5 min-w-max max-w-[28rem] h-[2.8rem] resize bg-white shadow-searchBarShadow relative flex items-center rounded-xl"
           >
             <MagnifyingGlassIcon className="h-5 w-5 ml-5" />
             <span className="m-1">

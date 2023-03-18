@@ -1,5 +1,5 @@
 .usernameField {
-  @apply w-72 h-10 text-grey font-Roboto font-normal text-lg bg-white;
+  @apply w-72 h-10 text-grey font-Roboto font-normal text-step0 bg-white;
   border-radius: 12px;
   box-shadow: inset 8px 8px 16px #cdd1d0, inset -8px -8px 16px #fafffe;
   animation: ease-in-out;
@@ -9,7 +9,7 @@
 }
 
 .emailField {
-  @apply w-72 h-10 text-grey font-Roboto font-normal text-lg bg-white;
+  @apply w-72 h-10 text-grey font-Roboto font-normal text-step0 bg-white;
   border-radius: 12px;
   box-shadow: inset 8px 8px 16px #cdd1d0, inset -8px -8px 16px #fafffe;
   animation: ease-in-out;
@@ -19,7 +19,7 @@
 }
 
 .passwordField {
-  @apply w-72 h-10 text-grey font-Roboto font-normal text-lg bg-white;
+  @apply w-72 h-10 text-grey font-Roboto font-normal text-step0 bg-white;
   border-radius: 12px;
   box-shadow: inset 8px 8px 16px #cdd1d0, inset -8px -8px 16px #fafffe;
   animation: ease-in-out;

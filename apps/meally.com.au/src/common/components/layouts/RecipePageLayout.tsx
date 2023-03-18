@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useState, useEffect, ReactHTMLElement } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 //types
 import type { Recipe, Info } from 'libs/types';
@@ -21,7 +21,7 @@ function RecipePageLayout({ recipe }: recipePageLayoutProps) {
 
   const info = recipe.info as Info;
 
-  if (recipe !== undefined) {
+  if (recipe !== null) {
     return (
       <>
         <main className={styles.mainContainer}>
@@ -67,8 +67,11 @@ function RecipePageLayout({ recipe }: recipePageLayoutProps) {
           </section>
           <InfoComponent info={recipe.info} recipeName={recipe.recipeName} />
           <Image
-            src={recipe.image.imgUrl}
-            alt={recipe.image.imgAlt || recipe.recipeName}
+            src={
+              recipe.image.imgUrl ||
+              'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png'
+            }
+            alt={recipe.image.imgAlt || recipe.recipeName || 'recipe image'}
             className={styles.recipeImage}
             width={800}
             height={600}

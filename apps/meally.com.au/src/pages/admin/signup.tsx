@@ -60,7 +60,7 @@ const SignupPage: NextPage = () => {
                   alt="Github Logo"
                   className="w-10 h-10 ml-4 text-white"
                 />
-                <h1 className="text-white ml-3.8 font-semibold font-Roboto text-lg ">
+                <h1 className="text-white ml-3.8 font-semibold font-Roboto text-step0 ">
                   Continue with Github
                 </h1>
               </button>
@@ -102,7 +102,7 @@ const SignupPage: NextPage = () => {
               <span className="bg-black dark:bg-white w-32 h-0.5 rounded-sm"></span>
             </div>
             <div className="flex flex-col gap-3">
-              <p className="bg-grey bg-opacity-60 text-opacity-100 text-black text-sm">
+              <p className="bg-grey bg-opacity-60 text-opacity-100 text-black text-step--2">
                 Not recommended, less safe
               </p>
               <input
@@ -126,7 +126,7 @@ const SignupPage: NextPage = () => {
               onClick={handleEmailSignup}
               className="mt-5 bg-yellow w-32 h-8 rounded-xl opacity-80"
             >
-              <h1 className="text-black text-lg font-Roboto font-semibold opacity-100">
+              <h1 className="text-black text-step0 font-Roboto font-semibold opacity-100">
                 Sign Up
               </h1>
             </button>
