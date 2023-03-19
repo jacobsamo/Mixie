@@ -14,8 +14,8 @@
     "clean:build": "rm -rf .next",
     "clean:node": "rm -rf node_modules/",
     "clean:turbo": "rm -rf .turbo",
-    "clean:all": "yarn clean:build && yarn clean:node && yarn clean:turbo",
-    "clean:node_modules": "rm -rf node_modules/"
+    "clean:node_modules": "rm -rf node_modules/",
+    "clean:all": "yarn clean:build && yarn clean:node && yarn clean:turbo"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",

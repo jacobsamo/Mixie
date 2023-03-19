@@ -15,7 +15,7 @@
     "clean:build": "turbo run clean:build",
     "clean:node": "turbo run clean:node",
     "clean:turbo": "turbo run clean:turbo",
-    "clean:all": "turbo run clean:all && rm -rf node_modules",
+    "clean:all": "turbo run clean:all && rm -rf node_modules/",
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",

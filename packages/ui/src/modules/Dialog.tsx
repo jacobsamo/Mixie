@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from 'react';
-
+import React, { useEffect, useRef } from "react";
 
 interface DialogProps {
   isOpen: boolean;
@@ -32,7 +31,7 @@ const Dialog = ({
   isOpen,
   setOpen,
   children,
-  closeKeys = ['Escape'],
+  closeKeys = ["Escape"],
   openKeys = [],
   closeOnOutsideClick = true,
   closeOnEscape = true,
@@ -41,37 +40,48 @@ const Dialog = ({
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (isOpen) {
-        if (closeKeys.includes(event.key)) {
-          setOpen(false);
-        }
-      } else if (openKeys.includes(event.key)) {
+      console.log('Key pressed: ', event.key);
+      if (isOpen && closeKeys.includes(event.key)) {
+        setOpen(false);
+      }
+      if (!isOpen && openKeys.includes(event.key)) {
         setOpen(true);
       }
     };
 
     const handleOutsideClick = (event: MouseEvent) => {
-      if (closeOnOutsideClick && dialogRef.current && !dialogRef.current.contains(event.target as Node)) {
+      if (
+        closeOnOutsideClick &&
+        dialogRef.current &&
+        !dialogRef.current.contains(event.target as Node)
+      ) {
         setOpen(false);
       }
     };
 
     const handleEscape = (event: KeyboardEvent) => {
-      if (closeOnEscape && event.key === 'Escape') {
+      if (closeOnEscape && event.key === "Escape") {
         setOpen(false);
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('mousedown', handleOutsideClick);
-    document.addEventListener('keydown', handleEscape);
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener("keydown", handleEscape);
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('mousedown', handleOutsideClick);
-      document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("keydown", handleEscape);
     };
-  }, [isOpen, setOpen, closeKeys, openKeys, closeOnOutsideClick, closeOnEscape]);
+  }, [
+    isOpen,
+    setOpen,
+    closeKeys,
+    openKeys,
+    closeOnOutsideClick,
+    closeOnEscape,
+  ]);
 
   return (
     <>
@@ -86,4 +96,4 @@ const Dialog = ({
   );
 };
 
-export default Dialog;
+export { Dialog };

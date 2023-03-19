@@ -12,6 +12,7 @@ import {
   Configure,
 } from 'react-instantsearch-hooks-web';
 import { Hit } from 'libs/types';
+import { Dialog } from 'ui';
 
 interface algoliaSearchDialogProps {
   buttonType: string;
@@ -56,43 +57,6 @@ export default function Algolia_Search_Dialog({
   buttonType,
 }: algoliaSearchDialogProps) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-  const ref = useRef();
-
-  const handleKeyPress = useCallback((event: any) => {
-    if (event.ctrlKey == true && event.key == 'k') setDialogOpen(true);
-  }, []);
-
-  const handleKeyClose = useCallback((event: any) => {
-    if (event.key == 'Escape') setDialogOpen(false);
-  }, []);
-
-  //TODO: make it so you can click out side of the dialog to close it
-  // useEffect(() => {
-  //   const checkIfClickedOutside = (e: any) => {
-  //     // If the menu is open and the clicked target is not within the menu,
-  //     // then close the menu
-  //     if (ref.current && !ref.current.contains(e.target as Node)) {
-  //       setDialogOpen(false)
-  //     }
-  //   }
-
-  //   document.addEventListener("mousedown", checkIfClickedOutside)
-
-  //   return () => {
-  //     // Cleanup the event listener
-  //     document.removeEventListener("mousedown", checkIfClickedOutside)
-  //   }
-  // }, [dialogOpen])
-
-  useEffect(() => {
-    document.addEventListener('keydown', handleKeyPress);
-    return () => document.removeEventListener('keydown', handleKeyPress);
-  }, [handleKeyPress]);
-
-  useEffect(() => {
-    document.addEventListener('keydown', handleKeyClose);
-    return () => document.removeEventListener('keydown', handleKeyClose);
-  }, [handleKeyClose]);
 
   const Button = () => {
     if (buttonType === 'searchBar') {
@@ -126,11 +90,12 @@ export default function Algolia_Search_Dialog({
   return (
     <>
       <Button />
-      <div
-        style={{
-          display: dialogOpen ? 'block' : 'none',
-        }}
-        className="fixed inset-0 z-50 overflow-y-auto backdrop-blur-sm"
+      <Dialog
+        isOpen={dialogOpen}
+        setOpen={() => setDialogOpen(!dialogOpen)}
+        closeOnEscape={true}
+        closeOnOutsideClick={true}
+        openKeys={['Control', '/', 'k']}
       >
         <InstantSearch searchClient={searchClient} indexName="recipes">
           <Configure hitsPerPage={10} />
@@ -169,7 +134,7 @@ export default function Algolia_Search_Dialog({
             />
           </div>
         </InstantSearch>
-      </div>
+      </Dialog>
     </>
   );
 }
