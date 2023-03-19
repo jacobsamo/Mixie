@@ -1,5 +1,5 @@
 import { NextPage } from 'next/types';
-import Navbar from '@components/elements/Navbar';
+import Navbar from '@components/modules/Navbar';
 
 const Custom404: NextPage = () => {
   //TODO: make prettier for users

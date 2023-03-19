@@ -8,6 +8,7 @@ export * from "./modules/InputFields";
 export * from "./modules/AddButton";
 export * from "./modules/Dialog";
 export * from "./modules/Cards";
+export * from "./modules/Dialog";
 
 // seo
 export * from "./seo/PageSEO";

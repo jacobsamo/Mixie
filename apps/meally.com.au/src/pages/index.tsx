@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from '@styles/modules/Home.module.scss';
-import Navbar from '@components/elements/Navbar';
-import Footer from '@components/elements/Footer';
+import Navbar from '@components/modules/Navbar';
+import Footer from '@components/modules/Footer';
 import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
-import { CardRectangle, CardRectangleSmall } from '@components/elements/Cards';
+import { CardRectangle, CardRectangleSmall } from '@components/modules/Cards';
 import RecipeService from '@lib/service/RecipeService';
 import { Recipe } from 'libs/types';
 import { PageSeo } from 'ui';

@@ -5,7 +5,7 @@ import RecipeService from '@lib/service/RecipeService';
 import { Recipe } from 'libs/types/';
 import { RecipeCard } from 'ui';
 import { PageSeo } from 'ui';
-import Navbar from '@components/elements/Navbar';
+import Navbar from '@components/modules/Navbar';
 import Link from 'next/link';
 import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
 
@@ -17,7 +17,7 @@ import {
   CardRectangle,
   CardRectangleSmall,
   CardSquare,
-} from '@components/elements/Cards';
+} from '@components/modules/Cards';
 
 interface HomeProps {
   breakFast: Recipe[];

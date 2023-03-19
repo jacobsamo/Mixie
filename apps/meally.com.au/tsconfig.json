@@ -18,10 +18,10 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "../../packages/tests/ui.test/RecipeCard.test.tsx",
+    "../../packages/ui/src/tests/RecipeCard.test.tsx",
     "../../packages/ui/modules/RecipeCard.tsx",
     ".next/types/**/*.ts",
-    "src/common/components/elements/Navbar.tsx"
+    "src/common/components/modules/Navbar.tsx"
   ],
   "exclude": ["node_modules"]
 }

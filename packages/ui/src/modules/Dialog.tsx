@@ -1,69 +1,89 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useRef } from 'react';
 
-function Dialog(props: any) {
-  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
-  // handle key events to open or close the dialog
-  const handleKeyOpen = useCallback(
-    (event: any) => {
-      if (event.key in props.keyOpen) setDialogOpen(true);
-    },
-    [props.keyOpen]
-  );
-
-  const handleKeyClose = useCallback(
-    (event: any) => {
-      if (event.key in props.keyClose) setDialogOpen(false);
-    },
-    [props.keyClose]
-  );
-
-  // add key event listeners
-  useEffect(() => {
-    if (props.keyOpen) {
-      document.addEventListener("keyup", handleKeyOpen);
-      return () => document.removeEventListener("keyup", handleKeyOpen);
-    }
-  }, [handleKeyOpen, props.keyOpen]);
-
-  useEffect(() => {
-    if (props.keyClose) {
-      document.addEventListener("keyup", handleKeyClose);
-      return () => document.removeEventListener("keyup", handleKeyClose);
-    }
-  }, [handleKeyClose, props.keyClose]);
-
-  useEffect(() => {
-    if (props.open) {
-      setDialogOpen(props.open);
-    }
-  }, [props.open]);
-
-  const handleOpen = () => {
-    setDialogOpen(true);
-    props.setOpen(true);
-  };
-
-  const handleClose = () => {
-    setDialogOpen(false);
-    props.setOpen(false);
-  };
-
-  const handleToggle = () => {
-    setDialogOpen(!dialogOpen);
-    props.setOpen(!dialogOpen);
-  };
-
-  return (
-    <div
-      style={{
-        display: dialogOpen ? "block" : "none",
-      }}
-      className={`fixed inset-0 z-50 overflow-y-auto backdrop-blur-sm w-full h-full ${props.className}`}
-    >
-      <section className={props.className}>{props.children}</section>
-    </div>
-  );
+interface DialogProps {
+  isOpen: boolean;
+  setOpen: (open: boolean) => void;
+  children: React.ReactNode;
+  closeKeys?: string[];
+  openKeys?: string[];
+  closeOnOutsideClick?: boolean;
+  closeOnEscape?: boolean;
 }
 
-export { Dialog };
+/**
+ * A dialog component that can be opened and closed with a keyboard shortcut.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.isOpen - Whether the dialog is currently open.
+ * @param {function} props.setOpen - A function to update the open state of the dialog.
+ * @param {JSX.Element} props.children - The content to display inside the dialog.
+ * @param {string[]} [props.closeKeys] - An optional array of keyboard keys to close the dialog.
+ * @param {string[]} [props.openKeys] - An optional array of keyboard keys to open the dialog.
+ * @param {boolean} [props.closeOnOutsideClick=true] - Whether to close the dialog when clicking outside of it.
+ * @param {boolean} [props.closeOnEscape=true] - Whether to close the dialog when pressing the Escape key.
+ *
+ * @example
+ * <Dialog isOpen={isOpen} setOpen={setOpen} closeKeys={['Escape']}>
+ *   <p>Hello, world!</p>
+ * </Dialog>
+ */
+const Dialog = ({
+  isOpen,
+  setOpen,
+  children,
+  closeKeys = ['Escape'],
+  openKeys = [],
+  closeOnOutsideClick = true,
+  closeOnEscape = true,
+}: DialogProps) => {
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (isOpen) {
+        if (closeKeys.includes(event.key)) {
+          setOpen(false);
+        }
+      } else if (openKeys.includes(event.key)) {
+        setOpen(true);
+      }
+    };
+
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (closeOnOutsideClick && dialogRef.current && !dialogRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (closeOnEscape && event.key === 'Escape') {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('mousedown', handleOutsideClick);
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isOpen, setOpen, closeKeys, openKeys, closeOnOutsideClick, closeOnEscape]);
+
+  return (
+    <>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 overflow-y-auto backdrop-blur-sm">
+          <div className="dialog-box" ref={dialogRef}>
+            {children}
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default Dialog;
