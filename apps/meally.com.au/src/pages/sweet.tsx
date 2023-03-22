@@ -2,7 +2,7 @@ import React from 'react';
 import styles from '@styles/modules/Home.module.scss';
 import Navbar from '@components/modules/Navbar';
 import Footer from '@components/modules/Footer';
-import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
+import AlgoliaDialog from '@components/elements/algolia_search/AlgoliaDialog';
 import { CardSquare } from '@components/modules/Cards';
 import RecipeService from '@lib/service/RecipeService';
 import { Recipe } from 'libs/types';
@@ -26,7 +26,7 @@ const Sweet: NextPage<SweetProps> = ({ sweet }: SweetProps) => {
       <main className="flex flex-col gap-4 w-full h-full p-2">
         <section className={styles.heroSection}>
           <h1 className={`${styles.heroTitle} pb-2`}>Want Tasty Recipes</h1>
-          <Algolia_Search_Dialog buttonType="searchBar" />
+          <AlgoliaDialog buttonType="searchBar" />
         </section>
         <section className="grid grid-cols-4 gap-4 w-screen h-96 overflow-scroll">
           {sweet.map((item: Recipe) => (

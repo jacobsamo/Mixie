@@ -2,7 +2,7 @@ import React from 'react';
 import styles from '@styles/modules/Home.module.scss';
 import Navbar from '@components/modules/Navbar';
 import Footer from '@components/modules/Footer';
-import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
+import AlgoliaDialog from '@components/elements/algolia_search/AlgoliaDialog';
 import { CardRectangle, CardRectangleSmall } from '@components/modules/Cards';
 import RecipeService from '@lib/service/RecipeService';
 import { Recipe } from 'libs/types';
@@ -37,7 +37,7 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
             className={styles.heroImg}
           /> */}
           <h1 className={`${styles.heroTitle} pb-2`}>Want Tasty Recipes</h1>
-          <Algolia_Search_Dialog buttonType="searchBar" />
+          <AlgoliaDialog buttonType="searchBar" />
         </section>
         <section className="pt-9 ">
           <SwiperTemplate>

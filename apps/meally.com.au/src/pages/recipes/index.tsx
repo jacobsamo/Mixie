@@ -7,7 +7,7 @@ import { RecipeCard } from 'ui';
 import { PageSeo } from 'ui';
 import Navbar from '@components/modules/Navbar';
 import Link from 'next/link';
-import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
+import AlgoliaDialog from '@components/elements/algolia_search/AlgoliaDialog';
 
 //swiper
 import { SwiperSlide } from 'swiper/react';
@@ -52,7 +52,7 @@ const RecipesPages: NextPage<HomeProps> = ({
             className={styles.heroImg}
           /> */}
           <h1 className={`${styles.heroTitle} pb-2`}>Want Tasty Recipes</h1>
-          <Algolia_Search_Dialog buttonType="searchBar" />
+          <AlgoliaDialog buttonType="searchBar" />
         </section>
         <section className="pt-9 ">
           <h2 className="text-step0 font-Roboto font-bold">Breakfast</h2>

@@ -1,6 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import React, { useState } from 'react';
 import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
 import algoliasearch from 'algoliasearch/lite';
 import styles from './algolia_search_dialog.module.scss';
@@ -8,13 +6,12 @@ import {
   InstantSearch,
   SearchBox,
   Hits,
-  Highlight,
   Configure,
 } from 'react-instantsearch-hooks-web';
-import { Hit } from 'libs/types';
 import { Dialog } from 'ui';
+import Hit from './Hit';
 
-interface algoliaSearchDialogProps {
+interface AlgoliaDialogProps {
   buttonType: string;
 }
 
@@ -23,39 +20,7 @@ const searchClient = algoliasearch(
   '799c88bf6f889e72af4c7ccceafa8f7b'
 );
 
-const Hit = ({ hit }: any) => {
-  const info: Hit = hit;
-  const DietaryNeeds = () => {
-    if (hit.dietary.length == 0) {
-      return <></>;
-    }
-    return (
-      <ul className={styles.hitDietary}>
-        {info.dietary.map((dietary: any) => {
-          return <li key={dietary.length}>{dietary}</li>;
-        })}
-      </ul>
-    );
-  };
-  //TODO: Make this faster and responsive for mobile and any other device just giving me the shits atm (9th, Dec, 2022)
-  //TODO: Make highlighting to also cover over measures of searching
-  return (
-    <Link className="relative" href={info.path.toString()}>
-      <Highlight
-        attribute="recipeName"
-        hit={hit}
-        classNames={{
-          root: styles.hitName,
-        }}
-      />
-      <DietaryNeeds />
-    </Link>
-  );
-};
-
-export default function Algolia_Search_Dialog({
-  buttonType,
-}: algoliaSearchDialogProps) {
+export default function AlgoliaDialog({ buttonType }: AlgoliaDialogProps) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   const Button = () => {

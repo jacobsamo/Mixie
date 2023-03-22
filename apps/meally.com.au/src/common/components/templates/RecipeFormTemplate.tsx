@@ -19,7 +19,7 @@ import {
   StepContainer,
   TextArea,
 } from '@components/elements/recipe_elemnts/form_items';
-import ImageUpload from '@components/elements/ImageUpload';
+import ImageUpload from '@components/elements/recipe_page/ImageUpload';
 
 const RecipeFromLayout = () => {
   const [recipe, dispatch] = useReducer(

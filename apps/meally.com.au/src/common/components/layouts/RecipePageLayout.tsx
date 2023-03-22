@@ -7,10 +7,10 @@ import styles from '@styles/modules/RecipePage.module.scss';
 //icons
 import { StarIcon } from '@heroicons/react/24/outline';
 //components
-import AddBatch from '@components/elements/recipe_elemnts/Addbatch';
-import InfoComponent from '@components/elements/recipe_elemnts/RecipeInfo';
-import Ingredient from '@components/elements/recipe_elemnts/RecipeIngredientCard';
-import Step from '@components/elements/recipe_elemnts/RecipeStep';
+import AddBatch from '@components/elements/recipe_page/Addbatch';
+import InfoComponent from '@components/elements/recipe_page/RecipeInfo';
+import Ingredient from '@components/elements/recipe_page/RecipeIngredientCard';
+import Step from '@components/elements/recipe_page/RecipeStep';
 
 interface recipePageLayoutProps {
   recipe: Recipe;

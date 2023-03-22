@@ -3,7 +3,7 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import styles from '@styles/modules/Navbar.module.scss';
 import { BookmarkIcon } from '@heroicons/react/24/outline';
-import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
+import AlgoliaDialog from '@components/elements/algolia_search/AlgoliaDialog';
 import Link from 'next/link';
 
 const Navbar = () => {
@@ -55,7 +55,7 @@ const Navbar = () => {
           </Link> */}
         </div>
         <div className={styles.utility}>
-          <Algolia_Search_Dialog buttonType="searchIcon" />
+          <AlgoliaDialog buttonType="searchIcon" />
           <button
             type="button"
             className={styles.hamburger}
