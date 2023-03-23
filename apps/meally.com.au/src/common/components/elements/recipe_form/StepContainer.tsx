@@ -24,8 +24,6 @@ const StepContainer = (props: any) => {
     console.log("Before deleting", stepArray);
     setStepArray(stepArray.filter((_, i) => i !== index));
     console.log("After deleting", stepArray);
-    
-
   }
 
   useEffect(() => {

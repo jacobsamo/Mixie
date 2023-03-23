@@ -1,9 +1,6 @@
-import { TrashIcon } from '@heroicons/react/24/outline';
-import { index } from 'mathjs';
 import { useEffect, useState } from 'react';
 import { AddButton, InputField } from 'ui';
 import styles from './Form.module.scss';
-import { units } from '@lib/service/data';
 import { Ingredient } from './Ingredient';
 
 const IngredientContainer = (props: any) => {
@@ -23,10 +20,11 @@ const IngredientContainer = (props: any) => {
   }
 
   function handleDelete(index: number) {
-    console.log('Deleting step at index', index);
-    console.log('Before deleting', ingredientArray);
+    // write a function that deletes the step from the array
+    console.log("Deleting step at index", index);
+    console.log("Before deleting", ingredientArray);
     setIngredientArray(ingredientArray.filter((_, i) => i !== index));
-    console.log('After deleting', ingredientArray);
+    console.log("After deleting", ingredientArray);
   }
 
   useEffect(() => {
@@ -56,6 +54,7 @@ const IngredientContainer = (props: any) => {
             onClick={() => handleAddClick()}
           />
         </section>
+        <button type='button' onClick={() => console.log(ingredientArray)} >Get ingrtiedent data</button>
       </article>
     </>
   );
