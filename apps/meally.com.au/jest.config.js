@@ -12,8 +12,7 @@ const customJestConfig = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
   moduleNameMapper: {
     '^@components/(.*)': '<rootDir>/src/common/components/$1',
-    '^@lib/(.*)$': '<rootDir>/src/common/shared/libs/$1',
-    '^/@types/(.*)$': '<rootDir>/src/common/shared/libs/types/$1',
+    '^@lib/(.*)$': '<rootDir>/src/common/libs/$1',
     '^/@styles/(.*)$': '<rootDir>/src/common/styles/$1',
     '^/@component_styles/(.*)$': '<rootDir>/src/common/components/styles/$1',
   },

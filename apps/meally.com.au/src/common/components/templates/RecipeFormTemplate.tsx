@@ -12,13 +12,13 @@ import {
 import styles from '@components/elements/recipe_elemnts/form_items/Form.module.scss';
 import { InputField, AddButton, Dialog } from 'ui';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import RecipeFrom from '@components/elements/recipe_elemnts/form_items/logic';
+import RecipeFrom from '@components/elements/recipe_form/logic';
 import {
   Ingredient,
   IngredientContainer,
   StepContainer,
   TextArea,
-} from '@components/elements/recipe_elemnts/form_items';
+} from '@components/elements/recipe_form/';
 import ImageUpload from '@components/elements/recipe_page/ImageUpload';
 
 const RecipeFromLayout = () => {

@@ -30,6 +30,7 @@ const Step = ({ index, value, handleChange, handleDelete }: StepProps) => {
           id="step_body"
           onChange={internalChange}
           value={value || bodyValue}
+          rows={/\n/.test((value) ? Number(value.match(/\n/g)?.lengt) + 1 : 1)}
           placeholder="Step body"
           className="resize-none w-80 mt-2 p-2 rounded-md border border-gray-300 dark:border-dark_grey focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
         />

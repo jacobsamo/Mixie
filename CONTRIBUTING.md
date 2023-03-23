@@ -7,8 +7,8 @@ Look to [getting started](./GETTING_STARTED.md) for more information on how to g
 
 ## Project structure
 
-This repo was migrated from Nextjs 12 to Turborepo 1.6.3 and Nextjs 13. with huge improvements in build times and code structure.
-All shared code is now under `packages` and all Nextjs apps are under `apps`.
+This repo was migrated from Nextjs 12 to a monorepo using Turborepo and Nextjs 13 for it's app. with huge improvements in build times and code structure.
+All shared code is now under [packages](./packages/) and all apps are under [apps](./apps/).
 
 ### Requirements
 
@@ -21,6 +21,9 @@ All shared code is now under `packages` and all Nextjs apps are under `apps`.
 Before requesting a PR please make sure you have the following:
 
 1. Made Tests for what you have added (if applicable)
-2. Run `npm run build` and fixed all errors related to your PR
+2. Run `yarn dev`
+3. run `yarn build`
+4. Fix any issues, bugs or errors in the build step
+5. run `yarn start` go through your change and test for every case there could be and fix any issues
 
 If you have learnt anything new on the project please add to [what you have learnt](./about_the_project/things_learnt/) by create a file with your name and adding what you have learnt. e.g: `John_doe.md` or `John.d.md`
