@@ -9,7 +9,7 @@ import {
   initialRecipeState,
   units,
 } from '@lib/service/data';
-import styles from '@components/elements/recipe_elemnts/form_items/Form.module.scss';
+import styles from '@components/elements/recipe_form/Form.module.scss';
 import { InputField, AddButton, Dialog } from 'ui';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import RecipeFrom from '@components/elements/recipe_form/logic';
@@ -19,7 +19,7 @@ import {
   StepContainer,
   TextArea,
 } from '@components/elements/recipe_form/';
-import ImageUpload from '@components/elements/recipe_page/ImageUpload';
+import ImageUpload from '@components/elements/recipe_form/ImageUpload';
 
 const RecipeFromLayout = () => {
   const [recipe, dispatch] = useReducer(
@@ -61,7 +61,7 @@ const RecipeFromLayout = () => {
 
   async function handleSubmit(event: any) {
     event.preventDefault();
-    await RecipeService.createRecipe(recipe);
+    // await RecipeService.createRecipe(recipe);
     console.log('recipe sent: ', recipe);
   }
 

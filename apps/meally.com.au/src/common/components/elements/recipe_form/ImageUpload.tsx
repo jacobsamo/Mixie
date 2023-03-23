@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 // import { AddButton, InputField } from 'ui';
 import Image from 'next/image';
-import styles from './recipe_elemnts/form_items/Form.module.scss';
+import styles from '@components/elements/recipe_form/Form.module.scss';
 
 interface imgProps {
   imgUrl: string;
