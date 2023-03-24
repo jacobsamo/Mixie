@@ -58,7 +58,6 @@ const Ingredient = ({
         name="unit"
         id="unit"
         className=""
-        // value={value.split('|')[1] || unit}
         value={value.split('|')[2]?.trim() || unit}
         onChange={(event: any) => setUnit(event?.target.value)}
       >

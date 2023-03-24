@@ -16,15 +16,11 @@ const IngredientContainer = (props: any) => {
       newArray[index] = event;
       return newArray;
     });
-    console.log(event);
   }
 
   function handleDelete(index: number) {
-    // write a function that deletes the step from the array
-    console.log("Deleting step at index", index);
-    console.log("Before deleting", ingredientArray);
-    setIngredientArray(ingredientArray.filter((_, i) => i !== index));
-    console.log("After deleting", ingredientArray);
+    const newArray = ingredientArray.filter((_, i) => i !== index);
+    setIngredientArray(newArray);
   }
 
   useEffect(() => {
@@ -54,7 +50,9 @@ const IngredientContainer = (props: any) => {
             onClick={() => handleAddClick()}
           />
         </section>
-        <button type='button' onClick={() => console.log(ingredientArray)} >Get ingrtiedent data</button>
+        <button type="button" onClick={() => console.log(ingredientArray)}>
+          Get ingrtiedent data
+        </button>
       </article>
     </>
   );
