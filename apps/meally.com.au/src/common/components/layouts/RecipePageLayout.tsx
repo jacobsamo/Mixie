@@ -108,12 +108,12 @@ function RecipePageLayout({ recipe }: recipePageLayoutProps) {
             <article className={`${styles.IngredientMethodContainer}`}>
               <article>
                 <section
-                  className={`${styles.recipeIngredients} flex flex-col w-[12.5rem] gap-3`}
+                  className={`${styles.recipeIngredients} flex flex-col w-[14.5rem] gap-3`}
                 >
                   <AddBatch />
-                  {recipe.ingredients.map((ingredient) => (
+                  {recipe.ingredients.map((ingredient, index) => (
                     <Ingredient
-                      key={ingredient.length}
+                      key={index}
                       ingredient={ingredient}
                     />
                   ))}
