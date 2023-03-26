@@ -9,6 +9,7 @@ const nextConfig = {
       'img.taste.com.au',
       'lh3.googleusercontent.com',
       'firebasestorage.googleapis.com',
+      'facebook.com',
       'images.unsplash.com',
       'source.unsplash.com',
       'unsplash.com',

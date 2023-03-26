@@ -19,11 +19,7 @@ const StepContainer = (props: any) => {
   }
 
   function handleDelete(index: number) {
-    // write a function that deletes the step from the array
-    console.log("Deleting step at index", index);
-    console.log("Before deleting", stepArray);
     setStepArray(stepArray.filter((_, i) => i !== index));
-    console.log("After deleting", stepArray);
   }
 
   useEffect(() => {

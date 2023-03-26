@@ -1,4 +1,3 @@
-import localStorage from 'libs/utils/localStorage';
 // file full of all data for the app like the initial state of the recipe, dietary requirements, etc.
 
 export const dietaryRequirements = [
@@ -27,15 +26,15 @@ export const initialRecipeState = {
   createdBy: '',
   createdAt: '',
   info: {
-    total: null,
-    prep: null,
-    cook: null,
-    serves: null,
-    rating: null,
+    total: undefined,
+    prep: undefined,
+    cook: undefined,
+    serves: undefined,
+    rating: undefined,
   },
   steps: [],
-  madeRecipe: null,
-  savedRecipe: null,
+  madeRecipe: undefined,
+  savedRecipe: undefined,
 };
 
 export const units = [

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 // import { AddButton, InputField } from 'ui';
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from '@components/elements/recipe_form/Form.module.scss';
 
 interface imgProps {
@@ -83,6 +84,16 @@ const ImageUpload = (props: any) => {
           name="Image"
         /> */}
       <div className="flex flex-col gap-2 bg-dark_grey p-20 rounded-md justify-center items-center w-full h-full">
+        <label htmlFor="imgUrl">
+          Our preferred image source is from{' '}
+          <Link
+            href={'https://unsplash.com'}
+            target="_blank"
+            className="text-blue underline"
+          >
+            Unsplash
+          </Link>
+        </label>
         <input
           type="text"
           name="imgUrl"

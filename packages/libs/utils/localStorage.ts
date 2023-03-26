@@ -15,11 +15,15 @@ class localStorageService {
     }
   }
 
-  async removeAllKey(key?: string) {
-    if (typeof window !== "undefined" && !key) {
-      window.localStorage.clear();
-    } else if (typeof window !== "undefined" && key) {
+  async removeKey(key: string) {
+    if (typeof window !== "undefined" && key) {
       window.localStorage.removeItem(key);
+    }
+  }
+
+  async removeAllKey() {
+    if (typeof window !== "undefined") {
+      window.localStorage.clear();
     }
   }
 }

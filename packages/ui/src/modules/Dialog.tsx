@@ -40,7 +40,6 @@ const Dialog = ({
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      console.log('Key pressed: ', event.key);
       if (isOpen && closeKeys.includes(event.key)) {
         setOpen(false);
       }

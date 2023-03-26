@@ -1,5 +1,5 @@
 .recipeForm {
-  @apply flex flex-col gap-1;
+  @apply flex flex-col gap-1 p-3;
   width: 55%;
   margin-right: auto;
   margin-left: 15%;
@@ -61,7 +61,7 @@
   width: 18.75rem;
 }
 .textarea_tags span {
-  @apply flex justify-center items-center gap-1 dark:text-white text-black bg-grey;
+  @apply flex justify-center items-center gap-1 dark:text-white text-black dark:bg-grey bg-white;
   width: fit-content;
   height: 1.5rem;
   border-radius: 5px;

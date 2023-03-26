@@ -31,23 +31,25 @@ const Ingredient = ({
   const [cupSelect, setCupSelect] = useState<string>('');
 
   useEffect(() => {
-    handleChange(index, ingredientArray);
-  }, [ingredientArray]);
+    handleChange(index, `${ingredientItem} | ${amount} ${cupSelect} | ${unit}`);
+    setIngredientArray(`${ingredientItem} | ${amount} ${cupSelect} | ${unit}`);
+  }, [ingredientItem, amount, cupSelect, unit]);
 
   useEffect(() => {
-    setIngredientArray(
-      `${ingredientItem.trim()} | ${amount.trim()} | ${unit.trim()}`
-    );
-  }, [ingredientItem, amount, unit]);
-
-  useEffect(() => {
-    setAmount(`${amount.split(' ')[0] || ''} ${cupSelect}`);
-  }, [cupSelect]);
+    if (value) {
+      const parts = value.split('|').map((part) => part.trim());
+      setIngredientArray(value);
+      setIngredientItem(parts[0] || '');
+      setAmount(parts[1]?.split(' ')[0] || '');
+      setCupSelect(parts[1]?.split(' ')[1] || '');
+      setUnit(parts[2] || '');
+    }
+  }, [value]);
 
   return (
     <section key={index} className={styles.ingredient}>
       <input
-        value={value.split('|')[0]?.trim() || ingredientItem}
+        value={ingredientItem}
         type="text"
         required
         placeholder="ingredient"
@@ -58,8 +60,8 @@ const Ingredient = ({
         name="unit"
         id="unit"
         className=""
-        value={value.split('|')[2]?.trim() || unit}
-        onChange={(event: any) => setUnit(event?.target.value)}
+        value={unit}
+        onChange={(event: any) => setUnit(event.target.value)}
       >
         {units.map((unit, index) => {
           return (
@@ -73,24 +75,23 @@ const Ingredient = ({
         type="number"
         placeholder="Amount"
         min={0}
-        // value={amount.split(' ')[0] || amount}
-        value={value.split('|')[1]?.trim().split(' ')[0] || amount}
+        value={amount}
         onChange={(event: any) => setAmount(event.target.value)}
       />
-      {((unit || value.split('|')[1]?.trim().split(' ')[0]) == 'cup' ||
-        (unit || value.split('|')[1]?.trim().split(' ')[0]) == 'tbsp' ||
-        (unit || value.split('|')[1]?.trim().split(' ')[0]) == 'tsp') && (
-        <select
-          name="select"
-          id="select"
-          value={value.split('|')[1]?.trim().split(' ')[1] || cupSelect}
-          onChange={(event: any) => setCupSelect(event?.target.value)}
-        >
-          <option value=" "></option>
-          <option value="1/4">1/4 {unit}</option>
-          <option value="1/2">1/2 {unit}</option>
-          <option value="3/4">3/4 {unit}</option>
-        </select>
+      {['cup', 'tbsp', 'tsp'].includes(unit || value.split('|')[2]?.trim()) && (
+        <>
+          <select
+            name="select_measure"
+            id="select_measure"
+            value={value.split('|')[1]?.trim().split(' ')[1] || cupSelect}
+            onChange={(event: any) => setCupSelect(event.target.value)}
+          >
+            <option value=""></option>
+            <option value="1/4">1/4 {unit}</option>
+            <option value="1/2">1/3 {unit}</option>
+            <option value="3/4">3/4 {unit}</option>
+          </select>
+        </>
       )}
       <button onClick={() => handleDelete(index)} type="button">
         <TrashIcon className="h-6 w-6" />

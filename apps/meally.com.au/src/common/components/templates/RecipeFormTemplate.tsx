@@ -1,7 +1,7 @@
 'use client';
 import { Recipe, Info } from 'libs/types';
 import Image from 'next/image';
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import localStorageService from 'libs/utils/localStorage';
 import RecipeService from '@lib/service/RecipeService';
 import {
@@ -10,16 +10,15 @@ import {
   units,
 } from '@lib/service/data';
 import styles from '@components/elements/recipe_form/Form.module.scss';
-import { InputField, AddButton, Dialog } from 'ui';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { InputField } from 'ui';
 import RecipeFrom from '@components/elements/recipe_form/logic';
 import {
-  Ingredient,
   IngredientContainer,
   StepContainer,
   TextArea,
 } from '@components/elements/recipe_form/';
 import ImageUpload from '@components/elements/recipe_form/ImageUpload';
+import Link from 'next/link';
 
 const RecipeFromLayout = () => {
   const [recipe, dispatch] = useReducer(
@@ -61,12 +60,19 @@ const RecipeFromLayout = () => {
 
   async function handleSubmit(event: any) {
     event.preventDefault();
-    // await RecipeService.createRecipe(recipe);
-    console.log('recipe sent: ', recipe);
+    await RecipeService.createRecipe(recipe).then((res: any) => {
+      if (res.status === 200) {
+        console.log('recipe has been created: ', res.data);
+        localStorageService.removeKey(`recipe-${recipe.id}`);
+      }
+    });
+    console.log('recipe has been sent to server: ', recipe);
   }
 
   useEffect(() => {
-    localStorageService.setLocal('recipe', recipe);
+    if (recipe.id !== '') {
+      localStorageService.setLocal(`recipe-${recipe.id}`, recipe);
+    }
   }, [recipe]);
 
   useEffect(() => {
@@ -95,7 +101,7 @@ const RecipeFromLayout = () => {
             </li>
             <li>
               If you have any improvement ideas please add them{' '}
-              <a href="#">here</a>
+              <Link href={"https://forms.gle/brc7atQ6dWDEsB7H6"} target="_blank" className='text-blue underline'>here</Link>
             </li>
             <li></li>
           </ul>
@@ -154,7 +160,7 @@ const RecipeFromLayout = () => {
         </label>
         <TextArea
           name="allergens"
-          label="contains:"
+          label="Please list any allergens, separated by a comma or new line."
           onTagsChange={handleArrayChange}
           placeholder="E.g gluten, dairy, nuts"
         />
@@ -176,6 +182,12 @@ const RecipeFromLayout = () => {
           placeholder="Recipe Description"
           name="recipe_description"
           onChange={handleChange}
+          rows={
+            /\n/.test(recipe.recipeDescription)
+              ? Number(recipe.recipeDescription.match(/\n/g)?.length) + 1
+              : 3
+          }
+          className="resize-none w-80 mt-2 p-2 rounded-md border border-gray-300 dark:border-dark_grey focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
         />
         <select
           name="meal_time"
@@ -190,7 +202,8 @@ const RecipeFromLayout = () => {
         </select>
         <TextArea
           name="keywords"
-          label="keywords:"
+          label="Please list some keywords, separated by a comma or new line."
+          notes="Keywords will be used to help users find your recipe."
           onTagsChange={handleArrayChange}
         />
         <InputField
@@ -212,7 +225,10 @@ const RecipeFromLayout = () => {
           <StepContainer handleArrayChange={handleArrayChange} name="steps" />
         </div>
 
-        <button type="submit" className="text-step--1 mt-14">
+        <button
+          type="submit"
+          className="text-step--1 mt-14 mb-3 border rounded-lg"
+        >
           Submit
         </button>
       </form>

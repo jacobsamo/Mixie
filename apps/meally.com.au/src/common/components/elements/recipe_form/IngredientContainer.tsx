@@ -50,9 +50,6 @@ const IngredientContainer = (props: any) => {
             onClick={() => handleAddClick()}
           />
         </section>
-        <button type="button" onClick={() => console.log(ingredientArray)}>
-          Get ingrtiedent data
-        </button>
       </article>
     </>
   );

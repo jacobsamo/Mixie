@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import styles from './Form.module.scss';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
-const TextArea = (props: any) => {
+const TextArea = ({ ...props }) => {
   const [textareaValue, setTextareaValue] = useState('');
   const [tags, setTags] = useState<string[]>([]);
 
@@ -24,13 +24,15 @@ const TextArea = (props: any) => {
   return (
     <label className={styles.textarea_container}>
       {props.label}
+      {props.notes ? (
+        <p className="text-[0.78rem] font-thin italic">{props.notes}</p>
+      ) : false}
       <textarea
         value={textareaValue}
         onChange={(e) => setTextareaValue(e.target.value)}
         onKeyDown={handleKeyDown}
         className={styles.textarea}
-        name={props.name}
-        placeholder={props.placeholder}
+        {...props}
       />
       <div className={styles.textarea_tags}>
         {tags.map((tag, index) => (
@@ -42,7 +44,7 @@ const TextArea = (props: any) => {
               }}
               type="button"
             >
-              <XMarkIcon className="w-4 h-4" />
+              <XMarkIcon className="w-5 h-5" />
             </button>
           </span>
         ))}
