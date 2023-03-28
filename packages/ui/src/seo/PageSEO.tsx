@@ -8,6 +8,22 @@ interface pageSEOProps {
   description: string;
 }
 
+/**
+ * A page SEO component
+ * @param {string} title - The title of the page
+ * @param {string} url - The url of the page
+ * @param {string} imgUrl - The image url of the page
+ * @param {string} description - The description of the page
+ * @returns jsx
+ * @example
+ * <PageSeo
+ *  title="Meally — Find your next meal"
+ *  url="https://meally.com.au/"
+ *  imgUrl="https://meally.com.au/og-image.png"
+ *  description="Find recipes you love all free and open source, completely powered by the community "
+ * />
+ */
+
 function PageSeo({ title, url, imgUrl, description }: pageSEOProps) {
   return (
     <Head>

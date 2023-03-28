@@ -1,6 +1,20 @@
 import React, { useState } from "react";
-import "../styles/InputFields.css";
 
+
+/**
+ * A text input field
+ * @param props
+ * @returns jsx
+ * @example
+ * <InputField
+ *  label="Name"
+ *  name="name"
+ *  id="name"
+ *  type="text"
+ *  value={name}
+ *  onChange={handleChange}
+ * />
+ */
 function InputField({ ...props }) {
   const [internalValue, setInternalValue] = useState("");
 
