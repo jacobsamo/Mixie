@@ -17,10 +17,11 @@ All shared code is now under [packages](./packages/) and all apps are under [app
 - Firebase-cli >= 11.19.0
 
 ### Committing changes
-In this project we use commit messages to better idiefy the changes along with making things more clear.
+In this project we use commit messages to better identify the changes along with making things more clear.
 
 FEAT: Use this keyword to indicate that you are committing to a new feature.
 "FEAT: Add new login functionality."
+
 
 CHANGE: Use this keyword to indicate that you are committing to a change in functionality.
 "CHANGE: Update login functionality to use new API."
@@ -30,6 +31,9 @@ UPDATE: Use this keyword to indicate that you are committing to an update to a f
 
 FIX: Use this keyword to indicate that you are committing a fix for a specific problem or issue.
 "FIX: Fix bug causing crashes on certain devices."
+
+DOCS: Use this keyword to indicate that you are committing to a documentation change.
+"DOCS: Update README.md to include new login functionality."
 
 STYLE: Use this keyword to indicate that you are making changes to the style or formatting of the code, but not its functionality.
 "STYLE: Update indentation in main.js."
