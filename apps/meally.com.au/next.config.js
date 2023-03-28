@@ -10,10 +10,16 @@ const nextConfig = {
       'lh3.googleusercontent.com',
       'firebasestorage.googleapis.com',
       'facebook.com',
-      'images.unsplash.com',
-      'source.unsplash.com',
-      'unsplash.com',
       'media4.giphy.com',
+      // good free images websites
+      'unsplash.com',
+      'source.unsplash.com',
+      'images.unsplash.com',
+      'isorepublic.com',
+      'pixabay.com',
+      'pexels.com',
+      'savee.com',
+      'dr.savee-cdn.com'
     ],
   },
   // eslint: {

@@ -85,8 +85,12 @@ const Dialog = ({
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto backdrop-blur-sm">
-          <div className="dialog-box" ref={dialogRef}>
+        <div className="fixed inset-0 z-50 flex justify-center items-center">
+          <div
+            ref={dialogRef}
+            className="bg-white rounded-lg shadow-lg p-4"
+            style={{ width: "500px" }}
+          >
             {children}
           </div>
         </div>

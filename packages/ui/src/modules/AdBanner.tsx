@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { GoogleAdsenseWidget } from "next-google-ads";
 import Script from "next/script";

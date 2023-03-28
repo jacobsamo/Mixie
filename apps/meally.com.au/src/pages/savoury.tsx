@@ -65,6 +65,7 @@ export async function getStaticProps() {
     props: {
       savoury: savoury,
     },
+    revalidate: 60 * 60 * 24 * 7,
   };
 }
 

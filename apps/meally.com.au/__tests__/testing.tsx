@@ -3,10 +3,8 @@ import React, { useState, useEffect } from 'react';
 import RecipeService from '@lib/service/RecipeService';
 import { auth } from '@lib/config/firebase';
 import AuthService from '@lib/service/Authservice';
-import { RecipeCard } from 'ui';
 import type { Recipe } from 'libs/types';
 import { HeartIcon } from '@heroicons/react/24/outline';
-import styles from '@component_styles/recipeCard.module.scss';
 
 const testData = {
   id: 'testDoc',
@@ -87,11 +85,7 @@ const Testing: NextPage = () => {
                   key={recipe.id}
                   className="relative w-46 h-58 dark:bg-grey bg-white rounded-xl"
                 >
-                  <img
-                    src={recipe.image.imgUrl}
-                    alt={recipe.recipeName}
-                    className={styles.image}
-                  />
+                  <img src={recipe.image.imgUrl} alt={recipe.recipeName} />
                   <h1 className="dark:text-white text-black text-step--2 font-Roboto font-bold absolute left-2 top-36">
                     {recipe.recipeName}
                   </h1>

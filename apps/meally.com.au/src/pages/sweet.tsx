@@ -55,6 +55,7 @@ export async function getStaticProps() {
     props: {
       sweet: sweet,
     },
+    revalidate: 60 * 60 * 24 * 7,
   };
 }
 

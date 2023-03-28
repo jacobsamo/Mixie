@@ -116,6 +116,7 @@ export async function getStaticProps() {
       sweet: sweet,
       savoury: savoury,
     },
+    revalidate: 60 * 60 * 24 * 7,
   };
 }
 

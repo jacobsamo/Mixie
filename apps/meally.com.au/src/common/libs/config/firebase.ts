@@ -21,22 +21,22 @@ const auth = getAuth();
 
 const analytics = isSupported().then((yes) => (yes ? getAnalytics(app) : null));
 
-// declare global {
-//   var EMULATORS_STARTED: boolean;
-// }
+declare global {
+  var EMULATORS_STARTED: boolean;
+}
 
-// const EMULATORS_STARTED = 'EMULATORS_STARTED';
+const EMULATORS_STARTED = 'EMULATORS_STARTED';
 
-// function startEmulators() {
-//   if (!global[EMULATORS_STARTED]) {
-//     global[EMULATORS_STARTED] = true;
-//     connectFirestoreEmulator(db, 'localhost', 8080);
-//     connectAuthEmulator(auth, 'http://localhost:9099');
-//   }
-// }
+function startEmulators() {
+  if (!global[EMULATORS_STARTED]) {
+    global[EMULATORS_STARTED] = true;
+    connectFirestoreEmulator(db, 'localhost', 8080);
+    connectAuthEmulator(auth, 'http://localhost:9099');
+  }
+}
 
-// if (process.env.NODE_ENV === 'development') {
-//   startEmulators();
-// }
+if (process.env.NODE_ENV === 'development') {
+  startEmulators();
+}
 
 export { db, auth, analytics };

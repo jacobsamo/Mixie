@@ -1,7 +1,12 @@
 import React from 'react';
 import styles from '@styles/modules/RecipePage.module.scss';
 
-const Step = ({ steps, step }: { steps: string[]; step: string }) => {
+interface StepProps {
+  steps: string[];
+  step: string;
+}
+
+const Step = ({ steps, step }: StepProps) => {
   return (
     <>
       <section key={steps.indexOf(step)} className={styles.steps}>

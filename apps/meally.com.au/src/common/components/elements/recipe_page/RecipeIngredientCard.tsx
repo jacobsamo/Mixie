@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from '@styles/modules/RecipePage.module.scss';
 
-interface ingredientProps {
+interface IngredientProps {
   ingredient: string;
 }
 
-const Ingredient = ({ ingredient }: ingredientProps) => {
+const Ingredient = ({ ingredient }: IngredientProps) => {
   return (
     <div
       key={ingredient.length}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon';
 import algoliasearch from 'algoliasearch/lite';
 import styles from './algolia_search_dialog.module.scss';
@@ -8,7 +8,7 @@ import {
   Hits,
   Configure,
 } from 'react-instantsearch-hooks-web';
-import { Dialog } from 'ui';
+import useOutsideClick from 'src/common/hooks/useOutsideClick';
 import Hit from './Hit';
 
 interface AlgoliaDialogProps {
@@ -22,13 +22,42 @@ const searchClient = algoliasearch(
 
 export default function AlgoliaDialog({ buttonType }: AlgoliaDialogProps) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (dialogOpen && event.key == 'Escape') {
+        setDialogOpen(false);
+      }
+      if (!dialogOpen && event.ctrlKey == true && event.key == 'k') {
+        setDialogOpen(true);
+      }
+    };
+
+    const handleClickOutside = (event: any) => {
+      if (
+        dialogRef.current &&
+        !dialogRef.current.contains(event.target as Node)
+      ) {
+        setDialogOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('touchstart', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, []);
 
   const Button = () => {
     if (buttonType === 'searchBar') {
       return (
         <>
           <button
-            onClick={() => setDialogOpen(true)}
+            onClick={() => setDialogOpen(!dialogOpen)}
             // style={{ width: '28rem', height: '2.8rem' }}
             className="dark:bg-dark_grey dark:text-white p-1 pr-5 min-w-max max-w-[28rem] h-[2.8rem] resize bg-white shadow-searchBarShadow relative flex items-center rounded-xl"
           >
@@ -43,7 +72,7 @@ export default function AlgoliaDialog({ buttonType }: AlgoliaDialogProps) {
 
     if (buttonType === 'searchIcon') {
       return (
-        <button onClick={() => setDialogOpen(true)}>
+        <button onClick={() => setDialogOpen(!dialogOpen)}>
           <MagnifyingGlassIcon className="h-8 w-8" />
         </button>
       );
@@ -55,12 +84,11 @@ export default function AlgoliaDialog({ buttonType }: AlgoliaDialogProps) {
   return (
     <>
       <Button />
-      <Dialog
-        isOpen={dialogOpen}
-        setOpen={() => setDialogOpen(!dialogOpen)}
-        closeOnEscape={true}
-        closeOnOutsideClick={true}
-        openKeys={['Control', '/', 'k']}
+      <div
+        style={{
+          display: dialogOpen ? 'block' : 'none',
+        }}
+        className="fixed inset-0 z-50 overflow-y-auto backdrop-blur-sm"
       >
         <InstantSearch searchClient={searchClient} indexName="recipes">
           <Configure hitsPerPage={10} />
@@ -99,7 +127,7 @@ export default function AlgoliaDialog({ buttonType }: AlgoliaDialogProps) {
             />
           </div>
         </InstantSearch>
-      </Dialog>
+      </div>
     </>
   );
 }

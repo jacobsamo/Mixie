@@ -3,7 +3,6 @@ import React from 'react';
 import styles from '@styles/modules/Home.module.scss';
 import RecipeService from '@lib/service/RecipeService';
 import { Recipe } from 'libs/types/';
-import { RecipeCard } from 'ui';
 import { PageSeo } from 'ui';
 import Navbar from '@components/modules/Navbar';
 import Link from 'next/link';
@@ -199,6 +198,7 @@ export async function getStaticProps() {
       sweet: sweet,
       savoury: savoury,
     },
+    revalidate: 60 * 60 * 24 * 7,
   };
 }
 

@@ -5,12 +5,12 @@ import TimelapseOutlinedIcon from '@mui/icons-material/TimelapseOutlined';
 import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
 import { ClockIcon, StarIcon } from '@heroicons/react/24/outline';
 
-interface infoComponentProps {
+interface InfoComponentProps {
   info: Info;
   recipeName: string;
 }
 
-const InfoComponent = ({ info, recipeName }: infoComponentProps) => {
+const InfoComponent = ({ info, recipeName }: InfoComponentProps) => {
   return (
     <>
       <ul

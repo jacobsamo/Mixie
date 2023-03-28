@@ -3,20 +3,21 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '@components/elements/recipe_form/Form.module.scss';
+import ImageWebsites from './ImageWebsites';
 
-interface imgProps {
+interface ImgProps {
   imgUrl: string;
   imgAlt: string;
 }
 
 // interface ImageUploadDialogProps {
-//   handleChange: (img: imgProps[]) => void;
+//   handleChange: (img: ImgProps[]) => void;
 //   dialogOpen: boolean;
 //   setDialogOpen: (state: boolean) => void;
 // }
 
 const ImageUploadForm = (props: any) => {
-  const [img, setImg] = useState<imgProps[]>([]);
+  const [img, setImg] = useState<ImgProps[]>([]);
   const [imgUrl, setImgUrl] = useState('');
   const [imgAlt, setImgAlt] = useState('');
 
@@ -60,7 +61,7 @@ const ImageUploadForm = (props: any) => {
 };
 
 const ImageUpload = (props: any) => {
-  const [img, setImg] = useState<imgProps[]>([]);
+  const [img, setImg] = useState<ImgProps[]>([]);
   const [imgUrl, setImgUrl] = useState('');
   const [imgAlt, setImgAlt] = useState('');
 
@@ -94,6 +95,7 @@ const ImageUpload = (props: any) => {
             Unsplash
           </Link>
         </label>
+        <ImageWebsites />
         <input
           type="text"
           name="imgUrl"
