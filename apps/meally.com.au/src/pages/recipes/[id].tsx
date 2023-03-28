@@ -6,7 +6,7 @@ import RecipeService from '@lib/service/RecipeService';
 
 //components
 import { RecipeSeo } from 'ui';
-import Navbar from '@components/elements/Navbar';
+import Navbar from '@components/modules/Navbar';
 import RecipePageLayout from '@components/layouts/RecipePageLayout';
 import { useRouter } from 'next/router';
 

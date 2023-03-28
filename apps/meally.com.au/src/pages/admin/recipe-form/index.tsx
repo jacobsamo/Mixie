@@ -1,7 +1,7 @@
 'use client';
 import { TextField } from '@mui/material';
 import React, { useState } from 'react';
-import Form from '@components/layouts/RecipeFromLayout';
+import Form from '@components/templates/RecipeFormTemplate';
 import RecipeService from '@lib/service/RecipeService';
 
 const recipe = {

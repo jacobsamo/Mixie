@@ -14,6 +14,28 @@ interface recipeSEOProps {
   keywords: string;
 }
 
+/**
+ * A page SEO component
+ * @param {string} recipeDescription - The description of the recipe
+ * @param {string} recipeName - The name of the recipe
+ * @param {string} imageUrl - The image url of the recipe
+ * @param {string} info - The info of the recipe
+ * @param {string} recipeUrl - The url of the recipe
+ * @param {string} createdAt - The date the recipe was created
+ * @param {string} keywords - The keywords of the recipe
+ * @returns jsx
+ * @example
+ * <RecipeSeo
+ *   recipeDescription="This is a description"
+ *   recipeName="This is a name"
+ *   imageUrl="https://meally.com.au/og-image.png"
+ *   info="This is info"
+ *   recipeUrl="https://meally.com.au/"
+ *   createdAt="2021-08-01T00:00:00.000Z"
+ *   keywords="This is a keyword"
+ * />
+ */
+
 function RecipeSeo({
   recipeDescription,
   recipeName,

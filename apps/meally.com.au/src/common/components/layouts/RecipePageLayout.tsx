@@ -7,10 +7,10 @@ import styles from '@styles/modules/RecipePage.module.scss';
 //icons
 import { StarIcon } from '@heroicons/react/24/outline';
 //components
-import AddBatch from '@components/elements/recipe_elemnts/Addbatch';
-import InfoComponent from '@components/elements/recipe_elemnts/RecipeInfo';
-import Ingredient from '@components/elements/recipe_elemnts/RecipeIngredientCard';
-import Step from '@components/elements/recipe_elemnts/RecipeStep';
+import AddBatch from '@components/elements/recipe_page/Addbatch';
+import InfoComponent from '@components/elements/recipe_page/RecipeInfo';
+import Ingredient from '@components/elements/recipe_page/RecipeIngredientCard';
+import Step from '@components/elements/recipe_page/RecipeStep';
 
 interface recipePageLayoutProps {
   recipe: Recipe;
@@ -108,12 +108,12 @@ function RecipePageLayout({ recipe }: recipePageLayoutProps) {
             <article className={`${styles.IngredientMethodContainer}`}>
               <article>
                 <section
-                  className={`${styles.recipeIngredients} flex flex-col w-[12.5rem] gap-3`}
+                  className={`${styles.recipeIngredients} flex flex-col w-[14.5rem] gap-3`}
                 >
                   <AddBatch />
-                  {recipe.ingredients.map((ingredient) => (
+                  {recipe.ingredients.map((ingredient, index) => (
                     <Ingredient
-                      key={ingredient.length}
+                      key={index}
                       ingredient={ingredient}
                     />
                   ))}

@@ -3,11 +3,10 @@ import React from 'react';
 import styles from '@styles/modules/Home.module.scss';
 import RecipeService from '@lib/service/RecipeService';
 import { Recipe } from 'libs/types/';
-import { RecipeCard } from 'ui';
 import { PageSeo } from 'ui';
-import Navbar from '@components/elements/Navbar';
+import Navbar from '@components/modules/Navbar';
 import Link from 'next/link';
-import Algolia_Search_Dialog from '@components/elements/algolia_search_dialog';
+import AlgoliaDialog from '@components/elements/algolia_search/AlgoliaDialog';
 
 //swiper
 import { SwiperSlide } from 'swiper/react';
@@ -17,7 +16,7 @@ import {
   CardRectangle,
   CardRectangleSmall,
   CardSquare,
-} from '@components/elements/Cards';
+} from '@components/modules/Cards';
 
 interface HomeProps {
   breakFast: Recipe[];
@@ -52,7 +51,7 @@ const RecipesPages: NextPage<HomeProps> = ({
             className={styles.heroImg}
           /> */}
           <h1 className={`${styles.heroTitle} pb-2`}>Want Tasty Recipes</h1>
-          <Algolia_Search_Dialog buttonType="searchBar" />
+          <AlgoliaDialog buttonType="searchBar" />
         </section>
         <section className="pt-9 ">
           <h2 className="text-step0 font-Roboto font-bold">Breakfast</h2>
@@ -199,6 +198,7 @@ export async function getStaticProps() {
       sweet: sweet,
       savoury: savoury,
     },
+    revalidate: 60 * 60 * 24 * 7,
   };
 }
 
