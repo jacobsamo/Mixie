@@ -16,9 +16,17 @@ import type { Recipe } from 'libs/types';
 import { db } from '@lib/config/firebase';
 
 class RecipeService {
-  createRecipe(post: Recipe) {
-    return setDoc(doc(db, 'recipes', post.id), post);
+  async createRecipe(post: Recipe): Promise<Recipe | {message: string | Error, status: number}> {
+    try {
+      await setDoc(doc(db, 'recipes', post.id), post); 
+      console.log('Recipe saved successfully!');
+      return {message: 'Recipe created successfully', status: 200};
+    } catch (e: any) {
+      console.error('Error saving recipe:', e);
+      return {message: e, status: 400};
+    }
   }
+  
 
   async getLatestRecipes(limitAmount?: number) {
     const recipeRef = collection(db, 'recipes');

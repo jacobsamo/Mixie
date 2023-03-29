@@ -4,6 +4,8 @@
 node_modules
 .pnp
 .pnp.js
+
+# misc
 .VsCodeCounter
 
 # testing
@@ -13,6 +15,9 @@ coverage
 .next/
 out/
 build
+
+# build
+dist
 
 # misc
 .DS_Store
@@ -32,7 +37,7 @@ ui-debug.log*
 database-debug.log*
 
 
-# local env files
+# environment variables
 .env.local
 .env.development.local
 .env.test.local
@@ -40,3 +45,6 @@ database-debug.log*
 
 # turbo
 .turbo
+
+# vercel 
+.vercel

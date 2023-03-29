@@ -9,10 +9,10 @@
     "clean:turbo": "rm -rf .turbo"
   },
   "dependencies": {
-    "eslint": "latest",
+    "eslint": "^8.36.0",
     "eslint-config-next": "latest",
     "eslint-config-prettier": "latest",
-    "eslint-config-turbo": "latest",
+    "eslint-config-turbo": "1.8.6",
     "eslint-plugin-react": "latest",
     "next": "latest"
   },

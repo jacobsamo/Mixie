@@ -1,6 +1,6 @@
 import { ImageProps, Info } from "./recipe";
 
-export interface Recipe {
+interface SimplifiedRecipe {
   id: string;
   image: ImageProps;
   recipeName: string;
@@ -9,3 +9,5 @@ export interface Recipe {
   sweet_savoury: string;
   info: Info;
 }
+
+export type { SimplifiedRecipe };
