@@ -55,7 +55,7 @@ jobs:
       - name: Start Meally
         run: yarn start
 
-  test&lint:
+  test_lint:
     name: Build
     timeout-minutes: 10
     runs-on: ubuntu-latest

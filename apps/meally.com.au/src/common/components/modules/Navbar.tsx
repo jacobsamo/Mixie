@@ -5,10 +5,19 @@ import styles from '@styles/modules/Navbar.module.scss';
 import { BookmarkIcon } from '@heroicons/react/24/outline';
 import AlgoliaDialog from '@components/elements/algolia_search/AlgoliaDialog';
 import Link from 'next/link';
+import { auth } from '@lib/config/firebase';
+import UserProfile from '@components/elements/UserProfile';
+import SignInDialog from '@components/elements/SignInDialog';
 
 const Navbar = () => {
-  const [userImage, setUserImage] = useState('/favicon.ico');
   const [isOpen, setIsOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const handleBookmarkClick = () => {
+    if (!auth.currentUser) {
+      setDialogOpen(true);
+    }
+  };
 
   return (
     <>
@@ -65,22 +74,11 @@ const Navbar = () => {
             <span className={styles.hamburger_bar}></span>
             <span className={styles.hamburger_bar}></span>
           </button>
-          <div className={styles.comingSoon}>
-            Coming soon
-            {/* <button>
-              <BookmarkIcon className="h-8 w-8x" />
-              </button>
-              <button>
-              <Image
-              src={userImage}
-              alt="Profile Picture"
-              width={48}
-              height={48}
-              className="rounded-full relative"
-              priority
-              />{' '}
-            </button> */}
-          </div>
+          <button onClick={() => handleBookmarkClick()}>
+            <BookmarkIcon className="h-8 w-8x" />
+            <SignInDialog open={dialogOpen} setOpen={setDialogOpen} />
+          </button>
+          <UserProfile />
         </div>
       </nav>
     </>

@@ -42,8 +42,8 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
         <section className="pt-9 ">
           <SwiperTemplate>
             {latestRecipes ? (
-              latestRecipes.map((item: Recipe) => (
-                <SwiperSlide>
+              latestRecipes.map((item: Recipe, index: number) => (
+                <SwiperSlide key={index}>
                   <CardRectangle
                     title={item.recipeName}
                     id={item.id}

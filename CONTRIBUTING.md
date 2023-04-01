@@ -22,7 +22,6 @@ In this project we use commit messages to better identify the changes along with
 FEAT: Use this keyword to indicate that you are committing to a new feature.
 "FEAT: Add new login functionality."
 
-
 CHANGE: Use this keyword to indicate that you are committing to a change in functionality.
 "CHANGE: Update login functionality to use new API."
 

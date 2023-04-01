@@ -1,5 +1,4 @@
-import { db, auth } from '@lib/config/firebase';
-import type { UserCredential } from 'firebase/auth';
+import { auth } from '@lib/config/firebase';
 import {
   signInWithPopup,
   signOut,
@@ -7,6 +6,8 @@ import {
   GoogleAuthProvider,
   FacebookAuthProvider,
   GithubAuthProvider,
+  TwitterAuthProvider,
+  UserCredential,
 } from 'firebase/auth';
 
 class AuthService {
@@ -25,15 +26,19 @@ class AuthService {
     return credential;
   }
 
+  async signInWithTwitter() {
+    const credential = signInWithPopup(auth, new TwitterAuthProvider());
+    return credential;
+  }
+
   async signOutUser() {
     await signOut(auth);
   }
   async getUserInfo() {
-    if (auth.currentUser === null) {
-      return 'https://unsplash.com/photos/K4mSJ7kc0As';
-    } else {
+    if (auth.currentUser) {
       return auth.currentUser.photoURL;
     }
+    return 'https://unsplash.com/photos/K4mSJ7kc0As';
   }
 }
 
