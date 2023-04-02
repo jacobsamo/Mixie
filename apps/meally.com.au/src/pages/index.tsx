@@ -7,6 +7,8 @@ import { CardRectangle, CardRectangleSmall } from '@components/modules/Cards';
 import RecipeService from '@lib/service/RecipeService';
 import { Recipe } from 'libs/types';
 import { PageSeo } from 'ui';
+import useAuth from 'src/common/hooks/useAuth';
+import AuthDialog from '@components/elements/AuthDialog';
 
 //swiper
 import { SwiperSlide } from 'swiper/react';
@@ -19,6 +21,8 @@ interface HomeProps {
 }
 
 const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
+  const { handleAuthClick, handleAuthDialogClose } = useAuth();
+
   return (
     <>
       <PageSeo
@@ -38,6 +42,7 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
           /> */}
           <h1 className={`${styles.heroTitle} pb-2`}>Want Tasty Recipes</h1>
           <AlgoliaDialog buttonType="searchBar" />
+          <button>Test button</button>
         </section>
         <section className="pt-9 ">
           <SwiperTemplate>

@@ -7,7 +7,7 @@ import AlgoliaDialog from '@components/elements/algolia_search/AlgoliaDialog';
 import Link from 'next/link';
 import { auth } from '@lib/config/firebase';
 import UserProfile from '@components/elements/UserProfile';
-import SignInDialog from '@components/elements/SignInDialog';
+import SignInDialog from '@components/elements/AuthDialog';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { auth } from '@lib/config/firebase';
 import type { User } from 'firebase/auth';
 import AuthService from '@lib/service/Authservice';
-import SignInDialog from './SignInDialog';
+import SignInDialog from './AuthDialog';
 
 const UserProfile = () => {
   const [user, setUser] = useState<User>();

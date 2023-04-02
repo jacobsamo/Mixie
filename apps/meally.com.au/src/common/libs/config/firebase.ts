@@ -37,8 +37,8 @@ function startEmulators() {
   }
 }
 
-// if (process.env.NODE_ENV === 'development') {
-//   startEmulators();
-// }
+if (process.env.NODE_ENV === 'development') {
+  startEmulators();
+}
 
 export { db, auth, storage, analytics };

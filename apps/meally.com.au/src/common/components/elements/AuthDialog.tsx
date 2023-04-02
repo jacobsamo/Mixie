@@ -7,14 +7,14 @@ import { auth } from '@lib/config/firebase';
 import type { User } from 'firebase/auth';
 import AuthService from '@lib/service/Authservice';
 
-interface SignInDialogProps {
+interface AuthDialogProps {
   user?: User | undefined;
   setUser?: (value: User) => void;
   open: boolean;
   setOpen: (value: boolean) => void;
 }
 
-const SignInDialog = ({ user, setUser, open, setOpen }: SignInDialogProps) => {
+const AuthDialog = ({ user, setUser, open, setOpen }: AuthDialogProps) => {
   const [internalUser, setInternalUser] = useState<User | undefined>();
 
   const handleGithubClick = () => {
@@ -144,4 +144,4 @@ const SignInDialog = ({ user, setUser, open, setOpen }: SignInDialogProps) => {
   );
 };
 
-export default SignInDialog;
+export default AuthDialog;
