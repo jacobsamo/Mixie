@@ -7,6 +7,8 @@ import { PageSeo } from 'ui';
 import Navbar from '@components/modules/Navbar';
 import Link from 'next/link';
 import AlgoliaDialog from '@components/elements/algolia_search/AlgoliaDialog';
+import useAuth from 'src/common/hooks/useAuth';
+import AuthDialog from '@components/elements/AuthDialog';
 
 //swiper
 import { SwiperSlide } from 'swiper/react';
@@ -33,6 +35,7 @@ const RecipesPages: NextPage<HomeProps> = ({
   sweet,
   savoury,
 }: HomeProps) => {
+  const { dialogOpen, handleAuthClick, handleAuthDialogClose } = useAuth();
   return (
     <>
       <PageSeo
@@ -42,6 +45,7 @@ const RecipesPages: NextPage<HomeProps> = ({
         description="recipes for the best meals"
       />
       <Navbar />
+      <AuthDialog open={dialogOpen} setOpen={handleAuthDialogClose} />
       <main className="flex flex-col justify-center items-center dark:text-white text-black">
         <section className={styles.heroSection}>
           {/* <Image

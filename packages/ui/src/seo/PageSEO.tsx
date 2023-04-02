@@ -1,7 +1,7 @@
 import Head from "next/head";
 import * as React from "react";
 
-interface pageSEOProps {
+interface PageSEOProps {
   title: string;
   url: string;
   imgUrl: string;
@@ -24,7 +24,7 @@ interface pageSEOProps {
  * />
  */
 
-function PageSeo({ title, url, imgUrl, description }: pageSEOProps) {
+function PageSeo({ title, url, imgUrl, description }: PageSEOProps) {
   return (
     <Head>
       <title>{title}</title>

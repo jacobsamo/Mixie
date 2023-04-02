@@ -11,12 +11,15 @@ import AddBatch from '@components/elements/recipe_page/Addbatch';
 import InfoComponent from '@components/elements/recipe_page/RecipeInfo';
 import Ingredient from '@components/elements/recipe_page/RecipeIngredientCard';
 import Step from '@components/elements/recipe_page/RecipeStep';
+import AuthDialog from '@components/elements/AuthDialog';
+import useAuth from 'src/common/hooks/useAuth';
 
 interface recipePageLayoutProps {
   recipe: Recipe;
 }
 
 function RecipePageLayout({ recipe }: recipePageLayoutProps) {
+  const { dialogOpen, handleAuthClick, handleAuthDialogClose } = useAuth();
   const [methodOpen, setMethodOpen] = useState(false);
 
   const info = recipe.info as Info;
@@ -24,6 +27,7 @@ function RecipePageLayout({ recipe }: recipePageLayoutProps) {
   if (recipe !== null) {
     return (
       <>
+        <AuthDialog open={dialogOpen} setOpen={handleAuthDialogClose} />
         <main className={styles.mainContainer}>
           <section className="flex flex-row items-center flex-wrap">
             <h1 className={styles.recipeTitle}>{recipe.recipeName}</h1>
@@ -112,10 +116,7 @@ function RecipePageLayout({ recipe }: recipePageLayoutProps) {
                 >
                   <AddBatch />
                   {recipe.ingredients.map((ingredient, index) => (
-                    <Ingredient
-                      key={index}
-                      ingredient={ingredient}
-                    />
+                    <Ingredient key={index} ingredient={ingredient} />
                   ))}
                 </section>
               </article>

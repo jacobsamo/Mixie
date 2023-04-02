@@ -5,13 +5,19 @@ import styles from '@styles/modules/Navbar.module.scss';
 import { BookmarkIcon } from '@heroicons/react/24/outline';
 import AlgoliaDialog from '@components/elements/algolia_search/AlgoliaDialog';
 import Link from 'next/link';
+import { auth } from '@lib/config/firebase';
+import UserProfile from '@components/elements/UserProfile';
+import useAuth from 'src/common/hooks/useAuth';
+import AuthDialog from '@components/elements/AuthDialog';
 
 const Navbar = () => {
-  const [userImage, setUserImage] = useState('/favicon.ico');
+  const { dialogOpen, handleAuthClick, handleAuthDialogClose } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  // const [dialogOpen, setDialogOpen] = useState(false);
 
   return (
     <>
+      <AuthDialog open={dialogOpen} setOpen={handleAuthDialogClose} />
       <nav className={`${isOpen ? styles.show_nav : ''} ${styles.nav}`}>
         <Link href="/" className={styles.branding}>
           <Image
@@ -65,22 +71,10 @@ const Navbar = () => {
             <span className={styles.hamburger_bar}></span>
             <span className={styles.hamburger_bar}></span>
           </button>
-          <div className={styles.comingSoon}>
-            Coming soon
-            {/* <button>
-              <BookmarkIcon className="h-8 w-8x" />
-              </button>
-              <button>
-              <Image
-              src={userImage}
-              alt="Profile Picture"
-              width={48}
-              height={48}
-              className="rounded-full relative"
-              priority
-              />{' '}
-            </button> */}
-          </div>
+          <button onClick={() => handleAuthClick(() => console.log("Bookmark clicked"))}>
+            <BookmarkIcon className="h-8 w-8x" />
+          </button>
+          <UserProfile />
         </div>
       </nav>
     </>

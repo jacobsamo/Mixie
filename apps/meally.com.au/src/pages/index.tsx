@@ -7,6 +7,8 @@ import { CardRectangle, CardRectangleSmall } from '@components/modules/Cards';
 import RecipeService from '@lib/service/RecipeService';
 import { Recipe } from 'libs/types';
 import { PageSeo } from 'ui';
+import useAuth from 'src/common/hooks/useAuth';
+import AuthDialog from '@components/elements/AuthDialog';
 
 //swiper
 import { SwiperSlide } from 'swiper/react';
@@ -19,6 +21,8 @@ interface HomeProps {
 }
 
 const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
+  const { dialogOpen, handleAuthClick, handleAuthDialogClose } = useAuth();
+
   return (
     <>
       <PageSeo
@@ -28,6 +32,7 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
         description="A directory of folder full things."
       />
       <Navbar />
+      <AuthDialog open={dialogOpen} setOpen={handleAuthDialogClose} />
       <main className="flex flex-col gap-4 w-full h-full p-2">
         <section className={styles.heroSection}>
           {/* <Image
@@ -42,8 +47,8 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
         <section className="pt-9 ">
           <SwiperTemplate>
             {latestRecipes ? (
-              latestRecipes.map((item: Recipe) => (
-                <SwiperSlide>
+              latestRecipes.map((item: Recipe, index: number) => (
+                <SwiperSlide key={index}>
                   <CardRectangle
                     title={item.recipeName}
                     id={item.id}
