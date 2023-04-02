@@ -3,7 +3,7 @@ import { auth } from '@lib/config/firebase';
 // import AuthDialog from '@components/elements/AuthDialog';
 
 function useAuth() {
-  const [open, setOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleAuthClick = (callback: Function) => {
@@ -11,7 +11,7 @@ function useAuth() {
       callback();
       setIsAuthenticated(true);
     } else {
-      setOpen(true);
+      setDialogOpen(true);
     }
   };
 
@@ -19,10 +19,10 @@ function useAuth() {
     if (auth.currentUser) {
       setIsAuthenticated(true);
     }
-    setOpen(false);
+    setDialogOpen(false);
   };
 
-  return { handleAuthClick, handleAuthDialogClose };
+  return { dialogOpen, handleAuthClick, handleAuthDialogClose };
 }
 
 export default useAuth;

@@ -7,20 +7,17 @@ import AlgoliaDialog from '@components/elements/algolia_search/AlgoliaDialog';
 import Link from 'next/link';
 import { auth } from '@lib/config/firebase';
 import UserProfile from '@components/elements/UserProfile';
-import SignInDialog from '@components/elements/AuthDialog';
+import useAuth from 'src/common/hooks/useAuth';
+import AuthDialog from '@components/elements/AuthDialog';
 
 const Navbar = () => {
+  const { dialogOpen, handleAuthClick, handleAuthDialogClose } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [dialogOpen, setDialogOpen] = useState(false);
-
-  const handleBookmarkClick = () => {
-    if (!auth.currentUser) {
-      setDialogOpen(true);
-    }
-  };
+  // const [dialogOpen, setDialogOpen] = useState(false);
 
   return (
     <>
+      <AuthDialog open={dialogOpen} setOpen={handleAuthDialogClose} />
       <nav className={`${isOpen ? styles.show_nav : ''} ${styles.nav}`}>
         <Link href="/" className={styles.branding}>
           <Image
@@ -74,9 +71,8 @@ const Navbar = () => {
             <span className={styles.hamburger_bar}></span>
             <span className={styles.hamburger_bar}></span>
           </button>
-          <button onClick={() => handleBookmarkClick()}>
+          <button onClick={() => handleAuthClick(() => console.log("Bookmark clicked"))}>
             <BookmarkIcon className="h-8 w-8x" />
-            <SignInDialog open={dialogOpen} setOpen={setDialogOpen} />
           </button>
           <UserProfile />
         </div>
