@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { Dialog } from 'ui';
-import { XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { auth } from '@lib/config/firebase';
 import type { User } from 'firebase/auth';
 import AuthService from '@lib/service/Authservice';
-import SignInDialog from './AuthDialog';
+import AuthDialog from '@components/elements/AuthDialog';
 
 const UserProfile = () => {
   const [user, setUser] = useState<User>();
   const [open, setOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const handleSignOut = () => {
     AuthService.signOutUser();
@@ -29,15 +29,30 @@ const UserProfile = () => {
 
   if (user) {
     return (
-      <button onClick={() => handleSignOut()}>
-        <Image
-          width={42}
-          height={42}
-          src={user.photoURL || 'https://unsplash.com/photos/K4mSJ7kc0As'}
-          alt="user profile picture"
-          className="rounded-full w-10 h-10"
-        />
-      </button>
+      <div className="flex flex-col gap-4">
+        <button ref={buttonRef} onClick={() => setModalOpen(!modalOpen)}>
+          <Image
+            width={42}
+            height={42}
+            src={user.photoURL || 'https://unsplash.com/photos/K4mSJ7kc0As'}
+            alt="user profile picture"
+            className="rounded-full w-10 h-10"
+          />
+        </button>
+        {modalOpen && (
+          <div className="fixed flex flex-col p-2 top-14 right-2 bg-white dark:bg-dark_grey dark:text-white text-black  items-center rounded-md shadow-md">
+            <Link href="#">Profile</Link>
+
+            <Link href="#">Bookmarks</Link>
+
+            <Link href="#">Settings</Link>
+
+            <Link href="#" onClick={handleSignOut}>
+              Logout
+            </Link>
+          </div>
+        )}
+      </div>
     );
   }
 
@@ -49,7 +64,7 @@ const UserProfile = () => {
       >
         Sign up
       </button>
-      <SignInDialog
+      <AuthDialog
         user={user}
         setUser={setUser}
         open={open}

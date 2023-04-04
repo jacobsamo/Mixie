@@ -17,7 +17,7 @@
     },
     "firestore": {
       "host": "localhost",
-      "port": 8000
+      "port": 8234
     },
     "storage": {
       "host": "localhost",
