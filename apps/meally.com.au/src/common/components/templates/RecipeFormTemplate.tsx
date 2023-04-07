@@ -19,6 +19,7 @@ import {
 } from '@components/elements/recipe_form/';
 import ImageUpload from '@components/elements/recipe_form/ImageUpload';
 import Link from 'next/link';
+import { Timestamp } from 'firebase/firestore';
 
 const RecipeFromLayout = () => {
   const [recipe, dispatch] = useReducer(
@@ -50,7 +51,7 @@ const RecipeFromLayout = () => {
     const id = recipe.recipeName.replace(/\s+/g, '-').toLowerCase();
     dispatch({ type: 'SET_ID', payload: id });
     // dispatch({ type: 'SET_CREATED_BY', payload: 'Meally' });
-    dispatch({ type: 'SET_CREATED_AT', payload: new Date() });
+    dispatch({ type: 'SET_CREATED_AT', payload: Timestamp.now() });
     dispatch({ type: 'SET_VERSION', payload: '1.0' });
     dispatch({
       type: 'SET_TOTAL',
@@ -101,7 +102,13 @@ const RecipeFromLayout = () => {
             </li>
             <li>
               If you have any improvement ideas please add them{' '}
-              <Link href={"https://forms.gle/brc7atQ6dWDEsB7H6"} target="_blank" className='text-blue underline'>here</Link>
+              <Link
+                href={'https://forms.gle/brc7atQ6dWDEsB7H6'}
+                target="_blank"
+                className="text-blue underline"
+              >
+                here
+              </Link>
             </li>
             <li></li>
           </ul>

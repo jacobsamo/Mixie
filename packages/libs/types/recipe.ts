@@ -16,7 +16,7 @@ export interface Recipe {
   mealTime: string[];
   version: string;
   createdBy: string;
-  createdAt: string;
+  createdAt: string | Timestamp;
   info: Info;
   steps: string[];
   madeRecipe: number;

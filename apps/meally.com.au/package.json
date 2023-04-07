@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "firebase-export-on-exit": "firebase emulators:start --import=./seed --export-on-exit=./seed",
+    "firebase-import": "firebase emulators:start --import=./seed",
     "dev": "next dev",
-    "dev-local": "next dev & firebase emulators:start --import=./seed --export-on-exit=./seed",
+    "build": "next build",
+    "dev-local": "yarn run dev & yarn run firebase-import",
     "lint": "next lint",
     "start": "next start",
     "test": "jest",

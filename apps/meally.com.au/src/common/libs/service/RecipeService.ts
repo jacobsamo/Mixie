@@ -49,7 +49,7 @@ class RecipeService {
 
   async getRecipesByCategory(sweet_savoury: string, limitAmount?: number) {
     const recipeRef = collection(db, 'recipes');
-
+    
     const querySnapshot = await getDocs(
       query(
         recipeRef,

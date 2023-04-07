@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { auth } from '@lib/config/firebase';
 import type { User } from 'firebase/auth';
-import AuthService from '@lib/service/Authservice';
+import AuthService from '@lib/service/AuthService';
 import AuthDialog from '@components/elements/AuthDialog';
 
 const UserProfile = () => {
@@ -14,6 +14,8 @@ const UserProfile = () => {
 
   const handleSignOut = () => {
     AuthService.signOutUser();
+    setUser(undefined);
+    setModalOpen(false);
   };
 
   useEffect(() => {
@@ -41,15 +43,20 @@ const UserProfile = () => {
         </button>
         {modalOpen && (
           <div className="fixed flex flex-col p-2 top-14 right-2 bg-white dark:bg-dark_grey dark:text-white text-black  items-center rounded-md shadow-md">
-            <Link href="#">Profile</Link>
+            <Link
+              href={`@${user.displayName
+                ?.toLowerCase()
+                .replace(' ', '')
+                .trim()}`}
+            >
+              Profile
+            </Link>
 
             <Link href="#">Bookmarks</Link>
 
             <Link href="#">Settings</Link>
 
-            <Link href="#" onClick={handleSignOut}>
-              Logout
-            </Link>
+            <button onClick={handleSignOut}>Logout</button>
           </div>
         )}
       </div>
@@ -64,12 +71,7 @@ const UserProfile = () => {
       >
         Sign up
       </button>
-      <AuthDialog
-        user={user}
-        setUser={setUser}
-        open={open}
-        setOpen={setOpen}
-      />
+      <AuthDialog user={user} setUser={setUser} open={open} setOpen={setOpen} />
     </>
   );
 };

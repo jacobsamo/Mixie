@@ -1,4 +1,4 @@
-import { auth } from '@lib/config/firebase';
+import { auth, db } from '@lib/config/firebase';
 import {
   signInWithPopup,
   signOut,
@@ -8,9 +8,38 @@ import {
   GithubAuthProvider,
   TwitterAuthProvider,
   UserCredential,
+  UserInfo,
+  User,
 } from 'firebase/auth';
+import { doc, setDoc, Timestamp } from 'firebase/firestore';
 
 class AuthService {
+  async createUserDoc(user: User) {
+    if (user) {
+      {
+        try {
+          const userDoc = {
+            uid: user.uid,
+            displayName: user.displayName,
+            userName: `@${user.displayName?.toLowerCase().replace(' ', '').trim()}`,
+            email: user.email,
+            photoURL: user.photoURL,
+            createdAt: Timestamp.now(),
+          };
+          await setDoc(doc(db, 'users', user.uid), userDoc).then((value: any) =>
+            console.log(userDoc.userName)
+          );
+          console.log('User document created successfully.');
+          return { message: 'User document created successfully', status: 200 };
+        } catch (e: any) {
+          console.error('Error creating user document: ', e);
+          return { message: e, status: 400 };
+        }
+      }
+    }
+    return null;
+  }
+
   async signInWithGoogle() {
     const credential = signInWithPopup(auth, new GoogleAuthProvider());
     return credential;

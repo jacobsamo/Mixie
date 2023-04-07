@@ -1,31 +1,55 @@
 // pages/[...slug].tsx
 
 import { useRouter } from 'next/router';
+import { User } from 'libs/types';
 import {
-    GetStaticPathsResult,
-    GetStaticPropsContext,
-    GetStaticPropsResult,
-  } from 'next';
+  GetStaticPathsResult,
+  GetStaticPropsContext,
+  GetStaticPropsResult,
+} from 'next';
+import UserService from '@lib/service/UserService';
+import Navbar from '@components/modules/Navbar';
 
-interface SlugPageProps {
-  id: string;
+interface ProfilePageProps {
+  user: User;
 }
 
-function SlugPage({ id }: SlugPageProps) {
+function ProfilePage({ user }: ProfilePageProps) {
   return (
-    <div>
-      <h1>Page for path: {id}</h1>
-      {/* your page content here */}
-    </div>
+    <>
+      <Navbar />
+      <div className="container">
+        <h1>Profile Page</h1>
+        <p>{user.userName}</p>
+      </div>
+    </>
   );
 }
 
-export default SlugPage;
+export default ProfilePage;
 
-export async function getServerSideProps(context: any) {
+export async function getStaticPaths() {
+  const users = await UserService.getAllUsers();
+
+  const paths = users.map((user) => {
+    return { params: { profile: user.userName } };
+  });
+
   return {
-    props: {
-      id: context.params.id,
-    }, // will be passed to the page component as props
+    paths,
+    fallback: 'blocking', // false or 'blocking'
+  };
+}
+
+export async function getStaticProps(context: any) {
+  const user = await UserService.getUserByUserName(context.params.profile);
+  if (!user || !Object.keys(user).length) {
+    return {
+      notFound: true,
+    };
+  }
+  return {
+    props: { user },
+    revalidate: 60 * 60 * 24,
   };
 }
