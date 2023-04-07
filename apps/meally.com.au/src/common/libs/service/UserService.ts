@@ -20,7 +20,11 @@ import { User } from 'libs/types';
 class UserService {
   async getUserByUserName(userName: string) {
     const usersCollection = collection(db, 'users');
-    const userQuery = query(usersCollection, where('userName', '==', userName), limit(1));
+    const userQuery = query(
+      usersCollection,
+      where('userName', '==', userName),
+      limit(1)
+    );
     const userQuerySnapshot = await getDocs(userQuery);
 
     if (userQuerySnapshot.empty) {
@@ -28,9 +32,9 @@ class UserService {
       return null;
     }
 
-    const userData = userQuerySnapshot.docs[0].data();
-    userData.createdAt = Timestamp.toString();
-    return userData;
+    const userData = userQuerySnapshot.docs[0].data() as User;
+    const user = { ...userData, createdAt: userData.createdAt.toDate() };
+    return JSON.parse(JSON.stringify(user));
   }
 
   async getUser(uid: string) {
@@ -38,10 +42,9 @@ class UserService {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      const data = docSnap.data() as User;
-      const createdAt = data.createdAt as string | Timestamp;
-      data.createdAt = Timestamp.toString();
-      return data;
+      const userData = docSnap.data() as User;
+      const user = { ...userData, createdAt: userData.createdAt.toDate() };
+      return JSON.parse(JSON.stringify(user));
     } else {
       return {};
     }
@@ -52,7 +55,7 @@ class UserService {
     const users: User[] = [];
     querySnapshot.forEach((user) => {
       const data = user.data() as User;
-      const createdAt = data.createdAt as string | Timestamp;
+      data.createdAt.toDate();
       users.push({ ...data });
     });
     return users;
