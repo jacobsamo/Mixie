@@ -10,7 +10,7 @@ import {
   units,
 } from '@lib/service/data';
 import styles from '@components/elements/recipe_form/Form.module.scss';
-import { InputField } from 'ui';
+import { InputField } from 'shared';
 import RecipeFrom from '@components/elements/recipe_form/logic';
 import {
   IngredientContainer,

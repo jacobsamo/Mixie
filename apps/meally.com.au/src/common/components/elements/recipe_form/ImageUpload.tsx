@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import { AddButton, InputField } from 'ui';
+// import { AddButton, InputField } from 'shared';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '@components/elements/recipe_form/Form.module.scss';

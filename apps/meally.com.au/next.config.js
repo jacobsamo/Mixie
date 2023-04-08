@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  transpilePackages: ['ui', 'libs'],
+  transpilePackages: ['shared', 'libs'],
 
   images: {
     domains: [

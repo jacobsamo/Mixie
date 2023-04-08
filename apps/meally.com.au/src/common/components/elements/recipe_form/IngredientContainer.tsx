@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AddButton, InputField } from 'ui';
+import { AddButton, InputField } from 'shared';
 import styles from './Form.module.scss';
 import { Ingredient } from './Ingredient';
 

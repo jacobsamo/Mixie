@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import InnerLabel from "./InnerLabel";
 
 /**
  * A text input field
@@ -24,8 +24,10 @@ function InputField({ ...props }) {
   }
 
   return (
-    <>
-      <label htmlFor={props.name || props.id}>{props.label}</label>
+    <div>
+      {(focused || hasInput) && (
+        <InnerLabel label={props.label} inputId={props.name || props.id} />
+      )}
       <input
         type={props.type || "text"}
         name={props.name}
@@ -34,7 +36,7 @@ function InputField({ ...props }) {
         onChange={handleChange}
         {...props}
       />
-    </>
+    </div>
   );
 }
 

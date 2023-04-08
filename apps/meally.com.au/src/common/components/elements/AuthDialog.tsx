@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { Dialog } from 'ui';
+import { Dialog } from 'shared';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { auth } from '@lib/config/firebase';

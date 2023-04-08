@@ -53,7 +53,7 @@
     "sharp": "^0.32.0",
     "storybook": "^6.5.15",
     "swiper": "^9.0.4",
-    "ui": "*",
+    "shared": "*",
     "web-vitals": "^3.0.1"
   },
   "devDependencies": {

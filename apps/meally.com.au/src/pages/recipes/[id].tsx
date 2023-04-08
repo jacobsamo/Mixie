@@ -5,7 +5,7 @@ import type { Recipe, Info } from 'libs/types';
 import RecipeService from '@lib/service/RecipeService';
 
 //components
-import { RecipeSeo } from 'ui';
+import { RecipeSeo } from 'shared';
 import Navbar from '@components/modules/Navbar';
 import RecipePageLayout from '@components/layouts/RecipePageLayout';
 import { useRouter } from 'next/router';
@@ -15,7 +15,6 @@ interface recipePageProps {
 }
 
 export default function RecipePage({ recipe }: recipePageProps) {
-
   return (
     <>
       <RecipeSeo
