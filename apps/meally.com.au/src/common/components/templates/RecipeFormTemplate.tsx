@@ -34,6 +34,7 @@ const RecipeFromLayout = () => {
       type: 'SET_' + event.target.name.toUpperCase(),
       payload: event.target.value,
     });
+    console.log('What is changed: ', event.target.value);
   }
 
   function handleImageChange(payload: any) {
@@ -120,16 +121,20 @@ const RecipeFromLayout = () => {
           value={recipe.recipeName}
           type="text"
           required
+          label="Recipe Name"
           placeholder="Recipe name"
           name="recipe_name"
+          inputId="recipe_name"
           onChange={handleChange}
         />
         <InputField
           value={recipe.info.prep}
           type="number"
           required
+          label="Prep Time in minutes"
           placeholder="Prep Time in minutes"
           name="prep"
+          inputId="prep"
           onChange={handleChange}
         />
         <InputField
@@ -137,7 +142,9 @@ const RecipeFromLayout = () => {
           type="number"
           required
           placeholder="Cook TIme in minutes"
+          label="Cook Time in minutes"
           name="cook"
+          inputId="cook"
           min="0"
           onChange={handleChange}
         />
@@ -146,7 +153,9 @@ const RecipeFromLayout = () => {
           type="number"
           required
           placeholder="Number of Serves"
+          label="Number of Serves"
           name="serves"
+          inputId="serves"
           min="0"
           onChange={handleChange}
         />
@@ -218,7 +227,9 @@ const RecipeFromLayout = () => {
           type="email"
           required
           placeholder="Email"
+          label="Email"
           name="created_by"
+          inputId="created_by"
           onChange={handleChange}
         />
 

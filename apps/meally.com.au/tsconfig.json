@@ -20,6 +20,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/common/components/modules/Navbar.tsx"
-  ],
+, "../../packages/shared/src/hooks/useOutsideClick.tsx", "../../packages/shared/src/hooks/useOutsideClick.tsx"  ],
   "exclude": ["node_modules"]
 }

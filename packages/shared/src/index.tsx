@@ -1,13 +1,12 @@
 import * as React from "react";
 
 // modules
-export * from "./modules/AdBanner";
-export * from "./modules/loader";
-export * from "./fields/InputField";
-export * from "./modules/AddButton";
-export * from "./modules/Dialog";
-
+export * from "./components/modules/AdBanner";
+export * from "./components/modules/loader";
+export * from "./components/fields/InputField";
+export * from "./components/modules/AddButton";
+export * from "./components/modules/Dialog";
 
 // seo
-export * from "./seo/PageSEO";
-export * from "./seo/RecipeSEO";
+export * from "./components/seo/PageSEO";
+export * from "./components/seo/RecipeSEO";

@@ -50,10 +50,10 @@
     "react-modal": "^3.16.1",
     "react-svg": "^16.1.7",
     "sass": "^1.57.1",
+    "shared": "*",
     "sharp": "^0.32.0",
     "storybook": "^6.5.15",
     "swiper": "^9.0.4",
-    "shared": "*",
     "web-vitals": "^3.0.1"
   },
   "devDependencies": {
