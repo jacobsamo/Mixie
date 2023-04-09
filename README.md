@@ -34,6 +34,10 @@ If you are new to the project and want to help out but don't know where to start
 
 If you have found or believe you have found any vulnerabilities than please read our [security policy](./SECURITY.md) for more information.
 
+## Licensing
+
+This project is licensed under the [GPL 3.0](./LICENSE) and all apps are licensed under [AGPL 3.0](./apps/meally.com.au/LICENSE). please for each part that you plan to copy or redistribute read the lisente for that part. if it's not clear please contact us. if the part doesn't have a license than refer to the global license.
+
 ## General idea
 
 As meally is very new most of the features below won't be implemented straight away however these will be implemented going into the future.
