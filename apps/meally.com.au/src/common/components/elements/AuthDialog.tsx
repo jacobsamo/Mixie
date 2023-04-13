@@ -16,7 +16,6 @@ interface AuthDialogProps {
 
 const AuthDialog = ({ user, setUser, open, setOpen }: AuthDialogProps) => {
   const [internalUser, setInternalUser] = useState<User | undefined>();
-  const [internalOpen, setInternalOpen] = useState(false);
 
   const handleGithubClick = async () => {
     try {

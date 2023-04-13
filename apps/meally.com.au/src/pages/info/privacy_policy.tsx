@@ -6,7 +6,6 @@ import Link from 'next/link';
 export default function Privacy_Policy() {
   return (
     <>
-      <Navbar />
       <main className={styles.main}>
         <h1>Privacy Policy</h1>
         <h2>Last updated: 4/8/23</h2>

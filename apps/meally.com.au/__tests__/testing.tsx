@@ -113,7 +113,6 @@ const Testing: NextPage = () => {
       <button
         onClick={() => {
           AuthService.signOutUser();
-          console.log(auth.currentUser);
         }}
       >
         Sign out

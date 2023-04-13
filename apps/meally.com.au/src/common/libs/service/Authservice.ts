@@ -26,10 +26,7 @@ class AuthService {
             photoURL: user.photoURL,
             createdAt: Timestamp.now(),
           };
-          await setDoc(doc(db, 'users', user.uid), userDoc).then((value: any) =>
-            console.log(userDoc.userName)
-          );
-          console.log('User document created successfully.');
+          await setDoc(doc(db, 'users', user.uid), userDoc)
           return { message: 'User document created successfully', status: 200 };
         } catch (e: any) {
           console.error('Error creating user document: ', e);

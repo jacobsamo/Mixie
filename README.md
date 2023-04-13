@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.meally.com.au/">
-    <img src="./public/icons/maskable_icons/maskable_icon_x128.png" style="border-radius: 9999px" height="128">
+    <img src="https://www.meally.com.au/favicon.ico" style="border-radius: 9999px" height="128">
     <h1 align="center">Meally</h1>
   </a>
 </p>

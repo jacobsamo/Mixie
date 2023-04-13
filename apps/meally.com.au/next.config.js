@@ -1,4 +1,11 @@
 /** @type {import('next').NextConfig} */
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  register: true,
+  disable: process.env.NODE_ENV === 'development',
+  skipWaiting: true,
+});
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
@@ -19,7 +26,7 @@ const nextConfig = {
       'pixabay.com',
       'pexels.com',
       'savee.com',
-      'dr.savee-cdn.com'
+      'dr.savee-cdn.com',
     ],
   },
   // eslint: {
@@ -29,4 +36,4 @@ const nextConfig = {
   // },
 };
 
-module.exports = nextConfig;
+module.exports = withPWA(nextConfig);

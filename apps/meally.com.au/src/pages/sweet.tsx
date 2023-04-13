@@ -25,7 +25,6 @@ const Sweet: NextPage<SweetProps> = ({ sweet }: SweetProps) => {
         imgUrl=""
         description="A directory of folder full things."
       />
-      <Navbar />
       <AuthDialog open={dialogOpen} setOpen={handleAuthDialogClose} />
       <main className="flex flex-col gap-4 w-full h-full p-2">
         <section className={styles.heroSection}>

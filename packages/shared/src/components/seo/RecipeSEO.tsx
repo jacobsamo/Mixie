@@ -47,11 +47,6 @@ function RecipeSeo({
 }: RecipeSEOProps) {
   return (
     <Head>
-      <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-      <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-      />
       <title>{recipeName}</title>
       <meta name="description" content={recipeDescription} />
       <meta property="og:title" content={recipeName} />
@@ -71,9 +66,6 @@ function RecipeSeo({
       <meta property="og:image" content={imageUrl} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <link rel="manifest" href="/manifest.json" />
-      <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-      <link rel="apple-touch-icon" href="/favicon.png" />
     </Head>
   );
 }

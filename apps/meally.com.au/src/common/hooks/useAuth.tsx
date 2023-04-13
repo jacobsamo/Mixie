@@ -6,9 +6,9 @@ function useAuth() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const handleAuthClick = (callback: Function) => {
+  const handleAuthClick = (callback?: Function) => {
     if (auth.currentUser) {
-      callback();
+      callback ? callback() : null;
       setIsAuthenticated(true);
     } else {
       setDialogOpen(true);

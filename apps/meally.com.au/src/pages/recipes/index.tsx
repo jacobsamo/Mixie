@@ -44,7 +44,6 @@ const RecipesPages: NextPage<HomeProps> = ({
         imgUrl=""
         description="recipes for the best meals"
       />
-      <Navbar />
       <AuthDialog open={dialogOpen} setOpen={handleAuthDialogClose} />
       <main className="flex flex-col justify-center items-center dark:text-white text-black">
         <section className={styles.heroSection}>

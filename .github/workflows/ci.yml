@@ -39,6 +39,7 @@ jobs:
   start:
     name: Start up Meally
     runs-on: ubuntu-latest
+    timeout-minutes: 2
     needs: build
     steps:
       - name: Check out code
@@ -56,7 +57,7 @@ jobs:
         run: yarn start
 
   test_lint:
-    name: Build
+    name: Test & Lint
     timeout-minutes: 10
     runs-on: ubuntu-latest
     needs: build

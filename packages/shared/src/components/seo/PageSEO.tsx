@@ -51,10 +51,6 @@ function PageSeo({ title, url, imgUrl, description }: PageSEOProps) {
         content="Find recipes you love all free and open source, completely powered by the community "
       />
       <meta property="twitter:image" content={imgUrl}></meta>
-
-      <link rel="manifest" href="/manifest.json" />
-      <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-      <link rel="apple-touch-icon" href="favicon.png" />
     </Head>
   );
 }

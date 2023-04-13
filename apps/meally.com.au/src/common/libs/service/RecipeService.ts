@@ -19,7 +19,6 @@ class RecipeService {
   async createRecipe(post: Recipe): Promise<Recipe | {message: string | Error, status: number}> {
     try {
       await setDoc(doc(db, 'recipes', post.id), post); 
-      console.log('Recipe saved successfully!');
       return {message: 'Recipe created successfully', status: 200};
     } catch (e: any) {
       console.error('Error saving recipe:', e);

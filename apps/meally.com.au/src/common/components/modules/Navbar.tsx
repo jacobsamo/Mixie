@@ -17,7 +17,7 @@ const Navbar = () => {
 
   return (
     <>
-      <AuthDialog open={dialogOpen} setOpen={handleAuthDialogClose} />
+      {/* <AuthDialog open={dialogOpen} setOpen={handleAuthDialogClose} /> */}
       <nav className={`${isOpen ? styles.show_nav : ''} ${styles.nav}`}>
         <Link href="/" className={styles.branding}>
           <Image
@@ -70,9 +70,6 @@ const Navbar = () => {
             <span className={styles.hamburger_bar}></span>
             <span className={styles.hamburger_bar}></span>
             <span className={styles.hamburger_bar}></span>
-          </button>
-          <button onClick={() => handleAuthClick(() => console.log("Bookmark clicked"))}>
-            <BookmarkIcon className="h-8 w-8x" />
           </button>
           <UserProfile />
         </div>

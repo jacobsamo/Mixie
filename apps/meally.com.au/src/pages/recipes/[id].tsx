@@ -26,7 +26,6 @@ export default function RecipePage({ recipe }: recipePageProps) {
         info=""
         createdAt={recipe.createdAt || ''}
       />
-      <Navbar />
       <RecipePageLayout recipe={recipe} />
     </>
   );

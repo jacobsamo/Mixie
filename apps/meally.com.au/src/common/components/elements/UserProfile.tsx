@@ -5,12 +5,14 @@ import { auth } from '@lib/config/firebase';
 import type { User } from 'firebase/auth';
 import AuthService from '@lib/service/AuthService';
 import AuthDialog from '@components/elements/AuthDialog';
+import useAuth from 'src/common/hooks/useAuth';
 
 const UserProfile = () => {
   const [user, setUser] = useState<User>();
   const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const { handleAuthClick } = useAuth();
 
   const handleSignOut = () => {
     AuthService.signOutUser();
@@ -66,12 +68,12 @@ const UserProfile = () => {
   return (
     <>
       <button
-        onClick={() => setOpen(!open)}
+        onClick={() => handleAuthClick(() => console.log('clicked'))}
         className="px-2 p-1 bg-yellow rounded-md text-black font-semibold"
       >
         Sign up
       </button>
-      <AuthDialog user={user} setUser={setUser} open={open} setOpen={setOpen} />
+      {/* <AuthDialog user={user} setUser={setUser} open={open} setOpen={setOpen} /> */}
     </>
   );
 };
