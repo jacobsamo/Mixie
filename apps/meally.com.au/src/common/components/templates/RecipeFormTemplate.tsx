@@ -34,7 +34,6 @@ const RecipeFromLayout = () => {
       type: 'SET_' + event.target.name.toUpperCase(),
       payload: event.target.value,
     });
-    console.log('What is changed: ', event.target.value);
   }
 
   function handleImageChange(payload: any) {

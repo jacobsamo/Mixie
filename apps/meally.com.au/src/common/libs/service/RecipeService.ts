@@ -1,6 +1,7 @@
 import {
   doc,
   setDoc,
+  addDoc,
   collection,
   getDocs,
   getDoc,
@@ -12,20 +13,38 @@ import {
   where,
 } from 'firebase/firestore';
 
-import type { Recipe } from 'libs/types';
-import { db } from '@lib/config/firebase';
+import type { Recipe, SimplifiedRecipe } from 'libs/types';
+import { db, auth } from '@lib/config/firebase';
 
 class RecipeService {
-  async createRecipe(post: Recipe): Promise<Recipe | {message: string | Error, status: number}> {
+  async createRecipe(
+    post: Recipe
+  ): Promise<Recipe | { message: string | Error; status: number }> {
     try {
-      await setDoc(doc(db, 'recipes', post.id), post); 
-      return {message: 'Recipe created successfully', status: 200};
+      await setDoc(doc(db, 'recipes', post.id), post);
+      await addDoc(
+        collection(db, 'users', auth.currentUser?.uid || '', 'recipes'),
+        {
+          id: post.id,
+          recipeName: post.recipeName,
+          image: post.image,
+          sweet_savoury: post.sweet_savoury,
+          dietary: post.dietary,
+          info: {
+            total: post.info.total,
+            rating: post.info.rating,
+          },
+          keywords: post.keywords,
+          createdAt: post.createdAt,
+          createdBy: post.createdBy,
+        } as SimplifiedRecipe
+      );
+      return { message: 'Recipe created successfully', status: 200 };
     } catch (e: any) {
       console.error('Error saving recipe:', e);
-      return {message: e, status: 400};
+      return { message: e, status: 400 };
     }
   }
-  
 
   async getLatestRecipes(limitAmount?: number) {
     const recipeRef = collection(db, 'recipes');
@@ -48,7 +67,7 @@ class RecipeService {
 
   async getRecipesByCategory(sweet_savoury: string, limitAmount?: number) {
     const recipeRef = collection(db, 'recipes');
-    
+
     const querySnapshot = await getDocs(
       query(
         recipeRef,
@@ -70,7 +89,6 @@ class RecipeService {
     return recipes;
   }
 
-  
   async getLatestMealTime(time: string) {
     const recipeRef = collection(db, 'recipes');
 
@@ -94,7 +112,6 @@ class RecipeService {
     });
     return recipes;
   }
-
 
   async getRecipe(id: string) {
     const docRef = doc(db, 'recipes', id);

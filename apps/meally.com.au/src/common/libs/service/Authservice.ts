@@ -2,31 +2,39 @@ import { auth, db } from '@lib/config/firebase';
 import {
   signInWithPopup,
   signOut,
-  createUserWithEmailAndPassword,
   GoogleAuthProvider,
   FacebookAuthProvider,
   GithubAuthProvider,
   TwitterAuthProvider,
-  UserCredential,
-  UserInfo,
-  User,
+  User as FirebaseUser,
 } from 'firebase/auth';
 import { doc, setDoc, Timestamp } from 'firebase/firestore';
+import { User } from 'libs/types';
 
 class AuthService {
-  async createUserDoc(user: User) {
+  async createUserDoc(user: FirebaseUser) {
     if (user) {
       {
         try {
           const userDoc = {
             uid: user.uid,
             displayName: user.displayName,
-            userName: `@${user.displayName?.toLowerCase().replace(' ', '').trim()}`,
+            userName: `@${user.displayName
+              ?.toLowerCase()
+              .replace(' ', '')
+              .trim()}`,
             email: user.email,
+            emailVerified: user.emailVerified,
+            phoneNumber: user.phoneNumber,
             photoURL: user.photoURL,
             createdAt: Timestamp.now(),
-          };
-          await setDoc(doc(db, 'users', user.uid), userDoc)
+            bio: '',
+            preferences: {},
+            settings: {},
+            socials: {},
+          } as User;
+          await setDoc(doc(db, 'users', user.uid), userDoc);
+          await localStorage.setItem('user', JSON.stringify(userDoc));
           return { message: 'User document created successfully', status: 200 };
         } catch (e: any) {
           console.error('Error creating user document: ', e);
@@ -59,12 +67,7 @@ class AuthService {
 
   async signOutUser() {
     await signOut(auth);
-  }
-  async getUserInfo() {
-    if (auth.currentUser) {
-      return auth.currentUser.photoURL;
-    }
-    return 'https://unsplash.com/photos/K4mSJ7kc0As';
+    await localStorage.removeItem('user');
   }
 }
 

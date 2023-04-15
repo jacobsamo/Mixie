@@ -1,12 +1,14 @@
-import { NextPage } from 'next/types';
 import React from 'react';
 
-const Custom404: NextPage = () => {
-  //TODO: make prettier for users
+interface Custom404Props {
+  children: React.ReactNode;
+}
 
+const Custom404 = ({ children }: Custom404Props): React.ReactElement => {
   return (
     <>
       <div className="w-full h-full flex justify-center items-center">404</div>
+      {children}
     </>
   );
 };

@@ -31,6 +31,7 @@ export interface Info {
   rating: number;
 }
 
+
 export interface ImageProps {
   imgUrl: string;
   imgAlt: string;

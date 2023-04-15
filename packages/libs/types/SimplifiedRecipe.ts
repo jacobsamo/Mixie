@@ -1,13 +1,14 @@
-import { ImageProps, Info } from "./recipe";
+import { ImageProps } from "./recipe";
+import { Timestamp } from "firebase/firestore";
 
-interface SimplifiedRecipe {
+export interface SimplifiedRecipe {
   id: string;
   image: ImageProps;
   recipeName: string;
   keywords: string[];
   dietary: string[];
   sweet_savoury: string;
-  info: Info;
+  createdBy: string;
+  createdAt: string | Timestamp;
+  info: {total: number, rating: number};
 }
-
-export type { SimplifiedRecipe };

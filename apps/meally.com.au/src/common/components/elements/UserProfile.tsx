@@ -12,7 +12,7 @@ const UserProfile = () => {
   const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const { handleAuthClick } = useAuth();
+  // const { handleAuthClick } = useAuth();
 
   const handleSignOut = () => {
     AuthService.signOutUser();
@@ -54,9 +54,9 @@ const UserProfile = () => {
               Profile
             </Link>
 
-            <Link href="#">Bookmarks</Link>
+            <Link href="/account/bookmarks">Bookmarks</Link>
 
-            <Link href="#">Settings</Link>
+            <Link href="/account/profile">Settings</Link>
 
             <button onClick={handleSignOut}>Logout</button>
           </div>
@@ -68,12 +68,12 @@ const UserProfile = () => {
   return (
     <>
       <button
-        onClick={() => handleAuthClick(() => console.log('clicked'))}
+        onClick={() => setOpen(true)}
         className="px-2 p-1 bg-yellow rounded-md text-black font-semibold"
       >
         Sign up
       </button>
-      {/* <AuthDialog user={user} setUser={setUser} open={open} setOpen={setOpen} /> */}
+      <AuthDialog user={user} setUser={setUser} open={open} setOpen={setOpen} />
     </>
   );
 };
