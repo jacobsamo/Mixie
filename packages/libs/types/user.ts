@@ -24,12 +24,18 @@ export interface UserSettings {
 }
 
 export interface UserPreferences {
-  Allergies: string[];
-  Diet: string[];
-  Intolerances: string[];
-  CookingSkill: string[];
-  GuaranteedIngredients: string[];
-  IngredientSubstitutions: IngredientSubstitutions[];
+  theme: "light" | "dark" | "system"; 
+  font: "default" | "sans-serif" | "serif" | "monospace" | "open dyslexic";
+  CookingSkill?: string[];
+  Allergies?: string[];
+  Diet?: string[]; //items a user is on a diet for e.g vegan, keto, etc
+  IngredientSubstitutions?: IngredientSubstitutions[]; // items a user wants to substitute for other items
+  loveCooking?: string[]; // items a user loves to cook e.g easy meals, desserts, etc
+  AverageCookingTime?: number; // average cooking time in minutes
+  budget?: number; // budget in dollars or an average at least 
+  Timezone?: string; // Timezone e.g America/New_York
+  measurement?: " metric" | "imperial";
+  // GuaranteedIngredients: string[];
 }
 
 interface IngredientSubstitutions {

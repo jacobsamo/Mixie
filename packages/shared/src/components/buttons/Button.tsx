@@ -33,7 +33,7 @@ export interface ButtonProps
   size?: "sm" | "md" | "lg" | null | undefined;
   class?: string;
   disabled?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const Button = ({
