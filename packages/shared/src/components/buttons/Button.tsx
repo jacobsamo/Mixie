@@ -31,7 +31,7 @@ export interface ButtonProps
   children: React.ReactNode;
   intent?: "primary" | "secondary" | null | undefined;
   size?: "sm" | "md" | "lg" | null | undefined;
-  class?: string;
+  className?: string;
   disabled?: boolean;
   onClick?: () => void;
 }
@@ -42,11 +42,13 @@ const Button = ({
   intent,
   size,
   disabled,
+  className,
   ...props
 }: ButtonProps) => {
+  const classNames = buttonStyles({ intent, size, disabled }) + (className ? ` ${className}` : '');
   return (
     <button
-      className={buttonStyles({ intent, size, disabled }) + ` ${props.class}`}
+      className={classNames}
       onClick={onClick}
       {...props}
     >

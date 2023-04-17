@@ -5,20 +5,10 @@ import { InputField } from 'shared';
 import Image from 'next/image';
 import { User } from 'libs/types';
 import Button from 'shared/src/components/buttons/Button';
+import useUser from 'src/common/hooks/useUser';
 
 const Profile = () => {
-  const [user, setUser] = useState<undefined | User>(undefined);
-
-  const getUser = async () => {
-    const user = await localStorage.readLocal('user');
-    return user;
-  };
-
-  useEffect(() => {
-    getUser().then((user) => {
-      setUser(user);
-    });
-  }, []);
+  const user = useUser();
 
   if (user) {
     return (
@@ -104,7 +94,7 @@ const Profile = () => {
             size="md"
             aria-label="Save profile changes"
             type="submit"
-            class='m-auto'
+            className="m-auto"
           >
             Save
           </Button>
