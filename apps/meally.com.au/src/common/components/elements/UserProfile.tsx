@@ -56,7 +56,7 @@ const UserProfile = () => {
 
             <Link href="/account/bookmarks">Bookmarks</Link>
 
-            <Link href="/account/profile">Settings</Link>
+            <Link href="/settings/profile">Settings</Link>
 
             <button onClick={handleSignOut}>Logout</button>
           </div>

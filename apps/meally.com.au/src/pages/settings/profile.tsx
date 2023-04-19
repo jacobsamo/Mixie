@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { User } from 'libs/types';
 import Button from 'shared/src/components/buttons/Button';
 import useUser from 'src/common/hooks/useUser';
+import NavHeader from './NavHeader';
 
 const Profile = () => {
   const user = useUser();
@@ -13,6 +14,7 @@ const Profile = () => {
   if (user) {
     return (
       <>
+        <NavHeader />
         <form className="flex flex-col items-start p-2">
           <div className="flex flex-row items-center">
             <Image
@@ -50,6 +52,7 @@ const Profile = () => {
                 ? Number(user.bio?.match(/\n/g)?.length) + 1
                 : 3
             }
+            maxLength={150}
             placeholder="Bio (optional)"
             className="resize-none w-full max-w-sm mt-2 p-2 rounded-md dark:bg-dark_grey dark:shadow-none bg-white shadow"
           />

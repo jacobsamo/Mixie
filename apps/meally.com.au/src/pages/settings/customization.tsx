@@ -8,6 +8,7 @@ import { CheckCircleIcon } from '@heroicons/react/24/outline';
 import CircleIcon from '@components/elements/CircleIcon';
 import useUser from 'src/common/hooks/useUser';
 import Button from 'shared/src/components/buttons/Button';
+import NavHeader from './NavHeader';
 
 const Customization = () => {
   const user = useUser();
@@ -21,6 +22,7 @@ const Customization = () => {
   if (user) {
     return (
       <>
+        <NavHeader />
         <form onSubmit={handleSubmit}>
           <div>
             <h1>Site Theme</h1>
