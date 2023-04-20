@@ -3,7 +3,7 @@ import InnerLabel from "./InnerLabel";
 import { useInputField } from "../../hooks/useInputField";
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  inputId: string;
+  id: string;
   name: string;
   label: string;
   placeholder?: string;
@@ -16,7 +16,7 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 function InputFieldComponent(
   {
-    inputId,
+    id,
     name,
     label,
     placeholder,
@@ -46,12 +46,12 @@ function InputFieldComponent(
       className="flex flex-col focus:outline-1 flex-1 items-start max-w-full rounded-md p-1 text-step--2 dark:bg-dark_grey bg-white shadow-buttonGithub"
     >
       {(focused || hasInput) && (
-        <InnerLabel label={label} inputId={inputId} className="text-step--3" />
+        <InnerLabel label={label} inputId={id} className="text-step--3" />
       )}
       <input
         type={type || "text"}
         name={name}
-        id={inputId}
+        id={id}
         value={value as string}
         // defaultValue={value as string}
         placeholder={focused || hasInput ? "" : placeholder}

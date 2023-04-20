@@ -7,9 +7,12 @@ import { User } from 'libs/types';
 import Button from 'shared/src/components/buttons/Button';
 import useUser from 'src/common/hooks/useUser';
 import NavHeader from './NavHeader';
+import { useForm } from 'react-hook-form';
 
 const Profile = () => {
   const user = useUser();
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data: any) => console.log(data);
 
   if (user) {
     return (
@@ -27,14 +30,14 @@ const Profile = () => {
             <div className="flex flex-col gap-2">
               <InputField
                 label="Name"
-                inputId="Name"
+                id="Name"
                 name="Name"
                 aria-label="Your name"
                 value={user.displayName}
               />
               <InputField
                 label="Username"
-                inputId="Username"
+                id="Username"
                 name="Username"
                 aria-label="Your Username"
                 value={user.userName}
@@ -61,7 +64,7 @@ const Profile = () => {
             <InputField
               label="Twitter handle"
               placeholder="Twitter handle"
-              inputId="twitter"
+              id="twitter"
               name="twitter"
               aria-label="Your Twitter handle"
               value={user.socials?.Twitter || ''}
@@ -69,7 +72,7 @@ const Profile = () => {
             <InputField
               label="Instagram handle"
               placeholder="Instagram handle"
-              inputId="instagram"
+              id="instagram"
               name="instagram"
               aria-label="Your Instagram handle"
               value={user.socials?.Instagram || ''}
@@ -77,7 +80,7 @@ const Profile = () => {
             <InputField
               label="Facebook handle"
               placeholder="Facebook handle"
-              inputId="facebook"
+              id="facebook"
               name="facebook"
               aria-label="Your Facebook handle"
               value={user.socials?.Facebook || ''}
@@ -85,7 +88,7 @@ const Profile = () => {
             <InputField
               label="Your Website"
               placeholder="Your Website"
-              inputId="website"
+              id="website"
               name="website"
               aria-label="Your Website Url"
               value={user.socials?.Website || ''}

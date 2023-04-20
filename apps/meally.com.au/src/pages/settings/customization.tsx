@@ -9,21 +9,21 @@ import CircleIcon from '@components/elements/CircleIcon';
 import useUser from 'src/common/hooks/useUser';
 import Button from 'shared/src/components/buttons/Button';
 import NavHeader from './NavHeader';
+import { useForm } from 'react-hook-form';
 
 const Customization = () => {
   const user = useUser();
+  const { register, handleSubmit } = useForm();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log('submitted: ', e.currentTarget);
-    console.log('submit');
+  const onSubmit = (data: any) => {
+    console.log('submitted form with data: ', data);
   };
 
   if (user) {
     return (
       <>
         <NavHeader />
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div>
             <h1>Site Theme</h1>
             <button>System</button>
@@ -42,7 +42,7 @@ const Customization = () => {
             <InputField
               label="Diet"
               name="diet"
-              inputId="diet"
+              id="diet"
               placeholder="Diet"
               value={user.preferences?.Diet || ''}
               // onChange={handleChange}
@@ -50,7 +50,7 @@ const Customization = () => {
             <InputField
               label="Allergens"
               name="allergens"
-              inputId="allergens"
+              id="allergens"
               placeholder="Allergens"
               value={user.preferences?.Allergies || ''}
               // onChange={handleChange}
@@ -58,7 +58,7 @@ const Customization = () => {
             <InputField
               label="Love cooking"
               name="loveCooking"
-              inputId="loveCooking"
+              id="loveCooking"
               placeholder="Love cooking"
               value={user.preferences?.loveCooking || ''}
               // onChange={handleChange}
@@ -66,7 +66,7 @@ const Customization = () => {
             <InputField
               label="Average time to cook a meal"
               name="averageTimeToCook"
-              inputId="averageTimeToCook"
+              id="averageTimeToCook"
               placeholder="Average time to cook a meal"
               value={user.preferences?.AverageCookingTime || ''}
               // onChange={handleChange}

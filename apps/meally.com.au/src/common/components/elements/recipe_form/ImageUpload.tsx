@@ -53,7 +53,7 @@ interface ImgProps {
 //         required
 //         value={imgAlt}
 //         name="imgAlt"
-//         inputId='imgAlt'
+//         id='imgAlt'
 //         label='Image Description'
 //         placeholder='Image Alt e.g. "Image of a cake"'
 //         onChange={internalChange}
@@ -103,8 +103,8 @@ const ImageUpload = (props: any) => {
           type="text"
           name="imgUrl"
           id="imgUrl"
-          inputId='imgUrl'
-          label='Image Url'
+          id="imgUrl"
+          label="Image Url"
           placeholder="Image url"
           value={imgUrl}
           onChange={(event: any) => setImgUrl(event.target.value)}
@@ -113,8 +113,8 @@ const ImageUpload = (props: any) => {
           type="text"
           name="imgAlt"
           id="imgAlt"
-          inputId='imgAlt'
-          label='Image Description'
+          id="imgAlt"
+          label="Image Description"
           placeholder="Image description"
           value={imgAlt}
           onChange={(event: any) => setImgAlt(event.target.value)}

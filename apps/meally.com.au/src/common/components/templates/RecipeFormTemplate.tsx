@@ -123,7 +123,7 @@ const RecipeFromLayout = () => {
           label="Recipe Name"
           placeholder="Recipe name"
           name="recipe_name"
-          inputId="recipe_name"
+          id="recipe_name"
           onChange={handleChange}
         />
         <InputField
@@ -133,7 +133,7 @@ const RecipeFromLayout = () => {
           label="Prep Time in minutes"
           placeholder="Prep Time in minutes"
           name="prep"
-          inputId="prep"
+          id="prep"
           onChange={handleChange}
         />
         <InputField
@@ -143,7 +143,7 @@ const RecipeFromLayout = () => {
           placeholder="Cook TIme in minutes"
           label="Cook Time in minutes"
           name="cook"
-          inputId="cook"
+          id="cook"
           min="0"
           onChange={handleChange}
         />
@@ -154,7 +154,7 @@ const RecipeFromLayout = () => {
           placeholder="Number of Serves"
           label="Number of Serves"
           name="serves"
-          inputId="serves"
+          id="serves"
           min="0"
           onChange={handleChange}
         />
@@ -228,7 +228,7 @@ const RecipeFromLayout = () => {
           placeholder="Email"
           label="Email"
           name="created_by"
-          inputId="created_by"
+          id="created_by"
           onChange={handleChange}
         />
 
