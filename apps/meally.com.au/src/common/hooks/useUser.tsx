@@ -1,8 +1,8 @@
 import localStorage from 'libs/utils/localStorage';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { User } from 'libs/types';
 
-function useUser() {
+const useUser = () => {
   const [user, setUser] = useState<undefined | User>(undefined);
 
   const getUser = async () => {
@@ -10,18 +10,21 @@ function useUser() {
     return user;
   };
 
-  const setNewUser = async (user: User) => {
+  const setNewUser = useCallback(async (user: User) => {
     await localStorage.setLocal('user', user);
     setUser(user);
-  };
+  }, []);
 
   useEffect(() => {
     getUser().then((user) => {
       setUser(user);
     });
-  }, []);
+  }, [user]);
 
-  return user;
-}
+  return {
+    user,
+    setNewUser,
+  };
+};
 
 export default useUser;

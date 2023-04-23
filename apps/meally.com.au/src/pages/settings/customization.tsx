@@ -10,72 +10,140 @@ import useUser from 'src/common/hooks/useUser';
 import Button from 'shared/src/components/buttons/Button';
 import NavHeader from './NavHeader';
 import { useForm } from 'react-hook-form';
+import UserService from '@lib/service/UserService';
 
 const Customization = () => {
-  const user = useUser();
-  const { register, handleSubmit } = useForm();
+  const { user, setNewUser } = useUser();
+  const { register, control, handleSubmit, setValue, getValues } = useForm({
+    defaultValues: {
+      theme: user?.preferences?.theme,
+      font: user?.preferences?.font,
+      diet: user?.preferences?.Diet || '',
+      allergens: user?.preferences?.Allergies || '',
+      loveCooking: user?.preferences?.loveCooking || '',
+      averageTimeToCook: user?.preferences?.AverageCookingTime || '',
+    },
+  });
 
-  const onSubmit = (data: any) => {
-    console.log('submitted form with data: ', data);
+  const themes: Theme[] = [Theme.SYSTEM, Theme.DARK, Theme.LIGHT];
+  const fonts: Font[] = [
+    Font.DEFAULT,
+    Font.OPEN_DYSLEXIC,
+    Font.MONOSPACE,
+    Font.SANS_SERIF,
+  ];
+
+  const onSubmit = async (data: any) => {
+    const updatedPreferences = Object.assign({}, user, {
+      preferences: {
+        theme: data.theme,
+        font: data.font,
+        Diet: data.diet,
+        Allergies: data.allergens,
+        loveCooking: data.loveCooking,
+        AverageCookingTime: data.averageTimeToCook,
+      },
+    });
+    if (user) {
+      await UserService.updateUser(updatedPreferences);
+      await setNewUser(updatedPreferences);
+    }
   };
 
   if (user) {
     return (
       <>
         <NavHeader />
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <h1>Site Theme</h1>
-            <button>System</button>
-            <button>Dark</button>
-            <button>Light</button>
-          </div>
-          <div>
-            <h1>Reading Font</h1>
-            <button>Default</button>
-            <button>open dyslexic</button>
-            <button>monospace</button>
-            <button>sans serif</button>
-          </div>
-          <div>
-            <h1>Cooking</h1>
-            <InputField
-              label="Diet"
-              name="diet"
-              id="diet"
-              placeholder="Diet"
-              value={user.preferences?.Diet || ''}
-              // onChange={handleChange}
-            />
-            <InputField
-              label="Allergens"
-              name="allergens"
-              id="allergens"
-              placeholder="Allergens"
-              value={user.preferences?.Allergies || ''}
-              // onChange={handleChange}
-            />
-            <InputField
-              label="Love cooking"
-              name="loveCooking"
-              id="loveCooking"
-              placeholder="Love cooking"
-              value={user.preferences?.loveCooking || ''}
-              // onChange={handleChange}
-            />
-            <InputField
-              label="Average time to cook a meal"
-              name="averageTimeToCook"
-              id="averageTimeToCook"
-              placeholder="Average time to cook a meal"
-              value={user.preferences?.AverageCookingTime || ''}
-              // onChange={handleChange}
-            />
-            <Button type="submit" intent="secondary">
-              Save
-            </Button>
-          </div>
-        </form>
+        <main className='flex justify-center'>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div>
+              <h1 className="text-step0">Theme</h1>
+              <div className="flex flex-auto flex-wrap gap-2">
+                {themes.map((theme, index) => (
+                  <label
+                    key={index}
+                    className="flex items-center gap-2 p-2 h-12 w-28 max-w-xs bg-dark_grey text-white rounded-md"
+                  >
+                    <input
+                      key={theme}
+                      type="radio"
+                      {...register('theme')}
+                      value={theme}
+                      defaultChecked={user?.preferences?.theme === theme}
+                      onChange={() => {
+                        setValue('theme', theme);
+                      }}
+                      className="w-4 h-4"
+                    />
+                    <p className="text-step--2">{theme}</p>
+                  </label>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h1 className="text-step0">Reading Font</h1>
+              <div className="flex flex-auto flex-wrap gap-2">
+                {fonts.map((font, index) => (
+                  <label
+                    key={index}
+                    className="flex items-center gap-2 p-2 h-12 w-46 max-w-xs bg-dark_grey text-white rounded-md"
+                  >
+                    <input
+                      key={font}
+                      type="radio"
+                      {...register('font')}
+                      value={font}
+                      defaultChecked={user?.preferences?.font === font}
+                      onChange={() => {
+                        setValue('font', font);
+                      }}
+                      className="w-4 h-4"
+                    />
+                    <p className="text-step--2">{font}</p>
+                  </label>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h1 className="text-step0">Cooking</h1>
+              {/* <InputField
+                label="Diet"
+                name="diet"
+                id="diet"
+                placeholder="Diet"
+                defaultValue={user?.preferences?.Diet}
+                control={control}
+              />
+              <InputField
+                label="Allergens"
+                name="allergens"
+                id="allergens"
+                placeholder="Allergens"
+                defaultValue={user?.preferences?.Allergies}
+                control={control}
+              />
+              <InputField
+                label="Love cooking"
+                name="loveCooking"
+                id="loveCooking"
+                placeholder="Love cooking"
+                defaultValue={user?.preferences?.loveCooking}
+                control={control}
+              />
+              <InputField
+                label="Average time to cook a meal"
+                name="averageTimeToCook"
+                id="averageTimeToCook"
+                placeholder="Average time to cook a meal"
+                defaultValue={user?.preferences?.AverageCookingTime}
+                control={control}
+              /> */}
+              <Button type="submit" intent="secondary">
+                Save
+              </Button>
+            </div>
+          </form>
+        </main>
       </>
     );
   }

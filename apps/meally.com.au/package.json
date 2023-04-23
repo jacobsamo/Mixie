@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "firebase-export-on-exit": "firebase emulators:start --import=./seed --export-on-exit=./seed",
     "firebase-import": "firebase emulators:start --import=./seed",
+    "firebase:start": "firebase emulators:start --import=./seed --export-on-exit=./seed",
     "dev": "next dev",
     "build": "next build",
     "postbuild": "node ./scripts/generate-sitemap.mjs",

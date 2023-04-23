@@ -4,7 +4,6 @@ import { Timestamp } from "firebase/firestore";
 export interface User {
   uid: string;
   photoURL: string;
-  createdAt: Timestamp;
   displayName: string;
   userName: string;
   bio?: string;
@@ -15,6 +14,8 @@ export interface User {
   preferences?: UserPreferences;
   settings?: UserSettings;
   socials?: UserSocials;
+  createdAt: Timestamp;
+  lastUpdated?: Date;
 }
 
 export interface UserSettings {
@@ -25,13 +26,13 @@ export interface UserSettings {
 }
 
 export enum Theme {
-  LIGHT = "light",
-  DARK = "dark",
-  SYSTEM = "system"
+  LIGHT = "Light",
+  DARK = "Dark",
+  SYSTEM = "System"
 }
 
 export enum Font {
-  DEFAULT = "default",
+  DEFAULT = "Default",
   SANS_SERIF = "sans-serif",
   SERIF = "serif",
   MONOSPACE = "monospace",
@@ -39,8 +40,8 @@ export enum Font {
 }
 
 export interface UserPreferences {
-  theme: Theme.SYSTEM; 
-  font: Font.DEFAULT;
+  theme: Theme; 
+  font: Font;
   CookingSkill?: string[];
   Allergies?: string[];
   Diet?: string[]; //items a user is on a diet for e.g vegan, keto, etc

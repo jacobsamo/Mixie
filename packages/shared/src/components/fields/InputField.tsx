@@ -1,17 +1,23 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import InnerLabel from "./InnerLabel";
-import { useInputField } from "../../hooks/useInputField";
+
+import {
+  UseFormRegister,
+  RegisterOptions,
+  Control,
+  useController,
+  Controller,
+} from "react-hook-form";
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
   name: string;
   label: string;
-  placeholder?: string;
   type?: string;
-  value: string | number | readonly string[];
-  valueChanged?: (value: string) => void;
-  maxLength?: number;
+  control: Control<any>;
   required?: boolean;
+  defaultValue?: string | number | undefined;
+  options?: RegisterOptions;
 }
 
 function InputFieldComponent(
@@ -19,50 +25,53 @@ function InputFieldComponent(
     id,
     name,
     label,
-    placeholder,
     type,
-    value,
-    valueChanged,
-    maxLength,
+    control,
     required,
+    defaultValue,
+    options,
     ...props
   }: InputFieldProps & React.InputHTMLAttributes<HTMLInputElement>,
-  ref: React.ForwardedRef<HTMLDivElement>
+  containerRef: React.ForwardedRef<HTMLDivElement>
 ): ReactElement {
-  const {
-    inputRef,
-    focused,
-    hasInput,
-    onFocus,
-    onBlur,
-    onInput,
-    focusInput,
-    setInput,
-  } = useInputField<HTMLInputElement>(value, valueChanged);
+  const [focused, setFocused] = useState(false);
+  const onFocus = () => setFocused(true);
+  const onBlur = () => setFocused(false);
 
   return (
-    <div
-      ref={ref}
-      className="flex flex-col focus:outline-1 flex-1 items-start max-w-full rounded-md p-1 text-step--2 dark:bg-dark_grey bg-white shadow-buttonGithub"
-    >
-      {(focused || hasInput) && (
-        <InnerLabel label={label} inputId={id} className="text-step--3" />
+    <Controller
+      control={control}
+      name={name}
+      defaultValue={defaultValue || ""}
+      rules={{ required: required, ...options }}
+      render={({
+        field,
+        fieldState: { invalid, isTouched, isDirty, error },
+        formState,
+      }) => (
+        <div
+          ref={containerRef}
+          className="flex flex-col focus:outline-1 flex-1 items-start max-w-full rounded-md p-1 text-step--2 dark:bg-dark_grey bg-white shadow-buttonGithub"
+        >
+          {(focused || field.value) && (
+            <InnerLabel label={label} id={id} className="text-step--3" />
+          )}
+          <input
+            type={type || "text"}
+            name={name}
+            id={id}
+            placeholder={focused || field.value ? "" : label}
+            onBlur={onBlur}
+            onFocus={onFocus}
+            value={field.value}
+            onChange={field.onChange}
+            ref={field.ref}
+            className="w-full dark:bg-dark_grey bg-white focus:outline-none"
+            {...props}
+          />
+        </div>
       )}
-      <input
-        type={type || "text"}
-        name={name}
-        id={id}
-        value={value as string}
-        // defaultValue={value as string}
-        placeholder={focused || hasInput ? "" : placeholder}
-        onInput={onInput}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        ref={inputRef}
-        className="w-full dark:bg-dark_grey bg-white"
-        {...props}
-      />
-    </div>
+    />
   );
 }
 

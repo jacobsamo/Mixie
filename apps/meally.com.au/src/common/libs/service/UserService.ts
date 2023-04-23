@@ -60,6 +60,19 @@ class UserService {
     });
     return users;
   }
+
+  async updateUser(data: any) {
+    const user = auth.currentUser;
+    if (user) {
+      try {
+        const docRef = doc(db, 'users', user?.uid);
+        await updateProfile(user, data);
+        await updateDoc(docRef, data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
 }
 
 export default new UserService();

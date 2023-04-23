@@ -9,7 +9,7 @@ import {
   User as FirebaseUser,
 } from 'firebase/auth';
 import { doc, setDoc, Timestamp } from 'firebase/firestore';
-import { User } from 'libs/types';
+import { User, Theme, Font } from 'libs/types';
 
 class AuthService {
   async createUserDoc(user: FirebaseUser) {
@@ -29,7 +29,10 @@ class AuthService {
             photoURL: user.photoURL,
             createdAt: Timestamp.now(),
             bio: '',
-            preferences: {},
+            preferences: {
+              theme: Theme.SYSTEM,
+              font: Font.DEFAULT,
+            },
             settings: {},
             socials: {},
           } as User;
