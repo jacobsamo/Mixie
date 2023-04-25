@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "firebase-import": "firebase emulators:start --import=./seed",
-    "firebase:start": "firebase emulators:start --import=./seed --export-on-exit=./seed",
+    "firebase:start": "firebase emulators:start  --import=./seed",
     "dev": "next dev",
     "build": "next build",
     "postbuild": "node ./scripts/generate-sitemap.mjs",

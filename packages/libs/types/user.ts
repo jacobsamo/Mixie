@@ -1,6 +1,5 @@
 import { Timestamp } from "firebase/firestore";
 
-
 export interface User {
   uid: string;
   photoURL: string;
@@ -28,7 +27,7 @@ export interface UserSettings {
 export enum Theme {
   LIGHT = "Light",
   DARK = "Dark",
-  SYSTEM = "System"
+  SYSTEM = "System",
 }
 
 export enum Font {
@@ -36,19 +35,36 @@ export enum Font {
   SANS_SERIF = "sans-serif",
   SERIF = "serif",
   MONOSPACE = "monospace",
-  OPEN_DYSLEXIC = "open dyslexic"
+  OPEN_DYSLEXIC = "open dyslexic",
+}
+
+export enum Diet {
+  KETO = "Keto",
+  PALEO = "Paleo",
+  GLUTEN_FREE = "Gluten-free",
+  DAIRY_FREE = "Dairy-free",
+  VEGAN = "Vegan",
+  VEGETARIAN = "Vegetarian",
+  OTHER = "Other",
+}
+
+export enum Allergies {
+  GLUTEN_FREE = "Gluten Free",
+  DAIRY_FREE = "Dairy Free",
+  NUT_FREE = "Nut Free",
+  OTHER = "Other",
 }
 
 export interface UserPreferences {
-  theme: Theme; 
+  theme: Theme;
   font: Font;
   CookingSkill?: string[];
-  Allergies?: string[];
-  Diet?: string[]; //items a user is on a diet for e.g vegan, keto, etc
+  Allergies?: Allergies[];
+  Diet?: Diet[]; //items a user is on a diet for e.g vegan, keto, etc
   IngredientSubstitutions?: IngredientSubstitutions[]; // items a user wants to substitute for other items
   loveCooking?: string[]; // items a user loves to cook e.g easy meals, desserts, etc
   AverageCookingTime?: number; // average cooking time in minutes
-  budget?: number; // budget in dollars or an average at least 
+  budget?: number; // budget in dollars or an average at least
   Timezone?: string; // Timezone e.g America/New_York
   measurement?: " metric" | "imperial";
   // GuaranteedIngredients: string[];

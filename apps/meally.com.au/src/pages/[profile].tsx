@@ -19,7 +19,7 @@ function ProfilePage({ user }: ProfilePageProps) {
   return (
     <>
       <main>
-        <div className="sm:w-full md:w-3/5 m-auto dark:bg-dark_grey dark:shadow-none shadow bg-white lg:h-80 rounded-xl mt-4 p-1">
+        <div className="sm:w-full md:w-3/5 m-auto dark:bg-dark_grey dark:shadow-none shadow-main bg-white lg:h-80 rounded-xl mt-4 p-1">
           <Image
             src={user.photoURL}
             alt={user.displayName}

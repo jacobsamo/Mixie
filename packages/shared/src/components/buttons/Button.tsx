@@ -12,7 +12,7 @@ const buttonStyles = cva(
       },
       intent: {
         primary: "bg-blue text-white hover:bg-primary-dark",
-        secondary: "bg-transparent text-white hover:bg-secondary-dark",
+        secondary: "bg-transparent dark:text-white text-black hover:bg-secondary-dark",
       },
       disabled: {
         true: "opacity-50 cursor-not-allowed",

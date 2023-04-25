@@ -66,10 +66,17 @@ class UserService {
     if (user) {
       try {
         const docRef = doc(db, 'users', user?.uid);
-        await updateProfile(user, data);
+        if (
+          user.displayName !== data.displayName ||
+          user.photoURL !== data.photoURL
+        ) {
+          await updateProfile(user, data);
+          return { message: 'Successfully updated user', status: 200 };
+        }
         await updateDoc(docRef, data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
+        return { message: `There was an error: ${error}`, status: 400 };
       }
     }
   }

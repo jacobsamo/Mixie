@@ -36,6 +36,7 @@ class AuthService {
             settings: {},
             socials: {},
           } as User;
+
           await setDoc(doc(db, 'users', user.uid), userDoc);
           await localStorage.setItem('user', JSON.stringify(userDoc));
           return { message: 'User document created successfully', status: 200 };

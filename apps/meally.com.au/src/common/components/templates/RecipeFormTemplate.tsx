@@ -126,6 +126,7 @@ const RecipeFromLayout = () => {
           id="recipe_name"
           onChange={handleChange}
         />
+        {/*TODO: Turn this into a field that is something more like: 1h 30m 20s just like Jira */}
         <InputField
           value={recipe.info.prep}
           type="number"

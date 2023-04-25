@@ -51,7 +51,7 @@ function InputFieldComponent(
       }) => (
         <div
           ref={containerRef}
-          className="flex flex-col focus:outline-1 flex-1 items-start max-w-full rounded-md p-1 text-step--2 dark:bg-dark_grey bg-white shadow-buttonGithub"
+          className="flex flex-col dark:outline dark:shadow-none dark:outline-grey dark:outline-1 focus:outline-1 shadow-main flex-1 items-start max-w-full rounded-md p-1 text-step--2 dark:bg-dark_grey bg-white"
         >
           {(focused || field.value) && (
             <InnerLabel label={label} id={id} className="text-step--3" />

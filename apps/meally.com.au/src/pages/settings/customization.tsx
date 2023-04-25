@@ -1,16 +1,12 @@
 import Custom404 from '@components/layouts/Custom404';
-import localStorage from 'libs/utils/localStorage';
-import React, { useEffect, useState } from 'react';
-import { User, Theme, Font } from 'libs/types';
-import { InputField } from 'shared';
-import Image from 'next/image';
-import { CheckCircleIcon } from '@heroicons/react/24/outline';
-import CircleIcon from '@components/elements/CircleIcon';
+import React from 'react';
+import { Theme, Font, Diet, Allergies } from 'libs/types';
 import useUser from 'src/common/hooks/useUser';
 import Button from 'shared/src/components/buttons/Button';
 import NavHeader from './NavHeader';
 import { useForm } from 'react-hook-form';
 import UserService from '@lib/service/UserService';
+import { cva } from 'class-variance-authority';
 
 const Customization = () => {
   const { user, setNewUser } = useUser();
@@ -18,8 +14,8 @@ const Customization = () => {
     defaultValues: {
       theme: user?.preferences?.theme,
       font: user?.preferences?.font,
-      diet: user?.preferences?.Diet || '',
-      allergens: user?.preferences?.Allergies || '',
+      diet: user?.preferences?.Diet || [],
+      allergens: user?.preferences?.Allergies || [],
       loveCooking: user?.preferences?.loveCooking || '',
       averageTimeToCook: user?.preferences?.AverageCookingTime || '',
     },
@@ -33,6 +29,37 @@ const Customization = () => {
     Font.SANS_SERIF,
   ];
 
+  const allergies: Allergies[] = [
+    Allergies.DAIRY_FREE,
+    Allergies.GLUTEN_FREE,
+    Allergies.NUT_FREE,
+  ];
+
+  const diet: Diet[] = [
+    Diet.GLUTEN_FREE,
+    Diet.KETO,
+    Diet.PALEO,
+    Diet.VEGAN,
+    Diet.VEGETARIAN,
+    Diet.OTHER,
+  ];
+
+  const styles = cva(
+    'flex items-center gap-2 p-2 max-w-xs dark:outline dark:outline-grey dark:outline-2 dark:bg-dark_grey dark:text-white dark:shadow-none shadow-main bg-white text-black rounded-md',
+    {
+      variants: {
+        size: {
+          sm: 'text-sm',
+          md: 'h-12 w-28 ',
+          lg: 'h-12 w-46',
+        },
+      },
+      defaultVariants: {
+        size: 'md',
+      },
+    }
+  );
+
   const onSubmit = async (data: any) => {
     const updatedPreferences = Object.assign({}, user, {
       preferences: {
@@ -45,25 +72,44 @@ const Customization = () => {
       },
     });
     if (user) {
-      await UserService.updateUser(updatedPreferences);
-      await setNewUser(updatedPreferences);
+      try {
+        await UserService.updateUser(updatedPreferences);
+        await setNewUser(updatedPreferences);
+      } catch (error) {
+        console.error(error);
+      }
     }
+  };
+
+  const handleCheckboxChange = (event: any, name: any) => {
+    const diet = event.target.value;
+    const values = getValues(name);
+
+    // If the checkbox is checked, add the item to the list.
+    if (event.target.checked) {
+      values.push(diet);
+    } else {
+      // If the checkbox is unchecked, remove the item from the list.
+      const index = values.indexOf(diet);
+      if (index > -1) {
+        values.splice(index, 1);
+      }
+    }
+
+    setValue(name, values);
   };
 
   if (user) {
     return (
       <>
         <NavHeader />
-        <main className='flex justify-center'>
+        <main className="flex flex-row mx-auto md:w-2/4 w-full mt-2 p-4 justify-center dark:bg-dark_grey  bg-white shadow-main rounded-md">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div>
-              <h1 className="text-step0">Theme</h1>
+              <h2 className="text-step0 my-2">Theme</h2>
               <div className="flex flex-auto flex-wrap gap-2">
                 {themes.map((theme, index) => (
-                  <label
-                    key={index}
-                    className="flex items-center gap-2 p-2 h-12 w-28 max-w-xs bg-dark_grey text-white rounded-md"
-                  >
+                  <label key={index} className={styles({ size: 'md' })}>
                     <input
                       key={theme}
                       type="radio"
@@ -81,13 +127,10 @@ const Customization = () => {
               </div>
             </div>
             <div>
-              <h1 className="text-step0">Reading Font</h1>
+              <h2 className="text-step0 my-2">Reading Font</h2>
               <div className="flex flex-auto flex-wrap gap-2">
                 {fonts.map((font, index) => (
-                  <label
-                    key={index}
-                    className="flex items-center gap-2 p-2 h-12 w-46 max-w-xs bg-dark_grey text-white rounded-md"
-                  >
+                  <label key={index} className={styles({ size: 'lg' })}>
                     <input
                       key={font}
                       type="radio"
@@ -105,43 +148,51 @@ const Customization = () => {
               </div>
             </div>
             <div>
-              <h1 className="text-step0">Cooking</h1>
-              {/* <InputField
-                label="Diet"
-                name="diet"
-                id="diet"
-                placeholder="Diet"
-                defaultValue={user?.preferences?.Diet}
-                control={control}
-              />
-              <InputField
-                label="Allergens"
-                name="allergens"
-                id="allergens"
-                placeholder="Allergens"
-                defaultValue={user?.preferences?.Allergies}
-                control={control}
-              />
-              <InputField
-                label="Love cooking"
-                name="loveCooking"
-                id="loveCooking"
-                placeholder="Love cooking"
-                defaultValue={user?.preferences?.loveCooking}
-                control={control}
-              />
-              <InputField
-                label="Average time to cook a meal"
-                name="averageTimeToCook"
-                id="averageTimeToCook"
-                placeholder="Average time to cook a meal"
-                defaultValue={user?.preferences?.AverageCookingTime}
-                control={control}
-              /> */}
-              <Button type="submit" intent="secondary">
-                Save
-              </Button>
+              <h2 className="text-step0 my-2">Diet</h2>
+              <div className="flex flex-auto flex-wrap gap-2">
+                {diet.map((diet, index) => (
+                  <label key={index} className={styles({ size: 'lg' })}>
+                    <input
+                      key={diet}
+                      type="checkbox"
+                      {...register('diet')}
+                      value={diet}
+                      defaultChecked={user?.preferences?.Diet?.includes(diet)}
+                      onChange={(event) => {
+                        handleCheckboxChange(event, 'diet');
+                      }}
+                      className="w-4 h-4"
+                    />
+                    <p className="text-step--2">{diet}</p>
+                  </label>
+                ))}
+              </div>
+              {/*TODO: Create a component that can handle tags do this once recipe page tags have been handled */}
+              <h2 className="text-step0 my-2">Allergies</h2>
+              <div className="flex flex-auto flex-wrap gap-2">
+                {allergies.map((allergies, index) => (
+                  <label key={index} className={styles({ size: 'lg' })}>
+                    <input
+                      key={allergies}
+                      type="checkbox"
+                      {...register('allergens')}
+                      value={allergies}
+                      defaultChecked={user?.preferences?.Allergies?.includes(
+                        allergies
+                      )}
+                      onChange={(event) => {
+                        handleCheckboxChange(event, 'allergens');
+                      }}
+                      className="w-4 h-4"
+                    />
+                    <p className="text-step--2">{allergies}</p>
+                  </label>
+                ))}
+              </div>
             </div>
+            <Button type="submit" intent="secondary" className="m-auto mt-12">
+              Save
+            </Button>
           </form>
         </main>
       </>

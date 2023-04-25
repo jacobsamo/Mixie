@@ -1,14 +1,12 @@
 import Custom404 from '@components/layouts/Custom404';
-import localStorage from 'libs/utils/localStorage';
 import UserService from '@lib/service/UserService';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { InputField } from 'shared';
 import Image from 'next/image';
 import Button from 'shared/src/components/buttons/Button';
 import useUser from 'src/common/hooks/useUser';
 import NavHeader from './NavHeader';
 import { useForm } from 'react-hook-form';
-import { User } from 'libs/types';
 
 const Profile = () => {
   const { user, setNewUser } = useUser();
@@ -45,7 +43,7 @@ const Profile = () => {
     return (
       <>
         <NavHeader />
-        <main className="flex justify-center">
+        <main className="flex flex-row mx-auto md:w-2/4 w-full mt-2 md:p-4 justify-center gap-4 dark:bg-dark_grey  bg-white shadow-main rounded-md">
           <form
             className="flex flex-col items-start p-2"
             onSubmit={handleSubmit(onSubmit)}
@@ -86,7 +84,7 @@ const Profile = () => {
                   : 3
               }
               placeholder="Bio (optional)"
-              className="resize-none w-full max-w-sm mt-2 p-2 rounded-md dark:bg-dark_grey dark:shadow-none bg-white shadow"
+              className="resize-none w-full max-w-sm mt-2 p-2 rounded-md dark:outline dark:outline-grey dark:outline-2 dark:bg-dark_grey dark:shadow-none bg-white shadow-main"
             />
             <div className="flex flex-col gap-2">
               <h1 className="text-step--1">Profile Social</h1>
@@ -124,7 +122,7 @@ const Profile = () => {
               size="md"
               aria-label="Save profile changes"
               type="submit"
-              className="m-auto"
+              className="m-auto mt-12"
             >
               Save
             </Button>
