@@ -62,8 +62,9 @@ Before requesting a PR please make sure you have the following:
 
 1. Made Tests for what you have added (if applicable)
 2. Run `yarn dev`
-3. run `yarn build`
-4. Fix any issues, bugs or errors in the build step
-5. run `yarn start` go through your change and test for every case there could be and fix any issues
+3. Run `yarn upgrade-interactive`
+4. run `yarn build`
+5. Fix any issues, bugs or errors in the build step
+6. run `yarn start` go through your change and test for every case there could be and fix any issues
 
 If you have learnt anything new on the project please add to [what you have learnt](./about_the_project/things_learnt/) by create a file with your name and adding what you have learnt. e.g: `John_doe.md` or `John.d.md`

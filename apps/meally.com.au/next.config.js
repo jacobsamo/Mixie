@@ -11,8 +11,6 @@ const nextConfig = {
   swcMinify: true,
   transpilePackages: ['shared', 'libs'],
 
-  
-
   images: {
     domains: [
       'img.taste.com.au',

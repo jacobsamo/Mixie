@@ -8,11 +8,15 @@
   Before submitting a Pull Request, please ensure you've done the following:
   - 📖 Read the Meally Contributing Guide: https://github.com/Eirfire/Meally/blob/master/CONTRIBUTING.md.
   - 📖 Read the Meally Code of Conduct: https://github.com/open-sauced/open-sauced/blob/HEAD/CODE_OF_CONDUCT.md.
-  - 👷‍♀️ Create small PRs. In most cases, this will be possible. If not please my it detailed.
+  - 👷‍♀️ Create small PRs. In most cases, this will be possible. If not please make it detailed.
   - ✅ Provide tests for your changes.
   - 📝 Use descriptive commit messages.
   - 📗 Update any related documentation and include any relevant screenshots.
--->
+-->\
+
+## First have you done these steps?
+- [ ] Run `yarn upgrade-interactive` to upgrade all packages
+- [ ] Run a `yarn build` and fixed any bugs or errors found in this process 
 
 ## What type of PR is this? (check all applicable)
 
@@ -56,6 +60,7 @@ https://docs.github.com/en/free-pro-team@latest/github/managing-your-work-on-git
 ## Added to documentation?
 
 - [ ] 📜 README.md
+- [ ] Contributing.md
 - [ ] 🙅 no documentation needed
 
 ## [optional] Are there any post-deployment tasks we need to perform?

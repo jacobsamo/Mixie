@@ -1,5 +1,17 @@
 # Changelogs
 
+## 39-user-profile
+===
+start-date: 
+end-date: 26/4/23
+target-completion-date: 28/4/23
+===
+- Users can now edit their profile
+- Changed forms to use react hook form
+- Add new pull-request template
+- updated services for new features
+- updated shared components to work with react hook form
+And many more updates
 ## 28-project-cleanup
 ===
 start-date:
