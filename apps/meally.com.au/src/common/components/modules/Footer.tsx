@@ -5,7 +5,7 @@ import Image from 'next/image';
 const Footer = () => {
   return (
     <>
-      <footer className="flex md:flex-row flex-col justify-between items-center w-full h-28 dark:bg-dark_grey bg-white px-4 absolute bottom-0">
+      <footer className="flex md:flex-row flex-col justify-between items-center w-full h-28 dark:bg-dark_grey bg-white px-4">
         <div className="flex flex-row gap-1 items-center justify-center">
           <Image src="/favicon.ico" alt="Meally Logo" width={60} height={60} />
           <h1 className="text-step1">Meally</h1>

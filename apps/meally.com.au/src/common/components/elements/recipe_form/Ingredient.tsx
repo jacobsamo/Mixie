@@ -1,7 +1,7 @@
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { index } from 'mathjs';
 import { useEffect, useState } from 'react';
-import { AddButton, InputField } from 'ui';
+import { AddButton, InputField } from 'shared';
 import styles from './Form.module.scss';
 import { units } from '@lib/service/data';
 

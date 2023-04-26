@@ -10,7 +10,7 @@ import {
   units,
 } from '@lib/service/data';
 import styles from '@components/elements/recipe_form/Form.module.scss';
-import { InputField } from 'ui';
+import { InputField } from 'shared';
 import RecipeFrom from '@components/elements/recipe_form/logic';
 import {
   IngredientContainer,
@@ -19,6 +19,7 @@ import {
 } from '@components/elements/recipe_form/';
 import ImageUpload from '@components/elements/recipe_form/ImageUpload';
 import Link from 'next/link';
+import { Timestamp } from 'firebase/firestore';
 
 const RecipeFromLayout = () => {
   const [recipe, dispatch] = useReducer(
@@ -50,7 +51,7 @@ const RecipeFromLayout = () => {
     const id = recipe.recipeName.replace(/\s+/g, '-').toLowerCase();
     dispatch({ type: 'SET_ID', payload: id });
     // dispatch({ type: 'SET_CREATED_BY', payload: 'Meally' });
-    dispatch({ type: 'SET_CREATED_AT', payload: new Date() });
+    dispatch({ type: 'SET_CREATED_AT', payload: Timestamp.now() });
     dispatch({ type: 'SET_VERSION', payload: '1.0' });
     dispatch({
       type: 'SET_TOTAL',
@@ -101,7 +102,13 @@ const RecipeFromLayout = () => {
             </li>
             <li>
               If you have any improvement ideas please add them{' '}
-              <Link href={"https://forms.gle/brc7atQ6dWDEsB7H6"} target="_blank" className='text-blue underline'>here</Link>
+              <Link
+                href={'https://forms.gle/brc7atQ6dWDEsB7H6'}
+                target="_blank"
+                className="text-blue underline"
+              >
+                here
+              </Link>
             </li>
             <li></li>
           </ul>
@@ -113,16 +120,21 @@ const RecipeFromLayout = () => {
           value={recipe.recipeName}
           type="text"
           required
+          label="Recipe Name"
           placeholder="Recipe name"
           name="recipe_name"
+          id="recipe_name"
           onChange={handleChange}
         />
+        {/*TODO: Turn this into a field that is something more like: 1h 30m 20s just like Jira */}
         <InputField
           value={recipe.info.prep}
           type="number"
           required
+          label="Prep Time in minutes"
           placeholder="Prep Time in minutes"
           name="prep"
+          id="prep"
           onChange={handleChange}
         />
         <InputField
@@ -130,7 +142,9 @@ const RecipeFromLayout = () => {
           type="number"
           required
           placeholder="Cook TIme in minutes"
+          label="Cook Time in minutes"
           name="cook"
+          id="cook"
           min="0"
           onChange={handleChange}
         />
@@ -139,7 +153,9 @@ const RecipeFromLayout = () => {
           type="number"
           required
           placeholder="Number of Serves"
+          label="Number of Serves"
           name="serves"
+          id="serves"
           min="0"
           onChange={handleChange}
         />
@@ -211,7 +227,9 @@ const RecipeFromLayout = () => {
           type="email"
           required
           placeholder="Email"
+          label="Email"
           name="created_by"
+          id="created_by"
           onChange={handleChange}
         />
 

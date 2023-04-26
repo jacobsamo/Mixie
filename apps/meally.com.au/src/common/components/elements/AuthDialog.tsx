@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { Dialog } from 'ui';
+import { Dialog } from 'shared';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { auth } from '@lib/config/firebase';
-import type { User } from 'firebase/auth';
-import AuthService from '@lib/service/Authservice';
+import type { User, UserCredential } from 'firebase/auth';
+import AuthService from '@lib/service/AuthService';
 
 interface AuthDialogProps {
   user?: User | undefined;
@@ -17,17 +17,60 @@ interface AuthDialogProps {
 const AuthDialog = ({ user, setUser, open, setOpen }: AuthDialogProps) => {
   const [internalUser, setInternalUser] = useState<User | undefined>();
 
-  const handleGithubClick = () => {
-    AuthService.signInWithGithub();
+  const handleGithubClick = async () => {
+    try {
+      const result = await AuthService.signInWithGithub().then(
+        (result: UserCredential) => {
+          AuthService.createUserDoc(result.user);
+          setUser ? setUser(result.user) : setInternalUser(result.user);
+        }
+      );
+      setOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
-  const handleGoogleClick = () => {
-    AuthService.signInWithGoogle();
+
+  const handleGoogleClick = async () => {
+    try {
+      const result = await AuthService.signInWithGoogle().then(
+        (result: UserCredential) => {
+          AuthService.createUserDoc(result.user);
+          setUser ? setUser(result.user) : setInternalUser(result.user);
+        }
+      );
+      setOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
-  const handleFacebookClick = () => {
-    AuthService.signInWithFacebook();
+
+  const handleFacebookClick = async () => {
+    try {
+      const result = await AuthService.signInWithFacebook().then(
+        (result: UserCredential) => {
+          AuthService.createUserDoc(result.user);
+          setUser ? setUser(result.user) : setInternalUser(result.user);
+        }
+      );
+      setOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
-  const handleTwitterClick = () => {
-    AuthService.signInWithTwitter();
+
+  const handleTwitterClick = async () => {
+    try {
+      const result = await AuthService.signInWithTwitter().then(
+        (result: UserCredential) => {
+          AuthService.createUserDoc(result.user);
+          setUser ? setUser(result.user) : setInternalUser(result.user);
+        }
+      );
+      setOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {

@@ -35,28 +35,31 @@ jobs:
 
       - name: Run Build
         run: yarn build
+        
+  # NOTE: Note needed anymore due to Vercel doing this build faster than github actions so not needed
+  #
+  # start:
+  #   name: Start up Meally
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 2
+  #   needs: build
+  #   steps:
+  #     - name: Check out code
+  #       uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 2
 
-  start:
-    name: Start up Meally
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 2
+  #     - name: Setup Node.js environment
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16
+  #         cache: "yarn"
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: "yarn"
-
-      - name: Start Meally
-        run: yarn start
+  #     - name: Start Meally
+  #       run: yarn start
 
   test_lint:
-    name: Build
+    name: Test & Lint
     timeout-minutes: 10
     runs-on: ubuntu-latest
     needs: build

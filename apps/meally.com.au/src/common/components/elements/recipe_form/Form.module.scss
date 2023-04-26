@@ -5,17 +5,17 @@
   margin-left: 15%;
 }
 
-.recipeForm input {
-  width: 18.75rem;
-  height: 2.5rem;
-  border-radius: 5px;
-  padding: 0.5rem;
-  font-size: var(--step--1);
-}
+// .recipeForm input {
+//   width: 18.75rem;
+//   height: 2.5rem;
+//   border-radius: 5px;
+//   padding: 0.5rem;
+//   font-size: var(--step--1);
+// }
 
-.recipeForm input:focus {
-  @apply border-black dark:border-white;
-}
+// .recipeForm input:focus {
+//   @apply border-black dark:border-white;
+// }
 
 .fileInput {
   @apply flex justify-center items-center;
@@ -74,13 +74,13 @@
 .ingredient {
   @apply flex flex-row items-center py-1 gap-1 flex-grow;
 }
-.ingredient input {
-  width: 7rem;
-  height: 2rem;
-  // border-radius: 0.5rem;
-  padding: 0.25rem;
-  font-size: var(--step--2);
-}
+// .ingredient input {
+//   width: 7rem;
+//   height: 2rem;
+//   // border-radius: 0.5rem;
+//   padding: 0.25rem;
+//   font-size: var(--step--2);
+// }
 
 .ingredient select {
   width: fit-content;
@@ -199,16 +199,15 @@
 }
 
 @media screen and (max-width: 600px) {
-  .recipeForm input {
-    width: 100%;
-    
-  }
+  // .recipeForm input {
+  //   width: 100%;
+
+  // }
   .recipeForm {
     @apply flex flex-col gap-1;
     width: 100%;
     margin-right: 0;
     margin-left: 0;
-  
   }
 
   .IngredientMethodContainer {

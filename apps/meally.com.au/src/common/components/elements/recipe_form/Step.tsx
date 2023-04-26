@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { TrashIcon } from '@heroicons/react/24/outline';
-import { AddButton } from 'ui';
+import { AddButton } from 'shared';
 import styles from './Form.module.scss';
 
 interface StepProps {

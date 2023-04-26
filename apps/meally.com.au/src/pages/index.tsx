@@ -6,7 +6,7 @@ import AlgoliaDialog from '@components/elements/algolia_search/AlgoliaDialog';
 import { CardRectangle, CardRectangleSmall } from '@components/modules/Cards';
 import RecipeService from '@lib/service/RecipeService';
 import { Recipe } from 'libs/types';
-import { PageSeo } from 'ui';
+import { PageSeo } from 'shared';
 import useAuth from 'src/common/hooks/useAuth';
 import AuthDialog from '@components/elements/AuthDialog';
 
@@ -31,7 +31,6 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
         imgUrl=""
         description="A directory of folder full things."
       />
-      <Navbar />
       <AuthDialog open={dialogOpen} setOpen={handleAuthDialogClose} />
       <main className="flex flex-col gap-4 w-full h-full p-2">
         <section className={styles.heroSection}>

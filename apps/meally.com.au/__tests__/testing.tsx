@@ -2,7 +2,7 @@ import { NextPage } from 'next/types';
 import React, { useState, useEffect } from 'react';
 import RecipeService from '@lib/service/RecipeService';
 import { auth } from '@lib/config/firebase';
-import AuthService from '@lib/service/Authservice';
+import AuthService from '@lib/service/AuthService';
 import type { Recipe } from 'libs/types';
 import { HeartIcon } from '@heroicons/react/24/outline';
 
@@ -113,7 +113,6 @@ const Testing: NextPage = () => {
       <button
         onClick={() => {
           AuthService.signOutUser();
-          console.log(auth.currentUser);
         }}
       >
         Sign out

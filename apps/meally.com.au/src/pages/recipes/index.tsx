@@ -3,7 +3,7 @@ import React from 'react';
 import styles from '@styles/modules/Home.module.scss';
 import RecipeService from '@lib/service/RecipeService';
 import { Recipe } from 'libs/types/';
-import { PageSeo } from 'ui';
+import { PageSeo } from 'shared';
 import Navbar from '@components/modules/Navbar';
 import Link from 'next/link';
 import AlgoliaDialog from '@components/elements/algolia_search/AlgoliaDialog';
@@ -44,7 +44,6 @@ const RecipesPages: NextPage<HomeProps> = ({
         imgUrl=""
         description="recipes for the best meals"
       />
-      <Navbar />
       <AuthDialog open={dialogOpen} setOpen={handleAuthDialogClose} />
       <main className="flex flex-col justify-center items-center dark:text-white text-black">
         <section className={styles.heroSection}>

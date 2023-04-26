@@ -6,7 +6,7 @@ import AlgoliaDialog from '@components/elements/algolia_search/AlgoliaDialog';
 import { CardSquare } from '@components/modules/Cards';
 import RecipeService from '@lib/service/RecipeService';
 import { Recipe } from 'libs/types';
-import { PageSeo } from 'ui';
+import { PageSeo } from 'shared';
 import { NextPage } from 'next';
 import useAuth from 'src/common/hooks/useAuth';
 import AuthDialog from '@components/elements/AuthDialog';
@@ -25,7 +25,6 @@ const Savoury: NextPage<SavouryProps> = ({ savoury }: SavouryProps) => {
         imgUrl=""
         description="A directory of folder full things."
       />
-      <Navbar />
       <AuthDialog open={dialogOpen} setOpen={handleAuthDialogClose} />
       <main className="flex flex-col gap-4 w-full h-full p-2">
         <section className={styles.heroSection}>

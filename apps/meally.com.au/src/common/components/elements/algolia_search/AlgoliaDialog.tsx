@@ -8,7 +8,7 @@ import {
   Hits,
   Configure,
 } from 'react-instantsearch-hooks-web';
-import useOutsideClick from 'src/common/hooks/useOutsideClick';
+import useOutsideClick from 'shared/src/hooks/useOutsideClick';
 import Hit from './Hit';
 
 interface AlgoliaDialogProps {

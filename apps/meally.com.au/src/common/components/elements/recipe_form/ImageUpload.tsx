@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-// import { AddButton, InputField } from 'ui';
+// import { AddButton, InputField } from 'shared';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '@components/elements/recipe_form/Form.module.scss';
 import ImageWebsites from './ImageWebsites';
+import { InputField } from 'shared';
 
 interface ImgProps {
   imgUrl: string;
@@ -16,49 +17,51 @@ interface ImgProps {
 //   setDialogOpen: (state: boolean) => void;
 // }
 
-const ImageUploadForm = (props: any) => {
-  const [img, setImg] = useState<ImgProps[]>([]);
-  const [imgUrl, setImgUrl] = useState('');
-  const [imgAlt, setImgAlt] = useState('');
+// const ImageUploadForm = (props: any) => {
+//   const [img, setImg] = useState<ImgProps[]>([]);
+//   const [imgUrl, setImgUrl] = useState('');
+//   const [imgAlt, setImgAlt] = useState('');
 
-  function internalChange(event: any) {
-    if (event.target.name == 'imgUrl') setImgUrl(event.target.value);
-    if (event.target.name == 'imgAlt') setImgAlt(event.target.value);
-  }
+//   function internalChange(event: any) {
+//     if (event.target.name == 'imgUrl') setImgUrl(event.target.value);
+//     if (event.target.name == 'imgAlt') setImgAlt(event.target.value);
+//   }
 
-  function handleSave() {
-    setImg([{ imgUrl, imgAlt }]);
-  }
+//   function handleSave() {
+//     setImg([{ imgUrl, imgAlt }]);
+//   }
 
-  useEffect(() => {
-    props.handleChange(img);
-  }, [img]);
+//   useEffect(() => {
+//     props.handleChange(img);
+//   }, [img]);
 
-  return (
-    <form
-      onSubmit={handleSave}
-      className="flex flex-col gap-2 bg-dark_grey p-20 rounded-md justify-center items-center w-full h-full"
-    >
-      <input
-        type="text"
-        required
-        value={imgUrl}
-        name="imgUrl"
-        placeholder='Image URL e.g. "https://www.example.com/image.jpg"'
-        onChange={internalChange}
-      />
-      <input
-        type="text"
-        required
-        value={imgAlt}
-        name="imgAlt"
-        placeholder='Image Alt e.g. "Image of a cake"'
-        onChange={internalChange}
-      />
-      <button type="submit">Save</button>
-    </form>
-  );
-};
+//   return (
+//     <form
+//       onSubmit={handleSave}
+//       className="flex flex-col gap-2 bg-dark_grey p-20 rounded-md justify-center items-center w-full h-full"
+//     >
+//       <InputField
+//         type="text"
+//         required
+//         value={imgUrl}
+//         name="imgUrl"
+//         placeholder='Image URL e.g. "https://www.example.com/image.jpg"'
+//         onChange={internalChange}
+//       />
+//       <InputField
+//         type="text"
+//         required
+//         value={imgAlt}
+//         name="imgAlt"
+//         id='imgAlt'
+//         label='Image Description'
+//         placeholder='Image Alt e.g. "Image of a cake"'
+//         onChange={internalChange}
+//       />
+//       <button type="submit">Save</button>
+//     </form>
+//   );
+// };
 
 const ImageUpload = (props: any) => {
   const [img, setImg] = useState<ImgProps[]>([]);
@@ -96,18 +99,22 @@ const ImageUpload = (props: any) => {
           </Link>
         </label>
         <ImageWebsites />
-        <input
+        <InputField
           type="text"
           name="imgUrl"
           id="imgUrl"
+          id="imgUrl"
+          label="Image Url"
           placeholder="Image url"
           value={imgUrl}
           onChange={(event: any) => setImgUrl(event.target.value)}
         />
-        <input
+        <InputField
           type="text"
           name="imgAlt"
           id="imgAlt"
+          id="imgAlt"
+          label="Image Description"
           placeholder="Image description"
           value={imgAlt}
           onChange={(event: any) => setImgAlt(event.target.value)}

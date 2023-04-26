@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Dialog } from 'ui';
+import { Dialog } from 'shared';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 const ImageWebsites = () => {
