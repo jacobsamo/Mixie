@@ -1,22 +1,30 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { TrashIcon } from '@heroicons/react/24/outline';
-import { AddButton } from 'shared';
+import { AddButton, TextArea } from 'shared';
 import styles from './Form.module.scss';
+import { Control } from 'react-hook-form';
 
 interface StepProps {
   index: number;
   value: string;
+  control: Control<any>;
   handleChange: (index: number, event: any) => void;
   handleDelete: (index: number) => void;
 }
 
-const Step = ({ index, value, handleChange, handleDelete }: StepProps) => {
+const Step = ({
+  index,
+  value,
+  control,
+  handleChange,
+  handleDelete,
+}: StepProps) => {
   const [bodyValue, setBodyValue] = useState('');
 
-  function internalChange(event: any) {
-    setBodyValue(event.target.value);
-    handleChange(index, event.target.value);
-  }
+  // function internalChange(event: any) {
+  //   setBodyValue(event.target.value);
+  //   handleChange(index, event.target.value);
+  // }
 
   return (
     <section
@@ -25,14 +33,12 @@ const Step = ({ index, value, handleChange, handleDelete }: StepProps) => {
     >
       <h1 className="font-medium font-Roboto text-step0">Step {index + 1}</h1>
       <label>
-        <textarea
-          name="step_body"
+        <TextArea
+          value={value}
           id="step_body"
-          onChange={internalChange}
-          value={value || bodyValue}
-          rows={/\n/.test(value) ? Number(value.match(/\n/g)?.length) + 1 : 3}
-          placeholder="Step body"
-          className="resize-none w-80 mt-2 p-2 rounded-md border border-gray-300 dark:border-dark_grey focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+          label="Step body"
+          name="step_body"
+          control={control}
         />
       </label>
       <button

@@ -16,7 +16,9 @@ export interface Recipe {
   mealTime: string[];
   version: string;
   createdBy: string;
-  createdAt: string | Timestamp;
+  createdAt: Timestamp;
+  lastUpdated: Timestamp;
+  lastUpdatedBy: string;
   info: Info;
   steps: string[];
   madeRecipe: number;
@@ -24,9 +26,9 @@ export interface Recipe {
 }
 
 export interface Info {
-  total: number;
-  prep: number;
-  cook: number;
+  total: string;
+  prep: string;
+  cook: string;
   serves: number;
   rating: number;
 }
@@ -36,3 +38,8 @@ export interface ImageProps {
   imgUrl: string;
   imgAlt: string;
 }
+
+
+
+
+

@@ -1,7 +1,8 @@
 'use client';
-import { Recipe, Info } from 'libs/types';
-import Image from 'next/image';
 import React, { useEffect, useReducer, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+import { Recipe } from 'libs/types';
 import localStorageService from 'libs/utils/localStorage';
 import RecipeService from '@lib/service/RecipeService';
 import {
@@ -22,68 +23,63 @@ import Link from 'next/link';
 import { Timestamp } from 'firebase/firestore';
 
 const RecipeFromLayout = () => {
-  const [recipe, dispatch] = useReducer(
-    RecipeFrom.recipeReducer,
-    initialRecipeState
-  );
-  const [steps, setSteps] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
+  const [recipe, setRecipe] = useState<Recipe>({
+    id: '',
+    image: {
+      imgUrl: '',
+      imgAlt: '',
+    },
+    recipeName: '',
+    recipeDescription: '',
+    keywords: [],
+    ingredients: [],
+    dietary: [],
+    Allergens: [],
+    sweet_savoury: '',
+    mealTime: [],
+    version: '',
+    createdBy: '',
+    createdAt: Timestamp.now(),
+    lastUpdated: Timestamp.now(),
+    lastUpdatedBy: '',
+    info: {
+      total: '',
+      prep: '',
+      cook: '',
+      serves: 0,
+      rating: 0,
+    },
+    steps: [],
+    madeRecipe: 0,
+    savedRecipe: 0,
+  });
+  const router = useRouter();
 
-  function handleChange(event: any) {
-    dispatch({
-      type: 'SET_' + event.target.name.toUpperCase(),
-      payload: event.target.value,
-    });
-  }
-
-  function handleImageChange(payload: any) {
-    const imgUrl = payload[0]?.imgUrl;
-    const imgAlt = payload[0]?.imgAlt;
-    dispatch({ type: 'SET_IMAGE_URL', payload: imgUrl });
-    dispatch({ type: 'SET_IMAGE_ALT', payload: imgAlt });
-  }
-
-  const handleArrayChange = (name: string, payload: string[]) => {
-    dispatch({ type: 'SET_' + name.toUpperCase(), payload: payload });
+  const getRecipe = async () => {
+    const query = router.query.recipe;
+    const recipe = await localStorageService.readLocal('recipe');
+    if (recipe) {
+      setRecipe(recipe);
+    }
   };
 
-  async function setAdditionalInformation() {
-    const id = recipe.recipeName.replace(/\s+/g, '-').toLowerCase();
-    dispatch({ type: 'SET_ID', payload: id });
-    // dispatch({ type: 'SET_CREATED_BY', payload: 'Meally' });
-    dispatch({ type: 'SET_CREATED_AT', payload: Timestamp.now() });
-    dispatch({ type: 'SET_VERSION', payload: '1.0' });
-    dispatch({
-      type: 'SET_TOTAL',
-      payload: parseInt(recipe.info.prep) + parseInt(recipe.info.cook),
-    });
-  }
-
-  async function handleSubmit(event: any) {
-    event.preventDefault();
-    await RecipeService.createRecipe(recipe).then((res: any) => {
-      if (res.status === 200) {
-        console.log('recipe has been created: ', res.data);
-        localStorageService.removeKey(`recipe-${recipe.id}`);
-      }
-    });
-    console.log('recipe has been sent to server: ', recipe);
-  }
+  const { register, control, handleSubmit, getValues } = useForm({
+    defaultValues: {
+      ...recipe,
+    },
+  });
 
   useEffect(() => {
-    if (recipe.id !== '') {
-      localStorageService.setLocal(`recipe-${recipe.id}`, recipe);
-    }
-  }, [recipe]);
+    getRecipe();
+  }, []);
 
-  useEffect(() => {
-    if (recipe.recipeName !== '') {
-      setAdditionalInformation();
-    }
-  }, [recipe.recipeName, recipe.info.prep, recipe.info.cook]);
+  const onsubmit = async (data: any) => {
+    console.log('Recipe has been created: ', data);
+    // const recipeId = await RecipeService.createRecipe(recipe);
+  };
 
   return (
-    <>
+    <main>
       <div className="flex w-full p-3">
         <div className="flex flex-col justify-center items-center">
           <h1>Recipe Creation Form</h1>
@@ -115,57 +111,52 @@ const RecipeFromLayout = () => {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className={styles.recipeForm}>
+      <form onSubmit={handleSubmit(onsubmit)} className={styles.recipeForm}>
         <InputField
-          value={recipe.recipeName}
-          type="text"
-          required
+          id="recipeName"
+          name="recipeName"
           label="Recipe Name"
-          placeholder="Recipe name"
-          name="recipe_name"
-          id="recipe_name"
-          onChange={handleChange}
+          type="text"
+          required={true}
+          control={control}
+          defaultValue={recipe.recipeName}
         />
         {/*TODO: Turn this into a field that is something more like: 1h 30m 20s just like Jira */}
         <InputField
-          value={recipe.info.prep}
-          type="number"
-          required
-          label="Prep Time in minutes"
-          placeholder="Prep Time in minutes"
-          name="prep"
           id="prep"
-          onChange={handleChange}
-        />
-        <InputField
-          value={recipe.info.cook}
+          name="prep"
+          label="Prep Time in minutes"
           type="number"
           required
-          placeholder="Cook TIme in minutes"
-          label="Cook Time in minutes"
-          name="cook"
+          control={control}
+          defaultValue={recipe.info.prep}
+        />
+        <InputField
           id="cook"
-          min="0"
-          onChange={handleChange}
-        />
-        <InputField
-          value={recipe.info.serves}
+          name="cook"
+          label="Cook Time in minutes"
           type="number"
           required
-          placeholder="Number of Serves"
-          label="Number of Serves"
-          name="serves"
+          options={{ min: 0 }}
+          control={control}
+          defaultValue={recipe.info.cook}
+        />
+        <InputField
           id="serves"
-          min="0"
-          onChange={handleChange}
+          name="serves"
+          label="Number of serves"
+          type="number"
+          required
+          options={{ min: 0 }}
+          control={control}
+          defaultValue={recipe.info.cook}
         />
         <label className="flex flex-col">
           Dietary requirements
           <select
-            name="dietary"
             id="dietary"
             value={recipe.dietary}
-            onChange={handleChange}
+            {...register('dietary', { required: true })}
           >
             {dietaryRequirements.map((dietaryRequirement, index) => (
               <option value={dietaryRequirement} key={index}>
@@ -181,10 +172,9 @@ const RecipeFromLayout = () => {
           placeholder="E.g gluten, dairy, nuts"
         />
         <select
-          name="sweet_savoury"
           id="sweet_savoury"
           value={recipe.sweet_savoury}
-          onChange={handleChange}
+          {...register('sweet_savoury', { required: true })}
         >
           <option value="sweet">sweet</option>
           <option value="savoury">savoury</option>
@@ -196,8 +186,7 @@ const RecipeFromLayout = () => {
           value={recipe.recipeDescription}
           required
           placeholder="Recipe Description"
-          name="recipe_description"
-          onChange={handleChange}
+          {...register('recipeDescription', { required: true })}
           rows={
             /\n/.test(recipe.recipeDescription)
               ? Number(recipe.recipeDescription.match(/\n/g)?.length) + 1
@@ -206,10 +195,9 @@ const RecipeFromLayout = () => {
           className="resize-none w-80 mt-2 p-2 rounded-md border border-gray-300 dark:border-dark_grey focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
         />
         <select
-          name="meal_time"
           id="meal_time"
-          value={recipe.meal_time}
-          onChange={handleChange}
+          value={recipe.mealTime}
+          {...register('mealTime', { required: true })}
         >
           <option value="breakfast">breakfast</option>
           <option value="lunch">lunch</option>
@@ -222,25 +210,14 @@ const RecipeFromLayout = () => {
           notes="Keywords will be used to help users find your recipe."
           onTagsChange={handleArrayChange}
         />
-        <InputField
-          value={recipe.created_by}
-          type="email"
-          required
-          placeholder="Email"
-          label="Email"
-          name="created_by"
-          id="created_by"
-          onChange={handleChange}
-        />
-
         <span className="w-full h-[0.125rem] my-2 mb-4 dark:bg-white bg-dark_grey rounded-md "></span>
 
         <div className={styles.IngredientMethodContainer}>
           <IngredientContainer
-            handleArrayChange={handleArrayChange}
+            control={control}
             name="ingredients"
           />
-          <StepContainer handleArrayChange={handleArrayChange} name="steps" />
+          <StepContainer control={control}/>
         </div>
 
         <button
@@ -250,7 +227,7 @@ const RecipeFromLayout = () => {
           Submit
         </button>
       </form>
-    </>
+    </main>
   );
 };
 

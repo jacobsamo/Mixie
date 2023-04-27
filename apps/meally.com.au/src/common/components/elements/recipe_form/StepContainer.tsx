@@ -2,42 +2,34 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { AddButton } from 'shared';
 import { Step } from './Step';
 import styles from './Form.module.scss';
+import { Control, useFieldArray, useForm } from 'react-hook-form';
 
-const StepContainer = (props: any) => {
-  const [stepArray, setStepArray] = useState<string[]>(['']);
+interface StepContainerProps {
+  control: Control<any>;
+}
 
-  function handleAddClick() {
-    setStepArray([...stepArray, '']);
-  }
+const StepContainer = ({ control }: StepContainerProps) => {
+  const { register } = useForm();
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+    {
+      control,
+      name: 'steps',
+    }
+  );
 
-  function handleChange(index: number, event: any): void {
-    setStepArray((prev) => {
-      const newArray = [...prev];
-      newArray[index] = event;
-      return newArray;
-    });
-  }
-
-  function handleDelete(index: number) {
-    setStepArray(stepArray.filter((_, i) => i !== index));
-  }
-
-  useEffect(() => {
-    props.handleArrayChange(props.name, stepArray);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stepArray]);
+  function handleDelete() {}
 
   return (
     <article className={styles.method_container}>
       <div className={styles.step_container}>
-        {stepArray.map((value, index) => {
+        {fields.map((field, index) => {
           return (
             <Step
               index={index}
-              value={value}
-              handleChange={handleChange}
+              value={`steps.${index}.step_body`}
               handleDelete={handleDelete}
-              key={index}
+              key={field.id}
+              control={control}
             />
           );
         })}
