@@ -9,7 +9,8 @@ import {
   Controller,
 } from "react-hook-form";
 
-interface InputFieldProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface InputFieldProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   id: string;
   name: string;
   label: string;
@@ -18,6 +19,7 @@ interface InputFieldProps extends React.TextareaHTMLAttributes<HTMLTextAreaEleme
   required?: boolean;
   defaultValue?: string | number | undefined;
   options?: RegisterOptions;
+  className?: string;
 }
 
 function TextAreaComponent(
@@ -30,6 +32,7 @@ function TextAreaComponent(
     required,
     defaultValue,
     options,
+    className,
     ...props
   }: InputFieldProps & React.TextareaHTMLAttributes<HTMLTextAreaElement>,
   containerRef: React.ForwardedRef<HTMLDivElement>
@@ -44,14 +47,10 @@ function TextAreaComponent(
       name={name}
       defaultValue={defaultValue || ""}
       rules={{ required: required, ...options }}
-      render={({
-        field,
-        fieldState: { invalid, isTouched, isDirty, error },
-        formState,
-      }) => (
+      render={({ field }) => (
         <div
           ref={containerRef}
-          className="flex flex-col dark:outline dark:shadow-none dark:outline-grey dark:outline-1 focus:outline-1 shadow-main flex-1 items-start max-w-full rounded-md p-1 text-step--2 dark:bg-dark_grey bg-white"
+          className={`flex flex-col w-full dark:outline dark:shadow-none dark:outline-grey dark:outline-1 focus:outline-1 shadow-main flex-1 items-start max-w-full rounded-md p-1 text-step--2 dark:bg-dark_grey bg-white ${className}`}
         >
           {(focused || field.value) && (
             <InnerLabel label={label} id={id} className="text-step--3" />
@@ -59,10 +58,10 @@ function TextAreaComponent(
           <textarea
             id={id}
             name={name}
-            placeholder={focused || field.value ? "" : label}
+            placeholder={label}
             // onBlur={onBlur}
             // onFocus={onFocus}
-            // onChange={field.onChange}
+            onChange={field.onChange}
             value={field.value}
             ref={field.ref}
             rows={
@@ -70,7 +69,7 @@ function TextAreaComponent(
                 ? Number(field.value?.match(/\n/g)?.length) + 1
                 : 3
             }
-            className="resize-none w-full max-w-sm mt-2 p-2 rounded-md dark:outline dark:outline-grey dark:outline-2 dark:bg-dark_grey dark:shadow-none bg-white shadow-main"
+            className="resize-none w-full rounded-md bg-white dark:bg-dark_grey"
             {...props}
           />
         </div>

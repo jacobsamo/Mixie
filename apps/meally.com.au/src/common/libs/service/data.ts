@@ -1,11 +1,12 @@
 // file full of all data for the app like the initial state of the recipe, dietary requirements, etc.
-import { Timestamp } from "firebase/firestore";
+import { Timestamp } from 'firebase/firestore';
 export const dietaryRequirements = [
-  '',
-  'Vegetarian',
-  'Gluten Free',
-  'Vegan',
-  'Dairy Free',
+  { value: 'None', label: 'None' },
+  { value: 'Vegetarian', label: 'Vegetarian' },
+  { value: 'Vegan', label: 'Vegan' },
+  { value: 'Gluten Free', label: 'Gluten Free' },
+  { value: 'Dairy Free', label: 'Dairy Free' },
+  { value: 'Nut Free', label: 'Nut Free' },
 ];
 
 export const initialRecipeState = {

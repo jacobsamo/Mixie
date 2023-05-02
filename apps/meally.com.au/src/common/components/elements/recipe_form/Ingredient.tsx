@@ -1,67 +1,49 @@
 import { TrashIcon } from '@heroicons/react/24/outline';
-import { index } from 'mathjs';
 import { useEffect, useState } from 'react';
-import { AddButton, InputField } from 'shared';
 import styles from './Form.module.scss';
 import { units } from '@lib/service/data';
-
-/* 
-====================================
-          Interfaces
-====================================
-*/
+import {
+  Control,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormGetValues,
+  UseFormWatch,
+  FieldValues,
+} from 'react-hook-form';
+import { Ingredient, Recipe } from 'libs/types';
 
 interface IngredientProps {
   index: number;
-  value: string;
-  handleChange: (index: number, event: any) => void;
+  values: Ingredient;
+  register: UseFormRegister<Recipe>;
+  watch: UseFormWatch<Recipe>;
+  getValues: UseFormGetValues<Recipe>;
   handleDelete: (index: number) => void;
 }
 
 const Ingredient = ({
   index,
-  value,
-  handleChange,
+  values,
+  register,
+  watch,
+  getValues,
   handleDelete,
 }: IngredientProps) => {
-  const [ingredientArray, setIngredientArray] = useState<string>('');
-  const [ingredientItem, setIngredientItem] = useState<string>('');
-  const [unit, setUnit] = useState<string>('gram');
-  const [amount, setAmount] = useState<string>('');
-  const [cupSelect, setCupSelect] = useState<string>('');
-
-  useEffect(() => {
-    handleChange(index, `${ingredientItem} | ${amount} ${cupSelect} | ${unit}`);
-    setIngredientArray(`${ingredientItem} | ${amount} ${cupSelect} | ${unit}`);
-  }, [ingredientItem, amount, cupSelect, unit]);
-
-  useEffect(() => {
-    if (value) {
-      const parts = value.split('|').map((part) => part.trim());
-      setIngredientArray(value);
-      setIngredientItem(parts[0] || '');
-      setAmount(parts[1]?.split(' ')[0] || '');
-      setCupSelect(parts[1]?.split(' ')[1] || '');
-      setUnit(parts[2] || '');
-    }
-  }, [value]);
+  const activeUnit = getValues(`ingredients.${index}.unit`);
 
   return (
     <section key={index} className={styles.ingredient}>
       <input
-        value={ingredientItem}
+        {...register(`ingredients.${index}.ingredient`)}
         type="text"
-        required
         placeholder="ingredient"
-        name="ingredient"
-        onChange={(event: any) => setIngredientItem(event.target.value)}
+        defaultValue={getValues(`ingredients.${index}.ingredient`)}
+        className="w-50 h-10 rounded-md p-2 text-step--3"
       />
       <select
-        name="unit"
-        id="unit"
-        className=""
-        value={unit}
-        onChange={(event: any) => setUnit(event.target.value)}
+        id={`ingredients.${index}.unit`}
+        defaultValue={getValues(`ingredients.${index}.unit`)}
+        {...register(`ingredients.${index}.unit`)}
       >
         {units.map((unit, index) => {
           return (
@@ -73,26 +55,32 @@ const Ingredient = ({
       </select>
       <input
         type="number"
-        placeholder="Amount"
-        min={0}
-        value={amount}
-        onChange={(event: any) => setAmount(event.target.value)}
+        placeholder="quantity"
+        defaultValue={values.quantity}
+        {...register(`ingredients.${index}.quantity`, { min: 0 })}
+        className="w-20 h-10 rounded-md p-2 text-step--4"
       />
-      {['cup', 'tbsp', 'tsp'].includes(unit || value.split('|')[2]?.trim()) && (
+      {['cup', 'tbsp', 'tsp'].includes(watch(`ingredients.${index}.unit`)) ? (
         <>
           <select
-            name="select_measure"
-            id="select_measure"
-            value={value.split('|')[1]?.trim().split(' ')[1] || cupSelect}
-            onChange={(event: any) => setCupSelect(event.target.value)}
+            id="measurement"
+            defaultValue={values.measurement}
+            {...register(`ingredients.${index}.measurement`)}
+            // value={value.split('|')[1]?.trim().split(' ')[1] || cupSelect}
+            // onChange={(event: any) => setCupSelect(event.target.value)}
           >
             <option value=""></option>
-            <option value="1/4">1/4 {unit}</option>
-            <option value="1/2">1/3 {unit}</option>
-            <option value="3/4">3/4 {unit}</option>
+            <option value="1/2">1/2 {}</option>
+            <option value="1/2">1/3 {activeUnit}</option>
+            <option value="1/2">2/3 {activeUnit}</option>
+            <option value="1/4">1/4 {activeUnit}</option>
+            <option value="3/4">3/4 {activeUnit}</option>
           </select>
         </>
+      ) : (
+        <></>
       )}
+
       <button onClick={() => handleDelete(index)} type="button">
         <TrashIcon className="h-6 w-6" />
       </button>

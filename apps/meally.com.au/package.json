@@ -54,6 +54,7 @@
     "react-hook-form": "^7.43.9",
     "react-instantsearch-hooks-web": "^6.38.1",
     "react-modal": "^3.16.1",
+    "react-select": "^5.7.2",
     "react-svg": "^16.1.7",
     "sass": "^1.57.1",
     "shared": "*",

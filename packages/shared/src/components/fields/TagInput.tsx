@@ -8,11 +8,10 @@ import React, {
 import InnerLabel from "./InnerLabel";
 
 import {
-  UseFormRegister,
   RegisterOptions,
   Control,
-  useController,
-  Controller,
+  useForm,
+  useFieldArray,
 } from "react-hook-form";
 
 interface TagInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -39,45 +38,26 @@ const TagInput = ({
   options,
   ...props
 }: TagInputProps) => {
-  const { register } = useForm();
+  const { register, getValues, setValue } = useForm();
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
       control,
-      name: "steps",
+      name: name  ,
     }
   );
   const [focused, setFocused] = useState(false);
   const onFocus = () => setFocused(true);
   const onBlur = () => setFocused(false);
-  //   const [textareaValue, setTextareaValue] = useState("");
-  //   const [tags, setTags] = useState<string[]>([]);
-
-  //   const handleKeyDown = useCallback(
-  //     (e: any) => {
-  //       if (e.key === "," || e.key === "Enter") {
-  //         e.preventDefault();
-  //         setTags([...tags, textareaValue]);
-  //         setTextareaValue("");
-  //       }
-  //     },
-  //     [textareaValue, tags]
-  //   );
-
-  //   useEffect(() => {
-  //     props.onTagsChange(props.name, tags);
-  //   }, [tags]);
-
-  const [textareaValue, setTextareaValue] = useState("");
 
   const handleKeyDown = useCallback(
     (e: any) => {
       if (e.key === "," || e.key === "Enter") {
         e.preventDefault();
-        append(textareaValue);
-        setTextareaValue("");
+        append({ value: e.target.value });
+        setValue(name, "");
       }
     },
-    [append, textareaValue]
+    [append, name, setValue]
   );
 
   const handleRemove = useCallback(
@@ -88,15 +68,15 @@ const TagInput = ({
   );
 
   return (
-    <div className="flex flex-col gap-1 h-fit w-auto">
-      {(focused || fields.value) && (
+    <div className="flex flex-col gap-1 h-fit w-auto ">
+      {(focused || getValues(name)) && (
         <InnerLabel label={label} id={id} className="text-step--3" />
       )}
       <div className="flex flex-row flex-wrap gap-1 w-72">
         {fields.map((field: any, index: any) => (
           <span
             key={index}
-            className="flex justify-center items-center w-fit h-6 p-2 rounded-lg text-step--2 gap-1 dark:text-white text-black dark:bg-grey bg-white"
+            className="flex justify-center items-center w-fit h-6 p-2 rounded-lg text-step--2 gap-1 dark:text-white dark:bg-dark_grey text-black bg-white "
           >
             {field.value}
             <button onClick={() => handleRemove(index)} type="button">
@@ -107,11 +87,11 @@ const TagInput = ({
       </div>
       <input
         {...register(name, options)}
-        onChange={(e) => setTextareaValue(e.target.value)}
         onKeyDown={handleKeyDown}
         onBlur={onBlur}
         onFocus={onFocus}
-        className="w-72 h-12 rounded-md text-step--1 resize-none"
+        placeholder={focused || getValues(name) ? "" : label}
+        className="w-72 h-12 rounded-md text-step--2 resize-none dark:bg-dark_grey dark:shadow-none shadow-main dark:text-white text-black bg-white"
         {...props}
       />
       {hint ? <p className="text-[0.78rem] font-thin italic">{hint}</p> : false}
@@ -120,18 +100,3 @@ const TagInput = ({
 };
 
 export { TagInput };
-function useFieldArray(arg0: { control: Control<any>; name: string }): {
-  fields: any;
-  append: any;
-  prepend: any;
-  remove: any;
-  swap: any;
-  move: any;
-  insert: any;
-} {
-  throw new Error("Function not implemented.");
-}
-
-function useForm(): { register: any } {
-  throw new Error("Function not implemented.");
-}

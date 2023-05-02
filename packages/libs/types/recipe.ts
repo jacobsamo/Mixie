@@ -8,19 +8,19 @@ export interface Recipe {
   image: ImageProps;
   recipeName: string;
   recipeDescription: string;
+  info: Info;
+  ingredients: Ingredient[];
+  steps: Step[];
   keywords: string[];
-  ingredients: string[];
-  dietary: string[];
-  Allergens: string[];
+  dietary: { value: string; label: string }[];
+  allergens: { value: string; label: string }[];
   sweet_savoury: string;
   mealTime: string[];
   version: string;
-  createdBy: string;
+  createdBy: UserInfo;
   createdAt: Timestamp;
   lastUpdated: Timestamp;
   lastUpdatedBy: string;
-  info: Info;
-  steps: string[];
   madeRecipe: number;
   savedRecipe: number;
 }
@@ -29,17 +29,29 @@ export interface Info {
   total: string;
   prep: string;
   cook: string;
-  serves: number;
+  serves: number | undefined;
   rating: number;
 }
 
+export interface Step {
+  step_body: string;
+}
+
+export interface Ingredient {
+  ingredient: string;
+  unit: string;
+  quantity: number | undefined;
+  measurement?: string;
+}
 
 export interface ImageProps {
   imgUrl: string;
   imgAlt: string;
 }
 
-
-
-
-
+export interface UserInfo {
+  uid: string;
+  email?: string;
+  phoneNumber?: string;
+  displayName: string;
+}

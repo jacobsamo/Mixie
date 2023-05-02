@@ -13,6 +13,7 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
   name: string;
   label: string;
+  hint?: string;
   type?: string;
   control: Control<any>;
   required?: boolean;
@@ -25,6 +26,7 @@ function InputFieldComponent(
     id,
     name,
     label,
+    hint,
     type,
     control,
     required,
@@ -69,6 +71,13 @@ function InputFieldComponent(
             className="w-full dark:bg-dark_grey bg-white focus:outline-none"
             {...props}
           />
+          {hint ? (
+            <p className="text-[0.78rem] font-thin italic">{hint}</p>
+          ) : (
+            false
+          )}
+
+          
         </div>
       )}
     />

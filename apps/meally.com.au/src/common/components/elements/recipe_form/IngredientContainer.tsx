@@ -1,31 +1,40 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { AddButton, InputField } from 'shared';
 import styles from './Form.module.scss';
 import { Ingredient } from './Ingredient';
+import { Control, useFieldArray, useFormContext } from 'react-hook-form';
+import { Recipe } from 'libs/types';
 
-const IngredientContainer = (props: any) => {
-  const [ingredientArray, setIngredientArray] = useState<string[]>(['']);
+interface IngredientContainerProps {
+  control: Control<Recipe>;
+}
 
-  function handleAddClick() {
-    setIngredientArray([...ingredientArray, '']);
-  }
+const IngredientContainer = () => {
+  const { setValue, getValues, register, control, watch } = useFormContext<Recipe>();
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+    {
+      control,
+      name: 'ingredients',
+    }
+  );
 
-  function handleChange(index: number, event: any): void {
-    setIngredientArray((prev) => {
-      const newArray = [...prev];
-      newArray[index] = event;
-      return newArray;
-    });
-  }
+  const handleChange = useCallback(
+    (index: number, value: any) => {
+      setValue(`ingredients.${index}`, value);
+    },
+    [setValue]
+  );
 
-  function handleDelete(index: number) {
-    const newArray = ingredientArray.filter((_, i) => i !== index);
-    setIngredientArray(newArray);
-  }
+  const handleDelete = useCallback(
+    (index: number) => {
+      remove(index);
+    },
+    [remove]
+  );
 
-  useEffect(() => {
-    props.handleArrayChange(props.name, ingredientArray);
-  }, [ingredientArray]);
+  const handleAddClick = useCallback(() => {
+    append({ ingredient: '', unit: 'gram', quantity: undefined });
+  }, [append]);
 
   return (
     <>
@@ -33,17 +42,27 @@ const IngredientContainer = (props: any) => {
         <section
           className={`${styles.recipeIngredients} flex flex-col w-[12.5rem] gap-3`}
         >
-          {ingredientArray.map((value, index) => {
+          {fields.map((field, index) => {
             return (
               <Ingredient
                 index={index}
-                value={value}
-                handleChange={handleChange}
+                values={{
+                  ingredient: field.ingredient,
+                  unit: field.unit,
+                  quantity: field.quantity,
+                  measurement: field.measurement,
+                }}
+                watch={watch}
+                register={register}
+                getValues={getValues}
                 handleDelete={handleDelete}
-                key={index}
+                key={field.id}
               />
             );
           })}
+          <button type="button" onClick={() => console.log(getValues())}>
+            Get values
+          </button>
           <AddButton
             type="button"
             name="Ingredient"

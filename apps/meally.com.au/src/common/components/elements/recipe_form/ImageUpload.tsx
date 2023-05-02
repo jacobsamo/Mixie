@@ -5,6 +5,8 @@ import Link from 'next/link';
 import styles from '@components/elements/recipe_form/Form.module.scss';
 import ImageWebsites from './ImageWebsites';
 import { InputField } from 'shared';
+import { Control, UseFormRegister, useFormContext } from 'react-hook-form';
+import { Recipe } from 'libs/types';
 
 interface ImgProps {
   imgUrl: string;
@@ -63,23 +65,8 @@ interface ImgProps {
 //   );
 // };
 
-const ImageUpload = (props: any) => {
-  const [img, setImg] = useState<ImgProps[]>([]);
-  const [imgUrl, setImgUrl] = useState('');
-  const [imgAlt, setImgAlt] = useState('');
-
-  function internalChange(event: any) {
-    if (event.target.name == 'imgUrl') setImgUrl(event.target.value);
-    if (event.target.name == 'imgAlt') setImgAlt(event.target.value);
-  }
-
-  useEffect(() => {
-    setImg([{ imgUrl, imgAlt }]);
-  }, [imgUrl, imgAlt]);
-
-  useEffect(() => {
-    props.handleChange(img);
-  }, [img]);
+const ImageUpload = () => {
+  const { register, control } = useFormContext<Recipe>();
 
   return (
     <div className={styles.fileInput}>
@@ -101,23 +88,17 @@ const ImageUpload = (props: any) => {
         <ImageWebsites />
         <InputField
           type="text"
-          name="imgUrl"
+          name="image.imgUrl"
           id="imgUrl"
-          id="imgUrl"
+          control={control}
           label="Image Url"
-          placeholder="Image url"
-          value={imgUrl}
-          onChange={(event: any) => setImgUrl(event.target.value)}
         />
         <InputField
           type="text"
-          name="imgAlt"
-          id="imgAlt"
+          name="image.imgAlt"
           id="imgAlt"
           label="Image Description"
-          placeholder="Image description"
-          value={imgAlt}
-          onChange={(event: any) => setImgAlt(event.target.value)}
+          control={control}
         />
       </div>
     </div>
