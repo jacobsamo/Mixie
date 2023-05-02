@@ -5,7 +5,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { Recipe } from 'libs/types';
 import localStorageService from 'libs/utils/localStorage';
 import RecipeService from '@lib/service/RecipeService';
-import { dietaryRequirements } from '@lib/service/data';
+import { dietaryRequirements, sweet_savoury } from '@lib/service/data';
 import styles from '@components/elements/recipe_form/Form.module.scss';
 import { InputField, TagInput, TextArea } from 'shared';
 import {
@@ -13,10 +13,13 @@ import {
   StepContainer,
   SelectComponent,
 } from '@components/elements/recipe_form/';
+import { meal_times } from '@lib/service/data';
 import ImageUpload from '@components/elements/recipe_form/ImageUpload';
 import { auth } from '@lib/config/firebase';
 import Link from 'next/link';
 import { Timestamp } from 'firebase/firestore';
+import { Slide } from '@mui/material';
+import Button from 'shared/src/components/buttons/Button';
 
 const RecipeFromLayout = () => {
   const [recipe, setRecipe] = useState<Recipe>({
@@ -95,7 +98,7 @@ const RecipeFromLayout = () => {
   };
 
   return (
-    <main>
+    <main className='pb-20'>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onsubmit)} className={styles.recipeForm}>
           <InputField
@@ -172,27 +175,18 @@ const RecipeFromLayout = () => {
             hint="Allergens (separated by a comma)"
             control={control}
           />
-          <select
-            id="sweet_savoury"
-            defaultValue={recipe.sweet_savoury}
-            {...register('sweet_savoury', { required: true })}
-          >
-            <option value="sweet">sweet</option>
-            <option value="savoury">savoury</option>
-            <option value="both">both sweet and savoury</option>
-          </select>
-
+          <SelectComponent 
+            name="sweet_savoury"
+            label="Sweet or Savoury"
+            options={sweet_savoury}
+            fieldOptions={{ required: true }}
+          />
           <ImageUpload />
-          <select
-            id="meal_time"
-            defaultValue={recipe.mealTime}
-            {...register('mealTime', { required: true })}
-          >
-            <option value="breakfast">breakfast</option>
-            <option value="lunch">lunch</option>
-            <option value="dinner">dinner</option>
-            <option value="snack">snack</option>
-          </select>
+          <SelectComponent
+            name="mealTime"
+            label="Meal Time"
+            options={meal_times}
+          />
           <TagInput
             id="keywords"
             name="keywords"
@@ -206,13 +200,12 @@ const RecipeFromLayout = () => {
             <IngredientContainer />
             <StepContainer />
           </div>
-
-          <button
+          <Button
             type="submit"
             className="text-step--1 mt-14 mb-3 border rounded-lg"
           >
             Submit
-          </button>
+          </Button>
         </form>
       </FormProvider>
     </main>

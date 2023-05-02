@@ -1,47 +1,34 @@
 import { TrashIcon } from '@heroicons/react/24/outline';
-import { useEffect, useState } from 'react';
 import styles from './Form.module.scss';
 import { units } from '@lib/service/data';
-import {
-  Control,
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormGetValues,
-  UseFormWatch,
-  FieldValues,
-} from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { Ingredient, Recipe } from 'libs/types';
 
 interface IngredientProps {
   index: number;
   values: Ingredient;
-  register: UseFormRegister<Recipe>;
-  watch: UseFormWatch<Recipe>;
-  getValues: UseFormGetValues<Recipe>;
   handleDelete: (index: number) => void;
 }
 
-const Ingredient = ({
-  index,
-  values,
-  register,
-  watch,
-  getValues,
-  handleDelete,
-}: IngredientProps) => {
+const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
+  const { register, getValues, watch } = useFormContext<Recipe>();
   const activeUnit = getValues(`ingredients.${index}.unit`);
 
   return (
-    <section key={index} className={styles.ingredient}>
+    <section
+      key={index}
+      className={`${styles.ingredient} dark:bg-dark_grey dark:shadow-none shadow-main dark:text-white text-black bg-white rounded-md`}
+    >
       <input
         {...register(`ingredients.${index}.ingredient`)}
         type="text"
         placeholder="ingredient"
         defaultValue={getValues(`ingredients.${index}.ingredient`)}
-        className="w-50 h-10 rounded-md p-2 text-step--3"
+        className="w-50 h-10 rounded-md p-2 text-step--3 dark:outline-none outline outline-1"
       />
       <select
         id={`ingredients.${index}.unit`}
+        className="dark:outline-none outline outline-1"
         defaultValue={getValues(`ingredients.${index}.unit`)}
         {...register(`ingredients.${index}.unit`)}
       >
@@ -58,13 +45,14 @@ const Ingredient = ({
         placeholder="quantity"
         defaultValue={values.quantity}
         {...register(`ingredients.${index}.quantity`, { min: 0 })}
-        className="w-20 h-10 rounded-md p-2 text-step--4"
+        className="w-20 h-10 rounded-md p-2 text-step--4 dark:outline-none outline outline-1"
       />
       {['cup', 'tbsp', 'tsp'].includes(watch(`ingredients.${index}.unit`)) ? (
         <>
           <select
             id="measurement"
             defaultValue={values.measurement}
+            className="dark:outline-none outline outline-1"
             {...register(`ingredients.${index}.measurement`)}
             // value={value.split('|')[1]?.trim().split(' ')[1] || cupSelect}
             // onChange={(event: any) => setCupSelect(event.target.value)}

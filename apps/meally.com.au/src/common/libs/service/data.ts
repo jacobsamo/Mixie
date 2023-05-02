@@ -52,5 +52,19 @@ export const units = [
   'item',
 ];
 
+export const sweet_savoury = [
+  { value: 'sweet', label: 'Sweet' },
+  { value: 'savoury', label: 'Savoury' },
+  { value: 'both', label: 'Sweet & Savoury' },
+];
+
+export const meal_times = [
+  { value: 'breakfast', label: 'Breakfast' },
+  { value: 'lunch', label: 'Lunch' },
+  { value: 'dinner', label: 'Dinner' },
+  { value: 'dessert', label: 'Dessert' },
+  { value: 'snack', label: 'Snack' },
+];
+
 // unit types e.g kg, gram, cup, item
 export const unitTypes = ['mass', 'volume', 'each'];

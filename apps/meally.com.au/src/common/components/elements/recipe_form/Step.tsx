@@ -6,7 +6,6 @@ import { Recipe } from 'libs/types';
 
 interface StepProps {
   index: number;
-  // handleChange: (index: number, event: any) => void;
   handleDelete: (index: number) => void;
 }
 
@@ -17,7 +16,7 @@ const Step = ({ index, handleDelete }: StepProps) => {
   return (
     <section
       key={index}
-      className="relative flex flex-col items-start p-3 rounded-md h-fit w-96 flex-grow bg-white text-black dark:bg-dark_grey dark:text-white"
+      className="relative flex flex-col items-start p-3 rounded-md h-fit sm:w-[19rem] w-96 flex-grow dark:bg-dark_grey dark:shadow-none shadow-main dark:text-white text-black bg-white"
     >
       <h1 className="font-medium font-Roboto text-step0">Step {index + 1}</h1>
       <TextArea
@@ -26,6 +25,7 @@ const Step = ({ index, handleDelete }: StepProps) => {
         label=""
         name={`steps.${index}.step_body`}
         control={control}
+        className="shadow-none outline outline-1 "
       />
       <button
         onClick={() => handleDelete(index)}

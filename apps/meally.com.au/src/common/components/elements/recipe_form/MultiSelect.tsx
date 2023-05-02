@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Children, useState } from 'react';
 import { useFormContext, Controller, RegisterOptions } from 'react-hook-form';
 import Select, {
   ClearIndicatorProps,
@@ -17,6 +17,7 @@ interface SelectComponentProps {
   label?: string;
   isMultiple?: true | undefined;
   fieldOptions?: RegisterOptions;
+  children?: React.ReactNode;
   options: OptionsOrGroups<any, GroupBase<any>> | undefined;
 }
 
@@ -51,6 +52,7 @@ const SelectComponent = ({
   label,
   isMultiple,
   options,
+  children,
   ...selectOptions
 }: SelectComponentProps) => {
   const { control } = useFormContext();
@@ -70,6 +72,7 @@ const SelectComponent = ({
           {label && (focused || value) && (
             <InnerLabel label={label} id={name} className="text-step--3" />
           )}
+          {children}
           <Select
             closeMenuOnSelect={false}
             name={name}

@@ -5,18 +5,12 @@ import { Ingredient } from './Ingredient';
 import { Control, useFieldArray, useFormContext } from 'react-hook-form';
 import { Recipe } from 'libs/types';
 
-interface IngredientContainerProps {
-  control: Control<Recipe>;
-}
-
 const IngredientContainer = () => {
-  const { setValue, getValues, register, control, watch } = useFormContext<Recipe>();
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
-      control,
-      name: 'ingredients',
-    }
-  );
+  const { setValue, control } = useFormContext<Recipe>();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'ingredients',
+  });
 
   const handleChange = useCallback(
     (index: number, value: any) => {
@@ -40,7 +34,7 @@ const IngredientContainer = () => {
     <>
       <article>
         <section
-          className={`${styles.recipeIngredients} flex flex-col w-[12.5rem] gap-3`}
+          className={`${styles.recipeIngredients} flex flex-col w-[12.5rem] gap-3 dark:bg-dark_grey dark:shadow-none shadow-main dark:text-white text-black bg-white`}
         >
           {fields.map((field, index) => {
             return (
@@ -52,17 +46,11 @@ const IngredientContainer = () => {
                   quantity: field.quantity,
                   measurement: field.measurement,
                 }}
-                watch={watch}
-                register={register}
-                getValues={getValues}
                 handleDelete={handleDelete}
                 key={field.id}
               />
             );
           })}
-          <button type="button" onClick={() => console.log(getValues())}>
-            Get values
-          </button>
           <AddButton
             type="button"
             name="Ingredient"

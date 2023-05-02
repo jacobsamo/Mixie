@@ -18,17 +18,11 @@
 // }
 
 .fileInput {
-  @apply flex justify-center items-center;
+  @apply flex justify-center items-center dark:bg-dark_grey bg-white;
   box-sizing: border-box;
   resize: horizontal;
   min-width: 18.75rem;
   height: 31.25rem;
-
-  background: linear-gradient(
-    235.91deg,
-    rgba(168, 168, 168, 0.5) -0.39%,
-    rgba(186, 186, 186, 0) 102.95%
-  );
   border: 4px solid #000000;
   border-radius: 0.75rem;
 }
@@ -204,14 +198,18 @@
   //   width: 100%;
 
   // }
+  .ingredient {
+    @apply flex-wrap;
+  }
   .recipeForm {
-    @apply flex flex-col gap-1;
+    @apply flex flex-col gap-1 p-1 w-full;
     width: 100%;
     margin-right: 0;
     margin-left: 0;
   }
 
   .IngredientMethodContainer {
+    @apply flex flex-col w-full;
     justify-content: center;
     align-items: center;
     flex-direction: column;

@@ -68,7 +68,7 @@ const TagInput = ({
   );
 
   return (
-    <div className="flex flex-col gap-1 h-fit w-auto ">
+    <div className="flex flex-col gap-1 h-fit w-auto">
       {(focused || getValues(name)) && (
         <InnerLabel label={label} id={id} className="text-step--3" />
       )}
