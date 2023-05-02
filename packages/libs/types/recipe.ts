@@ -8,6 +8,7 @@ export interface Recipe {
   image: ImageProps;
   recipeName: string;
   recipeDescription: string;
+  notes?: string;
   info: Info;
   ingredients: Ingredient[];
   steps: Step[];
@@ -20,7 +21,7 @@ export interface Recipe {
   createdBy: UserInfo;
   createdAt: Timestamp;
   lastUpdated: Timestamp;
-  lastUpdatedBy: string;
+  lastUpdatedBy: UserInfo;
   madeRecipe: number;
   savedRecipe: number;
 }
@@ -50,8 +51,8 @@ export interface ImageProps {
 }
 
 export interface UserInfo {
-  uid: string;
-  email?: string;
-  phoneNumber?: string;
-  displayName: string;
+  uid: string | undefined;
+  displayName: string | null | undefined;
+  email?: string | null | undefined;
+  phoneNumber?: string | null | undefined;
 }

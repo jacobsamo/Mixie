@@ -15,7 +15,7 @@ import {
   where,
   Timestamp,
 } from 'firebase/firestore';
-import { User } from 'libs/types';
+import { SimplifiedRecipe, User } from 'libs/types';
 
 class UserService {
   async getUserByUserName(userName: string) {
@@ -78,6 +78,17 @@ class UserService {
         console.error(error);
         return { message: `There was an error: ${error}`, status: 400 };
       }
+    }
+  }
+
+  async createRecipe(
+    recipeDoc: SimplifiedRecipe,
+    whoCanView: 'private' | 'public'
+  ) {
+    const user = auth.currentUser;
+    if (user) {
+      const docRef = doc(db, `users/recipes/${whoCanView}`, user.uid);
+      await setDoc(docRef, recipeDoc);
     }
   }
 }
