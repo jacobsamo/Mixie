@@ -9,6 +9,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
   //   .send(
   //     "Sorry at this point in time we don't accept any API calls. this will be changed in the future"
   //   );
+  const recipe = await RecipeService.getAllRecipes();
+  res.send(recipe)
 };
 
 export default handler;

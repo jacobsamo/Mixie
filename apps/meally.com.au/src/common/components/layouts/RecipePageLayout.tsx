@@ -86,7 +86,9 @@ function RecipePageLayout({ recipe }: recipePageLayoutProps) {
           </h1>
           <h1 className={styles.madeBy}>
             Recipe by:
-            <Link href="#">{recipe.createdBy}</Link>
+            <Link href={`/profile/${recipe.createdBy.userName}`}>
+              {recipe.createdBy.displayName}
+            </Link>
           </h1>
           <span className="w-full h-[0.125rem] my-2 mb-4 dark:bg-white bg-dark_grey rounded-md "></span>
 
@@ -116,15 +118,16 @@ function RecipePageLayout({ recipe }: recipePageLayoutProps) {
                 >
                   <AddBatch />
                   {recipe.ingredients.map((ingredient, index) => (
-                    <Ingredient key={index} ingredient={ingredient} />
+                    <Ingredient key={index} index={index} ingredient={ingredient} />
                   ))}
                 </section>
               </article>
               <article className={` ${styles.method_container}`}>
                 <div className={styles.step_container}>
-                  {recipe.steps.map((step) => {
+                  {recipe.steps.map((step, index) => {
                     return (
                       <Step
+                        index={index}
                         key={recipe.steps.indexOf(step)}
                         steps={recipe.steps}
                         step={step}
@@ -132,7 +135,7 @@ function RecipePageLayout({ recipe }: recipePageLayoutProps) {
                     );
                   })}
                 </div>
-              </article>
+              </article>   
             </article>
           </div>
         </main>

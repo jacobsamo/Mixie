@@ -13,10 +13,10 @@ export interface Recipe {
   ingredients: Ingredient[];
   steps: Step[];
   keywords: string[];
-  dietary: { value: string; label: string }[];
-  allergens: { value: string; label: string }[];
-  sweet_savoury: string;
-  mealTime: string[];
+  dietary: SelectValue[];
+  allergens: SelectValue[];
+  sweet_savoury: SelectValue;
+  mealTime: SelectValue;
   version: string;
   createdBy: UserInfo;
   createdAt: Timestamp;
@@ -24,6 +24,11 @@ export interface Recipe {
   lastUpdatedBy: UserInfo;
   madeRecipe: number;
   savedRecipe: number;
+}
+
+export interface SelectValue {
+  value: string;
+  label: string;
 }
 
 export interface Info {
@@ -53,6 +58,7 @@ export interface ImageProps {
 export interface UserInfo {
   uid: string | undefined;
   displayName: string | null | undefined;
+  userName: string;
   email?: string | null | undefined;
   phoneNumber?: string | null | undefined;
 }

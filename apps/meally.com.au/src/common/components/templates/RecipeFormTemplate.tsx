@@ -23,6 +23,8 @@ import ImageUpload from '@components/elements/recipe_form/ImageUpload';
 import Button from 'shared/src/components/buttons/Button';
 import UserService from '@lib/service/UserService';
 import Utils from '@lib/service/Utils';
+import { info } from 'console';
+import useUser from 'src/common/hooks/useUser';
 
 const RecipeFromLayout = () => {
   const [recipe, setRecipe] = useState<Recipe>({
@@ -36,18 +38,20 @@ const RecipeFromLayout = () => {
     keywords: [],
     dietary: [],
     allergens: [],
-    sweet_savoury: '',
-    mealTime: [],
+    sweet_savoury: { value: '', label: '' },
+    mealTime: { value: '', label: '' },
     version: '',
     createdBy: {
       uid: '',
       displayName: '',
+      userName: '',
     },
     createdAt: Timestamp.now(),
     lastUpdated: Timestamp.now(),
     lastUpdatedBy: {
       uid: '',
       displayName: '',
+      userName: '',
     },
     info: {
       total: '',
@@ -62,6 +66,7 @@ const RecipeFromLayout = () => {
     savedRecipe: 0,
   } as Recipe);
   const router = useRouter();
+  const loggedInUser = useUser();
 
   const getRecipe = async () => {
     const query = router.query.recipe;
@@ -87,7 +92,8 @@ const RecipeFromLayout = () => {
     const total = Utils.calculateTotalTime(data.info.prep, data.info.cook);
     const user = {
       uid: auth.currentUser?.uid || '',
-      displayName: auth.currentUser?.displayName || '',
+      displayName: loggedInUser.user?.displayName || '',
+      userName: loggedInUser.user?.userName || '',
       email: auth.currentUser?.email || '',
       phoneNumber: auth.currentUser?.phoneNumber || '',
     };
@@ -98,11 +104,13 @@ const RecipeFromLayout = () => {
       createdBy: user,
       lastUpdated: Timestamp.now(),
       info: {
+        ...data.info,
         total: total,
       },
+      mealTime: data.mealTime,
       lastUpdatedBy: user,
       version: '1.0',
-    } as Recipe
+    } as Recipe;
     if (auth.currentUser) {
       await UserService.createRecipe({
         id: recipe.id,

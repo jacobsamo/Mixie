@@ -116,9 +116,9 @@ export async function getStaticProps() {
   const savoury = await RecipeService.getRecipesByCategory('savoury');
   return {
     props: {
-      latestRecipes: latestRecipes,
-      sweet: sweet,
-      savoury: savoury,
+      latestRecipes: JSON.parse(JSON.stringify(latestRecipes)),
+      sweet: JSON.parse(JSON.stringify(sweet)),
+      savoury: JSON.parse(JSON.stringify(savoury)),
     },
     revalidate: 60 * 60 * 24 * 7,
   };

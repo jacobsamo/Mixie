@@ -55,7 +55,7 @@ const UserProfile = () => {
             </Link>
 
             <Link href="/account/bookmarks">Bookmarks</Link>
-
+            <Link href="/recipes/create">Create Recipe</Link>
             <Link href="/settings/profile">Settings</Link>
 
             <button onClick={handleSignOut}>Logout</button>

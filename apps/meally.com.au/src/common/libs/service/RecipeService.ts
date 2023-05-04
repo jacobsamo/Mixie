@@ -11,9 +11,8 @@ import {
   orderBy,
   limit,
   where,
-  Timestamp
-}
- from 'firebase/firestore';
+  Timestamp,
+} from 'firebase/firestore';
 import type { Recipe, SimplifiedRecipe } from 'libs/types';
 import { db, auth } from '@lib/config/firebase';
 
@@ -103,8 +102,7 @@ class RecipeService {
 
     if (docSnap.exists()) {
       const data = docSnap.data() as Recipe;
-      const createdAt = data.createdAt as any;
-      data['createdAt'] = Timestamp.fromDate(createdAt.toDate());
+      data.createdAt.toDate();
       return data;
     } else {
       return {};
@@ -116,10 +114,9 @@ class RecipeService {
     const recipes: Recipe[] = [];
     querySnapshot.forEach((recipe) => {
       const data = recipe.data() as Recipe;
-      const createdAt = data.createdAt as any;
+      data.createdAt.toDate();
       recipes.push({
         ...data,
-        createdAt: Timestamp.fromDate(createdAt.toDate()),
       });
     });
     return recipes;
