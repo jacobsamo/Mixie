@@ -7,8 +7,10 @@ interface Custom404Props {
 const Custom404 = ({ children }: Custom404Props): React.ReactElement => {
   return (
     <>
-      <div className="w-full h-full flex justify-center items-center">404</div>
-      {children}
+      <div className="w-full h-full flex flex-col justify-center items-center">
+        404 
+        <p>{children}</p>
+      </div>
     </>
   );
 };

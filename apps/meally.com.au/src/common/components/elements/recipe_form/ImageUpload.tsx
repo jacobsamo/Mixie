@@ -26,18 +26,18 @@ const ImageUpload = () => {
         <ImageWebsites />
         <InputField
           type="text"
+          name="image.imgUrl"
+          id="imgUrl"
+          control={control}
+          label="Image Url"
+        />
+        <InputField
+          type="text"
           name="image.imgAlt"
           id="imgAlt"
           hint='Description of the image, e.g. "A bowl of pasta"'
           label="Image Description"
           control={control}
-        />
-        <InputField
-          type="text"
-          name="image.imgUrl"
-          id="imgUrl"
-          control={control}
-          label="Image Url"
         />
       </div>
     </div>

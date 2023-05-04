@@ -14,8 +14,14 @@ import {
   limit,
   where,
   Timestamp,
+  addDoc,
 } from 'firebase/firestore';
 import { SimplifiedRecipe, User } from 'libs/types';
+
+interface ReturnType {
+  message: string;
+  status: number;
+}
 
 class UserService {
   async getUserByUserName(userName: string) {
@@ -82,14 +88,18 @@ class UserService {
   }
 
   async createRecipe(
-    recipeDoc: SimplifiedRecipe,
-    whoCanView: 'private' | 'public'
-  ) {
+    recipeDoc: SimplifiedRecipe
+  ): Promise<{ message: string; status: number }> {
     const user = auth.currentUser;
     if (user) {
-      const docRef = doc(db, `users/recipes/${whoCanView}`, user.uid);
+      const docRef = doc(
+        collection(doc(db, 'users', user.uid), 'recipes'),
+        recipeDoc.id
+      );
       await setDoc(docRef, recipeDoc);
+      return { message: 'Successfully created recipe', status: 200 };
     }
+    return { message: 'User not authenticated', status: 401 };
   }
 }
 

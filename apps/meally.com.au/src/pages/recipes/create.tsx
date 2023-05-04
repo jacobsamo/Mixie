@@ -9,10 +9,10 @@ const Create: NextPage = () => {
   return (
     <>
       <AuthDialog requiresAuth />
+      {auth.currentUser && <RecipeFromLayout />}
       {!auth.currentUser && (
         <Custom404>You have to be logged in to create a recipe</Custom404>
       )}
-      <RecipeFromLayout />
     </>
   );
 };

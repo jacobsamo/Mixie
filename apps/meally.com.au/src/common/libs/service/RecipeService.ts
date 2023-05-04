@@ -11,8 +11,9 @@ import {
   orderBy,
   limit,
   where,
-} from 'firebase/firestore';
-
+  Timestamp
+}
+ from 'firebase/firestore';
 import type { Recipe, SimplifiedRecipe } from 'libs/types';
 import { db, auth } from '@lib/config/firebase';
 
@@ -22,23 +23,6 @@ class RecipeService {
   ): Promise<Recipe | { message: string | Error; status: number }> {
     try {
       await setDoc(doc(db, 'recipes', post.id), post);
-      await addDoc(
-        collection(db, 'users', auth.currentUser?.uid || '', 'recipes'),
-        {
-          id: post.id,
-          recipeName: post.recipeName,
-          image: post.image,
-          sweet_savoury: post.sweet_savoury,
-          dietary: post.dietary,
-          info: {
-            total: post.info.total,
-            rating: post.info.rating,
-          },
-          keywords: post.keywords,
-          createdAt: post.createdAt,
-          createdBy: post.createdBy,
-        } as SimplifiedRecipe
-      );
       return { message: 'Recipe created successfully', status: 200 };
     } catch (e: any) {
       console.error('Error saving recipe:', e);
@@ -59,7 +43,7 @@ class RecipeService {
       const createdAt = data.createdAt as any;
       recipes.push({
         ...data,
-        createdAt: new Date(createdAt).toDateString(),
+        createdAt: Timestamp.fromDate(createdAt.toDate()),
       });
     });
     return recipes;
@@ -83,7 +67,7 @@ class RecipeService {
       const createdAt = data.createdAt as any;
       recipes.push({
         ...data,
-        createdAt: new Date(createdAt).toDateString(),
+        createdAt: Timestamp.fromDate(createdAt.toDate()),
       });
     });
     return recipes;
@@ -107,7 +91,7 @@ class RecipeService {
       const createdAt = data.createdAt as any;
       recipes.push({
         ...data,
-        createdAt: new Date(createdAt).toDateString(),
+        createdAt: Timestamp.fromDate(createdAt.toDate()),
       });
     });
     return recipes;
@@ -120,7 +104,7 @@ class RecipeService {
     if (docSnap.exists()) {
       const data = docSnap.data() as Recipe;
       const createdAt = data.createdAt as any;
-      data['createdAt'] = new Date(createdAt.toDate()).toDateString();
+      data['createdAt'] = Timestamp.fromDate(createdAt.toDate());
       return data;
     } else {
       return {};
@@ -135,7 +119,7 @@ class RecipeService {
       const createdAt = data.createdAt as any;
       recipes.push({
         ...data,
-        createdAt: new Date(createdAt).toDateString(),
+        createdAt: Timestamp.fromDate(createdAt.toDate()),
       });
     });
     return recipes;

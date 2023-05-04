@@ -4,15 +4,11 @@ import RecipeService from '@lib/service/RecipeService';
 import { Recipe } from 'libs/types';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
-  // if (req.method === 'GET') {
-  //   const data = await RecipeService.getAllRecipes();
-  //   res.status(200).json(data);
-  // }
-  res
-    .status(418)
-    .send(
-      "Sorry at this point in time we don't accept any API calls. this will be changed in the future"
-    );
+  // res
+  //   .status(418)
+  //   .send(
+  //     "Sorry at this point in time we don't accept any API calls. this will be changed in the future"
+  //   );
 };
 
 export default handler;
