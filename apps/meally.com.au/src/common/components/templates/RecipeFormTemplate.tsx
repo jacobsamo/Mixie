@@ -5,7 +5,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { auth } from '@lib/config/firebase';
 import { Timestamp } from 'firebase/firestore';
 import { Recipe } from 'libs/types';
-import localStorageService from 'libs/utils/localStorage';
+import localStorageService from 'libs/utils/localStorageService';
 import RecipeService from '@lib/service/RecipeService';
 import {
   dietaryRequirements,
@@ -26,7 +26,11 @@ import Utils from '@lib/service/Utils';
 import { info } from 'console';
 import useUser from 'src/common/hooks/useUser';
 
-const RecipeFromLayout = () => {
+interface RecipeFormProps {
+  recipeId: string | string[] | undefined;
+}
+
+const RecipeFromLayout = ({ recipeId }: RecipeFormProps) => {
   const [recipe, setRecipe] = useState<Recipe>({
     id: '',
     image: {
@@ -66,27 +70,50 @@ const RecipeFromLayout = () => {
     savedRecipe: 0,
   } as Recipe);
   const router = useRouter();
-  const loggedInUser = useUser();
-
-  const getRecipe = async () => {
-    const query = router.query.recipe;
-    const recipe = await localStorageService.readLocal('recipe');
-    if (recipe) {
-      setRecipe(recipe);
-    }
-  };
-
+  // react hook form
   const methods = useForm<Recipe>({
     defaultValues: {
       ...recipe,
     } as Recipe,
   });
+  const { control, watch, handleSubmit, getValues } = methods;
 
-  const { control, handleSubmit } = methods;
+  const loggedInUser = useUser();
+
+  const getRecipe = async () => {
+    if (recipeId == 'new' || !recipeId) {
+      return;
+    }
+    const recipe = await localStorageService.readLocal(recipeId as string);
+    if (recipe) {
+      setRecipe(recipe);
+    }
+  };
 
   useEffect(() => {
     getRecipe();
-  }, []);
+  }, [recipeId]);
+
+  useEffect(() => {
+    const values = getValues();
+    let id = recipe.recipeName.replace(/\s+/g, '-').toLowerCase();
+    const timer = setInterval(() => {
+      if (id) {
+        // Update URL params
+        const queryParams = new URLSearchParams();
+        queryParams.set('recipe', `recipe-${id}`);
+        queryParams.set('view', 'form');
+        router.replace(`?${queryParams.toString()}`, undefined, { shallow: true });
+        // Set local storage
+        localStorageService.setLocal(id, values);
+      }
+    }, 10000);
+    
+    return () => {
+      clearInterval(timer);
+    };
+  }, [recipe.recipeName]);
+  
 
   const onsubmit = async (data: Recipe) => {
     const total = Utils.calculateTotalTime(data.info.prep, data.info.cook);

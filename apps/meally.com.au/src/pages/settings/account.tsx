@@ -1,5 +1,5 @@
 import Custom404 from '@components/layouts/Custom404';
-import localStorage from 'libs/utils/localStorage';
+import localStorage from 'libs/utils/localStorageService';
 import React, { useEffect, useState } from 'react';
 import { InputField } from 'shared';
 import Image from 'next/image';

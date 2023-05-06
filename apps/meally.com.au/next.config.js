@@ -28,6 +28,9 @@ const nextConfig = {
       'savee.com',
       'dr.savee-cdn.com',
     ],
+    experimental: {
+      appDir: true,
+    },
   },
   // eslint: {
   //   // Warning: This allows production builds to successfully complete even if

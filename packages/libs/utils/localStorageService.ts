@@ -5,7 +5,7 @@ class localStorageService {
     }
   }
 
-  async readLocal(key: string) {
+  async readLocal<T>(key: string): Promise<T | any> {
     if (typeof window !== "undefined") {
       try {
         return JSON.parse(window.localStorage.getItem(key) as string);
@@ -28,5 +28,6 @@ class localStorageService {
   }
 }
 
-
+// Path: packages\libs\utils\localStorageService.ts
+// eslint-disable-next-line import/no-anonymous-default-export
 export default new localStorageService();
