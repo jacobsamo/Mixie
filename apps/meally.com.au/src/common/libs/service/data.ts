@@ -1,5 +1,6 @@
 // file full of all data for the app like the initial state of the recipe, dietary requirements, etc.
 import { Timestamp } from 'firebase/firestore';
+import { Recipe } from 'libs/types';
 export const dietaryRequirements = [
   { value: 'None', label: 'None' },
   { value: 'Vegetarian', label: 'Vegetarian' },
@@ -18,27 +19,35 @@ export const initialRecipeState = {
   recipeName: '',
   recipeDescription: '',
   keywords: [],
-  ingredients: [],
   dietary: [],
-  Allergens: [],
-  sweet_savoury: '',
-  mealTime: [],
+  allergens: [],
+  sweet_savoury: { value: '', label: '' },
+  mealTime: { value: '', label: '' },
   version: '',
-  createdBy: '',
+  createdBy: {
+    uid: '',
+    displayName: '',
+    userName: '',
+  },
   createdAt: Timestamp.now(),
   lastUpdated: Timestamp.now(),
-  lastUpdatedBy: '',
+  lastUpdatedBy: {
+    uid: '',
+    displayName: '',
+    userName: '',
+  },
   info: {
     total: '',
     prep: '',
     cook: '',
-    serves: 0,
+    serves: undefined,
     rating: 0,
   },
-  steps: [],
+  steps: [{ step_body: '' }],
+  ingredients: [{ ingredient: '', unit: 'gram', quantity: undefined }],
   madeRecipe: 0,
   savedRecipe: 0,
-};
+} as Recipe;
 
 export const units = [
   'gram',

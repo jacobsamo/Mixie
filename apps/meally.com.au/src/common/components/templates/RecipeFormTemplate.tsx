@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider, useWatch } from 'react-hook-form';
 import { auth } from '@lib/config/firebase';
 import { Timestamp } from 'firebase/firestore';
 import { Recipe } from 'libs/types';
@@ -11,6 +11,7 @@ import {
   dietaryRequirements,
   sweet_savoury,
   meal_times,
+  initialRecipeState,
 } from '@lib/service/data';
 import styles from '@components/elements/recipe_form/Form.module.scss';
 import { InputField, TagInput, TextArea } from 'shared';
@@ -26,49 +27,8 @@ import Utils from '@lib/service/Utils';
 import { info } from 'console';
 import useUser from 'src/common/hooks/useUser';
 
-interface RecipeFormProps {
-  recipeId: string | string[] | undefined;
-}
-
-const RecipeFromLayout = ({ recipeId }: RecipeFormProps) => {
-  const [recipe, setRecipe] = useState<Recipe>({
-    id: '',
-    image: {
-      imgUrl: '',
-      imgAlt: '',
-    },
-    recipeName: '',
-    recipeDescription: '',
-    keywords: [],
-    dietary: [],
-    allergens: [],
-    sweet_savoury: { value: '', label: '' },
-    mealTime: { value: '', label: '' },
-    version: '',
-    createdBy: {
-      uid: '',
-      displayName: '',
-      userName: '',
-    },
-    createdAt: Timestamp.now(),
-    lastUpdated: Timestamp.now(),
-    lastUpdatedBy: {
-      uid: '',
-      displayName: '',
-      userName: '',
-    },
-    info: {
-      total: '',
-      prep: '',
-      cook: '',
-      serves: undefined,
-      rating: 0,
-    },
-    steps: [{ step_body: '' }],
-    ingredients: [{ ingredient: '', unit: 'gram', quantity: undefined }],
-    madeRecipe: 0,
-    savedRecipe: 0,
-  } as Recipe);
+const RecipeFromLayout = () => {
+  const [recipe, setRecipe] = useState<Recipe>(initialRecipeState);
   const router = useRouter();
   // react hook form
   const methods = useForm<Recipe>({
@@ -76,44 +36,81 @@ const RecipeFromLayout = ({ recipeId }: RecipeFormProps) => {
       ...recipe,
     } as Recipe,
   });
-  const { control, watch, handleSubmit, getValues } = methods;
-
+  const { control, watch, handleSubmit, getValues, reset, setValue } = methods;
   const loggedInUser = useUser();
 
-  const getRecipe = async () => {
-    if (recipeId == 'new' || !recipeId) {
+  async function getRecipe() {
+    const recipeId = router.query.recipe?.toString();
+    const view = router.query.view?.toString();
+    console.log(`Recipe ID: ${recipeId}`);
+    console.log(`View: ${view}`);
+
+    if (!recipeId || view === 'preview') {
       return;
     }
-    const recipe = await localStorageService.readLocal(recipeId as string);
-    if (recipe) {
-      setRecipe(recipe);
+
+    if (view === 'form' && recipeId.startsWith('recipe-')) {
+      console.log('Reading recipe from local storage...');
+      try {
+        const recipe = await localStorageService.readLocal<Recipe>(recipeId);
+        console.log(`Recipe read: ${JSON.stringify(recipe)}`);
+        setRecipe(recipe); // Update the recipe state
+        return;
+      } catch (error) {
+        console.error(error);
+        return;
+      }
     }
-  };
+
+    // // Handle the case when the recipeId is 'create'
+    // if (recipeId === 'create') {
+    //   console.log('Creating new recipe');
+    //   reset();
+    //   return;
+    // }
+  }
 
   useEffect(() => {
     getRecipe();
-  }, [recipeId]);
+  }, []);
 
   useEffect(() => {
     const values = getValues();
-    let id = recipe.recipeName.replace(/\s+/g, '-').toLowerCase();
-    const timer = setInterval(() => {
-      if (id) {
-        // Update URL params
-        const queryParams = new URLSearchParams();
-        queryParams.set('recipe', `recipe-${id}`);
-        queryParams.set('view', 'form');
-        router.replace(`?${queryParams.toString()}`, undefined, { shallow: true });
-        // Set local storage
-        localStorageService.setLocal(id, values);
+    const recipeId = `recipe-${recipe.recipeName
+      .replace(/\s+/g, '-')
+      .toLowerCase()}`;
+
+    const timer = setInterval(async () => {
+      const currentValues = JSON.stringify(values);
+      const storedValues = await localStorageService.readLocal(
+        'recipe-' + recipeId
+      );
+      if (currentValues !== storedValues) {
+        localStorageService.setLocal('recipe-' + recipeId, currentValues);
+        const newUrl = `?recipe=${recipeId}&view=form`;
+        router.replace(newUrl);
       }
     }, 10000);
-    
-    return () => {
-      clearInterval(timer);
-    };
-  }, [recipe.recipeName]);
+
+    return () => clearInterval(timer);
+  }, [getValues]);
+
+
+  const handleRecipeNameChange = (value: string) => {
+    const newRecipeId = `recipe-${value.replace(/\s+/g, '-').toLowerCase()}`;
+    const currentValues = JSON.stringify(getValues());
+    localStorageService.setLocal(newRecipeId, currentValues);
+    const newUrl = `?recipe=${newRecipeId}&view=form`;
+    router.replace(newUrl);
+  };
+
+  const recipeName = watch('recipeName');
+  useEffect(() => {
+    handleRecipeNameChange(recipeName);
+  }, [recipeName]);
   
+
+
 
   const onsubmit = async (data: Recipe) => {
     const total = Utils.calculateTotalTime(data.info.prep, data.info.cook);

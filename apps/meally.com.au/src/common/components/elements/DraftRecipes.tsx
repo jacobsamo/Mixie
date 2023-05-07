@@ -55,7 +55,7 @@ const DraftRecipes = () => {
         </div>
       ))}
       <Button
-        onClick={() => router.push('?recipe=new&view=form')}
+        onClick={() => router.push('?recipe=create&view=form')}
         className="mt-48"
       >
         Create
