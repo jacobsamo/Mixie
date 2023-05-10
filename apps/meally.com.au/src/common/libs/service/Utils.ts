@@ -1,6 +1,19 @@
+import { Ingredient } from 'libs/types';
+import math from 'mathjs';
+interface CalculateBatchUnitsReturn {
+  newUnit: string;
+  newQuantity: number | undefined;
+  newMeasurement?: string;
+}
+
+interface CalculateCupUnits {
+  newQuantity: number | undefined;
+  newMeasurement?: string;
+}
+
 class Utils {
-  calculateTime(time: string) {
-    return '';
+  toId(string: string) {
+    return string.replace(/\s+/g, '-').toLowerCase();
   }
 
   calculateTotalTime(prep: string, cook: string) {
@@ -52,6 +65,101 @@ class Utils {
 
     return timeUnits.join(' ');
   }
+
+  private calculateCupType(
+    quantity: number | undefined,
+    batches: number,
+    measurement?: string
+  ): CalculateCupUnits {
+    let newQuantity = 0;
+    let newMeasurement = '';
+
+    if (quantity !== undefined && measurement !== undefined) {
+      // Convert quantity to cups
+      const cups = math.unit(quantity, measurement).to('cup');
+      newQuantity = cups.toNumber();
+
+      // Calculate total cups considering the number of batches
+      const totalCups = newQuantity * batches;
+
+      // Simplify the total cups using the best unit
+      const simplified = math.unit(totalCups, 'cup');
+
+      newQuantity = simplified.value;
+      newMeasurement = simplified.units.toString();
+    }
+
+    return { newQuantity, newMeasurement };
+  }
+
+  calculateBatchUnits = (
+    ingredient: Ingredient,
+    batches: number
+  ): CalculateBatchUnitsReturn => {
+    const { unit, quantity, measurement } = ingredient;
+    switch (unit) {
+      case 'cup':
+        return {
+          newUnit: unit,
+          newQuantity: quantity,
+          newMeasurement: measurement,
+        };
+      case 'tbsp':
+        return {
+          newUnit: unit,
+          newQuantity: quantity,
+          newMeasurement: measurement,
+        };
+      case 'tsp':
+        return {
+          newUnit: unit,
+          newQuantity: quantity,
+          newMeasurement: measurement,
+        };
+      case 'gram':
+        return {
+          newUnit: unit,
+          newQuantity: quantity,
+          newMeasurement: measurement,
+        };
+      case 'kg':
+        return {
+          newUnit: unit,
+          newQuantity: quantity,
+          newMeasurement: measurement,
+        };
+      case 'ml':
+        return {
+          newUnit: unit,
+          newQuantity: quantity,
+          newMeasurement: measurement,
+        };
+      case 'litre':
+        return {
+          newUnit: unit,
+          newQuantity: quantity,
+          newMeasurement: measurement,
+        };
+      case 'item':
+        return {
+          newUnit: unit,
+          newQuantity: quantity,
+          newMeasurement: measurement,
+        };
+      case 'pinch':
+        return {
+          newUnit: unit,
+          newQuantity: quantity,
+          newMeasurement: measurement,
+        };
+      default:
+        return {
+          newUnit: unit,
+          newQuantity: quantity,
+          newMeasurement: measurement,
+        };
+    }
+  };
 }
 
 export default new Utils();

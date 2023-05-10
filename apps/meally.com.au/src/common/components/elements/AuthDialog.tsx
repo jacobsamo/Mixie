@@ -10,6 +10,7 @@ import AuthService from '@lib/service/AuthService';
 interface AuthDialogProps {
   user?: User | undefined;
   requiresAuth?: true | undefined;
+  canClose?: true | false;
   setUser?: (value: User) => void;
   open?: boolean;
   setOpen?: (value: boolean) => void;
@@ -19,6 +20,7 @@ const AuthDialog = ({
   user,
   setUser,
   requiresAuth,
+  canClose,
   open,
   setOpen,
 }: AuthDialogProps) => {
@@ -103,7 +105,11 @@ const AuthDialog = ({
       <Dialog
         isOpen={open || internalOpen}
         setOpen={() =>
-          setOpen ? setOpen(!open) : setInternalOpen(!internalOpen)
+          canClose
+            ? setOpen
+              ? setOpen(!open)
+              : setInternalOpen(!internalOpen)
+            : () => {}
         }
         closeOnEscape={true}
         closeOnOutsideClick={true}

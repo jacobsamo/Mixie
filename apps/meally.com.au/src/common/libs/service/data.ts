@@ -75,5 +75,3 @@ export const meal_times = [
   { value: 'snack', label: 'Snack' },
 ];
 
-// unit types e.g kg, gram, cup, item
-export const unitTypes = ['mass', 'volume', 'each'];

@@ -14,14 +14,14 @@ import Step from '@components/elements/recipe_page/RecipeStep';
 import AuthDialog from '@components/elements/AuthDialog';
 import useAuth from 'src/common/hooks/useAuth';
 
-interface recipePageLayoutProps {
+interface RecipePageLayoutProps {
   recipe: Recipe;
 }
 
-function RecipePageLayout({ recipe }: recipePageLayoutProps) {
-  const { dialogOpen, handleAuthClick, handleAuthDialogClose } = useAuth();
+function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
+  const { dialogOpen, handleAuthDialogClose } = useAuth();
   const [methodOpen, setMethodOpen] = useState(false);
-
+  const [add, setAdd] = useState(1);
   const info = recipe.info as Info;
 
   if (recipe !== null) {
@@ -97,7 +97,7 @@ function RecipePageLayout({ recipe }: recipePageLayoutProps) {
               methodOpen ? styles.methodOpen : styles.ingredientOpen
             } flex justify-center flex-col`}
           >
-            <span className={styles.titles}>
+            <span className="flex flex-row items-start gap-x-[50%] pb-2">
               <button
                 className={`${styles.ingredientTitle}`}
                 onClick={() => setMethodOpen(false)}
@@ -116,9 +116,14 @@ function RecipePageLayout({ recipe }: recipePageLayoutProps) {
                 <section
                   className={`${styles.recipeIngredients} flex flex-col w-[14.5rem] gap-3`}
                 >
-                  <AddBatch />
+                  <AddBatch add={add} setAdd={setAdd} />
                   {recipe.ingredients.map((ingredient, index) => (
-                    <Ingredient key={index} index={index} ingredient={ingredient} />
+                    <Ingredient
+                      key={index}
+                      index={index}
+                      ingredient={ingredient}
+                      batchAmount={add}
+                    />
                   ))}
                 </section>
               </article>
@@ -128,14 +133,15 @@ function RecipePageLayout({ recipe }: recipePageLayoutProps) {
                     return (
                       <Step
                         index={index}
-                        key={recipe.steps.indexOf(step)}
+                        key={index}
                         steps={recipe.steps}
                         step={step}
+                        ingredients={recipe.ingredients}
                       />
                     );
                   })}
                 </div>
-              </article>   
+              </article>
             </article>
           </div>
         </main>

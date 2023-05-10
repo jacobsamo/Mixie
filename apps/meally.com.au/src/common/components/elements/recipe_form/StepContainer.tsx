@@ -12,12 +12,10 @@ import { Recipe } from 'libs/types';
 
 const StepContainer = () => {
   const { control } = useFormContext<Recipe>();
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
-      control,
-      name: 'steps',
-    }
-  );
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'steps',
+  });
 
   const handleDelete = useCallback(
     (index: number) => {
@@ -32,7 +30,7 @@ const StepContainer = () => {
 
   return (
     <article className={styles.method_container}>
-      <div className={styles.step_container}>
+      <div className="flex flex-col items-start gap-2 max-w-lg w-auto lg:w-full">
         {fields.map((field, index: number) => {
           return (
             <Step index={index} handleDelete={handleDelete} key={field.id} />

@@ -6,18 +6,11 @@ import { Control, useFieldArray, useFormContext } from 'react-hook-form';
 import { Recipe } from 'libs/types';
 
 const IngredientContainer = () => {
-  const { setValue, control } = useFormContext<Recipe>();
+  const { control } = useFormContext<Recipe>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'ingredients',
   });
-
-  const handleChange = useCallback(
-    (index: number, value: any) => {
-      setValue(`ingredients.${index}`, value);
-    },
-    [setValue]
-  );
 
   const handleDelete = useCallback(
     (index: number) => {

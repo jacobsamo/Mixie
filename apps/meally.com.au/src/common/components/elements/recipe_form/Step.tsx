@@ -3,6 +3,7 @@ import { TrashIcon } from '@heroicons/react/24/outline';
 import { TextArea } from 'shared';
 import { Control, useFormContext } from 'react-hook-form';
 import { Recipe } from 'libs/types';
+import styles from '@styles/modules/RecipePage.module.scss'
 
 interface StepProps {
   index: number;
@@ -10,13 +11,12 @@ interface StepProps {
 }
 
 const Step = ({ index, handleDelete }: StepProps) => {
-  const [bodyValue, setBodyValue] = useState('');
   const { control, getValues } = useFormContext<Recipe>();
 
   return (
     <section
       key={index}
-      className="relative flex flex-col items-start p-3 rounded-md h-fit sm:w-[19rem] w-96 flex-grow dark:bg-dark_grey dark:shadow-none shadow-main dark:text-white text-black bg-white"
+      className={styles.steps}
     >
       <h1 className="font-medium font-Roboto text-step0">Step {index + 1}</h1>
       <TextArea

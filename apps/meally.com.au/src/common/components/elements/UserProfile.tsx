@@ -12,7 +12,6 @@ const UserProfile = () => {
   const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  // const { handleAuthClick } = useAuth();
 
   const handleSignOut = () => {
     AuthService.signOutUser();

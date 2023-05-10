@@ -43,6 +43,7 @@
 }
 
 .method_container {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,8 +55,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 0.5rem;
-  max-width: 30rem;
-  width: auto;
+  width: 100%;
 }
 
 .steps {
@@ -68,24 +68,13 @@
   gap: 0.25rem;
   border-radius: 1rem;
   height: fit-content;
-
   width: 100%;
   flex-grow: 1;
 }
 
 .step_method {
-  // @apply font-Arial;
   white-space: normal;
   font-size: var(--step-0);
-}
-
-.titles {
-  display: flex;
-  flex-direction: row;
-
-  align-items: flex-start;
-  gap: clamp(0.5rem, 45vw, 20rem);
-  padding-bottom: 0.5rem;
 }
 
 .ingredientTitle,
@@ -140,20 +129,12 @@
     flex-direction: column;
     align-items: flex-start;
   }
-
-  // .recipeIngredients {
-  //   width: 100%;
-  //   margin-bottom: 1rem;
-  // }
-
+  
   .method_container {
     padding: 0;
   }
 
   .step_container {
     width: 100%;
-  }
-  .titles {
-    gap: 42vw;
   }
 }

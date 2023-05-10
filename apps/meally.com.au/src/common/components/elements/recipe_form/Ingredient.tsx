@@ -54,8 +54,6 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
             defaultValue={values.measurement}
             className="dark:outline-none outline outline-1"
             {...register(`ingredients.${index}.measurement`)}
-            // value={value.split('|')[1]?.trim().split(' ')[1] || cupSelect}
-            // onChange={(event: any) => setCupSelect(event.target.value)}
           >
             <option value=""></option>
             <option value="1/2">1/2 {}</option>

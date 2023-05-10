@@ -1,13 +1,7 @@
-import React, { TextareaHTMLAttributes, ReactElement, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import InnerLabel from "./InnerLabel";
 
-import {
-  UseFormRegister,
-  RegisterOptions,
-  Control,
-  useController,
-  Controller,
-} from "react-hook-form";
+import { RegisterOptions, Control, Controller } from "react-hook-form";
 
 interface InputFieldProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -37,10 +31,6 @@ function TextAreaComponent(
   }: InputFieldProps & React.TextareaHTMLAttributes<HTMLTextAreaElement>,
   containerRef: React.ForwardedRef<HTMLDivElement>
 ): ReactElement {
-  const [focused, setFocused] = useState(false);
-  const onFocus = () => setFocused(true);
-  const onBlur = () => setFocused(false);
-
   return (
     <Controller
       control={control}
@@ -52,15 +42,13 @@ function TextAreaComponent(
           ref={containerRef}
           className={`flex flex-col w-full dark:outline dark:shadow-none dark:outline-grey dark:outline-1 focus:outline-1 shadow-main flex-1 items-start max-w-full rounded-md p-1 text-step--2 dark:bg-dark_grey bg-white ${className}`}
         >
-          {(focused || field.value) && (
+          {(field.value) && (
             <InnerLabel label={label} id={id} className="text-step--3" />
           )}
           <textarea
             id={id}
             name={name}
             placeholder={label}
-            // onBlur={onBlur}
-            // onFocus={onFocus}
             onChange={field.onChange}
             value={field.value}
             ref={field.ref}

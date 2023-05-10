@@ -1,11 +1,8 @@
 import React, { ReactElement, useState } from "react";
 import InnerLabel from "./InnerLabel";
-
 import {
-  UseFormRegister,
   RegisterOptions,
   Control,
-  useController,
   Controller,
 } from "react-hook-form";
 
@@ -48,14 +45,13 @@ function InputFieldComponent(
       rules={{ required: required, ...options }}
       render={({
         field,
-        fieldState: { invalid, isTouched, isDirty, error },
-        formState,
+        fieldState
       }) => (
         <div
           ref={containerRef}
           className="flex flex-col dark:outline dark:shadow-none dark:outline-grey dark:outline-1 focus:outline-1 shadow-main flex-1 items-start max-w-full rounded-md p-1 text-step--2 dark:bg-dark_grey bg-white"
         >
-          {(focused || field.value) && (
+          {(focused || fieldState.isDirty) && (
             <InnerLabel label={label} id={id} className="text-step--3" />
           )}
           <input
@@ -76,8 +72,6 @@ function InputFieldComponent(
           ) : (
             false
           )}
-
-          
         </div>
       )}
     />

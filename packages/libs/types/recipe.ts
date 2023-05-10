@@ -45,9 +45,18 @@ export interface Step {
 
 export interface Ingredient {
   ingredient: string;
-  unit: string;
+  unit:
+    | "gram"
+    | "kg"
+    | "cup"
+    | "ml"
+    | "litre"
+    | "tsp"
+    | "tbsp"
+    | "pinch"
+    | "item";
   quantity: number | undefined;
-  measurement?: string;
+  measurement?: "" | "1/2" | "1/3" | "2/3" | "1/4" | "3/4";
 }
 
 export interface ImageProps {
