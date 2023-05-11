@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 //types
 import type { Recipe, Info } from 'libs/types';
@@ -13,6 +13,7 @@ import Ingredient from '@components/elements/recipe_page/RecipeIngredientCard';
 import Step from '@components/elements/recipe_page/RecipeStep';
 import AuthDialog from '@components/elements/AuthDialog';
 import useAuth from 'src/common/hooks/useAuth';
+import Utils from '@lib/service/Utils';
 
 interface RecipePageLayoutProps {
   recipe: Recipe;
@@ -23,7 +24,6 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
   const [methodOpen, setMethodOpen] = useState(false);
   const [add, setAdd] = useState(1);
   const info = recipe.info as Info;
-
   if (recipe !== null) {
     return (
       <>

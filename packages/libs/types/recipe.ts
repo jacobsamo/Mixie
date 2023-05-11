@@ -45,19 +45,23 @@ export interface Step {
 
 export interface Ingredient {
   ingredient: string;
-  unit:
-    | "gram"
-    | "kg"
-    | "cup"
-    | "ml"
-    | "litre"
-    | "tsp"
-    | "tbsp"
-    | "pinch"
-    | "item";
+  unit: Unit;
   quantity: number | undefined;
-  measurement?: "" | "1/2" | "1/3" | "2/3" | "1/4" | "3/4";
+  measurement?: Measurement;
 }
+
+export type Measurement = "" | "1/2" | "1/3" | "2/3" | "1/4" | "3/4";
+
+export type Unit =
+  | "gram"
+  | "kg"
+  | "cup"
+  | "ml"
+  | "litre"
+  | "tsp"
+  | "tbsp"
+  | "pinch"
+  | "item";
 
 export interface ImageProps {
   imgUrl: string;

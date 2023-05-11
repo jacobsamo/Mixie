@@ -1,4 +1,4 @@
-import { Ingredient } from 'libs/types';
+import { Ingredient, Measurement } from 'libs/types';
 import math from 'mathjs';
 interface CalculateBatchUnitsReturn {
   newUnit: string;
@@ -66,98 +66,111 @@ class Utils {
     return timeUnits.join(' ');
   }
 
-  private calculateCupType(
-    quantity: number | undefined,
-    batches: number,
-    measurement?: string
-  ): CalculateCupUnits {
-    let newQuantity = 0;
+  private calculateCupUnits = (
+    quantity: string | undefined,
+    measurement: Measurement,
+    batchAmount: number
+  ): { quantity: string; measurement?: Measurement } => {
+    const cupValues = {
+      '': 0,
+      '1/2': 120,
+      '1/3': 80,
+      '2/3': 160,
+      '1/4': 50,
+      '2/4': 100,
+      '3/4': 150,
+    };
+    let newQuantity = '0';
     let newMeasurement = '';
 
-    if (quantity !== undefined && measurement !== undefined) {
-      // Convert quantity to cups
-      const cups = math.unit(quantity, measurement).to('cup');
-      newQuantity = cups.toNumber();
+    const newValues = () => {
+      const calc = cupValues[measurement] * batchAmount;
+      if (calc >= 240) {
+        const remainder = calc % batchAmount;
+        const roundedRemainder = Math.round(remainder);
+        quantity = (
+          parseInt(quantity || '0') * batchAmount +
+          math.round(calc / 240)
+        ).toString();
+        newMeasurement = roundedNumber.toString();
+      } else {
+        newQuantity = (parseInt(quantity || '0') * batchAmount).toString();
+        newMeasurement = math.round(calc).toString();
+      }
+    };
 
-      // Calculate total cups considering the number of batches
-      const totalCups = newQuantity * batches;
+    // calculate the closest cup value that return `"" | "1/2" | "1/3" | "2/3" | "1/4" | "3/4"` and return the new measurement
+    const closestValue = Object.keys(cupValues).reduce((prev, curr) => {
+      return Math.abs(cupValues[curr] * batchAmount - 240) <
+        Math.abs(cupValues[prev] * batchAmount - 240)
+        ? curr
+        : prev;
+    });
 
-      // Simplify the total cups using the best unit
-      const simplified = math.unit(totalCups, 'cup');
+    return {
+      quantity: newQuantity,
+      measurement: closestValue.toString(),
+    };
+  };
 
-      newQuantity = simplified.value;
-      newMeasurement = simplified.units.toString();
-    }
-
-    return { newQuantity, newMeasurement };
-  }
-
-  calculateBatchUnits = (
+  calculateIngredient = (
     ingredient: Ingredient,
-    batches: number
-  ): CalculateBatchUnitsReturn => {
-    const { unit, quantity, measurement } = ingredient;
-    switch (unit) {
-      case 'cup':
-        return {
-          newUnit: unit,
-          newQuantity: quantity,
-          newMeasurement: measurement,
-        };
-      case 'tbsp':
-        return {
-          newUnit: unit,
-          newQuantity: quantity,
-          newMeasurement: measurement,
-        };
-      case 'tsp':
-        return {
-          newUnit: unit,
-          newQuantity: quantity,
-          newMeasurement: measurement,
-        };
+    batchAmount: number
+  ): Ingredient => {
+    const quantity = ingredient.quantity || 1;
+    switch (ingredient.unit) {
       case 'gram':
         return {
-          newUnit: unit,
-          newQuantity: quantity,
-          newMeasurement: measurement,
+          ...ingredient,
+          quantity: quantity * batchAmount,
+          unit: quantity * batchAmount > 1000 ? 'kg' : 'gram',
         };
       case 'kg':
         return {
-          newUnit: unit,
-          newQuantity: quantity,
-          newMeasurement: measurement,
+          ...ingredient,
+          quantity: quantity * batchAmount,
+        };
+      case 'cup':
+        return {
+          ...ingredient,
+          quantity: quantity * batchAmount,
+          measurement: ingredient.measurement,
         };
       case 'ml':
         return {
-          newUnit: unit,
-          newQuantity: quantity,
-          newMeasurement: measurement,
+          ...ingredient,
+          quantity: quantity * batchAmount,
+          unit: quantity * batchAmount > 1000 ? 'litre' : 'ml',
         };
       case 'litre':
         return {
-          newUnit: unit,
-          newQuantity: quantity,
-          newMeasurement: measurement,
+          ...ingredient,
+          quantity: quantity * batchAmount,
         };
-      case 'item':
+      case 'tsp':
         return {
-          newUnit: unit,
-          newQuantity: quantity,
-          newMeasurement: measurement,
+          ...ingredient,
+          quantity: quantity * batchAmount,
+          measurement: ingredient.measurement,
+        };
+      case 'tbsp':
+        return {
+          ...ingredient,
+          quantity: quantity * batchAmount,
+          measurement: ingredient.measurement,
         };
       case 'pinch':
         return {
-          newUnit: unit,
-          newQuantity: quantity,
-          newMeasurement: measurement,
+          ...ingredient,
+          quantity: quantity * batchAmount,
+        };
+      case 'item':
+        return {
+          ...ingredient,
+          quantity: quantity * batchAmount,
         };
       default:
-        return {
-          newUnit: unit,
-          newQuantity: quantity,
-          newMeasurement: measurement,
-        };
+        return ingredient;
     }
   };
 }
