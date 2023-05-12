@@ -67,49 +67,22 @@ class Utils {
   }
 
   private calculateCupUnits = (
-    quantity: string | undefined,
+    quantity: number | undefined,
     measurement: Measurement,
     batchAmount: number
-  ): { quantity: string; measurement?: Measurement } => {
-    const cupValues = {
-      '': 0,
-      '1/2': 120,
-      '1/3': 80,
-      '2/3': 160,
-      '1/4': 50,
-      '2/4': 100,
-      '3/4': 150,
-    };
-    let newQuantity = '0';
-    let newMeasurement = '';
-
-    const newValues = () => {
-      const calc = cupValues[measurement] * batchAmount;
-      if (calc >= 240) {
-        const remainder = calc % batchAmount;
-        const roundedRemainder = Math.round(remainder);
-        quantity = (
-          parseInt(quantity || '0') * batchAmount +
-          math.round(calc / 240)
-        ).toString();
-        newMeasurement = roundedNumber.toString();
-      } else {
-        newQuantity = (parseInt(quantity || '0') * batchAmount).toString();
-        newMeasurement = math.round(calc).toString();
-      }
-    };
-
-    // calculate the closest cup value that return `"" | "1/2" | "1/3" | "2/3" | "1/4" | "3/4"` and return the new measurement
-    const closestValue = Object.keys(cupValues).reduce((prev, curr) => {
-      return Math.abs(cupValues[curr] * batchAmount - 240) <
-        Math.abs(cupValues[prev] * batchAmount - 240)
-        ? curr
-        : prev;
-    });
-
+  ): { quantity: number | undefined; measurement?: Measurement } => {
+    const value = math.multiply(math.fraction(measurement), batchAmount);
+    const split = value.toString().split('.');
+    const q =
+      split.length > 1 && quantity ? quantity + parseInt(split[0]) : quantity;
+    const m =
+      split.length > 1
+        ? math.fraction(`0.${split[1]}`)
+        : math.fraction(value.toString());
+    const me = m.n > m.d ? '' : (`${m.n}/${m.d}` as Measurement);
     return {
-      quantity: newQuantity,
-      measurement: closestValue.toString(),
+      quantity: q,
+      measurement: me,
     };
   };
 
@@ -117,57 +90,62 @@ class Utils {
     ingredient: Ingredient,
     batchAmount: number
   ): Ingredient => {
-    const quantity = ingredient.quantity || 1;
+    const q = ingredient.quantity || 1;
+    const { quantity, measurement } = this.calculateCupUnits(
+      q * batchAmount,
+      ingredient.measurement || '',
+      batchAmount
+    );
     switch (ingredient.unit) {
       case 'gram':
         return {
           ...ingredient,
-          quantity: quantity * batchAmount,
-          unit: quantity * batchAmount > 1000 ? 'kg' : 'gram',
+          quantity: q * batchAmount,
+          unit: q * batchAmount > 1000 ? 'kg' : 'gram',
         };
       case 'kg':
         return {
           ...ingredient,
-          quantity: quantity * batchAmount,
+          quantity: q * batchAmount,
         };
       case 'cup':
         return {
           ...ingredient,
-          quantity: quantity * batchAmount,
-          measurement: ingredient.measurement,
+          quantity: quantity,
+          measurement: measurement,
         };
       case 'ml':
         return {
           ...ingredient,
-          quantity: quantity * batchAmount,
-          unit: quantity * batchAmount > 1000 ? 'litre' : 'ml',
+          quantity: q * batchAmount,
+          unit: q * batchAmount > 1000 ? 'litre' : 'ml',
         };
       case 'litre':
         return {
           ...ingredient,
-          quantity: quantity * batchAmount,
+          quantity: q * batchAmount,
         };
       case 'tsp':
         return {
           ...ingredient,
-          quantity: quantity * batchAmount,
-          measurement: ingredient.measurement,
+          quantity: quantity,
+          measurement: measurement,
         };
       case 'tbsp':
         return {
           ...ingredient,
-          quantity: quantity * batchAmount,
-          measurement: ingredient.measurement,
+          quantity: quantity,
+          measurement: measurement,
         };
       case 'pinch':
         return {
           ...ingredient,
-          quantity: quantity * batchAmount,
+          quantity: q * batchAmount,
         };
       case 'item':
         return {
           ...ingredient,
-          quantity: quantity * batchAmount,
+          quantity: q * batchAmount,
         };
       default:
         return ingredient;
