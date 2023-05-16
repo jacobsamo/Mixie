@@ -1,8 +1,5 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import React, {
-  useState,
-  useCallback,
-} from "react";
+import React, { useState, useCallback } from "react";
 import InnerLabel from "./InnerLabel";
 
 import {
@@ -11,6 +8,7 @@ import {
   useForm,
   useFieldArray,
 } from "react-hook-form";
+import { Chip } from "../Chip";
 
 interface TagInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
@@ -40,7 +38,7 @@ const TagInput = ({
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
       control,
-      name: name  ,
+      name: name,
     }
   );
   const [focused, setFocused] = useState(false);
@@ -70,19 +68,7 @@ const TagInput = ({
       {(focused || getValues(name)) && (
         <InnerLabel label={label} id={id} className="text-step--3" />
       )}
-      <div className="flex flex-row flex-wrap gap-1 w-72">
-        {fields.map((field: any, index: any) => (
-          <span
-            key={index}
-            className="flex justify-center items-center w-fit h-6 p-2 rounded-lg text-step--2 gap-1 dark:text-white dark:bg-dark_grey text-black bg-white "
-          >
-            {field.value}
-            <button onClick={() => handleRemove(index)} type="button">
-              <XMarkIcon className="w-5 h-5" />
-            </button>
-          </span>
-        ))}
-      </div>
+      <Chip fields={fields} handleRemove={handleRemove} />
       <input
         {...register(name, options)}
         onKeyDown={handleKeyDown}

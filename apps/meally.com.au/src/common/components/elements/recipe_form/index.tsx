@@ -5,4 +5,4 @@ export * from './Ingredient';
 export * from './Step';
 export * from './StepContainer';
 export * from './IngredientContainer';
-export * from './MultiSelect';
+export * from './SelectComponent';

@@ -1,15 +1,6 @@
 import { Ingredient, Measurement } from 'libs/types';
-import math from 'mathjs';
-interface CalculateBatchUnitsReturn {
-  newUnit: string;
-  newQuantity: number | undefined;
-  newMeasurement?: string;
-}
-
-interface CalculateCupUnits {
-  newQuantity: number | undefined;
-  newMeasurement?: string;
-}
+// import { fraction } from 'mathjs';
+import Fraction from 'fraction.js';
 
 class Utils {
   toId(string: string) {
@@ -71,18 +62,25 @@ class Utils {
     measurement: Measurement,
     batchAmount: number
   ): { quantity: number | undefined; measurement?: Measurement } => {
-    const value = math.multiply(math.fraction(measurement), batchAmount);
-    const split = value.toString().split('.');
-    const q =
-      split.length > 1 && quantity ? quantity + parseInt(split[0]) : quantity;
-    const m =
-      split.length > 1
-        ? math.fraction(`0.${split[1]}`)
-        : math.fraction(value.toString());
-    const me = m.n > m.d ? '' : (`${m.n}/${m.d}` as Measurement);
+    const fr = measurement.split('/');
+
+    if (fr.length <= 1) {
+      return {
+        quantity: quantity,
+        measurement: measurement,
+      };
+    }
+
+    const value = (Number(fr[0]) / Number(fr[1])) * batchAmount;
+    const fraction = new Fraction(value).toFraction(true);
+    const split = fraction.split(' ');
+    const newQuantity = split.length > 1 ? parseInt(split[0]) : undefined;
+    const newMeasurement =
+      split.length > 1 ? (split[1] as Measurement) : (split[0] as Measurement);
+
     return {
-      quantity: q,
-      measurement: me,
+      quantity: newQuantity,
+      measurement: newMeasurement,
     };
   };
 
@@ -90,18 +88,14 @@ class Utils {
     ingredient: Ingredient,
     batchAmount: number
   ): Ingredient => {
-    const q = ingredient.quantity || 1;
-    const { quantity, measurement } = this.calculateCupUnits(
-      q * batchAmount,
-      ingredient.measurement || '',
-      batchAmount
-    );
+    const q = ingredient.quantity || 0;
     switch (ingredient.unit) {
       case 'gram':
+        const gramQuantity = q * batchAmount;
         return {
           ...ingredient,
-          quantity: q * batchAmount,
-          unit: q * batchAmount > 1000 ? 'kg' : 'gram',
+          quantity: gramQuantity >= 1000 ? gramQuantity / 1000 : gramQuantity,
+          unit: gramQuantity >= 1000 ? 'kg' : 'gram',
         };
       case 'kg':
         return {
@@ -109,39 +103,32 @@ class Utils {
           quantity: q * batchAmount,
         };
       case 'cup':
+      case 'tsp':
+      case 'tbsp':
+        const multipliedQuantity = q * batchAmount;
+        const { quantity, measurement } = this.calculateCupUnits(
+          multipliedQuantity,
+          ingredient.measurement || '',
+          batchAmount
+        );
         return {
           ...ingredient,
           quantity: quantity,
           measurement: measurement,
         };
       case 'ml':
+        const mlQuantity = q * batchAmount;
         return {
           ...ingredient,
-          quantity: q * batchAmount,
-          unit: q * batchAmount > 1000 ? 'litre' : 'ml',
+          quantity: mlQuantity >= 1000 ? mlQuantity / 1000 : mlQuantity,
+          unit: mlQuantity >= 1000 ? 'litre' : 'ml',
         };
       case 'litre':
         return {
           ...ingredient,
           quantity: q * batchAmount,
         };
-      case 'tsp':
-        return {
-          ...ingredient,
-          quantity: quantity,
-          measurement: measurement,
-        };
-      case 'tbsp':
-        return {
-          ...ingredient,
-          quantity: quantity,
-          measurement: measurement,
-        };
       case 'pinch':
-        return {
-          ...ingredient,
-          quantity: q * batchAmount,
-        };
       case 'item':
         return {
           ...ingredient,

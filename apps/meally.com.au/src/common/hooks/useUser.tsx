@@ -20,7 +20,7 @@ const useUser = () => {
     getUser().then((user) => {
       setUser(user);
     });
-  }, [user]);
+  }, []);
 
   return {
     user,

@@ -13,7 +13,6 @@ const Ingredient = ({ index, ingredient, batchAmount }: IngredientProps) => {
     ingredient,
     batchAmount
   );
-
   return (
     <div key={index} className="flex flex-row items-center py-1 gap-3">
       <input type="checkbox" />

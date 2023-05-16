@@ -5,6 +5,8 @@ export * from "./components/modules/AdBanner";
 export * from "./components/modules/loader";
 export * from "./components/modules/AddButton";
 export * from "./components/modules/Dialog";
+export * from "./components/Chip";
+
 
 // fields
 export * from "./components/fields/InputField";

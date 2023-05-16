@@ -13,7 +13,7 @@ interface IngredientProps {
 const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
   const { register, getValues, watch } = useFormContext<Recipe>();
   const activeUnit = getValues(`ingredients.${index}.unit`);
-
+  
   return (
     <section
       key={index}

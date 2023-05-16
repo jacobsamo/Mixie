@@ -74,6 +74,8 @@ const SelectComponent = ({
           )}
           {children}
           <Select
+            id={name}
+            inputId={name}
             closeMenuOnSelect={false}
             name={name}
             placeholder={focused || value ? '' : label}

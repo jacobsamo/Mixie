@@ -30,7 +30,7 @@ const RecipeFromLayout = () => {
       ...initialRecipeState,
     },
   });
-  const { control, handleSubmit, formState } = methods;
+  const { control, handleSubmit, formState, getValues } = methods;
 
   const onsubmit = async (data: Recipe) => {
     if (data) {
@@ -164,7 +164,7 @@ const RecipeFromLayout = () => {
             control={control}
           />
           <span className="w-full h-[0.125rem] my-2 mb-4 dark:bg-white bg-dark_grey rounded-md "></span>
-          
+
           <div className={styles.IngredientMethodContainer}>
             <IngredientContainer />
             <StepContainer />
