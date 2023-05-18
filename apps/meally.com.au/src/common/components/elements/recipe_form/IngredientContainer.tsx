@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
-import { AddButton, InputField } from 'shared';
+import { useCallback } from 'react';
+import { AddButton } from 'shared';
 import styles from './Form.module.scss';
 import { Ingredient } from './Ingredient';
-import { Control, useFieldArray, useFormContext } from 'react-hook-form';
-import { Recipe } from 'libs/types';
+import { useFieldArray, useFormContext } from 'react-hook-form';
+import type { Recipe, Ingredient as IngredientType } from 'libs/types';
 
 const IngredientContainer = () => {
   const { control } = useFormContext<Recipe>();
@@ -20,7 +20,7 @@ const IngredientContainer = () => {
   );
 
   const handleAddClick = useCallback(() => {
-    append({ ingredient: '', unit: 'gram', quantity: undefined });
+    append({ ingredient: '', unit: 'grams', quantity: undefined });
   }, [append]);
 
   return (
@@ -44,6 +44,13 @@ const IngredientContainer = () => {
               />
             );
           })}
+          <button
+            type="button"
+            onClick={() => {}}
+            className="text-step--3 mt-0"
+          >
+            Add Heading
+          </button>
           <AddButton
             type="button"
             name="Ingredient"

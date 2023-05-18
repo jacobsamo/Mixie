@@ -44,13 +44,13 @@ export const initialRecipeState = {
     rating: 0,
   },
   steps: [{ step_body: '' }],
-  ingredients: [{ ingredient: '', unit: 'gram', quantity: undefined }],
+  ingredients: [{ ingredient: '', unit: 'grams', quantity: undefined }],
   madeRecipe: 0,
   savedRecipe: 0,
 } as Recipe;
 
 export const units = [
-  'gram',
+  'grams',
   'kg',
   'cup',
   'ml',
@@ -74,4 +74,3 @@ export const meal_times = [
   { value: 'dessert', label: 'Dessert' },
   { value: 'snack', label: 'Snack' },
 ];
-

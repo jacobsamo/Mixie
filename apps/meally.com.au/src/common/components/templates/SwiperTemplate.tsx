@@ -32,7 +32,6 @@ const SwiperTemplate = ({ children }: SwiperTemplateProps) => {
         delay: 5000,
         disableOnInteraction: false,
       }}
-      className="w-full h-full justify-center"
     >
       {children}
     </Swiper>

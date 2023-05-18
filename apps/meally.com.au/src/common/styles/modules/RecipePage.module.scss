@@ -5,22 +5,6 @@
   margin-left: 15%;
 }
 
-.recipeTitle {
-  @apply text-step--3 font-semibold;
-  font-size: var(--step-2);
-}
-
-.recipeImage {
-  @apply rounded-xl;
-  // max-width: 50rem;
-  // max-height: 31.25rem;
-}
-
-.recipeDescription,
-.madeBy {
-  font-size: var(--step--1);
-}
-
 .IngredientMethodContainer {
   display: flex;
   flex-direction: row;
@@ -56,25 +40,6 @@
   align-items: flex-start;
   gap: 0.5rem;
   width: 100%;
-}
-
-.steps {
-  @apply bg-white text-black dark:bg-dark_grey dark:text-white;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: var(--space-xs);
-  gap: 0.25rem;
-  border-radius: 1rem;
-  height: fit-content;
-  width: 100%;
-  flex-grow: 1;
-}
-
-.step_method {
-  white-space: normal;
-  font-size: var(--step-0);
 }
 
 .ingredientTitle,
@@ -129,7 +94,7 @@
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .method_container {
     padding: 0;
   }

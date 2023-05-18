@@ -6,7 +6,7 @@ interface ChipProps {
   handleRemove?: (index: number) => void;
 }
 
-const Chip = ({ fields, handleRemove = () => {} }: ChipProps) => {
+const Chip = ({ fields, handleRemove }: ChipProps) => {
   return (
     <div className="flex flex-row flex-wrap gap-1 w-72">
       {fields.map((field: any, index: any) => (

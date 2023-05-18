@@ -30,7 +30,7 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
         <AuthDialog open={dialogOpen} setOpen={handleAuthDialogClose} />
         <main className={styles.mainContainer}>
           <section className="flex flex-row items-center flex-wrap">
-            <h1 className={styles.recipeTitle}>{recipe.recipeName}</h1>
+            <h1 className="text-step2 font-semibold">{recipe.recipeName}</h1>
             <span className="flex flex-row pl-4">
               <StarIcon
                 className={`${
@@ -76,20 +76,18 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
               'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png'
             }
             alt={recipe.image.imgAlt || recipe.recipeName || 'recipe image'}
-            className={styles.recipeImage}
+            className="rounded-xl"
             width={800}
             height={600}
             priority
           />
-          <h1 className={styles.recipeDescription}>
-            {recipe.recipeDescription}
-          </h1>
-          <h1 className={styles.madeBy}>
+          <h1 className="text-step--3">
             Recipe by:
             <Link href={`/profile/${recipe.createdBy.userName}`}>
               {recipe.createdBy.displayName}
             </Link>
           </h1>
+          <h1 className="text-step--3">{recipe.recipeDescription}</h1>
           <span className="w-full h-[0.125rem] my-2 mb-4 dark:bg-white bg-dark_grey rounded-md "></span>
 
           <div
@@ -134,7 +132,6 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
                       <Step
                         index={index}
                         key={index}
-                        steps={recipe.steps}
                         step={step}
                         ingredients={recipe.ingredients}
                       />

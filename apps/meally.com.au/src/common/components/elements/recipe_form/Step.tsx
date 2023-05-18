@@ -1,9 +1,7 @@
-import React, { useCallback, useState, useEffect } from 'react';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { TextArea } from 'shared';
-import { Control, useFormContext } from 'react-hook-form';
+import {  useFormContext } from 'react-hook-form';
 import { Recipe } from 'libs/types';
-import styles from '@styles/modules/RecipePage.module.scss'
 
 interface StepProps {
   index: number;
@@ -16,7 +14,7 @@ const Step = ({ index, handleDelete }: StepProps) => {
   return (
     <section
       key={index}
-      className={styles.steps}
+      className="relative flex flex-col items-start p-3 rounded-2xl h-fit w-full flex-grow bg-white text-black dark:bg-dark_grey dark:text-white"
     >
       <h1 className="font-medium font-Roboto text-step0">Step {index + 1}</h1>
       <TextArea

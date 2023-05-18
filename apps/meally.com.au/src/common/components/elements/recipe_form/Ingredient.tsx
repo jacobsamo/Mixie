@@ -3,6 +3,7 @@ import styles from './Form.module.scss';
 import { units } from '@lib/service/data';
 import { useFormContext } from 'react-hook-form';
 import { Ingredient, Recipe } from 'libs/types';
+import { DragIndicator } from '@mui/icons-material';
 
 interface IngredientProps {
   index: number;
@@ -13,12 +14,13 @@ interface IngredientProps {
 const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
   const { register, getValues, watch } = useFormContext<Recipe>();
   const activeUnit = getValues(`ingredients.${index}.unit`);
-  
+
   return (
     <section
       key={index}
       className={`${styles.ingredient} dark:bg-dark_grey dark:shadow-none shadow-main dark:text-white text-black bg-white rounded-md`}
     >
+      <DragIndicator className="w-6 h-6 text-white bg-white" />
       <input
         {...register(`ingredients.${index}.ingredient`)}
         type="text"
@@ -56,7 +58,7 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
             {...register(`ingredients.${index}.measurement`)}
           >
             <option value=""></option>
-            <option value="1/2">1/2 {}</option>
+            <option value="1/2">1/2 {activeUnit}</option>
             <option value="1/2">1/3 {activeUnit}</option>
             <option value="1/2">2/3 {activeUnit}</option>
             <option value="1/4">1/4 {activeUnit}</option>

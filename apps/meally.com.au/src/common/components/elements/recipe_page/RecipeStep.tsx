@@ -1,26 +1,27 @@
 import React from 'react';
 import styles from '@styles/modules/RecipePage.module.scss';
-import type { Ingredient, Step as StepType } from 'libs/types';
+import type { Ingredient, Step } from 'libs/types';
 import { Chip } from 'shared';
+import IngredientChips from './IngredientChips';
+
 interface StepProps {
   index: number;
-  step: StepType;
-  steps: StepType[];
+  step: Step;
   ingredients: Ingredient[];
 }
 
-const Step = ({ index, steps, step, ingredients }: StepProps) => {
-  const ingredientsList = ingredients.map((ingredient) => {
-    return step.step_body.includes(ingredient.ingredient);
-  });
+const Step = ({ index, step, ingredients }: StepProps) => {
   return (
     <>
-      <section key={index} className={styles.steps}>
+      <section
+        key={index}
+        className="relative flex flex-col items-start p-4 gap-1 rounded-2xl w-full h-fit flex-grow bg-white text-black dark:bg-dark_grey dark:text-white"
+      >
         <h1 className="font-medium font-Roboto text-step--2">
           Step {index + 1}
         </h1>
-        <p className={styles.step_method}>{step.step_body}</p>
-        <Chip fields={ingredientsList} />
+        <p className="whitespace-normal text-step--2">{step.step_body}</p>
+        <IngredientChips step={step} ingredients={ingredients} />
       </section>
     </>
   );

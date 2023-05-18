@@ -11,7 +11,9 @@ import useAuth from 'src/common/hooks/useAuth';
 import AuthDialog from '@components/elements/AuthDialog';
 
 //swiper
-import { SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper';
+
 import SwiperTemplate from '@components/templates/SwiperTemplate';
 
 interface HomeProps {
@@ -44,7 +46,23 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
           <AlgoliaDialog buttonType="searchBar" />
         </section>
         <section className="pt-9 ">
-          <SwiperTemplate>
+          <Swiper
+            loop
+            grabCursor
+            slidesPerView={3}
+            spaceBetween={710}
+            centeredSlides={true}
+            centerInsufficientSlides={true}
+            pagination={{
+              clickable: true,
+            }}
+            modules={[Pagination, Autoplay, Navigation]}
+            navigation={true}
+            autoplay={{
+              delay: 5000,
+              disableOnInteraction: false,
+            }}
+          >
             {latestRecipes ? (
               latestRecipes.map((item: Recipe, index: number) => (
                 <SwiperSlide key={index}>
@@ -64,7 +82,7 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
             ) : (
               <h1>No Recipes at this point in time</h1>
             )}
-          </SwiperTemplate>
+          </Swiper>
         </section>
         <div className={styles.sweet_savouryContainer}>
           <section className={styles.sweet_savourySection}>

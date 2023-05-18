@@ -90,12 +90,12 @@ class Utils {
   ): Ingredient => {
     const q = ingredient.quantity || 0;
     switch (ingredient.unit) {
-      case 'gram':
+      case 'grams':
         const gramQuantity = q * batchAmount;
         return {
           ...ingredient,
           quantity: gramQuantity >= 1000 ? gramQuantity / 1000 : gramQuantity,
-          unit: gramQuantity >= 1000 ? 'kg' : 'gram',
+          unit: gramQuantity >= 1000 ? 'kg' : 'grams',
         };
       case 'kg':
         return {
@@ -113,7 +113,7 @@ class Utils {
         );
         return {
           ...ingredient,
-          quantity: quantity,
+          quantity: quantity ,
           measurement: measurement,
         };
       case 'ml':

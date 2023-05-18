@@ -1,13 +1,8 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { AddButton } from 'shared';
 import { Step } from './Step';
 import styles from './Form.module.scss';
-import {
-  Control,
-  useFieldArray,
-  useForm,
-  useFormContext,
-} from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { Recipe } from 'libs/types';
 
 const StepContainer = () => {
@@ -30,7 +25,7 @@ const StepContainer = () => {
 
   return (
     <article className={styles.method_container}>
-      <div className="flex flex-col items-start gap-2 max-w-lg w-auto lg:w-full">
+      <div className="flex flex-col items-center gap-2 w-full mb-4">
         {fields.map((field, index: number) => {
           return (
             <Step index={index} handleDelete={handleDelete} key={field.id} />

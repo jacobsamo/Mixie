@@ -53,7 +53,7 @@ export interface Ingredient {
 export type Measurement = "" | "1/2" | "1/3" | "2/3" | "1/4" | "3/4";
 
 export type Unit =
-  | "gram"
+  | "grams"
   | "kg"
   | "cup"
   | "ml"
