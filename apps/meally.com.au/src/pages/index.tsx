@@ -11,8 +11,9 @@ import useAuth from 'src/common/hooks/useAuth';
 import AuthDialog from '@components/elements/AuthDialog';
 
 //swiper
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/react-splide/css';
+// import { Navigation, Pagination, Autoplay } from 'swiper';
 
 import SwiperTemplate from '@components/templates/SwiperTemplate';
 
@@ -46,26 +47,20 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
           <AlgoliaDialog buttonType="searchBar" />
         </section>
         <section className="pt-9 ">
-          <Swiper
-            loop
-            grabCursor
-            slidesPerView={3}
-            spaceBetween={710}
-            centeredSlides={true}
-            centerInsufficientSlides={true}
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Pagination, Autoplay, Navigation]}
-            navigation={true}
-            autoplay={{
-              delay: 5000,
-              disableOnInteraction: false,
+          <Splide
+            options={{
+              type: 'loop',
+              gap: '1rem',
+              autoplay: true,
+              pauseOnHover: false,
+              resetProgress: false,
+              focus: 'center',
+              perPage: 3,
             }}
           >
             {latestRecipes ? (
               latestRecipes.map((item: Recipe, index: number) => (
-                <SwiperSlide key={index}>
+                <SplideSlide key={index}>
                   <CardRectangle
                     title={item.recipeName}
                     id={item.id}
@@ -77,12 +72,12 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
                       imgAlt: item.image?.imgAlt || '',
                     }}
                   />
-                </SwiperSlide>
+                </SplideSlide>
               ))
             ) : (
               <h1>No Recipes at this point in time</h1>
             )}
-          </Swiper>
+          </Splide>
         </section>
         <div className={styles.sweet_savouryContainer}>
           <section className={styles.sweet_savourySection}>

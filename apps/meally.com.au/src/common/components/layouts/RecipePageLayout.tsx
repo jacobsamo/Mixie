@@ -2,7 +2,12 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 //types
-import type { Recipe, Info } from 'libs/types';
+import type {
+  Recipe,
+  Info,
+  Ingredient as IngredientType,
+  Heading as HeadingType,
+} from 'libs/types';
 import styles from '@styles/modules/RecipePage.module.scss';
 //icons
 import { StarIcon } from '@heroicons/react/24/outline';
@@ -115,14 +120,19 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
                   className={`${styles.recipeIngredients} flex flex-col w-[14.5rem] gap-3`}
                 >
                   <AddBatch add={add} setAdd={setAdd} />
-                  {recipe.ingredients.map((ingredient, index) => (
-                    <Ingredient
-                      key={index}
-                      index={index}
-                      ingredient={ingredient}
-                      batchAmount={add}
-                    />
-                  ))}
+                  {recipe.ingredients.map((ingredient, index) => {
+                    if (ingredient instanceof HeadingType)
+                    // if (ingredient instanceof HeadingType) {
+                    //   <Ingredient
+                    //     key={index}
+                    //     index={index}
+                    //     ingredient={ingredient}
+                    //     batchAmount={add}
+                    //   />;
+                    // } 
+                    return <></>
+                  
+                  })}
                 </section>
               </article>
               <article className={` ${styles.method_container}`}>

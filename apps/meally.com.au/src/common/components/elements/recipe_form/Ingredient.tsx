@@ -3,7 +3,6 @@ import styles from './Form.module.scss';
 import { units } from '@lib/service/data';
 import { useFormContext } from 'react-hook-form';
 import { Ingredient, Recipe } from 'libs/types';
-import { DragIndicator } from '@mui/icons-material';
 
 interface IngredientProps {
   index: number;
@@ -20,7 +19,6 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
       key={index}
       className={`${styles.ingredient} dark:bg-dark_grey dark:shadow-none shadow-main dark:text-white text-black bg-white rounded-md`}
     >
-      <DragIndicator className="w-6 h-6 text-white bg-white" />
       <input
         {...register(`ingredients.${index}.ingredient`)}
         type="text"
