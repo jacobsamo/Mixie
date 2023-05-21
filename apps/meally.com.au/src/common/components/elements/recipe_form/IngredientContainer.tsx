@@ -6,10 +6,11 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 import type { Recipe, Ingredient as IngredientType } from 'libs/types';
 import { defaultInputStyles } from '@styles/defaultStyles';
 import { TrashIcon } from '@heroicons/react/24/outline';
+import Draggable from 'react-draggable';
 
 const IngredientContainer = () => {
   const { control, register } = useFormContext<Recipe>();
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, move } = useFieldArray({
     control,
     name: 'ingredients',
   });
@@ -29,43 +30,62 @@ const IngredientContainer = () => {
     append({ heading: '' });
   }, [append]);
 
+  const handleSwap = useCallback(
+    (sourceIndex: number, targetIndex: number) => {
+      move(sourceIndex, targetIndex);
+    },
+    [move]
+  );
+
   return (
     <>
       <article>
         <section
           className={`${styles.recipeIngredients} flex flex-col w-[12.5rem] gap-3 dark:bg-dark_grey dark:shadow-none shadow-main dark:text-white text-black bg-white`}
         >
-          {fields.map((field, index) => {
-            if ('ingredient' in field) {
-              return (
-                <Ingredient
-                  index={index}
-                  values={{
-                    ingredient: field.ingredient,
-                    unit: field.unit,
-                    quantity: field.quantity,
-                    measurement: field.measurement,
-                  }}
-                  handleDelete={handleDelete}
-                  key={field.id}
-                />
-              );
-            } else {
-              return (
-                <div className="flex flex-row">
-                  <input
-                    className={defaultInputStyles}
-                    {...register(`ingredients.${index}.heading` as const)}
-                    defaultValue={field.heading}
+          <Draggable
+            axis="y"
+            onStop={(sourceIndex, targetIndex) =>
+              handleSwap(sourceIndex, targetIndex)
+            }
+          >
+            {fields.map((field, index) => {
+              if (
+                'ingredient' in field &&
+                'unit' in field &&
+                'quantity' in field &&
+                'measurement' in field
+              ) {
+                return (
+                  <Ingredient
+                    index={index}
+                    values={{
+                      ingredient: field.ingredient,
+                      unit: field.unit,
+                      quantity: field.quantity,
+                      measurement: field.measurement,
+                    }}
+                    handleDelete={handleDelete}
                     key={field.id}
                   />
-                  <button onClick={() => handleDelete(index)} type="button">
-                    <TrashIcon className="h-6 w-6" />
-                  </button>
-                </div>
-              );
-            }
-          })}
+                );
+              } else {
+                return (
+                  <div className="flex flex-row">
+                    <input
+                      className={defaultInputStyles}
+                      {...register(`ingredients.${index}.heading` as const)}
+                      defaultValue={field.heading}
+                      key={field.id}
+                    />
+                    <button onClick={() => handleDelete(index)} type="button">
+                      <TrashIcon className="h-6 w-6" />
+                    </button>
+                  </div>
+                );
+              }
+            })}
+          </Draggable>
           <button
             type="button"
             onClick={() => handleHeadingClick()}

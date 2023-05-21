@@ -22,6 +22,7 @@ import Button from 'shared/src/components/buttons/Button';
 import UserService from '@lib/service/UserService';
 import Utils from '@lib/service/Utils';
 import useUser from 'src/common/hooks/useUser';
+import { useToast } from 'shared/src/components/toast/use-toast';
 
 const RecipeFromLayout = () => {
   const loggedInUser = useUser();
@@ -30,7 +31,8 @@ const RecipeFromLayout = () => {
       ...initialRecipeState,
     },
   });
-  const { control, handleSubmit, formState, getValues } = methods;
+  const { control, handleSubmit, formState, reset } = methods;
+  const { toast } = useToast();
 
   const onsubmit = async (data: Recipe) => {
     if (data) {
@@ -69,7 +71,21 @@ const RecipeFromLayout = () => {
           lastViewed: recipe.createdAt,
           privacy: 'public',
         });
-        await RecipeService.createRecipe(recipe);
+        await RecipeService.createRecipe(recipe).then((res) => {
+          if (res.status === 200) {
+            toast({
+              title: 'Recipe created.',
+              description: 'Your recipe has been created.',
+            });
+            reset();
+          } else {
+            toast({
+              title: 'Uh oh! Something went wrong.',
+              description: 'There was an error while creating your recipe.',
+              variant: 'destructive',
+            });
+          }
+        });
       }
       console.log('Recipe has been created: ', recipe);
     }

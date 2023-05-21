@@ -41,7 +41,6 @@ export const initialRecipeState = {
     prep: '',
     cook: '',
     serves: undefined,
-    rating: 0,
   },
   steps: [{ step_body: '' }],
   ingredients: [{ ingredient: '', unit: 'grams', quantity: undefined }],

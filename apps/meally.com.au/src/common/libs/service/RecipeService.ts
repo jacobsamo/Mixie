@@ -19,7 +19,7 @@ import { db, auth } from '@lib/config/firebase';
 class RecipeService {
   async createRecipe(
     post: Recipe
-  ): Promise<Recipe | { message: string | Error; status: number }> {
+  ): Promise<{ message: string | Error; status: number }> {
     try {
       await setDoc(doc(db, 'recipes', post.id), post);
       return { message: 'Recipe created successfully', status: 200 };
