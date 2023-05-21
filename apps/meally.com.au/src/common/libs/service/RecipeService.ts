@@ -13,7 +13,7 @@ import {
   where,
   Timestamp,
 } from 'firebase/firestore';
-import type { Recipe, SimplifiedRecipe } from 'libs/types';
+import type { Rating, RatingScale, Recipe, SimplifiedRecipe } from 'libs/types';
 import { db, auth } from '@lib/config/firebase';
 
 class RecipeService {
@@ -102,6 +102,27 @@ class RecipeService {
 
     if (docSnap.exists()) {
       const data = docSnap.data() as Recipe;
+      const querySnapshot = await getDocs(
+        collection(doc(db, 'recipes', data.id), 'rating')
+      );
+
+      let totalRating = 0;
+      let ratingCount = 0;
+
+      querySnapshot.forEach((doc) => {
+        const ratingData = doc.data() as Rating;
+        totalRating += ratingData.rating;
+        ratingCount++;
+      });
+
+      if (ratingCount > 0) {
+        const averageRating = totalRating / ratingCount;
+        const roundedAverageRating = Math.round(averageRating);
+
+        data.info.rating = roundedAverageRating as RatingScale;
+      } else {
+        data.info.rating = 0;
+      }
       data.createdAt.toDate();
       return data;
     } else {
@@ -122,10 +143,28 @@ class RecipeService {
     return recipes;
   }
 
-  async updateRecipe(id: string, data: any) {
+  async updateRecipe(id: string, data: Recipe) {
     const docRef = doc(db, 'recipes', id);
     const updatedDoc = await updateDoc(docRef, data);
     return updatedDoc;
+  }
+
+  async getRating(id: string) {}
+
+  async updateRating(
+    id: string,
+    data: Rating
+  ): Promise<{ message: string; status: number }> {
+    const user = auth.currentUser;
+    if (user) {
+      const docRef = doc(
+        collection(doc(db, 'recipes', id), 'rating'),
+        user.uid
+      );
+      await setDoc(docRef, data);
+      return { message: 'Successfully updated rating', status: 200 };
+    }
+    return { message: 'User not authenticated', status: 401 };
   }
 
   async deleteRecipe(id: string) {

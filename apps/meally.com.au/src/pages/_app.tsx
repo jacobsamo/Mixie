@@ -11,6 +11,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import Navbar from '@components/modules/Navbar';
 import Auth from '@components/elements/Auth';
+import { Toaster } from 'shared/src/components/toast/toaster';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -21,6 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Navbar />
       <Auth />
       <Component {...pageProps} />
+      <Toaster />
     </>
   );
 }

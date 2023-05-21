@@ -13,9 +13,7 @@ import AuthDialog from '@components/elements/AuthDialog';
 //swiper
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
-// import { Navigation, Pagination, Autoplay } from 'swiper';
 
-import SwiperTemplate from '@components/templates/SwiperTemplate';
 
 interface HomeProps {
   sweet: Recipe[];
@@ -24,7 +22,7 @@ interface HomeProps {
 }
 
 const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
-  const { dialogOpen, handleAuthClick, handleAuthDialogClose } = useAuth();
+  const { dialogOpen, handleAuthDialogClose } = useAuth();
 
   return (
     <>
@@ -50,17 +48,17 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
           <Splide
             options={{
               type: 'loop',
-              gap: '1rem',
+              gap: '10rem',
               autoplay: true,
               pauseOnHover: false,
               resetProgress: false,
               focus: 'center',
-              perPage: 3,
+              // perPage: 3,
             }}
           >
             {latestRecipes ? (
               latestRecipes.map((item: Recipe, index: number) => (
-                <SplideSlide key={index}>
+                <SplideSlide key={index} >
                   <CardRectangle
                     title={item.recipeName}
                     id={item.id}

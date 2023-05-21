@@ -1,13 +1,8 @@
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 //types
-import type {
-  Recipe,
-  Info,
-  Ingredient as IngredientType,
-  Heading as HeadingType,
-} from 'libs/types';
+import type { Recipe, Info, Rating, RatingScale } from 'libs/types';
 import styles from '@styles/modules/RecipePage.module.scss';
 //icons
 import { StarIcon } from '@heroicons/react/24/outline';
@@ -19,6 +14,9 @@ import Step from '@components/elements/recipe_page/RecipeStep';
 import AuthDialog from '@components/elements/AuthDialog';
 import useAuth from 'src/common/hooks/useAuth';
 import Utils from '@lib/service/Utils';
+import StarRating from '@components/elements/recipe_page/StarRating';
+import RecipeService from '@lib/service/RecipeService';
+import useUser from 'src/common/hooks/useUser';
 
 interface RecipePageLayoutProps {
   recipe: Recipe;
@@ -26,9 +24,28 @@ interface RecipePageLayoutProps {
 
 function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
   const { dialogOpen, handleAuthDialogClose } = useAuth();
+  const [rating, setRating] = useState<RatingScale | undefined>(undefined);
   const [methodOpen, setMethodOpen] = useState(false);
   const [add, setAdd] = useState(1);
   const info = recipe.info as Info;
+  const { user } = useUser();
+  // const rating = info.rating || 0;
+
+  const handleChange = (newRating: RatingScale): void => {
+    if (user && newRating !== rating) {
+      setRating(newRating);
+      const updatedRating: Rating = {
+        rating: newRating,
+        user: {
+          uid: user.uid,
+          displayName: user.displayName,
+        },
+      };
+
+      RecipeService.updateRating(recipe.id, updatedRating);
+    }
+  };
+
   if (recipe !== null) {
     return (
       <>
@@ -37,40 +54,44 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
           <section className="flex flex-row items-center flex-wrap">
             <h1 className="text-step2 font-semibold">{recipe.recipeName}</h1>
             <span className="flex flex-row pl-4">
-              <StarIcon
+              {/* <StarIcon
                 className={`${
-                  info.rating >= 1
+                  rating >= 1
                     ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
                     : 'text-[#3e3e3e]'
                 } w-6 h-6`}
               />
               <StarIcon
                 className={`${
-                  info.rating >= 2
+                  rating >= 2
                     ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
                     : 'text-[#3e3e3e]'
                 } w-6 h-6`}
               />
               <StarIcon
                 className={`${
-                  info.rating >= 3
+                  rating >= 3
                     ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
                     : 'text-[#3e3e3e]'
                 } w-6 h-6`}
               />
               <StarIcon
                 className={`${
-                  info.rating >= 4
+                  rating >= 4
                     ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
                     : 'text-[#3e3e3e]'
                 } w-6 h-6`}
               />
               <StarIcon
                 className={`${
-                  info.rating >= 5
+                  rating >= 5
                     ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
                     : 'text-[#3e3e3e]'
                 } w-6 h-6`}
+              /> */}
+              <StarRating
+                rating={rating || info.rating}
+                setRating={handleChange}
               />
             </span>
           </section>
@@ -121,17 +142,20 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
                 >
                   <AddBatch add={add} setAdd={setAdd} />
                   {recipe.ingredients.map((ingredient, index) => {
-                    if (ingredient instanceof HeadingType)
-                    // if (ingredient instanceof HeadingType) {
-                    //   <Ingredient
-                    //     key={index}
-                    //     index={index}
-                    //     ingredient={ingredient}
-                    //     batchAmount={add}
-                    //   />;
-                    // } 
-                    return <></>
-                  
+                    if ('ingredient' in ingredient) {
+                      <Ingredient
+                        key={index}
+                        index={index}
+                        ingredient={ingredient}
+                        batchAmount={add}
+                      />;
+                    } else {
+                      return (
+                        <h1 key={index} className="text-step--3 font-semibold">
+                          {ingredient.heading}
+                        </h1>
+                      );
+                    }
                   })}
                 </section>
               </article>

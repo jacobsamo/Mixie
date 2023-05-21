@@ -1,12 +1,14 @@
 import { useCallback } from 'react';
-import { AddButton } from 'shared';
+import { AddButton, InputField } from 'shared';
 import styles from './Form.module.scss';
 import { Ingredient } from './Ingredient';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import type { Recipe, Ingredient as IngredientType } from 'libs/types';
+import { defaultInputStyles } from '@styles/defaultStyles';
+import { TrashIcon } from '@heroicons/react/24/outline';
 
 const IngredientContainer = () => {
-  const { control, getValues } = useFormContext<Recipe>();
+  const { control, register } = useFormContext<Recipe>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'ingredients',
@@ -23,6 +25,10 @@ const IngredientContainer = () => {
     append({ ingredient: '', unit: 'grams', quantity: undefined });
   }, [append]);
 
+  const handleHeadingClick = useCallback(() => {
+    append({ heading: '' });
+  }, [append]);
+
   return (
     <>
       <article>
@@ -30,11 +36,7 @@ const IngredientContainer = () => {
           className={`${styles.recipeIngredients} flex flex-col w-[12.5rem] gap-3 dark:bg-dark_grey dark:shadow-none shadow-main dark:text-white text-black bg-white`}
         >
           {fields.map((field, index) => {
-            if (getValues(`ingredients.${index}.heading`)) {
-              return (
-                <li>{field.heading}</li>
-              )
-            } else {
+            if ('ingredient' in field) {
               return (
                 <Ingredient
                   index={index}
@@ -48,11 +50,25 @@ const IngredientContainer = () => {
                   key={field.id}
                 />
               );
+            } else {
+              return (
+                <div className="flex flex-row">
+                  <input
+                    className={defaultInputStyles}
+                    {...register(`ingredients.${index}.heading` as const)}
+                    defaultValue={field.heading}
+                    key={field.id}
+                  />
+                  <button onClick={() => handleDelete(index)} type="button">
+                    <TrashIcon className="h-6 w-6" />
+                  </button>
+                </div>
+              );
             }
           })}
           <button
             type="button"
-            onClick={() => {}}
+            onClick={() => handleHeadingClick()}
             className="text-step--3 mt-0"
           >
             Add Heading

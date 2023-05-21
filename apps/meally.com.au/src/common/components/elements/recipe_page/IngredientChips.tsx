@@ -19,7 +19,9 @@ const IngredientChips = ({ ingredients, step }: IngredientChipsProps) => {
   return (
     <div className="flex flex-row flex-wrap gap-1 w-full">
       {ingredients.map((ingredient, index) => {
+        if (ingredient.heading) return null;
         if (
+          ingredient.ingredient &&
           step.step_body
             .toLowerCase()
             .includes(ingredient.ingredient.toLowerCase())
