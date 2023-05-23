@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { PlusCircleIcon, MinusCircleIcon } from '@heroicons/react/24/outline';
 
 interface AddBatchProps {
-  add: number,
-  setAdd: React.Dispatch<React.SetStateAction<number>>
+  add: number;
+  setAdd: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const AddBatch = ({add, setAdd}: AddBatchProps) => {
+const AddBatch = ({ add, setAdd }: AddBatchProps) => {
   const [batchTitle, setBatchTitle] = useState('Batch');
 
   useEffect(() => {

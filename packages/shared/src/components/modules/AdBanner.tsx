@@ -4,7 +4,6 @@ import { GoogleAdsenseWidget } from "next-google-ads";
 import Script from "next/script";
 import React from "react";
 
-
 /**
  * An Ad banner component
  * @returns jsx

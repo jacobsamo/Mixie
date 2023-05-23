@@ -29,9 +29,9 @@ const nextConfig = {
       'dr.savee-cdn.com',
     ],
   },
-  experimental: {
-    appDir: true,
-  },
+  // experimental: {
+  //   appDir: true,
+  // },
 };
 
 module.exports = withPWA(nextConfig);

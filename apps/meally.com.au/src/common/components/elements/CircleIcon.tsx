@@ -1,6 +1,10 @@
 import React from 'react';
 
-const CircleIcon = ({ className }: { className?: string }): React.ReactElement => {
+const CircleIcon = ({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

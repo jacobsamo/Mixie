@@ -113,7 +113,7 @@ class Utils {
         );
         return {
           ...ingredient,
-          quantity: quantity ,
+          quantity: quantity,
           measurement: measurement,
         };
       case 'ml':

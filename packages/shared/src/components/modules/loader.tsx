@@ -1,7 +1,6 @@
 import React from "react";
 import "./loader.css";
 
-
 /**
  * Spinning loader for when you are waiting for a response
  * @returns Spinning loader

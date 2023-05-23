@@ -17,6 +17,7 @@ All shared code is now under [packages](./packages/) and all apps are under [app
 - Firebase-cli >= 11.19.0
 
 ### Committing changes
+
 In this project we use commit messages to better identify the changes along with making things more clear.
 
 FEAT: Use this keyword to indicate that you are committing to a new feature.
@@ -54,7 +55,6 @@ CI: Use this keyword to indicate that you are making changes to the continuous i
 
 BUILD: Use this keyword to indicate that you are making changes to the build process.
 "BUILD: Add new script for building the production version of the app."
-
 
 ### Before requesting a PR
 

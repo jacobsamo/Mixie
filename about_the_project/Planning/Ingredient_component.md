@@ -1,9 +1,7 @@
-So the ingredient component needs a lot of reworking so it works with react hook form 
+So the ingredient component needs a lot of reworking so it works with react hook form
 
+orginal code:
 
-
-
-orginal code: 
 ```jsx
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { index } from 'mathjs';
@@ -13,7 +11,7 @@ import styles from './Form.module.scss';
 import { units } from '@lib/service/data';
 import { Control, UseFormRegister, UseFormSetValue, UseFormGetValues } from 'react-hook-form';
 
-/* 
+/*
 ====================================
           Interfaces
 ====================================

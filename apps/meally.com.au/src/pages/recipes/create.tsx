@@ -6,7 +6,6 @@ import Custom404 from '@components/layouts/Custom404';
 import useUser from 'src/common/hooks/useUser';
 import { auth } from '@lib/config/firebase';
 
-
 const Create: NextPage = () => {
   const user = useUser();
 

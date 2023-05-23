@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "firebase-import": "firebase emulators:start --import=./seed",
     "firebase:start": "firebase emulators:start  --import=./seed",
     "dev": "next dev",
     "build": "next build",

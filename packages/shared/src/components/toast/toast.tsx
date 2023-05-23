@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ToastPrimitives from "@radix-ui/react-toast";
 import { VariantProps, cva } from "class-variance-authority";
-import { ClassValue, clsx } from "clsx"
+import { ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 

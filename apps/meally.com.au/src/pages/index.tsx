@@ -14,7 +14,6 @@ import AuthDialog from '@components/elements/AuthDialog';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 
-
 interface HomeProps {
   sweet: Recipe[];
   savoury: Recipe[];
@@ -58,7 +57,7 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
           >
             {latestRecipes ? (
               latestRecipes.map((item: Recipe, index: number) => (
-                <SplideSlide key={index} >
+                <SplideSlide key={index}>
                   <CardRectangle
                     title={item.recipeName}
                     id={item.id}

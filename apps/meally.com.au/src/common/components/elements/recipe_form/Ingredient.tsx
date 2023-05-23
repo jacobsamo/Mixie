@@ -48,7 +48,9 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
         {...register(`ingredients.${index}.quantity`, { min: 0 })}
         className="w-20 h-10 rounded-md p-2 text-step--4 dark:outline-none outline outline-1"
       />
-      {['cup', 'tbsp', 'tsp'].includes(watch(`ingredients.${index}.unit`) || '') ? (
+      {['cup', 'tbsp', 'tsp'].includes(
+        watch(`ingredients.${index}.unit`) || ''
+      ) ? (
         <>
           <select
             id={`ingredients.${index}.measurement`}
