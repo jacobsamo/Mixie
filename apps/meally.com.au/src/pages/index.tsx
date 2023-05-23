@@ -11,8 +11,8 @@ import useAuth from 'src/common/hooks/useAuth';
 import AuthDialog from '@components/elements/AuthDialog';
 
 //swiper
-import { SwiperSlide } from 'swiper/react';
-import SwiperTemplate from '@components/templates/SwiperTemplate';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/react-splide/css';
 
 interface HomeProps {
   sweet: Recipe[];
@@ -21,7 +21,7 @@ interface HomeProps {
 }
 
 const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
-  const { dialogOpen, handleAuthClick, handleAuthDialogClose } = useAuth();
+  const { dialogOpen, handleAuthDialogClose } = useAuth();
 
   return (
     <>
@@ -44,10 +44,20 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
           <AlgoliaDialog buttonType="searchBar" />
         </section>
         <section className="pt-9 ">
-          <SwiperTemplate>
+          <Splide
+            options={{
+              type: 'loop',
+              gap: '10rem',
+              autoplay: true,
+              pauseOnHover: false,
+              resetProgress: false,
+              focus: 'center',
+              // perPage: 3,
+            }}
+          >
             {latestRecipes ? (
               latestRecipes.map((item: Recipe, index: number) => (
-                <SwiperSlide key={index}>
+                <SplideSlide key={index}>
                   <CardRectangle
                     title={item.recipeName}
                     id={item.id}
@@ -59,12 +69,12 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
                       imgAlt: item.image?.imgAlt || '',
                     }}
                   />
-                </SwiperSlide>
+                </SplideSlide>
               ))
             ) : (
               <h1>No Recipes at this point in time</h1>
             )}
-          </SwiperTemplate>
+          </Splide>
         </section>
         <div className={styles.sweet_savouryContainer}>
           <section className={styles.sweet_savourySection}>
@@ -116,9 +126,9 @@ export async function getStaticProps() {
   const savoury = await RecipeService.getRecipesByCategory('savoury');
   return {
     props: {
-      latestRecipes: latestRecipes,
-      sweet: sweet,
-      savoury: savoury,
+      latestRecipes: JSON.parse(JSON.stringify(latestRecipes)),
+      sweet: JSON.parse(JSON.stringify(sweet)),
+      savoury: JSON.parse(JSON.stringify(savoury)),
     },
     revalidate: 60 * 60 * 24 * 7,
   };

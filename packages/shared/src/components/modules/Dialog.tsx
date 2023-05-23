@@ -1,10 +1,14 @@
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useRef } from "react";
+import { Dialog as HeadlessDialog } from "@headlessui/react";
 
 interface DialogProps {
   isOpen: boolean;
   setOpen: (open: boolean) => void;
   children: React.ReactNode;
-  className?: string;
+  classNames?: {
+    container?: string;
+    overlay?: string;
+  };
   closeKeys?: string[];
   openKeys?: string[];
   closeOnOutsideClick?: boolean;
@@ -33,71 +37,37 @@ const Dialog = ({
   isOpen,
   setOpen,
   children,
-  className,
-  closeKeys = ["Escape"],
+  classNames,
+  closeKeys = [],
   openKeys = [],
-  closeOnOutsideClick = true,
-  closeOnEscape = true,
 }: DialogProps) => {
   const dialogRef = useRef<HTMLDivElement>(null);
 
-  const handleKeyDown = useCallback(
-    (event: KeyboardEvent) => {
-      if (isOpen && closeKeys.includes(event.key)) {
-        setOpen(false);
-      }
-      if (!isOpen && openKeys.includes(event.key)) {
-        setOpen(true);
-      }
-    },
-    [isOpen, setOpen, closeKeys, openKeys]
-  );
-
-  const handleOutsideClick = useCallback(
-    (event: TouchEvent | MouseEvent) => {
-      if (
-        closeOnOutsideClick &&
-        dialogRef.current &&
-        !dialogRef.current.contains(event.target as Node)
-      ) {
-        setOpen(false);
-      }
-    },
-    [closeOnOutsideClick, dialogRef, setOpen]
-  );
-
-  const handleEscape = useCallback(
-    (event: KeyboardEvent) => {
-      if (closeOnEscape && event.key === "Escape") {
-        setOpen(false);
-      }
-    },
-    [closeOnEscape, setOpen]
-  );
-
-  useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("touchstart", handleOutsideClick);
-    document.removeEventListener("mousedown", handleOutsideClick);
-    document.addEventListener("keydown", handleEscape);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("touchstart", handleOutsideClick);
-      document.removeEventListener("mousedown", handleOutsideClick);
-      document.removeEventListener("keydown", handleEscape);
-    };
-  }, [handleKeyDown, handleOutsideClick, handleEscape]);
+  function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (closeKeys.includes(event.key)) {
+      setOpen(false);
+    } else if (openKeys.includes(event.key)) {
+      setOpen(true);
+    }
+  }
 
   return (
     <>
-      {isOpen && (
-        <div className="fixed flex justify-center items-center inset-0 z-50 backdrop-blur-sm">
-          <div ref={dialogRef} className={className || ""}>
+      <HeadlessDialog
+        open={isOpen}
+        onClose={() => setOpen(false)}
+        onKeyDown={handleKeyDown}
+        as="div"
+        className="fixed inset-0 flex items-center justify-center z-50"
+      >
+        <HeadlessDialog.Panel
+          className={`dark:bg-dark_grey dark:shadow-none shadow-main dark:text-white text-black bg-white rounded-md p-1 ${classNames?.overlay}`}
+        >
+          <div ref={dialogRef} className={classNames?.container}>
             {children}
           </div>
-        </div>
-      )}
+        </HeadlessDialog.Panel>
+      </HeadlessDialog>
     </>
   );
 };

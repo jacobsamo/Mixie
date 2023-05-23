@@ -1,18 +1,12 @@
 import React, { ReactElement, useState } from "react";
 import InnerLabel from "./InnerLabel";
-
-import {
-  UseFormRegister,
-  RegisterOptions,
-  Control,
-  useController,
-  Controller,
-} from "react-hook-form";
+import { RegisterOptions, Control, Controller } from "react-hook-form";
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
   name: string;
   label: string;
+  hint?: string;
   type?: string;
   control: Control<any>;
   required?: boolean;
@@ -25,6 +19,7 @@ function InputFieldComponent(
     id,
     name,
     label,
+    hint,
     type,
     control,
     required,
@@ -44,16 +39,12 @@ function InputFieldComponent(
       name={name}
       defaultValue={defaultValue || ""}
       rules={{ required: required, ...options }}
-      render={({
-        field,
-        fieldState: { invalid, isTouched, isDirty, error },
-        formState,
-      }) => (
+      render={({ field, fieldState }) => (
         <div
           ref={containerRef}
           className="flex flex-col dark:outline dark:shadow-none dark:outline-grey dark:outline-1 focus:outline-1 shadow-main flex-1 items-start max-w-full rounded-md p-1 text-step--2 dark:bg-dark_grey bg-white"
         >
-          {(focused || field.value) && (
+          {(focused || fieldState.isDirty) && (
             <InnerLabel label={label} id={id} className="text-step--3" />
           )}
           <input
@@ -69,6 +60,11 @@ function InputFieldComponent(
             className="w-full dark:bg-dark_grey bg-white focus:outline-none"
             {...props}
           />
+          {hint ? (
+            <p className="text-[0.78rem] font-thin italic">{hint}</p>
+          ) : (
+            false
+          )}
         </div>
       )}
     />

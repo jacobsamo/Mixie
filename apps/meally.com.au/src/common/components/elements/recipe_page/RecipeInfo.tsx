@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from '@styles/modules/RecipePage.module.scss';
 import { Info } from 'libs/types';
-import TimelapseOutlinedIcon from '@mui/icons-material/TimelapseOutlined';
-import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
+import { TimelapseOutlined, TimerOutlined } from '@mui/icons-material';
+
 import { ClockIcon, StarIcon } from '@heroicons/react/24/outline';
 
 interface InfoComponentProps {
@@ -34,9 +34,7 @@ const InfoComponent = ({ info, recipeName }: InfoComponentProps) => {
           {info.serves} {recipeName}
         </li>
         <li className="flex flex-row items-center gap-1">
-          <TimelapseOutlinedIcon
-            style={{ width: '1.5rem', height: '1.5rem' }}
-          />
+          <TimelapseOutlined style={{ width: '1.5rem', height: '1.5rem' }} />
           Prep {info.prep}
         </li>
         <li className="flex flex-row items-center gap-1">
@@ -44,7 +42,7 @@ const InfoComponent = ({ info, recipeName }: InfoComponentProps) => {
           {info.cook}
         </li>
         <li className="flex flex-row items-center gap-1">
-          <TimerOutlinedIcon style={{ width: '1.5rem', height: '1.5rem' }} />
+          <TimerOutlined style={{ width: '1.5rem', height: '1.5rem' }} />
           Total {info.total}
         </li>
       </ul>

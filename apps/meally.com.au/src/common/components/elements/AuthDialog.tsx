@@ -9,13 +9,29 @@ import AuthService from '@lib/service/AuthService';
 
 interface AuthDialogProps {
   user?: User | undefined;
+  requiresAuth?: true | undefined;
+  canClose?: true | false;
   setUser?: (value: User) => void;
-  open: boolean;
-  setOpen: (value: boolean) => void;
+  open?: boolean;
+  setOpen?: (value: boolean) => void;
 }
 
-const AuthDialog = ({ user, setUser, open, setOpen }: AuthDialogProps) => {
+const AuthDialog = ({
+  user,
+  setUser,
+  requiresAuth,
+  canClose,
+  open,
+  setOpen,
+}: AuthDialogProps) => {
+  const [internalOpen, setInternalOpen] = useState(false);
   const [internalUser, setInternalUser] = useState<User | undefined>();
+
+  useEffect(() => {
+    if (requiresAuth) {
+      setOpen ? setOpen(true) : setInternalOpen(true);
+    }
+  }, []);
 
   const handleGithubClick = async () => {
     try {
@@ -25,7 +41,7 @@ const AuthDialog = ({ user, setUser, open, setOpen }: AuthDialogProps) => {
           setUser ? setUser(result.user) : setInternalUser(result.user);
         }
       );
-      setOpen(false);
+      setOpen ? setOpen(false) : setInternalOpen(false);
     } catch (error) {
       console.error(error);
     }
@@ -39,7 +55,7 @@ const AuthDialog = ({ user, setUser, open, setOpen }: AuthDialogProps) => {
           setUser ? setUser(result.user) : setInternalUser(result.user);
         }
       );
-      setOpen(false);
+      setOpen ? setOpen(false) : setInternalOpen(false);
     } catch (error) {
       console.error(error);
     }
@@ -53,7 +69,7 @@ const AuthDialog = ({ user, setUser, open, setOpen }: AuthDialogProps) => {
           setUser ? setUser(result.user) : setInternalUser(result.user);
         }
       );
-      setOpen(false);
+      setOpen ? setOpen(false) : setInternalOpen(false);
     } catch (error) {
       console.error(error);
     }
@@ -67,7 +83,7 @@ const AuthDialog = ({ user, setUser, open, setOpen }: AuthDialogProps) => {
           setUser ? setUser(result.user) : setInternalUser(result.user);
         }
       );
-      setOpen(false);
+      setOpen ? setOpen(false) : setInternalOpen(false);
     } catch (error) {
       console.error(error);
     }
@@ -80,24 +96,35 @@ const AuthDialog = ({ user, setUser, open, setOpen }: AuthDialogProps) => {
       }
     });
     if (user || internalUser) {
-      setOpen(false);
+      setOpen ? setOpen(false) : setInternalOpen(false);
     }
   }, [user, internalUser]);
 
   return (
     <>
       <Dialog
-        isOpen={open}
-        setOpen={() => setOpen(!open)}
+        isOpen={open || internalOpen}
+        setOpen={() =>
+          canClose
+            ? setOpen
+              ? setOpen(!open)
+              : setInternalOpen(!internalOpen)
+            : () => {}
+        }
         closeOnEscape={true}
         closeOnOutsideClick={true}
-        className="flex flex-col justify-center items-center gap-2 sticky w-96 h-max dark:bg-dark_grey bg-white rounded-2xl p-2"
+        classNames={{
+          container:
+            'flex flex-col justify-center items-center gap-2 sticky w-96 h-max dark:bg-dark_grey bg-white rounded-2xl p-2',
+        }}
       >
         <div className="justify-center w-full flex flex-row">
           <h1>Sign up to Meally</h1>
           <button
             type="button"
-            onClick={() => setOpen(!open)}
+            onClick={() =>
+              setOpen ? setOpen(!open) : setInternalOpen(!internalOpen)
+            }
             className="absolute right-2"
           >
             <XMarkIcon className="w-6 h-6" />

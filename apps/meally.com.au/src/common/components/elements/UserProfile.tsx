@@ -12,7 +12,6 @@ const UserProfile = () => {
   const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  // const { handleAuthClick } = useAuth();
 
   const handleSignOut = () => {
     AuthService.signOutUser();
@@ -55,7 +54,7 @@ const UserProfile = () => {
             </Link>
 
             <Link href="/account/bookmarks">Bookmarks</Link>
-
+            <Link href="/recipes/create">Create Recipe</Link>
             <Link href="/settings/profile">Settings</Link>
 
             <button onClick={handleSignOut}>Logout</button>

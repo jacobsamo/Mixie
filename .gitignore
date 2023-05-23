@@ -6,7 +6,7 @@ node_modules
 .pnp.js
 
 # misc
-.VsCodeCounter
+.VSCodeCounter
 
 # testing
 coverage

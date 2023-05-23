@@ -12,7 +12,8 @@ const buttonStyles = cva(
       },
       intent: {
         primary: "bg-blue text-white hover:bg-primary-dark",
-        secondary: "bg-transparent dark:text-white text-black hover:bg-secondary-dark",
+        secondary:
+          "bg-transparent dark:text-white text-black hover:bg-secondary-dark",
       },
       disabled: {
         true: "opacity-50 cursor-not-allowed",
@@ -45,13 +46,11 @@ const Button = ({
   className,
   ...props
 }: ButtonProps) => {
-  const classNames = buttonStyles({ intent, size, disabled }) + (className ? ` ${className}` : '');
+  const classNames =
+    buttonStyles({ intent, size, disabled }) +
+    (className ? ` ${className}` : "");
   return (
-    <button
-      className={classNames}
-      onClick={onClick}
-      {...props}
-    >
+    <button className={classNames} onClick={onClick} {...props}>
       {children}
     </button>
   );

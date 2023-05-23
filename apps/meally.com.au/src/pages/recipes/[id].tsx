@@ -24,7 +24,7 @@ export default function RecipePage({ recipe }: recipePageProps) {
         imageUrl={recipe.image.imgUrl || ''}
         keywords={recipe.keywords.join(', ')}
         info=""
-        createdAt={recipe.createdAt || ''}
+        createdAt={recipe.createdAt}
       />
       <RecipePageLayout recipe={recipe} />
     </>
@@ -45,7 +45,10 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context: any) {
-  const recipe = await RecipeService.getRecipe(context.params.id);
+  const recipe = JSON.parse(
+    JSON.stringify(await RecipeService.getRecipe(context.params.id))
+  );
+
   if (!recipe || !Object.keys(recipe).length) {
     return {
       notFound: true,

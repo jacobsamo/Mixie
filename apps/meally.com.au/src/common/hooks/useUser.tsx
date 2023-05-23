@@ -1,4 +1,5 @@
-import localStorage from 'libs/utils/localStorage';
+'use client';
+import localStorage from 'libs/utils/localStorageService';
 import React, { useCallback, useEffect, useState } from 'react';
 import { User } from 'libs/types';
 
@@ -19,7 +20,7 @@ const useUser = () => {
     getUser().then((user) => {
       setUser(user);
     });
-  }, [user]);
+  }, []);
 
   return {
     user,

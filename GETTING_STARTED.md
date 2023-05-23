@@ -36,7 +36,7 @@ If you are new to the project and want to help out but don't know where to start
 
 ## file structure
 
-The repo uses a custom Nextjs 13 file structure with [Turborepo](https://turbo.build/repo). The project has been set up as a monorepo with multiple apps and packages. 
+The repo uses a custom Nextjs 13 file structure with [Turborepo](https://turbo.build/repo). The project has been set up as a monorepo with multiple apps and packages.
 All apps live under the [apps directory](./apps/) and packages that are shared between apps are under [packages](./packages/).
 
 ## Workspaces
@@ -48,6 +48,7 @@ If you aren't familiar with Workspaces they are pretty much ways of separating w
 Through this project there is mostly a consistent code style so it is easy to follow and understand no matter where you are in the project. When working on the project it would be greatly appreciated if you could follow this style.
 
 ### Passing props
+
 Passing props
 
 ```jsx

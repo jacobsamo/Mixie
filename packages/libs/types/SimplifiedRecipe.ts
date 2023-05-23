@@ -32,4 +32,9 @@ export interface SimplifiedRecipe {
    * @description The last time the recipe was viewed or saved depends wether it was saved a bookmark or saved as history
    */
   lastViewed: Timestamp;
+  /**
+   * @description privacy is used to determine whether the recipe is public or private
+   * either "public" or "private"
+   */
+  privacy: "public" | "private";
 }

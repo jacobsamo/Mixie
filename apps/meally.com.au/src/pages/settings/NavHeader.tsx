@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import { cva } from 'class-variance-authority';
 import { useRouter } from 'next/router';
 
-
 const linkStyles = cva('text-step--2', {
   variants: {
     selected: {

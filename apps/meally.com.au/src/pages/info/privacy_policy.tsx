@@ -41,7 +41,7 @@ export default function Privacy_Policy() {
               come in which are provided by{' '}
               <Link
                 href="https://adsense.google.com/start/"
-                target='_black'
+                target="_black"
                 className="underline underline-offset-0 text-blue"
               >
                 Adsense
@@ -85,7 +85,7 @@ export default function Privacy_Policy() {
               read more{' '}
               <Link
                 href="/info/terms_services"
-                target='_black'
+                target="_black"
                 className="underline underline-offset-0 text-blue"
               >
                 here

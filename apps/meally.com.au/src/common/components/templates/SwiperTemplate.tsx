@@ -10,10 +10,10 @@ interface SwiperTemplateProps {
   children: React.ReactNode;
 }
 
-/**   
-   * Simple use of the swiper component  
-   * @param children - JSX of the slides to be displayed in the swiper with the SwiperSlide component.
-   */
+/**
+ * Simple use of the swiper component
+ * @param children - JSX of the slides to be displayed in the swiper with the SwiperSlide component.
+ */
 const SwiperTemplate = ({ children }: SwiperTemplateProps) => {
   return (
     <Swiper
@@ -32,7 +32,6 @@ const SwiperTemplate = ({ children }: SwiperTemplateProps) => {
         delay: 5000,
         disableOnInteraction: false,
       }}
-      className="w-full h-full justify-center"
     >
       {children}
     </Swiper>
@@ -40,5 +39,3 @@ const SwiperTemplate = ({ children }: SwiperTemplateProps) => {
 };
 
 export default SwiperTemplate;
-
-

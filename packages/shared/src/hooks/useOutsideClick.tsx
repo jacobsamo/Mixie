@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 function useOutsideClick(ref: any) {
   useEffect(() => {
@@ -13,10 +13,10 @@ function useOutsideClick(ref: any) {
     }
 
     // Bind the event listener
-    document.addEventListener('touchstart', handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
     return () => {
       // Unbind the event listener on clean up
-      document.removeEventListener('touchstart', handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
     };
   }, [ref]);
 }

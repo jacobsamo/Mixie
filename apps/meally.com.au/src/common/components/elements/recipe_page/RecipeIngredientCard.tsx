@@ -1,18 +1,25 @@
 import React from 'react';
-import styles from '@styles/modules/RecipePage.module.scss';
+import { Ingredient } from 'libs/types';
+import Utils from '@lib/service/Utils';
 
 interface IngredientProps {
-  ingredient: string;
+  index: number;
+  ingredient: Ingredient;
+  batchAmount: number;
 }
 
-const Ingredient = ({ ingredient }: IngredientProps) => {
+const Ingredient = ({ index, ingredient, batchAmount }: IngredientProps) => {
+  const calculateIngredient = Utils.calculateIngredient(
+    ingredient,
+    batchAmount
+  );
   return (
-    <div
-      key={ingredient.length}
-      className="flex flex-row items-center py-1 gap-3"
-    >
+    <div key={index} className="flex flex-row items-center py-1 gap-3">
       <input type="checkbox" />
-      <h1>{ingredient}</h1>
+      <h1>
+        {calculateIngredient.ingredient} {calculateIngredient.quantity}{' '}
+        {calculateIngredient.measurement} {calculateIngredient.unit}
+      </h1>
     </div>
   );
 };
