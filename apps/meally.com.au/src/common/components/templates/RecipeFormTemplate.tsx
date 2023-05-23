@@ -94,7 +94,10 @@ const RecipeFromLayout = () => {
   return (
     <main className="pb-20">
       <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onsubmit)} className={styles.recipeForm}>
+        <form
+          onSubmit={handleSubmit(onsubmit)}
+          className="flex flex-col sm:gap1 sm:p-3 sm:w-3/5 sm:first-letter:mr-auto sm:ml-[15%] w-full gap-3 p-1 m-0"
+        >
           <InputField
             id="recipeName"
             name="recipeName"
@@ -181,7 +184,7 @@ const RecipeFromLayout = () => {
           />
           <span className="w-full h-[0.125rem] my-2 mb-4 dark:bg-white bg-dark_grey rounded-md "></span>
 
-          <div className={styles.IngredientMethodContainer}>
+          <div className="flex flex-row flex-wrap items-start p-0 sm:gap-8 gap-3 h-fit sm:w-full">
             <IngredientContainer />
             <StepContainer />
           </div>

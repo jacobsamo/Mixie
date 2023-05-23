@@ -1,10 +1,6 @@
 import React, { ReactElement, useState } from "react";
 import InnerLabel from "./InnerLabel";
-import {
-  RegisterOptions,
-  Control,
-  Controller,
-} from "react-hook-form";
+import { RegisterOptions, Control, Controller } from "react-hook-form";
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
@@ -43,10 +39,7 @@ function InputFieldComponent(
       name={name}
       defaultValue={defaultValue || ""}
       rules={{ required: required, ...options }}
-      render={({
-        field,
-        fieldState
-      }) => (
+      render={({ field, fieldState }) => (
         <div
           ref={containerRef}
           className="flex flex-col dark:outline dark:shadow-none dark:outline-grey dark:outline-1 focus:outline-1 shadow-main flex-1 items-start max-w-full rounded-md p-1 text-step--2 dark:bg-dark_grey bg-white"

@@ -85,16 +85,6 @@
   font-size: var(--step--2);
 }
 
-.IngredientMethodContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  align-items: flex-start;
-  padding: 0;
-  gap: 0.75;
-  height: fit-content;
-}
-
 .recipeIngredients {
   @apply text-black dark:text-white dark:bg-dark_grey bg-white;
   border-radius: 1rem;
@@ -107,9 +97,7 @@
 }
 
 .method_container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @apply flex flex-col items-center gap-2 mb-4;
   padding: 0 3rem 3.25rem 0.75rem;
 }
 
@@ -206,15 +194,6 @@
     width: 100%;
     margin-right: 0;
     margin-left: 0;
-  }
-
-  .IngredientMethodContainer {
-    @apply flex flex-col w-full;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2rem;
   }
 
   .method_container {

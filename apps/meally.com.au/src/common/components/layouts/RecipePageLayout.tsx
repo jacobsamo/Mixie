@@ -143,12 +143,14 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
                   <AddBatch add={add} setAdd={setAdd} />
                   {recipe.ingredients.map((ingredient, index) => {
                     if ('ingredient' in ingredient) {
-                      <Ingredient
-                        key={index}
-                        index={index}
-                        ingredient={ingredient}
-                        batchAmount={add}
-                      />;
+                      return (
+                        <Ingredient
+                          key={index}
+                          index={index}
+                          ingredient={ingredient}
+                          batchAmount={add}
+                        />
+                      );
                     } else {
                       return (
                         <h1 key={index} className="text-step--3 font-semibold">
