@@ -50,22 +50,22 @@ class AuthService {
   }
 
   async signInWithGoogle() {
-    const credential = signInWithPopup(auth, new GoogleAuthProvider());
+    const credential = await signInWithPopup(auth, new GoogleAuthProvider());
     return credential;
   }
 
   async signInWithGithub() {
-    const credential = signInWithPopup(auth, new GithubAuthProvider());
+    const credential = await signInWithPopup(auth, new GithubAuthProvider());
     return credential;
   }
 
   async signInWithFacebook() {
-    const credential = signInWithPopup(auth, new FacebookAuthProvider());
+    const credential = await signInWithPopup(auth, new FacebookAuthProvider());
     return credential;
   }
 
   async signInWithTwitter() {
-    const credential = signInWithPopup(auth, new TwitterAuthProvider());
+    const credential = await signInWithPopup(auth, new TwitterAuthProvider());
     return credential;
   }
 
