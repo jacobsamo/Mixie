@@ -3,9 +3,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { auth } from '@lib/config/firebase';
 import type { User } from 'firebase/auth';
-import AuthService from '@lib/service/AuthService';
+
 import AuthDialog from '@components/elements/AuthDialog';
 import useAuth from 'src/common/hooks/useAuth';
+import AuthService from '@lib/service/Authentication'; 
+
 
 const UserProfile = () => {
   const [user, setUser] = useState<User>();

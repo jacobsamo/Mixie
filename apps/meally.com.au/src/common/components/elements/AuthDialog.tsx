@@ -5,7 +5,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { auth } from '@lib/config/firebase';
 import type { User, UserCredential } from 'firebase/auth';
-import AuthService from '@lib/service/AuthService';
+import AuthService from '@lib/service/Authentication'; 
 
 interface AuthDialogProps {
   user?: User | undefined;
