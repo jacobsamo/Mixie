@@ -24,6 +24,7 @@ start just the one you want
 ```bash
     npm run dev --filter *app name*
     # e.g npm run dev --filter meally.com.au
+    # e.g npm run dev --filter meally.com.au
 ```
 
 ## Contributing

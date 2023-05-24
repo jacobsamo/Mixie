@@ -24,10 +24,10 @@
   "packageManager": "yarn@1.22.19",
   "dependencies": {
     "@manypkg/cli": "^0.20.0",
-    "dotenv-cli": "^7.2.1",
+    "dotenv-cli": "latest",
     "eslint": "^8.36.0",
     "eslint-config-custom": "*",
     "prettier": "2.8.7",
-    "turbo": "^1.8.8"
+    "turbo": "^1.8.6"
   }
 }

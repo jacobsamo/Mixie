@@ -9,6 +9,8 @@ Look to [getting started](./GETTING_STARTED.md) for more information on how to g
 
 This repo was migrated from Nextjs 12 to a monorepo using Turborepo and Nextjs 13 for it's app. with huge improvements in build times and code structure.
 All shared code is now under [packages](./packages/) and all apps are under [apps](./apps/).
+This repo was migrated from Nextjs 12 to a monorepo using Turborepo and Nextjs 13 for it's app. with huge improvements in build times and code structure.
+All shared code is now under [packages](./packages/) and all apps are under [apps](./apps/).
 
 ### Requirements
 

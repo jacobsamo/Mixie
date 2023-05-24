@@ -28,6 +28,7 @@ class RecipeService {
       return { message: e, status: 400 };
     }
   }
+  
 
   async getLatestRecipes(limitAmount?: number) {
     const recipeRef = collection(db, 'recipes');

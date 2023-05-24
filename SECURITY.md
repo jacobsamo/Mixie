@@ -1,8 +1,8 @@
 # Security Policy
-
 Apart of the security we strive to keep our users safe while on our platform however from time to time without us knowing about it a vulnerability shows up. If you believe you have found any vulnerability we encourage you tol et us know right away.
 
 ## Reporting a Vulnerability
+First and for most **DON'T** report it under Bugs
 
 First and for most **DON'T** report it under Bugs
 

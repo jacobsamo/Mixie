@@ -38,3 +38,5 @@ export interface SimplifiedRecipe {
    */
   privacy: "public" | "private";
 }
+
+export type { SimplifiedRecipe };
