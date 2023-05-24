@@ -4,7 +4,7 @@ import { Timestamp } from "firebase/firestore";
 /**
  * @description A simplified version of the recipe that is used for Bookmarks and tracking history
  */
-export interface SimplifiedRecipe {
+export type SimplifiedRecipe = {
   /**
    * @description The id of the recipe usually the same as the recipeName but in lowercase and with spaces replaced with hyphens
    * @example "chocolate-cake"
@@ -39,4 +39,3 @@ export interface SimplifiedRecipe {
   privacy: "public" | "private";
 }
 
-export type { SimplifiedRecipe };
