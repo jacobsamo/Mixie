@@ -7,7 +7,7 @@ import Link from 'next/link';
 interface CardProps {
   title: string;
   id: string;
-  totalTime: number;
+  totalTime: string;
   handleClick: () => void;
   image: ImageProps;
 }
@@ -19,14 +19,14 @@ const CardSquare = ({
   handleClick,
   image,
 }: CardProps) => {
-  const time = totalTime < 60 ? `${totalTime} mins` : `${totalTime / 60} hrs`;
+  // const time = totalTime < 60 ? `${totalTime} mins` : `${totalTime / 60} hrs`;
   return (
     <div className="relative flex p-2 items-center justify-between flex-col h-58 w-58 rounded-xl text-black dark:text-white">
       <Link href={`/recipes/${id}`} className="text-center text-step--2">
         {title}
       </Link>
       <div className="flex flex-row w-full justify-between ">
-        <h3 className="w-fit whitespace-nowrap">{time}</h3>
+        <h3 className="w-fit whitespace-nowrap">{totalTime}</h3>
         <button onClick={handleClick}>
           <HeartIcon className="w-8 h-8 cursor-pointer" />
           {/* Change width and height on different component types */}
@@ -49,14 +49,14 @@ const CardRectangleSmall = ({
   handleClick,
   image,
 }: CardProps) => {
-  const time = totalTime < 60 ? `${totalTime} mins` : `${totalTime / 60} hrs`;
+  // const time = totalTime < 60 ? `${totalTime} mins` : `${totalTime / 60} hrs`;
   return (
     <div className="relative flex p-2 items-center justify-between flex-col h-58 w-46 rounded-xl text-black dark:text-white">
       <Link href={`/recipes/${id}`} className="text-center text-step--2">
         {title}
       </Link>
       <div className="flex flex-row w-full justify-between ">
-        <h3 className="w-fit whitespace-nowrap">{time}</h3>
+        <h3 className="w-fit whitespace-nowrap">{totalTime}</h3>
         <button onClick={handleClick}>
           <HeartIcon className="w-8 h-8 cursor-pointer" />
           {/* Change width and height on different component types */}
@@ -79,7 +79,7 @@ const CardRectangle = ({
   handleClick,
   image,
 }: CardProps) => {
-  const time = totalTime < 60 ? `${totalTime} mins` : `${totalTime / 60} hrs`;
+  // const time = totalTime < 60 ? `${totalTime} mins` : `${totalTime / 60} hrs`;
   return (
     <div className="relative flex flex-col p-2 items-center justify-between  h-64 w-[43.75rem] resize rounded-xl text-black dark:text-white">
       <Link href={`/recipes/${id}`} className="text-center text-step1">

@@ -9,6 +9,8 @@ Look to [getting started](./GETTING_STARTED.md) for more information on how to g
 
 This repo was migrated from Nextjs 12 to a monorepo using Turborepo and Nextjs 13 for it's app. with huge improvements in build times and code structure.
 All shared code is now under [packages](./packages/) and all apps are under [apps](./apps/).
+This repo was migrated from Nextjs 12 to a monorepo using Turborepo and Nextjs 13 for it's app. with huge improvements in build times and code structure.
+All shared code is now under [packages](./packages/) and all apps are under [apps](./apps/).
 
 ### Requirements
 
@@ -17,11 +19,11 @@ All shared code is now under [packages](./packages/) and all apps are under [app
 - Firebase-cli >= 11.19.0
 
 ### Committing changes
+
 In this project we use commit messages to better identify the changes along with making things more clear.
 
 FEAT: Use this keyword to indicate that you are committing to a new feature.
 "FEAT: Add new login functionality."
-
 
 CHANGE: Use this keyword to indicate that you are committing to a change in functionality.
 "CHANGE: Update login functionality to use new API."
@@ -56,15 +58,15 @@ CI: Use this keyword to indicate that you are making changes to the continuous i
 BUILD: Use this keyword to indicate that you are making changes to the build process.
 "BUILD: Add new script for building the production version of the app."
 
-
 ### Before requesting a PR
 
 Before requesting a PR please make sure you have the following:
 
 1. Made Tests for what you have added (if applicable)
 2. Run `yarn dev`
-3. run `yarn build`
-4. Fix any issues, bugs or errors in the build step
-5. run `yarn start` go through your change and test for every case there could be and fix any issues
+3. Run `yarn upgrade-interactive`
+4. run `yarn build`
+5. Fix any issues, bugs or errors in the build step
+6. run `yarn start` go through your change and test for every case there could be and fix any issues
 
 If you have learnt anything new on the project please add to [what you have learnt](./about_the_project/things_learnt/) by create a file with your name and adding what you have learnt. e.g: `John_doe.md` or `John.d.md`

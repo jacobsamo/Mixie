@@ -46,7 +46,6 @@ const updatedRecipe = {
 };
 
 const index = () => {
-  console.log(auth.currentUser);
   return (
     <>
       <button

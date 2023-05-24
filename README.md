@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.meally.com.au/">
-    <img src="./public/icons/maskable_icons/maskable_icon_x128.png" style="border-radius: 9999px" height="128">
+    <img src="https://www.meally.com.au/favicon.ico" style="border-radius: 9999px" height="128">
     <h1 align="center">Meally</h1>
   </a>
 </p>
@@ -33,6 +33,10 @@ If you are new to the project and want to help out but don't know where to start
 ## Security Policy
 
 If you have found or believe you have found any vulnerabilities than please read our [security policy](./SECURITY.md) for more information.
+
+## Licensing
+
+This project is licensed under the [GPL 3.0](./LICENSE) and all apps are licensed under [AGPL 3.0](./apps/meally.com.au/LICENSE). please for each part that you plan to copy or redistribute read the lisente for that part. if it's not clear please contact us. if the part doesn't have a license than refer to the global license.
 
 ## General idea
 

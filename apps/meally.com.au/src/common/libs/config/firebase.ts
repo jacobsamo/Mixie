@@ -2,6 +2,7 @@ import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAnalytics, isSupported } from 'firebase/analytics';
 import { getAuth, connectAuthEmulator } from 'firebase/auth';
 import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
+import { getStorage, connectStorageEmulator } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -18,7 +19,7 @@ const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
 const db = getFirestore(app);
 const auth = getAuth();
-
+const storage = getStorage(app);
 const analytics = isSupported().then((yes) => (yes ? getAnalytics(app) : null));
 
 declare global {
@@ -30,7 +31,8 @@ const EMULATORS_STARTED = 'EMULATORS_STARTED';
 function startEmulators() {
   if (!global[EMULATORS_STARTED]) {
     global[EMULATORS_STARTED] = true;
-    connectFirestoreEmulator(db, 'localhost', 8080);
+    connectFirestoreEmulator(db, 'localhost', 8000);
+    connectStorageEmulator(storage, 'localhost', 9199);
     connectAuthEmulator(auth, 'http://localhost:9099');
   }
 }
@@ -39,4 +41,4 @@ if (process.env.NODE_ENV === 'development') {
   startEmulators();
 }
 
-export { db, auth, analytics };
+export { db, auth, storage, analytics };

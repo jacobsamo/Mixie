@@ -4,6 +4,8 @@ Apart of the security we strive to keep our users safe while on our platform how
 ## Reporting a Vulnerability
 First and for most **DON'T** report it under Bugs
 
+First and for most **DON'T** report it under Bugs
+
 When reporting a vulnerability please [Email Me](jacob35422@gmail.com) straight away so i can get to fixing it ASAP, when doing so please explain the following:
 
 1. How it occurred

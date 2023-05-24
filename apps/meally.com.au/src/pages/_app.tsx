@@ -1,6 +1,6 @@
 //types
 import type { AppProps } from 'next/app';
-import Script from 'next/script';
+import Head from 'next/head';
 
 //styles
 import '@styles/globals.scss';
@@ -9,21 +9,20 @@ import 'tailwindcss/tailwind.css';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import Navbar from '@components/modules/Navbar';
+import Auth from '@components/elements/Auth';
+import { Toaster } from 'shared/src/components/toast/toaster';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Script
-        id="Absence-banner"
-        async
-        strategy="afterInteractive"
-        onError={(e: any) => {
-          console.error('Script failed to load', e);
-        }}
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1553721231977629"
-        crossOrigin="anonymous"
-      />
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
+      <Navbar />
+      <Auth />
       <Component {...pageProps} />
+      <Toaster />
     </>
   );
 }

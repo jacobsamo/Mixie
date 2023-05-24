@@ -5,7 +5,7 @@ import type { Recipe, Info } from 'libs/types';
 import RecipeService from '@lib/service/RecipeService';
 
 //components
-import { RecipeSeo } from 'ui';
+import { RecipeSeo } from 'shared';
 import Navbar from '@components/modules/Navbar';
 import RecipePageLayout from '@components/layouts/RecipePageLayout';
 import { useRouter } from 'next/router';
@@ -15,7 +15,6 @@ interface recipePageProps {
 }
 
 export default function RecipePage({ recipe }: recipePageProps) {
-
   return (
     <>
       <RecipeSeo
@@ -25,9 +24,8 @@ export default function RecipePage({ recipe }: recipePageProps) {
         imageUrl={recipe.image.imgUrl || ''}
         keywords={recipe.keywords.join(', ')}
         info=""
-        createdAt={recipe.createdAt || ''}
+        createdAt={recipe.createdAt}
       />
-      <Navbar />
       <RecipePageLayout recipe={recipe} />
     </>
   );
@@ -47,7 +45,10 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context: any) {
-  const recipe = await RecipeService.getRecipe(context.params.id);
+  const recipe = JSON.parse(
+    JSON.stringify(await RecipeService.getRecipe(context.params.id))
+  );
+
   if (!recipe || !Object.keys(recipe).length) {
     return {
       notFound: true,

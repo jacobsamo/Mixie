@@ -3,23 +3,37 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@lib/*": ["src/common/libs/*"],
-      "@components/*": ["src/common/components/*"],
-      "@component_styles/*": ["src/common/components/styles/*"],
-      "@styles/*": ["src/common/styles/*"]
+      "@lib/*": [
+        "src/common/libs/*"
+      ],
+      "@components/*": [
+        "src/common/components/*"
+      ],
+      "@component_styles/*": [
+        "src/common/components/styles/*"
+      ],
+      "@styles/*": [
+        "src/common/styles/*"
+      ]
     },
     "plugins": [
       {
         "name": "next"
       }
-    ]
+    ],
+    "strictNullChecks": true
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/common/components/modules/Navbar.tsx"
+    "../../packages/shared/src/hooks/useOutsideClick.tsx",
+    "../../packages/shared/src/hooks/useOutsideClick.tsx",
+    "scripts/generate-sitemap.mjs",
+    "scripts/generate-sitemap.mjs"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

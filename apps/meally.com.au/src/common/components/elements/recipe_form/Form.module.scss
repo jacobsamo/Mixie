@@ -1,48 +1,43 @@
 .recipeForm {
-  @apply flex flex-col gap-1 p-3;
+  @apply flex flex-col gap-3 p-3;
   width: 55%;
   margin-right: auto;
   margin-left: 15%;
 }
 
-.recipeForm input {
-  width: 18.75rem;
-  height: 2.5rem;
-  border-radius: 5px;
-  padding: 0.5rem;
-  font-size: var(--step--1);
-}
+// .recipeForm input {
+//   width: 18.75rem;
+//   height: 2.5rem;
+//   border-radius: 5px;
+//   padding: 0.5rem;
+//   font-size: var(--step--1);
+// }
 
-.recipeForm input:focus {
-  @apply border-black dark:border-white;
-}
+// .recipeForm input:focus {
+//   @apply border-black dark:border-white;
+// }
 
 .fileInput {
-  @apply flex justify-center items-center;
+  @apply flex justify-center items-center dark:bg-dark_grey bg-white;
   box-sizing: border-box;
   resize: horizontal;
   min-width: 18.75rem;
   height: 31.25rem;
-
-  background: linear-gradient(
-    235.91deg,
-    rgba(168, 168, 168, 0.5) -0.39%,
-    rgba(186, 186, 186, 0) 102.95%
-  );
   border: 4px solid #000000;
   border-radius: 0.75rem;
 }
 
-.recipeForm select {
-  width: 18.75rem;
-  height: 2.5rem;
-  border-radius: 5px;
-  padding: 0.5rem;
-  font-size: var(--step--1);
-}
+// .recipeForm select {
+//   @apply dark:bg-dark_grey dark:shadow-none bg-white shadow-main;
+//   width: 18.75rem;
+//   height: 2.5rem;
+//   border-radius: 5px;
+//   padding: 0.5rem;
+//   font-size: var(--step--1);
+// }
 
 .textarea_container {
-  @apply flex flex-col  gap-1;
+  @apply flex flex-col gap-1 h-fit w-auto;
   width: auto;
   height: fit-content;
 }
@@ -56,31 +51,31 @@
   resize: none;
 }
 
-.textarea_tags {
-  @apply flex flex-row flex-wrap gap-1;
-  width: 18.75rem;
-}
-.textarea_tags span {
-  @apply flex justify-center items-center gap-1 dark:text-white text-black dark:bg-grey bg-white;
-  width: fit-content;
-  height: 1.5rem;
-  border-radius: 5px;
-  padding: 0.5rem;
-  font-size: var(--step--2);
-}
+// .textarea_tags {
+//   @apply flex flex-row flex-wrap gap-1 w-72;
+//   width: 18.75rem;
+// }
+// .textarea_tags span {
+//   @apply flex justify-center items-center w-fit h-6 p-2 rounded-lg text-step--2 gap-1 dark:text-white text-black dark:bg-grey bg-white;
+//   width: fit-content;
+//   height: 1.5rem;
+//   border-radius: 5px;
+//   padding: 0.5rem;
+//   font-size: var(--step--2);
+// }
 
 // step & ingredient container
 
 .ingredient {
   @apply flex flex-row items-center py-1 gap-1 flex-grow;
 }
-.ingredient input {
-  width: 7rem;
-  height: 2rem;
-  // border-radius: 0.5rem;
-  padding: 0.25rem;
-  font-size: var(--step--2);
-}
+// .ingredient input {
+//   width: 7rem;
+//   height: 2rem;
+//   // border-radius: 0.5rem;
+//   padding: 0.25rem;
+//   font-size: var(--step--2);
+// }
 
 .ingredient select {
   width: fit-content;
@@ -88,16 +83,6 @@
   border-radius: 0.5rem;
   padding: 0.5rem;
   font-size: var(--step--2);
-}
-
-.IngredientMethodContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  align-items: flex-start;
-  padding: 0;
-  gap: 0.75;
-  height: fit-content;
 }
 
 .recipeIngredients {
@@ -112,9 +97,7 @@
 }
 
 .method_container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @apply flex flex-col items-center gap-2 mb-4;
   padding: 0 3rem 3.25rem 0.75rem;
 }
 
@@ -199,24 +182,18 @@
 }
 
 @media screen and (max-width: 600px) {
-  .recipeForm input {
-    width: 100%;
-    
+  // .recipeForm input {
+  //   width: 100%;
+
+  // }
+  .ingredient {
+    @apply flex-wrap;
   }
   .recipeForm {
-    @apply flex flex-col gap-1;
+    @apply flex flex-col gap-1 p-1 w-full;
     width: 100%;
     margin-right: 0;
     margin-left: 0;
-  
-  }
-
-  .IngredientMethodContainer {
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2rem;
   }
 
   .method_container {

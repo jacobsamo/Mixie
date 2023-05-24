@@ -1,8 +1,15 @@
 /** @type {import('next').NextConfig} */
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  register: true,
+  disable: process.env.NODE_ENV === 'development',
+  skipWaiting: true,
+});
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  transpilePackages: ['ui', 'libs'],
+  transpilePackages: ['shared', 'libs'],
 
   images: {
     domains: [
@@ -19,14 +26,12 @@ const nextConfig = {
       'pixabay.com',
       'pexels.com',
       'savee.com',
-      'dr.savee-cdn.com'
+      'dr.savee-cdn.com',
     ],
   },
-  // eslint: {
-  //   // Warning: This allows production builds to successfully complete even if
-  //   // your project has ESLint errors.
-  //   ignoreDuringBuilds: true,
+  // experimental: {
+  //   appDir: true,
   // },
 };
 
-module.exports = nextConfig;
+module.exports = withPWA(nextConfig);

@@ -53,6 +53,8 @@ module.exports = {
       "2xl": "1440px",
     },
     colors: {
+      transparent: "transparent",
+      current: "currentColor",
       black: "#121212",
       dark_grey: "#292929",
       grey: "#333333",
@@ -123,8 +125,9 @@ module.exports = {
     },
     boxShadow: {
       sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-      buttonGithub: "14px 14px 28px #101419, -14px -14px 28px #1c222b",
+      main: "0px 0px 20px rgba(0, 0, 0, 0.25)",
       DEFAULT: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+      // DEFAULT: "0px 0px 20px rgba(0, 0, 0, 0.25)",
       md: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
       lg: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
       xl: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",

@@ -1,54 +1,56 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import { AddButton } from 'ui';
+import React, { useCallback } from 'react';
+import { AddButton } from 'shared';
 import { Step } from './Step';
 import styles from './Form.module.scss';
+import { useFieldArray, useFormContext } from 'react-hook-form';
+import { Recipe } from 'libs/types';
+import { DraggAbleCard } from './Dragableitem';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
-const StepContainer = (props: any) => {
-  const [stepArray, setStepArray] = useState<string[]>(['']);
+const StepContainer = () => {
+  const { control } = useFormContext<Recipe>();
+  const { fields, append, remove, move } = useFieldArray({
+    control,
+    name: 'steps',
+  });
 
-  function handleAddClick() {
-    setStepArray([...stepArray, '']);
-  }
+  const handleDelete = useCallback(
+    (index: number) => {
+      remove(index);
+    },
+    [remove]
+  );
 
-  function handleChange(index: number, event: any): void {
-    setStepArray((prev) => {
-      const newArray = [...prev];
-      newArray[index] = event;
-      return newArray;
-    });
-  }
+  const handleAddClick = useCallback(() => {
+    append({ step_body: '' });
+  }, [append]);
 
-  function handleDelete(index: number) {
-    // write a function that deletes the step from the array
-    console.log("Deleting step at index", index);
-    console.log("Before deleting", stepArray);
-    setStepArray(stepArray.filter((_, i) => i !== index));
-    console.log("After deleting", stepArray);
-    
-
-  }
-
-  useEffect(() => {
-    props.handleArrayChange(props.name, stepArray);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stepArray]);
+  const handleSwap = useCallback(
+    (sourceIndex: number, targetIndex: number) => {
+      move(sourceIndex, targetIndex);
+    },
+    [move]
+  );
 
   return (
     <article className={styles.method_container}>
-      <div className={styles.step_container}>
-        {stepArray.map((value, index) => {
+      <DndProvider backend={HTML5Backend}>
+        {fields.map((field, index: number) => {
           return (
-            <Step
+            <DraggAbleCard
+              key={field.id}
               index={index}
-              value={value}
-              handleChange={handleChange}
-              handleDelete={handleDelete}
-              key={index}
-            />
+              id={field.id}
+              acceptType="step"
+              moveCard={handleSwap}
+            >
+              <Step index={index} handleDelete={handleDelete} key={field.id} />
+            </DraggAbleCard>
           );
         })}
-        <AddButton type="button" name="Step" onClick={() => handleAddClick()} />
-      </div>
+      </DndProvider>
+      <AddButton type="button" name="Step" onClick={() => handleAddClick()} />
     </article>
   );
 };

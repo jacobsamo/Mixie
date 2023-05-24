@@ -3,10 +3,12 @@ import React from 'react';
 import styles from '@styles/modules/Home.module.scss';
 import RecipeService from '@lib/service/RecipeService';
 import { Recipe } from 'libs/types/';
-import { PageSeo } from 'ui';
+import { PageSeo } from 'shared';
 import Navbar from '@components/modules/Navbar';
 import Link from 'next/link';
 import AlgoliaDialog from '@components/elements/algolia_search/AlgoliaDialog';
+import useAuth from 'src/common/hooks/useAuth';
+import AuthDialog from '@components/elements/AuthDialog';
 
 //swiper
 import { SwiperSlide } from 'swiper/react';
@@ -33,6 +35,7 @@ const RecipesPages: NextPage<HomeProps> = ({
   sweet,
   savoury,
 }: HomeProps) => {
+  const { dialogOpen, handleAuthClick, handleAuthDialogClose } = useAuth();
   return (
     <>
       <PageSeo
@@ -41,7 +44,7 @@ const RecipesPages: NextPage<HomeProps> = ({
         imgUrl=""
         description="recipes for the best meals"
       />
-      <Navbar />
+      <AuthDialog open={dialogOpen} setOpen={handleAuthDialogClose} />
       <main className="flex flex-col justify-center items-center dark:text-white text-black">
         <section className={styles.heroSection}>
           {/* <Image
@@ -192,11 +195,11 @@ export async function getStaticProps() {
   const savoury = await RecipeService.getRecipesByCategory('savoury', 4);
   return {
     props: {
-      breakFast: breakFast,
-      lunch: lunch,
-      dinner: dinner,
-      sweet: sweet,
-      savoury: savoury,
+      breakFast: JSON.parse(JSON.stringify(breakFast)),
+      lunch: JSON.parse(JSON.stringify(lunch)),
+      dinner: JSON.parse(JSON.stringify(dinner)),
+      sweet: JSON.parse(JSON.stringify(sweet)),
+      savoury: JSON.parse(JSON.stringify(savoury)),
     },
     revalidate: 60 * 60 * 24 * 7,
   };
