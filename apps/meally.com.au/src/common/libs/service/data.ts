@@ -10,6 +10,7 @@ export const dietaryRequirements = [
   { value: 'Nut Free', label: 'Nut Free' },
 ];
 
+
 export const initialRecipeState = {
   id: '',
   image: {

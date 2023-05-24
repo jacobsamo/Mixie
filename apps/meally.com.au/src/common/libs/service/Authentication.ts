@@ -11,7 +11,7 @@ import {
 import { doc, setDoc, Timestamp } from 'firebase/firestore';
 import { User, Theme, Font } from 'libs/types';
 
-class AuthService {
+class AuthenticationService {
   async createUserDoc(user: FirebaseUser) {
     if (user) {
       {
@@ -75,4 +75,4 @@ class AuthService {
   }
 }
 
-export default new AuthService();
+export default new AuthenticationService();
