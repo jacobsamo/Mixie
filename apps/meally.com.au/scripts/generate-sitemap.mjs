@@ -1,21 +1,30 @@
-import { writeFileSync } from 'fs';
+import fs from 'fs';
+import path from 'path';
 import { globby } from 'globby';
-// import RecipeService from '../src/common/libs/service/RecipeService.js';
 import prettier from 'prettier';
-
 
 async function generate() {
   const prettierConfig = await prettier.resolveConfig('./.prettierrc');
-  const now = new Date();
+  const now = new Date().toISOString();
+  // const filePath = path.resolve('./public');
+  // console.log(filePath);
+  // const files = fs.readdirSync(filePath).filter((file) => {
+  //   return file.endsWith('.xml') && file.startsWith('sitemap-');
+  // });
+
   const sitemap = `
   <sitmapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
       <loc>http://meally.com.au/sitemap-static.xml</loc>
-      <lastmod>${now.toISOString()}</lastmod>
+      <lastmod>${now}</lastmod>
   </sitemap>
   <sitemap>
       <loc>http://meally.com.au/sitemap-recipes.xml</loc>
-      <lastmod>${now.toISOString()}</lastmod>
+      <lastmod>${now}</lastmod>
+  </sitemap>
+  <sitemap>
+      <loc>http://meally.com.au/sitemap-users.xml</loc>
+      <lastmod>${now}</lastmod>
   </sitemap>
 </sitmapindex>
   `;
@@ -25,8 +34,7 @@ async function generate() {
     parser: 'html',
   });
 
-  // eslint-disable-next-line no-sync
-  writeFileSync('public/sitemap.xml', formatted);
+  fs.writeFileSync('./public/sitemap.xml', formatted);
 }
 
 async function generateStatic() {
@@ -75,39 +83,8 @@ async function generateStatic() {
   });
 
   // eslint-disable-next-line no-sync
-  writeFileSync('public/sitemap-static.xml', formatted);
+  fs.writeFileSync('public/sitemap-static.xml', formatted);
 }
-
-// async function generateRecipes() {
-//   const prettierConfig = await prettier.resolveConfig('./.prettierrc');
-//   const recipes = await RecipeService.getAllRecipes();
-//   const sitemap = `
-//     <?xml version="1.0" encoding="UTF-8"?>
-//     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-//         ${recipes
-//           .map((recipe) => {
-//             return `
-//               <url>
-//                   <loc>${`https://meally.com.au/recipes/${recipe.id}`}</loc>
-//                   <lastmod>${recipe.lastUpdated
-//                     .toDate()
-//                     .toISOString()}</lastmod>
-//               </url>
-//             `;
-//           })
-//           .join('')}
-//     </urlset>
-//     `;
-
-//   const formatted = prettier.format(sitemap, {
-//     ...prettierConfig,
-//     parser: 'html',
-//   });
-
-//   // eslint-disable-next-line no-sync
-//   writeFileSync('public/sitemap-recipes.xml', formatted);
-// }
-// generateRecipes();
 
 generate();
 generateStatic();

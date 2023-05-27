@@ -69,6 +69,7 @@
     "shared": "*",
     "sharp": "^0.32.0",
     "swiper": "^9.0.4",
+    "ts-node": "^10.9.1",
     "web-vitals": "^3.0.1"
   },
   "devDependencies": {

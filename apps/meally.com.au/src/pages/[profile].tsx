@@ -10,6 +10,8 @@ import {
 import UserService from '@lib/service/UserService';
 import Navbar from '@components/modules/Navbar';
 import Image from 'next/image';
+import Utils from '@lib/service/Utils';
+import { generateSiteMap } from '@lib/service/Build';
 
 interface ProfilePageProps {
   user: User;
@@ -39,7 +41,7 @@ export default ProfilePage;
 
 export async function getStaticPaths() {
   const users = await UserService.getAllUsers();
-
+  generateSiteMap<User>(users, 'users');
   const paths = users.map((user) => {
     return { params: { profile: user.userName } };
   });

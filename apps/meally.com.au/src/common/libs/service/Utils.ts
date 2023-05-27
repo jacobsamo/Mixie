@@ -2,6 +2,7 @@ import { Ingredient, Measurement } from 'libs/types';
 // import { fraction } from 'mathjs';
 import Fraction from 'fraction.js';
 
+
 class Utils {
   toId(string: string) {
     return string.replace(/\s+/g, '-').toLowerCase();

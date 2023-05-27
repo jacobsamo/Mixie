@@ -9,6 +9,8 @@ import { RecipeSeo } from 'shared';
 import Navbar from '@components/modules/Navbar';
 import RecipePageLayout from '@components/layouts/RecipePageLayout';
 import { useRouter } from 'next/router';
+import Utils from '@lib/service/Utils';
+import { generateSiteMap } from '@lib/service/Build';
 
 interface recipePageProps {
   recipe: Recipe;
@@ -33,7 +35,7 @@ export default function RecipePage({ recipe }: recipePageProps) {
 
 export async function getStaticPaths() {
   const recipes = await RecipeService.getAllRecipes();
-
+  generateSiteMap<Recipe>(recipes, 'recipes');
   const paths = recipes.map((recipe) => {
     return { params: { id: recipe.id.toString() } };
   });

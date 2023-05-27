@@ -1,10 +1,14 @@
 <sitmapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
     <loc>http://meally.com.au/sitemap-static.xml</loc>
-    <lastmod>2023-05-24T07:14:34.284Z</lastmod>
+    <lastmod>2023-05-27T21:30:11.898Z</lastmod>
   </sitemap>
   <sitemap>
     <loc>http://meally.com.au/sitemap-recipes.xml</loc>
-    <lastmod>2023-05-24T07:14:34.284Z</lastmod>
+    <lastmod>2023-05-27T21:30:11.898Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>http://meally.com.au/sitemap-users.xml</loc>
+    <lastmod>2023-05-27T21:30:11.898Z</lastmod>
   </sitemap>
 </sitmapindex>
