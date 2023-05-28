@@ -3,7 +3,7 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import styles from '@styles/modules/Navbar.module.scss';
 import { BookmarkIcon } from '@heroicons/react/24/outline';
-import AlgoliaDialog from '@components/elements/algolia_search/AlgoliaDialog';
+import SearchDialog from '@components/elements/search/SearchDialog';
 import Link from 'next/link';
 import { auth } from '@lib/config/firebase';
 import UserProfile from '@components/elements/UserProfile';
@@ -61,7 +61,7 @@ const Navbar = () => {
           </Link> */}
         </div>
         <div className={styles.utility}>
-          <AlgoliaDialog buttonType="searchIcon" />
+          <SearchDialog buttonType="searchIcon" />
           <button
             type="button"
             className={styles.hamburger}

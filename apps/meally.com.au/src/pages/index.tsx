@@ -2,10 +2,9 @@ import React from 'react';
 import styles from '@styles/modules/Home.module.scss';
 import Navbar from '@components/modules/Navbar';
 import Footer from '@components/modules/Footer';
-import AlgoliaDialog from '@components/elements/algolia_search/AlgoliaDialog';
 import { CardRectangle, CardRectangleSmall } from '@components/modules/Cards';
 import RecipeService from '@lib/service/RecipeService';
-import { Recipe } from 'libs/types';
+import { Recipe, SimplifiedRecipe } from 'libs/types';
 import { PageSeo } from 'shared';
 import useAuth from 'src/common/hooks/useAuth';
 import AuthDialog from '@components/elements/AuthDialog';
@@ -13,11 +12,12 @@ import AuthDialog from '@components/elements/AuthDialog';
 //swiper
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
+import SearchDialog from '@components/elements/search/SearchDialog';
 
 interface HomeProps {
-  sweet: Recipe[];
-  savoury: Recipe[];
-  latestRecipes: Recipe[];
+  sweet: SimplifiedRecipe[];
+  savoury: SimplifiedRecipe[];
+  latestRecipes: SimplifiedRecipe[];
 }
 
 const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
@@ -41,7 +41,7 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
             className={styles.heroImg}
           /> */}
           <h1 className={`${styles.heroTitle} pb-2`}>Want Tasty Recipes</h1>
-          <AlgoliaDialog buttonType="searchBar" />
+          <SearchDialog buttonType="searchBar" />
         </section>
         <section className="pt-9 ">
           <Splide
@@ -56,19 +56,9 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
             }}
           >
             {latestRecipes ? (
-              latestRecipes.map((item: Recipe, index: number) => (
+              latestRecipes.map((item: SimplifiedRecipe, index: number) => (
                 <SplideSlide key={index}>
-                  <CardRectangle
-                    title={item.recipeName}
-                    id={item.id}
-                    totalTime={item.info.total}
-                    key={item.id}
-                    handleClick={() => console.log('clicked')}
-                    image={{
-                      imgUrl: item.image?.imgUrl || '',
-                      imgAlt: item.image?.imgAlt || '',
-                    }}
-                  />
+                  <CardRectangle recipe={item} />
                 </SplideSlide>
               ))
             ) : (
@@ -81,17 +71,7 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
             <h1 className="text-center text-step0">Sweet</h1>
             <div className={styles.gridContainer}>
               {sweet.map((item) => (
-                <CardRectangleSmall
-                  title={item.recipeName}
-                  id={item.id}
-                  totalTime={item.info.total}
-                  key={item.id}
-                  handleClick={() => console.log('clicked')}
-                  image={{
-                    imgUrl: item.image.imgUrl || '',
-                    imgAlt: item.image.imgAlt || '',
-                  }}
-                />
+                <CardRectangleSmall recipe={item} />
               ))}
             </div>
           </section>
@@ -99,17 +79,7 @@ const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
             <h1 className="text-center text-step0">Savoury</h1>
             <div className={styles.gridContainer}>
               {savoury.map((item) => (
-                <CardRectangleSmall
-                  title={item.recipeName}
-                  id={item.id}
-                  totalTime={item.info.total}
-                  key={item.id}
-                  handleClick={() => console.log('clicked')}
-                  image={{
-                    imgUrl: item.image.imgUrl || '',
-                    imgAlt: item.image.imgAlt || '',
-                  }}
-                />
+                <CardRectangleSmall recipe={item} />
               ))}
             </div>
           </section>

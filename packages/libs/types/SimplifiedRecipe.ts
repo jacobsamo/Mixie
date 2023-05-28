@@ -23,7 +23,7 @@ export type SimplifiedRecipe = {
   /**
    * @description The keywords that are used to search for the recipe
    */
-  keywords: string[];
+  keywords: { value: string }[];
   /**
    * @description The time it takes to prepare and cook the recipe represented as a string like: 1h 30m
    */
@@ -31,11 +31,11 @@ export type SimplifiedRecipe = {
   /**
    * @description The last time the recipe was viewed or saved depends wether it was saved a bookmark or saved as history
    */
-  lastViewed: Timestamp;
+  lastViewed?: Timestamp;
   /**
    * @description privacy is used to determine whether the recipe is public or private
    * either "public" or "private"
    */
-  privacy: "public" | "private";
-}
-
+  privacy?: "public" | "private";
+  collection?: string;
+};

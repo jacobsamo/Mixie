@@ -28,7 +28,6 @@ class RecipeService {
       return { message: e, status: 400 };
     }
   }
-  
 
   async getLatestRecipes(limitAmount?: number) {
     const recipeRef = collection(db, 'recipes');
@@ -37,13 +36,16 @@ class RecipeService {
       query(recipeRef, orderBy('createdAt', 'asc'), limit(limitAmount || 9))
     );
 
-    const recipes: Recipe[] = [];
+    const recipes: SimplifiedRecipe[] = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data() as Recipe;
-      const createdAt = data.createdAt as any;
       recipes.push({
-        ...data,
-        createdAt: Timestamp.fromDate(createdAt.toDate()),
+        id: data.id,
+        recipeName: data.recipeName,
+        keywords: data.keywords,
+        totalCookTime: data.info.total,
+        image: data.image,
+        lastViewed: data.lastUpdated,
       });
     });
     return recipes;
@@ -61,13 +63,17 @@ class RecipeService {
       )
     );
 
-    const recipes: Recipe[] = [];
+    const recipes: SimplifiedRecipe[] = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data() as Recipe;
       const createdAt = data.createdAt as any;
       recipes.push({
-        ...data,
-        createdAt: Timestamp.fromDate(createdAt.toDate()),
+        id: data.id,
+        recipeName: data.recipeName,
+        keywords: data.keywords,
+        totalCookTime: data.info.total,
+        image: data.image,
+        lastViewed: data.lastUpdated,
       });
     });
     return recipes;
@@ -85,13 +91,17 @@ class RecipeService {
       )
     );
 
-    const recipes: Recipe[] = [];
+    const recipes: SimplifiedRecipe[] = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data() as Recipe;
       const createdAt = data.createdAt as any;
       recipes.push({
-        ...data,
-        createdAt: Timestamp.fromDate(createdAt.toDate()),
+        id: data.id,
+        recipeName: data.recipeName,
+        keywords: data.keywords,
+        totalCookTime: data.info.total,
+        image: data.image,
+        lastViewed: data.lastUpdated,
       });
     });
     return recipes;

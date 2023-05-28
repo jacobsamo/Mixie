@@ -10,7 +10,7 @@ import {
 } from 'firebase/auth';
 import { doc, setDoc, Timestamp } from 'firebase/firestore';
 import { User, Theme, Font } from 'libs/types';
-import { setCookie } from 'cookies-next';
+import { setCookie, deleteCookie } from 'cookies-next';
 
 class AuthenticationService {
   async createUserDoc(user: FirebaseUser) {
@@ -75,7 +75,7 @@ class AuthenticationService {
 
   async signOutUser() {
     await signOut(auth);
-    await localStorage.removeItem('user');
+    await deleteCookie('user');
   }
 }
 

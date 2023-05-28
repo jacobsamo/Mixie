@@ -1,40 +1,34 @@
 import React from 'react';
 import Image from 'next/image';
-import type { ImageProps } from 'libs/types';
+import type { ImageProps, SimplifiedRecipe } from 'libs/types';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import UserService from '@lib/service/UserService';
 
-interface CardProps {
-  title: string;
-  id: string;
-  totalTime: string;
-  handleClick: () => void;
-  image: ImageProps;
+function addBookMark(recipe: SimplifiedRecipe) {
+  UserService.createBookMark({ ...recipe, collection: 'default' });
 }
 
-const CardSquare = ({
-  title,
-  id,
-  totalTime,
-  handleClick,
-  image,
-}: CardProps) => {
-  // const time = totalTime < 60 ? `${totalTime} mins` : `${totalTime / 60} hrs`;
+interface CardProps {
+  recipe: SimplifiedRecipe;
+}
+
+const CardSquare = ({ recipe }: CardProps) => {
   return (
     <div className="relative flex p-2 items-center justify-between flex-col h-58 w-58 rounded-xl text-black dark:text-white">
-      <Link href={`/recipes/${id}`} className="text-center text-step--2">
-        {title}
+      <Link href={`/recipes/${recipe.id}`} className="text-center text-step--2">
+        {recipe.recipeName}
       </Link>
       <div className="flex flex-row w-full justify-between ">
-        <h3 className="w-fit whitespace-nowrap">{totalTime}</h3>
-        <button onClick={handleClick}>
+        <h3 className="w-fit whitespace-nowrap">{recipe.totalCookTime}</h3>
+        <button onClick={() => addBookMark(recipe)}>
           <HeartIcon className="w-8 h-8 cursor-pointer" />
           {/* Change width and height on different component types */}
         </button>
       </div>
       <Image
-        src={image.imgUrl}
-        alt={image.imgAlt}
+        src={recipe.image.imgUrl}
+        alt={recipe.image.imgAlt}
         fill
         priority
         className="rounded-xl object-cover h-58 w-46 -z-20"
@@ -43,29 +37,22 @@ const CardSquare = ({
   );
 };
 
-const CardRectangleSmall = ({
-  title,
-  id,
-  totalTime,
-  handleClick,
-  image,
-}: CardProps) => {
-  // const time = totalTime < 60 ? `${totalTime} mins` : `${totalTime / 60} hrs`;
+const CardRectangleSmall = ({ recipe }: CardProps) => {
   return (
     <div className="relative flex p-2 items-center justify-between flex-col h-58 w-46 rounded-xl text-black dark:text-white">
-      <Link href={`/recipes/${id}`} className="text-center text-step--2">
-        {title}
+      <Link href={`/recipes/${recipe.id}`} className="text-center text-step--2">
+        {recipe.recipeName}
       </Link>
       <div className="flex flex-row w-full justify-between ">
-        <h3 className="w-fit whitespace-nowrap">{totalTime}</h3>
-        <button onClick={handleClick}>
+        <h3 className="w-fit whitespace-nowrap">{recipe.totalCookTime}</h3>
+        <button onClick={() => addBookMark(recipe)}>
           <HeartIcon className="w-8 h-8 cursor-pointer" />
           {/* Change width and height on different component types */}
         </button>
       </div>
       <Image
-        src={image.imgUrl}
-        alt={image.imgAlt}
+        src={recipe.image.imgUrl}
+        alt={recipe.image.imgAlt}
         fill
         priority
         className="rounded-xl object-cover h-58 w-46 -z-20"
@@ -74,26 +61,22 @@ const CardRectangleSmall = ({
   );
 };
 
-const CardRectangle = ({
-  title,
-  id,
-  totalTime,
-  handleClick,
-  image,
-}: CardProps) => {
-  // const time = totalTime < 60 ? `${totalTime} mins` : `${totalTime / 60} hrs`;
+const CardRectangle = ({ recipe }: CardProps) => {
   return (
     <div className="relative flex flex-col p-2 items-center justify-between  h-64 w-[43.75rem] resize rounded-xl text-black dark:text-white">
-      <Link href={`/recipes/${id}`} className="text-center text-step1">
-        {title}
+      <Link href={`/recipes/${recipe.id}`} className="text-center text-step1">
+        {recipe.recipeName}
       </Link>
-      <button onClick={handleClick} className="absolute right-2 bottom-2">
+      <button
+        onClick={() => addBookMark(recipe)}
+        className="absolute right-2 bottom-2"
+      >
         <HeartIcon className="w-8 h-8 cursor-pointer" />
         {/* Change width and height on different component types */}
       </button>
       <Image
-        src={image.imgUrl}
-        alt={image.imgAlt}
+        src={recipe.image.imgUrl}
+        alt={recipe.image.imgAlt}
         fill
         priority
         className="rounded-xl object-cover h-58 w-46 -z-20"

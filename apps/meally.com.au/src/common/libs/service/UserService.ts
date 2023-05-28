@@ -79,6 +79,21 @@ class UserService {
     }
   }
 
+  async createBookMark(
+    recipeDoc: SimplifiedRecipe
+  ): Promise<{ message: string; status: number }> {
+    const user = auth.currentUser;
+    if (user) {
+      const docRef = doc(
+        collection(doc(db, 'users', user.uid), 'bookmarks'),
+        recipeDoc.id
+      );
+      await setDoc(docRef, recipeDoc);
+      return { message: 'Successfully created bookmark', status: 200 };
+    }
+    return { message: 'User not authenticated', status: 401 };
+  }
+
   async createRecipe(
     recipeDoc: SimplifiedRecipe
   ): Promise<{ message: string; status: number }> {

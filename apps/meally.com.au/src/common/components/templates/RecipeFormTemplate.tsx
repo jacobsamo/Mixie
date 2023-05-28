@@ -82,7 +82,8 @@ const RecipeFromLayout = () => {
         lastUpdatedBy: user,
         version: '1.0',
       } as Recipe;
-      if (auth.currentUser) {
+      if (loggedInUser) {
+        console.log('User is logged in: ', user);
         await UserService.createRecipe({
           id: recipe.id,
           recipeName: recipe.recipeName,
