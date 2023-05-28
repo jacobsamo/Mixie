@@ -35,7 +35,7 @@ export default function RecipePage({ recipe }: recipePageProps) {
 
 export async function getStaticPaths() {
   const recipes = await RecipeService.getAllRecipes();
-  generateSiteMap<Recipe>(recipes, 'recipes');
+  generateSiteMap<Recipe>(recipes, 'recipes', 'recipes');
   const paths = recipes.map((recipe) => {
     return { params: { id: recipe.id.toString() } };
   });

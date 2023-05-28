@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+const webpack = require('webpack');
 const withPWA = require('next-pwa')({
   dest: 'public',
   register: true,
@@ -28,6 +29,15 @@ const nextConfig = {
       'savee.com',
       'dr.savee-cdn.com',
     ],
+  },
+  webpack: (config, { isServer }) => {
+    config.plugins.push(
+      new webpack.DefinePlugin({
+        'process.env.FLUENTFFMPEG_COV': false,
+        FileSystem: true,
+      })
+    );
+    return config;
   },
   // experimental: {
   //   appDir: true,

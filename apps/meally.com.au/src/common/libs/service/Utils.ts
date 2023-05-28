@@ -2,7 +2,6 @@ import { Ingredient, Measurement } from 'libs/types';
 // import { fraction } from 'mathjs';
 import Fraction from 'fraction.js';
 
-
 class Utils {
   toId(string: string) {
     return string.replace(/\s+/g, '-').toLowerCase();
@@ -139,6 +138,12 @@ class Utils {
         return ingredient;
     }
   };
+
+  calculateAllIngredients(ingredients: Ingredient[], batchAmount: number) {
+    return ingredients.map((ingredient) =>
+      this.calculateIngredient(ingredient, batchAmount)
+    );
+  }
 }
 
 export default new Utils();

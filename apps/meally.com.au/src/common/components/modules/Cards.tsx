@@ -36,6 +36,7 @@ const CardSquare = ({
         src={image.imgUrl}
         alt={image.imgAlt}
         fill
+        priority
         className="rounded-xl object-cover h-58 w-46 -z-20"
       />
     </div>
@@ -66,6 +67,7 @@ const CardRectangleSmall = ({
         src={image.imgUrl}
         alt={image.imgAlt}
         fill
+        priority
         className="rounded-xl object-cover h-58 w-46 -z-20"
       />
     </div>
@@ -93,6 +95,7 @@ const CardRectangle = ({
         src={image.imgUrl}
         alt={image.imgAlt}
         fill
+        priority
         className="rounded-xl object-cover h-58 w-46 -z-20"
       />
     </div>

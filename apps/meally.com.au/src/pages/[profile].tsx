@@ -27,6 +27,7 @@ function ProfilePage({ user }: ProfilePageProps) {
             alt={user.displayName}
             width={100}
             height={100}
+            priority
             className="rounded-full w-24 h-24 lg:w-48 lg:h-48 m-auto"
           />
           <h1 className="text-step0 text-center">{user.displayName}</h1>
@@ -41,7 +42,7 @@ export default ProfilePage;
 
 export async function getStaticPaths() {
   const users = await UserService.getAllUsers();
-  generateSiteMap<User>(users, 'users');
+  generateSiteMap<User>(users, '', 'users');
   const paths = users.map((user) => {
     return { params: { profile: user.userName } };
   });

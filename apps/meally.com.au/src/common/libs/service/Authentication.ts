@@ -10,6 +10,7 @@ import {
 } from 'firebase/auth';
 import { doc, setDoc, Timestamp } from 'firebase/firestore';
 import { User, Theme, Font } from 'libs/types';
+import { setCookie } from 'cookies-next';
 
 class AuthenticationService {
   async createUserDoc(user: FirebaseUser) {
@@ -38,7 +39,10 @@ class AuthenticationService {
           } as User;
 
           await setDoc(doc(db, 'users', user.uid), userDoc);
-          await localStorage.setItem('user', JSON.stringify(userDoc));
+          await setCookie('user', JSON.stringify(userDoc), {
+            maxAge: 30 * 24 * 60 * 60,
+            path: '/',
+          });
           return { message: 'User document created successfully', status: 200 };
         } catch (e: any) {
           console.error('Error creating user document: ', e);

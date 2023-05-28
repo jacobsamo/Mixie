@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
 //types
 import type { Recipe, Info, Rating, RatingScale } from 'libs/types';
@@ -30,6 +30,9 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
   const info = recipe.info as Info;
   const { user } = useUser();
   // const rating = info.rating || 0;
+  const ingredients = useMemo(() => {
+    return Utils.calculateAllIngredients(recipe.ingredients, add);
+  }, [add, recipe.ingredients]);
 
   const handleChange = (newRating: RatingScale): void => {
     if (user && newRating !== rating) {
@@ -42,7 +45,7 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
         },
       };
 
-      RecipeService.updateRating(recipe.id, updatedRating);
+    RecipeService.updateRating(recipe.id, updatedRating);
     }
   };
 
@@ -141,7 +144,7 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
                   className={`${styles.recipeIngredients} flex flex-col w-[14.5rem] gap-3`}
                 >
                   <AddBatch add={add} setAdd={setAdd} />
-                  {recipe.ingredients.map((ingredient, index) => {
+                  {ingredients.map((ingredient, index) => {
                     if ('ingredient' in ingredient) {
                       return (
                         <Ingredient
@@ -161,7 +164,7 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
                   })}
                 </section>
               </article>
-              <article className={` ${styles.method_container}`}>
+              <article className={`${styles.method_container}`}>
                 <div className={styles.step_container}>
                   {recipe.steps.map((step, index) => {
                     return (
@@ -169,7 +172,7 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
                         index={index}
                         key={index}
                         step={step}
-                        ingredients={recipe.ingredients}
+                        ingredients={ingredients}
                       />
                     );
                   })}

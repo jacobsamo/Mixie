@@ -3,11 +3,12 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /recipes/{document=**} {
         allow read, write: if true;
+        allow write: if request.auth != null && request.auth.uid == request.resource.data.lastModifiedBy.uid;
     }
     match /users/{document=**} {
       allow read: if true;
-      // allow write: if request.auth != null && request.auth.uid == request.resource.data.uid;
-      allow write: if true;
+      allow write: if request.auth != null && request.auth.uid == request.resource.data.uid;
+      // allow write: if true;
     }
   }
 }

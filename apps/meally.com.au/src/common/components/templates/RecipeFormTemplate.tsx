@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { auth } from '@lib/config/firebase';
 import { Timestamp } from 'firebase/firestore';
@@ -23,9 +23,12 @@ import UserService from '@lib/service/UserService';
 import Utils from '@lib/service/Utils';
 import useUser from 'src/common/hooks/useUser';
 import { useToast } from 'shared/src/components/toast/use-toast';
+import FileService from '@lib/service/FileService';
 
 const RecipeFromLayout = () => {
   const loggedInUser = useUser();
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
   const methods = useForm<Recipe>({
     defaultValues: {
       ...initialRecipeState,
@@ -35,8 +38,28 @@ const RecipeFromLayout = () => {
   const { toast } = useToast();
 
   const onsubmit = async (data: Recipe) => {
+    console.log('data', data);
     if (data) {
       const total = Utils.calculateTotalTime(data.info.prep, data.info.cook);
+      let imageUploaded: string | null = null;
+      const image = fileInputRef.current?.files?.[0];
+      if (image) {
+        try {
+          const response = await FileService.uploadImage(
+            image,
+            'recipe',
+            `${data.recipeName.replace(/\s+/g, '-').toLowerCase()}`
+          );
+          imageUploaded = response.url || '';
+          console.log('response of api', imageUploaded);
+        } catch (error) {
+          console.error('Image upload error:', error);
+          // Handle error if the image upload fails
+        }
+      } else {
+        imageUploaded = data.image.imgUrl;
+      }
+
       const user = {
         uid: auth.currentUser?.uid || '',
         displayName: loggedInUser.user?.displayName || '',
@@ -44,6 +67,7 @@ const RecipeFromLayout = () => {
         email: auth.currentUser?.email || '',
         phoneNumber: auth.currentUser?.phoneNumber || '',
       };
+      console.log('Submitting user: ', user);
       const recipe = {
         ...data,
         id: data.recipeName.replace(/\s+/g, '-').toLowerCase(),
@@ -72,13 +96,16 @@ const RecipeFromLayout = () => {
           privacy: 'public',
         });
         await RecipeService.createRecipe(recipe).then((res) => {
+          console.log('Recipes been sent to server: ', res);
           if (res.status === 200) {
             toast({
               title: 'Recipe created.',
               description: 'Your recipe has been created.',
             });
-            reset();
+            // reset();
+            console.log('Recipe has been created: ', recipe);
           } else {
+            console.log('There was an error: ', res.message);
             toast({
               title: 'Uh oh! Something went wrong.',
               description: 'There was an error while creating your recipe.',
@@ -87,7 +114,6 @@ const RecipeFromLayout = () => {
           }
         });
       }
-      console.log('Recipe has been created: ', recipe);
     }
   };
 
@@ -169,7 +195,7 @@ const RecipeFromLayout = () => {
             options={sweet_savoury}
             fieldOptions={{ required: true }}
           />
-          <ImageUpload />
+          <ImageUpload fileUploadRef={fileInputRef} />
           <SelectComponent
             name="mealTime"
             label="Meal Time"

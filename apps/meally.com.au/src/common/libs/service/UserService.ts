@@ -18,11 +18,6 @@ import {
 } from 'firebase/firestore';
 import { SimplifiedRecipe, User } from 'libs/types';
 
-interface ReturnType {
-  message: string;
-  status: number;
-}
-
 class UserService {
   async getUserByUserName(userName: string) {
     const usersCollection = collection(db, 'users');
@@ -39,8 +34,7 @@ class UserService {
     }
 
     const userData = userQuerySnapshot.docs[0].data() as User;
-    const user = { ...userData, createdAt: userData.createdAt.toDate() };
-    return JSON.parse(JSON.stringify(user));
+    return JSON.parse(JSON.stringify(userData));
   }
 
   async getUser(uid: string) {
@@ -49,8 +43,7 @@ class UserService {
 
     if (docSnap.exists()) {
       const userData = docSnap.data() as User;
-      const user = { ...userData, createdAt: userData.createdAt.toDate() };
-      return JSON.parse(JSON.stringify(user));
+      return JSON.parse(JSON.stringify(userData));
     } else {
       return {};
     }
@@ -60,9 +53,8 @@ class UserService {
     const querySnapshot = await getDocs(collection(db, 'users'));
     const users: User[] = [];
     querySnapshot.forEach((user) => {
-      const data = user.data() as User;
-      data.createdAt.toDate();
-      users.push({ ...data });
+      const userData = user.data() as User;
+      users.push(userData);
     });
     return users;
   }
