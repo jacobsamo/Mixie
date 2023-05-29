@@ -84,7 +84,7 @@ const RecipeFromLayout = () => {
       } as Recipe;
       if (loggedInUser) {
         console.log('User is logged in: ', user);
-        await UserService.createRecipe({
+        const simplifiedRecipe = {
           id: recipe.id,
           recipeName: recipe.recipeName,
           image: {
@@ -94,6 +94,9 @@ const RecipeFromLayout = () => {
           keywords: recipe.keywords,
           totalCookTime: recipe.info.total,
           lastViewed: recipe.createdAt,
+        };
+        await UserService.createRecipe({
+          ...simplifiedRecipe,
           privacy: 'public',
         });
         await RecipeService.createRecipe(recipe).then((res) => {
@@ -152,7 +155,13 @@ const RecipeFromLayout = () => {
             label="Prep Time in minutes"
             type="string"
             required
-            // options={{ pattern: /(\d+w)?(\d+d)?(\d+h)?(\d+m)?/ }}
+            options={{
+              pattern: /(\d+w)?(\d+d)?(\d+h)?(\d+m)?/,
+              validate: (value) => {
+                console.log('value', value);
+                return value !== '' || 'Please enter a cook time';
+              },
+            }}
             control={control}
             // defaultValue={recipe.info.prep}
           />
@@ -162,7 +171,13 @@ const RecipeFromLayout = () => {
             label="Cook Time"
             type="string"
             required
-            // options={{ pattern: /(\d+w)?(\d+d)?(\d+h)?(\d+m)?/ }}
+            options={{
+              pattern: /(\d+w)?(\d+d)?(\d+h)?(\d+m)?/,
+              validate: (value) => {
+                console.log('value', value);
+                return value !== '' || 'Please enter a cook time';
+              },
+            }}
             control={control}
             // defaultValue={recipe.info.cook}
           />

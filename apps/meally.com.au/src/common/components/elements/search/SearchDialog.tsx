@@ -3,9 +3,10 @@ import { Dialog } from 'shared';
 import Fuse from 'fuse.js';
 import { GetServerSideProps } from 'next';
 import RecipeService from '@lib/service/RecipeService';
-import { Recipe } from 'libs/types';
+import { Recipe, SimplifiedRecipe } from 'libs/types';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
+import { SearchCard } from '@components/modules/Cards';
 
 interface SearchDialogProps {
   buttonType: 'searchBar' | 'searchIcon';
@@ -13,18 +14,20 @@ interface SearchDialogProps {
 
 const SearchDialog = ({ buttonType }: SearchDialogProps) => {
   const [open, setOpen] = useState(false);
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [recipes, setRecipes] = useState<SimplifiedRecipe[]>([]);
 
-  const [returnedRecipes, setReturnedRecipes] = useState<Recipe[]>([]);
+  const [returnedRecipes, setReturnedRecipes] = useState<SimplifiedRecipe[]>(
+    []
+  );
 
   useEffect(() => {
-    RecipeService.getAllRecipes().then((recipes) => {
+    RecipeService.getAllRecipesAsSimplified().then((recipes) => {
       setRecipes(recipes);
     });
   }, []);
 
   function searchRecipes(query: string) {
-    const options: Fuse.IFuseOptions<Recipe> = {
+    const options: Fuse.IFuseOptions<SimplifiedRecipe> = {
       includeScore: true,
       keys: ['recipeName', 'recipeDescription', 'keywords'],
     };
@@ -56,46 +59,23 @@ const SearchDialog = ({ buttonType }: SearchDialogProps) => {
         closeOnEscape={true}
         closeOnOutsideClick={true}
         classNames={{
-          container:
-            'flex flex-col justify-center items-center gap-2 sticky w-max h-max',
+          overlay: 'fixed inset-0 z-50 md:w-1/2 w-full mx-auto',
+          backgroundColor: false,
         }}
       >
-        <div className="flex flex-col justify-center items-center gap-2">
+        <div className=" top-0 pt-0 flex flex-col mx-auto mt-16 w-full justify-center items-center gap-2">
           <input
-            className="w-full h-10 rounded-lg border border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+            className="w-full h-10 rounded-md focus:border-transparent"
             placeholder="Search for recipes"
             type="text"
             onChange={(event) => searchRecipes(event.target.value)}
           />
+          <ul>
+            {returnedRecipes.map((recipe) => (
+              <SearchCard as="li" recipe={recipe} />
+            ))}
+          </ul>
         </div>
-        <ul>
-          {returnedRecipes.map((recipe) => (
-            <li className="flex flex-row rounded-md bg-grey">
-              <Image
-                src={recipe.image.imgUrl}
-                alt={recipe.image.imgAlt}
-                width={100}
-                height={100}
-                className="w-24 h-24 rounded-lg"
-              />
-              <div>
-                <h1>{recipe.recipeName}</h1>
-                <div className="flex flex-row flex-wrap gap-1 w-full">
-                  {returnedRecipes.map((recipe, index) => {
-                    return (
-                      <p
-                        key={index}
-                        className="text-center w-fit h-fit p-1 rounded-lg text-step--4 bg-yellow opacity-80 text-black"
-                      >
-                        {recipe.keywords[index].value}
-                      </p>
-                    );
-                  })}
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
       </Dialog>
     </div>
   );

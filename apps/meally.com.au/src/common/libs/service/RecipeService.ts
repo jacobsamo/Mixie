@@ -29,6 +29,18 @@ class RecipeService {
     }
   }
 
+  // async createSearchAbleRecipes(
+  //   post: Recipe
+  // ): Promise<{ message: string | Error; status: number }> {
+  //   try {
+  //     await setDoc(doc(db, 'searchable-recipes', post.id), post);
+  //     return { message: 'Recipe created successfully', status: 200 };
+  //   } catch (e: any) {
+  //     console.error('Error saving recipe:', e);
+  //     return { message: e, status: 400 };
+  //   }
+  // }
+
   async getLatestRecipes(limitAmount?: number) {
     const recipeRef = collection(db, 'recipes');
 
@@ -158,6 +170,23 @@ class RecipeService {
     const docRef = doc(db, 'recipes', id);
     const updatedDoc = await updateDoc(docRef, data);
     return updatedDoc;
+  }
+
+  async getAllRecipesAsSimplified() {
+    const simplifiedRecipes: SimplifiedRecipe[] = [];
+    this.getAllRecipes().then((recipes) => {
+      recipes.forEach((recipe) => {
+        simplifiedRecipes.push({
+          id: recipe.id,
+          recipeName: recipe.recipeName,
+          keywords: recipe.keywords,
+          totalCookTime: recipe.info.total,
+          image: recipe.image,
+          lastViewed: recipe.lastUpdated,
+        });
+      });
+    });
+    return simplifiedRecipes as SimplifiedRecipe[];
   }
 
   async getRating(id: string) {}

@@ -3,6 +3,7 @@
 import { useRouter } from 'next/router';
 import { User } from 'libs/types';
 import {
+  GetStaticPaths,
   GetStaticPathsResult,
   GetStaticPropsContext,
   GetStaticPropsResult,
@@ -42,10 +43,11 @@ export default ProfilePage;
 
 export async function getStaticPaths() {
   const users = await UserService.getAllUsers();
-  generateSiteMap<User>(users, '', 'users');
+  console.log('users: ', users);
   const paths = users.map((user) => {
     return { params: { profile: user.userName } };
   });
+  generateSiteMap<User>(users, '', 'users');
 
   return {
     paths,
