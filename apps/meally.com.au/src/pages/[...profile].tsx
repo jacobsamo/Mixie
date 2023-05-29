@@ -41,21 +41,7 @@ function ProfilePage({ user }: ProfilePageProps) {
 
 export default ProfilePage;
 
-export async function getStaticPaths() {
-  const users = await UserService.getAllUsers();
-  console.log('users: ', users);
-  const paths = users.map((user) => {
-    return { params: { profile: user.userName } };
-  });
-  generateSiteMap<User>(users, '', 'users');
-
-  return {
-    paths,
-    fallback: 'blocking', // false or 'blocking'
-  };
-}
-
-export async function getStaticProps(context: any) {
+export async function getServerSideProps(context: any) {
   const user = await UserService.getUserByUserName(context.params.profile);
   if (!user) {
     return {
