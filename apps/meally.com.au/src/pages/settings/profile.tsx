@@ -1,6 +1,6 @@
 import Custom404 from '@components/layouts/Custom404';
 import UserService from '@lib/service/UserService';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { InputField } from 'shared';
 import Image from 'next/image';
 import Button from 'shared/src/components/buttons/Button';

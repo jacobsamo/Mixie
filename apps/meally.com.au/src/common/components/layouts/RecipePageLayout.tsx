@@ -57,41 +57,6 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
           <section className="flex flex-row items-center flex-wrap">
             <h1 className="text-step2 font-semibold">{recipe.recipeName}</h1>
             <span className="flex flex-row pl-4">
-              {/* <StarIcon
-                className={`${
-                  rating >= 1
-                    ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
-                    : 'text-[#3e3e3e]'
-                } w-6 h-6`}
-              />
-              <StarIcon
-                className={`${
-                  rating >= 2
-                    ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
-                    : 'text-[#3e3e3e]'
-                } w-6 h-6`}
-              />
-              <StarIcon
-                className={`${
-                  rating >= 3
-                    ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
-                    : 'text-[#3e3e3e]'
-                } w-6 h-6`}
-              />
-              <StarIcon
-                className={`${
-                  rating >= 4
-                    ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
-                    : 'text-[#3e3e3e]'
-                } w-6 h-6`}
-              />
-              <StarIcon
-                className={`${
-                  rating >= 5
-                    ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
-                    : 'text-[#3e3e3e]'
-                } w-6 h-6`}
-              /> */}
               <StarRating
                 rating={rating || info.rating}
                 setRating={handleChange}

@@ -7,7 +7,7 @@ import UserService from '@lib/service/UserService';
 import { useToast } from 'shared/src/components/toast/use-toast';
 
 function addBookMark(recipe: SimplifiedRecipe) {
-  UserService.createBookMark({ ...recipe, collection: 'default' });
+  UserService.createBookmark({ ...recipe, collection: 'default' });
 }
 
 interface CardProps {

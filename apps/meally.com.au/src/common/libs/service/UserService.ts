@@ -80,7 +80,7 @@ class UserService {
     }
   }
 
-  async createBookMark(
+  async createBookmark(
     recipeDoc: SimplifiedRecipe
   ): Promise<{ message: string; status: number }> {
     const user = auth.currentUser;

@@ -101,7 +101,7 @@ const RecipeFromLayout = () => {
               title: 'Recipe created.',
               description: 'Your recipe has been created.',
             });
-            // reset();
+            reset();
           } else {
             toast({
               title: 'Uh oh! Something went wrong.',
