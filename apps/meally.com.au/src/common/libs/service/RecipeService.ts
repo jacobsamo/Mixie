@@ -15,6 +15,7 @@ import {
 } from 'firebase/firestore';
 import type { Rating, RatingScale, Recipe, SimplifiedRecipe } from 'libs/types';
 import { db, auth } from '@lib/config/firebase';
+import { get } from 'http';
 
 class RecipeService {
   async createRecipe(
@@ -28,7 +29,6 @@ class RecipeService {
       return { message: e, status: 400 };
     }
   }
-  
 
   async getLatestRecipes(limitAmount?: number) {
     const recipeRef = collection(db, 'recipes');
@@ -37,13 +37,16 @@ class RecipeService {
       query(recipeRef, orderBy('createdAt', 'asc'), limit(limitAmount || 9))
     );
 
-    const recipes: Recipe[] = [];
+    const recipes: SimplifiedRecipe[] = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data() as Recipe;
-      const createdAt = data.createdAt as any;
       recipes.push({
-        ...data,
-        createdAt: Timestamp.fromDate(createdAt.toDate()),
+        id: data.id,
+        recipeName: data.recipeName,
+        keywords: data.keywords,
+        totalCookTime: data.info.total,
+        image: data.image,
+        lastViewed: data.lastUpdated,
       });
     });
     return recipes;
@@ -61,13 +64,17 @@ class RecipeService {
       )
     );
 
-    const recipes: Recipe[] = [];
+    const recipes: SimplifiedRecipe[] = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data() as Recipe;
       const createdAt = data.createdAt as any;
       recipes.push({
-        ...data,
-        createdAt: Timestamp.fromDate(createdAt.toDate()),
+        id: data.id,
+        recipeName: data.recipeName,
+        keywords: data.keywords,
+        totalCookTime: data.info.total,
+        image: data.image,
+        lastViewed: data.lastUpdated,
       });
     });
     return recipes;
@@ -85,13 +92,17 @@ class RecipeService {
       )
     );
 
-    const recipes: Recipe[] = [];
+    const recipes: SimplifiedRecipe[] = [];
     querySnapshot.forEach((doc) => {
       const data = doc.data() as Recipe;
       const createdAt = data.createdAt as any;
       recipes.push({
-        ...data,
-        createdAt: Timestamp.fromDate(createdAt.toDate()),
+        id: data.id,
+        recipeName: data.recipeName,
+        keywords: data.keywords,
+        totalCookTime: data.info.total,
+        image: data.image,
+        lastViewed: data.lastUpdated,
       });
     });
     return recipes;
@@ -150,7 +161,47 @@ class RecipeService {
     return updatedDoc;
   }
 
-  async getRating(id: string) {}
+  async getAllRecipesAsSimplified() {
+    const simplifiedRecipes: SimplifiedRecipe[] = [];
+    this.getAllRecipes().then((recipes) => {
+      recipes.forEach((recipe) => {
+        simplifiedRecipes.push({
+          id: recipe.id,
+          recipeName: recipe.recipeName,
+          keywords: recipe.keywords,
+          totalCookTime: recipe.info.total,
+          image: recipe.image,
+          lastViewed: recipe.lastUpdated,
+        });
+      });
+    });
+    return simplifiedRecipes as SimplifiedRecipe[];
+  }
+
+  async getRating(id: string): Promise<RatingScale> {
+    const querySnapshot = await getDocs(
+      collection(doc(db, 'recipes', id), 'rating')
+    );
+
+    let totalRating = 0;
+    let ratingCount = 0;
+    let rating: RatingScale = 0;
+    querySnapshot.forEach((doc) => {
+      const ratingData = doc.data() as Rating;
+      totalRating += ratingData.rating;
+      ratingCount++;
+    });
+
+    if (ratingCount > 0) {
+      const averageRating = totalRating / ratingCount;
+      const roundedAverageRating = Math.round(averageRating);
+
+      rating = roundedAverageRating as RatingScale;
+    } else {
+      rating = 0;
+    }
+    return rating;
+  }
 
   async updateRating(
     id: string,

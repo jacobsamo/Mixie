@@ -14,7 +14,7 @@ export interface User {
   settings?: UserSettings;
   socials?: UserSocials;
   createdAt: Timestamp;
-  lastUpdated?: Date;
+  lastUpdated?: Timestamp;
 }
 
 export interface UserSettings {

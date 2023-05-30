@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 
 const Profile = () => {
   const { user, setNewUser } = useUser();
-  const { register, control, handleSubmit, getValues } = useForm({
+  const { register, control, handleSubmit } = useForm({
     defaultValues: {
       name: user?.displayName,
       userName: user?.userName,
@@ -51,7 +51,7 @@ const Profile = () => {
             <div className="flex flex-row items-center gap-2">
               <Image
                 src={user.photoURL}
-                alt={user.displayName}
+                alt={user.displayName || 'Profile picture'}
                 width={100}
                 height={100}
                 priority

@@ -31,7 +31,8 @@
     "../../packages/shared/src/hooks/useOutsideClick.tsx",
     "../../packages/shared/src/hooks/useOutsideClick.tsx",
     "scripts/generate-sitemap.mjs",
-    "scripts/generate-sitemap.mjs"
+    "scripts/generate-sitemap.mjs",
+    "src/common/libs/service/Authentication"
   ],
   "exclude": [
     "node_modules"

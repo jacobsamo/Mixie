@@ -12,7 +12,7 @@ export type Recipe = {
   info: Info;
   ingredients: Ingredient[];
   steps: Step[];
-  keywords: string[];
+  keywords: { value: string }[];
   dietary: SelectValue[];
   allergens: SelectValue[];
   sweet_savoury: SelectValue;

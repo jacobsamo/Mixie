@@ -2,30 +2,26 @@ import type { NextPage } from 'next';
 import React from 'react';
 import styles from '@styles/modules/Home.module.scss';
 import RecipeService from '@lib/service/RecipeService';
-import { Recipe } from 'libs/types/';
+import { Recipe, SimplifiedRecipe } from 'libs/types/';
 import { PageSeo } from 'shared';
 import Navbar from '@components/modules/Navbar';
 import Link from 'next/link';
-import AlgoliaDialog from '@components/elements/algolia_search/AlgoliaDialog';
+import SearchDialog from '@components/elements/search/SearchDialog';
 import useAuth from 'src/common/hooks/useAuth';
 import AuthDialog from '@components/elements/AuthDialog';
 
 //swiper
-import { SwiperSlide } from 'swiper/react';
-import SwiperTemplate from '@components/templates/SwiperTemplate';
+import { SplideSlide } from '@splidejs/react-splide';
+import SplideTemplate from '@components/templates/SplideTemplate';
 
-import {
-  CardRectangle,
-  CardRectangleSmall,
-  CardSquare,
-} from '@components/modules/Cards';
+import { CardRectangleSmall, CardSquare } from '@components/modules/Cards';
 
 interface HomeProps {
-  breakFast: Recipe[];
-  lunch: Recipe[];
-  dinner: Recipe[];
-  sweet: Recipe[];
-  savoury: Recipe[];
+  breakFast: SimplifiedRecipe[];
+  lunch: SimplifiedRecipe[];
+  dinner: SimplifiedRecipe[];
+  sweet: SimplifiedRecipe[];
+  savoury: SimplifiedRecipe[];
 }
 
 const RecipesPages: NextPage<HomeProps> = ({
@@ -54,79 +50,49 @@ const RecipesPages: NextPage<HomeProps> = ({
             className={styles.heroImg}
           /> */}
           <h1 className={`${styles.heroTitle} pb-2`}>Want Tasty Recipes</h1>
-          <AlgoliaDialog buttonType="searchBar" />
+          <SearchDialog buttonType="searchBar" />
         </section>
         <section className="pt-9 ">
           <h2 className="text-step0 font-Roboto font-bold">Breakfast</h2>
-          <SwiperTemplate>
+          <SplideTemplate>
             {breakFast ? (
-              breakFast.map((item: Recipe) => (
-                <SwiperSlide>
-                  <CardSquare
-                    title={item.recipeName}
-                    id={item.id}
-                    totalTime={item.info.total}
-                    key={item.id}
-                    handleClick={() => console.log('clicked')}
-                    image={{
-                      imgUrl: item.image?.imgUrl || '',
-                      imgAlt: item.image?.imgAlt || '',
-                    }}
-                  />
-                </SwiperSlide>
+              breakFast.map((item: SimplifiedRecipe) => (
+                <SplideSlide>
+                  <CardSquare recipe={item} />
+                </SplideSlide>
               ))
             ) : (
               <h1>No Recipes at this point in time</h1>
             )}
-          </SwiperTemplate>
+          </SplideTemplate>
         </section>
         <section className="pt-9 ">
           <h2 className="text-step0 font-Roboto font-bold">Lunch</h2>
-          <SwiperTemplate>
+          <SplideTemplate>
             {lunch ? (
-              lunch.map((item: Recipe) => (
-                <SwiperSlide>
-                  <CardSquare
-                    title={item.recipeName}
-                    id={item.id}
-                    totalTime={item.info.total}
-                    key={item.id}
-                    handleClick={() => console.log('clicked')}
-                    image={{
-                      imgUrl: item.image?.imgUrl || '',
-                      imgAlt: item.image?.imgAlt || '',
-                    }}
-                  />
-                </SwiperSlide>
+              lunch.map((item: SimplifiedRecipe) => (
+                <SplideSlide>
+                  <CardSquare recipe={item} />
+                </SplideSlide>
               ))
             ) : (
               <h1>No Recipes at this point in time</h1>
             )}
-          </SwiperTemplate>
+          </SplideTemplate>
         </section>
         <section className="pt-9 ">
           <h2 className="text-step0 font-Roboto font-bold">Dinner</h2>
-          <SwiperTemplate>
+          <SplideTemplate>
             {dinner ? (
-              dinner.map((item: Recipe) => (
-                <SwiperSlide>
-                  <CardSquare
-                    title={item.recipeName}
-                    id={item.id}
-                    totalTime={item.info.total}
-                    key={item.id}
-                    handleClick={() => console.log('clicked')}
-                    image={{
-                      imgUrl: item.image?.imgUrl || '',
-                      imgAlt: item.image?.imgAlt || '',
-                    }}
-                  />
-                </SwiperSlide>
+              dinner.map((item: SimplifiedRecipe) => (
+                <SplideSlide>
+                  <CardSquare recipe={item} />
+                </SplideSlide>
               ))
             ) : (
               <h1>No Recipes at this point in time</h1>
             )}
-          </SwiperTemplate>
+          </SplideTemplate>
         </section>
         <section className="flex flex-row w-1/2 justify-between">
           <div className="flex flex-col justify-center p-3 dark:bg-dark_grey bg-white rounded-lg">
@@ -134,18 +100,8 @@ const RecipesPages: NextPage<HomeProps> = ({
               Sweet
             </h2>
             <div className="grid grid-rows-2 grid-cols-2 gap-4">
-              {sweet.map((item) => (
-                <CardRectangleSmall
-                  title={item.recipeName}
-                  id={item.id}
-                  totalTime={item.info.total}
-                  key={item.id}
-                  handleClick={() => console.log('clicked')}
-                  image={{
-                    imgUrl: item.image.imgUrl || '',
-                    imgAlt: item.image.imgAlt || '',
-                  }}
-                />
+              {sweet.map((item: SimplifiedRecipe) => (
+                <CardRectangleSmall recipe={item} />
               ))}
             </div>
             <Link
@@ -160,18 +116,8 @@ const RecipesPages: NextPage<HomeProps> = ({
               Savoury
             </h2>
             <div className="grid grid-rows-2 grid-cols-2 gap-4">
-              {savoury.map((item) => (
-                <CardRectangleSmall
-                  title={item.recipeName}
-                  id={item.id}
-                  totalTime={item.info.total}
-                  key={item.id}
-                  handleClick={() => console.log('clicked')}
-                  image={{
-                    imgUrl: item.image.imgUrl || '',
-                    imgAlt: item.image.imgAlt || '',
-                  }}
-                />
+              {savoury.map((item: SimplifiedRecipe) => (
+                <CardRectangleSmall recipe={item} />
               ))}
             </div>
             <Link

@@ -10,8 +10,9 @@ import {
 } from 'firebase/auth';
 import { doc, setDoc, Timestamp } from 'firebase/firestore';
 import { User, Theme, Font } from 'libs/types';
+import { setCookie, deleteCookie } from 'cookies-next';
 
-class AuthService {
+class AuthenticationService {
   async createUserDoc(user: FirebaseUser) {
     if (user) {
       {
@@ -37,8 +38,11 @@ class AuthService {
             socials: {},
           } as User;
 
+          await setCookie('user', JSON.stringify(userDoc), {
+            maxAge: 30 * 24 * 60 * 60,
+            path: '/',
+          });
           await setDoc(doc(db, 'users', user.uid), userDoc);
-          await localStorage.setItem('user', JSON.stringify(userDoc));
           return { message: 'User document created successfully', status: 200 };
         } catch (e: any) {
           console.error('Error creating user document: ', e);
@@ -71,8 +75,8 @@ class AuthService {
 
   async signOutUser() {
     await signOut(auth);
-    await localStorage.removeItem('user');
+    await deleteCookie('user');
   }
 }
 
-export default new AuthService();
+export default new AuthenticationService();

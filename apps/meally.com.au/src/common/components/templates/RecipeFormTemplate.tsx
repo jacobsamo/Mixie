@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { auth } from '@lib/config/firebase';
 import { Timestamp } from 'firebase/firestore';
@@ -23,9 +23,12 @@ import UserService from '@lib/service/UserService';
 import Utils from '@lib/service/Utils';
 import useUser from 'src/common/hooks/useUser';
 import { useToast } from 'shared/src/components/toast/use-toast';
+import FileService from '@lib/service/FileService';
 
 const RecipeFromLayout = () => {
   const loggedInUser = useUser();
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
   const methods = useForm<Recipe>({
     defaultValues: {
       ...initialRecipeState,
@@ -37,6 +40,24 @@ const RecipeFromLayout = () => {
   const onsubmit = async (data: Recipe) => {
     if (data) {
       const total = Utils.calculateTotalTime(data.info.prep, data.info.cook);
+      let imageUploaded: string | null = null;
+      const image = fileInputRef.current?.files?.[0];
+      if (image) {
+        try {
+          const response = await FileService.uploadImage(
+            image,
+            'recipe',
+            `${data.recipeName.replace(/\s+/g, '-').toLowerCase()}`
+          );
+          imageUploaded = response.url || '';
+        } catch (error) {
+          console.error('Image upload error:', error);
+          // Handle error if the image upload fails
+        }
+      } else {
+        imageUploaded = data.image.imgUrl;
+      }
+
       const user = {
         uid: auth.currentUser?.uid || '',
         displayName: loggedInUser.user?.displayName || '',
@@ -58,8 +79,8 @@ const RecipeFromLayout = () => {
         lastUpdatedBy: user,
         version: '1.0',
       } as Recipe;
-      if (auth.currentUser) {
-        await UserService.createRecipe({
+      if (loggedInUser) {
+        const simplifiedRecipe = {
           id: recipe.id,
           recipeName: recipe.recipeName,
           image: {
@@ -69,6 +90,9 @@ const RecipeFromLayout = () => {
           keywords: recipe.keywords,
           totalCookTime: recipe.info.total,
           lastViewed: recipe.createdAt,
+        };
+        await UserService.createRecipe({
+          ...simplifiedRecipe,
           privacy: 'public',
         });
         await RecipeService.createRecipe(recipe).then((res) => {
@@ -87,7 +111,6 @@ const RecipeFromLayout = () => {
           }
         });
       }
-      console.log('Recipe has been created: ', recipe);
     }
   };
 
@@ -125,7 +148,12 @@ const RecipeFromLayout = () => {
             label="Prep Time in minutes"
             type="string"
             required
-            // options={{ pattern: /(\d+w)?(\d+d)?(\d+h)?(\d+m)?/ }}
+            options={{
+              pattern: /(\d+w)?(\d+d)?(\d+h)?(\d+m)?/,
+              validate: (value) => {
+                return value !== '' || 'Please enter a cook time';
+              },
+            }}
             control={control}
             // defaultValue={recipe.info.prep}
           />
@@ -135,7 +163,12 @@ const RecipeFromLayout = () => {
             label="Cook Time"
             type="string"
             required
-            // options={{ pattern: /(\d+w)?(\d+d)?(\d+h)?(\d+m)?/ }}
+            options={{
+              pattern: /(\d+w)?(\d+d)?(\d+h)?(\d+m)?/,
+              validate: (value) => {
+                return value !== '' || 'Please enter a cook time';
+              },
+            }}
             control={control}
             // defaultValue={recipe.info.cook}
           />
@@ -169,7 +202,7 @@ const RecipeFromLayout = () => {
             options={sweet_savoury}
             fieldOptions={{ required: true }}
           />
-          <ImageUpload />
+          <ImageUpload fileUploadRef={fileInputRef} />
           <SelectComponent
             name="mealTime"
             label="Meal Time"

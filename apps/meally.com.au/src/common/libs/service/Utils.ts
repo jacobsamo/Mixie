@@ -138,6 +138,12 @@ class Utils {
         return ingredient;
     }
   };
+
+  calculateAllIngredients(ingredients: Ingredient[], batchAmount: number) {
+    return ingredients.map((ingredient) =>
+      this.calculateIngredient(ingredient, batchAmount)
+    );
+  }
 }
 
 export default new Utils();

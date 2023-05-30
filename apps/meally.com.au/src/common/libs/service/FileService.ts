@@ -1,6 +1,5 @@
 import { storage } from '@lib/config/firebase';
-import ffmpeg from 'fluent-ffmpeg';
-import * as FileType from 'file-type';
+// const ffmpeg = require('fluent-ffmpeg');
 import { Readable, PassThrough } from 'stream';
 import {
   getStorage,
@@ -30,17 +29,17 @@ class ImageService {
     const fileBuffer = Buffer.from(buffer);
 
     // Check if file is an image
-    const isImageFile = await this.isImage(fileBuffer);
-    if (!isImageFile) {
-      throw new Error('File is not an image');
-    }
+    // const isImageFile = await this.isImage(fileBuffer);
+    // if (!isImageFile) {
+    //   throw new Error('File is not an image');
+    // }
 
     // Convert to .webp
-    const webpBuffer = await this.convertToWebp(fileBuffer);
+    // const webpBuffer = await this.convertToWebp(fileBuffer);
 
     // Upload to Firebase Storage
     const fileRef = ref(storage, `images/${path}${fileName}.webp`);
-    await uploadBytes(fileRef, webpBuffer);
+    await uploadBytes(fileRef, fileBuffer);
 
     return {
       message: 'Uploaded successfully',
@@ -49,25 +48,25 @@ class ImageService {
     };
   }
 
-  isImage = async (file: Buffer): Promise<boolean> => {
-    const fileType = await FileType.fileTypeFromBuffer(file);
-    if (!fileType) return false;
-    return fileType.mime.startsWith('image/');
-  };
+  // isImage = async (file: Buffer): Promise<boolean> => {
+  //   const fileType = await FileType.fileTypeFromBuffer(file);
+  //   if (!fileType) return false;
+  //   return fileType.mime.startsWith('image/');
+  // };
 
-  convertToWebp = async (file: Buffer): Promise<Buffer> => {
-    return new Promise((resolve, reject) => {
-      const stream = new PassThrough();
-      stream.end(file);
-      ffmpeg(stream)
-        .format('webp')
-        .on('error', reject)
-        .on('end', (output) => {
-          resolve(output);
-        })
-        .pipe();
-    });
-  };
+  // convertToWebp = async (file: Buffer): Promise<Buffer> => {
+  //   return new Promise((resolve, reject) => {
+  //     const stream = new PassThrough();
+  //     stream.end(file);
+  //     ffmpeg(stream)
+  //       .format('webp')
+  //       .on('error', reject)
+  //       .on('end', (output: any) => {
+  //         resolve(output);
+  //       })
+  //       .pipe();
+  //   });
+  // };
 
   //   // Get the image's hash
   //   static async getImageHash(file: File) {
