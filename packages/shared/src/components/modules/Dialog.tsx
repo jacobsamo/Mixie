@@ -8,6 +8,7 @@ interface DialogProps {
   classNames?: {
     container?: string;
     overlay?: string;
+    backgroundColor?: boolean;
   };
   closeKeys?: string[];
   openKeys?: string[];
@@ -37,7 +38,7 @@ const Dialog = ({
   isOpen,
   setOpen,
   children,
-  classNames,
+  classNames = { backgroundColor: true },
   closeKeys = [],
   openKeys = [],
 }: DialogProps) => {
@@ -51,6 +52,10 @@ const Dialog = ({
     }
   }
 
+  const panelStyles = classNames?.backgroundColor
+    ? "dark:bg-dark_grey dark:shadow-none shadow-main bg-white "
+    : "";
+
   return (
     <>
       <HeadlessDialog
@@ -61,7 +66,7 @@ const Dialog = ({
         className="fixed inset-0 flex items-center justify-center z-50"
       >
         <HeadlessDialog.Panel
-          className={`dark:bg-dark_grey dark:shadow-none shadow-main dark:text-white text-black bg-white rounded-md p-1 ${classNames?.overlay}`}
+          className={`${panelStyles} dark:text-white text-black rounded-md p-1 ${classNames?.overlay}`}
         >
           <div ref={dialogRef} className={classNames?.container}>
             {children}

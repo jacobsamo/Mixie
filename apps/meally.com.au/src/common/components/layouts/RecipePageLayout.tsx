@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
 //types
 import type { Recipe, Info, Rating, RatingScale } from 'libs/types';
@@ -30,6 +30,9 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
   const info = recipe.info as Info;
   const { user } = useUser();
   // const rating = info.rating || 0;
+  const ingredients = useMemo(() => {
+    return Utils.calculateAllIngredients(recipe.ingredients, add);
+  }, [add, recipe.ingredients]);
 
   const handleChange = (newRating: RatingScale): void => {
     if (user && newRating !== rating) {
@@ -42,7 +45,7 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
         },
       };
 
-      RecipeService.updateRating(recipe.id, updatedRating);
+    RecipeService.updateRating(recipe.id, updatedRating);
     }
   };
 
@@ -54,41 +57,6 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
           <section className="flex flex-row items-center flex-wrap">
             <h1 className="text-step2 font-semibold">{recipe.recipeName}</h1>
             <span className="flex flex-row pl-4">
-              {/* <StarIcon
-                className={`${
-                  rating >= 1
-                    ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
-                    : 'text-[#3e3e3e]'
-                } w-6 h-6`}
-              />
-              <StarIcon
-                className={`${
-                  rating >= 2
-                    ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
-                    : 'text-[#3e3e3e]'
-                } w-6 h-6`}
-              />
-              <StarIcon
-                className={`${
-                  rating >= 3
-                    ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
-                    : 'text-[#3e3e3e]'
-                } w-6 h-6`}
-              />
-              <StarIcon
-                className={`${
-                  rating >= 4
-                    ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
-                    : 'text-[#3e3e3e]'
-                } w-6 h-6`}
-              />
-              <StarIcon
-                className={`${
-                  rating >= 5
-                    ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
-                    : 'text-[#3e3e3e]'
-                } w-6 h-6`}
-              /> */}
               <StarRating
                 rating={rating || info.rating}
                 setRating={handleChange}
@@ -141,7 +109,7 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
                   className={`${styles.recipeIngredients} flex flex-col w-[14.5rem] gap-3`}
                 >
                   <AddBatch add={add} setAdd={setAdd} />
-                  {recipe.ingredients.map((ingredient, index) => {
+                  {ingredients.map((ingredient, index) => {
                     if ('ingredient' in ingredient) {
                       return (
                         <Ingredient
@@ -161,7 +129,7 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
                   })}
                 </section>
               </article>
-              <article className={` ${styles.method_container}`}>
+              <article className={`${styles.method_container}`}>
                 <div className={styles.step_container}>
                   {recipe.steps.map((step, index) => {
                     return (
@@ -169,7 +137,7 @@ function RecipePageLayout({ recipe }: RecipePageLayoutProps) {
                         index={index}
                         key={index}
                         step={step}
-                        ingredients={recipe.ingredients}
+                        ingredients={ingredients}
                       />
                     );
                   })}

@@ -3,10 +3,18 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@lib/*": ["src/common/libs/*"],
-      "@components/*": ["src/common/components/*"],
-      "@component_styles/*": ["src/common/components/styles/*"],
-      "@styles/*": ["src/common/styles/*"]
+      "@lib/*": [
+        "src/common/libs/*"
+      ],
+      "@components/*": [
+        "src/common/components/*"
+      ],
+      "@component_styles/*": [
+        "src/common/components/styles/*"
+      ],
+      "@styles/*": [
+        "src/common/styles/*"
+      ]
     },
     "plugins": [
       {
@@ -26,5 +34,7 @@
     "scripts/generate-sitemap.mjs",
     "src/common/libs/service/Authentication"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -16,12 +16,8 @@ import {
   Timestamp,
   addDoc,
 } from 'firebase/firestore';
+import { User as FirebaseUser } from 'firebase/auth';
 import { SimplifiedRecipe, User } from 'libs/types';
-
-interface ReturnType {
-  message: string;
-  status: number;
-}
 
 class UserService {
   async getUserByUserName(userName: string) {
@@ -39,8 +35,7 @@ class UserService {
     }
 
     const userData = userQuerySnapshot.docs[0].data() as User;
-    const user = { ...userData, createdAt: userData.createdAt.toDate() };
-    return JSON.parse(JSON.stringify(user));
+    return JSON.parse(JSON.stringify(userData));
   }
 
   async getUser(uid: string) {
@@ -49,8 +44,7 @@ class UserService {
 
     if (docSnap.exists()) {
       const userData = docSnap.data() as User;
-      const user = { ...userData, createdAt: userData.createdAt.toDate() };
-      return JSON.parse(JSON.stringify(user));
+      return JSON.parse(JSON.stringify(userData));
     } else {
       return {};
     }
@@ -60,9 +54,8 @@ class UserService {
     const querySnapshot = await getDocs(collection(db, 'users'));
     const users: User[] = [];
     querySnapshot.forEach((user) => {
-      const data = user.data() as User;
-      data.createdAt.toDate();
-      users.push({ ...data });
+      const userData = user.data() as User;
+      users.push(userData);
     });
     return users;
   }
@@ -85,6 +78,36 @@ class UserService {
         return { message: `There was an error: ${error}`, status: 400 };
       }
     }
+  }
+
+  async createBookmark(
+    recipeDoc: SimplifiedRecipe
+  ): Promise<{ message: string; status: number }> {
+    const user = auth.currentUser;
+    if (user) {
+      const docRef = doc(
+        collection(doc(db, 'users', user.uid), 'bookmarks'),
+        recipeDoc.id
+      );
+      await setDoc(docRef, recipeDoc);
+      return { message: 'Successfully created bookmark', status: 200 };
+    }
+    return { message: 'User not authenticated', status: 401 };
+  }
+
+  async getBookmarks(user: User): Promise<SimplifiedRecipe[]> {
+    if (user) {
+      const querySnapshot = await getDocs(
+        collection(doc(db, 'users', user.uid), 'bookmarks')
+      );
+      const recipes: SimplifiedRecipe[] = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data() as SimplifiedRecipe;
+        recipes.push(data);
+      });
+      return recipes;
+    }
+    return [];
   }
 
   async createRecipe(

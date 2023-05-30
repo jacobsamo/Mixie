@@ -29,7 +29,7 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
       />
       <select
         id={`ingredients.${index}.unit`}
-        className="dark:outline-none outline outline-1"
+        className="dark:outline-none outline outline-1 w-fit h-fit rounded-lg p-2 text-step--4"
         defaultValue={getValues(`ingredients.${index}.unit`)}
         {...register(`ingredients.${index}.unit` as const)}
       >
@@ -55,7 +55,7 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
           <select
             id={`ingredients.${index}.measurement`}
             defaultValue={values.measurement}
-            className="dark:outline-none outline outline-1"
+            className="dark:outline-none outline outline-1 w-fit h-fit rounded-lg p-2 text-step--4"
             {...register(`ingredients.${index}.measurement` as const)}
           >
             <option value=""></option>
