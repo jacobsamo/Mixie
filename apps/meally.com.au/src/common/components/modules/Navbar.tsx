@@ -11,7 +11,6 @@ import useAuth from 'src/common/hooks/useAuth';
 import AuthDialog from '@components/elements/AuthDialog';
 
 const Navbar = () => {
-  const { dialogOpen, handleAuthClick, handleAuthDialogClose } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   // const [dialogOpen, setDialogOpen] = useState(false);
 

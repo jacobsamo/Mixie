@@ -38,7 +38,6 @@ const RecipeFromLayout = () => {
   const { toast } = useToast();
 
   const onsubmit = async (data: Recipe) => {
-    console.log('data', data);
     if (data) {
       const total = Utils.calculateTotalTime(data.info.prep, data.info.cook);
       let imageUploaded: string | null = null;
@@ -51,7 +50,6 @@ const RecipeFromLayout = () => {
             `${data.recipeName.replace(/\s+/g, '-').toLowerCase()}`
           );
           imageUploaded = response.url || '';
-          console.log('response of api', imageUploaded);
         } catch (error) {
           console.error('Image upload error:', error);
           // Handle error if the image upload fails
@@ -67,7 +65,6 @@ const RecipeFromLayout = () => {
         email: auth.currentUser?.email || '',
         phoneNumber: auth.currentUser?.phoneNumber || '',
       };
-      console.log('Submitting user: ', user);
       const recipe = {
         ...data,
         id: data.recipeName.replace(/\s+/g, '-').toLowerCase(),
@@ -83,7 +80,6 @@ const RecipeFromLayout = () => {
         version: '1.0',
       } as Recipe;
       if (loggedInUser) {
-        console.log('User is logged in: ', user);
         const simplifiedRecipe = {
           id: recipe.id,
           recipeName: recipe.recipeName,
@@ -100,16 +96,13 @@ const RecipeFromLayout = () => {
           privacy: 'public',
         });
         await RecipeService.createRecipe(recipe).then((res) => {
-          console.log('Recipes been sent to server: ', res);
           if (res.status === 200) {
             toast({
               title: 'Recipe created.',
               description: 'Your recipe has been created.',
             });
             // reset();
-            console.log('Recipe has been created: ', recipe);
           } else {
-            console.log('There was an error: ', res.message);
             toast({
               title: 'Uh oh! Something went wrong.',
               description: 'There was an error while creating your recipe.',
@@ -158,7 +151,6 @@ const RecipeFromLayout = () => {
             options={{
               pattern: /(\d+w)?(\d+d)?(\d+h)?(\d+m)?/,
               validate: (value) => {
-                console.log('value', value);
                 return value !== '' || 'Please enter a cook time';
               },
             }}
@@ -174,7 +166,6 @@ const RecipeFromLayout = () => {
             options={{
               pattern: /(\d+w)?(\d+d)?(\d+h)?(\d+m)?/,
               validate: (value) => {
-                console.log('value', value);
                 return value !== '' || 'Please enter a cook time';
               },
             }}

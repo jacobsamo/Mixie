@@ -38,11 +38,11 @@ class AuthenticationService {
             socials: {},
           } as User;
 
-          await setDoc(doc(db, 'users', user.uid), userDoc);
           await setCookie('user', JSON.stringify(userDoc), {
             maxAge: 30 * 24 * 60 * 60,
             path: '/',
           });
+          await setDoc(doc(db, 'users', user.uid), userDoc);
           return { message: 'User document created successfully', status: 200 };
         } catch (e: any) {
           console.error('Error creating user document: ', e);

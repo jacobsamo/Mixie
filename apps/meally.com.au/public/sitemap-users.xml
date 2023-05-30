@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://meally.com.au//@johnsmith</loc>
-    <lastmod>2023-05-29T07:26:11.843Z</lastmod>
+    <loc>https://meally.com.au/users/@toddsamorowski</loc>
+    <lastmod>2023-05-24T21:49:03.446Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://meally.com.au/users/@jacobsamorowski</loc>
+    <lastmod>2023-05-29T20:47:39.608Z</lastmod>
+  </url>
+
+  <url>
+    <loc>https://meally.com.au/users/@christysamorowski</loc>
+    <lastmod>2023-05-27T08:26:59.339Z</lastmod>
   </url>
 </urlset>

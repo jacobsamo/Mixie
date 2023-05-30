@@ -2,7 +2,7 @@
 import localStorage from 'libs/utils/localStorageService';
 import React, { useCallback, useEffect, useState } from 'react';
 import { User } from 'libs/types';
-import { getCookie, setCookie } from 'cookies-next';
+import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 
 const useUser = () => {
   const [user, setUser] = useState<undefined | User>(undefined);
@@ -17,6 +17,11 @@ const useUser = () => {
     setUser(user);
   }, []);
 
+  const signOutUser = useCallback(async () => {
+    await deleteCookie('user');
+    setUser(undefined);
+  }, []);
+
   useEffect(() => {
     getUser().then((user) => {
       setUser(user);
@@ -26,6 +31,7 @@ const useUser = () => {
   return {
     user,
     setNewUser,
+    signOutUser,
   };
 };
 

@@ -4,7 +4,7 @@ import Fuse from 'fuse.js';
 import { GetServerSideProps } from 'next';
 import RecipeService from '@lib/service/RecipeService';
 import { Recipe, SimplifiedRecipe } from 'libs/types';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { SearchCard } from '@components/modules/Cards';
 
@@ -60,16 +60,22 @@ const SearchDialog = ({ buttonType }: SearchDialogProps) => {
         closeOnOutsideClick={true}
         classNames={{
           overlay: 'fixed inset-0 z-50 md:w-1/2 w-full mx-auto',
-          backgroundColor: false,
         }}
       >
-        <div className=" top-0 pt-0 flex flex-col mx-auto mt-16 w-full justify-center items-center gap-2">
+        <div className="relative top-0 pt-0 flex flex-col mx-auto mt-16 w-full justify-center items-center gap-2">
           <input
             className="w-full h-10 rounded-md focus:border-transparent"
             placeholder="Search for recipes"
             type="text"
             onChange={(event) => searchRecipes(event.target.value)}
           />
+          <button
+            type="button"
+            className="absolute right-1 top-1"
+            onClick={() => setOpen(false)}
+          >
+            <XMarkIcon className="h-8 w-8" />
+          </button>
           <ul>
             {returnedRecipes.map((recipe) => (
               <SearchCard as="li" recipe={recipe} />

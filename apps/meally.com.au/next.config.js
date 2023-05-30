@@ -30,15 +30,6 @@ const nextConfig = {
       'dr.savee-cdn.com',
     ],
   },
-  webpack: (config, { isServer }) => {
-    config.plugins.push(
-      new webpack.DefinePlugin({
-        'process.env.FLUENTFFMPEG_COV': false,
-        FileSystem: true,
-      })
-    );
-    return config;
-  },
   // experimental: {
   //   appDir: true,
   // },

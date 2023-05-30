@@ -15,6 +15,7 @@ import {
 } from 'firebase/firestore';
 import type { Rating, RatingScale, Recipe, SimplifiedRecipe } from 'libs/types';
 import { db, auth } from '@lib/config/firebase';
+import { get } from 'http';
 
 class RecipeService {
   async createRecipe(
@@ -28,18 +29,6 @@ class RecipeService {
       return { message: e, status: 400 };
     }
   }
-
-  // async createSearchAbleRecipes(
-  //   post: Recipe
-  // ): Promise<{ message: string | Error; status: number }> {
-  //   try {
-  //     await setDoc(doc(db, 'searchable-recipes', post.id), post);
-  //     return { message: 'Recipe created successfully', status: 200 };
-  //   } catch (e: any) {
-  //     console.error('Error saving recipe:', e);
-  //     return { message: e, status: 400 };
-  //   }
-  // }
 
   async getLatestRecipes(limitAmount?: number) {
     const recipeRef = collection(db, 'recipes');
@@ -189,7 +178,30 @@ class RecipeService {
     return simplifiedRecipes as SimplifiedRecipe[];
   }
 
-  async getRating(id: string) {}
+  async getRating(id: string): Promise<RatingScale> {
+    const querySnapshot = await getDocs(
+      collection(doc(db, 'recipes', id), 'rating')
+    );
+
+    let totalRating = 0;
+    let ratingCount = 0;
+    let rating: RatingScale = 0;
+    querySnapshot.forEach((doc) => {
+      const ratingData = doc.data() as Rating;
+      totalRating += ratingData.rating;
+      ratingCount++;
+    });
+
+    if (ratingCount > 0) {
+      const averageRating = totalRating / ratingCount;
+      const roundedAverageRating = Math.round(averageRating);
+
+      rating = roundedAverageRating as RatingScale;
+    } else {
+      rating = 0;
+    }
+    return rating;
+  }
 
   async updateRating(
     id: string,

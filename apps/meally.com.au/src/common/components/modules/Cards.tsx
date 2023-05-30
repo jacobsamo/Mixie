@@ -4,6 +4,7 @@ import type { ImageProps, SimplifiedRecipe } from 'libs/types';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import UserService from '@lib/service/UserService';
+import { useToast } from 'shared/src/components/toast/use-toast';
 
 function addBookMark(recipe: SimplifiedRecipe) {
   UserService.createBookMark({ ...recipe, collection: 'default' });
@@ -32,6 +33,8 @@ const BaseCard = ({
   hasCookTime = true,
   classNames,
 }: BaseCardProps) => {
+  const { toast } = useToast();
+
   return (
     <div
       className={`${classNames.container} relative flex p-2 items-center justify-between flex-col h-58 w-58 rounded-xl text-black dark:text-white`}
@@ -51,7 +54,12 @@ const BaseCard = ({
             {recipe.totalCookTime}
           </h3>
           <button
-            onClick={() => addBookMark(recipe)}
+            onClick={() => {
+              addBookMark(recipe);
+              toast({
+                description: 'Recipe has been bookmarked',
+              });
+            }}
             className={classNames.bookmarkButton}
           >
             <HeartIcon
@@ -61,7 +69,12 @@ const BaseCard = ({
         </div>
       ) : (
         <button
-          onClick={() => addBookMark(recipe)}
+          onClick={() => {
+            addBookMark(recipe);
+            toast({
+              description: 'Recipe has been bookma',
+            });
+          }}
           className={`absolute right-2 bottom-2 ${classNames.bookmarkButton}`}
         >
           <HeartIcon
@@ -116,7 +129,9 @@ const SearchCard = ({ as, recipe }: SearchCardProps) => {
         <HeartIcon className={`w-8 h-8 cursor-pointer`} />
       </button>
       <div>
-        <h1 className="text-step--1">{recipe.recipeName}</h1>
+        <Link href={`/recipes/${recipe.id}`} className="text-step--1">
+          {recipe.recipeName}
+        </Link>
         <div className="flex flex-row flex-wrap gap-1 w-full">
           {recipe.keywords.map((keyword, index) => {
             return (

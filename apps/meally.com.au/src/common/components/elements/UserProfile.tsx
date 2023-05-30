@@ -6,31 +6,20 @@ import type { User } from 'firebase/auth';
 
 import AuthDialog from '@components/elements/AuthDialog';
 import useAuth from 'src/common/hooks/useAuth';
-import AuthService from '@lib/service/Authentication'; 
-
+import AuthService from '@lib/service/Authentication';
+import useUser from 'src/common/hooks/useUser';
 
 const UserProfile = () => {
-  const [user, setUser] = useState<User>();
+  const { user, signOutUser } = useUser();
   const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const handleSignOut = () => {
     AuthService.signOutUser();
-    setUser(undefined);
+    signOutUser();
     setModalOpen(false);
   };
-
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
-      }
-    });
-    if (user) {
-      setOpen(false);
-    }
-  }, [user]);
 
   if (user) {
     return (
@@ -55,7 +44,7 @@ const UserProfile = () => {
               Profile
             </Link>
 
-            <Link href="/account/bookmarks">Bookmarks</Link>
+            <Link href={`/${user.userName}/bookmarks`}>Bookmarks</Link>
             <Link href="/recipes/create">Create Recipe</Link>
             <Link href="/settings/profile">Settings</Link>
 
@@ -74,7 +63,7 @@ const UserProfile = () => {
       >
         Sign up
       </button>
-      <AuthDialog user={user} setUser={setUser} open={open} setOpen={setOpen} />
+      <AuthDialog open={open} setOpen={setOpen} />
     </>
   );
 };

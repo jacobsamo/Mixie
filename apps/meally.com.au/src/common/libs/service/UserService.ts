@@ -16,6 +16,7 @@ import {
   Timestamp,
   addDoc,
 } from 'firebase/firestore';
+import { User as FirebaseUser } from 'firebase/auth';
 import { SimplifiedRecipe, User } from 'libs/types';
 
 class UserService {
@@ -92,6 +93,21 @@ class UserService {
       return { message: 'Successfully created bookmark', status: 200 };
     }
     return { message: 'User not authenticated', status: 401 };
+  }
+
+  async getBookmarks(user: User): Promise<SimplifiedRecipe[]> {
+    if (user) {
+      const querySnapshot = await getDocs(
+        collection(doc(db, 'users', user.uid), 'bookmarks')
+      );
+      const recipes: SimplifiedRecipe[] = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data() as SimplifiedRecipe;
+        recipes.push(data);
+      });
+      return recipes;
+    }
+    return [];
   }
 
   async createRecipe(

@@ -11,6 +11,7 @@ import RecipePageLayout from '@components/layouts/RecipePageLayout';
 import { useRouter } from 'next/router';
 import Utils from '@lib/service/Utils';
 import { generateSiteMap } from '@lib/service/Build';
+import { GetStaticPaths, GetStaticProps } from 'next';
 
 interface recipePageProps {
   recipe: Recipe;
@@ -33,7 +34,7 @@ export default function RecipePage({ recipe }: recipePageProps) {
   );
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const recipes = await RecipeService.getAllRecipes();
   generateSiteMap<Recipe>(recipes, 'recipes', 'recipes');
   const paths = recipes.map((recipe) => {
@@ -44,9 +45,9 @@ export async function getStaticPaths() {
     paths,
     fallback: 'blocking', // false or 'blocking'
   };
-}
+};
 
-export async function getStaticProps(context: any) {
+export const getStaticProps: GetStaticProps = async (context: any) => {
   const recipe = JSON.parse(
     JSON.stringify(await RecipeService.getRecipe(context.params.id))
   );
@@ -60,4 +61,4 @@ export async function getStaticProps(context: any) {
     props: { recipe },
     revalidate: 60 * 60 * 24,
   };
-}
+};

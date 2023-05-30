@@ -13,6 +13,7 @@ import AuthDialog from '@components/elements/AuthDialog';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import SearchDialog from '@components/elements/search/SearchDialog';
+import { useToast } from 'shared/src/components/toast/use-toast';
 
 interface HomeProps {
   sweet: SimplifiedRecipe[];
@@ -22,7 +23,7 @@ interface HomeProps {
 
 const Home = ({ latestRecipes, sweet, savoury }: HomeProps) => {
   const { dialogOpen, handleAuthDialogClose } = useAuth();
-
+  const { toast } = useToast();
   return (
     <>
       <PageSeo
