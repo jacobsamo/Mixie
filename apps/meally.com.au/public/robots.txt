@@ -1,6 +1,0 @@
-User-agent: *
-
-Disallow: /settings/*
-
-Sitemap: https://meally.com.au/sitemap.xml
-Sitemap: https://www.meally.com.au/sitemap.xml
