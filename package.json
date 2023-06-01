@@ -5,14 +5,17 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "postinstall": "manypkg check"
   },
-  "devDependencies": {
+  "packageManager": "pnpm@7.15.0",
+  "dependencies": {
+    "@manypkg/cli": "^0.20.0",
     "@turbo/gen": "^1.10.1",
-    "eslint": "^8.41.0",
-    "eslint-config-custom": "workspace:*",
+    "dotenv-cli": "^7.2.1",
+    "eslint": "^7.32.0",
+    "eslint-config-custom": "0.0.0",
     "prettier": "^2.8.8",
     "turbo": "^1.10.1"
-  },
-  "packageManager": "pnpm@7.15.0"
+  }
 }
