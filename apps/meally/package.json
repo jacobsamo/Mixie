@@ -3,10 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "firebase:start": "firebase emulators:start  --import=./seed",
+    "dev": "next dev",
     "build": "next build",
+    "postbuild": "node ./src/scripts/generate-sitemap.mjs",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "clean:build": "rm -rf .next",
+    "clean:node": "rm -rf node_modules/",
+    "clean:turbo": "rm -rf .turbo",
+    "clean:node_modules": "rm -rf node_modules/",
+    "clean:all": "yarn clean:build && yarn clean:node && yarn clean:turbo"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.14",
@@ -41,6 +48,7 @@
     "postcss": "^8.4.24",
     "prettier": "^2.8.8",
     "tailwindcss": "^3.3.2",
+    "tailwind-config": "workspace:*",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "^4.5.3"
