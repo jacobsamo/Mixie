@@ -5,7 +5,7 @@
     "strictNullChecks": true,
     "baseUrl": "./",
     "paths": {
-      "@lib/*": ["src/common/libs/*"],
+      "@lib/*": ["src/common/lib/*"],
       "@components/*": ["src/common/components/*"],
       "@styles/*": ["src/common/styles/*"]
     }

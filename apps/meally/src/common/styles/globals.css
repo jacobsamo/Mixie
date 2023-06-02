@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    padding: 0;
+    margin: 0;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    html {
+      color-scheme: dark;
+    }
+    body {
+      @apply bg-black text-white;
+    }
+  }
+
+  @font-face {
+    font-family: 'OpenDyslexic';
+    src: url('../fonts/OpenDyslexic3-Regular.ttf') format('TrueType');
+  }
+}
+
+.firebase-emulator-warning {
+  display: none;
+}
