@@ -1,6 +1,8 @@
 import Navbar from '@components/modules/Navbar';
 import '@styles/globals.css';
 import { siteConfig } from '@lib/config/siteConfig';
+import AuthDialogProvider from 'src/common/hooks/AuthDialogProvider';
+import { SessionProvider } from 'next-auth/react';
 
 export const metadata = {
   title: {
@@ -66,8 +68,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        {children}
+        <SessionProvider>
+          <Navbar />
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );

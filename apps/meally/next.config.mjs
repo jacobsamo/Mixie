@@ -1,4 +1,8 @@
-module.exports = {
+import withPWA from 'next-pwa';
+import './env.mjs';
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ['shared'],
   images: {
@@ -20,3 +24,5 @@ module.exports = {
     ],
   },
 };
+
+export default nextConfig;

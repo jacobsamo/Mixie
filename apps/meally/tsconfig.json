@@ -3,11 +3,12 @@
   "compilerOptions": {
     "plugins": [{ "name": "next" }],
     "strictNullChecks": true,
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
-      "@lib/*": ["src/common/lib/*"],
-      "@components/*": ["src/common/components/*"],
-      "@styles/*": ["src/common/styles/*"]
+      "@/*": ["./*"],
+      "@lib/*": ["./src/common/lib/*"],
+      "@components/*": ["./src/common/components/*"],
+      "@styles/*": ["./src/common/styles/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
