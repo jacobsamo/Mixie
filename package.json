@@ -11,11 +11,11 @@
   "packageManager": "pnpm@7.15.0",
   "dependencies": {
     "@manypkg/cli": "^0.20.0",
-    "@turbo/gen": "^1.10.1",
+    "@turbo/gen": "^1.10.3",
     "dotenv-cli": "^7.2.1",
     "eslint": "^7.32.0",
-    "eslint-config-custom": "0.0.0",
+    "eslint-config-custom": "workspace:*",
     "prettier": "^2.8.8",
-    "turbo": "^1.10.1"
+    "turbo": "^1.10.3"
   }
 }

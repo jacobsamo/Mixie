@@ -2,8 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@lib/config/db';
 
 export async function GET() {
-  const res = await prisma.recipes.findMany();
-  const data = await res.json();
+  const res = await prisma.recipe.findMany();
 
-  return NextResponse.json({ data });
+  return NextResponse.json({ res });
 }

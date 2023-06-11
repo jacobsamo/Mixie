@@ -3,6 +3,7 @@ import '@styles/globals.css';
 import { siteConfig } from '@lib/config/siteConfig';
 import AuthDialogProvider from 'src/common/hooks/AuthDialogProvider';
 import { SessionProvider } from 'next-auth/react';
+import { NextAuthProvider } from '@components/layouts/NextAuthProvider';
 
 export const metadata = {
   title: {
@@ -68,10 +69,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SessionProvider>
+        <NextAuthProvider>
           <Navbar />
           {children}
-        </SessionProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );
