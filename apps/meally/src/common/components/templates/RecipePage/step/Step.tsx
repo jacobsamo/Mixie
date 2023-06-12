@@ -1,13 +1,12 @@
-import React from 'react'
+import { Step } from '@/src/common/types/recipe';
+import React from 'react';
 
 interface StepProps {
-    step: string
+  step: Step;
 }
 
-const Step = ({step}: StepProps) => {
-  return (
-    <div>Step</div>
-  )
-}
+const Step = ({ step }: StepProps) => {
+  return <div>Step</div>;
+};
 
-export default Step
+export default Step;

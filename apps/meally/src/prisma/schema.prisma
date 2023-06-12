@@ -16,16 +16,16 @@ model Recipe {
   uid           String   @id @default(cuid())
   id            String   @unique
   title         String
-  description   String
+  description   String?
   notes         String?
-  Info          Json
-  ingredients   Json
-  steps         Json
-  keywords      Json
-  dietary       Json
-  allergens     Json
-  sweet_savoury Json
-  mealTime      Json
+  Info          Json?
+  ingredients   Json?
+  steps         Json?
+  keywords      Json?
+  dietary       Json?
+  allergens     Json?
+  sweet_savoury Json?
+  mealTime      Json?
   version       String
   createdAt     DateTime @default(now())
   lastUpdated   DateTime @updatedAt
@@ -33,8 +33,9 @@ model Recipe {
   createdBy     String
   user          User     @relation(fields: [createdBy], references: [id])
 
-  madeRecipe  Int
-  savedRecipe Int
+  madeRecipe  Int?
+  savedRecipe Int?
+
 
   @@index([createdBy])
   @@map("recipes")
@@ -81,7 +82,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  recipe        Recipe[]
+  recipes        Recipe[]
 
   @@map(name: "users")
 }

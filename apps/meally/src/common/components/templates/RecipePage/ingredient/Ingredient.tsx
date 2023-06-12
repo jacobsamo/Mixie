@@ -1,7 +1,8 @@
+import { Ingredient } from '@/src/common/types/recipe';
 import React from 'react';
 
 interface IngredientProps {
-  ingredient: string;
+  ingredient: Ingredient;
 }
 
 const Ingredient = ({ ingredient }: IngredientProps) => {

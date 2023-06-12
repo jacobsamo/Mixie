@@ -1,9 +1,12 @@
-import React from 'react'
+import { Info } from '@/src/common/types/recipe';
+import React from 'react';
 
-const Info = () => {
-  return (
-    <div>Info</div>
-  )
+interface InfoProps {
+  info: Info;
 }
 
-export default Info
+const Info = ({ info }: InfoProps) => {
+  return <div>Info</div>;
+};
+
+export default Info;

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import AddBatch from './AddBatch';
 import Ingredient from './Ingredient';
+import { Ingredient as IngredientType } from '@/src/common/types/recipe';
 
 interface IngredientContainerProps {
-  ingredients: string[];
+  ingredients: IngredientType[];
 }
 
 const IngredientContainer = ({ ingredients }: IngredientContainerProps) => {

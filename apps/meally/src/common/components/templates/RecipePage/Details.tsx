@@ -3,19 +3,21 @@ import React, { useState } from 'react';
 import IngredientContainer from './ingredient/IngredientContainer';
 import StepContainer from './step/StepContainer';
 import AddBatch from './ingredient/AddBatch';
+import { Ingredient, Step } from '@/src/common/types/recipe';
 
-const Details = () => {
+interface DetailsProps {
+  ingredients: Ingredient[];
+  steps: Step[];
+}
+
+const Details = ({ ingredients, steps }: DetailsProps) => {
   const [add, setAdd] = useState(0);
 
-  const recipe = {
-    ingredients: [],
-    steps: [],
-  };
   return (
     <section>
       <AddBatch add={add} setAdd={setAdd} />
-      <IngredientContainer ingredients={recipe.ingredients} />
-      <StepContainer steps={recipe.steps} />
+      <IngredientContainer ingredients={ingredients} />
+      <StepContainer steps={steps} />
     </section>
   );
 };

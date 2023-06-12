@@ -1,8 +1,9 @@
 import React from 'react';
 import Step from './Step';
+import { Step as StepType } from '@/src/common/types/recipe';
 
 interface StepContainerProps {
-  steps: string[];
+  steps: StepType[];
 }
 
 const StepContainer = ({ steps }: StepContainerProps) => {
