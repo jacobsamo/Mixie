@@ -1,15 +1,15 @@
 import RecipeService from '@lib/services/RecipeService';
 
 export default async function RecipePage() {
-  const data = await RecipeService.getRecipes();
+  // const data = await RecipeService.getRecipes();
   return (
     <>
       <h1>Recipes</h1>
-      <ul>
+      {/* <ul>
         {data.map((recipe) => (
           <li key={recipe.id}>{recipe.title}</li>
         ))}
-      </ul>
+      </ul> */}
     </>
   );
 }

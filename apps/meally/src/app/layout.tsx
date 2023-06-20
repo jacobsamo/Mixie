@@ -5,6 +5,7 @@ import AuthDialogProvider from 'src/common/hooks/AuthDialogProvider';
 import { SessionProvider } from 'next-auth/react';
 import { NextAuthProvider } from '@components/layouts/NextAuthProvider';
 
+
 export const metadata = {
   title: {
     default: siteConfig.name,

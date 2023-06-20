@@ -35,10 +35,93 @@ model Recipe {
 
   madeRecipe  Int?
   savedRecipe Int?
-
+  Recipe GroupRecipe[]
+  Bookmark    Bookmark[]
 
   @@index([createdBy])
   @@map("recipes")
+}
+
+model Ratings {
+  id       String @id @default(uuid())
+  rating   Int
+  recipeId String
+  user     User   @relation(fields: [userId], references: [id])
+  userId   String
+
+  @@index([userId])
+}
+
+enum roles {
+  ADMIN
+  USER
+  GUEST
+}
+
+model GroupUser {
+  uid     String @unique
+  role    roles
+  user    User   @relation(fields: [uid], references: [id])
+  groupId String
+  group   Group  @relation(fields: [groupId], references: [id])
+  Note    Note[]
+
+  @@index([groupId])
+}
+
+model Group {
+  id          String        @id @default(uuid())
+  name        String
+  description String
+  image       String
+  users       GroupUser[]
+  recipes     GroupRecipe[]
+  owner       User          @relation(fields: [ownerId], references: [id])
+  ownerId     String
+  createdAt   DateTime
+  createdBy   String
+  version     String
+  isPublic    Boolean
+
+  @@index([ownerId])
+}
+
+model GroupRecipe {
+  uid      String @id @unique
+  group    Group  @relation(fields: [groupId], references: [id])
+  groupId  String
+  comments Note[]
+  Recipe   Recipe @relation(fields: [recipeId], references: [id])
+  recipeId String
+
+  @@index([groupId])
+  @@index([recipeId])
+}
+
+model Note {
+  id             String       @id @unique @default(uuid())
+  title          String?
+  body           String
+  createdAt      DateTime
+  createdBy      String
+  groupUserId    String
+  groupUser      GroupUser    @relation(fields: [groupUserId], references: [uid])
+  GroupRecipe    GroupRecipe? @relation(fields: [groupRecipeUid], references: [uid])
+  groupRecipeUid String?
+
+
+  @@index([groupRecipeUid])
+  @@index([groupUserId])
+}
+
+model Bookmark {
+  id        String   @id @default(uuid())
+  recipe    Recipe   @relation(fields: [recipeId], references: [id])
+  recipeId  String
+  createdAt DateTime
+  createdBy String
+
+  @@index([recipeId])
 }
 
 // Necessary for NextAuth
@@ -75,14 +158,17 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
-  recipes        Recipe[]
+  recipes       Recipe[]
+  Ratings       Ratings[]
+  GroupUser     GroupUser?
+  Group         Group[]
 
   @@map(name: "users")
 }

@@ -8,12 +8,9 @@ interface AddBatchProps {
 }
 
 const AddBatch = ({ add, setAdd }: AddBatchProps) => {
-  const [batchTitle, setBatchTitle] = useState('Batch');
-
   useEffect(() => {
     add < 1 ? setAdd(1) : null;
-    add > 1 ? setBatchTitle('Batches') : setBatchTitle('Batch');
-  }, [add]);
+  }, [add, setAdd]);
 
   function addBatch() {
     setAdd(add + 1);
@@ -36,7 +33,7 @@ const AddBatch = ({ add, setAdd }: AddBatchProps) => {
           />
         </button>
         <p data-testid="title">
-          {add} {batchTitle}
+          {add} {add > 1 ? 'Batches' : 'Batch'}
         </p>
       </div>
     </>

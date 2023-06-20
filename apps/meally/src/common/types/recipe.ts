@@ -6,7 +6,7 @@ export type Recipe = {
     id: string;
     image: ImageProps;
     title: string;
-    recipeDescription: string;
+    description: string;
     notes?: string;
     info: Info;
     ingredients: Ingredient[];
@@ -26,14 +26,14 @@ export type Recipe = {
     madeRecipe: number;
     savedRecipe: number;
   
-    team?: string;
-    isPublic: boolean;
-    isPublished: boolean;
-    isDraft: boolean;
-    isFavorite: boolean;
-    isLiked: boolean;
-    isBookMarked: boolean;
-    isShared: boolean;
+    // team?: string;
+    // isPublic: boolean;
+    // isPublished: boolean;
+    // isDraft: boolean;
+    // isFavorite: boolean;
+    // isLiked: boolean;
+    // isBookMarked: boolean;
+    // isShared: boolean;
   };
   
   export type SelectValue = {
