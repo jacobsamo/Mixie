@@ -6,6 +6,5 @@
     "eamodio.gitlens",
     "EditorConfig.EditorConfig",
     "esbenp.prettier-vscode",
-    "github.copilot",
   ]
 }

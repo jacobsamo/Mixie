@@ -6,16 +6,17 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "postinstall": "manypkg check"
+    "postinstall": "manypkg check",
+    "clean:all": "rm -rf node_modules/"
   },
   "packageManager": "pnpm@7.15.0",
   "dependencies": {
-    "@manypkg/cli": "^0.20.0",
-    "@turbo/gen": "^1.10.3",
+    "@manypkg/cli": "^0.21.0",
+    "@turbo/gen": "^1.10.6",
     "dotenv-cli": "^7.2.1",
-    "eslint": "^7.32.0",
+    "eslint": "^8.43.0",
     "eslint-config-custom": "workspace:*",
     "prettier": "^2.8.8",
-    "turbo": "^1.10.3"
+    "turbo": "^1.10.6"
   }
 }

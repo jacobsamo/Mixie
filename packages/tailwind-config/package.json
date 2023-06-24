@@ -4,6 +4,9 @@
   "private": true,
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "clean:all": "rm -rf node_modules/"
+  },
   "publishConfig": {
     "access": "public"
   },

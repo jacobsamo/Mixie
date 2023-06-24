@@ -4,7 +4,7 @@ import { siteConfig } from '@lib/config/siteConfig';
 import AuthDialogProvider from 'src/common/hooks/AuthDialogProvider';
 import { SessionProvider } from 'next-auth/react';
 import { NextAuthProvider } from '@components/layouts/NextAuthProvider';
-
+import { ThemeProvider } from '../common/components/modules/theme-provider';
 
 export const metadata = {
   title: {
@@ -70,10 +70,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <NextAuthProvider>
-          <Navbar />
-          {children}
-        </NextAuthProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <NextAuthProvider>
+            <Navbar />
+            {children}
+          </NextAuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
