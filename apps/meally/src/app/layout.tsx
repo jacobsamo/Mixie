@@ -5,6 +5,7 @@ import AuthDialogProvider from 'src/common/hooks/AuthDialogProvider';
 import { SessionProvider } from 'next-auth/react';
 import { NextAuthProvider } from '@components/layouts/NextAuthProvider';
 import { ThemeProvider } from '../common/components/modules/theme-provider';
+import { Toaster } from '@components/ui/toaster';
 
 export const metadata = {
   title: {
@@ -74,6 +75,7 @@ export default function RootLayout({
           <NextAuthProvider>
             <Navbar />
             {children}
+            <Toaster />
           </NextAuthProvider>
         </ThemeProvider>
       </body>

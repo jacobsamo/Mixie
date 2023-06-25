@@ -13,6 +13,7 @@ export const mockRecipe: Recipe = {
   ],
   steps: [
     {
+      id: 1,
       step_body: 'This is a test step',
     },
   ],

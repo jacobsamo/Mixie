@@ -1,12 +1,15 @@
 'use client';
 import React, { useState } from 'react';
-import IngredientContainer from './ingredient/IngredientContainer';
 import StepContainer from './step/StepContainer';
 import AddBatch from './ingredient/AddBatch';
-import { Ingredient, Step } from '@/src/common/types/recipe';
+import type {
+  Ingredient as IngredientType,
+  Step,
+} from '@/src/common/types/recipe';
+import Ingredient from './ingredient/Ingredient';
 
 interface DetailsProps {
-  ingredients: Ingredient[];
+  ingredients: IngredientType[];
   steps: Step[];
 }
 
@@ -14,11 +17,26 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
   const [add, setAdd] = useState(0);
 
   return (
-    <section>
-      <AddBatch add={add} setAdd={setAdd} />
-      <IngredientContainer ingredients={ingredients} />
-      <StepContainer steps={steps} />
-    </section>
+    <>
+      <div>
+        <h2>
+          {ingredients.length}{' '}
+          {ingredients.length < 1 ? 'Ingredients' : 'Ingredient'}
+        </h2>
+        <h2>
+          {steps.length} {ingredients.length < 1 ? 'Steps' : 'Step'}
+        </h2>
+      </div>
+      <section className="flex flex-row">
+        <div className="">
+          <AddBatch add={add} setAdd={setAdd} />
+          {ingredients.map((ingredient, index) => (
+            <Ingredient key={index} ingredient={ingredient} />
+          ))}
+        </div>
+        <StepContainer steps={steps} ingredients={ingredients} className="" />
+      </section>
+    </>
   );
 };
 

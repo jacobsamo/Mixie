@@ -60,6 +60,7 @@ export type Recipe = {
   };
   
   export type Step = {
+    id: number;
     step_body: string;
   };
   

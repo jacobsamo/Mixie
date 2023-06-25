@@ -21,11 +21,16 @@ const AddBatch = ({ add, setAdd }: AddBatchProps) => {
 
   return (
     <>
-      <div className="flex flew-row items-center py-1">
+      <div className="flex flew-row items-center py-1" aria-label="Add a batch">
         <button data-testid="plus_button" onClick={addBatch}>
           <PlusCircleIcon className="w-10 h-10 w-" />
         </button>
-        <button data-testid="minus_button" onClick={minusBatch}>
+        <button
+          data-testid="minus_button"
+          aria-label="Remove a batch"
+          onClick={minusBatch}
+          disabled={add < 2}
+        >
           <MinusCircleIcon
             className={`w-10 h-10 ${
               add < 2 ? 'pointer-events-none bg-none opacity-20 text-white' : ''
