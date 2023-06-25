@@ -20,19 +20,38 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
     <>
       <div>
         <h2>
-          {ingredients.length}{' '}
-          {ingredients.length < 1 ? 'Ingredients' : 'Ingredient'}
+          {ingredients.length > 0 ? (
+            <>
+              {ingredients.length}{' '}
+              {ingredients.length === 1 ? 'Ingredient' : 'Ingredients'}
+            </>
+          ) : (
+            'No Ingredients'
+          )}
         </h2>
         <h2>
-          {steps.length} {ingredients.length < 1 ? 'Steps' : 'Step'}
+          {steps.length > 0 ? (
+            <>
+              {steps.length} {steps.length === 1 ? 'Step' : 'Steps'}
+            </>
+          ) : (
+            'No Steps'
+          )}
         </h2>
       </div>
+
       <section className="flex flex-row">
-        <div className="">
+        <div className="flex flex-col items-start">
           <AddBatch add={add} setAdd={setAdd} />
-          {ingredients.map((ingredient, index) => (
-            <Ingredient key={index} ingredient={ingredient} />
-          ))}
+          {ingredients.map((ingredient, index) => {
+            if (ingredient.isHeading)
+              return (
+                <h3 key={index} className="text-2xl font-bold">
+                  {ingredient.title}
+                </h3>
+              );
+            return <Ingredient key={index} ingredient={ingredient} />;
+          })}
         </div>
         <StepContainer steps={steps} ingredients={ingredients} className="" />
       </section>

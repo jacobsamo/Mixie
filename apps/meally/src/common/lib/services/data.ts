@@ -10,6 +10,10 @@ export const mockRecipe: Recipe = {
       quantity: 200,
       unit: 'grams',
     },
+    {
+      isHeading: true,
+      title: 'Test Heading',
+    },
   ],
   steps: [
     {
