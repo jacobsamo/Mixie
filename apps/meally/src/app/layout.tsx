@@ -1,5 +1,6 @@
 import Navbar from '@components/modules/Navbar';
 import { siteConfig } from '@lib/config/siteConfig';
+import "@styles/globals.css";
 import AuthDialogProvider from 'src/common/hooks/AuthDialogProvider';
 import { SessionProvider } from 'next-auth/react';
 import { NextAuthProvider } from '@components/layouts/NextAuthProvider';

@@ -57,6 +57,8 @@
     "react-hook-form": "^7.45.0",
     "react-select": "^5.7.3",
     "sass": "^1.63.6",
+    "tailwind-merge": "^1.13.2",
+    "tailwindcss-animate": "^1.0.6",
     "types": "workspace:*",
     "zod": "^3.21.4"
   },
