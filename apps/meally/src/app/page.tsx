@@ -1,11 +1,11 @@
 import React from 'react';
-import { Button } from 'ui';
+import { Button } from '@components/ui/button';
 
 export default function Page() {
   return (
     <>
       <h1 className="">Main page</h1>
-      <Button variant={'primary'}>Click me</Button>
+      <Button variant={'default'}>Click me</Button>
     </>
   );
 }

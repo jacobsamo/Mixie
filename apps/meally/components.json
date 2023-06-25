@@ -4,12 +4,12 @@
   "rsc": true,
   "tailwind": {
     "config": "tailwind.config.js",
-    "css": "./src/styles.css",
-    "baseColor": "slate",
+    "css": "./src/common/styles/globals.css",
+    "baseColor": "neutral",
     "cssVariables": true
   },
   "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils"
+    "components": "@/src/common/components",
+    "utils": "@lib/utils"
   }
 }

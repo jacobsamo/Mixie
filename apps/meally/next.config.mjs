@@ -4,7 +4,7 @@ import './env.mjs';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['ui', 'types', 'tailwind-config'],
+  transpilePackages: ['types', 'tailwind-config'],
   images: {
     domains: [
       'img.taste.com.au',
