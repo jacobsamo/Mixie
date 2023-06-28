@@ -10,13 +10,17 @@ const Ingredient = ({ ingredient }: IngredientProps) => {
   return (
     <div className="flex flex-row items-center py-1 gap-3">
       {/*TODO:change the style of this checkbox */}
-      <input type="checkbox" id='checkbox' className='w-4 h-4 checked:text-white border-white rounded-xl' />
-      <h3>
-        {ingredient.title} {ingredient.quantity} {ingredient.amount}{' '}
-        {ingredient.unit}
+      <input
+        type="checkbox"
+        id="checkbox"
+        className="w-4 h-4 checked:text-white border-white rounded-xl"
+      />
+      <h3 className="">
+        {ingredient.quantity} {ingredient.amount} {ingredient.unit}{' '}
+        {ingredient.title}{' '}
       </h3>
     </div>
-  ); 
+  );
 };
 
 export default Ingredient;

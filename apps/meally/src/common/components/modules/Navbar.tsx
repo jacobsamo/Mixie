@@ -1,11 +1,16 @@
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import UserProfile from './UserProfile';
+import { SearchIcon } from 'lucide-react';
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  
   return (
     <nav className="flex flex-row justify-between items-center px-2 h-14 w-full bg-transparent">
+      {/*Logo & name - always show */}
       <Link href="/" className="flex flex-row gap-1">
         <Image
           width={44}
@@ -16,6 +21,7 @@ const Navbar = () => {
         />
         <h1 className="text-step--1">Meally</h1>
       </Link>
+      {/*Links - show in sidebar under 768px (md:) */}
       <div className="flex flex-row gap-8">
         <Link href={'/recipes'} className="font-roboto text-step0 text-center">
           Recipes
@@ -27,8 +33,12 @@ const Navbar = () => {
           Savoury
         </Link>
       </div>
-      <div className="flex flex-row">
+      {/*Search icon - show always */}
+      {/*user profile - show always? */}
+      {/* hamburger - show under 768px (md:) */}
+      <div className="flex flex-row items-center">
         {/* <SearchDialog buttonType="searchIcon" /> */}
+        <SearchIcon className="w-8 h-8" />
         <button
           type="button"
           className="flex flex-col"

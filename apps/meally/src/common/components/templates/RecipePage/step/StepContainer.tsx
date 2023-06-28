@@ -13,7 +13,7 @@ const StepContainer = ({ steps, ingredients, className }: StepContainerProps) =>
   return (
     <div className={className}>
       {steps.map((step, index) => (
-        <Step key={index} step={step} ingredients={ingredients} />
+        <Step key={index} index={index} step={step} ingredients={ingredients} />
       ))}
     </div>
   );

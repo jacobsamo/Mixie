@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import React, { useState } from 'react';
+import { Button } from '@components/ui/button';
 
 const UserProfile = () => {
   const [user, setUser] = useState(false);
@@ -18,12 +19,13 @@ const UserProfile = () => {
   }
 
   return (
-    <button
+    <Button
       onClick={() => console.log('Sign up')}
+      variant={'primary'}
       className="px-2 p-1 bg-yellow rounded-md text-black font-semibold"
     >
       Sign up
-    </button>
+    </Button>
   );
 };
 

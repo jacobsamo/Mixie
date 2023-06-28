@@ -6,6 +6,7 @@ import { SessionProvider } from 'next-auth/react';
 import { NextAuthProvider } from '@components/layouts/NextAuthProvider';
 import { ThemeProvider } from '../common/components/modules/theme-provider';
 import { Toaster } from '@components/ui/toaster';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata = {
   title: {
@@ -78,6 +79,7 @@ export default function RootLayout({
             <Toaster />
           </NextAuthProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );

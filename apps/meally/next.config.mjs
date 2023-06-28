@@ -1,4 +1,3 @@
-import withPWA from 'next-pwa';
 import './env.mjs';
 
 /** @type {import('next').NextConfig} */
@@ -21,6 +20,7 @@ const nextConfig = {
       'pexels.com',
       'savee.com',
       'dr.savee-cdn.com',
+      'via.placeholder.com',
     ],
   },
 };

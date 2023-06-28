@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react';
-import { StarIcon } from '@heroicons/react/24/outline';
+// import { StarIcon } from '@heroicons/react/24/outline';
+import {StarIcon} from 'lucide-react'
 
 type RatingScale = 0 | 1 | 2 | 3 | 4 | 5;
 
@@ -17,7 +18,7 @@ const StarRating = ({ rating }: StarRatingProps) => {
   }
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row h-fit w-fit">
       {[...Array(5)].map((star, index) => {
         index += 1;
         return (

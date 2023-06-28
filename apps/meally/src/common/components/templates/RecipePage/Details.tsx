@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import StepContainer from './step/StepContainer';
 import AddBatch from './ingredient/AddBatch';
 import type {
@@ -7,53 +7,113 @@ import type {
   Step,
 } from '@/src/common/types/recipe';
 import Ingredient from './ingredient/Ingredient';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { set } from 'zod';
 
 interface DetailsProps {
   ingredients: IngredientType[];
   steps: Step[];
 }
 
+//title styles for the ingredients and steps section with cva (class variance authority) to remove the underline from the h2
+const titleStyles = cva('md:cursor-default', {
+  variants: {
+    variant: {
+      true: 'underline underline-offset-2',
+      false: 'underline-none',
+    },
+  },
+  defaultVariants: {
+    variant: true,
+  },
+});
+
 const Details = ({ ingredients, steps }: DetailsProps) => {
   const [add, setAdd] = useState(0);
+  const [ingredientOpen, setIngredientOpen] = useState(true);
+  const [stepsOpen, setStepsOpen] = useState(true);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    const handleMediaQueryChange = (mediaQuery: any) => {
+      if (mediaQuery.matches) {
+        setStepsOpen(false);
+        setIngredientOpen(true);
+      } else {
+        setStepsOpen(true);
+        setIngredientOpen(true);
+      }
+    };
+    mediaQuery.addEventListener('change', handleMediaQueryChange);
+    return () => {
+      mediaQuery.removeEventListener('change', handleMediaQueryChange);
+    };
+  }, []);
 
   return (
     <>
-      <div>
-        <h2>
-          {ingredients.length > 0 ? (
-            <>
-              {ingredients.length}{' '}
-              {ingredients.length === 1 ? 'Ingredient' : 'Ingredients'}
-            </>
-          ) : (
-            'No Ingredients'
-          )}
-        </h2>
-        <h2>
-          {steps.length > 0 ? (
-            <>
-              {steps.length} {steps.length === 1 ? 'Step' : 'Steps'}
-            </>
-          ) : (
-            'No Steps'
-          )}
-        </h2>
+      <div className="md:w-[800px] flex flex-row items-center gap-x-[50%] pb-2 px-2">
+        <button
+          onClick={() => {
+            if (window.innerWidth <= 768) {
+              setIngredientOpen(true);
+              setStepsOpen(false);
+            }
+          }}
+        >
+          <h2 className={titleStyles({ variant: ingredientOpen })}>
+            {ingredients.length > 0 ? (
+              <>
+                {ingredients.length}{' '}
+                {ingredients.length === 1 ? 'Ingredient' : 'Ingredients'}
+              </>
+            ) : (
+              'No Ingredients'
+            )}
+          </h2>
+        </button>
+        <button
+          onClick={() => {
+            if (window.innerWidth <= 768) {
+              setStepsOpen(true);
+              setIngredientOpen(false);
+            }
+          }}
+        >
+          <h2 className={titleStyles({ variant: stepsOpen })}>
+            {steps.length > 0 ? (
+              <>
+                {steps.length} {steps.length === 1 ? 'Step' : 'Steps'}
+              </>
+            ) : (
+              'No Steps'
+            )}
+          </h2>
+        </button>
       </div>
 
-      <section className="flex flex-row">
-        <div className="flex flex-col items-start">
-          <AddBatch add={add} setAdd={setAdd} />
-          {ingredients.map((ingredient, index) => {
-            if (ingredient.isHeading)
-              return (
-                <h3 key={index} className="text-2xl font-bold">
-                  {ingredient.title}
-                </h3>
-              );
-            return <Ingredient key={index} ingredient={ingredient} />;
-          })}
-        </div>
-        <StepContainer steps={steps} ingredients={ingredients} className="" />
+      <section className="md:w-[800px] w-full flex flex-row md:gap-4 lg:gap-8">
+        {ingredientOpen && (
+          <div className="flex flex-col items-start p-2 w-full h-fit md:w-60 dark:bg-grey bg-white shadow rounded-lg ">
+            <AddBatch add={add} setAdd={setAdd} />
+            {ingredients.map((ingredient, index) => {
+              if (ingredient.isHeading)
+                return (
+                  <h3 key={index} className="text-2xl font-bold">
+                    {ingredient.title}
+                  </h3>
+                );
+              return <Ingredient key={index} ingredient={ingredient} />;
+            })}
+          </div>
+        )}
+        {stepsOpen && (
+          <StepContainer
+            steps={steps}
+            ingredients={ingredients}
+            className="flex flex-col gap-2 max-w-full w-fit "
+          />
+        )}
       </section>
     </>
   );

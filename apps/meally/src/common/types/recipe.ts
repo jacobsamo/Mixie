@@ -15,7 +15,7 @@ export type Recipe = {
     dietary: SelectValue[];
     allergens: SelectValue[];
     sweet_savoury: SelectValue;
-    mealTime: SelectValue;
+    mealTime: SelectValue[];
     version: string;
     createdAt: Date;
     lastUpdated: Date;
