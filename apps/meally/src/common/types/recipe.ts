@@ -1,40 +1,57 @@
 // you might ask why are we do we have this type here instead of just using the prisma type? \
 // well, the reason is that we want to have a type that is not tied to the prisma schema, this allows us to join other things together so that the frontend has what it needs and is easy to use a developer
+import { Recipe, User } from "@prisma/client";
+import { Modify } from "./utils";
 
-export type Recipe = {
-    uid: string;
-    id: string;
-    image: ImageProps;
-    title: string;
-    description: string;
-    notes?: string;
-    info: Info;
-    ingredients: Ingredient[];
-    steps: Step[];
-    keywords: { value: string }[];
-    dietary: SelectValue[];
-    allergens: SelectValue[];
-    sweet_savoury: SelectValue;
-    mealTime: SelectValue[];
-    version: string;
-    createdAt: Date;
-    lastUpdated: Date;
-    createdBy: string;
-    lastUpdatedBy: string;
-    user: User;
+// type Recipe = Modify<DataBaseRecipe, {
+
+//     info: Info;
+//     ingredients: Ingredient[];
+//     steps: Step[];
+//     keywords: { value: string }[];
+//     dietary: SelectValue[];
+//     allergens: SelectValue[];
+//     sweet_savoury: SelectValue;
+//     mealTime: SelectValue[];
+// }>;
+
+const testType: Recipe = {
+  id: "1",
+}
+// export; type Recipe = {
+//     uid: string;
+//     id: string;
+//     image: ImageProps;
+//     title: string;
+//     description: string;
+//     notes?: string;
+//     info: Info;
+//     ingredients: Ingredient[];
+//     steps: Step[];
+//     keywords: { value: string }[];
+//     dietary: SelectValue[];
+//     allergens: SelectValue[];
+//     sweet_savoury: SelectValue;
+//     mealTime: SelectValue[];
+//     version: string;
+//     createdAt: Date;
+//     lastUpdated: Date;
+//     createdBy: string;
+//     lastUpdatedBy: string;
+//     user: User;
   
-    madeRecipe: number;
-    savedRecipe: number;
+//     madeRecipe: number;
+//     savedRecipe: number;
   
-    // team?: string;
-    // isPublic: boolean;
-    // isPublished: boolean;
-    // isDraft: boolean;
-    // isFavorite: boolean;
-    // isLiked: boolean;
-    // isBookMarked: boolean;
-    // isShared: boolean;
-  };
+//     // team?: string;
+//     // isPublic: boolean;
+//     // isPublished: boolean;
+//     // isDraft: boolean;
+//     // isFavorite: boolean;
+//     // isLiked: boolean;
+//     // isBookMarked: boolean;
+//     // isShared: boolean;
+//   };
   
   export type SelectValue = {
     value: string;
@@ -90,43 +107,5 @@ export type Recipe = {
     imgAlt: string;
   };
   
-  export type User = {
-    id: string;
-    name?: string;
-    email?: string;
-    emailVerified?: Date;
-    image?: string;
-    accounts: Account[];
-    sessions: Session[];
-    recipes: Recipe[];
-  };
   
-  export type Account = {
-    id: string;
-    userId: string;
-    type: string;
-    provider: string;
-    providerAccountId: string;
-    refresh_token?: string;
-    access_token?: string;
-    expires_at?: number;
-    token_type?: string;
-    scope?: string;
-    id_token?: string;
-    session_state?: string;
-  };
-  
-  export type Session = {
-    id: string;
-    sessionToken: string;
-    userId: string;
-    expires: Date;
-    user: User;
-  };
-  
-  export type VerificationToken = {
-    identifier: string;
-    token: string;
-    expires: Date;
-  };
   
