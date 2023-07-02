@@ -7,11 +7,12 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { PrismaClient } from '@prisma/client';
 
 import { env } from '@/env.mjs';
+import DrizzleAdapter from '@/src/db/next-auth-adapter';
 
 const prisma = new PrismaClient();
 
 const authOptions: AuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: DrizzleAdapter(),
   providers: [
     GitHubProvider({
       clientId: env.GITHUB_CLIENT_ID,
