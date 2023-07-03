@@ -11,6 +11,6 @@
       "@styles/*": ["./src/common/styles/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/db/next-auth-adapter.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/db/next-auth-adapter.ts"],
   "exclude": ["node_modules"]
 }
