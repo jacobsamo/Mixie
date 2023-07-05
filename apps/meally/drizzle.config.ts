@@ -9,6 +9,7 @@ const config: Config = {
   dbCredentials: {
     connectionString: env.DATABASE_URL,
   },
+
 };
 
 export default config;

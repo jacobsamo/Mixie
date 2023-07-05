@@ -14,9 +14,9 @@
     "clean:turbo": "rm -rf .turbo",
     "clean:node_modules": "rm -rf node_modules/",
     "clean:all": "pnpm clean:build && pnpm clean:node && pnpm clean:turbo",
-    "db:push": "pnpm drizzle-kit push:mysql",
+    "db:push": "drizzle-kit push:mysql",
     "db:migrate": "drizzle-kit generate:mysql",
-    "db:studio": "pnpm drizzle-kit studio:mysql --verbose",
+    "db:studio": "drizzle-kit studio --verbose",
     "db:pull": "drizzle-kit introspect:mysql"
   },
   "dependencies": {
