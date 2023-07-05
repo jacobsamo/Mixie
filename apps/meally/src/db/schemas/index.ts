@@ -1,3 +1,3 @@
 export * from './auth';
-export * from './team';
+export * from './groups';
 export * from './recipe';
