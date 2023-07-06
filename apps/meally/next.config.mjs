@@ -9,6 +9,7 @@ const nextConfig = {
       'img.taste.com.au',
       'lh3.googleusercontent.com',
       'firebasestorage.googleapis.com',
+      'avatars.githubusercontent.com',
       'facebook.com',
       'media4.giphy.com',
       // good free images websites

@@ -1,14 +1,12 @@
-import React from 'react'
-
-const page = () => {
-  
-
-  return (
-    <div>
+"use client"
+import React from 'react';
 
 
-    </div>
-  )
-}
+const LoginPage = () => {
+  return <div>
+    <h1>Login</h1>
 
-export default page
+  </div>;
+};
+
+export default LoginPage;
