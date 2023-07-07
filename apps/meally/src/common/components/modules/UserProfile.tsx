@@ -3,44 +3,48 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { Button } from '@components/ui/button';
 import Link from 'next/link';
-import {getServerSession} from 'next-auth/next'
-import { useSession } from 'next-auth/react';
-import {Popover, PopoverContent, PopoverTrigger} from '@components/ui/popover'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@components/ui/popover';
+import useUser from '../../hooks/useUser';
 
 const UserProfile = () => {
-  const session = useSession();
+  const { session, user } = useUser();
 
-
-  if (session.data?.user) {
+  if (!user) {
     return (
-      <Popover>
-        <PopoverTrigger asChild>
-          <Image
-            width={42}
-            height={42}
-            src={session.data.user.image || 'https://unsplash.com/photos/K4mSJ7kc0As'}
-            alt="user profile picture"
-            className="rounded-full w-10 h-10 cursor-pointer"
-          />
-        </PopoverTrigger>
-        <PopoverContent className='flex flex-row'>
-          <Link href={'/profile'}>
-          Profile</Link>
-          <Link href={'/bookmarks'}>Bookmarks</Link>
-          <Link href={'/settings'}>Settings</Link>
-          <Link href={'/api/auth/signout'}>Signout</Link>
-        </PopoverContent>
-      </Popover>
+      <Link
+        href={'/api/auth/signin'}
+        className="px-2 p-1 bg-yellow rounded-md text-black font-semibold"
+      >
+        Login
+      </Link>
     );
   }
 
   return (
-    <Link
-      href={'/api/auth/signin'}
-      className="px-2 p-1 bg-yellow rounded-md text-black font-semibold"
-    >
-      Sign up
-    </Link>
+    <Popover>
+      <PopoverTrigger asChild>
+        <Image
+          width={42}
+          height={42}
+          src={
+            user?.image ||
+            'https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+          }
+          alt="user profile picture"
+          className="rounded-full w-10 h-10 cursor-pointer object-cover"
+        />
+      </PopoverTrigger>
+      <PopoverContent className="flex flex-col gap-2 w-fit">
+        <Link href={`/${user?.id}`}>Profile</Link>
+        <Link href={`/${user?.id}/bookmarks`}>Bookmarks</Link>
+        <Link href={`/${user?.id}/settings`}>Settings</Link>
+        <Link href={'/api/auth/signout'}>Signout</Link>
+      </PopoverContent>
+    </Popover>
   );
 };
 

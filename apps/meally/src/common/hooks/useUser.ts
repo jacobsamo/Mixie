@@ -1,34 +1,14 @@
 'use client';
-import React from 'react';
+import { useSession } from 'next-auth/react';
 
 const useUser = () => {
-  const [user, setUser] = React.useState<
-    { name: string; message: string } | undefined
-  >(undefined);
-
-  const setNewUser = async () => {
-    setUser({ name: 'test user', message: 'test message' });
-  };
-
-  const getUser = async () => {
-    if (!user) {
-      await setNewUser();
-    }
-    return user;
-  };
-
-  const signOutUser = async () => {
-    setUser(undefined);
-  };
-
-  // React.useEffect(() => {
-  //   getUser();
-  // }, []);
+  const session = useSession();
 
   return {
-    user,
-    getUser,
-    setNewUser,
+    session,
+    user: session?.data?.user,
+    isLoading: session?.status === 'loading',
+    isSignedIn: session?.status === 'authenticated',
   };
 };
 
