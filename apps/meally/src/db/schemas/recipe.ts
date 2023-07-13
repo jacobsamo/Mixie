@@ -9,9 +9,9 @@ import {
   text,
   tinytext,
   tinyint,
-  uniqueIndex,
   varchar,
   boolean,
+  timestamp,
 } from 'drizzle-orm/mysql-core';
 
 const difficulty_level = mysqlEnum('difficulty_level', [
@@ -23,8 +23,8 @@ const difficulty_level = mysqlEnum('difficulty_level', [
 
 export const recipes = mysqlTable('recipes', {
   uid: serial('uid').primaryKey().notNull(),
-  id: text('id').notNull(),
-  title: text('title').notNull(),
+  id: varchar('id', { length: 191 }).notNull(),
+  title: varchar('title', { length: 191 }).notNull(),
   description: text('description'),
   imgUrl: text('imgUrl'),
   imgAlt: text('imgAlt'),
@@ -32,7 +32,7 @@ export const recipes = mysqlTable('recipes', {
   info: json('info'),
   steps: json('steps'),
   mealTime: json('mealTime'),
-  version: tinyint('version').notNull(),
+  version: tinytext('version').notNull().default('1.0.0'),
 
   // little extras for searching
   keywords: json('keywords'),
@@ -44,10 +44,10 @@ export const recipes = mysqlTable('recipes', {
   isPublic: boolean('isPublic').notNull().default(false),
 
   // users
-  createdAt: datetime('createdAt').notNull().default(new Date()),
-  lastUpdated: datetime('lastUpdated').notNull().default(new Date()),
-  lastUpdatedBy: varchar('lastUpdatedBy', { length: 255 }).notNull(),
-  createdBy: varchar('createdBy', { length: 255 }).notNull(),
+  createdAt: timestamp('createdAt').notNull().defaultNow(),
+  lastUpdated: timestamp('lastUpdated').notNull().onUpdateNow(),
+  lastUpdatedBy: varchar('lastUpdatedBy', { length: 191 }).notNull(),
+  createdBy: varchar('createdBy', { length: 191 }).notNull(),
 
   madeRecipe: int('madeRecipe'),
   savedRecipe: int('savedRecipe'),
@@ -61,10 +61,10 @@ export const ingredientsRelation = relations(recipes, ({ one }) => ({
 }));
 
 export const ingredients = mysqlTable('ingredients', {
-  recipeId: varchar('recipeId', { length: 255 }).notNull(),
+  recipeId: varchar('recipeId', { length: 191 }).notNull(),
   isHeading: boolean('isHeading').notNull(),
-  title: varchar('title', { length: 255 }),
-  unit: varchar('unit', { length: 255 }),
+  title: varchar('title', { length: 191 }),
+  unit: varchar('unit', { length: 191 }),
   quantity: tinyint('quantity'),
   amount: tinyint('amount'),
 });
@@ -77,10 +77,10 @@ export const infoRelations = relations(recipes, ({ one }) => ({
 }));
 
 export const info = mysqlTable('info', {
-  recipeId: varchar('recipeId', { length: 255 }).notNull(),
-  total: varchar('total', { length: 255 }),
-  prep: varchar('prep', { length: 255 }),
-  cook: varchar('cook', { length: 255 }),
+  recipeId: varchar('recipeId', { length: 191 }).notNull(),
+  total: varchar('total', { length: 191 }),
+  prep: varchar('prep', { length: 191 }),
+  cook: varchar('cook', { length: 191 }),
   serves: tinyint('serves'),
 });
 
@@ -92,7 +92,7 @@ export const ratingsRelation = relations(info, ({ one }) => ({
 }));
 
 export const ratings = mysqlTable('ratings', {
-  recipeId: varchar('recipeId', { length: 255 }).notNull(),
-  userId: varchar('userId', { length: 255 }).notNull(),
+  recipeId: varchar('recipeId', { length: 191 }).notNull(),
+  userId: varchar('userId', { length: 191 }).notNull(),
   rating: tinyint('rating').notNull(),
 });
