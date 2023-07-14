@@ -11,8 +11,7 @@ const buttonVariants = cva(
       variant: {
         primary:
           'bg-white dark:bg-grey text-black dark:text-white dark:hover:bg-[rgba(24,27,35,0.80)] shadow dark:shadow-none hover:shadow-md',
-        destructive:
-          'bg-red text-white hover:bg-destructive/90',
+        destructive: 'bg-red text-white hover:bg-destructive/90',
         secondary:
           'rounded-md border-solid border-black dark:border-white border hover:bg-white dark:hover:bg-grey',
         tertiary: 'hover:bg-accent hover:text-accent-foreground',
@@ -34,16 +33,42 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {}
+    VariantProps<typeof buttonVariants> {
+  LeadingIcon?: React.ReactNode;
+  TrailingIcon?: React.ReactNode;
+  // tooltip?: string;
+  // tooltipSide?: 'top' | 'bottom' | 'left' | 'right';
+  // tooltipOffset?: number;
+  ariaLabel: string;
+}
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      LeadingIcon,
+      TrailingIcon,
+      // tooltip,
+      // tooltipSide,
+      // tooltipOffset,
+      ariaLabel,
+      ...props
+    },
+    ref
+  ) => {
     return (
       <button
         className={cn(buttonVariants({ variant, size, className }))}
+        aria-label={ariaLabel}
         ref={ref}
         {...props}
-      />
+      >
+        {LeadingIcon && <Slot className="mr-2">{LeadingIcon}</Slot>}
+        {props.children}
+        {TrailingIcon && <Slot className="ml-2">{TrailingIcon}</Slot>}
+      </button>
     );
   }
 );
