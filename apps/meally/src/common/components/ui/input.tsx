@@ -8,6 +8,7 @@ import {
   TooltipTrigger,
 } from '@components/ui/tooltip';
 import { HelpCircleIcon } from 'lucide-react';
+import type { FieldError } from 'react-hook-form';
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -15,7 +16,7 @@ export interface InputProps
   label?: string;
   tooltip?: string;
   hint?: string;
-  error?: string;
+  error?: FieldError;
   LeadingIcon?: React.ReactNode;
   TrailingIcon?: React.ReactNode;
   classNames?: {
@@ -53,7 +54,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 classNames?.label
               )}
             >
-              {label}
+              {label} {props.required && <span className="text-red">*</span>}
             </label>
             {tooltip && (
               <TooltipProvider>
@@ -71,7 +72,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
         {error && (
           <span className="text-red text-step--3 font-extralight italic">
-            {error}
+            {error.message}
           </span>
         )}
         <div
@@ -85,6 +86,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             type={type}
             id={name}
             name={name}
+            placeholder={label}
             className={cn(
               'flex h-9 w-full px-3 bg-transparent outline-none border-none',
               classNames?.input

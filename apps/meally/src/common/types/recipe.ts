@@ -1,6 +1,6 @@
 // you might ask why are we do we have this type here instead of just using the prisma type? \
 // well, the reason is that we want to have a type that is not tied to the prisma schema, this allows us to join other things together so that the frontend has what it needs and is easy to use a developer
-import { Recipe, User } from "@prisma/client";
+
 import { Modify } from "./utils";
 
 // type Recipe = Modify<DataBaseRecipe, {
@@ -15,9 +15,7 @@ import { Modify } from "./utils";
 //     mealTime: SelectValue[];
 // }>;
 
-const testType: Recipe = {
-  id: "1",
-}
+
 // export; type Recipe = {
 //     uid: string;
 //     id: string;

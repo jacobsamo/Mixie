@@ -1,6 +1,4 @@
-import { Recipe } from '../../types/recipe';
-
-export const mockRecipe: Recipe = {
+export const mockRecipe = {
   uid: 'test-user',
   id: 'chocolate-fudge-brownies',
   image: {
@@ -94,7 +92,7 @@ export const mockRecipe: Recipe = {
   savedRecipe: 20,
 };
 
-export const recipes: Recipe[] = [
+export const recipes = [
   {
     uid: 'test-user',
     id: 'chocolate-fudge-brownies',
@@ -192,4 +190,39 @@ export const recipes: Recipe[] = [
     madeRecipe: 5,
     savedRecipe: 20,
   },
+];
+
+export const dietaryRequirements = [
+  { value: 'None', label: 'None' },
+  { value: 'Vegetarian', label: 'Vegetarian' },
+  { value: 'Vegan', label: 'Vegan' },
+  { value: 'Gluten Free', label: 'Gluten Free' },
+  { value: 'Dairy Free', label: 'Dairy Free' },
+  { value: 'Nut Free', label: 'Nut Free' },
+];
+
+export const units = [
+  'grams',
+  'kg',
+  'cup',
+  'ml',
+  'litre',
+  'tsp',
+  'tbsp',
+  'pinch',
+  'item',
+];
+
+export const sweet_savoury = [
+  { value: 'sweet', label: 'Sweet' },
+  { value: 'savoury', label: 'Savoury' },
+  { value: 'both', label: 'Sweet & Savoury' },
+];
+
+export const meal_times = [
+  { value: 'breakfast', label: 'Breakfast' },
+  { value: 'lunch', label: 'Lunch' },
+  { value: 'dinner', label: 'Dinner' },
+  { value: 'dessert', label: 'Dessert' },
+  { value: 'snack', label: 'Snack' },
 ];
