@@ -9,6 +9,13 @@ import {
   PopoverTrigger,
 } from '@components/ui/popover';
 import useUser from '../../hooks/useUser';
+import CreateRecipeDialog from '../elements/CreateRecipeDialog';
+import {
+  UserCircle2,
+  Settings,
+  Bookmark,
+  ArrowUpRightSquare,
+} from 'lucide-react';
 
 const UserProfile = () => {
   const { session, user } = useUser();
@@ -39,10 +46,25 @@ const UserProfile = () => {
         />
       </PopoverTrigger>
       <PopoverContent className="flex flex-col gap-2 w-fit">
-        <Link href={`/${user?.id}`}>Profile</Link>
-        <Link href={`/${user?.id}/bookmarks`}>Bookmarks</Link>
-        <Link href={`/${user?.id}/settings`}>Settings</Link>
-        <Link href={'/api/auth/signout'}>Signout</Link>
+        <Link href={`/${user?.id}`} className="flex flex-row gap-1">
+          <UserCircle2 /> Profile
+        </Link>
+        <Link href={`/${user?.id}/bookmarks`} className="flex flex-row gap-1">
+          {' '}
+          <Bookmark />
+          Bookmarks
+        </Link>
+        <CreateRecipeDialog />
+        <Link href={`/${user?.id}/settings`} className="flex flex-row gap-1">
+          {' '}
+          <Settings />
+          Settings
+        </Link>
+        <Link href={'/api/auth/signout'} className="flex flex-row gap-1">
+          {' '}
+          <ArrowUpRightSquare />
+          Signout
+        </Link>
       </PopoverContent>
     </Popover>
   );

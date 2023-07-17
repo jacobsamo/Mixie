@@ -1,7 +1,7 @@
-import * as dotenv from 'dotenv';
 import { type Config } from 'drizzle-kit';
 import { env } from './env.mjs';
 
+import * as dotenv from "dotenv";
 dotenv.config();
 
 export default {
@@ -9,6 +9,6 @@ export default {
   out: './src/db/migrations',
   driver: 'mysql2',
   dbCredentials: {
-    connectionString: env.DATABASE_URL,
+    connectionString: process.env.DATABASE_URL || '',
   },
 } satisfies Config;

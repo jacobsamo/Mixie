@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { Textarea } from '../common/components/ui/textarea';
 import { useForm } from 'react-hook-form';
+import CreateRecipeDialog from '../common/components/elements/CreateRecipeDialog';
 
 export default function Page() {
   const { toast } = useToast();
@@ -20,7 +21,7 @@ export default function Page() {
   return (
     <>
       <h1 className="">Main page</h1>
-
+      <CreateRecipeDialog />
       <h2>Buttons</h2>
       <div className="flex gap-2">
         <Button ariaLabel="" variant={'primary'}>
@@ -62,7 +63,7 @@ export default function Page() {
           LeadingIcon={<AlarmCheckIcon />}
           TrailingIcon={<AlertTriangle />}
           hint="Hint"
-          error="Error"
+          
         />
       </div>
 
