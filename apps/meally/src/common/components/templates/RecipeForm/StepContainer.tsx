@@ -9,10 +9,12 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Button } from '../../ui/button';
 import { PlusCircleIcon } from 'lucide-react';
+import { formSchema } from './form';
+import * as z from 'zod';
 
 const StepContainer = () => {
-  const { control } = useFormContext();
-  const { fields, append, remove, move } = useFieldArray({
+  const { control } = useFormContext<z.infer<typeof formSchema>>();
+  const { fields, append, remove, move } = useFieldArray<z.infer<typeof formSchema>>({
     control,
     name: 'steps',
   });

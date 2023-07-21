@@ -1,10 +1,18 @@
 // Ingredient.tsx
 import { TrashIcon } from 'lucide-react';
-import styles from './Form.module.scss';
 import { units } from '@/src/common/lib/services/data';
 import { useFormContext } from 'react-hook-form';
 import { Ingredient as IngredientType } from '@/src/db/types';
 import { Input } from '../../ui/input';
+import { formSchema } from './form';
+import * as z from 'zod';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@components/ui/select';
 
 interface IngredientProps {
   index: number;
@@ -13,36 +21,49 @@ interface IngredientProps {
 }
 
 const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
-  const { register, getValues, watch } = useFormContext();
+  const { register, getValues, watch } = useFormContext<z.infer<typeof formSchema>>();
   const activeUnit = getValues(`ingredients.${index}.unit`);
 
   return (
     <section
       key={index}
-      className={`flex flex-row dark:shadow-none shadow-main  rounded-md`}
+      className="flex flex-row items-center gap-1 rounded-md"
     >
+      <button
+        type="button"
+        onClick={() => console.log(watch(`ingredients.${index}.unit.value`))}
+      >
+        Get values
+      </button>
       <Input
         {...register(`ingredients.${index}.ingredient` as const)}
         placeholder="Ingredient"
       />
-      <select
-        id={`ingredients.${index}.unit`}
-        className="dark:outline-none outline outline-1 w-fit h-fit rounded-lg p-2 text-step--4"
+
+      <Select
+        // id={`ingredients.${index}.unit`}
+
+        // className="dark:outline-none outline outline-1 w-fit h-fit rounded-lg p-2 text-step--4"
         defaultValue={getValues(`ingredients.${index}.unit`)}
         {...register(`ingredients.${index}.unit` as const)}
       >
-        {units.map((unit, index) => {
-          return (
-            <option value={unit} key={index}>
-              {unit}
-            </option>
-          );
-        })}
-      </select>
+        <SelectTrigger className="w-24 h-10">
+          <SelectValue placeholder="Unit" />
+        </SelectTrigger>
+        <SelectContent>
+          {units.map((item) => (
+            <SelectItem key={item.value} value={item.value}>
+              {item.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
       <Input
         type="number"
         {...register(`ingredients.${index}.quantity`, { min: 0 })}
-        className="w-20 h-10 rounded-md p-2 text-step--4 dark:outline-none outline outline-1"
+        // classNames={{ inputWrapper: 'w-fit' }}
+        // className="w-20 h-10 rounded-md p-2 text-step--4 dark:outline-none outline outline-1"
       />
       {['cup', 'tbsp', 'tsp'].includes(
         watch(`ingredients.${index}.unit`) || ''
@@ -64,7 +85,10 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
         <></>
       )}
 
-      <button onClick={() => handleDelete(index)} type="button">
+      <button
+        onClick={() => console.log(getValues(`ingredients.${index}.unit`))}
+        type="button"
+      >
         <TrashIcon className="h-6 w-6" />
       </button>
     </section>

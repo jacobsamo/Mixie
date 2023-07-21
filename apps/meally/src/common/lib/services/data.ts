@@ -202,15 +202,15 @@ export const dietaryRequirements = [
 ];
 
 export const units = [
-  'grams',
-  'kg',
-  'cup',
-  'ml',
-  'litre',
-  'tsp',
-  'tbsp',
-  'pinch',
-  'item',
+  { value: 'grams', label: 'grams' },
+  { value: 'kg', label: 'kg' },
+  { value: 'cup', label: 'cup' },
+  { value: 'ml', label: 'ml' },
+  { value: 'litre', label: 'litre' },
+  { value: 'tsp', label: 'tsp' },
+  { value: 'tbsp', label: 'tbsp' },
+  { value: 'pinch', label: 'pinch' },
+  { value: 'item', label: 'item' },
 ];
 
 export const sweet_savoury = [
