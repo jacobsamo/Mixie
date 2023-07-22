@@ -23,6 +23,7 @@ export interface InputProps
     input?: string;
     inputWrapper?: string;
     label?: string;
+    container?: string;
   };
 }
 
@@ -44,7 +45,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ref
   ) => {
     return (
-      <div className="flex flex-col gap-1">
+      <div
+        className={cn(
+          'flex flex-col gap-1',
+          classNames?.container
+        )}
+      >
         {label && (
           <span className="flex flex-row items-center gap-2">
             <label

@@ -21,6 +21,35 @@ const difficulty_level = mysqlEnum('difficulty_level', [
   'hard',
 ]);
 
+const unit = mysqlEnum('unit', [
+  'not_set',
+  'grams',
+  'kg',
+  'cup',
+  'ml',
+  'litre',
+  'tsp',
+  'tbsp',
+  'pinch',
+  'items',
+  'handful',
+  'slice',
+  'piece',
+  'can',
+  'bunch',
+  'bottle',
+]);
+
+const amount = mysqlEnum('amount', [
+  'not_set',
+  '1/8',
+  '1/2',
+  '1/3',
+  '2/3',
+  '1/4',
+  '3/4',
+]);
+
 export const recipes = mysqlTable('recipes', {
   uid: serial('uid').primaryKey().notNull(),
   id: varchar('id', { length: 191 }).notNull(),
@@ -64,9 +93,9 @@ export const ingredients = mysqlTable('ingredients', {
   recipeId: varchar('recipeId', { length: 191 }).notNull(),
   isHeading: boolean('isHeading').notNull(),
   title: varchar('title', { length: 191 }),
-  unit: varchar('unit', { length: 191 }),
+  unit: unit.default('not_set'),
   quantity: tinyint('quantity'),
-  amount: tinyint('amount'),
+  amount: amount.default('not_set'),
 });
 
 export const infoRelations = relations(recipes, ({ one }) => ({

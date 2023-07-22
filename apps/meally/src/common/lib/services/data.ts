@@ -192,6 +192,7 @@ export const recipes = [
   },
 ];
 
+
 export const dietaryRequirements = [
   { value: 'None', label: 'None' },
   { value: 'Vegetarian', label: 'Vegetarian' },

@@ -28,6 +28,7 @@ export interface TextareaProps
     input?: string;
     inputWrapper?: string;
     label?: string;
+    container?: string;
   };
 }
 
@@ -59,7 +60,12 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         defaultValue={defaultValue || ''}
         rules={{ required: required, ...options }}
         render={({ field }) => (
-          <div className="flex flex-col gap-1">
+          <div
+            className={cn(
+              'flex flex-col gap-1',
+              classNames?.container
+            )}
+          >
             {label && (
               <span className="flex flex-row items-center gap-2">
                 <label
@@ -95,13 +101,13 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
               <textarea
                 id={id}
                 name={name}
-                placeholder={label}
+                placeholder={label || props.placeholder}
                 onChange={field.onChange}
                 value={field.value}
                 ref={field.ref}
                 rows={
                   /\n/.test(field.value?.toString() || '')
-                    ? Number(field.value?.match(/\n/g)?.length) + 1
+                    ? Number(field.value?.match(/\n/g)?.length) + 2
                     : 3
                 }
                 className="resize-none w-full rounded-md bg-transparent border-none outline-none"

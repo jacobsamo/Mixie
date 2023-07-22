@@ -1,7 +1,6 @@
-// Ingredient.tsx
-import { TrashIcon } from 'lucide-react';
+import { Trash2Icon } from 'lucide-react';
 import { units } from '@/src/common/lib/services/data';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { Ingredient as IngredientType } from '@/src/db/types';
 import { Input } from '../../ui/input';
 import { formSchema } from './form';
@@ -13,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@components/ui/select';
+import { Button } from '../../ui/button';
 
 interface IngredientProps {
   index: number;
@@ -21,77 +21,98 @@ interface IngredientProps {
 }
 
 const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
-  const { register, getValues, watch } = useFormContext<z.infer<typeof formSchema>>();
+  const { register, getValues, watch, control } =
+    useFormContext<z.infer<typeof formSchema>>();
   const activeUnit = getValues(`ingredients.${index}.unit`);
 
+  if (values.isHeading) {
+    return (
+      <div className="flex flex-row items-center gap-1">
+        <Input {...register(`ingredients.${index}.title` as const)} />
+        <Button
+          ariaLabel="delete ingredient"
+          onClick={() => handleDelete(index)}
+          type="button"
+          className="bg-transparent border border-solid border-red hover:bg-red  rounded-md"
+          size="icon"
+        >
+          <Trash2Icon className="h-6 w-6 text-red hover:text-white" />
+        </Button>
+      </div>
+    );
+  }
+
   return (
-    <section
-      key={index}
-      className="flex flex-row items-center gap-1 rounded-md"
-    >
-      <button
-        type="button"
-        onClick={() => console.log(watch(`ingredients.${index}.unit.value`))}
-      >
-        Get values
-      </button>
+    <div key={index} className="flex flex-row items-center gap-1 rounded-md">
       <Input
-        {...register(`ingredients.${index}.ingredient` as const)}
+        {...register(`ingredients.${index}.title` as const)}
         placeholder="Ingredient"
       />
 
-      <Select
-        // id={`ingredients.${index}.unit`}
-
-        // className="dark:outline-none outline outline-1 w-fit h-fit rounded-lg p-2 text-step--4"
-        defaultValue={getValues(`ingredients.${index}.unit`)}
-        {...register(`ingredients.${index}.unit` as const)}
-      >
-        <SelectTrigger className="w-24 h-10">
-          <SelectValue placeholder="Unit" />
-        </SelectTrigger>
-        <SelectContent>
-          {units.map((item) => (
-            <SelectItem key={item.value} value={item.value}>
-              {item.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <Controller
+        control={control}
+        name={`ingredients.${index}.unit` as const}
+        render={({ field }) => (
+          <Select
+            defaultValue={field?.value || ''}
+            onValueChange={field.onChange}
+          >
+            <SelectTrigger className="w-24 h-10">
+              <SelectValue placeholder="Unit" />
+            </SelectTrigger>
+            <SelectContent>
+              {units.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
+      />
 
       <Input
         type="number"
         {...register(`ingredients.${index}.quantity`, { min: 0 })}
-        // classNames={{ inputWrapper: 'w-fit' }}
-        // className="w-20 h-10 rounded-md p-2 text-step--4 dark:outline-none outline outline-1"
       />
       {['cup', 'tbsp', 'tsp'].includes(
         watch(`ingredients.${index}.unit`) || ''
       ) ? (
-        <>
-          <select
-            className="dark:outline-none outline outline-1 w-fit h-fit rounded-lg p-2 text-step--4"
-            {...register(`ingredients.${index}.measurement` as const)}
-          >
-            <option value=""></option>
-            <option value="1/2">1/2 {activeUnit}</option>
-            <option value="1/3">1/3 {activeUnit}</option>
-            <option value="2/3">2/3 {activeUnit}</option>
-            <option value="1/4">1/4 {activeUnit}</option>
-            <option value="3/4">3/4 {activeUnit}</option>
-          </select>
-        </>
+        <Controller
+          control={control}
+          name={`ingredients.${index}.amount`}
+          render={({ field }) => (
+            <Select
+              defaultValue={field?.value || ''}
+              onValueChange={field.onChange}
+            >
+              <SelectTrigger className="min-w-[6rem] w-fit p-2 h-10">
+                <SelectValue placeholder="Unit" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="1/2">1/2 {activeUnit}</SelectItem>
+                <SelectItem value="1/3">1/3 {activeUnit}</SelectItem>
+                <SelectItem value="2/3">2/3 {activeUnit}</SelectItem>
+                <SelectItem value="1/4">1/4 {activeUnit}</SelectItem>
+                <SelectItem value="3/4">3/4 {activeUnit}</SelectItem>
+              </SelectContent>
+            </Select>
+          )}
+        />
       ) : (
         <></>
       )}
 
-      <button
-        onClick={() => console.log(getValues(`ingredients.${index}.unit`))}
+      <Button
+        ariaLabel="delete ingredient"
+        onClick={() => handleDelete(index)}
         type="button"
+        className="bg-transparent border border-solid border-red hover:bg-red  rounded-md"
+        size="icon"
       >
-        <TrashIcon className="h-6 w-6" />
-      </button>
-    </section>
+        <Trash2Icon className="h-6 w-6 text-red hover:text-white" />
+      </Button>
+    </div>
   );
 };
 

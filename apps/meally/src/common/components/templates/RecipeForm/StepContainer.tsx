@@ -14,7 +14,9 @@ import * as z from 'zod';
 
 const StepContainer = () => {
   const { control } = useFormContext<z.infer<typeof formSchema>>();
-  const { fields, append, remove, move } = useFieldArray<z.infer<typeof formSchema>>({
+  const { fields, append, remove, move } = useFieldArray<
+    z.infer<typeof formSchema>
+  >({
     control,
     name: 'steps',
   });
@@ -38,7 +40,7 @@ const StepContainer = () => {
   );
 
   return (
-    <section>
+    <section className='flex flex-col gap-2 w-2/3'>
       <DndProvider backend={HTML5Backend}>
         {fields.map((field, index: number) => {
           return (
@@ -55,7 +57,7 @@ const StepContainer = () => {
         })}
       </DndProvider>
       <Button
-        ariaLabel="Add an ingredient"
+        ariaLabel="Add an Step"
         className="flex flex-row items-center gap-2 h-9 text-step--2 mt-3 border rounded-xl"
         onClick={() => handleAddClick()}
         name="Ingredient"

@@ -1,12 +1,9 @@
 import { useCallback } from 'react';
 import { Ingredient } from './Ingredient';
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import type { Ingredient as IngredientType } from '@/src/db/types';
-import { TrashIcon } from 'lucide-react';
 import { DraggAbleCard } from './Dragableitem';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { Input } from '../../ui/input';
 import { Button } from '../../ui/button';
 import { PlusCircleIcon } from 'lucide-react';
 import { formSchema } from './form';
@@ -14,7 +11,9 @@ import * as z from 'zod';
 
 const IngredientContainer = () => {
   const { control, register } = useFormContext<z.infer<typeof formSchema>>();
-  const { fields, append, remove, move } = useFieldArray<z.infer<typeof formSchema>>({
+  const { fields, append, remove, move } = useFieldArray<
+    z.infer<typeof formSchema>
+  >({
     control,
     name: 'ingredients',
   });
@@ -27,11 +26,23 @@ const IngredientContainer = () => {
   );
 
   const handleAddClick = useCallback(() => {
-    append({ ingredient: '', unit: 'grams', quantity: undefined });
+    append({
+      title: '',
+      unit: 'grams',
+      quantity: null,
+      isHeading: false,
+      amount: null,
+    });
   }, [append]);
 
   const handleHeadingClick = useCallback(() => {
-    append({ heading: '' });
+    append({
+      title: '',
+      isHeading: true,
+      unit: null,
+      quantity: null,
+      amount: null,
+    });
   }, [append]);
 
   const handleSwap = useCallback(
@@ -43,57 +54,32 @@ const IngredientContainer = () => {
 
   return (
     <>
-      <section
-        className={` flex flex-col w-full gap-3 dark:bg-dark_grey dark:shadow-none shadow  bg-white dark:bg-grey`}
-      >
+      <section className="flex flex-col w-fit h-fit p-4 gap-3 dark:bg-grey shadow  bg-white rounded-lg">
         <DndProvider backend={HTML5Backend}>
-          {fields.map((field, index) => {
-            if ('ingredient' in field) {
-              return (
-                <DraggAbleCard
-                  key={field.id}
-                  index={index}
-                  id={field.id}
-                  acceptType="ingredient"
-                  moveCard={handleSwap}
-                  showHandle
-                >
-                  <Ingredient
-                    index={index}
-                    values={{
-                      ingredient: field.ingredient,
-                      unit: field.unit,
-                      quantity: field.quantity,
-                      measurement: field.measurement,
-                    }}
-                    handleDelete={handleDelete}
-                    key={field.id}
-                  />
-                </DraggAbleCard>
-              );
-            } else {
-              return (
-                <DraggAbleCard
-                  key={field.id}
-                  index={index}
-                  id={field.id}
-                  acceptType="ingredient"
-                  moveCard={handleSwap}
-                  showHandle
-                >
-                  <div className="flex flex-row">
-                    <Input
-                      {...register(`ingredients.${index}.heading` as const)}
-                      key={field.id}
-                    />
-                    <button onClick={() => handleDelete(index)} type="button">
-                      <TrashIcon className="h-6 w-6" />
-                    </button>
-                  </div>
-                </DraggAbleCard>
-              );
-            }
-          })}
+          {fields.map((field, index) => (
+            <DraggAbleCard
+              index={index}
+              id={field.id}
+              key={field.id}
+              acceptType="ingredient"
+              moveCard={handleSwap}
+              showHandle
+            >
+              <Ingredient
+                index={index}
+                // TODO: fix these errors - data still passes just throws errors
+                values={{
+                  title: field.title,
+                  unit: field.unit,
+                  quantity: field.quantity,
+                  isHeading: field.isHeading,
+                  amount: field.amount,
+                }}
+                handleDelete={handleDelete}
+                key={field.id}
+              />
+            </DraggAbleCard>
+          ))}
         </DndProvider>
         <button
           type="button"
@@ -108,6 +94,7 @@ const IngredientContainer = () => {
           onClick={() => handleAddClick()}
           name="Ingredient"
           type="button"
+          variant={'secondary'}
         >
           <PlusCircleIcon className="w-5 h-5" />
           Add Ingredient

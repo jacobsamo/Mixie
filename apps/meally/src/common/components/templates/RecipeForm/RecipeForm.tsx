@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider, Controller } from 'react-hook-form';
 import { Button } from '@components/ui/button';
 import {
   Select,
@@ -23,8 +23,8 @@ import {
 import { IngredientContainer } from './IngredientContainer';
 import { StepContainer } from './StepContainer';
 import { formSchema } from './form';
-
-
+import TagInput from '../../ui/taginput';
+import ImageUpload from './ImageUpload';
 
 interface RecipeFormProps {
   recipe: Recipe | null;
@@ -36,6 +36,11 @@ const RecipeForm = () => {
 
   const methods = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    // defaultValues: {
+    //   mealTime: { label: 'Meal Time', value: '' },
+    //   sweet_savoury: { label: 'Sweet or Savoury', value: '' },
+    //   allergens: { label: 'Allergens', value: '' },
+    // }
   });
   const {
     handleSubmit,
@@ -48,6 +53,7 @@ const RecipeForm = () => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    //TODO: handle when a unit for the recipe is not `tsp` or `tbsp` and convert to `tsp, tbsp or cup` and there is a value in the amount this should be set to `undefined`
     console.log(values);
   }
 
@@ -55,8 +61,11 @@ const RecipeForm = () => {
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col w-full md:w-1/2 mx-auto p-2 md:p-0"
+        className="flex flex-col w-full lg:w-1/2 mx-auto p-2 md:p-0"
       >
+        <button type="button" onClick={() => console.log(getValues())}>
+          get values
+        </button>
         <Input
           {...register('title', {
             required: true,
@@ -64,11 +73,7 @@ const RecipeForm = () => {
           required
           label="Title"
         />
-        <Textarea
-          id="recipe-description"
-          label="Description"
-          control={control}
-        />
+        <Textarea id="description" label="Description" control={control} />
         <Input
           {...register('info.prep')}
           label="Prep Time"
@@ -87,52 +92,117 @@ const RecipeForm = () => {
           type="number"
         />
 
-        <Select {...register('allergens')}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Allergens" />
-          </SelectTrigger>
-          <SelectContent>
-            {dietaryRequirements.map((item) => (
-              <SelectItem key={item.value} value={item.value}>
-                {item.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <Controller
+          control={control}
+          name="dietary"
+          render={({ field }) => (
+            <>
+              <label
+                htmlFor="dietary"
+                className="block text-step--3 font-medium"
+              >
+                Dietary Requirements
+              </label>
+              <Select
+                name="dietary"
+                defaultValue={field.value?.value}
+                onValueChange={field.onChange}
+              >
+                <SelectTrigger className="w-2/3 text-step--2">
+                  <SelectValue placeholder="Dietary Requirements" />
+                </SelectTrigger>
+                <SelectContent>
+                  {dietaryRequirements.map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </>
+          )}
+        />
 
-        {/* Vegan, vegerenten, etc select */}
+        <TagInput
+          control={control}
+          name="contains"
+          // label='Contains'
+          placeholder="E.g gluten, dairy, nuts"
+          hint="Allergens (separated by a comma)"
+        />
 
-        <Select {...register('allergens')}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Sweet or Savoury" />
-          </SelectTrigger>
-          <SelectContent>
-            {sweet_savoury.map((item) => (
-              <SelectItem key={item.value} value={item.value}>
-                {item.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <Controller
+          control={control}
+          name="sweet_savoury"
+          render={({ field }) => (
+            <>
+              <label
+                htmlFor="sweet_savoury"
+                className="block text-step--3 font-medium"
+              >
+                Sweet or Savoury
+              </label>
+              <Select
+                name="sweet_savoury"
+                defaultValue={field.value?.value}
+                onValueChange={field.onChange}
+              >
+                <SelectTrigger className="w-2/3 text-step--2">
+                  <SelectValue placeholder="Sweet or Savoury" />
+                </SelectTrigger>
+                <SelectContent>
+                  {sweet_savoury.map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </>
+          )}
+        />
 
-        <section>{/*Image upload */}</section>
+        <ImageUpload />
 
-        <Select {...register('allergens')}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Meal time" />
-          </SelectTrigger>
-          <SelectContent>
-            {meal_times.map((item) => (
-              <SelectItem key={item.value} value={item.value}>
-                {item.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <Controller
+          control={control}
+          name="mealTime"
+          render={({ field }) => (
+            <>
+              <label
+                htmlFor="mealTime"
+                className="block text-step--3 font-medium"
+              >
+                Meal Time
+              </label>
+              <Select
+                name="mealTime"
+                defaultValue={field.value?.value}
+                onValueChange={field.onChange}
+              >
+                <SelectTrigger className="w-2/3 text-step--2">
+                  <SelectValue placeholder="Meal time" />
+                </SelectTrigger>
+                <SelectContent>
+                  {meal_times.map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </>
+          )}
+        />
 
-        {/* Keywords */}
+        <TagInput
+          name="keywords"
+          control={control}
+          placeholder="Keywords (separated by a comma)"
+          hint="Keywords will be used to help users find your recipe."
+        />
 
-        <section>
+        <section className="flex flex-row gap-4 ">
           <IngredientContainer />
           <StepContainer />
         </section>
