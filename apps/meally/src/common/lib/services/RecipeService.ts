@@ -94,22 +94,11 @@ class RecipeService {
   }
 
   async createRecipeFromTitle(title: string) {
-    // const session = await getServerSession(authOptions);
-    // if (!session?.user) {
-    //   return { status: 401, message: 'Not authorized' };
-    // }
-    // const id = recipeId(title);
-
-    // const recipe: NewRecipe = {
-    //   id,
-    //   title,
-    //   createdBy: session.user.id,
-    //   lastUpdatedBy: session.user.id,
-    // };
-
-    // await db.insert(recipes).values(recipe);
-
-    return { status: 200, message: 'Successfully sent' };
+    const fetchedRecipe = fetch('/api/recipes/create', {
+      method: 'POST',
+      body: JSON.stringify({ title }),
+    });
+    return (await fetchedRecipe).json();
   }
 
   async createRecipeFormUrl(url: string): Promise<MockApiReturnTypes> {

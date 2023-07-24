@@ -41,20 +41,30 @@ const CreateRecipeDialog = () => {
     // ✅ This will be type-safe and validated.
     console.log(values);
     if (values.link) {
-      recipeService.createRecipeFormUrl(values.link).then((res) => {
-        if (res.status === 200) {
-          // router.push(`/recipes/${JSON.parse(res.message).uid}/edit`);
-          setLoading(false);
-        }
-      });
+      // recipeService.createRecipeFormUrl(values.link).then((res) => {
+      //   if (res.status === 200) {
+      //     // router.push(`/recipes/${JSON.parse(res.message).uid}/edit`);
+      //     setLoading(false);
+      //   }
+      // });
     }
 
     if (values.title) {
-      recipeService.createRecipe(recipeId(values.title)).then((res) => {
-        if (res.status === 200) {
-          // router.push(`/recipes/${JSON.parse(res.message).uid}/edit`);
-          setLoading(false);
-        }
+      // recipeService.createRecipeFromTitle(values.title).then((res) => {
+      //   if (res.status === 200) {
+      //     // router.push(`/recipes/${JSON.parse(res.message).uid}/edit`);
+      //     setLoading(false);
+      //   }
+      // });
+      fetch('/api/recipes/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Needed for CORS
+        mode: 'cors',
+
+        body: JSON.stringify(values.title),
       });
     }
   }
