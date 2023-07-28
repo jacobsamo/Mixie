@@ -6,13 +6,14 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Button } from '../../ui/button';
 import { PlusCircleIcon } from 'lucide-react';
-import { formSchema } from './form';
+import { recipeFormSchema } from './form';
 import * as z from 'zod';
 
 const IngredientContainer = () => {
-  const { control, register } = useFormContext<z.infer<typeof formSchema>>();
+  const { control, register } =
+    useFormContext<z.infer<typeof recipeFormSchema>>();
   const { fields, append, remove, move } = useFieldArray<
-    z.infer<typeof formSchema>
+    z.infer<typeof recipeFormSchema>
   >({
     control,
     name: 'ingredients',

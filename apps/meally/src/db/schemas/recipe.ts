@@ -74,7 +74,7 @@ export const recipes = mysqlTable('recipes', {
 
   // users
   createdAt: timestamp('createdAt').notNull().defaultNow(),
-  lastUpdated: timestamp('lastUpdated').notNull().onUpdateNow(),
+  lastUpdated: timestamp('lastUpdated').notNull().defaultNow().onUpdateNow(),
   lastUpdatedBy: varchar('lastUpdatedBy', { length: 191 }).notNull(),
   createdBy: varchar('createdBy', { length: 191 }).notNull(),
 

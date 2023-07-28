@@ -9,13 +9,13 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Button } from '../../ui/button';
 import { PlusCircleIcon } from 'lucide-react';
-import { formSchema } from './form';
+import { recipeFormSchema } from './form';
 import * as z from 'zod';
 
 const StepContainer = () => {
-  const { control } = useFormContext<z.infer<typeof formSchema>>();
+  const { control } = useFormContext<z.infer<typeof recipeFormSchema>>();
   const { fields, append, remove, move } = useFieldArray<
-    z.infer<typeof formSchema>
+    z.infer<typeof recipeFormSchema>
   >({
     control,
     name: 'steps',
@@ -40,7 +40,7 @@ const StepContainer = () => {
   );
 
   return (
-    <section className='flex flex-col gap-2 w-2/3'>
+    <section className="w-full flex flex-col gap-2">
       <DndProvider backend={HTML5Backend}>
         {fields.map((field, index: number) => {
           return (
@@ -62,6 +62,7 @@ const StepContainer = () => {
         onClick={() => handleAddClick()}
         name="Ingredient"
         type="button"
+        variant={'secondary'}
       >
         <PlusCircleIcon className="w-5 h-5" />
         Add Step

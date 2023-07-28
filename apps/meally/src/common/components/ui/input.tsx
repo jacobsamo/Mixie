@@ -16,7 +16,7 @@ export interface InputProps
   label?: string;
   tooltip?: string;
   hint?: string;
-  error?: FieldError;
+  error?: FieldError | null;
   LeadingIcon?: React.ReactNode;
   TrailingIcon?: React.ReactNode;
   classNames?: {
@@ -46,13 +46,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ) => {
     return (
       <div
-        className={cn(
-          'flex flex-col gap-1',
-          classNames?.container
-        )}
+        className={cn('flex flex-col gap-1', classNames?.container)}
+        data-input="container"
       >
         {label && (
-          <span className="flex flex-row items-center gap-2">
+          <span
+            className="flex flex-row items-center gap-2"
+            data-input="label-container"
+          >
             <label
               htmlFor={name}
               className={cn(
@@ -86,6 +87,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             'flex flex-row w-full items-center rounded-md p-1 border border-black dark:border-white bg-white dark:bg-grey  py-1 text-step--3 shadow-sm transition-colors file:border-0 file:bg-transparent file:font-medium placeholder:text-opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
             classNames?.inputWrapper
           )}
+          data-input="input-container"
         >
           {LeadingIcon && <span>{LeadingIcon}</span>}
           <input

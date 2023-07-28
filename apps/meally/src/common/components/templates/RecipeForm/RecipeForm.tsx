@@ -22,9 +22,11 @@ import {
 } from '@lib/services/data';
 import { IngredientContainer } from './IngredientContainer';
 import { StepContainer } from './StepContainer';
-import { formSchema } from './form';
+import { recipeFormSchema } from './form';
 import TagInput from '../../ui/taginput';
 import ImageUpload from './ImageUpload';
+import RecipeService from '@/src/common/lib/services/RecipeService';
+import { toast } from '../../ui/use-toast';
 
 interface RecipeFormProps {
   recipe: Recipe | null;
@@ -34,8 +36,20 @@ interface RecipeFormProps {
 const RecipeForm = () => {
   const [preview, setPreview] = useState(false);
 
-  const methods = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const methods = useForm<z.infer<typeof recipeFormSchema>>({
+    resolver: zodResolver(recipeFormSchema),
+    defaultValues: {
+      ingredients: [
+        {
+          title: '',
+          unit: 'grams',
+          quantity: null,
+          isHeading: false,
+          amount: null,
+        },
+      ],
+      steps: [{ step_body: '' }],
+    },
     // defaultValues: {
     //   mealTime: { label: 'Meal Time', value: '' },
     //   sweet_savoury: { label: 'Sweet or Savoury', value: '' },
@@ -47,21 +61,45 @@ const RecipeForm = () => {
     register,
     control,
     getValues,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
   } = methods;
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    //TODO: handle when a unit for the recipe is not `tsp` or `tbsp` and convert to `tsp, tbsp or cup` and there is a value in the amount this should be set to `undefined`
-    console.log(values);
-  }
+  const onSubmit = async (recipe: z.infer<typeof recipeFormSchema>) => {
+    console.log('Values passeed: ', recipe);
+    if (!recipe) return;
+
+    const ingredients = recipe?.ingredients?.map((ingredient) => {
+      if (!['cup', 'tbsp', 'tsp'].includes(ingredient?.unit || '')) {
+        ingredient.unit = null;
+      }
+      return ingredient;
+    });
+
+    const data = {
+      ...recipe,
+      ingredients,
+    };
+
+    console.log('Data: ', data);
+
+    // send data to edit the recipe in the db
+
+    //   const res = await RecipeService.EditRecipe(data).then(res => {
+    //     if (res.status == 200) {
+    //       toast({'Recipe has been published succfulyy'})
+    //     }
+    //     else {
+    //       toast({'An error occurred'})
+
+    //     }
+    //  })
+  };
 
   return (
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col w-full lg:w-1/2 mx-auto p-2 md:p-0"
+        className="flex flex-col w-full lg:w-1/2 mx-auto p-2 md:p-0 mb-[20%]"
       >
         <button type="button" onClick={() => console.log(getValues())}>
           get values
@@ -85,9 +123,8 @@ const RecipeForm = () => {
           hint="Must be in the format 4h 3m 4s where h = hours, m = mintues, s = seconds"
         />
         <Input
-          {...register('info.serves', { min: 0 })}
+          {...register('info.serves', { valueAsNumber: true, min: 0 })}
           error={errors.info?.serves}
-          min={0}
           label="Serves"
           type="number"
         />
@@ -202,7 +239,7 @@ const RecipeForm = () => {
           hint="Keywords will be used to help users find your recipe."
         />
 
-        <section className="flex flex-row gap-4 ">
+        <section className="flex flex-row flex-wrap gap-4 mb-8">
           <IngredientContainer />
           <StepContainer />
         </section>
@@ -211,7 +248,14 @@ const RecipeForm = () => {
           control={control}
           label="Notes, Tips or Suggestions"
         />
-        <button>Submit</button>
+        <Button
+          type="submit"
+          ariaLabel="Submit Recipe"
+          className="text-step--1 mt-14 mb-3  border rounded-lg"
+          // disabled={!isDirty || !isValid}
+        >
+          Submit
+        </Button>
       </form>
     </FormProvider>
   );

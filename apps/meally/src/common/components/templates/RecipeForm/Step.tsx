@@ -1,7 +1,7 @@
 import { Trash2Icon } from 'lucide-react';
 import { Textarea } from '../../ui/textarea';
 import { useFormContext } from 'react-hook-form';
-import { formSchema } from './form';
+import { recipeFormSchema } from './form';
 import * as z from 'zod';
 import { Button } from '../../ui/button';
 interface StepProps {
@@ -10,7 +10,8 @@ interface StepProps {
 }
 
 const Step = ({ index, handleDelete }: StepProps) => {
-  const { control, getValues } = useFormContext<z.infer<typeof formSchema>>();
+  const { control, getValues } =
+    useFormContext<z.infer<typeof recipeFormSchema>>();
 
   return (
     <div

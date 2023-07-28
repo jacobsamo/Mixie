@@ -10,23 +10,23 @@ import {
 import { Input } from '../ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { Loader2, PlusCircleIcon } from 'lucide-react';
 import { useRouter } from 'next/router';
-import recipeService from '../../lib/services/RecipeService';
-import { recipeId } from '../../lib/utils';
 
-interface CreateRecipe {
-  title?: string;
-  link?: string;
-}
+const createRecipeSchema = z.object({
+  title: z.string().optional(),
+  link: z.string().optional(),
+});
 
 const CreateRecipeDialog = () => {
   const [loading, setLoading] = useState(false);
-  // const router = useRouter();
+  const router = useRouter();
 
-  const methods = useForm<CreateRecipe>({});
+  const methods = useForm<z.infer<typeof createRecipeSchema>>({
+    resolver: zodResolver(createRecipeSchema),
+  });
   const {
     handleSubmit,
     register,
@@ -35,36 +35,18 @@ const CreateRecipeDialog = () => {
     formState: { errors },
   } = methods;
 
-  function onSubmit(values: CreateRecipe) {
+  function onSubmit(values: z.infer<typeof createRecipeSchema>) {
     setLoading(true);
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-    if (values.link) {
-      // recipeService.createRecipeFormUrl(values.link).then((res) => {
-      //   if (res.status === 200) {
-      //     // router.push(`/recipes/${JSON.parse(res.message).uid}/edit`);
-      //     setLoading(false);
-      //   }
-      // });
-    }
 
     if (values.title) {
-      // recipeService.createRecipeFromTitle(values.title).then((res) => {
-      //   if (res.status === 200) {
-      //     // router.push(`/recipes/${JSON.parse(res.message).uid}/edit`);
-      //     setLoading(false);
-      //   }
-      // });
       fetch('/api/recipes/create', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include', // Needed for CORS
-        mode: 'cors',
-
-        body: JSON.stringify(values.title),
+        body: JSON.stringify({ title: values.title }),
+      }).then((res) => {
+        if (res.status == 200) {
+          setLoading(false);
+          // router.push(`/recipes/${recipeId(values.title)}`);
+        }
       });
     }
   }
@@ -84,7 +66,7 @@ const CreateRecipeDialog = () => {
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <Input {...register('title')} label="Title" />
-          <p className="mx-auto">OR</p>
+          {/* <p className="mx-auto">OR</p>
 
           <div>
             import a recipe
@@ -93,7 +75,7 @@ const CreateRecipeDialog = () => {
               label="Recipe Url"
               placeholder="https://"
             />
-          </div>
+          </div> */}
           <Button
             ariaLabel="continue with creating the recipe"
             className="font-semibold items-center"

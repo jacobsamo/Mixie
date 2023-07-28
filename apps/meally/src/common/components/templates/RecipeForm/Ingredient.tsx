@@ -3,7 +3,7 @@ import { units } from '@/src/common/lib/services/data';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Ingredient as IngredientType } from '@/src/db/types';
 import { Input } from '../../ui/input';
-import { formSchema } from './form';
+import { recipeFormSchema } from './form';
 import * as z from 'zod';
 import {
   Select,
@@ -22,12 +22,12 @@ interface IngredientProps {
 
 const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
   const { register, getValues, watch, control } =
-    useFormContext<z.infer<typeof formSchema>>();
+    useFormContext<z.infer<typeof recipeFormSchema>>();
   const activeUnit = getValues(`ingredients.${index}.unit`);
 
   if (values.isHeading) {
     return (
-      <div className="flex flex-row items-center gap-1">
+      <div className="flex flex-row flex-wrap items-center gap-1">
         <Input {...register(`ingredients.${index}.title` as const)} />
         <Button
           ariaLabel="delete ingredient"
@@ -36,14 +36,17 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
           className="bg-transparent border border-solid border-red hover:bg-red  rounded-md"
           size="icon"
         >
-          <Trash2Icon className="h-6 w-6 text-red hover:text-white" />
+          <Trash2Icon className="h-6 w-6 text-red group-hover:text-white" />
         </Button>
       </div>
     );
   }
 
   return (
-    <div key={index} className="flex flex-row items-center gap-1 rounded-md">
+    <div
+      key={index}
+      className="flex flex-row flex-wrap items-center gap-1 rounded-md"
+    >
       <Input
         {...register(`ingredients.${index}.title` as const)}
         placeholder="Ingredient"
