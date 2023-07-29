@@ -194,12 +194,13 @@ export const recipes = [
 
 
 export const dietaryRequirements = [
-  { value: 'None', label: 'None' },
-  { value: 'Vegetarian', label: 'Vegetarian' },
-  { value: 'Vegan', label: 'Vegan' },
-  { value: 'Gluten Free', label: 'Gluten Free' },
-  { value: 'Dairy Free', label: 'Dairy Free' },
-  { value: 'Nut Free', label: 'Nut Free' },
+  { value: 'none', label: 'None' },
+  { value: 'vegetarian', label: 'Vegetarian' },
+  { value: 'vegan', label: 'Vegan' },
+  { value: 'gluten_free', label: 'Gluten Free' },
+  { value: 'dairy_free', label: 'Dairy Free' },
+  { value: 'nut_free', label: 'Nut Free' },
+  { value: 'egg_free', label: 'Egg Free' },
 ];
 
 export const units = [

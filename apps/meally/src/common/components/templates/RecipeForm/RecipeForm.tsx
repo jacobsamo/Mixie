@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useForm, FormProvider, Controller } from 'react-hook-form';
@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from '@components/ui/select';
 import { Input } from '@components/ui/input';
-import { Recipe } from '@/src/db/types';
+import { Ingredient, Recipe } from '@/src/db/types';
 import { Textarea } from '../../ui/textarea';
 
 import {
@@ -27,9 +27,10 @@ import TagInput from '../../ui/taginput';
 import ImageUpload from './ImageUpload';
 import RecipeService from '@/src/common/lib/services/RecipeService';
 import { toast } from '../../ui/use-toast';
+import { type } from 'os';
 
 interface RecipeFormProps {
-  recipe: any | null;
+  recipe?: any | null;
 }
 
 const RecipeForm = ({ recipe }: RecipeFormProps) => {
@@ -44,7 +45,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
           unit: 'grams',
           quantity: null,
           isHeading: false,
-          amount: null,
+          amount: 'not_set',
         },
       ],
       steps: [{ step_body: '' }],
@@ -64,30 +65,51 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
     formState: { errors, isDirty, isValid },
   } = methods;
 
-  const onSubmit = async (recipe: z.infer<typeof recipeFormSchema>) => {
+  useEffect(() => {
+    console.log('Errors: ', errors);
+  }, [errors]);
+
+  const onSubmit = async (recipe: any) => {
     console.log('Recipe: ', recipe);
-    console.log(getValues());
-    // if (!recipe) return;
-    // const ingredients = recipe?.ingredients?.map((ingredient) => {
-    //   if (!['cup', 'tbsp', 'tsp'].includes(ingredient?.unit || '')) {
-    //     ingredient.unit = null;
-    //   }
-    //   return ingredient;
-    // });
-    // const data = {
-    //   ...recipe,
-    //   ingredients,
-    // };
-    // console.log('Data: ', data);
+    if (!recipe) return;
+    //TODO: fix this so it will override the current ingredients on the recipe with the new ones
+    const ingredients = recipe?.ingredients?.map((ingredient: Ingredient) => {
+      if (!['cup', 'tbsp', 'tsp'].includes(ingredient?.unit || '')) {
+        ingredient.amount = 'not_set';
+      }
+      // check if the quanity is a number if not then set the value to null
+      if (typeof ingredient.quantity != 'number') {
+        ingredient.quantity = null;
+      }
+
+      return ingredient;
+    });
+    const data = {
+      ...recipe,
+      ingredients,
+    };
+    console.log('Data: ', data);
     // send data to edit the recipe in the db
-    //   const res = await RecipeService.EditRecipe(data).then(res => {
-    //     if (res.status == 200) {
-    //       toast({'Recipe has been published succfulyy'})
-    //     }
-    //     else {
-    //       toast({'An error occurred'})
-    //     }
-    //  })
+    await fetch(`/api/recipes/${recipe.id}/edit`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(recipe),
+    }).then((res) => {
+      if (res.status === 200) {
+        toast({
+          title: 'Recipe created.',
+          description: 'Your recipe has been created.',
+        });
+      } else {
+        toast({
+          title: 'Uh oh! Something went wrong.',
+          description: 'There was an error while creating your recipe.',
+          variant: 'destructive',
+        });
+      }
+    });
   };
 
   return (
@@ -117,12 +139,12 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
           label="Cook Time"
           hint="Must be in the format 4h 3m 4s where h = hours, m = mintues, s = seconds"
         />
-        <Input
+        {/* <Input
           {...register('info.serves', { valueAsNumber: true, min: 0 })}
           error={errors.info?.serves}
           label="Serves"
           type="number"
-        />
+        /> */}
 
         <Controller
           control={control}
@@ -137,7 +159,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
               </label>
               <Select
                 name="dietary"
-                defaultValue={field.value?.value}
+                defaultValue={field.value || undefined}
                 onValueChange={field.onChange}
               >
                 <SelectTrigger className="w-2/3 text-step--2">
@@ -176,7 +198,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
               </label>
               <Select
                 name="sweet_savoury"
-                defaultValue={field.value?.value}
+                defaultValue={field.value || undefined}
                 onValueChange={field.onChange}
               >
                 <SelectTrigger className="w-2/3 text-step--2">
@@ -209,7 +231,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
               </label>
               <Select
                 name="mealTime"
-                defaultValue={field.value?.value}
+                defaultValue={field.value || undefined}
                 onValueChange={field.onChange}
               >
                 <SelectTrigger className="w-2/3 text-step--2">
@@ -248,6 +270,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
           ariaLabel="Submit Recipe"
           className="text-step--1 mt-14 mb-3  border rounded-lg"
           // disabled={!isDirty || !isValid}
+          // onClick={() => console.log(getValues())}
         >
           Submit
         </Button>

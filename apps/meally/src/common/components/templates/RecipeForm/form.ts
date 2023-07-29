@@ -2,18 +2,20 @@ import { recipeId } from '@/src/common/lib/utils';
 import { ingredients } from '@/src/db/schemas';
 import * as z from 'zod';
 
+// TODO: get this to work with drizzle-zod instead
 export const recipeFormSchema = z.object({
-  // uid: z.string(),
+  uid: z.string().uuid(),
   id: z.string(), // generated from the title
   title: z.string().min(2, {
     message: 'must be at least 2 characters long',
   }),
-  description: z.string().optional(),
-  imgUrl: z.string().url().optional(),
-  imgAlt: z.string().optional(),
-  notes: z.string().optional(),
+  description: z.string().nullable().nullable().optional(),
+  imgUrl: z.string().url().nullable().optional(),
+  imgAlt: z.string().nullable().optional(),
+  notes: z.string().nullable().optional(),
   info: z
     .object({
+      recipeId: z.string().uuid().optional(),
       prep: z.string().optional(),
       cook: z.string().optional(),
       total: z.string().optional(),
@@ -27,19 +29,39 @@ export const recipeFormSchema = z.object({
     })
     .optional(),
   mealTime: z
-    .object({
-      value: z.string(),
-      label: z.string(),
-    })
+    .enum(['not_set', 'breakfast', 'lunch', 'dinner', 'snack'])
+    .default('not_set')
+    .nullable()
     .optional(),
   version: z.string().default('1.0.0'),
+
   ingredients: z
     .object({
+      recipeId: z.string().uuid().optional(),
       isHeading: z.boolean(),
       title: z.string(),
-      unit: z.string().nullable(),
+      unit: z.enum([
+        'not_set',
+        'grams',
+        'kg',
+        'cup',
+        'ml',
+        'litre',
+        'tsp',
+        'tbsp',
+        'pinch',
+        'item',
+        'handful',
+        'slice',
+        'piece',
+        'can',
+        'bunch',
+        'bottle',
+      ]),
       quantity: z.number().nullable(),
-      amount: z.string().nullable(),
+      amount: z
+        .enum(['not_set', '1/8', '1/2', '1/3', '2/3', '1/4', '3/4'])
+        .default('not_set'),
     })
     .array()
     .optional(),
@@ -55,49 +77,53 @@ export const recipeFormSchema = z.object({
     .object({
       value: z.string(),
     })
+    .array()
     .optional(),
   dietary: z
-    .object({
-      value: z.string(),
-      label: z.string(),
-    })
+    .enum([
+      'none',
+      'vegetarian',
+      'vegan',
+      'pescatarian',
+      'gluten_free',
+      'dairy_free',
+      'nut_free',
+      'egg_free',
+    ])
+    .default('none')
+    .nullable()
     .optional(),
   contains: z
     .object({
       value: z.string(),
     })
+    .array()
     .optional(),
   allergens: z
     .object({
       value: z.string(),
       label: z.string(),
     })
+    .nullable()
     .optional(),
   sweet_savoury: z
-    .object({
-      value: z.string(),
-      label: z.string(),
-    })
+    .enum(['not_set', 'sweet', 'savoury'])
+    .default('not_set')
+    .nullable()
     .optional(),
-  difficulty_level: z
-    .object({
-      value: z.string(),
-      label: z.string(),
-    })
-    .optional(),
+  difficulty_level: z.enum(['not_set', 'easy', 'medium', 'hard']).optional(),
   cuisine: z
     .object({
       value: z.string(),
       label: z.string(),
     })
+    .nullable()
     .optional(),
   isPublic: z.boolean().default(false),
 
   lastUpdatedBy: z.string(),
   createdBy: z.string(),
 
-  madeRecipe: z.number().default(0).optional(),
-  savedRecipe: z.number().default(0).optional(),
+  madeRecipe: z.number().nullable().default(null).optional(),
+  savedRecipe: z.number().nullable().default(null).optional(),
 });
-
-

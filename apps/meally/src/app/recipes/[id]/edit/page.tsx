@@ -16,11 +16,12 @@ interface EditPageProps {
 }
 
 export default async function EditPage({ params, searchParams }) {
-  console.log('Prams id: ', params.id);
   const recipe = await RecipeService.getRecipeById(params.id);
-  console.log('Recipe: ', recipe[0]);  
+
   if (recipe) {
     return <RecipeForm recipe={recipe[0]} />;
   }
+
   return <div>Recipe not found</div>;
+  // return <RecipeForm />
 }

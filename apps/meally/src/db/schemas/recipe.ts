@@ -22,33 +22,31 @@ const difficulty_level = mysqlEnum('difficulty_level', [
   'hard',
 ]);
 
-const unit = mysqlEnum('unit', [
+const sweet_savoury = mysqlEnum('sweet_savoury', [
   'not_set',
-  'grams',
-  'kg',
-  'cup',
-  'ml',
-  'litre',
-  'tsp',
-  'tbsp',
-  'pinch',
-  'items',
-  'handful',
-  'slice',
-  'piece',
-  'can',
-  'bunch',
-  'bottle',
+  'sweet',
+  'savoury',
+  'both',
 ]);
 
-const amount = mysqlEnum('amount', [
+const dietary = mysqlEnum('dietary', [
+  'none',
+  'vegetarian',
+  'vegan',
+  'pescatarian',
+  'gluten_free',
+  'dairy_free',
+  'nut_free',
+  'egg_free',
+]);
+
+const mealTime = mysqlEnum('mealTime', [
   'not_set',
-  '1/8',
-  '1/2',
-  '1/3',
-  '2/3',
-  '1/4',
-  '3/4',
+  'breakfast',
+  'lunch',
+  'dinner',
+  'snack',
+  'dessert',
 ]);
 
 export const recipes = mysqlTable('recipes', {
@@ -59,16 +57,15 @@ export const recipes = mysqlTable('recipes', {
   imgUrl: text('imgUrl'),
   imgAlt: text('imgAlt'),
   notes: text('notes'),
-  info: json('info'),
   steps: json('steps'),
-  mealTime: json('mealTime'),
+  mealTime: mealTime.default('not_set'),
   version: tinytext('version').notNull().default('1.0.0'),
 
   // little extras for searching
   keywords: json('keywords'),
-  dietary: json('dietary'),
+  dietary: dietary.default('none'),
   allergens: json('allergens'),
-  sweet_savoury: json('sweet_savoury'),
+  sweet_savoury: sweet_savoury.default('not_set'),
   difficulty_level: difficulty_level.default('not_set'),
   cuisine: json('cuisine'),
   isPublic: boolean('isPublic').notNull().default(false),
@@ -90,12 +87,40 @@ export const ingredientsRelation = relations(recipes, ({ one }) => ({
   }),
 }));
 
+const unit = mysqlEnum('unit', [
+  'not_set',
+  'grams',
+  'kg',
+  'cup',
+  'ml',
+  'litre',
+  'tsp',
+  'tbsp',
+  'pinch',
+  'item',
+  'handful',
+  'slice',
+  'piece',
+  'can',
+  'bunch',
+  'bottle',
+]);
+
+const amount = mysqlEnum('amount', [
+  'not_set',
+  '1/8',
+  '1/2',
+  '1/3',
+  '2/3',
+  '1/4',
+  '3/4',
+]);
 export const ingredients = mysqlTable('ingredients', {
-  recipeId: varchar('recipeId', { length: 191 }).notNull(),
+  recipeId: char('recipeId', { length: 36 }).notNull(),
   isHeading: boolean('isHeading').notNull(),
   title: varchar('title', { length: 191 }),
   unit: unit.default('not_set'),
-  quantity: tinyint('quantity'),
+  quantity: int('quantity'),
   amount: amount.default('not_set'),
 });
 
@@ -107,7 +132,7 @@ export const infoRelations = relations(recipes, ({ one }) => ({
 }));
 
 export const info = mysqlTable('info', {
-  recipeId: varchar('recipeId', { length: 191 }).notNull(),
+  recipeId: char('recipeId', { length: 36 }).primaryKey().notNull(),
   total: varchar('total', { length: 191 }),
   prep: varchar('prep', { length: 191 }),
   cook: varchar('cook', { length: 191 }),
@@ -122,7 +147,7 @@ export const ratingsRelation = relations(info, ({ one }) => ({
 }));
 
 export const ratings = mysqlTable('ratings', {
-  recipeId: varchar('recipeId', { length: 191 }).notNull(),
+  recipeId: char('recipeId', { length: 36 }).primaryKey().notNull(),
   userId: varchar('userId', { length: 191 }).notNull(),
   rating: tinyint('rating').notNull(),
 });

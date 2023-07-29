@@ -12,12 +12,12 @@
   - ✅ Provide tests for your changes.
   - 📝 Use descriptive commit messages.
   - 📗 Update any related documentation and include any relevant screenshots.
--->\
+-->
 
 ## First have you done these steps?
 
-- [ ] Run `yarn upgrade-interactive` to upgrade all packages
-- [ ] Run a `yarn build` and fixed any bugs or errors found in this process
+- [ ] Run `pnpm up --latest` to upgrade all packages
+- [ ] Run a `pnpm build` and fixed any bugs or errors found in this process
 
 ## What type of PR is this? (check all applicable)
 

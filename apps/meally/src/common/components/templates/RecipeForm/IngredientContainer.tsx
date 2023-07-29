@@ -32,7 +32,7 @@ const IngredientContainer = () => {
       unit: 'grams',
       quantity: null,
       isHeading: false,
-      amount: null,
+      amount: 'not_set',
     });
   }, [append]);
 
@@ -40,9 +40,9 @@ const IngredientContainer = () => {
     append({
       title: '',
       isHeading: true,
-      unit: null,
+      unit: 'not_set',
       quantity: null,
-      amount: null,
+      amount: 'not_set',
     });
   }, [append]);
 
@@ -68,7 +68,7 @@ const IngredientContainer = () => {
             >
               <Ingredient
                 index={index}
-                // TODO: fix these errors - data still passes just throws errors here so no issue for now  
+                // TODO: fix these errors - data still passes just throws errors here so no issue for now
                 values={{
                   title: field.title,
                   unit: field.unit,

@@ -76,7 +76,16 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
 
       <Input
         type="number"
-        {...register(`ingredients.${index}.quantity`, { min: 0 })}
+        {...register(`ingredients.${index}.quantity`, {
+          min: 0,
+          valueAsNumber: true,
+          validate: (value) => {
+            if (value === 0) {
+              return 'Quantity cannot be 0';
+            }
+            return true;
+          },
+        })}
       />
       {['cup', 'tbsp', 'tsp'].includes(
         watch(`ingredients.${index}.unit`) || ''
