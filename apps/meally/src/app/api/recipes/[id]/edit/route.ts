@@ -6,6 +6,7 @@ import { NewRecipe } from '@/src/db/types';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 import * as z from 'zod';
+import { v4 as uuidv4 } from 'uuid';
 
 const createRecipeSchema = z.object({
   title: z.string().optional(),
@@ -22,10 +23,12 @@ export async function PUT(req: Request) {
   const json = await req.json();
 
   const { title, link } = createRecipeSchema.parse(json);
+  const uid = uuidv4();
 
   if (title) {
     const id = recipeId(title);
     const recipe: NewRecipe = {
+      uid: uid,
       id,
       title,
       createdBy: user.id,

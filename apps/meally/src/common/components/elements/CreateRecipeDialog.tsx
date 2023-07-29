@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import {
   Dialog,
@@ -13,7 +14,7 @@ import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { Loader2, PlusCircleIcon } from 'lucide-react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const createRecipeSchema = z.object({
   title: z.string().optional(),
@@ -21,8 +22,9 @@ const createRecipeSchema = z.object({
 });
 
 const CreateRecipeDialog = () => {
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const methods = useForm<z.infer<typeof createRecipeSchema>>({
     resolver: zodResolver(createRecipeSchema),
@@ -44,15 +46,19 @@ const CreateRecipeDialog = () => {
         body: JSON.stringify({ title: values.title }),
       }).then((res) => {
         if (res.status == 200) {
+          res.json().then((data) => {
+            console.log(data);
+            router.push(`/recipes/${data.id}/edit`);
+          });
           setLoading(false);
-          // router.push(`/recipes/${recipeId(values.title)}`);
+          setOpen(false);
         }
       });
     }
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="flex flex-row gap-1 outline-none border-none">
         <PlusCircleIcon /> Create a recipe
       </DialogTrigger>

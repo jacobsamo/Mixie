@@ -1,4 +1,5 @@
 import RecipeForm from '@/src/common/components/templates/RecipeForm/RecipeForm';
+import RecipeService from '@/src/common/lib/services/RecipeService';
 import { db } from '@/src/db';
 import { recipes } from '@/src/db/schemas';
 import { Recipe } from '@/src/db/types';
@@ -15,9 +16,11 @@ interface EditPageProps {
 }
 
 export default async function EditPage({ params, searchParams }) {
-  // const recipe = await db
-  //   .select()
-  //   .from(recipes)
-  //   .where(eq(recipes.id, params.id));
-  return <RecipeForm />;
+  console.log('Prams id: ', params.id);
+  const recipe = await RecipeService.getRecipeById(params.id);
+  console.log('Recipe: ', recipe[0]);  
+  if (recipe) {
+    return <RecipeForm recipe={recipe[0]} />;
+  }
+  return <div>Recipe not found</div>;
 }

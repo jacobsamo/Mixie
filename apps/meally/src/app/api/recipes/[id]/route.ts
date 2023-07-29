@@ -1,9 +1,8 @@
+import RecipeService from '@/src/common/lib/services/RecipeService';
 import { NextResponse } from 'next/server';
 
-
 export async function GET() {
-  const res = await fetch('https://data.mongodb-api.com/...', {});
-  const data = await res.json();
+  const recipe = RecipeService.getRecipeById('test-recipe');
 
-  return NextResponse.json({ data });
+  return NextResponse.json({ recipe });
 }

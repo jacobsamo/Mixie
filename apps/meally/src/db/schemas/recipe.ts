@@ -12,6 +12,7 @@ import {
   varchar,
   boolean,
   timestamp,
+  char,
 } from 'drizzle-orm/mysql-core';
 
 const difficulty_level = mysqlEnum('difficulty_level', [
@@ -51,7 +52,7 @@ const amount = mysqlEnum('amount', [
 ]);
 
 export const recipes = mysqlTable('recipes', {
-  uid: serial('uid').primaryKey().notNull(),
+  uid: char('uid', { length: 36 }).primaryKey().notNull(),
   id: varchar('id', { length: 191 }).notNull(),
   title: varchar('title', { length: 191 }).notNull(),
   description: text('description'),

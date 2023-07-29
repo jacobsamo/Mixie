@@ -1,13 +1,14 @@
 import * as puppeteer from 'puppeteer';
 import { recipeId } from '../utils';
 import { db } from '@/src/db';
-import { NewRecipe } from '@/src/db/types';
+import { NewRecipe, Recipe } from '@/src/db/types';
 
 import { authOptions } from '@/src/db/next-auth-adapter';
 import { getServerSession } from 'next-auth/next';
 import { recipes } from '@/src/db/schemas';
 import * as z from 'zod';
 import { recipeFormSchema } from '@components/templates/RecipeForm/form';
+import { eq, sql } from 'drizzle-orm';
 
 class RecipeService {
   //   async getRatingByRecipeId(id: string) {
@@ -23,8 +24,16 @@ class RecipeService {
     return;
   }
 
-  async getRecipeById(id: string) {
-    return;
+  /**
+   * @param {string} id - The id or uid of the recipe to fetch
+   * @returns {Promise<Recipe>} - The recipe object
+   */
+  async getRecipeById(recipeId: string) {
+    const recipe = await db
+      .select()
+      .from(recipes)
+      .where(sql`${recipes.id} = ${recipeId} or ${recipes.uid} = ${recipeId}`);
+    return recipe || null;
   }
 
   async EditRecipe(recipe: z.infer<typeof recipeFormSchema>) {
@@ -38,12 +47,19 @@ class RecipeService {
     return { status: 451, message: 'Not yet implemented' };
   }
 
-  async createRecipeFromTitle(title: string) {
+  async createRecipeFromTitle(title: string): Promise<string> {
     const fetchedRecipe = fetch('/api/recipes/create', {
       method: 'POST',
       body: JSON.stringify({ title }),
+    }).then((res) => {
+      if (res.status === 200) {
+        return res.json().then((data) => data.id);
+      } else {
+        return '';
+      }
     });
-    return (await fetchedRecipe).json();
+
+    return '';
   }
 
   async createRecipeFormUrl(url: string) {

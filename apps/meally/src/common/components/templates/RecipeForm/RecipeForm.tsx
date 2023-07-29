@@ -29,16 +29,15 @@ import RecipeService from '@/src/common/lib/services/RecipeService';
 import { toast } from '../../ui/use-toast';
 
 interface RecipeFormProps {
-  recipe: Recipe | null;
+  recipe: any | null;
 }
-// { recipe }: RecipeFormProps
 
-const RecipeForm = () => {
+const RecipeForm = ({ recipe }: RecipeFormProps) => {
   const [preview, setPreview] = useState(false);
-
   const methods = useForm<z.infer<typeof recipeFormSchema>>({
     resolver: zodResolver(recipeFormSchema),
     defaultValues: {
+      ...recipe,
       ingredients: [
         {
           title: '',
@@ -56,6 +55,7 @@ const RecipeForm = () => {
     //   allergens: { label: 'Allergens', value: '' },
     // }
   });
+
   const {
     handleSubmit,
     register,
@@ -65,32 +65,27 @@ const RecipeForm = () => {
   } = methods;
 
   const onSubmit = async (recipe: z.infer<typeof recipeFormSchema>) => {
-    console.log('Values passeed: ', recipe);
-    if (!recipe) return;
-
-    const ingredients = recipe?.ingredients?.map((ingredient) => {
-      if (!['cup', 'tbsp', 'tsp'].includes(ingredient?.unit || '')) {
-        ingredient.unit = null;
-      }
-      return ingredient;
-    });
-
-    const data = {
-      ...recipe,
-      ingredients,
-    };
-
-    console.log('Data: ', data);
-
+    console.log('Recipe: ', recipe);
+    console.log(getValues());
+    // if (!recipe) return;
+    // const ingredients = recipe?.ingredients?.map((ingredient) => {
+    //   if (!['cup', 'tbsp', 'tsp'].includes(ingredient?.unit || '')) {
+    //     ingredient.unit = null;
+    //   }
+    //   return ingredient;
+    // });
+    // const data = {
+    //   ...recipe,
+    //   ingredients,
+    // };
+    // console.log('Data: ', data);
     // send data to edit the recipe in the db
-
     //   const res = await RecipeService.EditRecipe(data).then(res => {
     //     if (res.status == 200) {
     //       toast({'Recipe has been published succfulyy'})
     //     }
     //     else {
     //       toast({'An error occurred'})
-
     //     }
     //  })
   };
