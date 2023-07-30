@@ -2,14 +2,14 @@ import { recipeId } from '@/src/common/lib/utils';
 import { ingredients } from '@/src/db/schemas';
 import * as z from 'zod';
 
-// TODO: get this to work with drizzle-zod instead
+// keep this here until i know that everything works as it should with the drizzleZod plugin
 export const recipeFormSchema = z.object({
   uid: z.string().uuid(),
   id: z.string(), // generated from the title
   title: z.string().min(2, {
     message: 'must be at least 2 characters long',
   }),
-  description: z.string().nullable().nullable().optional(),
+  description: z.string().nullable().optional(),
   imgUrl: z.string().url().nullable().optional(),
   imgAlt: z.string().nullable().optional(),
   notes: z.string().nullable().optional(),

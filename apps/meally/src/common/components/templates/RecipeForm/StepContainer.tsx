@@ -9,7 +9,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Button } from '../../ui/button';
 import { PlusCircleIcon } from 'lucide-react';
-import { recipeFormSchema } from './form';
+import { recipeFormSchema } from '@/src/db/zodSchemas';
 import * as z from 'zod';
 
 const StepContainer = () => {

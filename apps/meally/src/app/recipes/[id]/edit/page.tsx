@@ -3,7 +3,7 @@ import RecipeService from '@/src/common/lib/services/RecipeService';
 import { db } from '@/src/db';
 import { recipes } from '@/src/db/schemas';
 import { Recipe } from '@/src/db/types';
-import { eq } from 'drizzle-orm';
+import { eq, or } from 'drizzle-orm';
 import React from 'react';
 
 interface EditPageProps {
@@ -16,7 +16,15 @@ interface EditPageProps {
 }
 
 export default async function EditPage({ params, searchParams }) {
-  const recipe = await RecipeService.getRecipeById(params.id);
+  // TODO: get this query to work properly to get the recipe with the right types
+  const recipe = await db.query.recipes.findMany({
+    where: or(eq(recipes.id, params.id), eq(recipes.uid, params.id)),
+    with: {
+      info: true,
+      // ingredients: true,
+      // ratings: true,
+    },
+  });
 
   if (recipe) {
     return <RecipeForm recipe={recipe[0]} />;

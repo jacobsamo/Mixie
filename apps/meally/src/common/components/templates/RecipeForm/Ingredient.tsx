@@ -3,7 +3,7 @@ import { units } from '@/src/common/lib/services/data';
 import { Controller, useFormContext } from 'react-hook-form';
 import { Ingredient as IngredientType } from '@/src/db/types';
 import { Input } from '../../ui/input';
-import { recipeFormSchema } from './form';
+import { recipeFormSchema } from '@/src/db/zodSchemas';
 import * as z from 'zod';
 import {
   Select,

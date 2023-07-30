@@ -8,7 +8,7 @@ import { getServerSession } from 'next-auth/next';
 import { recipes } from '@/src/db/schemas';
 import * as z from 'zod';
 import { recipeFormSchema } from '@components/templates/RecipeForm/form';
-import { eq, sql } from 'drizzle-orm';
+import { eq, or, sql } from 'drizzle-orm';
 
 class RecipeService {
   //   async getRatingByRecipeId(id: string) {
@@ -20,19 +20,35 @@ class RecipeService {
   //     return rating;
   //   }
 
-  async getRecipes() {
-    return;
+  /**
+   * Gets all recipes in the database
+   * @returns {Promise<Recipe[]>} - An array of recipe objects
+   */
+  async getRecipes(): Promise<Recipe[]> {
+    const recipes = await db.query.recipes.findMany({
+      with: {
+        info: true,
+        ingredients: true,
+        ratings: true,
+      },
+    });
+    return recipes;
   }
 
   /**
    * @param {string} id - The id or uid of the recipe to fetch
-   * @returns {Promise<Recipe>} - The recipe object
+   * @returns {Promise<Recipe[] | null>} - All recipes that match the id or uid
    */
-  async getRecipeById(recipeId: string) {
-    const recipe = await db
-      .select()
-      .from(recipes)
-      .where(sql`${recipes.id} = ${recipeId} or ${recipes.uid} = ${recipeId}`);
+  async getRecipeById(recipeId: string): Promise<Recipe[] | null> {
+    const recipe = await db.query.recipes.findMany({
+      where: or(eq(recipes.id, recipeId), eq(recipes.uid, recipeId)),
+      with: {
+        info: true,
+        ingredients: true,
+        ratings: true,
+      },
+    });
+    // .where(sql`${recipes.id} = ${recipeId} or ${recipes.uid} = ${recipeId}`);
     return recipe || null;
   }
 

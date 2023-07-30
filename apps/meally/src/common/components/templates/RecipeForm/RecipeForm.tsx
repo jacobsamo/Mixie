@@ -22,7 +22,7 @@ import {
 } from '@lib/services/data';
 import { IngredientContainer } from './IngredientContainer';
 import { StepContainer } from './StepContainer';
-import { recipeFormSchema } from './form';
+import { insertRecipeSchema, recipeFormSchema } from '@/src/db/zodSchemas';
 import TagInput from '../../ui/taginput';
 import ImageUpload from './ImageUpload';
 import RecipeService from '@/src/common/lib/services/RecipeService';
@@ -30,16 +30,24 @@ import { toast } from '../../ui/use-toast';
 import { type } from 'os';
 
 interface RecipeFormProps {
-  recipe?: any | null;
+  recipe: any | Recipe; //TODO: fix this type to represent the correct type of recipe (not a huge deal but would be useful)
 }
 
+/**
+ * The form for creating and editing recipes
+ * @param {Recipe} recipe - the recipe to be edited
+ * @returns {React.JSX.Element} - the recipe form
+ */
 const RecipeForm = ({ recipe }: RecipeFormProps) => {
+  const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState(false);
+
   const methods = useForm<z.infer<typeof recipeFormSchema>>({
     resolver: zodResolver(recipeFormSchema),
     defaultValues: {
+      // apply the recipe values if they exist using something like ...recipe
       ...recipe,
-      ingredients: [
+      ingredients: recipe?.ingredients || [
         {
           title: '',
           unit: 'grams',
@@ -48,13 +56,8 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
           amount: 'not_set',
         },
       ],
-      steps: [{ step_body: '' }],
+      steps: recipe?.steps || [{ step_body: '' }],
     },
-    // defaultValues: {
-    //   mealTime: { label: 'Meal Time', value: '' },
-    //   sweet_savoury: { label: 'Sweet or Savoury', value: '' },
-    //   allergens: { label: 'Allergens', value: '' },
-    // }
   });
 
   const {
@@ -64,10 +67,6 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
     getValues,
     formState: { errors, isDirty, isValid },
   } = methods;
-
-  useEffect(() => {
-    console.log('Errors: ', errors);
-  }, [errors]);
 
   const onSubmit = async (recipe: any) => {
     console.log('Recipe: ', recipe);

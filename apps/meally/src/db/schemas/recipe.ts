@@ -14,41 +14,17 @@ import {
   timestamp,
   char,
 } from 'drizzle-orm/mysql-core';
+// imoport
+import {
+  mealTime,
+  amount,
+  dietary,
+  difficulty_level,
+  sweet_savoury,
+  unit,
+} from './enums';
 
-const difficulty_level = mysqlEnum('difficulty_level', [
-  'not_set',
-  'easy',
-  'medium',
-  'hard',
-]);
-
-const sweet_savoury = mysqlEnum('sweet_savoury', [
-  'not_set',
-  'sweet',
-  'savoury',
-  'both',
-]);
-
-const dietary = mysqlEnum('dietary', [
-  'none',
-  'vegetarian',
-  'vegan',
-  'pescatarian',
-  'gluten_free',
-  'dairy_free',
-  'nut_free',
-  'egg_free',
-]);
-
-const mealTime = mysqlEnum('mealTime', [
-  'not_set',
-  'breakfast',
-  'lunch',
-  'dinner',
-  'snack',
-  'dessert',
-]);
-
+// Recipes
 export const recipes = mysqlTable('recipes', {
   uid: char('uid', { length: 36 }).primaryKey().notNull(),
   id: varchar('id', { length: 191 }).notNull(),
@@ -80,41 +56,19 @@ export const recipes = mysqlTable('recipes', {
   savedRecipe: int('savedRecipe'),
 });
 
-export const ingredientsRelation = relations(recipes, ({ one }) => ({
-  ingredients: one(ingredients, {
+export const recipesRelation = relations(recipes, ({ one, many }) => ({
+  ingredients: many(ingredients),
+  info: one(info, {
     fields: [recipes.uid],
-    references: [ingredients.recipeId],
+    references: [info.recipeId],
+  }),
+  ratings: one(ratings, {
+    fields: [recipes.uid],
+    references: [ratings.recipeId],
   }),
 }));
 
-const unit = mysqlEnum('unit', [
-  'not_set',
-  'grams',
-  'kg',
-  'cup',
-  'ml',
-  'litre',
-  'tsp',
-  'tbsp',
-  'pinch',
-  'item',
-  'handful',
-  'slice',
-  'piece',
-  'can',
-  'bunch',
-  'bottle',
-]);
-
-const amount = mysqlEnum('amount', [
-  'not_set',
-  '1/8',
-  '1/2',
-  '1/3',
-  '2/3',
-  '1/4',
-  '3/4',
-]);
+// Ingredients
 export const ingredients = mysqlTable('ingredients', {
   recipeId: char('recipeId', { length: 36 }).notNull(),
   isHeading: boolean('isHeading').notNull(),
@@ -124,13 +78,14 @@ export const ingredients = mysqlTable('ingredients', {
   amount: amount.default('not_set'),
 });
 
-export const infoRelations = relations(recipes, ({ one }) => ({
-  info: one(info, {
+export const ingredientsRelation = relations(recipes, ({ one }) => ({
+  ingredients: one(ingredients, {
     fields: [recipes.uid],
-    references: [info.recipeId],
+    references: [ingredients.recipeId],
   }),
 }));
 
+// Info
 export const info = mysqlTable('info', {
   recipeId: char('recipeId', { length: 36 }).primaryKey().notNull(),
   total: varchar('total', { length: 191 }),
@@ -139,15 +94,23 @@ export const info = mysqlTable('info', {
   serves: tinyint('serves'),
 });
 
+export const infoRelations = relations(recipes, ({ one }) => ({
+  info: one(info, {
+    fields: [recipes.uid],
+    references: [info.recipeId],
+  }),
+}));
+
+// Ratings
+export const ratings = mysqlTable('ratings', {
+  recipeId: char('recipeId', { length: 36 }).primaryKey().notNull(),
+  userId: varchar('userId', { length: 191 }).notNull(),
+  rating: tinyint('rating').notNull(),
+});
+
 export const ratingsRelation = relations(info, ({ one }) => ({
   ratings: one(ratings, {
     fields: [info.recipeId],
     references: [ratings.recipeId],
   }),
 }));
-
-export const ratings = mysqlTable('ratings', {
-  recipeId: char('recipeId', { length: 36 }).primaryKey().notNull(),
-  userId: varchar('userId', { length: 191 }).notNull(),
-  rating: tinyint('rating').notNull(),
-});

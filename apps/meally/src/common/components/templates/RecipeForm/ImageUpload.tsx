@@ -11,23 +11,15 @@ import {
 import { Button } from '@components/ui/button';
 import { ImagePlus, Loader2 } from 'lucide-react';
 import { Input } from '../../ui/input';
-import { recipeFormSchema } from './form';
+import { recipeFormSchema } from '@/src/db/zodSchemas';
 import { useFormContext } from 'react-hook-form';
 import * as z from 'zod';
 
+// TODO: add image upload functionality with uploadThing https://uploadthing.com/dashboard
 const ImageUpload = () => {
   const { register } = useFormContext<z.infer<typeof recipeFormSchema>>();
   const [open, setOpen] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
-
-  //TODO: add image upload functionality
-  function handleImageUpload() {
-    // setUploadLoading(true);
-    // setTimeout(() => {
-    //   setUploadLoading(false);
-    //   setOpen(false);
-    // }, 2000);
-  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

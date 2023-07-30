@@ -10,14 +10,31 @@ type NewUser = InferModel<typeof users, 'insert'>;
 export type { User, NewUser };
 
 // recipes
-type Recipe = InferModel<typeof recipes>;
-type NewRecipe = InferModel<typeof recipes, 'insert'>;
-type Info = InferModel<typeof info>;
+type PartialRecipe = InferModel<typeof recipes, 'select'>;
+type NewPartialRecipe = InferModel<typeof recipes, 'insert'>;
+type Info = InferModel<typeof info, 'select'>;
 type NewInfo = InferModel<typeof info, 'insert'>;
-type Ingredient = InferModel<typeof ingredients>;
+type Ingredient = InferModel<typeof ingredients, 'select'>;
 type NewIngredient = InferModel<typeof ingredients, 'insert'>;
 
-export type { Recipe, NewRecipe, Info, NewInfo, Ingredient, NewIngredient };
+// set the recipe type to have the info and ingredients but ingredients as an array
+type Recipe = PartialRecipe &
+  Info & { ingredients: Ingredient[]; steps: { step_body: string }[] };
+
+// type Recipe = PartialRecipe & Info & Ingredient[];
+type NewRecipe = NewPartialRecipe &
+  NewInfo & { ingredients?: Ingredient[]; steps?: { step_body: string }[] };
+
+export type {
+  Recipe,
+  NewRecipe,
+  PartialRecipe,
+  NewPartialRecipe,
+  Info,
+  NewInfo,
+  Ingredient,
+  NewIngredient,
+};
 
 // groups
 type Group = InferModel<typeof groups>;
