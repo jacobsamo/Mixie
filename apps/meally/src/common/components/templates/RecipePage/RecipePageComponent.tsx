@@ -2,7 +2,7 @@ import React from 'react';
 import Details from './Details';
 import Info from './Info';
 import StarRating from './StarRating';
-import { Recipe } from '@/src/common/types/recipe';
+import type { Recipe } from '@/src/db/types';
 import Image from 'next/image';
 
 interface RecipePageComponentProps {
@@ -14,13 +14,13 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
     <main className="flex flex-col items-start  lg:ml-[20%] mb-14">
       <div className="flex flex-wrap gap-4 items-center">
         <h1 className="text-step2 font-semibold text-center">{recipe.title}</h1>
-        <StarRating rating={recipe.info.rating} />
+        <StarRating rating={recipe.info?.rating || 0} />
       </div>
-      <Info info={recipe.info} title={recipe.title} />
+      <Info info={recipe.info} />
       <div>
         <Image
-          src={recipe.image.imgUrl}
-          alt={recipe.image.imgAlt || recipe.title || 'recipe image'}
+          src={recipe?.imgUrl || '/images/placeholder.png'}
+          alt={recipe.imgAlt || recipe.title || 'recipe image'}
           width={800}
           height={600}
           className="rounded-xl aspect-video object-cover"

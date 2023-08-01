@@ -1,8 +1,8 @@
 import { recipeId } from '@/src/common/lib/utils';
 import { db } from '@/src/db';
 import { authOptions } from '@/src/db/next-auth-adapter';
-import { recipes } from '@/src/db/schemas';
-import { NewRecipe } from '@/src/db/types';
+import { recipes, info } from '@/src/db/schemas';
+import { NewInfo, NewPartialRecipe, NewRecipe } from '@/src/db/types';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 import * as z from 'zod';
@@ -67,15 +67,23 @@ export async function POST(req: Request) {
 
   if (title) {
     const id = recipeId(title);
-    const recipe: NewRecipe = {
+    // general info about the recipe
+    const newInfo: NewInfo = {
+      recipeId: uid,
+      id,
+      title,
+    };
+    // the recipe itself
+    const recipe: NewPartialRecipe = {
       uid: uid,
       id,
       title,
       createdBy: user.id,
       lastUpdatedBy: user.id,
     };
+    const setInfo = await db.insert(info).values(newInfo);
     const setRecipe = await db.insert(recipes).values(recipe);
-    console.log('Created Recipe', setRecipe);
+
     return NextResponse.json(
       { message: `Recipe succuflly created, ${setRecipe}`, id: uid },
       {

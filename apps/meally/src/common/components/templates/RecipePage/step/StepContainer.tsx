@@ -1,6 +1,6 @@
 import React from 'react';
 import Step from './Step';
-import { Step as StepType, Ingredient } from '@/src/common/types/recipe';
+import { Step as StepType, Ingredient } from '@/src/db/types';
 import type { ClassValue } from 'clsx';
 
 interface StepContainerProps {
@@ -9,9 +9,13 @@ interface StepContainerProps {
   className?: string;
 }
 
-const StepContainer = ({ steps, ingredients, className }: StepContainerProps) => {
+const StepContainer = ({
+  steps,
+  ingredients,
+  className,
+}: StepContainerProps) => {
   return (
-    <div className={className}>
+    <div className="flex flex-col gap-2 w-full">
       {steps.map((step, index) => (
         <Step key={index} index={index} step={step} ingredients={ingredients} />
       ))}

@@ -1,5 +1,4 @@
 import { recipeId } from '@/src/common/lib/utils';
-import { ingredients } from '@/src/db/schemas';
 import * as z from 'zod';
 
 // keep this here until i know that everything works as it should with the drizzleZod plugin

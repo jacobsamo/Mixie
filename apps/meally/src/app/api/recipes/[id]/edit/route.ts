@@ -1,12 +1,17 @@
 import { recipeId } from '@/src/common/lib/utils';
 import { db } from '@/src/db';
 import { authOptions } from '@/src/db/next-auth-adapter';
-import { ingredients, recipes, info } from '@/src/db/schemas';
-import { NewIngredient, NewRecipe, NewPartialRecipe } from '@/src/db/types';
+import { recipes, info } from '@/src/db/schemas';
+import {
+  Ingredient,
+  NewRecipe,
+  NewPartialRecipe,
+  NewInfo,
+} from '@/src/db/types';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 import * as z from 'zod';
-import { recipeFormSchema, insertRecipeSchema } from '@/src/db/zodSchemas';
+import { recipeFormSchema } from '@/src/db/zodSchemas';
 import { eq } from 'drizzle-orm';
 
 export async function PUT(req: Request) {
@@ -22,24 +27,12 @@ export async function PUT(req: Request) {
   // console.log('Recipe sent to server: ', json);
   const recipe = recipeFormSchema.parse(json);
 
-  // set all the ingredients to have the recipeId & set in their table
-  // loop over each ingredient and set the recipeId to the recipe.uid and insert those values into the database
-  if (recipe?.ingredients) {
-    const newIngredients: NewIngredient[] = recipe.ingredients.map(
-      (ingredient) => {
-        return {
-          ...ingredient,
-          recipeId: recipe.uid,
-        };
-      }
-    );
-    console.log('Ingredients: ', newIngredients);
-    await db
-      .insert(ingredients)
-      .values(newIngredients)
-      .onDuplicateKeyUpdate({ set: { recipeId: recipe.uid } });
-  }
+  // get all ingredients and set them to the info, only include ingredients that have isHeading set to false
 
+  const ingredients = recipe?.ingredients
+    ?.filter((ingredient) => !ingredient.isHeading && ingredient.title)
+    .map((ingredient) => ingredient.title);
+  console.log('Ingredients: ', ingredients);
   console.log('Ingredients table updated');
 
   // create the json schema for the steps
@@ -48,29 +41,22 @@ export async function PUT(req: Request) {
   });
 
   // update info table
-  const newInfo = {
+  const newInfo: NewInfo = {
     recipeId: recipe.uid,
+    id: recipeId(recipe.title) || recipe.id,
+    title: recipe.title,
+    keywords: recipe?.info?.keywords || null,
+    ingredients: ingredients || null,
     prep: recipe?.info?.prep || null,
     cook: recipe?.info?.cook || null,
     total: recipe?.info?.total || null,
   };
   console.log('Info: ', newInfo);
-  await db
-    .insert(info)
-    .values(newInfo)
-    .onDuplicateKeyUpdate({
-      set: {
-        recipeId: recipe.uid,
-        serves: recipe?.info?.serves || null,
-        prep: recipe?.info?.prep || null,
-        cook: recipe?.info?.cook || null,
-        total: recipe?.info?.total || null,
-      },
-    });
+  await db.update(info).set(newInfo).where(eq(info.recipeId, recipe.uid));
+
   console.log('Info table updated');
 
-  // remove values that are not needed in the recipe table but needed in other tables
-  delete recipe?.ingredients;
+  // remove the info from the recipe as it's been set on another table
   delete recipe?.info;
   console.log('Recipe now: ', recipe);
 

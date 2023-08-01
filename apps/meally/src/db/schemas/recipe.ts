@@ -15,14 +15,7 @@ import {
   char,
 } from 'drizzle-orm/mysql-core';
 // imoport
-import {
-  mealTime,
-  amount,
-  dietary,
-  difficulty_level,
-  sweet_savoury,
-  unit,
-} from './enums';
+import { mealTime, dietary, difficulty_level, sweet_savoury } from './enums';
 
 // Recipes
 export const recipes = mysqlTable('recipes', {
@@ -34,11 +27,11 @@ export const recipes = mysqlTable('recipes', {
   imgAlt: text('imgAlt'),
   notes: text('notes'),
   steps: json('steps'),
+  ingredients: json('ingredients'),
   mealTime: mealTime.default('not_set'),
   version: tinytext('version').notNull().default('1.0.0'),
 
   // little extras for searching
-  keywords: json('keywords'),
   dietary: dietary.default('none'),
   allergens: json('allergens'),
   sweet_savoury: sweet_savoury.default('not_set'),
@@ -57,7 +50,6 @@ export const recipes = mysqlTable('recipes', {
 });
 
 export const recipesRelation = relations(recipes, ({ one, many }) => ({
-  ingredients: many(ingredients),
   info: one(info, {
     fields: [recipes.uid],
     references: [info.recipeId],
@@ -68,30 +60,18 @@ export const recipesRelation = relations(recipes, ({ one, many }) => ({
   }),
 }));
 
-// Ingredients
-export const ingredients = mysqlTable('ingredients', {
-  recipeId: char('recipeId', { length: 36 }).notNull(),
-  isHeading: boolean('isHeading').notNull(),
-  title: varchar('title', { length: 191 }),
-  unit: unit.default('not_set'),
-  quantity: int('quantity'),
-  amount: amount.default('not_set'),
-});
-
-export const ingredientsRelation = relations(recipes, ({ one }) => ({
-  ingredients: one(ingredients, {
-    fields: [recipes.uid],
-    references: [ingredients.recipeId],
-  }),
-}));
-
 // Info
 export const info = mysqlTable('info', {
   recipeId: char('recipeId', { length: 36 }).primaryKey().notNull(),
+  id: varchar('id', { length: 191 }).notNull(),
+  title: varchar('title', { length: 191 }).notNull(),
   total: varchar('total', { length: 191 }),
   prep: varchar('prep', { length: 191 }),
   cook: varchar('cook', { length: 191 }),
   serves: tinyint('serves'),
+  keywords: json('keywords'),
+  ingredients: json('ingredients'),
+  isPublic: boolean('isPublic').notNull().default(false),
 });
 
 export const infoRelations = relations(recipes, ({ one }) => ({

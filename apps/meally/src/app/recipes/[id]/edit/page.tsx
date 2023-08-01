@@ -16,13 +16,10 @@ interface EditPageProps {
 }
 
 export default async function EditPage({ params, searchParams }) {
-  // TODO: get this query to work properly to get the recipe with the right types
   const recipe = await db.query.recipes.findMany({
     where: or(eq(recipes.id, params.id), eq(recipes.uid, params.id)),
     with: {
       info: true,
-      // ingredients: true,
-      // ratings: true,
     },
   });
 

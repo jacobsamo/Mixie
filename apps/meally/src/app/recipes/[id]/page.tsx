@@ -3,7 +3,9 @@ import React from 'react';
 import { mockRecipe } from '@/src/common/lib/services/data';
 import { db } from '@/src/db';
 import { recipes } from '@/src/db/schemas';
-import { eq } from 'drizzle-orm';
+import { eq, or } from 'drizzle-orm';
+import RecipeService from '@/src/common/lib/services/RecipeService';
+import type { Recipe } from '@/src/db/types';
 
 interface RecipePageProps {
   params: {
@@ -12,10 +14,12 @@ interface RecipePageProps {
 }
 
 export default async function RecipePage({ params }: RecipePageProps) {
-  // console.log(params);
-  // const recipe = await db
-  //   .select()
-  //   .from(recipes)
-  //   .where(eq(recipes.id, params.id));
-  return <RecipePageComponent recipe={mockRecipe} />;
+  const recipe = await db.query.recipes.findMany({
+    where: or(eq(recipes.id, params.id), eq(recipes.uid, params.id)),
+    with: {
+      info: true,
+    },
+  });
+
+  return <RecipePageComponent recipe={recipe[0] as Recipe} />;
 }

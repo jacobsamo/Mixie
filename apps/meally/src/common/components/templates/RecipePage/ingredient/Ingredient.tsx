@@ -1,4 +1,4 @@
-import { Ingredient } from '@/src/common/types/recipe';
+import type { Ingredient } from '@/src/db/types';
 import React from 'react';
 import { Checkbox } from '@components/ui/checkbox';
 
@@ -16,8 +16,9 @@ const Ingredient = ({ ingredient }: IngredientProps) => {
         className="w-4 h-4 checked:text-white border-white rounded-xl"
       />
       <h3 className="">
-        {ingredient.quantity} {ingredient.amount} {ingredient.unit}{' '}
-        {ingredient.title}{' '}
+        {ingredient.quantity}{' '}
+        {ingredient.amount == 'not_set' ? null : ingredient.amount}{' '}
+        {ingredient.unit} {ingredient.title}{' '}
       </h3>
     </div>
   );

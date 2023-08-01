@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from '@components/ui/select';
 import { Input } from '@components/ui/input';
-import { Ingredient, Recipe } from '@/src/db/types';
+import { Ingredient, Recipe, amount } from '@/src/db/types';
 import { Textarea } from '../../ui/textarea';
 
 import {
@@ -22,7 +22,7 @@ import {
 } from '@lib/services/data';
 import { IngredientContainer } from './IngredientContainer';
 import { StepContainer } from './StepContainer';
-import { insertRecipeSchema, recipeFormSchema } from '@/src/db/zodSchemas';
+import { recipeFormSchema } from '@/src/db/zodSchemas';
 import TagInput from '../../ui/taginput';
 import ImageUpload from './ImageUpload';
 import RecipeService from '@/src/common/lib/services/RecipeService';
@@ -68,13 +68,21 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
     formState: { errors, isDirty, isValid },
   } = methods;
 
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
+
+  useEffect(() => {
+    console.log(recipe);
+  }, [recipe]);
+
   const onSubmit = async (recipe: any) => {
     console.log('Recipe: ', recipe);
     if (!recipe) return;
     //TODO: fix this so it will override the current ingredients on the recipe with the new ones
     const ingredients = recipe?.ingredients?.map((ingredient: Ingredient) => {
       if (!['cup', 'tbsp', 'tsp'].includes(ingredient?.unit || '')) {
-        ingredient.amount = 'not_set';
+        ingredient.amount = amount.not_set;
       }
       // check if the quanity is a number if not then set the value to null
       if (typeof ingredient.quantity != 'number') {
@@ -249,7 +257,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
         />
 
         <TagInput
-          name="keywords"
+          name="info.keywords"
           control={control}
           placeholder="Keywords (separated by a comma)"
           hint="Keywords will be used to help users find your recipe."

@@ -32,8 +32,6 @@ const CreateRecipeDialog = () => {
   const {
     handleSubmit,
     register,
-    control,
-    getValues,
     formState: { errors },
   } = methods;
 

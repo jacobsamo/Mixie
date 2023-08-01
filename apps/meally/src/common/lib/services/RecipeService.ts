@@ -22,14 +22,18 @@ class RecipeService {
 
   /**
    * Gets all recipes in the database
+   * @param {boolean} getRatings - Whether to get the ratings for the recipe
+   * @param {boolean} getInfo - Whether to get the info for the recipe
    * @returns {Promise<Recipe[]>} - An array of recipe objects
    */
-  async getRecipes(): Promise<Recipe[]> {
+  async getRecipes(
+    getRatings: boolean = false,
+    getInfo: boolean = true
+  ): Promise<Recipe[]> {
     const recipes = await db.query.recipes.findMany({
       with: {
-        info: true,
-        ingredients: true,
-        ratings: true,
+        info: getInfo,
+        ratings: getRatings,
       },
     });
     return recipes;
@@ -37,15 +41,20 @@ class RecipeService {
 
   /**
    * @param {string} id - The id or uid of the recipe to fetch
+   * @param {boolean} getRatings - Whether to get the ratings for the recipe
+   * @param {boolean} getInfo - Whether to get the info for the recipe
    * @returns {Promise<Recipe[] | null>} - All recipes that match the id or uid
    */
-  async getRecipeById(recipeId: string): Promise<Recipe[] | null> {
+  async getRecipeById(
+    recipeId: string,
+    getRatings: boolean = false,
+    getInfo: boolean = true
+  ): Promise<Recipe[] | null> {
     const recipe = await db.query.recipes.findMany({
       where: or(eq(recipes.id, recipeId), eq(recipes.uid, recipeId)),
       with: {
-        info: true,
-        ingredients: true,
-        ratings: true,
+        info: getInfo,
+        ratings: getRatings,
       },
     });
     // .where(sql`${recipes.id} = ${recipeId} or ${recipes.uid} = ${recipeId}`);

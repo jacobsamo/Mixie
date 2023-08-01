@@ -1,14 +1,12 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import StepContainer from './step/StepContainer';
 import AddBatch from './ingredient/AddBatch';
-import type {
-  Ingredient as IngredientType,
-  Step,
-} from '@/src/common/types/recipe';
+import type { Ingredient as IngredientType, Step } from '@/src/db/types';
 import Ingredient from './ingredient/Ingredient';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { set } from 'zod';
+import { calculateAllIngredients } from '@/src/common/lib/utils';
 
 interface DetailsProps {
   ingredients: IngredientType[];
@@ -32,6 +30,10 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
   const [add, setAdd] = useState(0);
   const [ingredientOpen, setIngredientOpen] = useState(true);
   const [stepsOpen, setStepsOpen] = useState(true);
+
+  const calculatedIngredients = useMemo(() => {
+    return calculateAllIngredients(ingredients, add);
+  }, [add, ingredients]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 768px)');
@@ -96,7 +98,7 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
         {ingredientOpen && (
           <div className="flex flex-col items-start p-2 w-full h-fit md:w-60 dark:bg-grey bg-white shadow rounded-lg ">
             <AddBatch add={add} setAdd={setAdd} />
-            {ingredients.map((ingredient, index) => {
+            {calculatedIngredients.map((ingredient, index) => {
               if (ingredient.isHeading)
                 return (
                   <h3 key={index} className="text-2xl font-bold">
@@ -108,11 +110,7 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
           </div>
         )}
         {stepsOpen && (
-          <StepContainer
-            steps={steps}
-            ingredients={ingredients}
-            className="flex flex-col gap-2 max-w-full w-fit "
-          />
+          <StepContainer steps={steps} ingredients={calculatedIngredients} />
         )}
       </section>
     </>
