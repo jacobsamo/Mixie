@@ -28,6 +28,7 @@ import ImageUpload from './ImageUpload';
 import RecipeService from '@/src/common/lib/services/RecipeService';
 import { toast } from '../../ui/use-toast';
 import { type } from 'os';
+import Overlay from './Overlay';
 
 interface RecipeFormProps {
   recipe: any | Recipe; //TODO: fix this type to represent the correct type of recipe (not a huge deal but would be useful)
@@ -125,6 +126,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col w-full lg:w-1/2 mx-auto p-2 md:p-0 mb-[20%]"
       >
+        <Overlay />
         <button type="button" onClick={() => console.log(getValues())}>
           get values
         </button>
