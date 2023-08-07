@@ -18,11 +18,9 @@ export function recipeId(title: string): string {
   return title.replace(/\s/g, '-').toLowerCase();
 }
 
-import { unit, type Ingredient } from '@/src/db/types';
+import { Amount, type Ingredient } from '@/src/db/types';
 
 // amount types for the amount
-export type Amount = 'not_set' | '1/8' | '1/2' | '1/3' | '2/3' | '1/4' | '3/4';
-
 async function calculateTotalTime(prep: string, cook: string) {
   const matchRegex = /^(\d+d)?\s?(\d+h)?\s?(\d+m)?\s?(\d+s)?$/i;
 
@@ -74,10 +72,10 @@ async function calculateTotalTime(prep: string, cook: string) {
 }
 
 function calculateCupUnits(
-  quantity: number | undefined,
+  quantity: Ingredient['quantity'],
   amount: Amount,
   batchAmount: number
-): { quantity: number | undefined; amount?: Amount } {
+): { quantity: Ingredient['quantity']; amount: Amount } {
   const fr = amount.split('/');
 
   if (fr.length <= 1) {
@@ -111,7 +109,7 @@ export function calculateIngredient(
       return {
         ...ingredient,
         quantity: gramQuantity >= 1000 ? gramQuantity / 1000 : gramQuantity,
-        unit: gramQuantity >= 1000 ? unit.kg : unit.grams,
+        unit: gramQuantity >= 1000 ? 'kg' : 'grams',
       };
     case 'kg':
       return {
@@ -137,7 +135,7 @@ export function calculateIngredient(
       return {
         ...ingredient,
         quantity: mlQuantity >= 1000 ? mlQuantity / 1000 : mlQuantity,
-        unit: mlQuantity >= 1000 ? unit.litre : unit.ml,
+        unit: mlQuantity >= 1000 ? 'litre' : 'ml',
       };
     case 'litre':
       return {

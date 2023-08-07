@@ -24,7 +24,7 @@ export default async function EditPage({ params, searchParams }) {
   });
 
   if (recipe) {
-    return <RecipeForm recipe={recipe[0]} />;
+    return <RecipeForm recipe={recipe} />;
   }
 
   return <div>Recipe not found</div>;

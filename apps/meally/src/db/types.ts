@@ -2,6 +2,8 @@ import { InferModel } from 'drizzle-orm';
 import { users, accounts, sessions, verificationTokens } from './schemas/auth';
 import { recipes, info, ratings } from './schemas/recipe';
 import { groupMembers, groups, groupRecipes } from './schemas/groups';
+import { z } from 'zod';
+import { amount, ingredientSchema, recipeSchema, stepSchema } from './zodSchemas';
 
 // users
 type User = InferModel<typeof users>;
@@ -16,46 +18,11 @@ type Info = InferModel<typeof info, 'select'>;
 type NewInfo = InferModel<typeof info, 'insert'>;
 
 // ingredients
-export enum unit {
-  not_set = 'not_set',
-  grams = 'grams',
-  kg = 'kg',
-  cup = 'cup',
-  ml = 'ml',
-  litre = 'litre',
-  tsp = 'tsp',
-  tbsp = 'tbsp',
-  pinch = 'pinch',
-  item = 'item',
-  handful = 'handful',
-  slice = 'slice',
-  piece = 'piece',
-  can = 'can',
-  bunch = 'bunch',
-  bottle = 'bottle',
-}
+export type Ingredient = z.infer<typeof ingredientSchema>;
 
-export enum amount {
-  not_set = 'not_set',
-  '1/8' = '1/8',
-  '1/2' = '1/2',
-  '1/3' = '1/3',
-  '2/3' = '2/3',
-  '1/4' = '1/4',
-  '3/4' = '3/4',
-}
+export type Amount = z.infer<typeof amount>;
 
-export type Ingredient = {
-  isHeading: boolean;
-  title: string;
-  unit?: unit.not_set | unit | null;
-  quantity?: number | null;
-  amount?: amount.not_set | amount | null;
-};
-
-export type Step = {
-  step_body: string;
-};
+export type Step = z.infer<typeof stepSchema>;
 
 // set the recipe type to have the info and ingredients but ingredients as an array
 type Recipe = PartialRecipe &
