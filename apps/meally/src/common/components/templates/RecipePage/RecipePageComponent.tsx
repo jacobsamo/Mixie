@@ -2,13 +2,16 @@ import React from 'react';
 import Details from './Details';
 import Info from './Info';
 import StarRating from './StarRating';
-import type { Recipe } from '@/src/db/types';
+import type { NewRecipe, Recipe } from '@/src/db/types';
 import Image from 'next/image';
+import { recipeFormSchema } from '@/src/db/zodSchemas';
+import * as z from 'zod';
 
 interface RecipePageComponentProps {
-  recipe: Recipe;
+  recipe: Recipe | NewRecipe | z.infer<typeof recipeFormSchema>;
 }
 
+// TODO: user `next-seo` for ld+json for the recipe schema
 const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
   return (
     <main className="flex flex-col items-start  lg:ml-[20%] mb-14">
@@ -35,7 +38,10 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
         )}
       </div>
       <span className="w-full md:w-[800px] h-[0.125rem] my-2 mb-4 dark:bg-white bg-dark_grey rounded-md " />
-      <Details ingredients={recipe.ingredients} steps={recipe.steps} />
+      <Details
+        ingredients={recipe.ingredients || []}
+        steps={recipe.steps || []}
+      />
     </main>
   );
 };

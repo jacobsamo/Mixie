@@ -1,9 +1,9 @@
-import type { Info } from '@/src/db/types';
+import type { Info, NewInfo } from '@/src/db/types';
 import React from 'react';
 import { PieChart, Clock, Timer, AlarmClock } from 'lucide-react';
 
 interface InfoProps {
-  info: Info;
+  info: Info | NewInfo;
 }
 
 const Info = ({ info }: InfoProps) => {

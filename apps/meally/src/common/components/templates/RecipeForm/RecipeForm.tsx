@@ -24,20 +24,17 @@ import { StepContainer } from './StepContainer';
 import { recipeFormSchema } from '@/src/db/zodSchemas';
 import TagInput from '../../ui/taginput';
 import ImageUpload from './ImageUpload';
-import { toast } from '../../ui/use-toast';
-import { type } from 'os';
 import Overlay from './Overlay';
 import { onSubmit } from './form';
 import RecipePageComponent from '../RecipePage/RecipePageComponent';
 
-
 interface RecipeFormProps {
-  recipe: any | Recipe; //TODO: fix this type to represent the correct type of recipe (not a huge deal but would be useful)
+  recipe: any | Recipe | NewRecipe; //TODO: fix this type to represent the correct type of recipe (not a huge deal but would be useful)
 }
 
 /**
- * The form for creating and editing recipes
- * @param {Recipe} recipe - the recipe to be edited
+ * The form for creating and editing recipes, must take in a initial recipe with the default values set
+ * @param {Recipe | NewRecipe} recipe - the recipe to be edited
  * @returns {React.JSX.Element} - the recipe form
  */
 const RecipeForm = ({ recipe }: RecipeFormProps) => {
@@ -71,14 +68,17 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
     formState: { errors, isDirty, isValid },
   } = methods;
 
+  const gotRecipe = getValues();
 
+  if (loading) {
+    
+  }
 
 
   return (
     <>
-
       <FormProvider {...methods}>
-        {/* {preview && <RecipePageComponent recipe={} />} */}
+        {preview && <RecipePageComponent recipe={gotRecipe} />}
         <Overlay
           onPreview={() => setPreview(true)}
           onSave={() => setPublishDialog(false)}

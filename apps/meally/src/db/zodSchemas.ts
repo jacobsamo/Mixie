@@ -10,8 +10,8 @@ export const infoSchema = createInsertSchema(info, {
 });
 
 export const amount = z
-.enum(['not_set', '1/8', '1/2', '1/3', '2/3', '1/4', '3/4'])
-.default('not_set');
+  .enum(['not_set', '1/8', '1/2', '1/3', '2/3', '1/4', '3/4'])
+  .default('not_set');
 
 export const ingredientSchema = z.object({
   isHeading: z.boolean(),
@@ -35,10 +35,8 @@ export const ingredientSchema = z.object({
     'bottle',
   ]),
   quantity: z.number().optional().nullable(),
-  amount: amount
+  amount: amount,
 });
-
-
 
 export const stepSchema = z.object({
   step_body: z.string(),
@@ -52,5 +50,5 @@ export const recipeSchema = createInsertSchema(recipes, {
 
 // extend the recipe schema to include the info and ingredients
 export const recipeFormSchema = recipeSchema.extend({
-  info: infoSchema.optional(),
+  info: infoSchema,
 });

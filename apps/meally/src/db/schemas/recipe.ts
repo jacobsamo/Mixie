@@ -40,9 +40,11 @@ export const recipes = mysqlTable('recipes', {
   isPublic: boolean('isPublic').notNull().default(false),
 
   // users
+  createByName: varchar('lastUpdatedBy', { length: 191 }).notNull(),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
   lastUpdated: timestamp('lastUpdated').notNull().defaultNow().onUpdateNow(),
   lastUpdatedBy: varchar('lastUpdatedBy', { length: 191 }).notNull(),
+  lastUpdatedByName: varchar('lastUpdatedBy', { length: 191 }).notNull(),
   createdBy: varchar('createdBy', { length: 191 }).notNull(),
 
   madeRecipe: int('madeRecipe'),
@@ -72,6 +74,7 @@ export const info = mysqlTable('info', {
   keywords: json('keywords'),
   ingredients: json('ingredients'),
   isPublic: boolean('isPublic').notNull().default(false),
+  rating: tinyint('rating').default(0),
 });
 
 export const infoRelations = relations(recipes, ({ one }) => ({
@@ -85,7 +88,7 @@ export const infoRelations = relations(recipes, ({ one }) => ({
 export const ratings = mysqlTable('ratings', {
   recipeId: char('recipeId', { length: 36 }).primaryKey().notNull(),
   userId: varchar('userId', { length: 191 }).notNull(),
-  rating: tinyint('rating').notNull(),
+  rating: tinyint('rating').notNull().default(0),
 });
 
 export const ratingsRelation = relations(info, ({ one }) => ({

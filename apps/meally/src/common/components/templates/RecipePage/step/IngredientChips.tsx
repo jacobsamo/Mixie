@@ -1,5 +1,5 @@
 import React from 'react';
-import { Ingredient, Step } from '@/src/common/types/recipe';
+import { Ingredient, Step } from '@db/types';
 
 interface IngredientChipsProps {
   step: Step;
@@ -7,7 +7,7 @@ interface IngredientChipsProps {
 }
 
 const IngredientChips = ({ step, ingredients }: IngredientChipsProps) => {
-  //TODO: Fix miss matches in the as in something getting matched when it shouldn't e.g "brown sugar" matching "sugar" 
+  //TODO: Fix miss matches in the as in something getting matched when it shouldn't e.g "brown sugar" matching "sugar"
   //TODO: make sure that the matched ingredients are unique so there are no duplicates as this could happen
   const stepWords = step.step_body.toLowerCase().split(/\s+/); // Split step body into words or tokens
 

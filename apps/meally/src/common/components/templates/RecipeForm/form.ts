@@ -133,7 +133,8 @@ import { recipeFormSchema } from '@/src/db/zodSchemas';
 export const onSubmit = async (recipe: z.infer<typeof recipeFormSchema>) => {
   console.log('Recipe: ', recipe);
   if (!recipe) return;
-  //TODO: fix this so it will override the current ingredients on the recipe with the new ones
+  
+
   const ingredients = recipe?.ingredients?.map((ingredient: Ingredient) => {
     if (!['cup', 'tbsp', 'tsp'].includes(ingredient.unit || '')) {
       ingredient.amount = 'not_set';

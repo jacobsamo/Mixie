@@ -15,26 +15,24 @@ import { Button } from '../../ui/button';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-type RatingScale = 0 | 1 | 2 | 3 | 4 | 5;
-
 interface StarRatingProps {
-  rating: RatingScale | undefined;
+  rating: number | undefined;
 }
 
 const StarRating = ({ rating }: StarRatingProps) => {
   const { user } = useUser();
-  const [hoverRating, setHoverRating] = useState<RatingScale>(0);
-  const [internalRating, setInternalRating] = useState<RatingScale>(0);
+  const [hoverRating, setHoverRating] = useState<number>(0);
+  const [internalRating, setInternalRating] = useState<number>(0);
   const [showSignInPrompt, setShowSignInPrompt] = useState(false);
 
   //TODO: create the function to set a new rating on a recipe
-  function setRating(rating: RatingScale): void {
+  function setRating(rating: number): void {
     if (!user) {
       setShowSignInPrompt(true);
       return;
     }
     console.log('Rating: ', rating);
-    setInternalRating(rating)
+    setInternalRating(rating);
   }
 
   return (
@@ -50,9 +48,9 @@ const StarRating = ({ rating }: StarRatingProps) => {
                 ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
                 : ''
             }
-            onClick={() => setRating(index as RatingScale)}
-            onMouseEnter={() => setHoverRating(index as RatingScale)}
-            onMouseLeave={() => setHoverRating(rating as RatingScale)}
+            onClick={() => setRating(index)}
+            onMouseEnter={() => setHoverRating(index)}
+            onMouseLeave={() => setHoverRating(rating! || 0)}
           >
             <StarIcon className="w-8 h-w-8" />
           </button>

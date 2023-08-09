@@ -3,7 +3,12 @@ import { users, accounts, sessions, verificationTokens } from './schemas/auth';
 import { recipes, info, ratings } from './schemas/recipe';
 import { groupMembers, groups, groupRecipes } from './schemas/groups';
 import { z } from 'zod';
-import { amount, ingredientSchema, recipeSchema, stepSchema } from './zodSchemas';
+import {
+  amount,
+  ingredientSchema,
+  recipeSchema,
+  stepSchema,
+} from './zodSchemas';
 
 // users
 type User = InferModel<typeof users>;
@@ -25,18 +30,19 @@ export type Amount = z.infer<typeof amount>;
 export type Step = z.infer<typeof stepSchema>;
 
 // set the recipe type to have the info and ingredients but ingredients as an array
-type Recipe = PartialRecipe &
-  Info & {
-    steps: { step_body: string }[];
-    ingredients: Ingredient[];
-  };
+
+interface Recipe extends PartialRecipe {
+  info: Info;
+  steps: Step[];
+  ingredients: Ingredient[];
+}
 
 // type Recipe = PartialRecipe & Info & Ingredient[];
-type NewRecipe = NewPartialRecipe &
-  NewInfo & {
-    steps?: { step_body: string }[];
-    ingredients?: Ingredient[];
-  };
+interface NewRecipe extends NewPartialRecipe {
+  info: NewInfo;
+  steps?: Step[];
+  ingredients?: Ingredient[];
+}
 
 export type {
   Recipe,
