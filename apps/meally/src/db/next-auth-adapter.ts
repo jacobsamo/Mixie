@@ -100,106 +100,133 @@ export const getServerAuthSession = (ctx: {
 export function DrizzleAdapter(): Adapter {
   const { users, sessions, accounts, verificationTokens } = schema;
   return {
-    createUser: async (data) => {
+    async createUser(data) {
       const id = crypto.randomUUID();
 
       await db.insert(users).values({ ...data, id });
 
-      const user = await db
+      return await db
         .select()
         .from(users)
         .where(eq(users.id, id))
         .then((res) => res[0]);
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return user!;
     },
-    getUser: async (data) => {
-      const user = await db.select().from(users).where(eq(users.id, data));
-      return user[0] ?? null;
+    async getUser(data) {
+      const thing =
+        (await db
+          .select()
+          .from(users)
+          .where(eq(users.id, data))
+          .then((res) => res[0])) ?? null;
+
+      return thing;
     },
-    getUserByEmail: async (data) => {
-      const user = await db.select().from(users).where(eq(users.email, data));
-      return user[0] ?? null;
+    async getUserByEmail(data) {
+      const user =
+        (await db
+          .select()
+          .from(users)
+          .where(eq(users.email, data))
+          .then((res) => res[0])) ?? null;
+
+      return user;
     },
-    createSession: async (data) => {
+    async createSession(data) {
       await db.insert(sessions).values(data);
 
-      const session = await db
+      return await db
         .select()
         .from(sessions)
-        .where(eq(sessions.sessionToken, data.sessionToken));
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return session[0]!;
+        .where(eq(sessions.sessionToken, data.sessionToken))
+        .then((res) => res[0]);
     },
-    getSessionAndUser: async (data) => {
-      const sessionAndUser = await db
-        .select({
-          session: sessions,
-          user: users,
-        })
-        .from(sessions)
-        .where(eq(sessions.sessionToken, data))
-        .innerJoin(users, eq(users.id, sessions.userId));
+    async getSessionAndUser(data) {
+      const sessionAndUser =
+        (await db
+          .select({
+            session: sessions,
+            user: users,
+          })
+          .from(sessions)
+          .where(eq(sessions.sessionToken, data))
+          .innerJoin(users, eq(users.id, sessions.userId))
+          .then((res) => res[0])) ?? null;
 
-      return sessionAndUser[0] ?? null;
+      return sessionAndUser;
     },
-    updateUser: async (data) => {
+    async updateUser(data) {
       if (!data.id) {
         throw new Error('No user id.');
       }
 
       await db.update(users).set(data).where(eq(users.id, data.id));
 
-      const user = await db.select().from(users).where(eq(users.id, data.id));
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return user[0]!;
+      return await db
+        .select()
+        .from(users)
+        .where(eq(users.id, data.id))
+        .then((res) => res[0]);
     },
-    updateSession: async (data) => {
+    async updateSession(data) {
       await db
         .update(sessions)
         .set(data)
         .where(eq(sessions.sessionToken, data.sessionToken));
 
-      return db
+      return await db
         .select()
         .from(sessions)
         .where(eq(sessions.sessionToken, data.sessionToken))
         .then((res) => res[0]);
     },
-    linkAccount: async (rawAccount) => {
+    async linkAccount(rawAccount) {
       await db
         .insert(accounts)
         .values(rawAccount)
-        .then((res) => res.rows[0]);
-    },
-    getUserByAccount: async (account) => {
-      const dbAccount = await db
-        .select()
-        .from(accounts)
-        .where(
-          and(
-            eq(accounts.providerAccountId, account.providerAccountId),
-            eq(accounts.provider, account.provider)
-          )
-        )
-        .leftJoin(users, eq(accounts.userId, users.id))
         .then((res) => res[0]);
+    },
+    async getUserByAccount(account) {
+      const dbAccount =
+        (await db
+          .select()
+          .from(accounts)
+          .where(
+            and(
+              eq(accounts.providerAccountId, account.providerAccountId),
+              eq(accounts.provider, account.provider)
+            )
+          )
+          .leftJoin(users, eq(accounts.userId, users.id))
+          .then((res) => res[0])) ?? null;
 
-      return dbAccount?.users ?? null;
+      if (!dbAccount) {
+        return null;
+      }
+
+      return dbAccount.users;
     },
-    deleteSession: async (sessionToken) => {
+    async deleteSession(sessionToken) {
+      const session =
+        (await db
+          .select()
+          .from(sessions)
+          .where(eq(sessions.sessionToken, sessionToken))
+          .then((res) => res[0])) ?? null;
+
       await db.delete(sessions).where(eq(sessions.sessionToken, sessionToken));
+
+      return session;
     },
-    createVerificationToken: async (token) => {
+    async createVerificationToken(token) {
       await db.insert(verificationTokens).values(token);
 
-      return db
+      return await db
         .select()
         .from(verificationTokens)
         .where(eq(verificationTokens.identifier, token.identifier))
         .then((res) => res[0]);
     },
-    useVerificationToken: async (token) => {
+    async useVerificationToken(token) {
       try {
         const deletedToken =
           (await db
@@ -227,16 +254,18 @@ export function DrizzleAdapter(): Adapter {
         throw new Error('No verification token found.');
       }
     },
-    deleteUser: async (id) => {
-      await Promise.all([
-        db.delete(users).where(eq(users.id, id)),
-        db.delete(sessions).where(eq(sessions.userId, id)),
-        db.delete(accounts).where(eq(accounts.userId, id)),
-      ]);
+    async deleteUser(id) {
+      const user = await db
+        .select()
+        .from(users)
+        .where(eq(users.id, id))
+        .then((res) => res[0] ?? null);
 
-      return null;
+      await db.delete(users).where(eq(users.id, id));
+
+      return user;
     },
-    unlinkAccount: async (account) => {
+    async unlinkAccount(account) {
       await db
         .delete(accounts)
         .where(

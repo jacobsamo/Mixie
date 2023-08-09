@@ -78,10 +78,10 @@ export async function POST(req: Request) {
       uid: uid,
       id,
       title,
-      createByName: user.name,
+      createByName: user.name! || '',
       createdBy: user.id,
       lastUpdatedBy: user.id,
-      lastUpdatedByName: user.name,
+      lastUpdatedByName: user.name! || '',
     };
     const setInfo = await db.insert(info).values(newInfo);
     const setRecipe = await db.insert(recipes).values(recipe);
