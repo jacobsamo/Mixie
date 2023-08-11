@@ -1,14 +1,13 @@
-import { relations } from 'drizzle-orm';
 import {
   int,
   timestamp,
-  varchar,
-  primaryKey,
   mysqlTable,
+  primaryKey,
+  varchar,
 } from 'drizzle-orm/mysql-core';
-import { type AdapterAccount } from 'next-auth/adapters';
+import type { AdapterAccount } from 'next-auth/adapters';
 
-export const users = mysqlTable('users', {
+export const users = mysqlTable('user', {
   id: varchar('id', { length: 255 }).notNull().primaryKey(),
   name: varchar('name', { length: 255 }),
   email: varchar('email', { length: 255 }).notNull(),
@@ -17,12 +16,10 @@ export const users = mysqlTable('users', {
     fsp: 3,
   }).defaultNow(),
   image: varchar('image', { length: 255 }),
-  created_at: timestamp('created_at').notNull().defaultNow(),
-  updated_at: timestamp('updated_at').notNull().defaultNow().onUpdateNow(),
 });
 
 export const accounts = mysqlTable(
-  'accounts',
+  'account',
   {
     userId: varchar('userId', { length: 255 })
       .notNull()
@@ -39,15 +36,13 @@ export const accounts = mysqlTable(
     scope: varchar('scope', { length: 255 }),
     id_token: varchar('id_token', { length: 255 }),
     session_state: varchar('session_state', { length: 255 }),
-    created_at: timestamp('created_at').notNull().defaultNow(),
-    updated_at: timestamp('updated_at').notNull().defaultNow().onUpdateNow(),
   },
   (account) => ({
     compoundKey: primaryKey(account.provider, account.providerAccountId),
   })
 );
 
-export const sessions = mysqlTable('sessions', {
+export const sessions = mysqlTable('session', {
   sessionToken: varchar('sessionToken', { length: 255 }).notNull().primaryKey(),
   userId: varchar('userId', { length: 255 })
     .notNull()

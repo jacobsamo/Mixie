@@ -1,3 +1,4 @@
+import { SearchCard } from '@/src/common/components/elements/Cards';
 import useUser from '@/src/common/hooks/useUser';
 import { db } from '@/src/db';
 import { recipes } from '@/src/db/schemas';
@@ -12,21 +13,18 @@ const DraftsPage = async () => {
     return <h1>No found</h1>;
   }
 
-  const gotRecipes = (await db.query.recipes.findMany({
+  const gotRecipes = (await db.query.info.findMany({
     where: or(
       eq(recipes.createdBy, user.id),
       eq(recipes.lastUpdatedBy, user.id)
     ),
-    with: {
-      info: true,
-    },
   })) as Recipe[];
 
   return (
     <main>
       <ul>
         {gotRecipes.map((recipe, index) => {
-          return <li key={index}>{recipe.title}</li>;
+          return <SearchCard key={index} recipe={recipe} />;
         })}
       </ul>
     </main>

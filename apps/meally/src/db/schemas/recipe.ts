@@ -19,7 +19,10 @@ import { mealTime, dietary, difficulty_level, sweet_savoury } from './enums';
 
 // Recipes
 export const recipes = mysqlTable('recipes', {
-  uid: char('uid', { length: 36 }).primaryKey().notNull(),
+  uid: char('uid', { length: 36 })
+    .primaryKey()
+    .notNull()
+    .references(() => recipes.uid, { onDelete: 'cascade' }),
   id: varchar('id', { length: 191 }).notNull(),
   title: varchar('title', { length: 191 }).notNull(),
   description: text('description'),
@@ -27,7 +30,7 @@ export const recipes = mysqlTable('recipes', {
   steps: json('steps'),
   ingredients: json('ingredients'),
   mealTime: mealTime.default('not_set'),
-  version: tinytext('version').notNull().default('1.0.0'),
+  version: tinytext('version').default('1.0.0'),
 
   // little extras for searching
   dietary: dietary.default('none'),
@@ -35,18 +38,19 @@ export const recipes = mysqlTable('recipes', {
   sweet_savoury: sweet_savoury.default('not_set'),
   difficulty_level: difficulty_level.default('not_set'),
   cuisine: json('cuisine'),
-  isPublic: boolean('isPublic').notNull().default(false),
+  isPublic: boolean('isPublic').default(false).notNull(),
 
   // users
   createByName: varchar('lastUpdatedBy', { length: 191 }).notNull(),
-  createdAt: timestamp('createdAt').notNull().defaultNow(),
-  lastUpdated: timestamp('lastUpdated').notNull().defaultNow().onUpdateNow(),
+  createdAt: timestamp('createdAt', { mode: 'date' }).notNull().defaultNow(),
+
+  lastUpdated: timestamp('lastUpdated', { mode: 'date' })
+    .notNull()
+    .defaultNow()
+    .onUpdateNow(),
   lastUpdatedBy: varchar('lastUpdatedBy', { length: 191 }).notNull(),
   lastUpdatedByName: varchar('lastUpdatedBy', { length: 191 }).notNull(),
   createdBy: varchar('createdBy', { length: 191 }).notNull(),
-
-  madeRecipe: int('madeRecipe'),
-  savedRecipe: int('savedRecipe'),
 });
 
 export const recipesRelation = relations(recipes, ({ one, many }) => ({
@@ -62,7 +66,10 @@ export const recipesRelation = relations(recipes, ({ one, many }) => ({
 
 // Info
 export const info = mysqlTable('info', {
-  recipeId: char('recipeId', { length: 36 }).primaryKey().notNull(),
+  recipeId: char('recipeId', { length: 36 })
+    .primaryKey()
+    .notNull()
+    .references(() => recipes.uid, { onDelete: 'cascade' }),
   id: varchar('id', { length: 191 }).notNull(),
   title: varchar('title', { length: 191 }).notNull(),
   imgUrl: text('imgUrl'),
@@ -73,8 +80,16 @@ export const info = mysqlTable('info', {
   serves: tinyint('serves'),
   keywords: json('keywords'),
   ingredients: json('ingredients'),
-  isPublic: boolean('isPublic').notNull().default(false),
+  isPublic: boolean('isPublic').default(false),
   rating: tinyint('rating').default(0),
+
+  // users
+  createByName: varchar('lastUpdatedBy', { length: 191 }).notNull(),
+  createdAt: timestamp('createdAt').defaultNow(),
+  lastUpdated: timestamp('lastUpdated').defaultNow().onUpdateNow(),
+  lastUpdatedBy: varchar('lastUpdatedBy', { length: 191 }).notNull(),
+  lastUpdatedByName: varchar('lastUpdatedBy', { length: 191 }).notNull(),
+  createdBy: varchar('createdBy', { length: 191 }).notNull(),
 });
 
 export const infoRelations = relations(recipes, ({ one }) => ({
