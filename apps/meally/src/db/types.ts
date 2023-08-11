@@ -4,10 +4,13 @@ import { recipes, info, ratings } from './schemas/recipe';
 import { groupMembers, groups, groupRecipes } from './schemas/groups';
 import { z } from 'zod';
 import {
-  amount,
-  ingredientSchema,
   recipeSchema,
+  infoSchema,
+  ingredientSchema,
+  amount,
   stepSchema,
+  recipeFormSchema,
+  recipesSelect,
 } from './zodSchemas';
 
 // users
@@ -17,11 +20,18 @@ type NewUser = InferModel<typeof users, 'insert'>;
 export type { User, NewUser };
 
 // recipes
-type PartialRecipe = InferModel<typeof recipes, 'select'>;
-type NewPartialRecipe = InferModel<typeof recipes, 'insert'>;
-type Info = InferModel<typeof info, 'select'>;
-type NewInfo = InferModel<typeof info, 'insert'>;
+// type PartialRecipe = InferModel<typeof recipes, 'select'>;
+// type NewPartialRecipe = InferModel<typeof recipes, 'insert'>;
+// type Info = InferModel<typeof info, 'select'>;
+// type NewInfo = InferModel<typeof info, 'insert'>;
 
+type PartialRecipe = z.infer<typeof recipeSchema>;
+type NewPartialRecipe = z.infer<typeof recipeSchema>;
+type Info = z.infer<typeof infoSchema>;
+type NewInfo = z.infer<typeof infoSchema>;
+
+type Recipe = z.infer<typeof recipesSelect>;
+type NewRecipe = z.infer<typeof recipeFormSchema>;
 // ingredients
 export type Ingredient = z.infer<typeof ingredientSchema>;
 
@@ -31,18 +41,7 @@ export type Step = z.infer<typeof stepSchema>;
 
 // set the recipe type to have the info and ingredients but ingredients as an array
 
-interface Recipe extends PartialRecipe {
-  info: Info;
-  steps: Step[];
-  ingredients: Ingredient[];
-}
-
 // type Recipe = PartialRecipe & Info & Ingredient[];
-interface NewRecipe extends NewPartialRecipe {
-  info: NewInfo;
-  steps?: Step[];
-  ingredients?: Ingredient[];
-}
 
 export type {
   Recipe,

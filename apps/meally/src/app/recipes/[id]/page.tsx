@@ -29,17 +29,21 @@ export default async function RecipePage({ params }: RecipePageProps) {
           useAppDir={true}
           name={recipe?.title || ''}
           authorName={''}
-          ingredients={recipe.ingredients.map((ingredient) => {
-            return `${ingredient.quantity} ${
-              ingredient.amount == 'not_set' ? null : ingredient.amount
-            } ${ingredient.unit} ${ingredient.title}`;
-          })}
-          instructions={recipe.steps.map((step, index) => {
-            return {
-              name: `Step ${index + 1}`,
-              text: step.step_body,
-            };
-          })}
+          ingredients={
+            recipe?.ingredients?.map((ingredient) => {
+              return `${ingredient.quantity} ${
+                ingredient.amount == 'not_set' ? null : ingredient.amount
+              } ${ingredient.unit} ${ingredient.title}`;
+            }) || []
+          }
+          instructions={
+            recipe?.steps?.map((step, index) => {
+              return {
+                name: `Step ${index + 1}`,
+                text: step.step_body,
+              };
+            }) || []
+          }
           description={recipe.description! || ''}
         />
         <RecipePageComponent recipe={recipe as Recipe} />

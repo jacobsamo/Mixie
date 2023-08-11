@@ -5,8 +5,6 @@ import { HeartIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useToast } from '../ui/use-toast';
 
-
-
 function addBookMark(recipe: Info) {
   throw Error('Function not implemented.');
 }
@@ -85,8 +83,8 @@ const BaseCard = ({
       )}
 
       <Image
-        src={recipe.imgUrl}
-        alt={recipe.imgAlt}
+        src={recipe.imgUrl || ''}
+        alt={recipe.imgAlt || ''}
         fill
         priority
         className={`${classNames.image} rounded-xl object-cover h-58 w-58 -z-20`}
@@ -117,8 +115,8 @@ const SearchCard = ({ as, recipe }: SearchCardProps) => {
   return (
     <Tag className="flex flex-row relative w-full gap-2 h-32 rounded-md bg-grey">
       <Image
-        src={recipe.imgUrl}
-        alt={recipe.imgAlt}
+        src={recipe.imgUrl || ''}
+        alt={recipe.imgAlt || ''}
         width={100}
         height={100}
         className="w-2/5 h-32 object-cover rounded-lg"
@@ -134,7 +132,7 @@ const SearchCard = ({ as, recipe }: SearchCardProps) => {
           {recipe.title}
         </Link>
         <div className="flex flex-row flex-wrap gap-1 w-full">
-          {recipe.keywords.map((keyword, index) => {
+          {recipe?.keywords?.map((keyword, index) => {
             return (
               <p
                 key={index}
@@ -143,7 +141,7 @@ const SearchCard = ({ as, recipe }: SearchCardProps) => {
                 {keyword.value}
               </p>
             );
-          })}
+          }) || null}
         </div>
       </div>
     </Tag>

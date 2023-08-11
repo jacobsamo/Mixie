@@ -2,13 +2,13 @@ import * as puppeteer from 'puppeteer';
 import { recipeId } from '../utils';
 import { db } from '@/src/db';
 import { NewRecipe, Recipe } from '@/src/db/types';
-
 import { authOptions } from '@/src/db/next-auth-adapter';
 import { getServerSession } from 'next-auth/next';
 import { recipes } from '@/src/db/schemas';
 import * as z from 'zod';
-import { recipeFormSchema } from '@components/templates/RecipeForm/form';
+import {  } from '@/src/db/types';
 import { eq, or, sql } from 'drizzle-orm';
+import { recipeFormSchema } from '@/src/db/zodSchemas';
 
 class RecipeService {
   //   async getRatingByRecipeId(id: string) {
@@ -32,8 +32,8 @@ class RecipeService {
   ): Promise<Recipe[]> {
     const recipes = await db.query.recipes.findMany({
       with: {
-        info: getInfo,
-        ratings: getRatings,
+        info: true,
+        ratings: getRatings
       },
     });
     return recipes;

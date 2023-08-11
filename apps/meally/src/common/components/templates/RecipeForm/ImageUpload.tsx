@@ -40,7 +40,7 @@ const ImageUpload = () => {
           <DialogDescription>Upload an image for your recipe</DialogDescription>
         </DialogHeader>
         <Input
-          {...register('imgUrl', {
+          {...register('info.imgUrl', {
             required: true,
           })}
           required
@@ -48,7 +48,7 @@ const ImageUpload = () => {
           placeholder="https://"
         />
         <Input
-          {...register('imgAlt', {
+          {...register('info.imgAlt', {
             required: true,
           })}
           required

@@ -25,8 +25,8 @@ const DraftsPage = async () => {
   return (
     <main>
       <ul>
-        {gotRecipes.map((recipe) => {
-          return <li>{recipe.title}</li>;
+        {gotRecipes.map((recipe, index) => {
+          return <li key={index}>{recipe.title}</li>;
         })}
       </ul>
     </main>

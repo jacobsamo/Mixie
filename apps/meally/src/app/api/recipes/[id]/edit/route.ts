@@ -53,11 +53,10 @@ export async function PUT(req: Request) {
   };
   console.log('Info: ', newInfo);
   await db.update(info).set(newInfo).where(eq(info.recipeId, recipe.uid));
-
   console.log('Info table updated');
 
   // remove the info from the recipe as it's been set on another table
-  delete recipe?.info;
+  delete recipe.info;
   console.log('Recipe now: ', recipe);
 
   // define the new recipe
