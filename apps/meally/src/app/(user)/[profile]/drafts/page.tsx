@@ -27,7 +27,9 @@ const DraftsPage = async () => {
     <main>
       <ul>
         {gotRecipes.map((recipe, index) => {
-          return <SearchCard as="div" key={index} recipe={recipe} />;
+          return (
+            <SearchCard as="div" edit={true} key={index} recipe={recipe} />
+          );
         })}
       </ul>
     </main>

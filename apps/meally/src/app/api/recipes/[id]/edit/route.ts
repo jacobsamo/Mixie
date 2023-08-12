@@ -24,6 +24,8 @@ export async function PUT(req: Request) {
   const json = await req.json();
   json.createdAt = new Date(json.createdAt);
   json.lastUpdated = new Date(json.lastUpdated);
+  json.info.createdAt = new Date(json.info.createdAt);
+  json.info.lastUpdated = new Date(json.info.lastUpdated);
   // console.log('Recipe sent to server: ', json);
   const recipe = recipeFormSchema.parse(json);
 
@@ -42,6 +44,7 @@ export async function PUT(req: Request) {
 
   // update info table
   const newInfo: NewInfo = {
+    ...recipe.info,
     recipeId: recipe.uid,
     id: recipeId(recipe.title) || recipe.id,
     title: recipe.title,
@@ -50,10 +53,10 @@ export async function PUT(req: Request) {
     prep: recipe?.info?.prep || null,
     cook: recipe?.info?.cook || null,
     total: recipe?.info?.total || null,
+    createByName: recipe.info?.createByName || '',
     createdBy: recipe.info?.createdBy || user.id,
-    createByName: recipe.info?.createByName || user.name || '',
     lastUpdatedBy: user.id,
-    lastUpdatedByName: user.name || '',
+    lastUpdatedByName: user.name! || '',
   };
   console.log('Info: ', newInfo);
   await db.update(info).set(newInfo).where(eq(info.recipeId, recipe.uid));
@@ -70,8 +73,8 @@ export async function PUT(req: Request) {
     // id: ,
     id: recipeId(recipe.title) || recipe.id,
     steps: steps,
-    createdBy: recipe.createdBy,
     lastUpdatedBy: user.id,
+    lastUpdatedByName: user.name! || '',
   };
   console.log('new recipe being set: ', newRecipe);
 

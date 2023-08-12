@@ -76,164 +76,165 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
   return (
     <>
       <FormProvider {...methods}>
-        {preview && <RecipePageComponent recipe={gotRecipe} />}
         <Overlay
-          onPreview={() => setPreview(true)}
-          onSave={() => setPublishDialog(false)}
+          onPreview={() => setPreview(!preview)}
+          onSave={() => {}}
           onPublish={() => setPublishDialog(true)}
         />
-        <form
-          className="relative z-0 flex flex-col w-full lg:w-1/2 mx-auto p-2 md:p-0 mb-[20%]"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <button type="button" onClick={() => console.log(getValues())}>
-            get values
-          </button>
-          <Input
-            {...register('title', {
-              required: true,
-            })}
-            required
-            label="Title"
-          />
-          <Textarea id="description" label="Description" control={control} />
-          <Input
-            {...register('info.prep')}
-            label="Prep Time"
-            hint="Must be in the format 4h 3m 4s where h = hours, m = mintues, s = seconds"
-          />
-          <Input
-            {...register('info.cook')}
-            label="Cook Time"
-            hint="Must be in the format 4h 3m 4s where h = hours, m = mintues, s = seconds"
-          />
-          <Input
-            {...register('info.serves', {})}
-            error={errors.info?.serves}
-            label="Serves"
-            type="number"
-          />
+        {preview && <RecipePageComponent recipe={gotRecipe} />}
+        {!preview && (
+          <form
+            className="relative z-0 flex flex-col w-full lg:w-1/2 mx-auto p-2 md:p-0 mb-[20%]"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <button type="button" onClick={() => console.log(getValues())}>
+              get values
+            </button>
+            <Input
+              {...register('title', {
+                required: true,
+              })}
+              required
+              label="Title"
+            />
+            <Textarea id="description" label="Description" control={control} />
+            <Input
+              {...register('info.prep')}
+              label="Prep Time"
+              hint="Must be in the format 4h 3m 4s where h = hours, m = mintues, s = seconds"
+            />
+            <Input
+              {...register('info.cook')}
+              label="Cook Time"
+              hint="Must be in the format 4h 3m 4s where h = hours, m = mintues, s = seconds"
+            />
+            <Input
+              {...register('info.serves', { valueAsNumber: true })}
+              error={errors.info?.serves}
+              label="Serves"
+              type="number"
+            />
 
-          <Controller
-            control={control}
-            name="dietary"
-            render={({ field }) => (
-              <>
-                <label
-                  htmlFor="dietary"
-                  className="block text-step--3 font-medium"
-                >
-                  Dietary Requirements
-                </label>
-                <Select
-                  name="dietary"
-                  defaultValue={field.value || undefined}
-                  onValueChange={field.onChange}
-                >
-                  <SelectTrigger className="w-2/3 text-step--2">
-                    <SelectValue placeholder="Dietary Requirements" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {dietaryRequirements.map((item) => (
-                      <SelectItem key={item.value} value={item.value}>
-                        {item.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </>
-            )}
-          />
+            <Controller
+              control={control}
+              name="dietary"
+              render={({ field }) => (
+                <>
+                  <label
+                    htmlFor="dietary"
+                    className="block text-step--3 font-medium"
+                  >
+                    Dietary Requirements
+                  </label>
+                  <Select
+                    name="dietary"
+                    defaultValue={field.value || undefined}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger className="w-2/3 text-step--2">
+                      <SelectValue placeholder="Dietary Requirements" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {dietaryRequirements.map((item) => (
+                        <SelectItem key={item.value} value={item.value}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </>
+              )}
+            />
 
-          <TagInput
-            control={control}
-            name="contains"
-            // label='Contains'
-            placeholder="E.g gluten, dairy, nuts"
-            hint="Allergens (separated by a comma)"
-          />
+            <TagInput
+              control={control}
+              name="contains"
+              // label='Contains'
+              placeholder="E.g gluten, dairy, nuts"
+              hint="Allergens (separated by a comma)"
+            />
 
-          <Controller
-            control={control}
-            name="sweet_savoury"
-            render={({ field }) => (
-              <>
-                <label
-                  htmlFor="sweet_savoury"
-                  className="block text-step--3 font-medium"
-                >
-                  Sweet or Savoury
-                </label>
-                <Select
-                  name="sweet_savoury"
-                  defaultValue={field.value || undefined}
-                  onValueChange={field.onChange}
-                >
-                  <SelectTrigger className="w-2/3 text-step--2">
-                    <SelectValue placeholder="Sweet or Savoury" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {sweet_savoury.map((item) => (
-                      <SelectItem key={item.value} value={item.value}>
-                        {item.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </>
-            )}
-          />
+            <Controller
+              control={control}
+              name="sweet_savoury"
+              render={({ field }) => (
+                <>
+                  <label
+                    htmlFor="sweet_savoury"
+                    className="block text-step--3 font-medium"
+                  >
+                    Sweet or Savoury
+                  </label>
+                  <Select
+                    name="sweet_savoury"
+                    defaultValue={field.value || undefined}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger className="w-2/3 text-step--2">
+                      <SelectValue placeholder="Sweet or Savoury" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {sweet_savoury.map((item) => (
+                        <SelectItem key={item.value} value={item.value}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </>
+              )}
+            />
 
-          <ImageUpload />
+            <ImageUpload />
 
-          <Controller
-            control={control}
-            name="mealTime"
-            render={({ field }) => (
-              <>
-                <label
-                  htmlFor="mealTime"
-                  className="block text-step--3 font-medium"
-                >
-                  Meal Time
-                </label>
-                <Select
-                  name="mealTime"
-                  defaultValue={field.value || undefined}
-                  onValueChange={field.onChange}
-                >
-                  <SelectTrigger className="w-2/3 text-step--2">
-                    <SelectValue placeholder="Meal time" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {meal_times.map((item) => (
-                      <SelectItem key={item.value} value={item.value}>
-                        {item.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </>
-            )}
-          />
+            <Controller
+              control={control}
+              name="mealTime"
+              render={({ field }) => (
+                <>
+                  <label
+                    htmlFor="mealTime"
+                    className="block text-step--3 font-medium"
+                  >
+                    Meal Time
+                  </label>
+                  <Select
+                    name="mealTime"
+                    defaultValue={field.value || undefined}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger className="w-2/3 text-step--2">
+                      <SelectValue placeholder="Meal time" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {meal_times.map((item) => (
+                        <SelectItem key={item.value} value={item.value}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </>
+              )}
+            />
 
-          <TagInput
-            name="info.keywords"
-            control={control}
-            placeholder="Keywords (separated by a comma)"
-            hint="Keywords will be used to help users find your recipe."
-          />
+            <TagInput
+              name="info.keywords"
+              control={control}
+              placeholder="Keywords (separated by a comma)"
+              hint="Keywords will be used to help users find your recipe."
+            />
 
-          <section className="flex flex-row flex-wrap gap-4 mb-8">
-            <IngredientContainer />
-            <StepContainer />
-          </section>
-          <Textarea
-            id="notes"
-            control={control}
-            label="Notes, Tips or Suggestions"
-          />
-          {/* <Button
+            <section className="flex flex-row flex-wrap gap-4 mb-8">
+              <IngredientContainer />
+              <StepContainer />
+            </section>
+            <Textarea
+              id="notes"
+              control={control}
+              label="Notes, Tips or Suggestions"
+            />
+            {/* <Button
             type="submit"
             ariaLabel="Submit Recipe"
             className="text-step--1 mt-14 mb-3  border rounded-lg"
@@ -242,7 +243,8 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
           >
             Submit
           </Button> */}
-        </form>
+          </form>
+        )}
       </FormProvider>
     </>
   );

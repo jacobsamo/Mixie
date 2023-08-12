@@ -26,6 +26,7 @@ const Overlay = ({ onPreview, onSave, onPublish }: OverlayProps) => {
             type="button"
             className="mr-2"
             TrailingIcon={<EyeIcon />}
+            onClick={onPreview}
           >
             Preview
           </Button>

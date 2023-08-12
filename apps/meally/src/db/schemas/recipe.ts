@@ -34,14 +34,14 @@ export const recipes = mysqlTable('recipes', {
   isPublic: boolean('isPublic').default(false),
 
   // users
-  createByName: varchar('lastUpdatedBy', { length: 191 }).notNull(),
   createdAt: timestamp('createdAt').default(sql`CURRENT_TIMESTAMP`),
   createdBy: varchar('createdBy', { length: 191 }).notNull(),
+  createByName: varchar('createByName', { length: 191 }).notNull(),
   lastUpdated: timestamp('lastUpdated')
     .default(sql`CURRENT_TIMESTAMP`)
     .onUpdateNow(),
   lastUpdatedBy: varchar('lastUpdatedBy', { length: 191 }).notNull(),
-  lastUpdatedByName: varchar('lastUpdatedBy', { length: 191 }).notNull(),
+  lastUpdatedByName: varchar('lastUpdatedByName', { length: 191 }).notNull(),
 });
 
 export const recipesRelation = relations(recipes, ({ one, many }) => ({
@@ -76,14 +76,14 @@ export const info = mysqlTable('info', {
   rating: tinyint('rating').default(0),
 
   // users
-  createByName: varchar('lastUpdatedBy', { length: 191 }).notNull(),
   createdAt: timestamp('createdAt').default(sql`CURRENT_TIMESTAMP`),
   createdBy: varchar('createdBy', { length: 191 }).notNull(),
+  createByName: varchar('createByName', { length: 191 }).notNull(),
   lastUpdated: timestamp('lastUpdated')
     .default(sql`CURRENT_TIMESTAMP`)
     .onUpdateNow(),
   lastUpdatedBy: varchar('lastUpdatedBy', { length: 191 }).notNull(),
-  lastUpdatedByName: varchar('lastUpdatedBy', { length: 191 }).notNull(),
+  lastUpdatedByName: varchar('lastUpdatedByName', { length: 191 }).notNull(),
 });
 
 export const infoRelations = relations(recipes, ({ one }) => ({
