@@ -5,7 +5,7 @@ import {
   primaryKey,
   varchar,
 } from 'drizzle-orm/mysql-core';
-import type { AdapterAccount } from 'next-auth/adapters';
+import type { AdapterAccount } from '@auth/core/adapters';
 
 export const users = mysqlTable('user', {
   id: varchar('id', { length: 255 }).notNull().primaryKey(),
@@ -19,7 +19,7 @@ export const users = mysqlTable('user', {
 });
 
 export const accounts = mysqlTable(
-  'account',
+  'accounts',
   {
     userId: varchar('userId', { length: 255 })
       .notNull()
@@ -37,8 +37,8 @@ export const accounts = mysqlTable(
     id_token: varchar('id_token', { length: 255 }),
     session_state: varchar('session_state', { length: 255 }),
   },
-  (account) => ({
-    compoundKey: primaryKey(account.provider, account.providerAccountId),
+  (accounts) => ({
+    compoundKey: primaryKey(accounts.provider, accounts.providerAccountId),
   })
 );
 

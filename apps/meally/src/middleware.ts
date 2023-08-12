@@ -1,5 +1,9 @@
-// export { default } from 'next-auth/middleware';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-export async function middleware(req) {}
+export { default } from 'next-auth/middleware';
+
+// export async function middleware(request: NextRequest) {
+// }
 
 export const config = { matcher: ['/recipes/:path/edit'] };

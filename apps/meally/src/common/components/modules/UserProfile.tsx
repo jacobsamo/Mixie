@@ -55,7 +55,10 @@ const UserProfile = () => {
           Bookmarks
         </Link>
         <CreateRecipeDialog />
-        <Link href={`/${user?.id}/settings`} className="flex flex-row gap-1">
+        <Link
+          href={`/${user?.id}/settings/profile`}
+          className="flex flex-row gap-1"
+        >
           {' '}
           <Settings />
           Settings
