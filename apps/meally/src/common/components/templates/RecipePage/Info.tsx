@@ -3,7 +3,7 @@ import React from 'react';
 import { PieChart, Clock, Timer, AlarmClock } from 'lucide-react';
 
 interface InfoProps {
-  info: Info | NewInfo;
+  info: Info;
 }
 
 const Info = ({ info }: InfoProps) => {

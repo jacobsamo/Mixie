@@ -12,9 +12,7 @@ import * as z from 'zod';
 const IngredientContainer = () => {
   const { control, register } =
     useFormContext<z.infer<typeof recipeFormSchema>>();
-  const { fields, append, remove, move } = useFieldArray<
-    z.infer<typeof recipeFormSchema>
-  >({
+  const { fields, append, remove, move } = useFieldArray({
     control,
     name: 'ingredients',
   });
@@ -68,7 +66,6 @@ const IngredientContainer = () => {
             >
               <Ingredient
                 index={index}
-                // TODO: fix these errors - data still passes just throws errors here so no issue for now
                 values={{
                   title: field.title,
                   unit: field.unit,

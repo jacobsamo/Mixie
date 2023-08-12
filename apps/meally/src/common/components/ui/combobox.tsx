@@ -31,6 +31,7 @@ export function SelectWithSearch({ options, placeholder }: ComboboxProps) {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
+          ariaLabel="Select an option"
           variant="secondary"
           role="combobox"
           aria-expanded={open}

@@ -14,9 +14,7 @@ import * as z from 'zod';
 
 const StepContainer = () => {
   const { control } = useFormContext<z.infer<typeof recipeFormSchema>>();
-  const { fields, append, remove, move } = useFieldArray<
-    z.infer<typeof recipeFormSchema>
-  >({
+  const { fields, append, remove, move } = useFieldArray({
     control,
     name: 'steps',
   });

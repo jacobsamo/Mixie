@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -15,6 +15,7 @@ import { useForm } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { Loader2, PlusCircleIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useToast } from '../ui/use-toast';
 
 const createRecipeSchema = z.object({
   title: z.string().optional(),
@@ -23,6 +24,7 @@ const createRecipeSchema = z.object({
 
 const CreateRecipeDialog = () => {
   const router = useRouter();
+  const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -51,9 +53,24 @@ const CreateRecipeDialog = () => {
           setLoading(false);
           setOpen(false);
         }
+        if (res.status == 400) {
+          toast({
+            title: 'An Error Occurred',
+            description: 'This Error more the likely occurred due to a bug',
+          });
+        }
       });
+      setLoading(false);
+      setOpen(false);
     }
   }
+
+  useEffect(() => {
+    if (!open) {
+      methods.reset();
+      setLoading(false);
+    }
+  }, [open, methods]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

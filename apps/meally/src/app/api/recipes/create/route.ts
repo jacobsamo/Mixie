@@ -72,22 +72,29 @@ export async function POST(req: Request) {
       recipeId: uid,
       id,
       title,
-    };
-    // the recipe itself
-    const recipe: NewPartialRecipe = {
-      uid: uid,
-      id,
-      title,
       createByName: user.name! || '',
       createdBy: user.id,
       lastUpdatedBy: user.id,
       lastUpdatedByName: user.name! || '',
     };
-    const setInfo = await db.insert(info).values(newInfo);
-    const setRecipe = await db.insert(recipes).values(recipe);
+    console.log(newInfo);
+    // the recipe itself
+    const recipe: NewPartialRecipe = {
+      uid: uid,
+      id,
+      title,
+
+      createByName: user.name! || '',
+      createdBy: user.id,
+      lastUpdatedBy: user.id,
+      lastUpdatedByName: user.name! || '',
+    };
+    console.log(recipe);
+    await db.insert(info).values(newInfo);
+    await db.insert(recipes).values(recipe);
 
     return NextResponse.json(
-      { message: `Recipe succuflly created, ${setRecipe}`, id: uid },
+      { message: `Recipe succuflly created`, id: uid },
       {
         status: 200,
       }

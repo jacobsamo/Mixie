@@ -8,7 +8,7 @@ import { recipeFormSchema } from '@/src/db/zodSchemas';
 import * as z from 'zod';
 
 interface RecipePageComponentProps {
-  recipe: Recipe | NewRecipe | z.infer<typeof recipeFormSchema>;
+  recipe: Recipe;
 }
 
 // TODO: user `next-seo` for ld+json for the recipe schema
@@ -22,8 +22,8 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
       <Info info={recipe.info} />
       <div>
         <Image
-          src={recipe?.imgUrl || '/images/placeholder.png'}
-          alt={recipe.imgAlt || recipe.title || 'recipe image'}
+          src={recipe?.info.imgUrl || '/images/placeholder.png'}
+          alt={recipe?.info.imgAlt || recipe.title || 'recipe image'}
           width={800}
           height={600}
           className="rounded-xl aspect-video object-cover"

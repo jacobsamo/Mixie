@@ -68,12 +68,10 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
     formState: { errors, isDirty, isValid },
   } = methods;
 
-  const gotRecipe = getValues();
+  const gotRecipe = getValues() as Recipe;
 
   if (loading) {
-    
   }
-
 
   return (
     <>

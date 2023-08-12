@@ -7,9 +7,7 @@ export async function GET() {
   const recipe = await db.query.recipes.findMany({
     with: {
       info: true,
-      ingredients: true,
-      ratings: true,
-    }
+    },
   });
   console.log('Recipe: ', recipe);
   return NextResponse.json({ recipe });

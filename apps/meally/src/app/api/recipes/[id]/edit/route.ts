@@ -50,6 +50,10 @@ export async function PUT(req: Request) {
     prep: recipe?.info?.prep || null,
     cook: recipe?.info?.cook || null,
     total: recipe?.info?.total || null,
+    createdBy: recipe.info?.createdBy || user.id,
+    createByName: recipe.info?.createByName || user.name || '',
+    lastUpdatedBy: user.id,
+    lastUpdatedByName: user.name || '',
   };
   console.log('Info: ', newInfo);
   await db.update(info).set(newInfo).where(eq(info.recipeId, recipe.uid));
@@ -66,7 +70,7 @@ export async function PUT(req: Request) {
     // id: ,
     id: recipeId(recipe.title) || recipe.id,
     steps: steps,
-    createdBy: user.id,
+    createdBy: recipe.createdBy,
     lastUpdatedBy: user.id,
   };
   console.log('new recipe being set: ', newRecipe);
