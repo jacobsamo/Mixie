@@ -13,7 +13,7 @@ const DraftsPage = async () => {
   const session = await getServerSession(authOptions);
 
   if (!session?.user) {
-    return <h1>No found</h1>;
+    return <h1>No recipes found</h1>;
   }
 
   const gotRecipes = (await db.query.info.findMany({

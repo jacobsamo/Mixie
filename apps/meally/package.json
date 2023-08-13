@@ -21,9 +21,7 @@
   "dependencies": {
     "@auth/core": "^0.11.1",
     "@auth/drizzle-adapter": "^0.2.1",
-    "@headlessui/react": "^1.7.15",
     "@hookform/resolvers": "^3.1.1",
-    "@next-auth/prisma-adapter": "1.0.7",
     "@planetscale/database": "^1.8.0",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.4",
@@ -66,7 +64,6 @@
     "react-select": "^5.7.4",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.6",
-    "types": "workspace:*",
     "uuid": "^9.0.0",
     "zod": "^3.21.4"
   },
