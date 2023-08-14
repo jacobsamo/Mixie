@@ -21,6 +21,7 @@ import { ArrowLeftIcon } from 'lucide-react';
 import { Textarea } from '@components/ui/textarea';
 import TagInput from '@components/ui/taginput';
 import { recipeFormSchema } from '@/src/db/zodSchemas';
+import { Switch } from '../../ui/switch';
 
 interface CreateRecipeDialogProps {
   open: boolean;
@@ -41,7 +42,7 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
             The final steps before you publish your recipe
           </DialogDescription>
         </DialogHeader>
-        <div className="flex flex-col gap-2 items-center">
+        <div className="flex flex-col mx-auto p-2 md:p-0">
           <Input
             {...register('title', {
               required: true,
@@ -56,7 +57,7 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
             placeholder="Keywords (separated by a comma)"
             hint="Keywords will be used to help users find your recipe."
           />
-          <Input type="checkbox" {...register('info.isPublic')} />
+          <Switch {...register('info.isPublic')} />
         </div>
         <DialogFooter>
           <Button

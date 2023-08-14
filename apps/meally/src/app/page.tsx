@@ -13,6 +13,7 @@ import {
 import { Textarea } from '../common/components/ui/textarea';
 import { useForm } from 'react-hook-form';
 import CreateRecipeDialog from '../common/components/elements/CreateRecipeDialog';
+import { Switch } from '../common/components/ui/switch';
 
 export default function Page() {
   const { toast } = useToast();
@@ -21,61 +22,7 @@ export default function Page() {
   return (
     <>
       <h1 className="">Main page</h1>
-      <CreateRecipeDialog />
-      <h2>Buttons</h2>
-      <div className="flex gap-2">
-        <Button ariaLabel="" variant={'primary'}>
-          Priamry
-        </Button>
-        <Button ariaLabel="" variant={'secondary'}>
-          Secondary
-        </Button>
-        <Button ariaLabel="" variant={'tertiary'}>
-          Tretiary{' '}
-        </Button>
-        <Button
-          ariaLabel=""
-          variant={'destructive'}
-          TrailingIcon={<Trash2Icon />}
-        >
-          Destructive{' '}
-        </Button>
-        <Button ariaLabel="" variant={'link'}>
-          Link{' '}
-        </Button>
-      </div>
-
-      <h2>Input Feilds</h2>
-      <div className="flex flex-col gap-2 max-w-fit">
-        <Input name="all" placeholder="All of the above" />
-        <Input
-          name="all"
-          placeholder="All of the above"
-          label="Test Label"
-          tooltip="test"
-          LeadingIcon={<AlarmCheckIcon />}
-        />
-        <Input
-          name="all"
-          placeholder="All of the above"
-          label="Test Label"
-          tooltip="test"
-          LeadingIcon={<AlarmCheckIcon />}
-          TrailingIcon={<AlertTriangle />}
-          hint="Hint"
-          
-        />
-      </div>
-
-      <h2>Text Area</h2>
-      <div className="w-fit">
-        <Textarea
-          id="test"
-          control={control}
-          label="test"
-          tooltip="tghis is a tooltip"
-        />
-      </div>
+      <Switch />
     </>
   );
 }

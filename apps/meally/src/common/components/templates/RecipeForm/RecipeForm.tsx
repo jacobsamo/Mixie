@@ -87,9 +87,6 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
             className="relative z-0 flex flex-col w-full lg:w-1/2 mx-auto p-2 md:p-0 mb-[20%]"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <button type="button" onClick={() => console.log(getValues())}>
-              get values
-            </button>
             <Input
               {...register('title', {
                 required: true,
@@ -234,15 +231,6 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
               control={control}
               label="Notes, Tips or Suggestions"
             />
-            {/* <Button
-            type="submit"
-            ariaLabel="Submit Recipe"
-            className="text-step--1 mt-14 mb-3  border rounded-lg"
-            // disabled={!isDirty || !isValid}
-            // onClick={() => console.log(getValues())}
-          >
-            Submit
-          </Button> */}
           </form>
         )}
       </FormProvider>
