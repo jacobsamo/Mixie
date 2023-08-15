@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Terms_Services() {
+export default function Terms_ServicesPage() {
   return (
     <main className="max-w-[800px] my-0 mx-auto p-10">
       <h1 className="font-bold text-step1 mb-5">Terms and Services</h1>

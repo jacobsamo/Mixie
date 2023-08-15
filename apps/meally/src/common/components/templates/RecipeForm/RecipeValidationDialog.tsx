@@ -21,7 +21,7 @@ import { ArrowLeftIcon } from 'lucide-react';
 import { Textarea } from '@components/ui/textarea';
 import TagInput from '@components/ui/taginput';
 import { recipeFormSchema } from '@/src/db/zodSchemas';
-import { Switch } from '../../ui/switch';
+import { Switch, SwitchInput } from '../../ui/switch';
 
 interface CreateRecipeDialogProps {
   open: boolean;
@@ -57,7 +57,11 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
             placeholder="Keywords (separated by a comma)"
             hint="Keywords will be used to help users find your recipe."
           />
-          <Switch {...register('info.isPublic')} />
+          <SwitchInput
+            {...register('info.isPublic')}
+            label="Public"
+            tooltip="Makes your recipe visible to everyone outside of your group"
+          />
         </div>
         <DialogFooter>
           <Button

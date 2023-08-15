@@ -1,6 +1,6 @@
 import RecipeService from '@lib/services/RecipeService';
 
-export default async function RecipePage() {
+export default async function RecipeViewPage() {
   // const data = await RecipeService.getRecipes();
   return (
     <>

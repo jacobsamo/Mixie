@@ -96,14 +96,26 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
             />
             <Textarea id="description" label="Description" control={control} />
             <Input
-              {...register('info.prep')}
+              {...register('info.prep', {
+                pattern: {
+                  value: /[0-9]{1, 2}[dhms]/gi,
+                  message:
+                    'Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds',
+                },
+              })}
               label="Prep Time"
-              hint="Must be in the format 4h 3m 4s where h = hours, m = mintues, s = seconds"
+              hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
             />
             <Input
-              {...register('info.cook')}
+              {...register('info.cook', {
+                pattern: {
+                  value: /[0-9]{1, 2}[dhms]/gi,
+                  message:
+                    'Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds',
+                },
+              })}
               label="Cook Time"
-              hint="Must be in the format 4h 3m 4s where h = hours, m = mintues, s = seconds"
+              hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
             />
             <Input
               {...register('info.serves', { valueAsNumber: true })}

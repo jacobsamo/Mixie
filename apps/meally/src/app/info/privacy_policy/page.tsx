@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-export default function Privacy_Policy() {
+export default function Privacy_PolicyPage() {
   return (
     <>
       <main className="max-w-[800px] my-0 mx-auto p-10">
