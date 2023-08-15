@@ -21,8 +21,10 @@ export function recipeId(title: string): string {
 import { Amount, type Ingredient } from '@/src/db/types';
 
 // amount types for the amount
-async function calculateTotalTime(prep: string, cook: string) {
-  const matchRegex = /^(\d+d)?\s?(\d+h)?\s?(\d+m)?\s?(\d+s)?$/i;
+export async function calculateTotalTime(prep: string, cook: string) {
+  // const matchRegex = /^(\d+d)?\s?(\d+h)?\s?(\d+m)?\s?(\d+s)?$/i;
+
+  const matchRegex = /^(\d{1,2}[hms]\s?)+$/i;
 
   const parseTime = (timeString: string) => {
     const matches = timeString.match(matchRegex);

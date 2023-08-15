@@ -1,4 +1,4 @@
-import { recipeId } from '@/src/common/lib/utils';
+import { calculateTotalTime, recipeId } from '@/src/common/lib/utils';
 import * as z from 'zod';
 import type { Ingredient } from '@/src/db/types';
 import { toast } from '../../ui/use-toast';
@@ -133,8 +133,12 @@ import { recipeFormSchema } from '@/src/db/zodSchemas';
 export const onSubmit = async (recipe: z.infer<typeof recipeFormSchema>) => {
   console.log('Recipe: ', recipe);
   if (!recipe) return;
-  
 
+  const totalTime =
+    recipe.info && recipe.info.prep && recipe?.info.cook
+      ? await calculateTotalTime(recipe.info.prep, recipe.info.cook)
+      : null;
+  console.log('Total time: ', totalTime);
   const ingredients = recipe?.ingredients?.map((ingredient: Ingredient) => {
     if (!['cup', 'tbsp', 'tsp'].includes(ingredient.unit || '')) {
       ingredient.amount = 'not_set';
@@ -149,6 +153,10 @@ export const onSubmit = async (recipe: z.infer<typeof recipeFormSchema>) => {
 
   const data = {
     ...recipe,
+    info: {
+      ...recipe.info,
+      total: totalTime,
+    },
     ingredients,
   };
   console.log('Data: ', data);

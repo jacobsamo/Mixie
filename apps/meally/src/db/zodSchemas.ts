@@ -8,6 +8,20 @@ export const infoSchema = createInsertSchema(info, {
   ingredients: z.string().array().nullable().optional(),
   imgUrl: z.string().url().optional(),
   keywords: z.object({ value: z.string() }).array().optional(),
+  prep: z
+    .string()
+    .regex(/^(\d{1,2}[hms]\s?)+$/i, {
+      message:
+        'Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds',
+    })
+    .optional(),
+  cook: z
+    .string()
+    .regex(/^(\d{1,2}[hms]\s?)+$/i, {
+      message:
+        'Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds',
+    })
+    .optional(),
 });
 
 export const amount = z

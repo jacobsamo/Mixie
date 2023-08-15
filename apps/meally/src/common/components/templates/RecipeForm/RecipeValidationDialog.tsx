@@ -7,15 +7,11 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@components/ui/dialog';
 import { Input } from '@components/ui/input';
-import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { Button } from '@components/ui/button';
-import { Loader2, PlusCircleIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { onSubmit } from './form';
 import { ArrowLeftIcon } from 'lucide-react';
 import { Textarea } from '@components/ui/textarea';
@@ -57,10 +53,19 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
             placeholder="Keywords (separated by a comma)"
             hint="Keywords will be used to help users find your recipe."
           />
-          <SwitchInput
-            {...register('info.isPublic')}
-            label="Public"
-            tooltip="Makes your recipe visible to everyone outside of your group"
+          <Controller
+            control={control}
+            name={'info.isPublic'}
+            defaultValue={false}
+            render={({ field }) => (
+              <SwitchInput
+                name={field.name}
+                checked={field.value ? field.value : false}
+                onCheckedChange={field.onChange}
+                label="Public"
+                tooltip="Makes your recipe visible to everyone outside of your group"
+              />
+            )}
           />
         </div>
         <DialogFooter>
@@ -78,7 +83,6 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
             ariaLabel="save"
             type="button"
             className="w-52 m-2"
-            // onClick={() => handleImageUpload()}
             onClick={handleSubmit(onSubmit)}
           >
             Save

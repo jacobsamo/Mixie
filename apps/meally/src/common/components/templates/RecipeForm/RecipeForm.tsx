@@ -70,9 +70,6 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
 
   const gotRecipe = getValues() as Recipe;
 
-  if (loading) {
-  }
-
   return (
     <>
       <FormProvider {...methods}>
@@ -98,22 +95,24 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
             <Input
               {...register('info.prep', {
                 pattern: {
-                  value: /[0-9]{1, 2}[dhms]/gi,
+                  value: /^(\d{1,2}[hms]\s?)+$/i,
                   message:
                     'Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds',
                 },
               })}
+              error={errors.info?.prep}
               label="Prep Time"
               hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
             />
             <Input
               {...register('info.cook', {
                 pattern: {
-                  value: /[0-9]{1, 2}[dhms]/gi,
+                  value: /^(\d{1,2}[hms]\s?)+$/i,
                   message:
                     'Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds',
                 },
               })}
+              error={errors.info?.cook}
               label="Cook Time"
               hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
             />

@@ -13,9 +13,12 @@ import {
 import { HelpCircleIcon } from 'lucide-react';
 import type { FieldError } from 'react-hook-form';
 
+interface SwitchProps
+  extends React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> {}
+
 const Switch = React.forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,
-  React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>
+  SwitchProps
 >(({ className, ...props }, ref) => (
   <SwitchPrimitives.Root
     className={cn(
@@ -34,8 +37,7 @@ const Switch = React.forwardRef<
 ));
 Switch.displayName = SwitchPrimitives.Root.displayName;
 
-export interface SwitchInputProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface SwitchInputProps extends SwitchProps {
   name: string;
   label?: string;
   tooltip?: string;
