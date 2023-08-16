@@ -20,41 +20,55 @@ export function recipeId(title: string): string {
 
 import { Amount, type Ingredient } from '@/src/db/types';
 
-// amount types for the amount
-export async function calculateTotalTime(prep: string, cook: string) {
-  // const matchRegex = /^(\d+d)?\s?(\d+h)?\s?(\d+m)?\s?(\d+s)?$/i;
+/**
+ * Takes in a time string matching `/^(\d{1,2}[hms]\s?)+$/i` and returns the total time in seconds
+ * @param {RegExpMatchArray} timeString - time string matching `/^(\d{1,2}[hms]\s?)+$/i`
+ * @returns {number} total time in seconds
+ */
+const parseTimeToSeconds = (timeString: RegExpMatchArray) => {
+  const time = timeString[0].split(' ');
 
+  const timeMap = time.map((time): number | undefined => {
+    if (time.includes('h')) {
+      console.log('hours: ', parseInt(time) * 60 * 60);
+      return parseInt(time) * 60 * 60;
+    } else if (time.includes('m')) {
+      console.log('minutes: ', parseInt(time) * 60);
+      return parseInt(time) * 60;
+    } else if (time.includes('s')) {
+      console.log('seconds: ', parseInt(time));
+      return parseInt(time);
+    }
+  });
+  // return the sum of total seconds
+  return timeMap.reduce((acc, curr) => acc! + curr!, 0);
+};
+
+/**
+ * Takes in a prep and cook time string and returns the total time in the same format
+ * @param {string} prep - prep time string matching `/^(\d{1,2}[hms]\s?)+$/i`
+ * @param {string} cook - cook time string matching `/^(\d{1,2}[hms]\s?)+$/i`
+ * @returns {string} total time in the same format
+ */
+export async function calculateTime(prep: string, cook: string) {
   const matchRegex = /^(\d{1,2}[hms]\s?)+$/i;
 
-  const parseTime = (timeString: string) => {
-    const matches = timeString.match(matchRegex);
-    if (!matches) {
-      throw new Error('Invalid time string format');
-    }
-    const days = matches[1] ? parseInt(matches[1]) : 0;
-    const hours = matches[2] ? parseInt(matches[2]) : 0;
-    const minutes = matches[3] ? parseInt(matches[3]) : 0;
-    const seconds = matches[4] ? parseInt(matches[4]) : 0;
-    return { days, hours, minutes, seconds };
-  };
+  const prepT = prep.match(matchRegex);
+  const cookT = cook.match(matchRegex);
 
-  const prepTime = parseTime(prep);
-  const cookTime = parseTime(cook);
+  if (!prepT || !cookT) {
+    throw new Error('Invalid time string format');
+  }
 
-  const totalSeconds =
-    prepTime.days * 24 * 60 * 60 +
-    prepTime.hours * 60 * 60 +
-    prepTime.minutes * 60 +
-    prepTime.seconds +
-    cookTime.days * 24 * 60 * 60 +
-    cookTime.hours * 60 * 60 +
-    cookTime.minutes * 60 +
-    cookTime.seconds;
+  const prepTime = parseTimeToSeconds(prepT);
+  const cookTime = parseTimeToSeconds(cookT);
 
-  const days = Math.floor(totalSeconds / (24 * 60 * 60));
-  const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60));
-  const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
-  const seconds = totalSeconds % 60;
+  const totalTime = prepTime! + cookTime!;
+
+  const days = Math.floor(totalTime / (24 * 60 * 60));
+  const hours = Math.floor((totalTime % (24 * 60 * 60)) / (60 * 60));
+  const minutes = Math.floor((totalTime % (60 * 60)) / 60);
+  const seconds = totalTime % 60;
 
   const timeUnits: string[] = [];
   if (days > 0) {
