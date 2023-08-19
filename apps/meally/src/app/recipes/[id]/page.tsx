@@ -29,6 +29,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
           useAppDir={true}
           name={recipe?.title || ''}
           authorName={''}
+          yields={recipe?.info.serves?.toString() || ''}
           ingredients={
             recipe?.ingredients?.map((ingredient) => {
               return `${ingredient.quantity} ${
@@ -45,6 +46,13 @@ export default async function RecipePage({ params }: RecipePageProps) {
             }) || []
           }
           description={recipe.description! || ''}
+          datePublished={recipe.createdAt?.toTimeString()}
+          dateModified={recipe.lastUpdated?.toTimeString()}
+          keywords={
+            recipe.info.keywords?.map((keyword) => keyword.value).join(', ') ||
+            ''
+          }
+          
         />
         <RecipePageComponent recipe={recipe as Recipe} />
       </>

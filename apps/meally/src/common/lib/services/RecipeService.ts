@@ -1,16 +1,32 @@
 import * as puppeteer from 'puppeteer';
 import { recipeId } from '../utils';
 import { db } from '@/src/db';
-import { NewRecipe, Recipe } from '@/src/db/types';
+import { Info, NewRecipe, Recipe } from '@/src/db/types';
 import { authOptions } from '@/src/db/next-auth-adapter';
 import { getServerSession } from 'next-auth/next';
 import { recipes } from '@/src/db/schemas';
 import * as z from 'zod';
-import {  } from '@/src/db/types';
+import {} from '@/src/db/types';
 import { eq, or, sql } from 'drizzle-orm';
 import { recipeFormSchema } from '@/src/db/zodSchemas';
+import { env } from '@/env.mjs';
 
 class RecipeService {
+  async getAllRecipeCards(
+    limit: number = 9,
+    offset: number = 0
+  ): Promise<Info[]> {
+    // const recipes = await db.query.info.findMany({
+    //   offset: offset,
+    //   limit: limit,
+    // });
+    const req = await fetch(`${env.NEXT_PUBLIC_APP_URL}/api/recipes`, {
+      method: 'GET',
+    });
+    const recipes = await req.json();
+    return recipes as Info[];
+  }
+
   //   async getRatingByRecipeId(id: string) {
   //     const rating = await prisma.rating.findMany({
   //       where: {

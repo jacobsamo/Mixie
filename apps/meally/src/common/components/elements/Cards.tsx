@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 import Image from 'next/image';
 import type { Info, Recipe } from '@/src/db/types';
@@ -72,7 +71,7 @@ const BaseCard = ({
           onClick={() => {
             addBookMark(recipe);
             toast({
-              description: 'Recipe has been bookma',
+              description: 'Recipe has been bookmarked',
             });
           }}
           className={`absolute right-2 bottom-2 ${classNames.bookmarkButton}`}

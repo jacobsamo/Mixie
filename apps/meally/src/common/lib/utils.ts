@@ -30,13 +30,10 @@ const parseTimeToSeconds = (timeString: RegExpMatchArray) => {
 
   const timeMap = time.map((time): number | undefined => {
     if (time.includes('h')) {
-      console.log('hours: ', parseInt(time) * 60 * 60);
       return parseInt(time) * 60 * 60;
     } else if (time.includes('m')) {
-      console.log('minutes: ', parseInt(time) * 60);
       return parseInt(time) * 60;
     } else if (time.includes('s')) {
-      console.log('seconds: ', parseInt(time));
       return parseInt(time);
     }
   });
@@ -50,7 +47,7 @@ const parseTimeToSeconds = (timeString: RegExpMatchArray) => {
  * @param {string} cook - cook time string matching `/^(\d{1,2}[hms]\s?)+$/i`
  * @returns {string} total time in the same format
  */
-export async function calculateTime(prep: string, cook: string) {
+export async function calculateTotalTime(prep: string, cook: string) {
   const matchRegex = /^(\d{1,2}[hms]\s?)+$/i;
 
   const prepT = prep.match(matchRegex);

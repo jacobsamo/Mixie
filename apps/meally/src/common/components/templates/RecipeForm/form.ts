@@ -138,7 +138,7 @@ export const onSubmit = async (recipe: z.infer<typeof recipeFormSchema>) => {
     recipe.info && recipe.info.prep && recipe?.info.cook
       ? await calculateTotalTime(recipe.info.prep, recipe.info.cook)
       : null;
-  console.log('Total time: ', totalTime);
+
   const ingredients = recipe?.ingredients?.map((ingredient: Ingredient) => {
     if (!['cup', 'tbsp', 'tsp'].includes(ingredient.unit || '')) {
       ingredient.amount = 'not_set';
@@ -159,7 +159,7 @@ export const onSubmit = async (recipe: z.infer<typeof recipeFormSchema>) => {
     },
     ingredients,
   };
-  console.log('Data: ', data);
+
   // send data to edit the recipe in the db
   fetch(`/api/recipes/${recipe.id}/edit`, {
     method: 'PUT',
