@@ -5,6 +5,7 @@ import { NextAuthProvider } from '@components/layouts/NextAuthProvider';
 import { ThemeProvider } from '../common/components/modules/theme-provider';
 import { Toaster } from '@components/ui/toaster';
 import { Analytics } from '@vercel/analytics/react';
+import Search from '../common/components/modules/Search';
 
 export const metadata = {
   title: {
@@ -73,6 +74,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextAuthProvider>
             <Navbar />
+            <Search />
             {children}
             <Toaster />
           </NextAuthProvider>

@@ -1,9 +1,11 @@
+'use client';
 import React from 'react';
 import Image from 'next/image';
 import type { Info, Recipe } from '@/src/db/types';
 import { HeartIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useToast } from '../ui/use-toast';
+import { cn } from '@lib/utils';
 
 function addBookMark(recipe: Info) {
   throw Error('Function not implemented.');
@@ -36,20 +38,26 @@ const BaseCard = ({
 
   return (
     <div
-      className={`${classNames.container} relative flex p-2 items-center justify-between flex-col h-58 w-58 rounded-xl text-black dark:text-white`}
+      className={cn(
+        'relative flex p-2 items-center justify-between flex-col h-58 w-58 rounded-xl text-black dark:text-white',
+        classNames.container
+      )}
     >
       <Link
         href={`/recipes/${recipe.id}`}
-        className={`${classNames.title} text-center text-step--2`}
+        className={cn('text-center text-step--2', classNames.title)}
       >
         {recipe.title}
       </Link>
 
       {hasCookTime ? (
         <div
-          className={`${classNames.bookmarkContainer} flex flex-row w-full justify-between `}
+          className={cn(
+            'flex flex-row w-full justify-between',
+            classNames.bookmarkContainer
+          )}
         >
-          <h3 className={`${classNames.cookTime} w-fit whitespace-nowrap`}>
+          <h3 className={cn('w-fit whitespace-nowrap', classNames.cookTime)}>
             {recipe.total}
           </h3>
           <button
@@ -62,7 +70,7 @@ const BaseCard = ({
             className={classNames.bookmarkButton}
           >
             <HeartIcon
-              className={`${classNames.bookmarkIcon} w-8 h-8 cursor-pointer`}
+              className={cn('w-8 h-8 cursor-pointer', classNames.bookmarkIcon)}
             />
           </button>
         </div>
@@ -74,10 +82,10 @@ const BaseCard = ({
               description: 'Recipe has been bookmarked',
             });
           }}
-          className={`absolute right-2 bottom-2 ${classNames.bookmarkButton}`}
+          className={cn('absolute right-2 bottom-2', classNames.bookmarkButton)}
         >
           <HeartIcon
-            className={`${classNames.bookmarkIcon} w-8 h-8 cursor-pointer`}
+            className={cn('w-8 h-8 cursor-pointer', classNames.bookmarkIcon)}
           />
         </button>
       )}
@@ -87,7 +95,10 @@ const BaseCard = ({
         alt={recipe.imgAlt || ''}
         fill
         priority
-        className={`${classNames.image} rounded-xl object-cover h-58 w-58 -z-20`}
+        className={cn(
+          'rounded-xl object-cover h-58 w-58 -z-20',
+          classNames.image
+        )}
       />
     </div>
   );
@@ -101,7 +112,12 @@ const CardRectangleSmall = ({ recipe }: CardProps) => {
   return (
     <BaseCard
       recipe={recipe}
-      classNames={{ container: 'h-58 w-46', image: 'h-58 w-46' }}
+      // classNames={{ container: 'h-58 w-46', image: 'h-58 w-46' }}
+      classNames={{
+        container: 'h-58 w-46',
+        image: 'h-58 w-46',
+        title: 'text-step--1',
+      }}
     />
   );
 };

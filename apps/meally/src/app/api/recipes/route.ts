@@ -1,8 +1,8 @@
 import { db } from '@/src/db';
 import { recipes } from '@/src/db/schemas';
+import { desc, asc } from 'drizzle-orm';
 
 import { NextResponse } from 'next/server';
-import { desc, asc } from 'drizzle-orm';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -12,11 +12,11 @@ export async function GET(request: Request) {
   const offset = parseInt(searchParams.get('offset') || '0');
   console.log('Offest: ', offset);
 
-  const recipe = await db.query.info.findMany({
-    limit: limit,
-    offset: offset,
-    orderBy: [asc(recipes.lastUpdated)],
-  });
+  // const recipe = await db.query.info.findMany({
+  //   limit: limit,
+  //   offset: offset,
+  //   orderBy: [asc(recipes.lastUpdated)],
+  // });
   
-  return NextResponse.json({ recipes: recipe });
+  // return NextResponse.json({ recipes: recipe });
 }

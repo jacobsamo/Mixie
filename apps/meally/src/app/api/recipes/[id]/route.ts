@@ -8,10 +8,10 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get('id');
 
-  const recipe = await db
-    .select()
-    .from(recipes)
-    .where(sql`${recipes.id} = ${id} or ${recipes.uid} = ${id}`);
+  // const recipe = await db
+  //   .select()
+  //   .from(recipes)
+  //   .where(sql`${recipes.id} = ${id} or ${recipes.uid} = ${id}`);
 
-  return NextResponse.json({ recipe });
+  // return NextResponse.json({ recipe });
 }

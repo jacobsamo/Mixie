@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import UserProfile from './UserProfile';
 import { SearchIcon } from 'lucide-react';
 import clsx from 'clsx';
+import SearchTrigger from './SearchTrigger';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,7 +59,7 @@ const Navbar = () => {
         >
           Recipes
         </Link>
-        <Link
+        {/* <Link
           href={'/sweet'}
           onClick={() => setIsOpen(false)}
           className="font-roboto text-step0 text-center"
@@ -71,7 +72,7 @@ const Navbar = () => {
           className="font-roboto text-step0 text-center"
         >
           Savoury
-        </Link>
+        </Link> */}
       </div>
 
       {/*Search icon - show always */}
@@ -79,7 +80,9 @@ const Navbar = () => {
       {/* hamburger - show under 768px (md:) */}
       <div className="flex flex-row gap-1 items-center">
         {/* <SearchDialog buttonType="searchIcon" /> */}
-        <SearchIcon className="w-8 h-8" />
+        <SearchTrigger>
+          <SearchIcon className="w-8 h-8" />
+        </SearchTrigger>
         <button
           type="button"
           className="flex flex-col items-end justify-center gap-1 sm:hidden"

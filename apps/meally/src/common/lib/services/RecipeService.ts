@@ -20,11 +20,9 @@ class RecipeService {
     //   offset: offset,
     //   limit: limit,
     // });
-    const req = await fetch(`${env.NEXT_PUBLIC_APP_URL}/api/recipes`, {
-      method: 'GET',
-    });
+    const req = await fetch(`${env.NEXT_PUBLIC_APP_URL}/api/recipes`);
     const recipes = await req.json();
-    return recipes as Info[];
+    return recipes.recipes as Info[];
   }
 
   //   async getRatingByRecipeId(id: string) {
