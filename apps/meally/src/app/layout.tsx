@@ -1,11 +1,18 @@
 import Navbar from '@components/modules/Navbar';
 import { siteConfig } from '@lib/config/siteConfig';
-import "@styles/globals.css";
+import '@styles/globals.css';
 import { NextAuthProvider } from '@components/layouts/NextAuthProvider';
 import { ThemeProvider } from '../common/components/modules/theme-provider';
 import { Toaster } from '@components/ui/toaster';
 import { Analytics } from '@vercel/analytics/react';
 import Search from '../common/components/modules/Search';
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
 
 export const metadata = {
   title: {
@@ -63,6 +70,8 @@ export const metadata = {
   manifest: `${siteConfig.url}/manifest.json`,
 };
 
+const queryClient = new QueryClient();
+
 export default function RootLayout({
   children,
 }: {
@@ -73,10 +82,12 @@ export default function RootLayout({
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextAuthProvider>
-            <Navbar />
-            <Search />
-            {children}
-            <Toaster />
+            <QueryClientProvider client={queryClient}>
+              <Navbar />
+              <Search />
+              {children}
+              <Toaster />
+            </QueryClientProvider>
           </NextAuthProvider>
         </ThemeProvider>
         <Analytics />

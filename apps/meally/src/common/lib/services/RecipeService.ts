@@ -4,12 +4,13 @@ import { db } from '@/src/db';
 import { Info, NewRecipe, Recipe } from '@/src/db/types';
 import { authOptions } from '@/src/db/next-auth-adapter';
 import { getServerSession } from 'next-auth/next';
-import { recipes } from '@/src/db/schemas';
+import { info, recipes } from '@/src/db/schemas';
 import * as z from 'zod';
 import {} from '@/src/db/types';
-import { eq, or, sql } from 'drizzle-orm';
+import { asc, eq, or, sql } from 'drizzle-orm';
 import { recipeFormSchema } from '@/src/db/zodSchemas';
 import { env } from '@/env.mjs';
+import { useQuery } from '@tanstack/react-query';
 
 class RecipeService {
   async getAllRecipeCards(
@@ -123,3 +124,20 @@ class RecipeService {
 const recipeService = new RecipeService();
 
 export default recipeService;
+
+export const useFetchAllRecipe = () => {
+  const query = useQuery({
+    queryKey: ['recipes'],
+    queryFn: async () => {
+      const recipe = await db.query.info.findMany({
+        orderBy: [asc(info.lastUpdated)],
+      });
+      return recipe as Info[];
+    },
+    cacheTime: 60 * 60 * 24,
+  });
+
+  return {
+    recipes: query.data,
+  };
+};
