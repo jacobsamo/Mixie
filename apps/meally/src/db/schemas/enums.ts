@@ -62,3 +62,60 @@ export const mealTime = mysqlEnum('mealTime', [
   'snack',
   'dessert',
 ]);
+
+// auth
+
+export const theme = mysqlEnum('theme', ['system', 'light', 'dark']);
+export const fonts = mysqlEnum('fonts', [
+  'default',
+  'open_dyslexic',
+  'monospace',
+  'serif',
+  'sans_serif',
+]);
+export const diet = mysqlEnum('diet', [
+  'none',
+  'vegetarian',
+  'vegan',
+  'pescatarian',
+  'gluten_free',
+  'dairy_free',
+  'nut_free',
+  'egg_free',
+]);
+
+export const allergens = mysqlEnum('allergens', [
+  'none',
+  'gluten',
+  'dairy',
+  'nuts',
+  'eggs',
+  'soya',
+  'fish',
+  'shellfish',
+  'sesame',
+  'celery',
+  'mustard',
+  'lupin',
+  'molluscs',
+]);
+
+export const loveCooking = mysqlEnum('loveCooking', [
+  'not_set',
+  'hate_it',
+  'dislike_it',
+  'neutral',
+  'like_it',
+  'love_it',
+]);
+
+export const averageTimeToCook = mysqlEnum('averageTimeToCook', [
+  'not_set',
+  'less_than_15',
+  '15_to_30',
+  '30_to_45',
+  '45_to_60',
+  '60_to_90',
+  '90_to_120',
+  'more_than_120',
+]);

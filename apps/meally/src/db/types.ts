@@ -2,6 +2,8 @@ import { InferModel } from 'drizzle-orm';
 import { users, accounts, sessions, verificationTokens } from './schemas/auth';
 import { recipes, info, ratings } from './schemas/recipe';
 // import { groupMembers, groups, groupRecipes } from './schemas/groups';
+
+import { type InferSelectModel, type InferInsertModel } from 'drizzle-orm'
 import { z } from 'zod';
 import {
   recipeSchema,
@@ -14,8 +16,8 @@ import {
 } from './zodSchemas';
 
 // users
-type User = InferModel<typeof users>;
-type NewUser = InferModel<typeof users, 'insert'>;
+type User = InferSelectModel<typeof users>;
+type NewUser = InferInsertModel<typeof users>;
 
 export type { User, NewUser };
 
