@@ -1,6 +1,7 @@
 import * as puppeteer from 'puppeteer';
 import { recipeId } from '../utils';
 import { db } from '@/src/db';
+import { env } from '@/env.mjs';
 import { Info, NewRecipe, Recipe } from '@/src/db/types';
 import { authOptions } from '@/src/db/next-auth-adapter';
 import { getServerSession } from 'next-auth/next';
@@ -9,8 +10,7 @@ import * as z from 'zod';
 import {} from '@/src/db/types';
 import { asc, eq, or, sql } from 'drizzle-orm';
 import { recipeFormSchema } from '@/src/db/zodSchemas';
-import { env } from '@/env.mjs';
-import { useQuery } from '@tanstack/react-query';
+import React, { cache } from 'react';
 
 class RecipeService {
   async getAllRecipeCards(
@@ -21,7 +21,9 @@ class RecipeService {
     //   offset: offset,
     //   limit: limit,
     // });
-    const req = await fetch(`${env.NEXT_PUBLIC_APP_URL}/api/recipes`);
+    const req = await fetch(`${env.NEXT_PUBLIC_APP_URL}/api/recipes`, {
+      next: { revalidate: 60 * 60 * 24 },
+    });
     const recipes = await req.json();
     return recipes.recipes as Info[];
   }
@@ -126,18 +128,24 @@ const recipeService = new RecipeService();
 export default recipeService;
 
 export const useFetchAllRecipe = () => {
-  const query = useQuery({
-    queryKey: ['recipes'],
-    queryFn: async () => {
-      const recipe = await db.query.info.findMany({
-        orderBy: [asc(info.lastUpdated)],
+  const [recipes, setRecipes] = React.useState<Info[] | undefined>([]);
+
+  React.useEffect(() => {
+    const fetchRecipes = async () => {
+
+      recipeService.getAllRecipeCards().then((data) => {
+
+        setRecipes(data);
       });
-      return recipe as Info[];
-    },
-    cacheTime: 60 * 60 * 24,
-  });
+    };
+
+    if (recipes?.length === 0) {
+
+      fetchRecipes();
+    }
+  }, [recipes]);
 
   return {
-    recipes: query.data,
+    recipes,
   };
 };

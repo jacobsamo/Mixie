@@ -31,7 +31,6 @@ const StarRating = ({ rating }: StarRatingProps) => {
       setShowSignInPrompt(true);
       return;
     }
-    console.log('Rating: ', rating);
     setInternalRating(rating);
   }
 

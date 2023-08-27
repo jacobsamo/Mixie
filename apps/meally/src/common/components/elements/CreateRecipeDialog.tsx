@@ -47,7 +47,7 @@ const CreateRecipeDialog = () => {
       }).then((res) => {
         if (res.status == 200) {
           res.json().then((data) => {
-            console.log(data);
+  
             router.push(`/recipes/${data.id}/edit`);
           });
           setLoading(false);

@@ -21,9 +21,7 @@ export default function SettingsLayout({
   const pathname = usePathname();
   const lastSegment = pathname.substring(pathname.lastIndexOf('/') + 1);
   const firstSegment = pathname.split('/')[1];
-  console.log('pathNAme: ', pathname);
-  console.log('lastSegment: ', lastSegment);
-  console.log('firstSegment: ', firstSegment);
+
 
   return (
     <main>

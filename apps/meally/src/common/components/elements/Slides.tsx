@@ -20,7 +20,7 @@ const Slides = ({ children }: SwiperTemplateProps) => {
         autoplay: true,
         pauseOnHover: false,
         resetProgress: false,
-        focus: 'center',
+        // focus: 'center',
         // perPage: 3,
       }}
     >

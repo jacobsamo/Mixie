@@ -58,10 +58,8 @@ export async function POST(req: Request) {
     return NextResponse.json('Unauthorized', { status: 403 });
   }
   const { user } = session;
-  console.log('user: ', user);
+
   const json = await req.json();
-  console.log(json);
-  console.log(createRecipeSchema.parse(json));
   const { title, link } = createRecipeSchema.parse(json);
   const uid = uuidv4();
 

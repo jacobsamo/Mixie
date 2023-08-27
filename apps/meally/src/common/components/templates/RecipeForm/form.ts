@@ -131,7 +131,6 @@ import { recipeFormSchema } from '@/src/db/zodSchemas';
 // });
 
 export const onSubmit = async (recipe: z.infer<typeof recipeFormSchema>) => {
-  console.log('Recipe: ', recipe);
   if (!recipe) return;
 
   const totalTime =

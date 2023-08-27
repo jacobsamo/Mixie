@@ -6,6 +6,8 @@ import UserProfile from './UserProfile';
 import { SearchIcon } from 'lucide-react';
 import clsx from 'clsx';
 import SearchTrigger from './SearchTrigger';
+import { Button } from '../ui/button';
+import recipeService from '../../lib/services/RecipeService';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

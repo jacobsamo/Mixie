@@ -1,4 +1,5 @@
 import './env.mjs';
+import { env } from './env.mjs';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -23,6 +24,22 @@ const nextConfig = {
       'dr.savee-cdn.com',
       'via.placeholder.com',
     ],
+  },
+  headers: async () => {
+    return [
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: env.NEXT_PUBLIC_APP_URL,
+          },
+        ],
+      },
+    ];
+  },
+  experimental: {
+    serverActions: true,
   },
 };
 

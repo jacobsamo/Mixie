@@ -26,7 +26,6 @@ export async function PUT(req: Request) {
   json.lastUpdated = new Date(json.lastUpdated);
   json.info.createdAt = new Date(json.info.createdAt);
   json.info.lastUpdated = new Date(json.info.lastUpdated);
-  // console.log('Recipe sent to server: ', json);
   const recipe = recipeFormSchema.parse(json);
 
   // get all ingredients and set them to the info, only include ingredients that have isHeading set to false
@@ -34,8 +33,7 @@ export async function PUT(req: Request) {
   const ingredients = recipe?.ingredients
     ?.filter((ingredient) => !ingredient.isHeading && ingredient.title)
     .map((ingredient) => ingredient.title);
-  console.log('Ingredients: ', ingredients);
-  console.log('Ingredients table updated');
+
 
   // create the json schema for the steps
   const steps = recipe?.steps?.map((step) => {
@@ -60,14 +58,14 @@ export async function PUT(req: Request) {
   };
   console.log('Info: ', newInfo);
   await db.update(info).set(newInfo).where(eq(info.recipeId, recipe.uid));
-  console.log('Info table updated');
+
 
   // remove the info from the recipe as it's been set on another table
   delete recipe.info;
-  console.log('Recipe now: ', recipe);
+
 
   // define the new recipe
-  console.log('Start creating new recipe');
+
   const newRecipe: NewPartialRecipe = {
     ...recipe,
     // id: ,
