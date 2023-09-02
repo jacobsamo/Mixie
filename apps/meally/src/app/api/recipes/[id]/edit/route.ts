@@ -1,16 +1,13 @@
-import { recipeId } from '@/src/common/lib/utils';
+import { calculateTotalTime, recipeId } from '@/src/common/lib/utils';
 import { db } from '@/src/db';
 import { authOptions } from '@/src/db/next-auth-adapter';
 import { recipes, info } from '@/src/db/schemas';
 import {
-  Ingredient,
-  NewRecipe,
   NewPartialRecipe,
   NewInfo,
 } from '@/src/db/types';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
-import * as z from 'zod';
 import { recipeFormSchema } from '@/src/db/zodSchemas';
 import { eq } from 'drizzle-orm';
 
@@ -34,11 +31,15 @@ export async function PUT(req: Request) {
     ?.filter((ingredient) => !ingredient.isHeading && ingredient.title)
     .map((ingredient) => ingredient.title);
 
-
   // create the json schema for the steps
   const steps = recipe?.steps?.map((step) => {
     return step;
   });
+
+  const totalTime =
+    recipe.info && recipe.info.prep && recipe?.info.cook
+      ? await calculateTotalTime(recipe.info.prep, recipe.info.cook)
+      : null;
 
   // update info table
   const newInfo: NewInfo = {
@@ -50,19 +51,16 @@ export async function PUT(req: Request) {
     ingredients: ingredients || null,
     prep: recipe?.info?.prep || null,
     cook: recipe?.info?.cook || null,
-    total: recipe?.info?.total || null,
+    total: totalTime,
     createByName: recipe.info?.createByName || '',
     createdBy: recipe.info?.createdBy || user.id,
     lastUpdatedBy: user.id,
     lastUpdatedByName: user.name! || '',
   };
-  console.log('Info: ', newInfo);
   await db.update(info).set(newInfo).where(eq(info.recipeId, recipe.uid));
-
 
   // remove the info from the recipe as it's been set on another table
   delete recipe.info;
-
 
   // define the new recipe
 
@@ -74,13 +72,17 @@ export async function PUT(req: Request) {
     lastUpdatedBy: user.id,
     lastUpdatedByName: user.name! || '',
   };
-  console.log('new recipe being set: ', newRecipe);
 
   const setRecipe = await db
     .update(recipes)
     .set(newRecipe)
     .where(eq(recipes.uid, recipe.uid));
-  console.log('Created Recipe', setRecipe);
+
+  console.log('Created Recipe', {
+    message: `Recipe successfully created, ${setRecipe}`,
+    recipe: newRecipe,
+    info: newInfo,
+  });
   return NextResponse.json(
     { message: `Recipe successfully created, ${setRecipe}`, recipe: newRecipe },
     {

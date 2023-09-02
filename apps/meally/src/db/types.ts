@@ -1,4 +1,3 @@
-import { InferModel } from 'drizzle-orm';
 import { users, accounts, sessions, verificationTokens } from './schemas/auth';
 import { recipes, info, ratings } from './schemas/recipe';
 // import { groupMembers, groups, groupRecipes } from './schemas/groups';
@@ -59,3 +58,7 @@ export type {
 // type NewGroup = InferModel<typeof groups, 'insert'>;
 
 // export type { Group, NewGroup };
+
+
+
+

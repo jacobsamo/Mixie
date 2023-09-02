@@ -7,6 +7,7 @@ interface InfoProps {
 }
 
 const Info = ({ info }: InfoProps) => {
+  console.log('Info: ', info);
   return (
     <ul className="flex flex-wrap gap-4 pb-4">
       <li className="flex flex-row items-center gap-1">
