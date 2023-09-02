@@ -1,8 +1,8 @@
-'use client';
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 // import { StarIcon } from '@heroicons/react/24/outline';
-import { StarIcon } from 'lucide-react';
-import useUser from '@/src/common/hooks/useUser';
+import { StarIcon } from "lucide-react";
+import useUser from "@/src/common/hooks/useUser";
 import {
   Dialog,
   DialogContent,
@@ -10,10 +10,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@components/ui/dialog';
-import { Button } from '../../ui/button';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+} from "@components/ui/dialog";
+import { Button } from "../../ui/button";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface StarRatingProps {
   rating: number | undefined;
@@ -35,7 +35,7 @@ const StarRating = ({ rating }: StarRatingProps) => {
   }
 
   return (
-    <div className="flex flex-row h-fit w-fit">
+    <div className="flex h-fit w-fit flex-row">
       {[...Array(5)].map((star, index) => {
         index += 1;
         return (
@@ -44,14 +44,14 @@ const StarRating = ({ rating }: StarRatingProps) => {
             key={index}
             className={
               index <= (hoverRating || internalRating || rating || -1)
-                ? 'fill-[#ffe14cf6] text-[#ffe14cf6]'
-                : ''
+                ? "fill-[#ffe14cf6] text-[#ffe14cf6]"
+                : ""
             }
             onClick={() => setRating(index)}
             onMouseEnter={() => setHoverRating(index)}
             onMouseLeave={() => setHoverRating(rating! || 0)}
           >
-            <StarIcon className="w-8 h-w-8" />
+            <StarIcon className="h-w-8 w-8" />
           </button>
         );
       })}
@@ -65,8 +65,8 @@ const StarRating = ({ rating }: StarRatingProps) => {
               </DialogDescription>
             </DialogHeader>
             <Link
-              href={'/api/auth/signin'}
-              className="flex justify-center h-10 px-4 py-2 bg-yellow rounded-md text-step--2 items-center text-black font-semibold"
+              href={"/api/auth/signin"}
+              className="flex h-10 items-center justify-center rounded-md bg-yellow px-4 py-2 text-step--2 font-semibold text-black"
             >
               Login
             </Link>

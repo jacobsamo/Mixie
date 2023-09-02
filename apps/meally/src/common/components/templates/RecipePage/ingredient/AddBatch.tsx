@@ -1,6 +1,6 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import { PlusCircleIcon, MinusCircleIcon } from 'lucide-react';
+"use client";
+import React, { useEffect, useState } from "react";
+import { PlusCircleIcon, MinusCircleIcon } from "lucide-react";
 
 interface AddBatchProps {
   add: number;
@@ -21,9 +21,9 @@ const AddBatch = ({ add, setAdd }: AddBatchProps) => {
 
   return (
     <>
-      <div className="flex flew-row items-center py-2" aria-label="Add a batch">
+      <div className="flew-row flex items-center py-2" aria-label="Add a batch">
         <button data-testid="plus_button" onClick={addBatch}>
-          <PlusCircleIcon className="w-9 h-9" />
+          <PlusCircleIcon className="h-9 w-9" />
         </button>
         <button
           data-testid="minus_button"
@@ -32,13 +32,13 @@ const AddBatch = ({ add, setAdd }: AddBatchProps) => {
           disabled={add < 2}
         >
           <MinusCircleIcon
-            className={`w-9 h-9 ${
-              add < 2 ? 'pointer-events-none bg-none opacity-20 text-white' : ''
+            className={`h-9 w-9 ${
+              add < 2 ? "pointer-events-none bg-none text-white opacity-20" : ""
             }`}
           />
         </button>
         <p data-testid="title">
-          {add} {add > 1 ? 'Batches' : 'Batch'}
+          {add} {add > 1 ? "Batches" : "Batch"}
         </p>
       </div>
     </>

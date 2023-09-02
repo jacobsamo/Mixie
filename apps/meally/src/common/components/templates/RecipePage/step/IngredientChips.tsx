@@ -1,5 +1,5 @@
-import React from 'react';
-import { Ingredient, Step } from '@db/types';
+import React from "react";
+import { Ingredient, Step } from "@db/types";
 
 interface IngredientChipsProps {
   step: Step;
@@ -51,11 +51,11 @@ const IngredientChips = ({ step, ingredients }: IngredientChipsProps) => {
       {uniqueMatchedIngredients.map((ingredient, index) => (
         <p
           key={index}
-          className="text-center w-fit h-fit p-1 rounded-lg text-step--4 bg-yellow opacity-80 text-black"
+          className="h-fit w-fit rounded-lg bg-yellow p-1 text-center text-step--4 text-black opacity-80"
         >
-          {ingredient.quantity}{' '}
-          {ingredient.amount == 'not_set' ? null : ingredient.amount}{' '}
-          {ingredient.unit} {ingredient.title}{' '}
+          {ingredient.quantity}{" "}
+          {ingredient.amount == "not_set" ? null : ingredient.amount}{" "}
+          {ingredient.unit} {ingredient.title}{" "}
         </p>
       ))}
     </div>

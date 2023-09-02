@@ -1,18 +1,18 @@
-import { Trash2Icon } from 'lucide-react';
-import { units } from '@/src/common/lib/services/data';
-import { Controller, useFormContext } from 'react-hook-form';
-import { Ingredient as IngredientType } from '@/src/db/types';
-import { Input } from '../../ui/input';
-import { recipeFormSchema } from '@/src/db/zodSchemas';
-import * as z from 'zod';
+import { Trash2Icon } from "lucide-react";
+import { units } from "@/src/common/lib/services/data";
+import { Controller, useFormContext } from "react-hook-form";
+import { Ingredient as IngredientType } from "@/src/db/types";
+import { Input } from "../../ui/input";
+import { recipeFormSchema } from "@/src/db/zodSchemas";
+import * as z from "zod";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@components/ui/select';
-import { Button } from '../../ui/button';
+} from "@components/ui/select";
+import { Button } from "../../ui/button";
 
 interface IngredientProps {
   index: number;
@@ -33,7 +33,7 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
           ariaLabel="delete ingredient"
           onClick={() => handleDelete(index)}
           type="button"
-          className="bg-transparent border border-solid border-red hover:bg-red  rounded-md"
+          className="rounded-md border border-solid border-red bg-transparent  hover:bg-red"
           size="icon"
         >
           <Trash2Icon className="h-6 w-6 text-red group-hover:text-white" />
@@ -57,10 +57,10 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
         name={`ingredients.${index}.unit` as const}
         render={({ field }) => (
           <Select
-            defaultValue={field?.value || ''}
+            defaultValue={field?.value || ""}
             onValueChange={field.onChange}
           >
-            <SelectTrigger className="w-24 h-10">
+            <SelectTrigger className="h-10 w-24">
               <SelectValue placeholder="Unit" />
             </SelectTrigger>
             <SelectContent>
@@ -81,24 +81,24 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
           valueAsNumber: true,
           validate: (value) => {
             if (value === 0) {
-              return 'Quantity cannot be 0';
+              return "Quantity cannot be 0";
             }
             return true;
           },
         })}
       />
-      {['cup', 'tbsp', 'tsp'].includes(
-        watch(`ingredients.${index}.unit`) || ''
+      {["cup", "tbsp", "tsp"].includes(
+        watch(`ingredients.${index}.unit`) || ""
       ) ? (
         <Controller
           control={control}
           name={`ingredients.${index}.amount`}
           render={({ field }) => (
             <Select
-              defaultValue={field?.value || ''}
+              defaultValue={field?.value || ""}
               onValueChange={field.onChange}
             >
-              <SelectTrigger className="min-w-[6rem] w-fit p-2 h-10">
+              <SelectTrigger className="h-10 w-fit min-w-[6rem] p-2">
                 <SelectValue placeholder="Unit" />
               </SelectTrigger>
               <SelectContent>
@@ -119,7 +119,7 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
         ariaLabel="delete ingredient"
         onClick={() => handleDelete(index)}
         type="button"
-        className="bg-transparent border border-solid border-red hover:bg-red  rounded-md"
+        className="rounded-md border border-solid border-red bg-transparent  hover:bg-red"
         size="icon"
       >
         <Trash2Icon className="h-6 w-6 text-red hover:text-white" />

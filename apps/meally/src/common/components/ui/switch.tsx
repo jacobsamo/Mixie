@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import * as SwitchPrimitives from '@radix-ui/react-switch';
+import * as React from "react";
+import * as SwitchPrimitives from "@radix-ui/react-switch";
 
-import { cn } from '@lib/utils';
+import { cn } from "@lib/utils";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@components/ui/tooltip';
-import { HelpCircleIcon } from 'lucide-react';
-import type { FieldError } from 'react-hook-form';
+} from "@components/ui/tooltip";
+import { HelpCircleIcon } from "lucide-react";
+import type { FieldError } from "react-hook-form";
 
 interface SwitchProps
   extends React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> {}
@@ -22,7 +22,7 @@ const Switch = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SwitchPrimitives.Root
     className={cn(
-      'peer inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-red disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-yellow data-[state=unchecked]:bg-grey',
+      "peer inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-red disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-yellow data-[state=unchecked]:bg-grey",
       className
     )}
     {...props}
@@ -30,7 +30,7 @@ const Switch = React.forwardRef<
   >
     <SwitchPrimitives.Thumb
       className={cn(
-        'pointer-events-none block h-5 w-5 rounded-full bg-white shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0'
+        "pointer-events-none block h-5 w-5 rounded-full bg-white shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0"
       )}
     />
   </SwitchPrimitives.Root>
@@ -67,7 +67,7 @@ const SwitchInput = React.forwardRef<HTMLButtonElement, SwitchInputProps>(
     ref
   ) => {
     return (
-      <div className={cn('flex flex-col gap-1', classNames?.container)}>
+      <div className={cn("flex flex-col gap-1", classNames?.container)}>
         {label && (
           <span
             className="flex flex-row items-center gap-2"
@@ -76,7 +76,7 @@ const SwitchInput = React.forwardRef<HTMLButtonElement, SwitchInputProps>(
             <label
               htmlFor={name}
               className={cn(
-                'block text-step--3 font-medium',
+                "block text-step--3 font-medium",
                 classNames?.label
               )}
             >
@@ -86,7 +86,7 @@ const SwitchInput = React.forwardRef<HTMLButtonElement, SwitchInputProps>(
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild className="cursor-pointer">
-                    <HelpCircleIcon className="w-5 h-5 opacity-70" />
+                    <HelpCircleIcon className="h-5 w-5 opacity-70" />
                   </TooltipTrigger>
                   <TooltipContent sideOffset={5} side="bottom">
                     {tooltip}
@@ -97,7 +97,7 @@ const SwitchInput = React.forwardRef<HTMLButtonElement, SwitchInputProps>(
           </span>
         )}
         {error && (
-          <span className="text-red text-step--3 font-extralight italic">
+          <span className="text-step--3 font-extralight italic text-red">
             {error.message}
           </span>
         )}
@@ -108,7 +108,7 @@ const SwitchInput = React.forwardRef<HTMLButtonElement, SwitchInputProps>(
           placeholder={label}
           ref={ref}
           {...props}
-          className={cn('', classNames?.input)}
+          className={cn("", classNames?.input)}
         />
         {hint && (
           <span className="text-step--3 font-extralight italic">{hint}</span>
@@ -117,6 +117,6 @@ const SwitchInput = React.forwardRef<HTMLButtonElement, SwitchInputProps>(
     );
   }
 );
-SwitchInput.displayName = 'SwitchInput';
+SwitchInput.displayName = "SwitchInput";
 
 export { Switch, SwitchInput };

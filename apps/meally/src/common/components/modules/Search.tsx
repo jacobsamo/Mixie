@@ -1,15 +1,15 @@
-'use client';
-import Fuse from 'fuse.js';
-import React, { useCallback, useEffect, useState } from 'react';
+"use client";
+import Fuse from "fuse.js";
+import React, { useCallback, useEffect, useState } from "react";
 // import { useFetchAllRecipe } from '../../lib/services/RecipeService';
-import { Info } from '@/src/db/types';
-import { useToggleWithShortcut } from '../../hooks/useToggleWithShortCut';
-import Link from 'next/link';
-import { recipeId } from '../../lib/utils';
-import { Dialog, DialogContent } from '@components/ui/dialog';
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
-import { useForm } from 'react-hook-form';
-import recipeService from '../../lib/services/RecipeService';
+import { Info } from "@/src/db/types";
+import { useToggleWithShortcut } from "../../hooks/useToggleWithShortCut";
+import Link from "next/link";
+import { recipeId } from "../../lib/utils";
+import { Dialog, DialogContent } from "@components/ui/dialog";
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { useForm } from "react-hook-form";
+import recipeService from "../../lib/services/RecipeService";
 
 interface SearchProps {
   externalOpen?: boolean;
@@ -26,18 +26,18 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
   const { open, setOpen } = useToggleWithShortcut(setExternalOpen);
   const { register, watch } = useForm<{ search: string }>({
     defaultValues: {
-      search: '',
+      search: "",
     },
   });
 
-  const searchValue = watch('search');
+  const searchValue = watch("search");
 
   function searchRecipes(query: string) {
     if (recipes.length === 0) return;
 
     const options: Fuse.IFuseOptions<Info> = {
       includeScore: true,
-      keys: ['title', 'keywords'],
+      keys: ["title", "keywords"],
     };
     const fuse = new Fuse(recipes, options);
     const result = fuse.search(query);
@@ -73,12 +73,12 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
         onOpenChange={setExternalOpen !== undefined ? setExternalOpen : setOpen}
       >
         <DialogContent className="overflow-hidden p-0">
-          <div className="flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground">
+          <div className="bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md">
             <div className="flex items-center border-b px-3">
               <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
               <input
-                className="flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-                {...register('search')}
+                className="text-sm placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                {...register("search")}
               />
             </div>
 
@@ -89,7 +89,7 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
                   <Link
                     href={`/recipes/${recipeId(recipe.title)}`}
                     key={recipe.id}
-                    className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-grey aria-selected:text-white data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+                    className="text-sm relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 outline-none aria-selected:bg-grey aria-selected:text-white data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
                   >
                     {recipe.title}
                   </Link>

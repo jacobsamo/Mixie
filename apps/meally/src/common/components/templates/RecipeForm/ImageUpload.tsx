@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -7,13 +7,13 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@components/ui/dialog';
-import { Button } from '@components/ui/button';
-import { ImagePlus, Loader2 } from 'lucide-react';
-import { Input } from '../../ui/input';
-import { recipeFormSchema } from '@/src/db/zodSchemas';
-import { useFormContext } from 'react-hook-form';
-import * as z from 'zod';
+} from "@components/ui/dialog";
+import { Button } from "@components/ui/button";
+import { ImagePlus, Loader2 } from "lucide-react";
+import { Input } from "../../ui/input";
+import { recipeFormSchema } from "@/src/db/zodSchemas";
+import { useFormContext } from "react-hook-form";
+import * as z from "zod";
 
 // TODO: add image upload functionality with uploadThing https://uploadthing.com/dashboard
 const ImageUpload = () => {
@@ -26,9 +26,9 @@ const ImageUpload = () => {
       <DialogTrigger asChild>
         <Button
           ariaLabel="edit or upload an image"
-          variant={'secondary'}
+          variant={"secondary"}
           type="button"
-          className="w-52 m-2"
+          className="m-2 w-52"
           LeadingIcon={<ImagePlus />}
         >
           Upload Image
@@ -40,7 +40,7 @@ const ImageUpload = () => {
           <DialogDescription>Upload an image for your recipe</DialogDescription>
         </DialogHeader>
         <Input
-          {...register('info.imgUrl', {
+          {...register("info.imgUrl", {
             required: true,
           })}
           required
@@ -48,7 +48,7 @@ const ImageUpload = () => {
           placeholder="https://"
         />
         <Input
-          {...register('info.imgAlt', {
+          {...register("info.imgAlt", {
             required: true,
           })}
           required
@@ -59,9 +59,9 @@ const ImageUpload = () => {
         <DialogFooter>
           <Button
             ariaLabel="cancel"
-            variant={'destructive'}
+            variant={"destructive"}
             type="button"
-            className="w-52 m-2"
+            className="m-2 w-52"
             onClick={() => setOpen(false)}
           >
             Cancel
@@ -69,7 +69,7 @@ const ImageUpload = () => {
           <Button
             ariaLabel="save"
             type="button"
-            className="w-52 m-2"
+            className="m-2 w-52"
             // onClick={() => handleImageUpload()}
             onClick={() => setOpen(false)}
           >

@@ -1,7 +1,7 @@
-import React from 'react';
-import Step from './Step';
-import { Step as StepType, Ingredient } from '@/src/db/types';
-import type { ClassValue } from 'clsx';
+import React from "react";
+import Step from "./Step";
+import { Step as StepType, Ingredient } from "@/src/db/types";
+import type { ClassValue } from "clsx";
 
 interface StepContainerProps {
   steps: StepType[];
@@ -15,7 +15,7 @@ const StepContainer = ({
   className,
 }: StepContainerProps) => {
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       {steps.map((step, index) => (
         <Step key={index} index={index} step={step} ingredients={ingredients} />
       ))}

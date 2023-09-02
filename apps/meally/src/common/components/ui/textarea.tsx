@@ -1,14 +1,14 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { cn } from '@lib/utils';
-import { Control, Controller, RegisterOptions } from 'react-hook-form';
+import { cn } from "@lib/utils";
+import { Control, Controller, RegisterOptions } from "react-hook-form";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@components/ui/tooltip';
-import { HelpCircleIcon } from 'lucide-react';
+} from "@components/ui/tooltip";
+import { HelpCircleIcon } from "lucide-react";
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -57,21 +57,16 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       <Controller
         control={control}
         name={id}
-        defaultValue={defaultValue || ''}
+        defaultValue={defaultValue || ""}
         rules={{ required: required, ...options }}
         render={({ field }) => (
-          <div
-            className={cn(
-              'flex flex-col gap-1',
-              classNames?.container
-            )}
-          >
+          <div className={cn("flex flex-col gap-1", classNames?.container)}>
             {label && (
               <span className="flex flex-row items-center gap-2">
                 <label
                   htmlFor={name}
                   className={cn(
-                    'block text-step--3 font-medium',
+                    "block text-step--3 font-medium",
                     classNames?.label
                   )}
                 >
@@ -81,7 +76,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild className="cursor-pointer">
-                        <HelpCircleIcon className="w-5 h-5 opacity-70" />
+                        <HelpCircleIcon className="h-5 w-5 opacity-70" />
                       </TooltipTrigger>
                       <TooltipContent sideOffset={5} side="bottom">
                         {tooltip}
@@ -92,11 +87,11 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
               </span>
             )}
             {error && (
-              <span className="text-red text-step--3 font-extralight italic">
+              <span className="text-step--3 font-extralight italic text-red">
                 {error}
               </span>
             )}
-            <div className="flex flec-col min-h-[60px] w-full rounded-md bg-white  dark:bg-grey  bg-transparent px-3 py-2 text-sm shadow-sm  focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50">
+            <div className="flec-col text-sm focus-visible:ring-ring flex min-h-[60px] w-full  rounded-md  bg-transparent bg-white px-3 py-2 shadow-sm  focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-grey">
               {Icon && <span>{Icon}</span>}
               <textarea
                 id={id}
@@ -106,11 +101,11 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
                 value={field.value}
                 ref={field.ref}
                 rows={
-                  /\n/.test(field.value?.toString() || '')
+                  /\n/.test(field.value?.toString() || "")
                     ? Number(field.value?.match(/\n/g)?.length) + 2
                     : 3
                 }
-                className="resize-none w-full rounded-md bg-transparent border-none outline-none"
+                className="w-full resize-none rounded-md border-none bg-transparent outline-none"
                 {...props}
               />
             </div>
@@ -125,7 +120,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     );
   }
 );
-Textarea.displayName = 'Textarea';
+Textarea.displayName = "Textarea";
 
 export { Textarea };
 

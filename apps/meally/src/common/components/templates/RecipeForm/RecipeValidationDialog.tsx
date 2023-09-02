@@ -1,5 +1,5 @@
-'use client';
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -7,17 +7,17 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@components/ui/dialog';
-import { Input } from '@components/ui/input';
-import * as z from 'zod';
-import { Controller, useFormContext } from 'react-hook-form';
-import { Button } from '@components/ui/button';
-import { onSubmit } from './form';
-import { ArrowLeftIcon } from 'lucide-react';
-import { Textarea } from '@components/ui/textarea';
-import TagInput from '@components/ui/taginput';
-import { recipeFormSchema } from '@/src/db/zodSchemas';
-import { Switch, SwitchInput } from '../../ui/switch';
+} from "@components/ui/dialog";
+import { Input } from "@components/ui/input";
+import * as z from "zod";
+import { Controller, useFormContext } from "react-hook-form";
+import { Button } from "@components/ui/button";
+import { onSubmit } from "./form";
+import { ArrowLeftIcon } from "lucide-react";
+import { Textarea } from "@components/ui/textarea";
+import TagInput from "@components/ui/taginput";
+import { recipeFormSchema } from "@/src/db/zodSchemas";
+import { Switch, SwitchInput } from "../../ui/switch";
 
 interface CreateRecipeDialogProps {
   open: boolean;
@@ -38,9 +38,9 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
             The final steps before you publish your recipe
           </DialogDescription>
         </DialogHeader>
-        <div className="flex flex-col mx-auto p-2 md:p-0">
+        <div className="mx-auto flex flex-col p-2 md:p-0">
           <Input
-            {...register('title', {
+            {...register("title", {
               required: true,
             })}
             required
@@ -55,7 +55,7 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
           />
           <Controller
             control={control}
-            name={'info.isPublic'}
+            name={"info.isPublic"}
             defaultValue={false}
             render={({ field }) => (
               <SwitchInput
@@ -71,9 +71,9 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
         <DialogFooter>
           <Button
             ariaLabel="go back"
-            variant={'destructive'}
+            variant={"destructive"}
             type="button"
-            className="w-52 m-2"
+            className="m-2 w-52"
             onClick={() => setOpen(false)}
             LeadingIcon={<ArrowLeftIcon />}
           >
@@ -82,7 +82,7 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
           <Button
             ariaLabel="save"
             type="button"
-            className="w-52 m-2"
+            className="m-2 w-52"
             onClick={handleSubmit(onSubmit)}
           >
             Save

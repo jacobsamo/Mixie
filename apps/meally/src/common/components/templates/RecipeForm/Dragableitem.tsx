@@ -1,7 +1,7 @@
-import type { Identifier, XYCoord } from 'dnd-core';
-import type { FC } from 'react';
-import { useRef } from 'react';
-import { useDrag, useDrop, DropTargetHookSpec } from 'react-dnd';
+import type { Identifier, XYCoord } from "dnd-core";
+import type { FC } from "react";
+import { useRef } from "react";
+import { useDrag, useDrop, DropTargetHookSpec } from "react-dnd";
 
 interface DragItem {
   index: number;
@@ -108,7 +108,7 @@ export const DraggAbleCard: FC<CardProps> = ({
       className="flex flex-row items-center hover:cursor-pointer"
     >
       {showHandle && (
-        <svg className="w-4 h-4 p-0">
+        <svg className="h-4 w-4 p-0">
           <path d="M10 13a1 1 0 100-2 1 1 0 000 2zm-4 0a1 1 0 100-2 1 1 0 000 2zm1-5a1 1 0 11-2 0 1 1 0 012 0zm3 1a1 1 0 100-2 1 1 0 000 2zm1-5a1 1 0 11-2 0 1 1 0 012 0zM6 5a1 1 0 100-2 1 1 0 000 2z"></path>
         </svg>
       )}

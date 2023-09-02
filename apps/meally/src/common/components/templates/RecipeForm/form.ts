@@ -1,8 +1,8 @@
-import { calculateTotalTime, recipeId } from '@/src/common/lib/utils';
-import * as z from 'zod';
-import type { Ingredient } from '@/src/db/types';
-import { toast } from '../../ui/use-toast';
-import { recipeFormSchema } from '@/src/db/zodSchemas';
+import { calculateTotalTime, recipeId } from "@/src/common/lib/utils";
+import * as z from "zod";
+import type { Ingredient } from "@/src/db/types";
+import { toast } from "../../ui/use-toast";
+import { recipeFormSchema } from "@/src/db/zodSchemas";
 
 // keep this here until i know that everything works as it should with the drizzleZod plugin
 // export const recipeFormSchema = z.object({
@@ -139,11 +139,11 @@ export const onSubmit = async (recipe: z.infer<typeof recipeFormSchema>) => {
       : null;
 
   const ingredients = recipe?.ingredients?.map((ingredient: Ingredient) => {
-    if (!['cup', 'tbsp', 'tsp'].includes(ingredient.unit || '')) {
-      ingredient.amount = 'not_set';
+    if (!["cup", "tbsp", "tsp"].includes(ingredient.unit || "")) {
+      ingredient.amount = "not_set";
     }
     // check if the quanity is a number if not then set the value to null
-    if (typeof ingredient?.quantity != 'number') {
+    if (typeof ingredient?.quantity != "number") {
       ingredient.quantity = null;
     }
 
@@ -161,22 +161,22 @@ export const onSubmit = async (recipe: z.infer<typeof recipeFormSchema>) => {
 
   // send data to edit the recipe in the db
   fetch(`/api/recipes/${recipe.id}/edit`, {
-    method: 'PUT',
+    method: "PUT",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(recipe),
   }).then((res) => {
     if (res.status === 200) {
       toast({
-        title: 'Recipe created.',
-        description: 'Your recipe has been created.',
+        title: "Recipe created.",
+        description: "Your recipe has been created.",
       });
     } else {
       toast({
-        title: 'Uh oh! Something went wrong.',
-        description: 'There was an error while creating your recipe.',
-        variant: 'destructive',
+        title: "Uh oh! Something went wrong.",
+        description: "There was an error while creating your recipe.",
+        variant: "destructive",
       });
     }
   });

@@ -1,9 +1,9 @@
-import { Trash2Icon } from 'lucide-react';
-import { Textarea } from '../../ui/textarea';
-import { useFormContext } from 'react-hook-form';
-import { recipeFormSchema } from '@/src/db/zodSchemas';
-import * as z from 'zod';
-import { Button } from '../../ui/button';
+import { Trash2Icon } from "lucide-react";
+import { Textarea } from "../../ui/textarea";
+import { useFormContext } from "react-hook-form";
+import { recipeFormSchema } from "@/src/db/zodSchemas";
+import * as z from "zod";
+import { Button } from "../../ui/button";
 interface StepProps {
   index: number;
   handleDelete: (index: number) => void;
@@ -16,15 +16,15 @@ const Step = ({ index, handleDelete }: StepProps) => {
   return (
     <div
       key={index}
-      className="flex flex-col w-full relative p-3 rounded-2xl shadow dark:bg-grey"
+      className="relative flex w-full flex-col rounded-2xl p-3 shadow dark:bg-grey"
     >
-      <div className="flex flex-row justify-between items-center">
-        <h1 className="font-medium font-Roboto text-step0">Step {index + 1}</h1>
+      <div className="flex flex-row items-center justify-between">
+        <h1 className="font-Roboto text-step0 font-medium">Step {index + 1}</h1>
         <Button
           ariaLabel="delete ingredient"
           onClick={() => handleDelete(index)}
           type="button"
-          className="bg-transparent border border-solid border-red hover:bg-red  rounded-md"
+          className="rounded-md border border-solid border-red bg-transparent  hover:bg-red"
           // variant={'secondary'}
           size="icon"
         >
@@ -38,9 +38,9 @@ const Step = ({ index, handleDelete }: StepProps) => {
         name={`steps.${index}.step_body`}
         control={control}
         classNames={{
-          inputWrapper: 'border border-solid border-white rounded-md',
+          inputWrapper: "border border-solid border-white rounded-md",
         }}
-        className="shadow-none outline outline-1 border border-solid border-white"
+        className="border border-solid border-white shadow-none outline outline-1"
       />
     </div>
   );

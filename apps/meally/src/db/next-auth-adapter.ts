@@ -1,21 +1,21 @@
-import { and, eq } from 'drizzle-orm';
-import { type GetServerSidePropsContext } from 'next';
+import { and, eq } from "drizzle-orm";
+import { type GetServerSidePropsContext } from "next";
 import {
   getServerSession,
   type NextAuthOptions,
   type DefaultSession,
   type AuthOptions,
-} from 'next-auth';
-import { type Adapter } from 'next-auth/adapters';
+} from "next-auth";
+import { type Adapter } from "next-auth/adapters";
 
-import GitHubProvider from 'next-auth/providers/github';
-import FacebookProvider from 'next-auth/providers/facebook';
-import GoogleProvider from 'next-auth/providers/google';
-import TwitterProvider from 'next-auth/providers/twitter';
+import GitHubProvider from "next-auth/providers/github";
+import FacebookProvider from "next-auth/providers/facebook";
+import GoogleProvider from "next-auth/providers/google";
+import TwitterProvider from "next-auth/providers/twitter";
 
-import { env } from '@/env.mjs';
-import { db } from '.';
-import * as schema from './schemas';
+import { env } from "@/env.mjs";
+import { db } from ".";
+import * as schema from "./schemas";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -23,13 +23,13 @@ import * as schema from './schemas';
  *
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
-declare module 'next-auth' {
+declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
       // ...other properties
       // role: UserRole;
-    } & DefaultSession['user'];
+    } & DefaultSession["user"];
   }
 
   // interface User {
@@ -49,7 +49,7 @@ export const authOptions: NextAuthOptions = {
   //   signOut: '/logout',
   // },\
   theme: {
-    logo: '/favicon.ico',
+    logo: "/favicon.ico",
   },
   callbacks: {
     session: ({ session, user }) => ({
@@ -83,8 +83,8 @@ export const authOptions: NextAuthOptions = {
  * @see https://next-auth.js.org/configuration/nextjs
  */
 export const getServerAuthSession = (ctx: {
-  req: GetServerSidePropsContext['req'];
-  res: GetServerSidePropsContext['res'];
+  req: GetServerSidePropsContext["req"];
+  res: GetServerSidePropsContext["res"];
 }) => {
   return getServerSession(ctx.req, ctx.res, authOptions);
 };
@@ -156,7 +156,7 @@ export function DrizzleAdapter(): Adapter {
     },
     async updateUser(data) {
       if (!data.id) {
-        throw new Error('No user id.');
+        throw new Error("No user id.");
       }
 
       await db.update(users).set(data).where(eq(users.id, data.id));
@@ -251,7 +251,7 @@ export function DrizzleAdapter(): Adapter {
 
         return deletedToken;
       } catch (err) {
-        throw new Error('No verification token found.');
+        throw new Error("No verification token found.");
       }
     },
     async deleteUser(id) {

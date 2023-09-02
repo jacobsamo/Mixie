@@ -1,13 +1,13 @@
-import { X } from 'lucide-react';
-import React, { useCallback } from 'react';
-import { Input, InputProps } from './input';
+import { X } from "lucide-react";
+import React, { useCallback } from "react";
+import { Input, InputProps } from "./input";
 import {
   Control,
   RegisterOptions,
   useController,
   useFieldArray,
   useForm,
-} from 'react-hook-form';
+} from "react-hook-form";
 
 // add types for react-hook-form so that we can use the `control` prop with the types from the formschema and not have to use `any`
 export interface TagInputProps
@@ -36,10 +36,10 @@ const TagInput = ({
 
   const handleKeyDown = useCallback(
     (e: any) => {
-      if (e.key === ',' || e.key === 'Enter') {
+      if (e.key === "," || e.key === "Enter") {
         e.preventDefault();
         append({ value: e.target.value });
-        setValue(name, '');
+        setValue(name, "");
       }
     },
     [append, name, setValue]
@@ -54,16 +54,16 @@ const TagInput = ({
 
   return (
     <div className="mt-4">
-      <div className="flex flex-row flex-wrap gap-1 w-full">
+      <div className="flex w-full flex-row flex-wrap gap-1">
         {fields.map((field: any, index: any) => (
           <span
             key={index}
-            className="flex justify-center items-center w-fit h-6 p-4 mb-2 rounded-lg text-step--2 gap-1 dark:text-white dark:bg-grey  "
+            className="mb-2 flex h-6 w-fit items-center justify-center gap-1 rounded-lg p-4 text-step--2 dark:bg-grey dark:text-white  "
           >
             {field.value}
             {handleRemove ? (
               <button onClick={() => handleRemove(index)} type="button">
-                <X className="w-5 h-5 hover:text-red" />
+                <X className="h-5 w-5 hover:text-red" />
               </button>
             ) : (
               <></>

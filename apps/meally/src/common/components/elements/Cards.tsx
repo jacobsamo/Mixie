@@ -1,14 +1,14 @@
-'use client';
-import React from 'react';
-import Image from 'next/image';
-import type { Info, Recipe } from '@/src/db/types';
-import { HeartIcon } from 'lucide-react';
-import Link from 'next/link';
-import { useToast } from '../ui/use-toast';
-import { cn } from '@lib/utils';
+"use client";
+import React from "react";
+import Image from "next/image";
+import type { Info, Recipe } from "@/src/db/types";
+import { HeartIcon } from "lucide-react";
+import Link from "next/link";
+import { useToast } from "../ui/use-toast";
+import { cn } from "@lib/utils";
 
 function addBookMark(recipe: Info) {
-  throw Error('Function not implemented.');
+  throw Error("Function not implemented.");
 }
 
 interface CardProps {
@@ -39,13 +39,13 @@ export const BaseCard = ({
   return (
     <div
       className={cn(
-        'relative flex p-2 items-center justify-between flex-col h-56 w-56  rounded-xl text-black dark:text-white',
+        "relative flex h-56 w-56 flex-col items-center justify-between rounded-xl  p-2 text-black dark:text-white",
         classNames?.container
       )}
     >
       <Link
         href={`/recipes/${recipe.id}`}
-        className={cn('text-center text-step--2', classNames?.title)}
+        className={cn("text-center text-step--2", classNames?.title)}
       >
         {recipe.title}
       </Link>
@@ -53,24 +53,24 @@ export const BaseCard = ({
       {hasCookTime ? (
         <div
           className={cn(
-            'flex flex-row w-full justify-between',
+            "flex w-full flex-row justify-between",
             classNames?.bookmarkContainer
           )}
         >
-          <h3 className={cn('w-fit whitespace-nowrap', classNames?.cookTime)}>
+          <h3 className={cn("w-fit whitespace-nowrap", classNames?.cookTime)}>
             {recipe.total}
           </h3>
           <button
             onClick={() => {
               addBookMark(recipe);
               toast({
-                description: 'Recipe has been bookmarked',
+                description: "Recipe has been bookmarked",
               });
             }}
             className={classNames?.bookmarkButton}
           >
             <HeartIcon
-              className={cn('w-8 h-8 cursor-pointer', classNames?.bookmarkIcon)}
+              className={cn("h-8 w-8 cursor-pointer", classNames?.bookmarkIcon)}
             />
           </button>
         </div>
@@ -79,27 +79,27 @@ export const BaseCard = ({
           onClick={() => {
             addBookMark(recipe);
             toast({
-              description: 'Recipe has been bookmarked',
+              description: "Recipe has been bookmarked",
             });
           }}
           className={cn(
-            'absolute right-2 bottom-2',
+            "absolute bottom-2 right-2",
             classNames?.bookmarkButton
           )}
         >
           <HeartIcon
-            className={cn('w-8 h-8 cursor-pointer', classNames?.bookmarkIcon)}
+            className={cn("h-8 w-8 cursor-pointer", classNames?.bookmarkIcon)}
           />
         </button>
       )}
 
       <Image
-        src={recipe.imgUrl || ''}
-        alt={recipe.imgAlt || ''}
+        src={recipe.imgUrl || ""}
+        alt={recipe.imgAlt || ""}
         fill
         priority
         className={cn(
-          'rounded-xl object-cover h-56 w-56 -z-20',
+          "-z-20 h-56 w-56 rounded-xl object-cover",
           classNames?.image
         )}
       />
@@ -112,8 +112,8 @@ const CardSquare = ({ recipe }: CardProps) => {
     <BaseCard
       recipe={recipe}
       classNames={{
-        container: 'h-56 w-56 ',
-        image: 'h-56 w-56',
+        container: "h-56 w-56 ",
+        image: "h-56 w-56",
       }}
     />
   );
@@ -125,57 +125,57 @@ const CardRectangleSmall = ({ recipe }: CardProps) => {
       recipe={recipe}
       // classNames={{ container: 'h-56 w-46', image: 'h-56 w-46' }}
       classNames={{
-        container: 'h-56 w-46',
-        image: 'h-56 w-46',
-        title: 'text-step--1',
+        container: "h-56 w-46",
+        image: "h-56 w-46",
+        title: "text-step--1",
       }}
     />
   );
 };
 
 interface SearchCardProps extends CardProps {
-  as: 'li' | 'div' | 'article' | 'section';
+  as: "li" | "div" | "article" | "section";
   edit?: boolean;
 }
 
 const SearchCard = ({ as, edit, recipe }: SearchCardProps) => {
   const Tag = as;
   return (
-    <Tag className="flex flex-row relative w-full max-w-[600px] gap-2 h-32 rounded-md bg-grey">
+    <Tag className="relative flex h-32 w-full max-w-[600px] flex-row gap-2 rounded-md bg-grey">
       <Image
-        src={recipe.imgUrl || ''}
-        alt={recipe.imgAlt || ''}
+        src={recipe.imgUrl || ""}
+        alt={recipe.imgAlt || ""}
         width={100}
         height={100}
-        className="w-2/5 h-32 object-cover rounded-lg"
+        className="h-32 w-2/5 rounded-lg object-cover"
       />
       <button
         onClick={() => addBookMark(recipe)}
-        className="absolute right-2 bottom-2"
+        className="absolute bottom-2 right-2"
       >
-        <HeartIcon className={`w-8 h-8 cursor-pointer`} />
+        <HeartIcon className={`h-8 w-8 cursor-pointer`} />
       </button>
       <div>
         <Link
-          href={`/recipes/${recipe.id}${edit ? '/edit' : ''}`}
+          href={`/recipes/${recipe.id}${edit ? "/edit" : ""}`}
           className="text-step--1"
         >
           {recipe.title}
         </Link>
         {recipe.keywords && (
-          <div className="flex flex-row flex-wrap gap-1 w-full">
+          <div className="flex w-full flex-row flex-wrap gap-1">
             {recipe?.keywords?.slice(0, 5).map((keyword, index) => {
               return (
                 <p
                   key={index}
-                  className="text-center w-fit h-fit p-1 rounded-lg text-step--4 bg-yellow opacity-80 text-black"
+                  className="h-fit w-fit rounded-lg bg-yellow p-1 text-center text-step--4 text-black opacity-80"
                 >
                   {keyword.value}
                 </p>
               );
             }) || null}
             {recipe?.keywords?.length > 5 && (
-              <p className="text-center text-step--4 opacity-80 text-black">
+              <p className="text-center text-step--4 text-black opacity-80">
                 ...
               </p>
             )}
@@ -192,10 +192,10 @@ const CardRectangle = ({ recipe }: CardProps) => {
       recipe={recipe}
       hasCookTime={false}
       classNames={{
-        container: 'h-64 w-[43.75rem] resize',
-        bookmarkContainer: 'absolute right-2 bottom-2',
-        image: 'h-64 w-[43.75rem] resize',
-        title: 'text-step0',
+        container: "h-64 w-[43.75rem] resize",
+        bookmarkContainer: "absolute right-2 bottom-2",
+        image: "h-64 w-[43.75rem] resize",
+        title: "text-step0",
       }}
     />
   );

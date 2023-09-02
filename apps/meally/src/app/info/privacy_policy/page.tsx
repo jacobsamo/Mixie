@@ -1,19 +1,19 @@
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
 export default function Privacy_PolicyPage() {
   return (
     <>
-      <main className="max-w-[800px] my-0 mx-auto p-10">
-        <h1 className="font-bold text-step1 mb-5">Privacy Policy</h1>
-        <h2 className="font-bold mb-5 text-step--2">Last updated: 4/8/23</h2>
+      <main className="mx-auto my-0 max-w-[800px] p-10">
+        <h1 className="mb-5 text-step1 font-bold">Privacy Policy</h1>
+        <h2 className="mb-5 text-step--2 font-bold">Last updated: 4/8/23</h2>
         <p className="mb-5 text-step--3">
           At Meally we are committed to protecting you and your privacy while on
           our platform, and ensuring that your personal information is safe and
           secure. This privacy policy outlines the types of information we
           collect and how we use that information.
         </p>
-        <ol className="list-decimal pl-5 mb-5">
+        <ol className="mb-5 list-decimal pl-5">
           <li className="mb-5 text-step--3">
             Information we collect:
             <p className="mb-5 text-step--3">
@@ -36,11 +36,11 @@ export default function Privacy_PolicyPage() {
               Tracking Technologies: On Meally we strive to provide a free
               service always however to keep this service up and running we need
               to generate money to pay the bills this is where Advertisements
-              come in which are provided by{' '}
+              come in which are provided by{" "}
               <Link
                 href="https://adsense.google.com/start/"
                 target="_black"
-                className="underline underline-offset-0 text-blue"
+                className="text-blue underline underline-offset-0"
               >
                 Adsense
               </Link>
@@ -80,11 +80,11 @@ export default function Privacy_PolicyPage() {
               time, please do note that it can take up to 24 hours to process
               and be sent to you. Along with this, you have the option to delete
               your account from Meally, this, however, won’t delete your recipes
-              read more{' '}
+              read more{" "}
               <Link
                 href="/info/terms_services"
                 target="_black"
-                className="underline underline-offset-0 text-blue"
+                className="text-blue underline underline-offset-0"
               >
                 here
               </Link>

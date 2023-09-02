@@ -1,20 +1,20 @@
-import { useCallback } from 'react';
-import { Ingredient } from './Ingredient';
-import { useFieldArray, useFormContext } from 'react-hook-form';
-import { DraggAbleCard } from './Dragableitem';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { Button } from '../../ui/button';
-import { PlusCircleIcon } from 'lucide-react';
-import { recipeFormSchema } from '@/src/db/zodSchemas';
-import * as z from 'zod';
+import { useCallback } from "react";
+import { Ingredient } from "./Ingredient";
+import { useFieldArray, useFormContext } from "react-hook-form";
+import { DraggAbleCard } from "./Dragableitem";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { Button } from "../../ui/button";
+import { PlusCircleIcon } from "lucide-react";
+import { recipeFormSchema } from "@/src/db/zodSchemas";
+import * as z from "zod";
 
 const IngredientContainer = () => {
   const { control, register } =
     useFormContext<z.infer<typeof recipeFormSchema>>();
   const { fields, append, remove, move } = useFieldArray({
     control,
-    name: 'ingredients',
+    name: "ingredients",
   });
 
   const handleDelete = useCallback(
@@ -26,21 +26,21 @@ const IngredientContainer = () => {
 
   const handleAddClick = useCallback(() => {
     append({
-      title: '',
-      unit: 'grams',
+      title: "",
+      unit: "grams",
       quantity: null,
       isHeading: false,
-      amount: 'not_set',
+      amount: "not_set",
     });
   }, [append]);
 
   const handleHeadingClick = useCallback(() => {
     append({
-      title: '',
+      title: "",
       isHeading: true,
-      unit: 'not_set',
+      unit: "not_set",
       quantity: null,
-      amount: 'not_set',
+      amount: "not_set",
     });
   }, [append]);
 
@@ -53,7 +53,7 @@ const IngredientContainer = () => {
 
   return (
     <>
-      <section className="flex flex-col w-fit h-fit p-4 gap-3 dark:bg-grey shadow  bg-white rounded-lg">
+      <section className="flex h-fit w-fit flex-col gap-3 rounded-lg bg-white p-4  shadow dark:bg-grey">
         <DndProvider backend={HTML5Backend}>
           {fields.map((field, index) => (
             <DraggAbleCard
@@ -82,19 +82,19 @@ const IngredientContainer = () => {
         <button
           type="button"
           onClick={() => handleHeadingClick()}
-          className="text-step--3 mt-0"
+          className="mt-0 text-step--3"
         >
           Add Heading
         </button>
         <Button
           ariaLabel="Add an ingredient"
-          className="flex flex-row items-center gap-2 h-9 text-step--2 mt-3 border rounded-xl"
+          className="mt-3 flex h-9 flex-row items-center gap-2 rounded-xl border text-step--2"
           onClick={() => handleAddClick()}
           name="Ingredient"
           type="button"
-          variant={'secondary'}
+          variant={"secondary"}
         >
-          <PlusCircleIcon className="w-5 h-5" />
+          <PlusCircleIcon className="h-5 w-5" />
           Add Ingredient
         </Button>
       </section>

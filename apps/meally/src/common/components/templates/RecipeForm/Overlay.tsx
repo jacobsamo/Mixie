@@ -1,9 +1,9 @@
-import React, { DOMAttributes, useState } from 'react';
-import { Button } from '../../ui/button';
-import RecipeValidationDialog from './RecipeValidationDialog';
-import { useFormContext } from 'react-hook-form';
-import { onSubmit } from './form';
-import { EyeIcon } from 'lucide-react';
+import React, { DOMAttributes, useState } from "react";
+import { Button } from "../../ui/button";
+import RecipeValidationDialog from "./RecipeValidationDialog";
+import { useFormContext } from "react-hook-form";
+import { onSubmit } from "./form";
+import { EyeIcon } from "lucide-react";
 
 interface OverlayProps {
   onPreview: () => void;
@@ -18,9 +18,9 @@ const Overlay = ({ onPreview, onSave, onPublish }: OverlayProps) => {
   const { handleSubmit } = useFormContext();
   return (
     <>
-      <div className="fixed inset-0 inset-y-16  flex flex-col justify-between items-end mr-3">
+      <div className="fixed inset-0 inset-y-16  mr-3 flex flex-col items-end justify-between">
         {/* Top Bar */}
-        <div className="p-4 z-50  rounded-md w-fit dark:bg-grey bg-white shadow flex justify-end ">
+        <div className="z-50 flex  w-fit justify-end rounded-md bg-white p-4 shadow dark:bg-grey ">
           <Button
             ariaLabel="Preview"
             type="button"

@@ -1,14 +1,14 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { cn } from '@lib/utils';
+import { cn } from "@lib/utils";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@components/ui/tooltip';
-import { HelpCircleIcon } from 'lucide-react';
-import type { FieldError } from 'react-hook-form';
+} from "@components/ui/tooltip";
+import { HelpCircleIcon } from "lucide-react";
+import type { FieldError } from "react-hook-form";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -46,7 +46,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ) => {
     return (
       <div
-        className={cn('flex flex-col gap-1', classNames?.container)}
+        className={cn("flex flex-col gap-1", classNames?.container)}
         data-input="container"
       >
         {label && (
@@ -57,7 +57,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             <label
               htmlFor={name}
               className={cn(
-                'block text-step--3 font-medium',
+                "block text-step--3 font-medium",
                 classNames?.label
               )}
             >
@@ -67,7 +67,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild className="cursor-pointer">
-                    <HelpCircleIcon className="w-5 h-5 opacity-70" />
+                    <HelpCircleIcon className="h-5 w-5 opacity-70" />
                   </TooltipTrigger>
                   <TooltipContent sideOffset={5} side="bottom">
                     {tooltip}
@@ -78,13 +78,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           </span>
         )}
         {error && (
-          <span className="text-red text-step--3 font-extralight italic">
+          <span className="text-step--3 font-extralight italic text-red">
             {error.message}
           </span>
         )}
         <div
           className={cn(
-            'flex flex-row w-full items-center rounded-md p-1 border border-black dark:border-white bg-white dark:bg-grey  py-1 text-step--3 shadow-sm transition-colors file:border-0 file:bg-transparent file:font-medium placeholder:text-opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
+            "focus-visible:ring-ring flex w-full flex-row items-center rounded-md border border-black bg-white p-1 py-1  text-step--3 shadow-sm transition-colors file:border-0 file:bg-transparent file:font-medium placeholder:text-opacity-70 focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white dark:bg-grey",
             classNames?.inputWrapper
           )}
           data-input="input-container"
@@ -96,7 +96,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             name={name}
             placeholder={label}
             className={cn(
-              'flex h-9 w-full px-3 bg-transparent outline-none border-none',
+              "flex h-9 w-full border-none bg-transparent px-3 outline-none",
               classNames?.input
             )}
             ref={ref}
@@ -111,6 +111,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     );
   }
 );
-Input.displayName = 'Input';
+Input.displayName = "Input";
 
 export { Input };

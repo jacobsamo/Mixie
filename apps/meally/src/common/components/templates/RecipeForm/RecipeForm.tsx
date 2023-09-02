@@ -1,32 +1,32 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { useForm, FormProvider, Controller } from 'react-hook-form';
+"use client";
+import React, { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { useForm, FormProvider, Controller } from "react-hook-form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@components/ui/select';
-import { Input } from '@components/ui/input';
-import { Ingredient, NewRecipe, Recipe } from '@/src/db/types';
-import { Textarea } from '../../ui/textarea';
+} from "@components/ui/select";
+import { Input } from "@components/ui/input";
+import { Ingredient, NewRecipe, Recipe } from "@/src/db/types";
+import { Textarea } from "../../ui/textarea";
 
 import {
   dietaryRequirements,
   meal_times,
   sweet_savoury,
-} from '@lib/services/data';
-import { IngredientContainer } from './IngredientContainer';
-import { StepContainer } from './StepContainer';
-import { recipeFormSchema } from '@/src/db/zodSchemas';
-import TagInput from '../../ui/taginput';
-import ImageUpload from './ImageUpload';
-import Overlay from './Overlay';
-import { onSubmit } from './form';
-import RecipePageComponent from '../RecipePage/RecipePageComponent';
+} from "@lib/services/data";
+import { IngredientContainer } from "./IngredientContainer";
+import { StepContainer } from "./StepContainer";
+import { recipeFormSchema } from "@/src/db/zodSchemas";
+import TagInput from "../../ui/taginput";
+import ImageUpload from "./ImageUpload";
+import Overlay from "./Overlay";
+import { onSubmit } from "./form";
+import RecipePageComponent from "../RecipePage/RecipePageComponent";
 
 interface RecipeFormProps {
   recipe: any | Recipe | NewRecipe; //TODO: fix this type to represent the correct type of recipe (not a huge deal but would be useful)
@@ -49,14 +49,14 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
       ...recipe,
       ingredients: recipe?.ingredients || [
         {
-          title: '',
-          unit: 'grams',
+          title: "",
+          unit: "grams",
           quantity: null,
           isHeading: false,
-          amount: 'not_set',
+          amount: "not_set",
         },
       ],
-      steps: recipe?.steps || [{ step_body: '' }],
+      steps: recipe?.steps || [{ step_body: "" }],
     },
   });
 
@@ -81,11 +81,11 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
         {preview && <RecipePageComponent recipe={gotRecipe} />}
         {!preview && (
           <form
-            className="relative z-0 flex flex-col w-full lg:w-1/2 mx-auto p-2 md:p-0 mb-[20%]"
+            className="relative z-0 mx-auto mb-[20%] flex w-full flex-col p-2 md:p-0 lg:w-1/2"
             onSubmit={handleSubmit(onSubmit)}
           >
             <Input
-              {...register('title', {
+              {...register("title", {
                 required: true,
               })}
               required
@@ -93,11 +93,11 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
             />
             <Textarea id="description" label="Description" control={control} />
             <Input
-              {...register('info.prep', {
+              {...register("info.prep", {
                 pattern: {
                   value: /^(\d{1,2}[hms]\s?)+$/i,
                   message:
-                    'Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds',
+                    "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
                 },
               })}
               error={errors.info?.prep}
@@ -105,11 +105,11 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
               hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
             />
             <Input
-              {...register('info.cook', {
+              {...register("info.cook", {
                 pattern: {
                   value: /^(\d{1,2}[hms]\s?)+$/i,
                   message:
-                    'Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds',
+                    "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
                 },
               })}
               error={errors.info?.cook}
@@ -117,7 +117,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
               hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
             />
             <Input
-              {...register('info.serves', { valueAsNumber: true })}
+              {...register("info.serves", { valueAsNumber: true })}
               error={errors.info?.serves}
               label="Serves"
               type="number"
@@ -233,7 +233,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
               hint="Keywords will be used to help users find your recipe."
             />
 
-            <section className="flex flex-row flex-wrap gap-4 mb-8">
+            <section className="mb-8 flex flex-row flex-wrap gap-4">
               <IngredientContainer />
               <StepContainer />
             </section>

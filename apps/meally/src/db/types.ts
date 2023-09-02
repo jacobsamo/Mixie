@@ -1,9 +1,9 @@
-import { users, accounts, sessions, verificationTokens } from './schemas/auth';
-import { recipes, info, ratings } from './schemas/recipe';
+import { users, accounts, sessions, verificationTokens } from "./schemas/auth";
+import { recipes, info, ratings } from "./schemas/recipe";
 // import { groupMembers, groups, groupRecipes } from './schemas/groups';
 
-import { type InferSelectModel, type InferInsertModel } from 'drizzle-orm'
-import { z } from 'zod';
+import { type InferSelectModel, type InferInsertModel } from "drizzle-orm";
+import { z } from "zod";
 import {
   recipeSchema,
   infoSchema,
@@ -12,7 +12,7 @@ import {
   stepSchema,
   recipeFormSchema,
   recipesSelect,
-} from './zodSchemas';
+} from "./zodSchemas";
 
 // users
 type User = InferSelectModel<typeof users>;
@@ -58,7 +58,3 @@ export type {
 // type NewGroup = InferModel<typeof groups, 'insert'>;
 
 // export type { Group, NewGroup };
-
-
-
-

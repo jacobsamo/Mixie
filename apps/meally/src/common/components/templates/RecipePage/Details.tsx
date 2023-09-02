@@ -1,12 +1,12 @@
-'use client';
-import React, { useEffect, useMemo, useState } from 'react';
-import StepContainer from './step/StepContainer';
-import AddBatch from './ingredient/AddBatch';
-import type { Ingredient as IngredientType, Step } from '@/src/db/types';
-import Ingredient from './ingredient/Ingredient';
-import { cva, type VariantProps } from 'class-variance-authority';
-import { set } from 'zod';
-import { calculateAllIngredients } from '@/src/common/lib/utils';
+"use client";
+import React, { useEffect, useMemo, useState } from "react";
+import StepContainer from "./step/StepContainer";
+import AddBatch from "./ingredient/AddBatch";
+import type { Ingredient as IngredientType, Step } from "@/src/db/types";
+import Ingredient from "./ingredient/Ingredient";
+import { cva, type VariantProps } from "class-variance-authority";
+import { set } from "zod";
+import { calculateAllIngredients } from "@/src/common/lib/utils";
 
 interface DetailsProps {
   ingredients: IngredientType[];
@@ -14,11 +14,11 @@ interface DetailsProps {
 }
 
 //title styles for the ingredients and steps section with cva (class variance authority) to remove the underline from the h2
-const titleStyles = cva('md:cursor-default', {
+const titleStyles = cva("md:cursor-default", {
   variants: {
     variant: {
-      true: 'underline underline-offset-2',
-      false: 'underline-none',
+      true: "underline underline-offset-2",
+      false: "underline-none",
     },
   },
   defaultVariants: {
@@ -36,7 +36,7 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
   }, [add, ingredients]);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
     const handleMediaQueryChange = (mediaQuery: any) => {
       if (mediaQuery.matches) {
         setStepsOpen(false);
@@ -46,15 +46,15 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
         setIngredientOpen(true);
       }
     };
-    mediaQuery.addEventListener('change', handleMediaQueryChange);
+    mediaQuery.addEventListener("change", handleMediaQueryChange);
     return () => {
-      mediaQuery.removeEventListener('change', handleMediaQueryChange);
+      mediaQuery.removeEventListener("change", handleMediaQueryChange);
     };
   }, []);
 
   return (
     <>
-      <div className="md:w-[800px] flex flex-row items-center gap-x-[50%] pb-2 px-2">
+      <div className="flex flex-row items-center gap-x-[50%] px-2 pb-2 md:w-[800px]">
         <button
           onClick={() => {
             if (window.innerWidth <= 768) {
@@ -66,11 +66,11 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
           <h2 className={titleStyles({ variant: ingredientOpen })}>
             {ingredients.length > 0 ? (
               <>
-                {ingredients.length}{' '}
-                {ingredients.length === 1 ? 'Ingredient' : 'Ingredients'}
+                {ingredients.length}{" "}
+                {ingredients.length === 1 ? "Ingredient" : "Ingredients"}
               </>
             ) : (
-              'No Ingredients'
+              "No Ingredients"
             )}
           </h2>
         </button>
@@ -85,18 +85,18 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
           <h2 className={titleStyles({ variant: stepsOpen })}>
             {steps.length > 0 ? (
               <>
-                {steps.length} {steps.length === 1 ? 'Step' : 'Steps'}
+                {steps.length} {steps.length === 1 ? "Step" : "Steps"}
               </>
             ) : (
-              'No Steps'
+              "No Steps"
             )}
           </h2>
         </button>
       </div>
 
-      <section className="md:w-[800px] w-full flex flex-row md:gap-4 lg:gap-8">
+      <section className="flex w-full flex-row md:w-[800px] md:gap-4 lg:gap-8">
         {ingredientOpen && (
-          <div className="flex flex-col items-start p-2 w-full h-fit md:w-60 dark:bg-grey bg-white shadow rounded-lg ">
+          <div className="flex h-fit w-full flex-col items-start rounded-lg bg-white p-2 shadow dark:bg-grey md:w-60 ">
             <AddBatch add={add} setAdd={setAdd} />
             {calculatedIngredients.map((ingredient, index) => {
               if (ingredient.isHeading)

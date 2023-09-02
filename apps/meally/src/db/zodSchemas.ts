@@ -1,6 +1,6 @@
-import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
-import { z } from 'zod';
-import { recipes, info, ratings } from './schemas';
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { z } from "zod";
+import { recipes, info, ratings } from "./schemas";
 
 // join the info and ingredients to the recipe
 
@@ -12,42 +12,42 @@ export const infoSchema = createInsertSchema(info, {
     .string()
     .regex(/^(\d{1,2}[hms]\s?)+$/i, {
       message:
-        'Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds',
+        "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
     })
     .optional(),
   cook: z
     .string()
     .regex(/^(\d{1,2}[hms]\s?)+$/i, {
       message:
-        'Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds',
+        "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
     })
     .optional(),
 });
 
 export const amount = z
-  .enum(['not_set', '1/8', '1/2', '1/3', '2/3', '1/4', '3/4'])
-  .default('not_set');
+  .enum(["not_set", "1/8", "1/2", "1/3", "2/3", "1/4", "3/4"])
+  .default("not_set");
 
 export const unit = z
   .enum([
-    'not_set',
-    'grams',
-    'kg',
-    'cup',
-    'ml',
-    'litre',
-    'tsp',
-    'tbsp',
-    'pinch',
-    'item',
-    'handful',
-    'slice',
-    'piece',
-    'can',
-    'bunch',
-    'bottle',
+    "not_set",
+    "grams",
+    "kg",
+    "cup",
+    "ml",
+    "litre",
+    "tsp",
+    "tbsp",
+    "pinch",
+    "item",
+    "handful",
+    "slice",
+    "piece",
+    "can",
+    "bunch",
+    "bottle",
   ])
-  .default('grams');
+  .default("grams");
 
 export const ingredientSchema = z.object({
   isHeading: z.boolean(),

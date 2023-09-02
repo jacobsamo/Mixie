@@ -1,12 +1,12 @@
-import { recipeId } from '@/src/common/lib/utils';
-import { db } from '@/src/db';
-import { authOptions } from '@/src/db/next-auth-adapter';
-import { recipes, info } from '@/src/db/schemas';
-import { NewInfo, NewPartialRecipe, NewRecipe } from '@/src/db/types';
-import { getServerSession } from 'next-auth';
-import { NextResponse } from 'next/server';
-import * as z from 'zod';
-import { v4 as uuidv4 } from 'uuid';
+import { recipeId } from "@/src/common/lib/utils";
+import { db } from "@/src/db";
+import { authOptions } from "@/src/db/next-auth-adapter";
+import { recipes, info } from "@/src/db/schemas";
+import { NewInfo, NewPartialRecipe, NewRecipe } from "@/src/db/types";
+import { getServerSession } from "next-auth";
+import { NextResponse } from "next/server";
+import * as z from "zod";
+import { v4 as uuidv4 } from "uuid";
 
 const createRecipeSchema = z.object({
   title: z.string().optional(),
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
 
   const session = await getServerSession(authOptions);
   if (!session) {
-    return NextResponse.json('Unauthorized', { status: 403 });
+    return NextResponse.json("Unauthorized", { status: 403 });
   }
   const { user } = session;
 
@@ -70,10 +70,10 @@ export async function POST(req: Request) {
       recipeId: uid,
       id,
       title,
-      createByName: user.name! || '',
+      createByName: user.name! || "",
       createdBy: user.id,
       lastUpdatedBy: user.id,
-      lastUpdatedByName: user.name! || '',
+      lastUpdatedByName: user.name! || "",
     };
     console.log(newInfo);
     // the recipe itself
@@ -82,10 +82,10 @@ export async function POST(req: Request) {
       id,
       title,
 
-      createByName: user.name! || '',
+      createByName: user.name! || "",
       createdBy: user.id,
       lastUpdatedBy: user.id,
-      lastUpdatedByName: user.name! || '',
+      lastUpdatedByName: user.name! || "",
     };
     console.log(recipe);
     await db.insert(info).values(newInfo);

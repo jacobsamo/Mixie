@@ -1,20 +1,17 @@
-import { calculateTotalTime, recipeId } from '@/src/common/lib/utils';
-import { db } from '@/src/db';
-import { authOptions } from '@/src/db/next-auth-adapter';
-import { recipes, info } from '@/src/db/schemas';
-import {
-  NewPartialRecipe,
-  NewInfo,
-} from '@/src/db/types';
-import { getServerSession } from 'next-auth';
-import { NextResponse } from 'next/server';
-import { recipeFormSchema } from '@/src/db/zodSchemas';
-import { eq } from 'drizzle-orm';
+import { calculateTotalTime, recipeId } from "@/src/common/lib/utils";
+import { db } from "@/src/db";
+import { authOptions } from "@/src/db/next-auth-adapter";
+import { recipes, info } from "@/src/db/schemas";
+import { NewPartialRecipe, NewInfo } from "@/src/db/types";
+import { getServerSession } from "next-auth";
+import { NextResponse } from "next/server";
+import { recipeFormSchema } from "@/src/db/zodSchemas";
+import { eq } from "drizzle-orm";
 
 export async function PUT(req: Request) {
   const session = await getServerSession(authOptions);
   if (!session) {
-    return NextResponse.json('Unauthorized', { status: 403 });
+    return NextResponse.json("Unauthorized", { status: 403 });
   }
   const { user } = session;
 
@@ -52,10 +49,10 @@ export async function PUT(req: Request) {
     prep: recipe?.info?.prep || null,
     cook: recipe?.info?.cook || null,
     total: totalTime,
-    createByName: recipe.info?.createByName || '',
+    createByName: recipe.info?.createByName || "",
     createdBy: recipe.info?.createdBy || user.id,
     lastUpdatedBy: user.id,
-    lastUpdatedByName: user.name! || '',
+    lastUpdatedByName: user.name! || "",
   };
   await db.update(info).set(newInfo).where(eq(info.recipeId, recipe.uid));
 
@@ -70,7 +67,7 @@ export async function PUT(req: Request) {
     id: recipeId(recipe.title) || recipe.id,
     steps: steps,
     lastUpdatedBy: user.id,
-    lastUpdatedByName: user.name! || '',
+    lastUpdatedByName: user.name! || "",
   };
 
   const setRecipe = await db
@@ -78,7 +75,7 @@ export async function PUT(req: Request) {
     .set(newRecipe)
     .where(eq(recipes.uid, recipe.uid));
 
-  console.log('Created Recipe', {
+  console.log("Created Recipe", {
     message: `Recipe successfully created, ${setRecipe}`,
     recipe: newRecipe,
     info: newInfo,

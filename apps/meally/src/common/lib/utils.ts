@@ -1,6 +1,6 @@
-import { type ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-import Fraction from 'fraction.js';
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+import Fraction from "fraction.js";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -15,10 +15,10 @@ export function cn(...inputs: ClassValue[]) {
  * recipeId('Chicken Tikka Masala') // 'chicken-tikka-masala'
  */
 export function recipeId(title: string): string {
-  return title.replace(/\s/g, '-').toLowerCase();
+  return title.replace(/\s/g, "-").toLowerCase();
 }
 
-import { Amount, type Ingredient } from '@/src/db/types';
+import { Amount, type Ingredient } from "@/src/db/types";
 
 /**
  * Takes in a time string matching `/^(\d{1,2}[hms]\s?)+$/i` and returns the total time in seconds
@@ -26,14 +26,14 @@ import { Amount, type Ingredient } from '@/src/db/types';
  * @returns {number} total time in seconds
  */
 const parseTimeToSeconds = (timeString: RegExpMatchArray) => {
-  const time = timeString[0].split(' ');
+  const time = timeString[0].split(" ");
 
   const timeMap = time.map((time): number | undefined => {
-    if (time.includes('h')) {
+    if (time.includes("h")) {
       return parseInt(time) * 60 * 60;
-    } else if (time.includes('m')) {
+    } else if (time.includes("m")) {
       return parseInt(time) * 60;
-    } else if (time.includes('s')) {
+    } else if (time.includes("s")) {
       return parseInt(time);
     }
   });
@@ -54,7 +54,7 @@ export async function calculateTotalTime(prep: string, cook: string) {
   const cookT = cook.match(matchRegex);
 
   if (!prepT || !cookT) {
-    throw new Error('Invalid time string format');
+    throw new Error("Invalid time string format");
   }
 
   const prepTime = parseTimeToSeconds(prepT);
@@ -81,15 +81,15 @@ export async function calculateTotalTime(prep: string, cook: string) {
     timeUnits.push(`${seconds}s`);
   }
 
-  return timeUnits.join(' ');
+  return timeUnits.join(" ");
 }
 
 function calculateCupUnits(
-  quantity: Ingredient['quantity'],
+  quantity: Ingredient["quantity"],
   amount: Amount,
   batchAmount: number
-): { quantity: Ingredient['quantity']; amount: Amount } {
-  const fr = amount.split('/');
+): { quantity: Ingredient["quantity"]; amount: Amount } {
+  const fr = amount.split("/");
 
   if (fr.length <= 1) {
     return {
@@ -100,7 +100,7 @@ function calculateCupUnits(
 
   const value = (Number(fr[0]) / Number(fr[1])) * batchAmount;
   const fraction = new Fraction(value).toFraction(true);
-  const split = fraction.split(' ');
+  const split = fraction.split(" ");
   const newQuantity = split.length > 1 ? parseInt(split[0]) : undefined;
   const newMeasurement =
     split.length > 1 ? (split[1] as Amount) : (split[0] as Amount);
@@ -117,25 +117,25 @@ export function calculateIngredient(
 ): Ingredient {
   const q = ingredient.quantity || 0;
   switch (ingredient.unit) {
-    case 'grams':
+    case "grams":
       const gramQuantity = q * batchAmount;
       return {
         ...ingredient,
         quantity: gramQuantity >= 1000 ? gramQuantity / 1000 : gramQuantity,
-        unit: gramQuantity >= 1000 ? 'kg' : 'grams',
+        unit: gramQuantity >= 1000 ? "kg" : "grams",
       };
-    case 'kg':
+    case "kg":
       return {
         ...ingredient,
         quantity: q * batchAmount,
       };
-    case 'cup':
-    case 'tsp':
-    case 'tbsp':
+    case "cup":
+    case "tsp":
+    case "tbsp":
       const multipliedQuantity = q * batchAmount;
       const { quantity, amount } = calculateCupUnits(
         multipliedQuantity,
-        ingredient.amount || 'not_set',
+        ingredient.amount || "not_set",
         batchAmount
       );
       return {
@@ -143,20 +143,20 @@ export function calculateIngredient(
         quantity: quantity,
         amount: amount,
       };
-    case 'ml':
+    case "ml":
       const mlQuantity = q * batchAmount;
       return {
         ...ingredient,
         quantity: mlQuantity >= 1000 ? mlQuantity / 1000 : mlQuantity,
-        unit: mlQuantity >= 1000 ? 'litre' : 'ml',
+        unit: mlQuantity >= 1000 ? "litre" : "ml",
       };
-    case 'litre':
+    case "litre":
       return {
         ...ingredient,
         quantity: q * batchAmount,
       };
-    case 'pinch':
-    case 'item':
+    case "pinch":
+    case "item":
       return {
         ...ingredient,
         quantity: q * batchAmount,

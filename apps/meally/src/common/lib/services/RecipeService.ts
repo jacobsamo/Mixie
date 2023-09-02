@@ -1,16 +1,16 @@
-import * as puppeteer from 'puppeteer';
-import { recipeId } from '../utils';
-import { db } from '@/src/db';
-import { env } from '@/env.mjs';
-import { Info, NewRecipe, Recipe } from '@/src/db/types';
-import { authOptions } from '@/src/db/next-auth-adapter';
-import { getServerSession } from 'next-auth/next';
-import { info, recipes } from '@/src/db/schemas';
-import * as z from 'zod';
-import {} from '@/src/db/types';
-import { asc, eq, or, sql } from 'drizzle-orm';
-import { recipeFormSchema } from '@/src/db/zodSchemas';
-import React, { cache } from 'react';
+import * as puppeteer from "puppeteer";
+import { recipeId } from "../utils";
+import { db } from "@/src/db";
+import { env } from "@/env.mjs";
+import { Info, NewRecipe, Recipe } from "@/src/db/types";
+import { authOptions } from "@/src/db/next-auth-adapter";
+import { getServerSession } from "next-auth/next";
+import { info, recipes } from "@/src/db/schemas";
+import * as z from "zod";
+import {} from "@/src/db/types";
+import { asc, eq, or, sql } from "drizzle-orm";
+import { recipeFormSchema } from "@/src/db/zodSchemas";
+import React, { cache } from "react";
 
 class RecipeService {
   async getAllRecipeCards(
@@ -132,15 +132,12 @@ export const useFetchAllRecipe = () => {
 
   React.useEffect(() => {
     const fetchRecipes = async () => {
-
       recipeService.getAllRecipeCards().then((data) => {
-
         setRecipes(data);
       });
     };
 
     if (recipes?.length === 0) {
-
       fetchRecipes();
     }
   }, [recipes]);

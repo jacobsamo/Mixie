@@ -1,8 +1,8 @@
-import * as dotenv from 'dotenv';
-import * as schema from './schemas';
-import { connect } from '@planetscale/database';
-import { drizzle } from 'drizzle-orm/planetscale-serverless';
-import { env } from '@/env.mjs';
+import * as dotenv from "dotenv";
+import * as schema from "./schemas";
+import { connect } from "@planetscale/database";
+import { drizzle } from "drizzle-orm/planetscale-serverless";
+import { env } from "@/env.mjs";
 
 dotenv.config();
 

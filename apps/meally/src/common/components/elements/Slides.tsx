@@ -1,7 +1,7 @@
-'use client';
-import React from 'react';
-import { Splide, SplideSlide } from '@splidejs/react-splide';
-import '@splidejs/react-splide/css';
+"use client";
+import React from "react";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import "@splidejs/react-splide/css";
 
 interface SwiperTemplateProps {
   children: React.ReactNode;
@@ -15,8 +15,8 @@ const Slides = ({ children }: SwiperTemplateProps) => {
   return (
     <Splide
       options={{
-        type: 'loop',
-        gap: '10rem',
+        type: "loop",
+        gap: "10rem",
         autoplay: true,
         pauseOnHover: false,
         resetProgress: false,

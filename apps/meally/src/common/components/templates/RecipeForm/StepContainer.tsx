@@ -1,22 +1,22 @@
-import React, { useCallback } from 'react';
+import React, { useCallback } from "react";
 
-import { Step } from './Step';
+import { Step } from "./Step";
 
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext } from "react-hook-form";
 
-import { DraggAbleCard } from './Dragableitem';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { Button } from '../../ui/button';
-import { PlusCircleIcon } from 'lucide-react';
-import { recipeFormSchema } from '@/src/db/zodSchemas';
-import * as z from 'zod';
+import { DraggAbleCard } from "./Dragableitem";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { Button } from "../../ui/button";
+import { PlusCircleIcon } from "lucide-react";
+import { recipeFormSchema } from "@/src/db/zodSchemas";
+import * as z from "zod";
 
 const StepContainer = () => {
   const { control } = useFormContext<z.infer<typeof recipeFormSchema>>();
   const { fields, append, remove, move } = useFieldArray({
     control,
-    name: 'steps',
+    name: "steps",
   });
 
   const handleDelete = useCallback(
@@ -27,7 +27,7 @@ const StepContainer = () => {
   );
 
   const handleAddClick = useCallback(() => {
-    append({ step_body: '' });
+    append({ step_body: "" });
   }, [append]);
 
   const handleSwap = useCallback(
@@ -38,7 +38,7 @@ const StepContainer = () => {
   );
 
   return (
-    <section className="w-full flex flex-col gap-2">
+    <section className="flex w-full flex-col gap-2">
       <DndProvider backend={HTML5Backend}>
         {fields.map((field, index: number) => {
           return (
@@ -56,13 +56,13 @@ const StepContainer = () => {
       </DndProvider>
       <Button
         ariaLabel="Add an Step"
-        className="flex flex-row items-center gap-2 h-9 text-step--2 mt-3 border rounded-xl"
+        className="mt-3 flex h-9 flex-row items-center gap-2 rounded-xl border text-step--2"
         onClick={() => handleAddClick()}
         name="Ingredient"
         type="button"
-        variant={'secondary'}
+        variant={"secondary"}
       >
-        <PlusCircleIcon className="w-5 h-5" />
+        <PlusCircleIcon className="h-5 w-5" />
         Add Step
       </Button>
     </section>

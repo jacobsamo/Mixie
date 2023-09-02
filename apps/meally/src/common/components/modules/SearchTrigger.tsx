@@ -1,6 +1,6 @@
-'use client';
-import React from 'react';
-import Search from './Search';
+"use client";
+import React from "react";
+import Search from "./Search";
 
 interface SearchTriggerProps {
   children: React.ReactNode;

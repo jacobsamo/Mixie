@@ -6,9 +6,9 @@ interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  name: 'Meally',
+  name: "Meally",
   description:
-    'Meally is a community-driven recipe platform where home cooks and food enthusiasts can collaborate on unique and delicious recipes',
-  url: 'https://meally.com.au',
-  ogImage: '',
+    "Meally is a community-driven recipe platform where home cooks and food enthusiasts can collaborate on unique and delicious recipes",
+  url: "https://meally.com.au",
+  ogImage: "",
 };

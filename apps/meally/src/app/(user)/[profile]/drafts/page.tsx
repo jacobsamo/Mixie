@@ -1,13 +1,13 @@
-import { SearchCard } from '@/src/common/components/elements/Cards';
-import useUser from '@/src/common/hooks/useUser';
-import { db } from '@/src/db';
-import { eq, or } from 'drizzle-orm';
-import { authOptions } from '@/src/db/next-auth-adapter';
-import { recipes } from '@/src/db/schemas';
-import { Info, Recipe } from '@/src/db/types';
-import { getServerSession } from 'next-auth';
-import { useSession } from 'next-auth/react';
-import React from 'react';
+import { SearchCard } from "@/src/common/components/elements/Cards";
+import useUser from "@/src/common/hooks/useUser";
+import { db } from "@/src/db";
+import { eq, or } from "drizzle-orm";
+import { authOptions } from "@/src/db/next-auth-adapter";
+import { recipes } from "@/src/db/schemas";
+import { Info, Recipe } from "@/src/db/types";
+import { getServerSession } from "next-auth";
+import { useSession } from "next-auth/react";
+import React from "react";
 
 const DraftsPage = async () => {
   const session = await getServerSession(authOptions);
@@ -26,7 +26,7 @@ const DraftsPage = async () => {
   return (
     <main>
       <div className="mt-4">
-        <h1 className="text-step0 text-center mb-2">Draft Recipes</h1>
+        <h1 className="mb-2 text-center text-step0">Draft Recipes</h1>
         <ul className="flex flex-row flex-wrap justify-center gap-4">
           {gotRecipes.map((recipe, index) => {
             return <SearchCard as="li" key={index} recipe={recipe} />;

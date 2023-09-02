@@ -15,7 +15,6 @@
 // //     mealTime: SelectValue[];
 // // }>;
 
-
 // // export; type Recipe = {
 // //     uid: string;
 // //     id: string;
@@ -37,10 +36,10 @@
 // //     createdBy: string;
 // //     lastUpdatedBy: string;
 // //     user: User;
-  
+
 // //     madeRecipe: number;
 // //     savedRecipe: number;
-  
+
 // //     // team?: string;
 // //     // isPublic: boolean;
 // //     // isPublished: boolean;
@@ -50,12 +49,12 @@
 // //     // isBookMarked: boolean;
 // //     // isShared: boolean;
 // //   };
-  
+
 //   export type SelectValue = {
 //     value: string;
 //     label: string;
 //   };
-  
+
 //   export type Info = {
 //     total: string;
 //     prep: string;
@@ -63,9 +62,9 @@
 //     serves: number | undefined;
 //     rating?: RatingScale;
 //   };
-  
+
 //   export type RatingScale = 0 | 1 | 2 | 3 | 4 | 5;
-  
+
 //   export type Rating = {
 //     rating: RatingScale;
 //     user: {
@@ -73,12 +72,12 @@
 //       displayName: string;
 //     };
 //   };
-  
+
 //   export type Step = {
 //     id: number;
 //     step_body: string;
 //   };
-  
+
 //   export type Ingredient = {
 //     isHeading?: boolean;
 //     title?: string;
@@ -86,9 +85,9 @@
 //     quantity?: number;
 //     amount?: Measurement;
 //   };
-  
+
 //   export type Measurement = "" | "1/2" | "1/3" | "2/3" | "1/4" | "3/4";
-  
+
 //   export type Unit =
 //     | "grams"
 //     | "kg"
@@ -99,11 +98,8 @@
 //     | "tbsp"
 //     | "pinch"
 //     | "item";
-  
+
 //   export type ImageProps = {
 //     imgUrl: string;
 //     imgAlt: string;
 //   };
-  
-  
-  

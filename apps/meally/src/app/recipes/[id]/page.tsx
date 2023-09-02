@@ -1,12 +1,12 @@
-import RecipePageComponent from '@components/templates/RecipePage/RecipePageComponent';
-import React from 'react';
-import { mockRecipe } from '@/src/common/lib/services/data';
-import { db } from '@/src/db';
-import { recipes } from '@/src/db/schemas';
-import { eq, or } from 'drizzle-orm';
-import RecipeService from '@/src/common/lib/services/RecipeService';
-import type { Recipe } from '@/src/db/types';
-import { RecipeJsonLd } from 'next-seo';
+import RecipePageComponent from "@components/templates/RecipePage/RecipePageComponent";
+import React from "react";
+import { mockRecipe } from "@/src/common/lib/services/data";
+import { db } from "@/src/db";
+import { recipes } from "@/src/db/schemas";
+import { eq, or } from "drizzle-orm";
+import RecipeService from "@/src/common/lib/services/RecipeService";
+import type { Recipe } from "@/src/db/types";
+import { RecipeJsonLd } from "next-seo";
 
 interface RecipePageProps {
   params: {
@@ -27,13 +27,13 @@ export default async function RecipePage({ params }: RecipePageProps) {
       <>
         <RecipeJsonLd
           useAppDir={true}
-          name={recipe?.title || ''}
-          authorName={''}
-          yields={recipe?.info.serves?.toString() || ''}
+          name={recipe?.title || ""}
+          authorName={""}
+          yields={recipe?.info.serves?.toString() || ""}
           ingredients={
             recipe?.ingredients?.map((ingredient) => {
               return `${ingredient.quantity} ${
-                ingredient.amount == 'not_set' ? null : ingredient.amount
+                ingredient.amount == "not_set" ? null : ingredient.amount
               } ${ingredient.unit} ${ingredient.title}`;
             }) || []
           }
@@ -45,14 +45,13 @@ export default async function RecipePage({ params }: RecipePageProps) {
               };
             }) || []
           }
-          description={recipe.description! || ''}
+          description={recipe.description! || ""}
           datePublished={recipe.createdAt?.toTimeString()}
           dateModified={recipe.lastUpdated?.toTimeString()}
           keywords={
-            recipe.info.keywords?.map((keyword) => keyword.value).join(', ') ||
-            ''
+            recipe.info.keywords?.map((keyword) => keyword.value).join(", ") ||
+            ""
           }
-          
         />
         <RecipePageComponent recipe={recipe as Recipe} />
       </>
