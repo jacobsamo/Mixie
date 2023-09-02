@@ -1,21 +1,17 @@
 {
   "name": "libs",
   "version": "0.0.0",
-  "main": "./index.tsx",
-  "types": "./index.tsx",
+  "main": "./index.ts",
+  "types": "./index.ts",
   "license": "MIT",
   "scripts": {
-    "lint": "TIMING=1 eslint \"**/*.ts*\"",
-    "clean:node": "rm -rf node_modules/",
-    "clean:turbo": "rm -rf .turbo",
-    "clean:all": "yarn clean:node && yarn clean:turbo"
+    "lint": "eslint \"**/*.ts*\"",
+    "clean:all": "rm -rf node_modules/"
   },
   "devDependencies": {
-    "eslint": "^8.36.0",
-    "eslint-config-custom": "*",
-    "eslint-config-next": "^13.1.1",
-    "firebase": "^9.17.2",
-    "tsconfig": "*",
-    "typescript": "5.0.2"
+    "eslint": "^8.43.0",
+    "eslint-config-custom": "0.0.0",
+    "tsconfig": "0.0.0",
+    "typescript": "^5.1.3"
   }
 }
