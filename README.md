@@ -1,47 +1,81 @@
-<p align="center">
-  <a href="https://www.meally.com.au/">
-    <img src="https://www.meally.com.au/favicon.ico" style="border-radius: 9999px" height="128">
-    <h1 align="center">Meally</h1>
-  </a>
-</p>
+# Turborepo starter
 
-<p align="center">
-    <img alt="Website" src="https://img.shields.io/website?down_color=red&down_message=Offline&label=Website&up_message=Online&url=https%3A%2F%2Fwww.meally.com.au">
-    <img alt="GitHub" src="https://img.shields.io/github/license/eirfire/meally?color=blue">
-    <img alt="GitHub Workflow Status (with branch)" src="https://img.shields.io/github/actions/workflow/status/eirfire/meally/intergrate.yml?branch=master">
-</p>
+This is an official starter Turborepo.
 
-## Getting started
+## Using this example
 
-Please read our [getting started guide](./GETTING_STARTED.md) for more information.
+Run the following command:
 
-### About the project
+```sh
+pnpm dlx create-turbo@latest
+```
 
-- [Contributing](./CONTRIBUTING.md)
-- [Things people have learnt while contributing to the project](./about_the_project/things_learnt/)
-- [Helpful items for developers](./about_the_project/Helpful_items.md)
-- [Planning of certain features](./about_the_project/Planning.md)
+## What's inside?
 
-## Contributing
+This Turborepo includes the following packages/apps:
 
-Please see our [contributing guide](./CONTRIBUTING.md) for more information on how to contribute to the project.
+### Apps and Packages
 
-### Good First issues
+- `docs`: a [Next.js](https://nextjs.org/) app
+- `web`: another [Next.js](https://nextjs.org/) app
+- `ui`: a stub React component library shared by both `web` and `docs` applications
+- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+- `tsconfig`: `tsconfig.json`s used throughout the monorepo
 
-If you are new to the project and want to help out but don't know where to start than please check out our [good first issues](https://github.com/Eirfire/Meally/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22).
+Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
-## Security Policy
+### Utilities
 
-If you have found or believe you have found any vulnerabilities than please read our [security policy](./SECURITY.md) for more information.
+This Turborepo has some additional tools already setup for you:
 
-## Licensing
+- [TypeScript](https://www.typescriptlang.org/) for static type checking
+- [ESLint](https://eslint.org/) for code linting
+- [Prettier](https://prettier.io) for code formatting
 
-This project is licensed under the [GPL 3.0](./LICENSE) and all apps are licensed under [AGPL 3.0](./apps/meally.com.au/LICENSE). please for each part that you plan to copy or redistribute read the lisente for that part. if it's not clear please contact us. if the part doesn't have a license than refer to the global license.
+### Build
 
-## General idea
+To build all apps and packages, run the following command:
 
-As meally is very new most of the features below won't be implemented straight away however these will be implemented going into the future.
+```
+cd my-turborepo
+pnpm build
+```
 
-Here is the general idea: All recipes to be made by the community and approved by the community, meaning there aren't any recipes will spelling mistakes, grammar or a recipe with bad information.
+### Develop
 
-A few big things setting us aside from everyone else is a feature added into the future which will be no recipe is the same an example of this when you get a cook book there isn't any of the same recipe making the same dish. Another thing is for all recipes to have the ability to be edited by the community with of course all recipes being reviewed before being accepted kind of like how github contributions this will also lead to have a version history of the recipe so the community can always go back to the last change or even the original recipe.
+To develop all apps and packages, run the following command:
+
+```
+cd my-turborepo
+pnpm dev
+```
+
+### Remote Caching
+
+Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+
+By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
+
+```
+cd my-turborepo
+npx turbo login
+```
+
+This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+
+Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+
+```
+npx turbo link
+```
+
+## Useful Links
+
+Learn more about the power of Turborepo:
+
+- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
+- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
+- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
+- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
+- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
+- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)

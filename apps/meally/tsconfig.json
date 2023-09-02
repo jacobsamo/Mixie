@@ -1,0 +1,23 @@
+{
+  "extends": "tsconfig/nextjs.json",
+  "compilerOptions": {
+    "plugins": [{ "name": "next" }],
+    "strictNullChecks": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@db/*": ["./src/db/*"],
+      "@lib/*": ["./src/common/lib/*"],
+      "@components/*": ["./src/common/components/*"],
+      "@styles/*": ["./src/common/styles/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/db/next-auth-adapter.ts"
+  ],
+  "exclude": ["node_modules"]
+}

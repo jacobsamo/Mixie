@@ -1,13 +1,16 @@
 {
   "name": "tailwind-config",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "private": true,
   "main": "index.js",
+  "license": "MIT",
   "scripts": {
-    "clean:node": "rm -rf node_modules",
-    "clean:all": "yarn clean:node"
+    "clean:all": "rm -rf node_modules/"
   },
-  "devDependencies": {
-    "tailwindcss": "^3.3.1"
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.3.2"
   }
 }

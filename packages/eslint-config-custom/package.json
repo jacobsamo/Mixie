@@ -4,17 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf dist",
-    "clean:node": "rm -rf node_modules/",
-    "clean:turbo": "rm -rf .turbo"
+    "clean:all": "rm -rf node_modules/"
   },
   "dependencies": {
-    "eslint": "^8.36.0",
-    "eslint-config-next": "^13.1.1",
-    "eslint-config-prettier": "latest",
-    "eslint-config-turbo": "1.8.6",
-    "eslint-plugin-react": "latest",
-    "next": "^13.2.4"
+    "eslint-config-next": "^13.4.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-turbo": "^1.9.3",
+    "eslint-plugin-react": "7.28.0"
   },
   "publishConfig": {
     "access": "public"

@@ -1,10 +1,10 @@
 <!--
   For Work In Progress Pull Requests, please use the Draft PR feature,
   see https://github.blog/2019-02-14-introducing-draft-pull-requests/ for further details.
-  
+
   For a timely review/response, please avoid force-pushing additional
   commits if your PR already received reviews or comments.
-  
+
   Before submitting a Pull Request, please ensure you've done the following:
   - 📖 Read the Meally Contributing Guide: https://github.com/Eirfire/Meally/blob/master/CONTRIBUTING.md.
   - 📖 Read the Meally Code of Conduct: https://github.com/open-sauced/open-sauced/blob/HEAD/CODE_OF_CONDUCT.md.
@@ -12,12 +12,12 @@
   - ✅ Provide tests for your changes.
   - 📝 Use descriptive commit messages.
   - 📗 Update any related documentation and include any relevant screenshots.
--->\
+-->
 
 ## First have you done these steps?
 
-- [ ] Run `yarn upgrade-interactive` to upgrade all packages
-- [ ] Run a `yarn build` and fixed any bugs or errors found in this process
+- [ ] Run `pnpm up --latest` to upgrade all packages
+- [ ] Run a `pnpm build` and fixed any bugs or errors found in this process
 
 ## What type of PR is this? (check all applicable)
 
