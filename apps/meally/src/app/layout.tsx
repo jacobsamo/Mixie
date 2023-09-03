@@ -1,10 +1,18 @@
 import Navbar from "@components/modules/Navbar";
-import { siteConfig } from "@lib/config/siteConfig";
 import "@styles/globals.css";
 import { NextAuthProvider } from "@components/layouts/NextAuthProvider";
 import { ThemeProvider } from "../common/components/modules/theme-provider";
 import { Toaster } from "@components/ui/toaster";
 import { Analytics } from "@vercel/analytics/react";
+
+
+const siteConfig = {
+  name: "Meally",
+  description:
+    "Meally is a community-driven recipe platform where home cooks and food enthusiasts can collaborate on unique and delicious recipes",
+  url: "https://meally.com.au",
+  ogImage: "",
+};
 
 export const metadata = {
   title: {

@@ -16,7 +16,12 @@ import { SearchIcon } from "lucide-react";
 import { Button } from "../common/components/ui/button";
 
 export default async function Page() {
-  const latestRecipes = await recipeService.getAllRecipeCards();
+  // const latestRecipes = await recipeService.getAllRecipeCards();
+  const latestRecipes = (await db.query.info.findMany({
+    limit: 9,
+    offset: 0,
+    orderBy: [asc(info.lastUpdated)],
+  })) as Info[];
 
   return (
     <>
