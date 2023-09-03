@@ -21,7 +21,12 @@ class RecipeService {
     //   offset: offset,
     //   limit: limit,
     // });
-    const req = await fetch(`${env.NEXT_PUBLIC_APP_URL}/api/recipes`, {
+
+    const baseUrl =
+      process.env.NODE_ENV === "production"
+        ? "https://www.meally.com.au"
+        : "http://localhost:3000";
+    const req = await fetch(`${baseUrl}/api/recipes`, {
       next: { revalidate: 60 * 60 * 24 },
     });
     const recipes = await req.json();

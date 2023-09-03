@@ -13,10 +13,11 @@ import Image from "next/image";
 
 export default async function RecipeViewPage() {
   const recipes = (await db.query.info.findMany({
-    limit: 9,
+    limit: 100,
     offset: 0,
     orderBy: [asc(info.lastUpdated)],
   })) as Info[];
+
   return (
     <>
       <h1>Recipes</h1>

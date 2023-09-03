@@ -47,15 +47,21 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
 
   React.useEffect(() => {
     const fetchRecipes = async () => {
-      recipeService.getAllRecipeCards().then((data) => {
-        setRecipes(data);
+      // recipeService.getAllRecipeCards().then((data) => {
+      //   setRecipes(data);
+      // });
+
+      const req = await fetch(`/api/recipes`, {
+        next: { revalidate: 60 * 60 * 24 },
       });
+      const recipes = await req.json();
+      setRecipes(recipes.recipes as Info[]);
     };
 
     if (recipes?.length === 0) {
       fetchRecipes();
     }
-  }, [recipes]);
+  }, []);
 
   useEffect(() => {
     if (searchValue) {
