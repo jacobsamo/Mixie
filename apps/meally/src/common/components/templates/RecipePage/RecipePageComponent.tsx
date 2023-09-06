@@ -37,7 +37,7 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
           </div>
         )}
       </div>
-      <span className="bg-dark_grey my-2 mb-4 h-[0.125rem] w-full rounded-md dark:bg-white md:w-[800px] " />
+      <span className="bg-grey my-2 mb-4 h-[0.125rem] w-full rounded-md dark:bg-white md:w-[800px]" />
       <Details
         ingredients={recipe.ingredients || []}
         steps={recipe.steps || []}
