@@ -12,10 +12,12 @@ import GitHubProvider from "next-auth/providers/github";
 import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
 import TwitterProvider from "next-auth/providers/twitter";
+import EmailProvider from "next-auth/providers/email";
 
 import { env } from "@/env.mjs";
 import { db } from ".";
 import * as schema from "./schemas";
+import { sendVerificationRequest } from "./send-verification-request";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -73,6 +75,18 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
+    }),
+    EmailProvider({
+      server: {
+        host: "smtp.resend.com",
+        port: "465",
+        auth: {
+          user: "resend",
+          pass: env.RESEND_API_KEY,
+        },
+      },
+      from: "cook@meally.com.au",
+      sendVerificationRequest,
     }),
   ],
 };

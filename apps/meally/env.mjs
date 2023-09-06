@@ -1,5 +1,5 @@
-import { createEnv } from '@t3-oss/env-nextjs';
-import { z } from 'zod';
+import { createEnv } from "@t3-oss/env-nextjs";
+import { z } from "zod";
 
 export const env = createEnv({
   server: {
@@ -7,7 +7,7 @@ export const env = createEnv({
     DATABASE_HOST: z.string().min(1),
     DATABASE_USERNAME: z.string().min(1),
     DATABASE_PASSWORD: z.string().min(1),
-    NODE_ENV: z.enum(['development', 'test', 'production']),
+    NODE_ENV: z.enum(["development", "test", "production"]),
     NEXTAUTH_URL: z.string().min(1),
     NEXTAUTH_SECRET: z.string().min(1),
     GITHUB_CLIENT_ID: z.string().min(1),
@@ -18,6 +18,7 @@ export const env = createEnv({
     FACEBOOK_CLIENT_SECRET: z.string().min(1),
     TWITTER_API_KEY: z.string().min(1),
     TWITTER_API_SECRET: z.string().min(1),
+    RESEND_API_KEY: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_FIREBASE_API_KEY: z.string().min(1),
@@ -55,6 +56,7 @@ export const env = createEnv({
     DATABASE_USERNAME: process.env.DATABASE_USERNAME,
     DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
     NODE_ENV: process.env.NODE_ENV,
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
 
     // NextAuth
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,

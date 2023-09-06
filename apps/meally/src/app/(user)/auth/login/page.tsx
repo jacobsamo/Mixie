@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import { Input } from "@/src/common/components/ui/input";
@@ -35,6 +36,15 @@ const LoginPage = () => {
         {/* <Button ariaLabel='sign in with google'>Sign in with Google</Button>
                 <Button ariaLabel='sign in with github'>Sign in with Facebook</Button> */}
       </div>
+      <button
+        onClick={() => {
+          fetch("/api/send", {
+            method: "POST",
+          }).then((res) => console.log("Email response", res));
+        }}
+      >
+        Send email
+      </button>
     </div>
   );
 };
