@@ -40,6 +40,11 @@ export type Amount = z.infer<typeof amount>;
 
 export type Step = z.infer<typeof stepSchema>;
 
+export type SelectValue = {
+  label: string;
+  value: string;
+};
+
 // set the recipe type to have the info and ingredients but ingredients as an array
 
 // type Recipe = PartialRecipe & Info & Ingredient[];

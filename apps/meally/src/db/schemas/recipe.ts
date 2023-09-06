@@ -12,6 +12,8 @@ import {
 } from "drizzle-orm/mysql-core";
 // imoport
 import { mealTime, dietary, difficulty_level, sweet_savoury } from "./enums";
+import * as z from "zod";
+import { Ingredient, Step, SelectValue } from "../types";
 
 // Recipes
 export const recipes = mysqlTable("recipes", {
@@ -20,8 +22,8 @@ export const recipes = mysqlTable("recipes", {
   title: varchar("title", { length: 191 }).notNull(),
   description: text("description"),
   notes: text("notes"),
-  steps: json("steps"),
-  ingredients: json("ingredients"),
+  steps: json("steps").$type<Step[]>(),
+  ingredients: json("ingredients").$type<Ingredient[]>(),
   mealTime: mealTime.default("not_set"),
   version: double("version").default(1.0),
 
@@ -58,10 +60,6 @@ export const recipesRelation = relations(recipes, ({ one, many }) => ({
 // Info
 export const info = mysqlTable("info", {
   recipeId: char("recipeId", { length: 36 }).primaryKey().notNull(),
-  // .references(() => recipes.uid, {
-  //   onDelete: 'cascade',
-  //   onUpdate: 'cascade',
-  // }),
   id: varchar("id", { length: 191 }).notNull(),
   title: varchar("title", { length: 191 }).notNull(),
   imgUrl: text("imgUrl"),
@@ -70,8 +68,8 @@ export const info = mysqlTable("info", {
   prep: varchar("prep", { length: 191 }),
   cook: varchar("cook", { length: 191 }),
   serves: tinyint("serves"),
-  keywords: json("keywords"),
-  ingredients: json("ingredients"),
+  keywords: json("keywords").$type<SelectValue[]>(),
+  ingredients: json("ingredients").$type<string[]>(),
   isPublic: boolean("isPublic").default(false),
   rating: tinyint("rating").default(0),
 

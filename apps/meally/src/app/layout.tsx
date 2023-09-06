@@ -5,7 +5,6 @@ import { ThemeProvider } from "../common/components/modules/theme-provider";
 import { Toaster } from "@components/ui/toaster";
 import { Analytics } from "@vercel/analytics/react";
 
-
 const siteConfig = {
   name: "Meally",
   description:
@@ -67,7 +66,7 @@ export const metadata = {
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
-  manifest: `${siteConfig.url}/manifest.json`,
+  manifest: `/manifest.json`,
 };
 
 export default function RootLayout({

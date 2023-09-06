@@ -76,18 +76,18 @@ export const authOptions: NextAuthOptions = {
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
-    EmailProvider({
-      server: {
-        host: "smtp.resend.com",
-        port: "465",
-        auth: {
-          user: "resend",
-          pass: env.RESEND_API_KEY,
-        },
-      },
-      from: "cook@meally.com.au",
-      sendVerificationRequest,
-    }),
+    // EmailProvider({
+    //   server: {
+    //     host: "smtp.resend.com",
+    //     port: "465",
+    //     auth: {
+    //       user: "resend",
+    //       pass: env.RESEND_API_KEY,
+    //     },
+    //   },
+    //   from: "cook@meally.com.au",
+    //   sendVerificationRequest,
+    // }),
   ],
 };
 
