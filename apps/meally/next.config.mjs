@@ -1,10 +1,10 @@
-import './env.mjs';
-import { env } from './env.mjs';
+import "./env.mjs";
+import { env } from "./env.mjs";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ["types", "tailwind-config"],
+  transpilePackages: ["types", "tailwind-config", "emails"],
   images: {
     domains: [
       "img.taste.com.au",

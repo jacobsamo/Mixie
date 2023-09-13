@@ -13,17 +13,18 @@ import {
   Hr,
 } from "@react-email/components";
 import * as React from "react";
+import * as defaultConfig from "../../tailwind-config/tailwind.config";
 
-interface PlaidVerifyIdentityEmailProps {
-  validationCode?: string;
+interface VerificationEmailProps {
+  email: string;
+  token: string;
+  url: string;
 }
 
-export const VerificationEmail = ({
-  validationCode = "144833",
-}: PlaidVerifyIdentityEmailProps) => (
+export const VerificationEmail = ({ email, token }: VerificationEmailProps) => (
   <Html>
     <Head />
-    <Tailwind>
+    <Tailwind config={{ theme: defaultConfig.default.theme }}>
       <Body className="font-sans bg-white">
         <Container className="mx-auto mt-5 w-96 rounded-md bg-white p-4 text-center shadow ">
           <Img
@@ -40,17 +41,17 @@ export const VerificationEmail = ({
             The link and code will be valid for the next 12 hours
           </Text>
           <Button
-            href={`https://meally.com.au/auto/sign?verfiy-request=${validationCode}`}
-            className="bg-amber-400 rounded-sm p-2 text-black"
+            href={`https://meally.com.au/auto/sign?verfiy-request=${token}`}
+            className="bg-yellow rounded-sm p-2 text-black"
           >
             Login to Meally
           </Button>
           <Text className="text-center">Or</Text>
           <Hr />
           <Text className="text-center">Login with the code below</Text>
-          <Section className="bg-slate-500 mx-auto mb-3 mt-4 w-fit rounded-md px-2 py-1 align-middle">
+          <Section className="bg- mx-auto mb-3 mt-4 w-fit rounded-md px-2 py-1 align-middle">
             <Text className="text-4xl tacking-[6px] font mx-auto my-0 inline-block w-full py-2 text-center font-bold text-black">
-              {validationCode}
+              {token}
             </Text>
           </Section>
 

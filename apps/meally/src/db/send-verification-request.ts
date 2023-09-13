@@ -1,7 +1,7 @@
 import React from "react";
 import { SendVerificationRequestParams } from "next-auth/providers";
 import { resend } from "./resend";
-import VerificationEmail from "../common/components/email/VerificationEmail";
+import VerificationEmail from "../../../../packages/emails/src/VerificationEmail";
 
 export const sendVerificationRequest = async (
   params: SendVerificationRequestParams
@@ -14,6 +14,7 @@ export const sendVerificationRequest = async (
       react: VerificationEmail({
         email: params.identifier,
         token: params.token,
+        url: params.url,
       }) as React.ReactElement,
     });
   } catch (error) {

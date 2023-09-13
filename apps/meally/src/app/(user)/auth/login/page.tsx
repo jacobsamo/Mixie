@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import { Input } from "@/src/common/components/ui/input";
@@ -6,15 +7,9 @@ import { GithubIcon } from "lucide-react";
 import { getProviders, signIn } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/src/db/next-auth-adapter";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const LoginPage = async () => {
-  const session = await getServerSession(authOptions);
-  const providers = await getProviders();
-
-  if (session) {
-    return { redirect: { destination: "/" } };
-  }
-
   return (
     <div className="m-auto flex max-w-md flex-col items-center gap-3 rounded-3xl bg-white p-3 text-center dark:bg-grey">
       <div className="flex flex-col items-center">
