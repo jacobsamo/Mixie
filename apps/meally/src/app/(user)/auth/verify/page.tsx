@@ -5,11 +5,15 @@ import React, { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Image from "next/image";
 
-const VerificationPage = () => {
-  const { control, handleSubmit } = useForm<{ code: string }>();
+interface CodeFormProps {
+  code: string;
+}
 
-  const onSubmit = async (data) => {
-    console.log("Code: ", data);
+const VerificationPage = () => {
+  const { control, handleSubmit } = useForm<CodeFormProps>();
+
+  const onSubmit = async (data: CodeFormProps) => {
+    console.log("Code: ", data.code);
   };
 
   return (
@@ -27,13 +31,15 @@ const VerificationPage = () => {
         />
         <h1 className="text-step--1">Welcome to Meally</h1>
       </div>
-      <p>Please enter the 6 digit code sent to {}</p>
+      <p>Please enter the 5 digit code sent to {}</p>
       <Controller
         name="code"
         defaultValue=""
+        rules={{ minLength: 5, required: true }}
         render={({ field }) => (
           <OtpInput
             value={field.value}
+            size={5}
             onChange={(val) => {
               field.onChange(val);
             }}
@@ -41,7 +47,7 @@ const VerificationPage = () => {
         )}
         control={control}
       />
-      <p>Resend code</p>
+      {/* <p>Resend code</p> */}
       <Button type="submit" ariaLabel="submit verification code">
         Verify
       </Button>

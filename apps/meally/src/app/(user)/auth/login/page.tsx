@@ -8,8 +8,20 @@ import { getProviders, signIn } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/src/db/next-auth-adapter";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useForm } from "react-hook-form";
+
+interface EmailFormProps {
+  email: string;
+}
 
 const LoginPage = async () => {
+  const { register, handleSubmit } = useForm<EmailFormProps>();
+  const router = useRouter();
+
+  const onSubmit = (data: EmailFormProps) => {
+    console.log(data.email);
+  };
+
   return (
     <div className="m-auto flex max-w-md flex-col items-center gap-3 rounded-3xl bg-white p-3 text-center dark:bg-grey">
       <div className="flex flex-col items-center">
@@ -22,24 +34,31 @@ const LoginPage = async () => {
         />
         <h1 className="text-step--1">Welcome to Meally</h1>
       </div>
-      <div className="flex w-2/3 flex-col  gap-4">
+      <form
+        className="flex w-2/3 flex-col  gap-4"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <Input
           label="Email"
-          name="email"
           type="email"
           placeholder="john@example.com"
+          {...register("email")}
         />
-        <Button ariaLabel="Log into Meally" className="mx-auto w-full">
+        <Button
+          type="submit"
+          ariaLabel="Log into Meally"
+          className="mx-auto w-full"
+        >
           Log in
         </Button>
-      </div>
+      </form>
       <span className="my-2 mb-4 h-[0.125rem] w-3/4 rounded-md bg-grey dark:bg-white"></span>
       <div>
         <Button
           LeadingIcon={<GithubIcon />}
           ariaLabel="sign in with google"
           className="bg-[#333333] p-3 text-step--2 text-white"
-          onClick={() => signIn()}
+          onClick={async () => signIn()}
         >
           Sign in with Github
         </Button>
