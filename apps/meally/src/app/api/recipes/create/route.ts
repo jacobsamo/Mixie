@@ -7,6 +7,14 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import * as z from "zod";
 import { v4 as uuidv4 } from "uuid";
+import * as puppeteer from "puppeteer";
+import * as cheerio from "cheerio";
+import { RecipeJsonLdProps } from "next-seo";
+import {
+  convertIngredients,
+  getRecipeJsonLd,
+  splitTime,
+} from "@/src/common/lib/services/recipeJsonLDParsing";
 
 const createRecipeSchema = z.object({
   title: z.string().optional(),
@@ -81,7 +89,6 @@ export async function POST(req: Request) {
       uid: uid,
       id,
       title,
-
       createByName: user.name! || "",
       createdBy: user.id,
       lastUpdatedBy: user.id,
@@ -92,10 +99,78 @@ export async function POST(req: Request) {
     await db.insert(recipes).values(recipe);
 
     return NextResponse.json(
-      { message: `Recipe succuflly created`, id: uid },
+      { message: `Recipe successfully created`, id: uid },
       {
         status: 200,
       }
     );
+  }
+
+  if (link) {
+    const recipe = await getRecipeJsonLd(link);
+    const ingredients = await convertIngredients(recipe.recipeIngredient);
+
+    // parse the recipe
+
+    if (recipe) {
+      const uid = uuidv4();
+
+      const newInfo: NewInfo = {
+        recipeId: uid,
+        id: recipeId(recipe.name),
+        title: recipe.name,
+        createByName: user.name! || "",
+        createdBy: user.id,
+        lastUpdatedBy: user.id,
+        lastUpdatedByName: user.name! || "",
+        cook: splitTime(recipe.cookTime),
+        prep: splitTime(recipe.prepTime),
+        total: splitTime(recipe.totalTime),
+        rating: recipe.aggregateRating?.ratingValue || null,
+        serves: recipe.recipeYield || null,
+        imgUrl: recipe.image.url || null,
+        imgAlt: recipe.image.alt || null,
+        keywords: recipe.keywords.split(",").map((keyword: string) => {
+          return { value: keyword };
+        }),
+        ingredients: ingredients.map((ingredient) => ingredient.title),
+      };
+
+      const newRecipe: NewPartialRecipe = {
+        uid: uid,
+        id: recipeId(recipe.name),
+        title: recipe.name,
+        createByName: user.name! || "",
+        createdBy: user.id,
+        lastUpdatedBy: user.id,
+        lastUpdatedByName: user.name! || "",
+        description: recipe.description || null,
+        steps:
+          recipe.recipeInstructions.map((step: string) => {
+            return { step_body: step };
+          }) || null,
+        ingredients,
+      };
+
+      console.log("Info: ", info);
+      console.log("Recipe: ", newRecipe);
+
+      await db.insert(info).values(newInfo);
+      await db.insert(recipes).values(recipe);
+
+      return NextResponse.json(
+        { message: `Recipe successfully created`, id: uid},
+        {
+          status: 200,
+        }
+      );
+    } else {
+      return NextResponse.json(
+        { message: `No recipe found at ${link}` },
+        {
+          status: 404,
+        }
+      );
+    }
   }
 }

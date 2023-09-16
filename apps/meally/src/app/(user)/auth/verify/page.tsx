@@ -1,9 +1,10 @@
 "use client";
-import OtpInput from "@/src/common/components/elements/LoginCode";
+import OtpInput from "@/src/common/components/elements/OtpInput";
 import { Button } from "@/src/common/components/ui/button";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import Image from "next/image";
+import { getCsrfToken, signIn } from "next-auth/react";
 
 interface CodeFormProps {
   code: string;
@@ -14,6 +15,13 @@ const VerificationPage = () => {
 
   const onSubmit = async (data: CodeFormProps) => {
     console.log("Code: ", data.code);
+    signIn("")
+  };
+
+  const getCode = async () => {
+    const csrfToken = await getCsrfToken();
+    console.log("Code: ", csrfToken);
+    return csrfToken;
   };
 
   return (
@@ -48,6 +56,13 @@ const VerificationPage = () => {
         control={control}
       />
       {/* <p>Resend code</p> */}
+      <Button
+        type="button"
+        ariaLabel="submit verification code"
+        onClick={() => getCode()}
+      >
+        get code
+      </Button>
       <Button type="submit" ariaLabel="submit verification code">
         Verify
       </Button>

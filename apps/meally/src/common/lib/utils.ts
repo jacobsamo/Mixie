@@ -42,6 +42,34 @@ const parseTimeToSeconds = (timeString: RegExpMatchArray) => {
 };
 
 /**
+ * Takes in seconds to parse and return a time string matching `/^(\d{1,2}[hms]\s?)+$/i` 
+ * @param {number} seconds - seconds to be parsed
+ * @returns {string} - return a string matching `/^(\d{1,2}[hms]\s?)+$/i` as a time string
+ */
+export const parseSecondsToTime = (seconds: number): string => {
+  const days = Math.floor(seconds / (24 * 60 * 60));
+  const hours = Math.floor((seconds % (24 * 60 * 60)) / (60 * 60));
+  const min = Math.floor((seconds % (60 * 60)) / 60);
+  const sec = seconds % 60;
+
+  const timeUnits: string[] = [];
+  if (days > 0) {
+    timeUnits.push(`${days}d`);
+  }
+  if (hours > 0) {
+    timeUnits.push(`${hours}h`);
+  }
+  if (min > 0) {
+    timeUnits.push(`${min}m`);
+  }
+  if (sec > 0) {
+    timeUnits.push(`${sec}s`);
+  }
+
+  return timeUnits.join(" ");
+};
+
+/**
  * Takes in a prep and cook time string and returns the total time in the same format
  * @param {string} prep - prep time string matching `/^(\d{1,2}[hms]\s?)+$/i`
  * @param {string} cook - cook time string matching `/^(\d{1,2}[hms]\s?)+$/i`
@@ -62,26 +90,7 @@ export async function calculateTotalTime(prep: string, cook: string) {
 
   const totalTime = prepTime! + cookTime!;
 
-  const days = Math.floor(totalTime / (24 * 60 * 60));
-  const hours = Math.floor((totalTime % (24 * 60 * 60)) / (60 * 60));
-  const minutes = Math.floor((totalTime % (60 * 60)) / 60);
-  const seconds = totalTime % 60;
-
-  const timeUnits: string[] = [];
-  if (days > 0) {
-    timeUnits.push(`${days}d`);
-  }
-  if (hours > 0) {
-    timeUnits.push(`${hours}h`);
-  }
-  if (minutes > 0) {
-    timeUnits.push(`${minutes}m`);
-  }
-  if (seconds > 0) {
-    timeUnits.push(`${seconds}s`);
-  }
-
-  return timeUnits.join(" ");
+  return parseSecondsToTime(totalTime);
 }
 
 function calculateCupUnits(

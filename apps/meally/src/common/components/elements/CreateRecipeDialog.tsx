@@ -39,29 +39,26 @@ const CreateRecipeDialog = () => {
 
   function onSubmit(values: z.infer<typeof createRecipeSchema>) {
     setLoading(true);
-
-    if (values.title) {
-      fetch("/api/recipes/create", {
-        method: "POST",
-        body: JSON.stringify({ title: values.title }),
-      }).then((res) => {
-        if (res.status == 200) {
-          res.json().then((data) => {
-            router.push(`/recipes/${data.id}/edit`);
-          });
-          setLoading(false);
-          setOpen(false);
-        }
-        if (res.status == 400) {
-          toast({
-            title: "An Error Occurred",
-            description: "This Error more the likely occurred due to a bug",
-          });
-        }
-      });
-      setLoading(false);
-      setOpen(false);
-    }
+    fetch("/api/recipes/create", {
+      method: "POST",
+      body: JSON.stringify({ title: values.title, link: values.link }),
+    }).then((res) => {
+      if (res.status == 200) {
+        res.json().then((data) => {
+          router.push(`/recipes/${data.id}/edit`);
+        });
+        setLoading(false);
+        // setOpen(false);
+      }
+      if (res.status == 400) {
+        toast({
+          title: "An Error Occurred",
+          description: "This Error more the likely occurred due to a bug",
+        });
+      }
+    });
+    setLoading(false);
+    // setOpen(false);
   }
 
   useEffect(() => {
@@ -86,16 +83,16 @@ const CreateRecipeDialog = () => {
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <Input {...register("title")} label="Title" />
-          {/* <p className="mx-auto">OR</p>
+          <p className="mx-auto">OR</p>
 
           <div>
             import a recipe
             <Input
-              {...register('link')}
+              {...register("link")}
               label="Recipe Url"
               placeholder="https://"
             />
-          </div> */}
+          </div>
           <Button
             ariaLabel="continue with creating the recipe"
             className="items-center font-semibold"

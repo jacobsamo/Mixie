@@ -4,10 +4,8 @@ import Image from "next/image";
 import { Input } from "@/src/common/components/ui/input";
 import { Button } from "@/src/common/components/ui/button";
 import { GithubIcon } from "lucide-react";
-import { getProviders, signIn } from "next-auth/react";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/src/db/next-auth-adapter";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 interface EmailFormProps {
@@ -18,8 +16,16 @@ const LoginPage = async () => {
   const { register, handleSubmit } = useForm<EmailFormProps>();
   const router = useRouter();
 
-  const onSubmit = (data: EmailFormProps) => {
+  const onSubmit = async (data: EmailFormProps) => {
     console.log(data.email);
+    signIn("email", { email: data.email, callbackUrl: "/" });
+    // router.push(
+    //   "/auth/verify?" + new URLSearchParams({ email: data.email }).toString()
+    // );
+  };
+
+  const signInWithGithub = async () => {
+    signIn("github", { callbackUrl: "/" });
   };
 
   return (
@@ -58,7 +64,7 @@ const LoginPage = async () => {
           LeadingIcon={<GithubIcon />}
           ariaLabel="sign in with google"
           className="bg-[#333333] p-3 text-step--2 text-white"
-          onClick={async () => signIn()}
+          onClick={() => signInWithGithub()}
         >
           Sign in with Github
         </Button>
