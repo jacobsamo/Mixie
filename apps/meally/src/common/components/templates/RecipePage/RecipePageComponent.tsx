@@ -14,7 +14,7 @@ interface RecipePageComponentProps {
 // TODO: user `next-seo` for ld+json for the recipe schema
 const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
   return (
-    <main className="mb-14 flex flex-col  items-start lg:ml-[20%]">
+    <div className="mb-14 flex flex-col  items-start lg:ml-[20%]">
       <div className="flex flex-wrap items-center gap-4">
         <h1 className="text-center text-step2 font-semibold">{recipe.title}</h1>
         <StarRating rating={recipe.info?.rating || 0} />
@@ -42,7 +42,7 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
         ingredients={recipe.ingredients || []}
         steps={recipe.steps || []}
       />
-    </main>
+    </div>
   );
 };
 

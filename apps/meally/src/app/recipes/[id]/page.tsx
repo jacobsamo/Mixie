@@ -1,26 +1,55 @@
 import RecipePageComponent from "@components/templates/RecipePage/RecipePageComponent";
-import React from "react";
+import React, { cache } from "react";
 import { mockRecipe } from "@/src/common/lib/services/data";
 import { db } from "@/src/db";
-import { recipes } from "@/src/db/schemas";
+import { info as infoSchema, recipes as recipeSchema } from "@/src/db/schemas";
 import { eq, or } from "drizzle-orm";
-import RecipeService from "@/src/common/lib/services/RecipeService";
 import type { Recipe } from "@/src/db/types";
 import { RecipeJsonLd } from "next-seo";
+import { Metadata } from "next";
+import { constructMetadata } from "@/src/common/lib/utils";
 
-interface RecipePageProps {
-  params: {
-    id: string;
-  };
+const getRecipes = cache(async () => {
+  const recipes = await db.query.recipes.findMany({
+    with: { info: true },
+    // where: eq(recipeSchema.isPublic, true),
+  });
+  return recipes;
+});
+
+export async function generateStaticParams() {
+  const recipes = await getRecipes();
+
+  return recipes.map((post) => ({
+    id: post.id,
+  }));
 }
 
-export default async function RecipePage({ params }: RecipePageProps) {
-  const recipe = (await db.query.recipes.findFirst({
-    where: or(eq(recipes.id, params.id), eq(recipes.uid, params.id)),
-    with: {
-      info: true,
-    },
-  })) as Recipe;
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata | undefined> {
+  const recipes = await getRecipes();
+  const recipe = recipes?.find((post) => {
+    post.id == params.id;
+  });
+  if (!recipe) {
+    return;
+  }
+
+  return constructMetadata({
+    title: recipe.title,
+    description: recipe.description || undefined,
+    image: recipe.info.imgUrl || undefined,
+    keywords:
+      recipe.info.keywords?.map((keyword) => keyword.value) || undefined,
+  });
+}
+
+export default async function RecipePage({ params }) {
+  const recipes = await getRecipes();
+  const recipe = recipes?.find((post) => post.id == params.id);
 
   if (recipe) {
     return (

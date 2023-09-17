@@ -15,7 +15,10 @@ interface EditPageProps {
   };
 }
 
-export default async function EditPage({ params, searchParams }) {
+export default async function EditPage({
+  params,
+  searchParams,
+}: EditPageProps) {
   const recipe = (await db.query.recipes.findFirst({
     where: or(eq(recipes.id, params.id), eq(recipes.uid, params.id)),
     with: {

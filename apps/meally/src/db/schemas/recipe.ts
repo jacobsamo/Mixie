@@ -68,7 +68,7 @@ export const info = mysqlTable("info", {
   prep: varchar("prep", { length: 191 }),
   cook: varchar("cook", { length: 191 }),
   serves: tinyint("serves"),
-  keywords: json("keywords").$type<SelectValue[]>(),
+  keywords: json("keywords").$type<{value: string}[]>(),
   ingredients: json("ingredients").$type<string[]>(),
   isPublic: boolean("isPublic").default(false),
   rating: tinyint("rating").default(0),

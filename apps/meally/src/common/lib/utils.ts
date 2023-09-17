@@ -19,6 +19,7 @@ export function recipeId(title: string): string {
 }
 
 import { Amount, type Ingredient } from "@/src/db/types";
+import { Metadata } from "next";
 
 /**
  * Takes in a time string matching `/^(\d{1,2}[hms]\s?)+$/i` and returns the total time in seconds
@@ -42,7 +43,7 @@ const parseTimeToSeconds = (timeString: RegExpMatchArray) => {
 };
 
 /**
- * Takes in seconds to parse and return a time string matching `/^(\d{1,2}[hms]\s?)+$/i` 
+ * Takes in seconds to parse and return a time string matching `/^(\d{1,2}[hms]\s?)+$/i`
  * @param {number} seconds - seconds to be parsed
  * @returns {string} - return a string matching `/^(\d{1,2}[hms]\s?)+$/i` as a time string
  */
@@ -182,4 +183,60 @@ export function calculateAllIngredients(
   return ingredients.map((ingredient) =>
     calculateIngredient(ingredient, batchAmount)
   );
+}
+
+// meta data
+export function constructMetadata({
+  title = "Meally",
+  description = "Meally is a community-driven recipe platform where home cooks and food enthusiasts can collaborate on unique and delicious recipes",
+  image = "https://dub.co/_static/thumbnail.png",
+  domain = "meally.com.au",
+  noIndex = false,
+}: {
+  title?: string;
+  description?: string;
+  keywords?: string[];
+  image?: string;
+  domain?: string;
+  noIndex?: boolean;
+} = {}): Metadata {
+  return {
+    title,
+    description,
+    openGraph: {
+      type: "website",
+      locale: "en_AU",
+      title,
+      description,
+      images: [
+        {
+          url: image,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [image],
+      creator: "@meally",
+    },
+    icons: {
+      icon: "/favicon.ico",
+      shortcut: "/favicon-16x16.png",
+      apple: "/apple-touch-icon.png",
+    },
+    metadataBase: new URL(domain),
+    themeColor: [
+      { media: "(prefers-color-scheme: light)", color: "white" },
+      { media: "(prefers-color-scheme: dark)", color: "black" },
+    ],
+    ...(noIndex && {
+      robots: {
+        index: false,
+        follow: false,
+      },
+    }),
+    manifest: `/manifest.json`,
+  };
 }
