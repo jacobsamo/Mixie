@@ -18,10 +18,10 @@ const LoginPage = async () => {
 
   const onSubmit = async (data: EmailFormProps) => {
     console.log(data.email);
-    signIn("email", { email: data.email, callbackUrl: "/" });
-    // router.push(
-    //   "/auth/verify?" + new URLSearchParams({ email: data.email }).toString()
-    // );
+    signIn("email", { email: data.email, callbackUrl: "/", redirect: false });
+    router.push(
+      "/auth/verify?" + new URLSearchParams({ email: data.email }).toString()
+    );
   };
 
   const signInWithGithub = async () => {

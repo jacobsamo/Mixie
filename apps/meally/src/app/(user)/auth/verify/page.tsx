@@ -5,23 +5,22 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import Image from "next/image";
 import { getCsrfToken, signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { env } from "@/env.mjs";
 
 interface CodeFormProps {
   code: string;
 }
 
 const VerificationPage = () => {
+  const router = useRouter();
   const { control, handleSubmit } = useForm<CodeFormProps>();
 
   const onSubmit = async (data: CodeFormProps) => {
     console.log("Code: ", data.code);
-    signIn("")
-  };
-
-  const getCode = async () => {
-    const csrfToken = await getCsrfToken();
-    console.log("Code: ", csrfToken);
-    return csrfToken;
+    router.push(
+      `/api/auth/callback/email?callbackUrl=${env.NEXT_PUBLIC_APP_URL}&token=${data.code}&email=jacob35422%40gmail.com`
+    );
   };
 
   return (
@@ -56,13 +55,6 @@ const VerificationPage = () => {
         control={control}
       />
       {/* <p>Resend code</p> */}
-      <Button
-        type="button"
-        ariaLabel="submit verification code"
-        onClick={() => getCode()}
-      >
-        get code
-      </Button>
       <Button type="submit" ariaLabel="submit verification code">
         Verify
       </Button>

@@ -93,7 +93,15 @@ export const authOptions: NextAuthOptions = {
       from: "cook@meally.com.au",
       sendVerificationRequest,
       async generateVerificationToken() {
-        return ""
+        const digits = "0123456789";
+        let verificationCode = "";
+
+        for (let i = 0; i < 5; i++) {
+          const randomIndex = Math.floor(Math.random() * digits.length);
+          verificationCode += digits.charAt(randomIndex);
+        }
+
+        return verificationCode;
       },
     }),
   ],
@@ -124,6 +132,12 @@ export function DrizzleAdapter(): Adapter {
   return {
     async createUser(data) {
       const id = crypto.randomUUID();
+
+      if (!data.image) {
+        data.image = `https:ui-avatars.com/api/?name=${data.name
+          ?.split(" ")
+          .join("+")}"&size=256&background=random`;
+      }
 
       await db.insert(users).values({ ...data, id });
 

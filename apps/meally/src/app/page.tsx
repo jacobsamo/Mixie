@@ -14,6 +14,7 @@ import { SelectWithSearch } from "../common/components/ui/combobox";
 import SearchTrigger from "../common/components/modules/SearchTrigger";
 import { SearchIcon } from "lucide-react";
 import { Button } from "../common/components/ui/button";
+import Image from "next/image";
 
 export default async function Page() {
   // const latestRecipes = await recipeService.getAllRecipeCards();
