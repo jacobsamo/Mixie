@@ -17,7 +17,6 @@ const LoginPage = async () => {
   const router = useRouter();
 
   const onSubmit = async (data: EmailFormProps) => {
-    console.log(data.email);
     signIn("email", { email: data.email, callbackUrl: "/", redirect: false });
     router.push(
       "/auth/verify?" + new URLSearchParams({ email: data.email }).toString()

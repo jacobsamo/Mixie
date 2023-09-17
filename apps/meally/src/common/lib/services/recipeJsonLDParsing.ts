@@ -70,7 +70,6 @@ export async function convertIngredients(ingredients: string[]): Promise<Ingredi
     if (quantityMatch && quantity == null) {
       quantity = parseFloat(quantityMatch[0]);
       title = title.replace(quantityMatch[0], "");
-      console.log(`found quantity ${quantity}`);
     }
 
     // Check for unit and amount in the remaining parts
@@ -95,7 +94,6 @@ export async function convertIngredients(ingredients: string[]): Promise<Ingredi
         if (amountMatch) {
           amount = amountMatch[0] as Ingredient["amount"];
           title = title.replace(parts[i], "");
-          console.log(`found amount ${amount}`);
           continue;
         }
       }
@@ -114,7 +112,6 @@ export async function convertIngredients(ingredients: string[]): Promise<Ingredi
 
     ingredientList.push(ingredientObject);
   }
-  console.log("ingredientList: ", ingredientList);
   return ingredientList;
 }
 

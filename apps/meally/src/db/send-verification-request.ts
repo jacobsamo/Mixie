@@ -18,6 +18,6 @@ export const sendVerificationRequest = async (
       }) as React.ReactElement,
     });
   } catch (error) {
-    console.log({ error });
+    console.error({ error });
   }
 };
