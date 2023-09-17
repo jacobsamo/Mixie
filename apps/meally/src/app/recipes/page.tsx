@@ -3,13 +3,8 @@ import { db } from "@/src/db";
 import { info } from "@/src/db/schemas";
 import { desc, asc } from "drizzle-orm";
 import {
-  BaseCard,
-  CardRectangle,
-  CardRectangleSmall,
   CardSquare,
 } from "@/src/common/components/elements/Cards";
-import Link from "next/link";
-import Image from "next/image";
 
 export default async function RecipeViewPage() {
   const recipes = (await db.query.info.findMany({
@@ -20,8 +15,7 @@ export default async function RecipeViewPage() {
 
   return (
     <>
-      <h1>Recipes</h1>
-      <section>
+      <section className="flex flex-wrap gap-2 p-3">
         {recipes.map((recipe) => {
           return <CardSquare key={recipe.id} recipe={recipe} />;
         })}

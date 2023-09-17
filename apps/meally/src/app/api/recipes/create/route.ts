@@ -156,7 +156,7 @@ export async function POST(req: Request) {
       console.log("Recipe: ", newRecipe);
 
       await db.insert(info).values(newInfo);
-      await db.insert(recipes).values(recipe);
+      await db.insert(recipes).values(newRecipe);
 
       return NextResponse.json(
         { message: `Recipe successfully created`, id: uid},

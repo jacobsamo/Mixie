@@ -7,7 +7,7 @@
     ".react-email"
   ],
   "scripts": {
-    "dev": "email dev --dir ./src --port 4001",
+    "email": "email dev --dir ./src --port 4001",
     "export": "email export"
   },
   "dependencies": {

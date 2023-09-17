@@ -45,10 +45,13 @@ const CreateRecipeDialog = () => {
     }).then((res) => {
       if (res.status == 200) {
         res.json().then((data) => {
+          toast({
+            title: "Recipe Created",
+          });
           router.push(`/recipes/${data.id}/edit`);
+          setLoading(false);
+          setOpen(false);
         });
-        setLoading(false);
-        // setOpen(false);
       }
       if (res.status == 400) {
         toast({
@@ -58,7 +61,7 @@ const CreateRecipeDialog = () => {
       }
     });
     setLoading(false);
-    // setOpen(false);
+    setOpen(false);
   }
 
   useEffect(() => {
