@@ -60,7 +60,7 @@ export const BaseCard = ({
           <h3 className={cn("w-fit whitespace-nowrap", classNames?.cookTime)}>
             {recipe.total}
           </h3>
-          <button
+          {/* <button
             onClick={() => {
               addBookMark(recipe);
               toast({
@@ -68,29 +68,32 @@ export const BaseCard = ({
               });
             }}
             className={classNames?.bookmarkButton}
+            aria-label="Bookmark Recipe"
           >
             <HeartIcon
               className={cn("h-8 w-8 cursor-pointer", classNames?.bookmarkIcon)}
             />
-          </button>
+          </button> */}
         </div>
       ) : (
-        <button
-          onClick={() => {
-            addBookMark(recipe);
-            toast({
-              description: "Recipe has been bookmarked",
-            });
-          }}
-          className={cn(
-            "absolute bottom-2 right-2",
-            classNames?.bookmarkButton
-          )}
-        >
-          <HeartIcon
-            className={cn("h-8 w-8 cursor-pointer", classNames?.bookmarkIcon)}
-          />
-        </button>
+        <></>
+        // <button
+        //   onClick={() => {
+        //     addBookMark(recipe);
+        //     toast({
+        //       description: "Recipe has been bookmarked",
+        //     });
+        //   }}
+        //   className={cn(
+        //     "absolute bottom-2 right-2",
+        //     classNames?.bookmarkButton
+        //   )}
+        //   aria-label="Bookmark Recipe"
+        // >
+        //   <HeartIcon
+        //     className={cn("h-8 w-8 cursor-pointer", classNames?.bookmarkIcon)}
+        //   />
+        // </button>
       )}
 
       <Image

@@ -26,6 +26,7 @@ export const recipes = mysqlTable("recipes", {
   ingredients: json("ingredients").$type<Ingredient[]>(),
   mealTime: mealTime.default("not_set"),
   version: double("version").default(1.0),
+  source: varchar("source", { length: 191 }),
 
   // little extras for searching
   dietary: dietary.default("none"),

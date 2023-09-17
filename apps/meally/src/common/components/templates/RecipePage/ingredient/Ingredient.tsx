@@ -14,6 +14,7 @@ const Ingredient = ({ ingredient }: IngredientProps) => {
         type="checkbox"
         id="checkbox"
         className="h-4 w-4 rounded-xl border-white checked:text-white"
+        aria-label={`Check off Ingredient, ${ingredient.title}`}
       />
       <h3 className="">
         {ingredient.quantity}{" "}

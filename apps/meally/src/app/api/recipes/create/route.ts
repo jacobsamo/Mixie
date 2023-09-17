@@ -150,6 +150,7 @@ export async function POST(req: Request) {
             return { step_body: step };
           }) || null,
         ingredients,
+        source: link,
       };
 
       console.log("Info: ", info);
@@ -159,7 +160,7 @@ export async function POST(req: Request) {
       await db.insert(recipes).values(newRecipe);
 
       return NextResponse.json(
-        { message: `Recipe successfully created`, id: uid},
+        { message: `Recipe successfully created`, id: uid },
         {
           status: 200,
         }

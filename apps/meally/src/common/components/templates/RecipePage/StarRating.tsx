@@ -50,6 +50,7 @@ const StarRating = ({ rating }: StarRatingProps) => {
             onClick={() => setRating(index)}
             onMouseEnter={() => setHoverRating(index)}
             onMouseLeave={() => setHoverRating(rating! || 0)}
+            aria-label={`Rating ${index} of 5`}
           >
             <StarIcon className="h-w-8 w-8" />
           </button>

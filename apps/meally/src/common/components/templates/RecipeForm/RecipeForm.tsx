@@ -93,6 +93,11 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
             />
             <Textarea id="description" label="Description" control={control} />
             <Input
+              {...register("source")}
+              label="Source"
+              tooltip="Where you got the recipe from if you got it from another website"
+            />
+            <Input
               {...register("info.prep", {
                 pattern: {
                   value: /^(\d{1,2}[hms]\s?)+$/i,
