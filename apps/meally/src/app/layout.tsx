@@ -5,6 +5,7 @@ import { ThemeProvider } from "../common/components/modules/theme-provider";
 import { Toaster } from "@components/ui/toaster";
 import { Analytics } from "@vercel/analytics/react";
 import TrpcProvider from "../common/trpc/TrpcProvider";
+import Footer from "../common/components/modules/Footer";
 
 const siteConfig = {
   name: "Meally",
@@ -85,6 +86,7 @@ export default function RootLayout({
               {/* <Search /> */}
               {children}
               <Toaster />
+              <Footer />
             </TrpcProvider>
           </NextAuthProvider>
         </ThemeProvider>

@@ -6,97 +6,126 @@ export default function Privacy_PolicyPage() {
     <>
       <main className="mx-auto my-0 max-w-[800px] p-10">
         <h1 className="mb-5 text-step1 font-bold">Privacy Policy</h1>
-        <h2 className="mb-5 text-step--2 font-bold">Last updated: 4/8/23</h2>
+        <h2 className="mb-5 text-step--2 font-bold">Last updated: 19/9/23</h2>
         <p className="mb-5 text-step--3">
-          At Meally we are committed to protecting you and your privacy while on
-          our platform, and ensuring that your personal information is safe and
-          secure. This privacy policy outlines the types of information we
-          collect and how we use that information.
+          Welcome to Meally, where your privacy and data security are our top
+          priorities. We are committed to ensuring that your personal
+          information is handled with care and used only for legitimate
+          purposes. This privacy policy outlines how we collect, use, and
+          protect your information.
         </p>
+        <p>
+          At Meally, we value your trust and are dedicated to safeguarding your
+          privacy. This policy explains how we collect, use, share, and protect
+          your personal information. By using our platform, you agree to the
+          practices described herein.
+        </p>
+        <br />
         <ol className="mb-5 list-decimal pl-5">
           <li className="mb-5 text-step--3">
             Information we collect:
             <p className="mb-5 text-step--3">
-              When you signup to our website we collect the information you
-              provide to us voluntarily. This information includes your name,
-              email address and profile picture. These are provided from the
-              service you sign in with for example but are not limited to
-              Google, Facebook or Github which providers give us when you sign
-              in. We also collect information on the recipes you have clicked
-              on, made or created which is not shared with anyone and is kept on
-              our platform only.
+              When you sign up on our website, we collect the following
+              information voluntarily:
+              <br />
+              <ul className="ml-8 list-disc">
+                <li>Your name</li>
+                <li>Your email address</li>
+                <li>
+                  Profile picture (provided by yourself or sign-in service,
+                  e.g., Google, Facebook, or Github)
+                </li>
+              </ul>
+              <br />
+              <p>
+                Additionally, we collect data related to the recipes you
+                interact with, including those you've clicked on, made, or
+                created. This information is stored securely within our platform
+                and is not shared with third parties.
+              </p>
             </p>
           </li>
           <li className="mb-5 text-step--3">
             Use of information:
             <p className="mb-3 text-step--3">
-              We use the data that we collect from the recipes you have made and
-              created to optimize suggested recipes for you and only for you to
-              improve your experience while on our platform. Cookies and
-              Tracking Technologies: On Meally we strive to provide a free
-              service always however to keep this service up and running we need
-              to generate money to pay the bills this is where Advertisements
-              come in which are provided by{" "}
+              We use the data we collect from your recipe interactions to
+              enhance your experience on our platform. This includes optimizing
+              suggested recipes tailored to your preferences and improving our
+              overall service.
+            </p>
+          </li>
+          <li className="mb-5 text-step--3">
+            Cookies and Tracking Technologies
+            <p className="mb-3 text-step--3">
+              To maintain our free service, we rely on advertisements provided
+              by{" "}
               <Link
                 href="https://adsense.google.com/start/"
                 target="_black"
                 className="text-blue underline underline-offset-0"
               >
-                Adsense
+                Google Adsense
               </Link>
-              . Along with Advertisements we also collect analytics on different
-              measures to improve our overall experience for users.
+              . We may also collect analytics data to enhance user experience.
+              {/* You can manage your preferences for cookies and tracking
+              technologies in your account settings. */}
             </p>
           </li>
           <li className="mb-5 text-step--3">
-            Sharing of information:
+            Sharing of Information
             <p className="mb-3 text-step--3">
-              Sharing of information: We do not share any of your personal
-              information with any third party for their own marketing purposes.
-              However, we may share your information with our service providers
-              who assist us in providing you with our products and services. We
-              may also share your information if we are required to do so by law
-              or if we believe that such action is necessary to protect our
-              rights or the rights of others
+              We do not share your personal information for third-party
+              marketing purposes. However, we may share your information with
+              service providers who assist us in delivering our products and
+              services. We will also disclose information if required by law or
+              if we believe it's necessary to protect our rights or the rights
+              of others.
             </p>
           </li>
           <li className="mb-5 text-step--3">
-            Data security:
+            Data Security
             <p className="mb-3 text-step--3">
-              We take many measures to protect your personal information from
-              unauthorized access, use, and disclosure. However, please note
-              that no method of transmission over the Internet or electronic
-              storage is completely secure, and we cannot guarantee the absolute
-              security of your information. However, we guarantee that we will
-              take all measures that we can to make sure your data is safe.
+              We take extensive measures to protect your personal information
+              from unauthorized access, use, or disclosure. While we implement
+              robust security protocols, please understand that no online method
+              is entirely secure. Nevertheless, we are committed to doing
+              everything within our power to ensure the safety of your data. .
             </p>
           </li>
           <li className="mb-5 text-step--3">
-            Your choices:
+            Your Choices
             <p className="mb-3 text-step--3">
               You have the right to opt out of receiving marketing
-              communications from us at any time, this may include: new letters,
-              updates, etc. You can also request to view your information at any
-              time, please do note that it can take up to 24 hours to process
-              and be sent to you. Along with this, you have the option to delete
-              your account from Meally, this, however, won’t delete your recipes
-              read more{" "}
-              <Link
-                href="/info/terms_services"
-                target="_black"
-                className="text-blue underline underline-offset-0"
-              >
-                here
-              </Link>
-              .
+              communications from us at any time, including newsletters and
+              updates. You can request access to your information, which may
+              take up to 24 hours to process. Additionally, you have the option
+              to delete your Meally account; however, please note that this
+              action won't delete your recipes.
+              {/* For more details, please read
+              our [Account Deletion Policy](#link-to-account-deletion-policy). */}
             </p>
           </li>
           <li className="mb-5 text-step--3">
-            Changes to the privacy policy:
+            Data Retention
             <p className="mb-3 text-step--3">
-              We may update this Privacy Policy from time to time. If we make
-              any material changes to the policy, we will notify you by posting
-              a notice on our website and by sending you an email.
+              We retain your data only for as long as necessary to fulfill the
+              purposes outlined in this policy or as required by law. Afterward,
+              we may anonymize or delete your data securely.
+            </p>
+          </li>
+          <li className="mb-5 text-step--3">
+            Changes to the Privacy Policy
+            <p className="mb-3 text-step--3">
+              We may update this Privacy Policy periodically. In the event of
+              significant changes, we will notify you by posting a notice on our
+              website and sending an email to your registered address.
+            </p>
+          </li>
+          <li className="mb-5 text-step--3">
+            Consent
+            <p className="mb-3 text-step--3">
+              By using Meally, you consent to the collection and use of your
+              data as described in this Privacy Policy.
             </p>
           </li>
         </ol>
