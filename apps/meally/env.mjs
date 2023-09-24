@@ -20,6 +20,8 @@ export const env = createEnv({
     TWITTER_API_SECRET: z.string().min(1),
     RESEND_API_KEY: z.string().min(1),
     API_APP_TOKEN: z.string().min(1),
+    UPLOADTHING_SECRET: z.string().min(1),
+    UPLOADTHING_APP_ID: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_FIREBASE_API_KEY: z.string().min(1),
@@ -59,6 +61,10 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     API_APP_TOKEN: process.env.API_APP_TOKEN,
+
+    // UploadThing
+    UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,
+    UPLOADTHING_APP_ID: process.env.UPLOADTHING_APP_ID,
 
     // NextAuth
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,

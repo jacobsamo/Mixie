@@ -1,5 +1,5 @@
 import * as puppeteer from "puppeteer";
-import { recipeId } from "../utils";
+import { recipeId } from "../utils/utils";
 import { db } from "@/src/db";
 import { env } from "@/env.mjs";
 import { Info, NewRecipe, Recipe } from "@/src/db/types";
@@ -12,7 +12,6 @@ import { asc, eq, or, sql } from "drizzle-orm";
 import { recipeFormSchema } from "@/src/db/zodSchemas";
 import React, { cache } from "react";
 import * as cheerio from "cheerio";
-
 
 class RecipeService {
   async getAllRecipeCards(
@@ -34,7 +33,6 @@ class RecipeService {
     const recipes = await req.json();
     return recipes.recipes as Info[];
   }
-
 
   //   async getRatingByRecipeId(id: string) {
   //     const rating = await prisma.rating.findMany({

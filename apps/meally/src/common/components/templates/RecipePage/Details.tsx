@@ -6,7 +6,7 @@ import type { Ingredient as IngredientType, Step } from "@/src/db/types";
 import Ingredient from "./ingredient/Ingredient";
 import { cva, type VariantProps } from "class-variance-authority";
 import { set } from "zod";
-import { calculateAllIngredients } from "@/src/common/lib/utils";
+import { calculateAllIngredients } from "@/src/common/lib/utils/utils";
 
 interface DetailsProps {
   ingredients: IngredientType[];

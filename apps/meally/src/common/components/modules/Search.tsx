@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Info } from "@/src/db/types";
 import { useToggleWithShortcut } from "../../hooks/useToggleWithShortCut";
 import Link from "next/link";
-import { recipeId } from "../../lib/utils";
+import { recipeId } from "../../lib/utils/utils";
 import { Dialog, DialogContent } from "@components/ui/dialog";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { useForm } from "react-hook-form";

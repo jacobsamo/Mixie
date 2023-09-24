@@ -1,5 +1,5 @@
 import { Amount, Ingredient } from "@/src/db/types";
-import { parseSecondsToTime } from "../utils";
+import { parseSecondsToTime } from "../utils/utils";
 import * as cheerio from "cheerio";
 
 /**
@@ -26,7 +26,6 @@ export function splitTime(time: string): string {
     ], 
 */
 
-
 const units: any = [
   { tsp: ["tsp", "teaspoon", "teaspoons", "t", "tsps"] },
   { tbsp: ["tbsp", "tablespoon", "tablespoons", "T", "tbsps"] },
@@ -45,13 +44,14 @@ const units: any = [
   { bottle: ["bottle", "bottles"] },
 ];
 
-
 /**
  * Parses the ingredients from the recipe jsonld
  * @param {string[]} ingredients - ingredients array
  * @returns {Ingredient[]} - return an array of Ingredient objects
  */
-export async function convertIngredients(ingredients: string[]): Promise<Ingredient[]> {
+export async function convertIngredients(
+  ingredients: string[]
+): Promise<Ingredient[]> {
   const ingredientList: Ingredient[] = [];
 
   for (const ingredient of ingredients) {
@@ -63,9 +63,8 @@ export async function convertIngredients(ingredients: string[]): Promise<Ingredi
     let unit: Ingredient["unit"] = "not_set";
     let amount: Ingredient["amount"] = "not_set";
     let quantity: Ingredient["quantity"] = null;
-    
 
-    // set quantity 
+    // set quantity
     const quantityMatch = ingredient.match(/[\d.]+/g);
     if (quantityMatch && quantity == null) {
       quantity = parseFloat(quantityMatch[0]);
@@ -114,7 +113,6 @@ export async function convertIngredients(ingredients: string[]): Promise<Ingredi
   }
   return ingredientList;
 }
-
 
 export const getRecipeJsonLd = async (link: string) => {
   let recipe: any;

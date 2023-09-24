@@ -189,7 +189,7 @@ export function calculateAllIngredients(
 export function constructMetadata({
   title = "Meally",
   description = "Meally is a community-driven recipe platform where home cooks and food enthusiasts can collaborate on unique and delicious recipes",
-  image = "https://dub.co/_static/thumbnail.png",
+  image = "/favicon.ico",
   domain = "meally.com.au",
   noIndex = false,
 }: {

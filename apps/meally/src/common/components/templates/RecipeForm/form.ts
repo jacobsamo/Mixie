@@ -1,4 +1,4 @@
-import { calculateTotalTime, recipeId } from "@/src/common/lib/utils";
+import { calculateTotalTime, recipeId } from "@/src/common/lib/utils/utils";
 import * as z from "zod";
 import type { Ingredient } from "@/src/db/types";
 import { toast } from "../../ui/use-toast";

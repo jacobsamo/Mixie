@@ -7,7 +7,7 @@ import { eq, or } from "drizzle-orm";
 import type { Recipe } from "@/src/db/types";
 import { RecipeJsonLd } from "next-seo";
 import { Metadata } from "next";
-import { constructMetadata } from "@/src/common/lib/utils";
+import { constructMetadata } from "@/src/common/lib/utils/utils";
 
 const getRecipes = cache(async () => {
   const recipes = await db.query.recipes.findMany({

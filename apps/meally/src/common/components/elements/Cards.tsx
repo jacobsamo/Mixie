@@ -5,7 +5,7 @@ import type { Info, Recipe } from "@/src/db/types";
 import { HeartIcon } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "../ui/use-toast";
-import { cn } from "@lib/utils";
+import { cn } from "@/src/common/lib/utils/utils";
 
 function addBookMark(recipe: Partial<Info>) {
   throw Error("Function not implemented.");

@@ -1,4 +1,4 @@
-import { calculateTotalTime, recipeId } from "@/src/common/lib/utils";
+import { calculateTotalTime, recipeId } from "@/src/common/lib/utils/utils";
 import { db } from "@/src/db";
 import { authOptions } from "@/src/db/next-auth-adapter";
 import { recipes, info } from "@/src/db/schemas";

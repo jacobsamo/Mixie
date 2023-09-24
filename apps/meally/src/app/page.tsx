@@ -2,10 +2,10 @@ import { CardRectangle } from "@components/elements/Cards";
 import "@splidejs/react-splide/css";
 import Slides from "../common/components/elements/Slides";
 
-
 import { SearchIcon } from "lucide-react";
 import SearchTrigger from "../common/components/modules/SearchTrigger";
 import { serverClient } from "../common/trpc/serverClient";
+import ImageUploadDialog from "../common/components/elements/ImageUploadDialog";
 
 export default async function Page() {
   const latestRecipe = await serverClient.recipes.query();
@@ -35,6 +35,7 @@ export default async function Page() {
           })}
         </Slides>
       </section>
+      <ImageUploadDialog title="Upload an image" />
     </>
   );
 }
