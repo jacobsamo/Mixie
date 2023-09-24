@@ -71,7 +71,7 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
     }
   }, [searchValue]);
 
-  //TODO: Make this to work just like CMDK with keyboard navigation and more
+  //TODO: Make this to work just like CMDK with keyboard navigation and more refence to OPTcode
   return (
     <>
       <Dialog

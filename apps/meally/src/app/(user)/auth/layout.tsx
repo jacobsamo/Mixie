@@ -1,11 +1,9 @@
 "use client";
-import React from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/src/db/next-auth-adapter";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import React from "react";
 
-export default async function SettingsLayout({
+export default function SettingsLayout({
   children,
 }: {
   children: React.ReactNode;

@@ -7,19 +7,20 @@ import {
 } from "@/src/common/components/elements/Cards";
 
 export default async function RecipeViewPage() {
-  const recipes = (await db.query.info.findMany({
-    limit: 100,
-    offset: 0,
-    orderBy: [asc(info.lastUpdated)],
-  })) as Info[];
-
+  // const recipes = (await db.query.info.findMany({
+  //   limit: 100,
+  //   offset: 0,
+  //   orderBy: [asc(info.lastUpdated)],
+  // })) as Info[];
+  //TODO: fix all querying
   return (
     <>
-      <section className="flex flex-wrap gap-2 p-3">
+    <h1>WIP</h1>
+      {/* <section className="flex flex-wrap gap-2 p-3">
         {recipes.map((recipe) => {
           return <CardSquare key={recipe.id} recipe={recipe} />;
         })}
-      </section>
+      </section> */}
     </>
   );
 }

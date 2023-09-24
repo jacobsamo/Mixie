@@ -18,12 +18,12 @@ import Image from "next/image";
 
 export default async function Page() {
   // const latestRecipes = await recipeService.getAllRecipeCards();
-  const latestRecipes = (await db.query.info.findMany({
-    limit: 9,
-    offset: 0,
-    orderBy: [asc(info.lastUpdated)],
-  })) as Info[];
-
+  // const latestRecipes = (await db.query.info.findMany({
+  //   limit: 9,
+  //   offset: 0,
+  //   orderBy: [asc(info.lastUpdated)],
+  // })) as Info[];
+  //TODO: fix all querying
   return (
     <>
       <section className="flex h-52 flex-col items-center justify-center">
@@ -43,13 +43,13 @@ export default async function Page() {
           </div>
         </SearchTrigger>
       </section>
-      <section className="pt-9 ">
+      {/* <section className="pt-9 ">
         <Slides>
           {latestRecipes.map((recipe) => {
             return <CardRectangle key={recipe.id} recipe={recipe} />;
           })}
         </Slides>
-      </section>
+      </section> */}
     </>
   );
 }

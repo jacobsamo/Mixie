@@ -1,5 +1,4 @@
 "use client";
-import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,13 +7,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@components/ui/dialog";
-import { Input } from "../ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { Button } from "../ui/button";
 import { Loader2, PlusCircleIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import VersionChip from "../modules/VersionChip";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 import { useToast } from "../ui/use-toast";
 
 const createRecipeSchema = z.object({
@@ -89,7 +90,9 @@ const CreateRecipeDialog = () => {
           <p className="mx-auto">OR</p>
 
           <div>
-            import a recipe
+            <div className="flex flex-row items-center gap-4">
+              import a recipe <VersionChip release="beta" />
+            </div>
             <Input
               {...register("link")}
               label="Recipe Url"
