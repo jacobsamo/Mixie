@@ -7,12 +7,12 @@ import Link from "next/link";
 import { useToast } from "../ui/use-toast";
 import { cn } from "@lib/utils";
 
-function addBookMark(recipe: Info) {
+function addBookMark(recipe: Partial<Info>) {
   throw Error("Function not implemented.");
 }
 
 interface CardProps {
-  recipe: Info;
+  recipe: Partial<Info>;
 }
 
 interface BaseCardProps extends CardProps {

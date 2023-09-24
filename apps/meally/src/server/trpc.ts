@@ -18,18 +18,18 @@ export const isAuthenticated = middleware(async (opts) => {
 });
 
 export const isApp = middleware(async (opts) => {
-  const { req } = opts.ctx;
-  console.log(req.headers);
+  const { headers } = opts.ctx;
+  console.log(headers);
   if (
-    req.headers.authorization == "uPvovwjISK1H0IhDQd7ZiZoUBnmF//D4lm5SWA4m99s="
+    headers?.authorization == "uPvovwjISK1H0IhDQd7ZiZoUBnmF//D4lm5SWA4m99s="
   ) {
-    throw new TRPCError({
-      code: "FORBIDDEN",
-      message: "You must be logged in to do that.",
-    });
+    return opts.next();
   }
 
-  return opts.next();
+  throw new TRPCError({
+    code: "FORBIDDEN",
+    message: "You must be logged in to do that.",
+  });
 });
 
 export const publicProcedure = tRCP.procedure;

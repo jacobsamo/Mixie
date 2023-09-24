@@ -15,8 +15,10 @@ import SearchTrigger from "../common/components/modules/SearchTrigger";
 import { SearchIcon } from "lucide-react";
 import { Button } from "../common/components/ui/button";
 import Image from "next/image";
+import { serverClient } from "../common/trpc/serverClient";
 
 export default async function Page() {
+  const latestRecipe = await serverClient.recipes.query();
   // const latestRecipes = await recipeService.getAllRecipeCards();
   // const latestRecipes = (await db.query.info.findMany({
   //   limit: 9,
@@ -43,13 +45,13 @@ export default async function Page() {
           </div>
         </SearchTrigger>
       </section>
-      {/* <section className="pt-9 ">
+      <section className="pt-9 ">
         <Slides>
-          {latestRecipes.map((recipe) => {
+          {latestRecipe.map((recipe) => {
             return <CardRectangle key={recipe.id} recipe={recipe} />;
           })}
         </Slides>
-      </section> */}
+      </section>
     </>
   );
 }

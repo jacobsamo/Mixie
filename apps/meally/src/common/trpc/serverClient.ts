@@ -1,7 +1,15 @@
-import { httpBatchLink } from "@trpc/client";
+import {
+  createTRPCProxyClient,
+  unstable_httpBatchStreamLink,
+} from "@trpc/client";
+import type { AppRouter } from "@/src/server";
+import { env } from "@/env.mjs";
 
-import { appRouter } from "@/src/server";
-
-export const serverClient = appRouter.createCaller({
-  
+export const serverClient = createTRPCProxyClient<AppRouter>({
+  // transformer,
+  links: [
+    unstable_httpBatchStreamLink({
+      url: env.NEXT_PUBLIC_APP_URL + "/api/trpc",
+    }),
+  ],
 });
