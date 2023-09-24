@@ -1,7 +1,3 @@
-import { Info } from "@db/types";
-import { db } from "@/src/db";
-import { info } from "@/src/db/schemas";
-import { desc, asc } from "drizzle-orm";
 import { CardSquare } from "@/src/common/components/elements/Cards";
 import { serverClient } from "@/src/common/trpc/serverClient";
 

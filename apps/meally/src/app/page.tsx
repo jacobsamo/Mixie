@@ -1,31 +1,14 @@
-import React from "react";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-import "@splidejs/react-splide/css";
-import recipeService from "@lib/services/RecipeService";
 import { CardRectangle } from "@components/elements/Cards";
+import "@splidejs/react-splide/css";
 import Slides from "../common/components/elements/Slides";
 
-import { Info } from "@db/types";
-import { db } from "@/src/db";
-import { info } from "@/src/db/schemas";
-import { desc, asc } from "drizzle-orm";
 
-import { SelectWithSearch } from "../common/components/ui/combobox";
-import SearchTrigger from "../common/components/modules/SearchTrigger";
 import { SearchIcon } from "lucide-react";
-import { Button } from "../common/components/ui/button";
-import Image from "next/image";
+import SearchTrigger from "../common/components/modules/SearchTrigger";
 import { serverClient } from "../common/trpc/serverClient";
 
 export default async function Page() {
   const latestRecipe = await serverClient.recipes.query();
-  // const latestRecipes = await recipeService.getAllRecipeCards();
-  // const latestRecipes = (await db.query.info.findMany({
-  //   limit: 9,
-  //   offset: 0,
-  //   orderBy: [asc(info.lastUpdated)],
-  // })) as Info[];
-  //TODO: fix all querying
   return (
     <>
       <section className="flex h-52 flex-col items-center justify-center">

@@ -1,5 +1,7 @@
 import { TRPCError, initTRPC } from "@trpc/server";
 import { Context } from "./context";
+import * as crypto from "crypto";
+import { env } from "@/env.mjs";
 
 export const tRCP = initTRPC.context<Context>().create();
 
@@ -20,9 +22,10 @@ export const isAuthenticated = middleware(async (opts) => {
 export const isApp = middleware(async (opts) => {
   const { headers } = opts.ctx;
   console.log(headers);
-  if (
-    headers?.authorization == "uPvovwjISK1H0IhDQd7ZiZoUBnmF//D4lm5SWA4m99s="
-  ) {
+  const hash = crypto.createHash("sha256");
+  const token = hash.update(env.API_APP_TOKEN).digest("hex");
+
+  if (headers?.authorization == token) {
     return opts.next();
   }
 
