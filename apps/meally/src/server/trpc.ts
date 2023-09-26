@@ -21,7 +21,6 @@ export const isAuthenticated = middleware(async (opts) => {
 
 export const isApp = middleware(async (opts) => {
   const { headers } = opts.ctx;
-  console.log(headers);
   const hash = crypto.createHash("sha256");
   const token = hash.update(env.API_APP_TOKEN).digest("hex");
 

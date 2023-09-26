@@ -1,14 +1,21 @@
 import { CardRectangle } from "@components/elements/Cards";
 import "@splidejs/react-splide/css";
 import Slides from "../common/components/elements/Slides";
-
 import { SearchIcon } from "lucide-react";
 import SearchTrigger from "../common/components/modules/SearchTrigger";
 import { serverClient } from "../common/trpc/serverClient";
-import ImageUploadDialog from "../common/components/elements/ImageUploadDialog";
+import { Info } from "../db/types";
 
 export default async function Page() {
-  const latestRecipe = await serverClient.recipes.query();
+  const req = await fetch(`http://localhost:3000/api/recipes`, {
+    next: { revalidate: 60 * 60 * 24 },
+    headers: {
+      set("authorization", "Bearer " + token)
+    }
+  });
+
+  const latestRecipe: Info[] = await req.json();
+
   return (
     <>
       <section className="flex h-52 flex-col items-center justify-center">
@@ -30,12 +37,11 @@ export default async function Page() {
       </section>
       <section className="pt-9 ">
         <Slides>
-          {latestRecipe.map((recipe) => {
+          {latestRecipe?.map((recipe) => {
             return <CardRectangle key={recipe.id} recipe={recipe} />;
           })}
         </Slides>
       </section>
-      <ImageUploadDialog title="Upload an image" />
     </>
   );
 }

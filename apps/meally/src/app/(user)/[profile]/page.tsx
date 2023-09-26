@@ -1,22 +1,51 @@
-import { authOptions } from "@/src/db/next-auth-adapter";
-import { getServerSession } from "next-auth";
+import { SearchCard } from "@/src/common/components/elements/Cards";
+import { constructMetadata } from "@/src/common/lib/utils/utils";
 import { db } from "@/src/db";
-import { eq, or } from "drizzle-orm";
+import { authOptions } from "@/src/db/next-auth-adapter";
 import { info, users } from "@/src/db/schemas";
 import { Info, User } from "@/src/db/types";
-import Link from "next/link";
+import { and, eq, or } from "drizzle-orm";
+import { Pencil, ScrollText } from "lucide-react";
+import { Metadata } from "next";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
-import React from "react";
-import { SearchCard } from "@/src/common/components/elements/Cards";
-import { PenLine, Pencil, ScrollText } from "lucide-react";
+import Link from "next/link";
+import { cache } from "react";
 
-interface ProfilePageProps {
-  params: {
-    profile: string;
-  };
+const getUsers = cache(async () => {
+  const users = await db.query.users.findMany();
+  return users;
+});
+
+export async function generateStaticParams() {
+  const users = await getUsers();
+
+  return users.map((post) => ({
+    id: post.id,
+  }));
 }
 
-export default async function ProfilePage({ params }: ProfilePageProps) {
+export async function generateMetadata({
+  params,
+}: {
+  params: { profile: string };
+}): Promise<Metadata | undefined> {
+  const users = await getUsers();
+  const user = users?.find((user) => {
+    user.id == params.profile;
+  });
+  if (!user) {
+    return;
+  }
+
+  return constructMetadata({
+    title: user.name || "",
+    description: undefined,
+    image: user.image || undefined,
+  });
+}
+
+export default async function ProfilePage({ params }) {
   const session = await getServerSession(authOptions);
 
   const user = (await db.query.users.findFirst({
@@ -24,10 +53,12 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   })) as User;
 
   const gotRecipes = (await db.query.info.findMany({
-    where: or(
-      eq(info.createdBy, params.profile),
-      eq(info.lastUpdatedBy, params.profile),
-      eq(info.isPublic, true)
+    where: and(
+      eq(info.isPublic, true),
+      or(
+        eq(info.createdBy, params.profile),
+        eq(info.lastUpdatedBy, params.profile)
+      )
     ),
   })) as Info[];
 
@@ -44,7 +75,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             className="m-auto h-24 w-24 rounded-full lg:h-48 lg:w-48"
           />
           <h1 className="text-center text-step0">{user.name}</h1>
-          <h2 className="text-step-1 text-center">{user.id}</h2>
+          <h2 className="text-step-1 text-center">{user.userName}</h2>
           {session?.user.id == user.id && (
             <span className="mt-4 flex flex-row gap-4">
               <Link

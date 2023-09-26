@@ -1,5 +1,5 @@
-import { eq } from "drizzle-orm";
 import { appProcedure, publicProcedure } from "../trpc";
+import { eq } from "drizzle-orm";
 import { db } from "@/src/db";
 import { info } from "@/src/db/schemas";
 

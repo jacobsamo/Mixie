@@ -22,45 +22,6 @@ const createRecipeSchema = z.object({
 });
 
 export async function POST(req: Request) {
-  // try {
-  //   const session = await getServerSession(authOptions);
-  //   if (!session) {
-  //     return NextResponse.json('Unauthorized', { status: 403 });
-  //   }
-
-  //   const { user } = session;
-  //   console.log('user: ', user);
-  //   const json = await req.json();
-  //   console.log(json);
-  //   console.log(createRecipeSchema.parse(json));
-  //   const { title, link } = createRecipeSchema.parse(json);
-
-  //   if (title) {
-  //     const id = recipeId(title);
-  //     const recipe: NewRecipe = {
-  //       id,
-  //       title,
-  //       createdBy: user.id,
-  //       lastUpdatedBy: user.id,
-  //     };
-  //     const setRecipe = await db.insert(recipes).values(recipe);
-  //     console.log('Created Recipe', setRecipe);
-  //     return NextResponse.json(`Recipe succuflly created, ${setRecipe}`, {
-  //       status: 200,
-  //     });
-  //   }
-  // } catch (error) {
-  //   if (error instanceof z.ZodError) {
-  //     return NextResponse.json(JSON.stringify(error.issues), { status: 422 });
-  //   }
-
-  //   return NextResponse.json(null, { status: 500 });
-  // }
-  //   const session = await getServerSession(authOptions);
-  //   if (!session) {
-  //     return NextResponse.json('Unauthorized', { status: 403 });
-  //   }
-
   const session = await getServerSession(authOptions);
   if (!session) {
     return NextResponse.json("Unauthorized", { status: 403 });
@@ -174,4 +135,11 @@ export async function POST(req: Request) {
       );
     }
   }
+
+  return NextResponse.json(
+    { message: `No title or link provided` },
+    {
+      status: 400,
+    }
+  );
 }

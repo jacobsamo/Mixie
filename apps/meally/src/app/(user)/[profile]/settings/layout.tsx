@@ -3,6 +3,11 @@ import React from "react";
 import Link from "next/link";
 import { cva } from "class-variance-authority";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+
+interface SettingsParams {
+  profile: string;
+}
 
 const linkStyles = cva("text-step--2", {
   variants: {
@@ -15,9 +20,21 @@ const linkStyles = cva("text-step--2", {
 
 export default function SettingsLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: SettingsParams;
 }) {
+  const { data: session } = useSession();
+
+  if (session?.user?.id !== params.profile) {
+    return (
+      <main>
+        <h1 className="text-center text-step--2">You are not authorized.</h1>
+      </main>
+    );
+  }
+
   const pathname = usePathname();
   const lastSegment = pathname.substring(pathname.lastIndexOf("/") + 1);
   const firstSegment = pathname.split("/")[1];

@@ -2,7 +2,9 @@ import { CardSquare } from "@/src/common/components/elements/Cards";
 import { serverClient } from "@/src/common/trpc/serverClient";
 
 export default async function RecipeViewPage() {
-  const recipes = await serverClient.recipes.query();
+  const recipes = await fetch("/api/recipes", {
+    next: { revalidate: 60 * 60 * 24 },
+  }).then((res) => res.json());
 
   return (
     <>

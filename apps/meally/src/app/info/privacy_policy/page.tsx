@@ -39,7 +39,7 @@ export default function Privacy_PolicyPage() {
               <br />
               <p>
                 Additionally, we collect data related to the recipes you
-                interact with, including those you've clicked on, made, or
+                interact with, including those you have clicked on, made, or
                 created. This information is stored securely within our platform
                 and is not shared with third parties.
               </p>
@@ -61,7 +61,7 @@ export default function Privacy_PolicyPage() {
               by{" "}
               <Link
                 href="https://adsense.google.com/start/"
-                target="_black"
+                target="_blank"
                 className="text-blue underline underline-offset-0"
               >
                 Google Adsense
@@ -78,7 +78,7 @@ export default function Privacy_PolicyPage() {
               marketing purposes. However, we may share your information with
               service providers who assist us in delivering our products and
               services. We will also disclose information if required by law or
-              if we believe it's necessary to protect our rights or the rights
+              if we believe it is necessary to protect our rights or the rights
               of others.
             </p>
           </li>
@@ -97,10 +97,10 @@ export default function Privacy_PolicyPage() {
             <p className="mb-3 text-step--3">
               You have the right to opt out of receiving marketing
               communications from us at any time, including newsletters and
-              updates. You can request access to your information, which may
-              take up to 24 hours to process. Additionally, you have the option
-              to delete your Meally account; however, please note that this
-              action won't delete your recipes.
+              updates. and updates. You can request access to your information,
+              which may take up to 24 hours to process. Additionally, you have
+              the option to delete your Meally account; however, please note
+              that this action will not delete your recipes.
               {/* For more details, please read
               our [Account Deletion Policy](#link-to-account-deletion-policy). */}
             </p>

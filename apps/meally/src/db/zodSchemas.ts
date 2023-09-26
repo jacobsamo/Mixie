@@ -1,6 +1,6 @@
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
-import { recipes, info, ratings } from "./schemas";
+import { recipes, info, ratings, users } from "./schemas";
 
 // join the info and ingredients to the recipe
 
@@ -84,3 +84,5 @@ export const recipesSelect = recipeSchemaSelect.extend({
   info: infoSchema,
   ratings: ratingsSchema.optional(),
 });
+
+export const userSchema = createInsertSchema(users);
