@@ -6,6 +6,47 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function matchIngredients(step: Step, ingredients: Ingredient[]) {
+  const stepWords = step.step_body.toLowerCase().split(/\s+/);
+
+  const matchedIngredients = ingredients
+    .filter((ingredient, index, arr) => {
+      if (ingredient.isHeading || !ingredient.title) {
+        return false;
+      }
+
+      const ingredientWords = ingredient.title.toLowerCase().split(/\s+/);
+
+      // Check if any ingredient word is a substring of any step word
+      return ingredientWords.some((ingredientWord) =>
+        stepWords.some((stepWord) => stepWord.toLowerCase() === ingredientWord)
+      );
+    })
+    .filter((ingredient, index, arr) => {
+      // Filter out duplicate ingredients
+      return arr.findIndex((i) => i.title === ingredient.title) === index;
+    });
+
+  const uniqueMatchedIngredients = matchedIngredients.filter(
+    (ingredient, index) => {
+      const ingredientWords = ingredient.title.toLowerCase().split(/\s+/); // Split ingredient title into words
+
+      // Check if any ingredient word is a substring of any step word
+      return !ingredientWords.some((ingredientWord) =>
+        matchedIngredients
+          .slice(index + 1)
+          .some((matchedIngredient) =>
+            matchedIngredient.title
+              .toLowerCase()
+              .includes(ingredientWord.toLowerCase())
+          )
+      );
+    }
+  );
+
+  return uniqueMatchedIngredients;
+}
+
 /**
  * Converts a recipe title to a recipe id
  * @param {string} title The title of the recipe
@@ -18,7 +59,7 @@ export function recipeId(title: string): string {
   return title.replace(/\s/g, "-").toLowerCase();
 }
 
-import { Amount, type Ingredient } from "@/src/db/types";
+import { Amount, Step, type Ingredient } from "@/src/db/types";
 import { Metadata } from "next";
 
 /**

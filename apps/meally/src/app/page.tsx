@@ -5,13 +5,11 @@ import { SearchIcon } from "lucide-react";
 import SearchTrigger from "../common/components/modules/SearchTrigger";
 import { serverClient } from "../common/trpc/serverClient";
 import { Info } from "../db/types";
-import { Get } from "../common/lib/services/apiHandle";
+import { Request } from "../common/lib/services/apiHandle";
+import { Button } from "../common/components/ui/button";
 
 export default async function Page() {
-  const latestRecipes = await Get<Info[]>({
-    url: `http://localhost:3000/api/recipes`,
-    method: "GET",
-  });
+  const latestRecipes = await Request<Info[]>(`api/recipes`);
 
   return (
     <>

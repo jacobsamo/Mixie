@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -153,6 +153,9 @@ importers:
       fuse.js:
         specifier: ^6.6.2
         version: 6.6.2
+      jose:
+        specifier: ^4.15.2
+        version: 4.15.2
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
@@ -313,7 +316,7 @@ packages:
     dependencies:
       '@panva/hkdf': 1.1.1
       cookie: 0.5.0
-      jose: 4.14.6
+      jose: 4.15.2
       nodemailer: 6.9.5
       oauth4webapi: 2.3.0
       preact: 10.11.3
@@ -330,7 +333,7 @@ packages:
     dependencies:
       '@panva/hkdf': 1.1.1
       cookie: 0.5.0
-      jose: 4.14.6
+      jose: 4.15.2
       nodemailer: 6.9.5
       oauth4webapi: 2.3.0
       preact: 10.11.3
@@ -6190,8 +6193,8 @@ packages:
     resolution: {integrity: sha512-8wb9Yw966OSxApiCt0K3yNJL8pnNeIv+OEq2YMidz4FKP6nonSRoOXc80iXY4JaN2FC11B9qsNmDsm+ZOfMROA==}
     dev: false
 
-  /jose@4.14.6:
-    resolution: {integrity: sha512-EqJPEUlZD0/CSUMubKtMaYUOtWe91tZXTWMJZoKSbLk+KtdhNdcvppH8lA9XwVu2V4Ailvsj0GBZJ2ZwDjfesQ==}
+  /jose@4.15.2:
+    resolution: {integrity: sha512-IY73F228OXRl9ar3jJagh7Vnuhj/GzBunPiZP13K0lOl7Am9SoWW3kEzq3MCllJMTtZqHTiDXQvoRd4U95aU6A==}
     dev: false
 
   /js-beautify@1.14.9:
@@ -6660,7 +6663,7 @@ packages:
       '@babel/runtime': 7.22.15
       '@panva/hkdf': 1.1.1
       cookie: 0.5.0
-      jose: 4.14.6
+      jose: 4.15.2
       next: 13.5.2(react-dom@18.2.0)(react@18.2.0)
       nodemailer: 6.9.5
       oauth: 0.9.15
@@ -6954,7 +6957,7 @@ packages:
   /openid-client@5.5.0:
     resolution: {integrity: sha512-Y7Xl8BgsrkzWLHkVDYuroM67hi96xITyEDSkmWaGUiNX6CkcXC3XyQGdv5aWZ6dukVKBFVQCADi9gCavOmU14w==}
     dependencies:
-      jose: 4.14.6
+      jose: 4.15.2
       lru-cache: 6.0.0
       object-hash: 2.2.0
       oidc-token-hash: 5.0.3

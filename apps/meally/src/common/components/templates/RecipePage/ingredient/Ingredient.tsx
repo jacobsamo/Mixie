@@ -19,7 +19,8 @@ const Ingredient = ({ ingredient }: IngredientProps) => {
       <h3 className="">
         {ingredient.quantity}{" "}
         {ingredient.amount == "not_set" ? null : ingredient.amount}{" "}
-        {ingredient.unit} {ingredient.title}{" "}
+        {ingredient.unit == "not_set" ? null : ingredient.unit}{" "}
+        {ingredient.title}{" "}
       </h3>
     </div>
   );

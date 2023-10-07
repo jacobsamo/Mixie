@@ -18,7 +18,7 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
   return (
     <div className="mb-14 flex flex-col  items-start lg:ml-[20%]">
       <div className="flex flex-wrap items-center gap-4">
-        <h1 className="text-center text-step2 font-semibold">{recipe.title}</h1>
+        <h1 id="title" className="text-center text-step2 font-semibold">{recipe.title}</h1>
         <StarRating rating={recipe.info?.rating || 0} />
       </div>
       <Info info={recipe.info} />

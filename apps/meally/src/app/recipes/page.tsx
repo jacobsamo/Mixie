@@ -1,13 +1,10 @@
 import { CardSquare } from "@/src/common/components/elements/Cards";
-import { Get } from "@/src/common/lib/services/apiHandle";
+import { Request } from "@/src/common/lib/services/apiHandle";
 import { serverClient } from "@/src/common/trpc/serverClient";
 import { Info } from "@/src/db/types";
 
 export default async function RecipeViewPage() {
-  const recipes = await Get<Info[]>({
-    url: `/api/recipes`,
-    method: "GET",
-  });
+  const recipes = await Request<Info[]>("/api/recipes");
 
   return (
     <>

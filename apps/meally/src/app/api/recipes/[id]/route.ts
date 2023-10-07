@@ -1,12 +1,11 @@
 import { isApp } from "@/src/common/lib/services/apiMiddleware";
-import { NextApiRequest } from "next";
-import { NextResponse } from "next/server";
-import { eq, or } from "drizzle-orm";
 import { db } from "@/src/db";
 import { recipes } from "@/src/db/schemas";
+import { eq, or } from "drizzle-orm";
+import { NextResponse, type NextRequest } from "next/server";
 
-export async function GET(req: NextApiRequest, params: { id: string }) {
-  const app = isApp(req);
+export async function GET(req: NextRequest, params: { id: string }) {
+  const app = await isApp(req);
 
   if (!app) {
     return NextResponse.json("Unauthorized", { status: 403 });

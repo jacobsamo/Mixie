@@ -1,11 +1,9 @@
 import { isApp } from "@/src/common/lib/services/apiMiddleware";
-import { NextApiRequest } from "next";
-import { NextResponse } from "next/server";
 import { db } from "@/src/db";
+import { NextResponse, type NextRequest } from "next/server";
 
-
-export async function GET(req: NextApiRequest) {
-  const app = isApp(req);
+export async function GET(req: NextRequest) {
+  const app = await isApp(req);
 
   if (!app) {
     return NextResponse.json("Unauthorized", { status: 403 });

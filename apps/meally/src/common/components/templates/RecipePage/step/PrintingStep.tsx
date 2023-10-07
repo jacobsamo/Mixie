@@ -1,6 +1,7 @@
 import { Step, Ingredient } from "@/src/db/types";
 import React from "react";
 import IngredientChips from "./IngredientChips";
+import { matchIngredients } from "@/src/common/lib/utils/utils";
 
 interface StepProps {
   index: number;
@@ -9,6 +10,8 @@ interface StepProps {
 }
 
 const Step = ({ index, step, ingredients }: StepProps) => {
+  const matchedIngredients = matchIngredients(step, ingredients);
+
   return (
     <section className="bg-whtie relative flex w-full flex-grow flex-col items-start gap-1 rounded-2xl p-4 shadow dark:bg-grey ">
       <h2
@@ -18,7 +21,9 @@ const Step = ({ index, step, ingredients }: StepProps) => {
         Step {index + 1}
       </h2>
       <p>{step.step_body}</p>
-      <IngredientChips step={step} ingredients={ingredients} />
+      <span>
+        Ingredients: {matchedIngredients.map((ingredient) => ingredient.title)}
+      </span>
     </section>
   );
 };

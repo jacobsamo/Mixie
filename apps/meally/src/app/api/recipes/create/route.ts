@@ -1,29 +1,29 @@
-import { recipeId } from "@/src/common/lib/utils/utils";
-import { db } from "@/src/db";
-import { authOptions } from "@/src/db/next-auth-adapter";
-import { recipes, info } from "@/src/db/schemas";
-import { NewInfo, NewPartialRecipe, NewRecipe } from "@/src/db/types";
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
-import * as z from "zod";
-import { v4 as uuidv4 } from "uuid";
-import * as puppeteer from "puppeteer";
-import * as cheerio from "cheerio";
-import { RecipeJsonLdProps } from "next-seo";
+import { isApp } from "@/src/common/lib/services/apiMiddleware";
 import {
   convertIngredients,
   getRecipeJsonLd,
   splitTime,
 } from "@/src/common/lib/services/recipeJsonLDParsing";
+import { recipeId } from "@/src/common/lib/utils/utils";
+import { db } from "@/src/db";
+import { authOptions } from "@/src/db/next-auth-adapter";
+import { info, recipes } from "@/src/db/schemas";
+import { NewInfo, NewPartialRecipe } from "@/src/db/types";
+import { getServerSession } from "next-auth";
+import { type NextRequest, NextResponse } from "next/server";
+import { v4 as uuidv4 } from "uuid";
+import * as z from "zod";
 
 const createRecipeSchema = z.object({
   title: z.string().optional(),
   link: z.string().url().optional(),
 });
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
+  const app = await isApp(req);
   const session = await getServerSession(authOptions);
-  if (!session) {
+
+  if (!session || !app) {
     return NextResponse.json("Unauthorized", { status: 403 });
   }
   const { user } = session;

@@ -1,18 +1,22 @@
+import { isApp } from "@/src/common/lib/services/apiMiddleware";
 import { calculateTotalTime, recipeId } from "@/src/common/lib/utils/utils";
 import { db } from "@/src/db";
 import { authOptions } from "@/src/db/next-auth-adapter";
-import { recipes, info } from "@/src/db/schemas";
-import { NewPartialRecipe, NewInfo } from "@/src/db/types";
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
+import { info, recipes } from "@/src/db/schemas";
+import { NewInfo, NewPartialRecipe } from "@/src/db/types";
 import { recipeFormSchema } from "@/src/db/zodSchemas";
 import { eq } from "drizzle-orm";
+import { getServerSession } from "next-auth";
+import { type NextRequest, NextResponse } from "next/server";
 
-export async function PUT(req: Request) {
+export async function PUT(req: NextRequest) {
+  const app = await isApp(req);
   const session = await getServerSession(authOptions);
-  if (!session) {
+  
+  if (!session || !app) {
     return NextResponse.json("Unauthorized", { status: 403 });
   }
+  
   const { user } = session;
 
   const json = await req.json();

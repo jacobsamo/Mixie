@@ -1,23 +1,77 @@
 import { env } from "@/env.mjs";
-import jwt from "jsonwebtoken";
+import * as jose from "jose";
+
+interface JWTResponse<T> {
+  items: T | undefined;
+  app: string;
+}
 
 class JWT {
-  setJwt(data?: any) {
-    const JWT = jwt.sign(
-      {
-        ...data,
+  async signJWT(payload?: object) {
+    try {
+      const secret = new TextEncoder().encode(env.JWT_SECRET);
+      return new jose.SignJWT({
+        items: payload,
         app: env.API_APP_TOKEN,
-      },
-      env.JWT_SECRET
-    );
-
-    return JWT;
+      })
+        .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+        .setIssuedAt()
+        .setExpirationTime("1h")
+        .sign(secret);
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
-  verifyJwt(token: string) {
-    const verify = jwt.verify(token, env.JWT_SECRET);
-    console.log("verify: ", verify);
-    return verify;
+  /**
+   * Sets the payload to be signed in a jwt to be sent back to the client so that certain data is private
+   */
+  async setPayload<T>(payload: T) {
+    try {
+      const secret = new TextEncoder().encode(env.JWT_SECRET);
+      return new jose.SignJWT({
+        payload,
+      })
+        .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+        .sign(secret);
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async verifyJWT<T>(token: string): Promise<JWTResponse<T>> {
+    console.log("token: ", token);
+
+    try {
+      const payload = (
+        await jose.jwtVerify(
+          token,
+          new TextEncoder().encode(process.env.JWT_SECRET_KEY)
+        )
+      ).payload;
+      console.log("payload: ", payload);
+      return {
+        items: payload.items as T,
+        app: payload.app as string,
+      };
+    } catch (error) {
+      console.log(error);
+      throw new Error("Your token has expired.");
+    }
+  }
+
+  async decodeJWT<T>(token: string): Promise<T> {
+    try {
+      return (
+        await jose.jwtDecrypt(
+          token,
+          new TextEncoder().encode(process.env.JWT_SECRET_KEY)
+        )
+      ).payload as T;
+    } catch (error) {
+      console.log(error);
+      throw new Error("Your token has expired.");
+    }
   }
 }
 
@@ -32,14 +86,16 @@ interface BaseRequest {
   nextOptions?: NextFetchRequestConfig;
 }
 
-export const Get = async <T>({
-  url,
-  method = "GET",
-  data,
-  params,
-  headers,
-  nextOptions,
-}: BaseRequest) => {
+export const Request = async <T>(
+  url: string,
+  {
+    method = "GET",
+    data,
+    params,
+    headers,
+    nextOptions,
+  }: Partial<BaseRequest> = {}
+) => {
   const jwt = new JWT();
 
   const req = await fetch(url, {
@@ -47,7 +103,7 @@ export const Get = async <T>({
     body: JSON.stringify(data),
     headers: {
       ...headers,
-      authorization: jwt.setJwt(),
+      authorization: await jwt.signJWT(),
     },
     next: {
       ...nextOptions,
