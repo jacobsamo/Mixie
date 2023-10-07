@@ -13,7 +13,7 @@ const Step = ({ index, step, ingredients }: StepProps) => {
   const matchedIngredients = matchIngredients(step, ingredients);
 
   return (
-    <section className="bg-whtie relative flex w-full flex-grow flex-col items-start gap-1 rounded-2xl p-4 shadow dark:bg-grey ">
+    <section className="relative flex w-96 flex-grow flex-col items-start gap-1 rounded-2xl p-4">
       <h2
         id={`step-${index + 1}`}
         className="font-Roboto text-step0 font-medium"
@@ -22,7 +22,15 @@ const Step = ({ index, step, ingredients }: StepProps) => {
       </h2>
       <p>{step.step_body}</p>
       <span>
-        Ingredients: {matchedIngredients.map((ingredient) => ingredient.title)}
+        <p className="font-bold">Ingredients:</p>{" "}
+        {matchedIngredients
+          .map(
+            (ingredient) => `${ingredient.quantity} 
+        ${ingredient.amount == "not_set" ? "" : ingredient.amount} 
+        ${ingredient.unit == "not_set" ? "" : ingredient.unit} 
+        ${ingredient.title}`
+          )
+          .join(" | ")}
       </span>
     </section>
   );

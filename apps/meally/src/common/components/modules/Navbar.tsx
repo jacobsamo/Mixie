@@ -31,7 +31,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="flex h-14 w-full flex-row items-center justify-between bg-transparent px-2">
+    <nav className="flex print:hidden h-14 w-full flex-row items-center justify-between bg-transparent px-2">
       {/* Logo & name - always show */}
       <Link href="/" className="flex flex-row gap-1">
         {/* Logo image */}

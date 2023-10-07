@@ -8,6 +8,7 @@ import { recipeFormSchema } from "@/src/db/zodSchemas";
 import * as z from "zod";
 import Link from "next/link";
 import { ExternalLinkIcon } from "lucide-react";
+import RecipePrintingView from "./RecipePrintingView";
 
 interface RecipePageComponentProps {
   recipe: Recipe;
@@ -16,58 +17,63 @@ interface RecipePageComponentProps {
 // TODO: user `next-seo` for ld+json for the recipe schema
 const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
   return (
-    <div className="mb-14 flex flex-col  items-start lg:ml-[20%]">
-      <div className="flex flex-wrap items-center gap-4">
-        <h1 id="title" className="text-center text-step2 font-semibold">{recipe.title}</h1>
-        <StarRating rating={recipe.info?.rating || 0} />
-      </div>
-      <Info info={recipe.info} />
-      <div className="w-full">
-        <Image
-          src={recipe?.info.imgUrl || "/images/placeholder.png"}
-          alt={recipe?.info.imgAlt || recipe.title || "recipe image"}
-          width={800}
-          height={600}
-          className="aspect-video rounded-xl object-cover"
-          priority
-        />
-        <div className="py-2">
-          <span className="relative flex flex-wrap gap-2">
-            {recipe.info?.keywords?.splice(0, 5).map((keyword, index) => (
-              <p
-                key={index}
-                className="h-fit w-fit rounded-lg bg-yellow p-1 text-center text-step--4 text-black opacity-80"
-              >
-                {keyword.value}
-              </p>
-            ))}
-            {recipe.source && (
-              <Link
-                href={recipe.source}
-                target="_blank"
-                className="flex cursor-pointer flex-row items-center gap-1 rounded-lg bg-white p-1 dark:bg-grey absolute right-2 "
-              >
-                {" "}
-                <ExternalLinkIcon className="h-5 w-5" />
-                Source
-              </Link>
-            )}
-          </span>
+    <>
+      <RecipePrintingView recipe={recipe} />
+      <div className="mb-14 flex flex-col  items-start print:hidden lg:ml-[20%]">
+        <div className="flex flex-wrap items-center gap-4">
+          <h1 id="title" className="text-center text-step2 font-semibold">
+            {recipe.title}
+          </h1>
+          <StarRating rating={recipe.info?.rating || 0} />
         </div>
-        <p className="md:w-9/12">{recipe.description}</p>
-        {recipe.notes && (
-          <div>
-            <h2>Notes: </h2>
-            <p>{recipe.notes}</p>
+        <Info info={recipe.info} />
+        <div className="w-full">
+          <Image
+            src={recipe?.info.imgUrl || "/images/placeholder.png"}
+            alt={recipe?.info.imgAlt || recipe.title || "recipe image"}
+            width={800}
+            height={600}
+            className="aspect-video rounded-xl object-cover"
+            priority
+          />
+          <div className="py-2">
+            <span className="relative flex flex-wrap gap-2">
+              {recipe.info?.keywords?.splice(0, 5).map((keyword, index) => (
+                <p
+                  key={index}
+                  className="h-fit w-fit rounded-lg bg-yellow p-1 text-center text-step--4 text-black opacity-80"
+                >
+                  {keyword.value}
+                </p>
+              ))}
+              {recipe.source && (
+                <Link
+                  href={recipe.source}
+                  target="_blank"
+                  className="absolute right-2 flex cursor-pointer flex-row items-center gap-1 rounded-lg bg-white p-1 dark:bg-grey "
+                >
+                  {" "}
+                  <ExternalLinkIcon className="h-5 w-5" />
+                  Source
+                </Link>
+              )}
+            </span>
           </div>
-        )}
+          <p className="md:w-9/12">{recipe.description}</p>
+          {recipe.notes && (
+            <div>
+              <h2>Notes: </h2>
+              <p>{recipe.notes}</p>
+            </div>
+          )}
+        </div>
+        <span className="my-2 mb-4 h-[0.125rem] w-full rounded-md bg-grey dark:bg-white md:w-[800px]" />
+        <Details
+          ingredients={recipe.ingredients || []}
+          steps={recipe.steps || []}
+        />
       </div>
-      <span className="my-2 mb-4 h-[0.125rem] w-full rounded-md bg-grey dark:bg-white md:w-[800px]" />
-      <Details
-        ingredients={recipe.ingredients || []}
-        steps={recipe.steps || []}
-      />
-    </div>
+    </>
   );
 };
 

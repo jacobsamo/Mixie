@@ -11,22 +11,40 @@ interface RecipePrintingViewProps {
 
 const RecipePrintingView = ({ recipe }: RecipePrintingViewProps) => {
   return (
-    <div className="mb-14 flex flex-col  items-start lg:ml-[20%]">
-      <div className="flex flex-wrap items-center gap-4">
-        <h1 id="title" className="text-center text-step2 font-semibold">
-          {recipe.title}
-        </h1>
-        {[...Array(5)].map((star, index) => {
-          index += 1;
-          return recipe.info.rating && index <= recipe.info.rating ? (
-            <StarIcon className="h-w-8 w-8 fill-[#ffe14cf6] text-[#ffe14cf6]" />
-          ) : (
-            <StarIcon className="h-w-8 w-8" />
-          );
-        })}
-      </div>
-      <Info info={recipe.info} />
-      <div className="w-full">
+    <div className="hidden w-full flex-col items-start print:flex">
+      <p className="flex flex-row gap-1">
+        {/* Logo image */}
+        <Image
+          width={44}
+          height={44}
+          src="/favicon.ico"
+          alt="Logo"
+          className="h-11 w-11 rounded-full"
+        />
+        {/* Logo text */}
+        <h1 className="text-step--1">Meally</h1>
+      </p>
+
+      <section>
+        <div className="flex flex-wrap items-center gap-4">
+          <h1 id="title" className="text-center text-step2 font-semibold">
+            {recipe.title}
+          </h1>
+        </div>
+        <span className="flex flex-row">
+          {[...Array(5)].map((star, index) => {
+            index += 1;
+            return recipe.info.rating && index <= recipe.info.rating ? (
+              <StarIcon className="h-w-8 w-8 fill-[#ffe14cf6] text-[#ffe14cf6]" />
+            ) : (
+              <StarIcon className="h-w-8 w-8" />
+            );
+          })}
+        </span>
+        <Info info={recipe.info} />
+      </section>
+
+      <section className="w-full pb-12">
         <Image
           src={recipe?.info.imgUrl || "/images/placeholder.png"}
           alt={recipe?.info.imgAlt || recipe.title || "recipe image"}
@@ -53,45 +71,59 @@ const RecipePrintingView = ({ recipe }: RecipePrintingViewProps) => {
             <p>{recipe.notes}</p>
           </div>
         )}
-      </div>
+        <p className="text-blue underline underline-offset-2 opacity-50">
+          https://meally.com.au/recipes/{recipe.id}
+        </p>
+      </section>
+
+      <h2 className="text-step1">
+        {recipe.ingredients && recipe.ingredients.length > 0 ? (
+          <>
+            {recipe.ingredients.length}{" "}
+            {recipe.ingredients.length === 1 ? "Ingredient" : "Ingredients"}
+          </>
+        ) : (
+          "No Ingredients"
+        )}
+      </h2>
+
       <span className="my-2 mb-4 h-[0.125rem] w-full rounded-md bg-grey dark:bg-white md:w-[800px]" />
-      <div className="flex flex-row items-center gap-x-[50%] px-2 pb-2 md:w-[800px]">
-        <div>
-          <h2 className="underline underline-offset-2">
-            {recipe.ingredients && recipe.ingredients.length > 0 ? (
-              <>
-                {recipe.ingredients.length}{" "}
-                {recipe.ingredients.length === 1 ? "Ingredient" : "Ingredients"}
-              </>
-            ) : (
-              "No Ingredients"
-            )}
-          </h2>
-          <h2 className="underline underline-offset-2">
-            {recipe.steps && recipe.steps.length > 0 ? (
-              <>
-                {recipe.steps.length}{" "}
-                {recipe.steps.length === 1 ? "Step" : "Steps"}
-              </>
-            ) : (
-              "No Steps"
-            )}
-          </h2>
-        </div>
 
-        <section>steps</section>
+      <ol className="pb-12">
+        {recipe.ingredients &&
+          recipe.ingredients.map((ingredient, index) => {
+            return (
+              <li key={index} className="flex flex-row gap-4 whitespace-normal">
+                {index + 1}. <p>{ingredient.title}</p>
+              </li>
+            );
+          })}
+      </ol>
 
-        <ul>
-          {recipe.steps &&
-            recipe.steps.map((step, index) => {
-              return (
-                <li key={index}>
-                  <PrintingStep step={step} ingredients={recipe.ingredients} index={index} />
-                </li>
-              );
-            })}
-        </ul>
-      </div>
+      <h2 className="text-step1">
+        {recipe.steps && recipe.steps.length > 0 ? (
+          <>
+            {recipe.steps.length} {recipe.steps.length === 1 ? "Step" : "Steps"}
+          </>
+        ) : (
+          "No Steps"
+        )}
+      </h2>
+      <span className="my-2 mb-4 h-[0.125rem] w-full rounded-md bg-grey dark:bg-white md:w-[800px]" />
+      <ul>
+        {recipe.steps &&
+          recipe.steps.map((step, index) => {
+            return (
+              <li key={index}>
+                <PrintingStep
+                  step={step}
+                  ingredients={recipe.ingredients || []}
+                  index={index}
+                />
+              </li>
+            );
+          })}
+      </ul>
     </div>
   );
 };
