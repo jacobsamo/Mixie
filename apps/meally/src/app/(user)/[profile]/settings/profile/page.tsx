@@ -40,13 +40,10 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   });
   const onSubmit = async (data: typeof user) => {
     try {
-      db.update(users)
-        .set({
-          name: data.name,
-          userName: data.userName,
-          bio: data.bio,
-        })
-        .where(eq(users.id, user.id));
+      await fetch(`/api/users/${params.profile}`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+      });
     } catch (error) {
       console.error(error);
     }

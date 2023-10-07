@@ -20,6 +20,7 @@ export const env = createEnv({
     TWITTER_API_SECRET: z.string().min(1),
     RESEND_API_KEY: z.string().min(1),
     API_APP_TOKEN: z.string().min(1),
+    JWT_SECRET: z.string().min(1),
     UPLOADTHING_SECRET: z.string().min(1),
     UPLOADTHING_APP_ID: z.string().min(1),
   },
@@ -61,6 +62,7 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     API_APP_TOKEN: process.env.API_APP_TOKEN,
+    JWT_SECRET: process.env.JWT_SECRET,
 
     // UploadThing
     UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,

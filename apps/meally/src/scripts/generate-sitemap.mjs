@@ -40,15 +40,15 @@ async function generate() {
 async function generateStatic() {
   const prettierConfig = await prettier.resolveConfig('./.prettierrc');
   const pages = await globby([
-    'pages/*.js',
-    'pages/*.tsx',
-    'pages/*.ts',
-    'pages/*.tsx',
+    'app/*.js',
+    'app/*.tsx',
+    'app/*.ts',
+    'app/*.tsx',
     'data/**/*.mdx',
     '!data/*.mdx',
-    '!pages/_*.js',
-    '!pages/api',
-    '!pages/404.tsx',
+    '!app/_*.js',
+    '!app/api',
+    '!app/404.tsx',
   ]);
 
   const sitemap = `

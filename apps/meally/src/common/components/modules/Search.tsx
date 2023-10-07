@@ -10,6 +10,7 @@ import { Dialog, DialogContent } from "@components/ui/dialog";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { useForm } from "react-hook-form";
 import recipeService from "../../lib/services/RecipeService";
+import { Get } from "../../lib/services/apiHandle";
 
 interface SearchProps {
   externalOpen?: boolean;
@@ -47,15 +48,12 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
 
   React.useEffect(() => {
     const fetchRecipes = async () => {
-      // recipeService.getAllRecipeCards().then((data) => {
-      //   setRecipes(data);
-      // });
-
-      const req = await fetch(`/api/recipes`, {
-        next: { revalidate: 60 * 60 * 24 },
+      const recipes = await Get<Info[]>({
+        url: `/api/recipes`,
+        method: "GET",
       });
-      const recipes = await req.json();
-      setRecipes(recipes.recipes as Info[]);
+
+      setRecipes(recipes);
     };
 
     if (recipes?.length === 0) {

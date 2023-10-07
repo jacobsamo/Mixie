@@ -6,6 +6,9 @@ import { db } from "@/src/db";
 import { info } from "@/src/db/schemas";
 
 export async function GET(req: NextApiRequest) {
+
+
+  console.log("req: ", req.headers["authorization"]);
   const app = isApp(req);
 
   if (!app) {

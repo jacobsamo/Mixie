@@ -5,16 +5,13 @@ import { SearchIcon } from "lucide-react";
 import SearchTrigger from "../common/components/modules/SearchTrigger";
 import { serverClient } from "../common/trpc/serverClient";
 import { Info } from "../db/types";
+import { Get } from "../common/lib/services/apiHandle";
 
 export default async function Page() {
-  const req = await fetch(`http://localhost:3000/api/recipes`, {
-    next: { revalidate: 60 * 60 * 24 },
-    headers: {
-      set("authorization", "Bearer " + token)
-    }
+  const latestRecipes = await Get<Info[]>({
+    url: `http://localhost:3000/api/recipes`,
+    method: "GET",
   });
-
-  const latestRecipe: Info[] = await req.json();
 
   return (
     <>
@@ -36,11 +33,11 @@ export default async function Page() {
         </SearchTrigger>
       </section>
       <section className="pt-9 ">
-        <Slides>
-          {latestRecipe?.map((recipe) => {
+        {/* <Slides>
+          {latestRecipes?.map((recipe) => {
             return <CardRectangle key={recipe.id} recipe={recipe} />;
           })}
-        </Slides>
+        </Slides> */}
       </section>
     </>
   );
