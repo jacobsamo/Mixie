@@ -30,7 +30,11 @@ export async function PUT(req: NextRequest) {
 
   const ingredients = recipe?.ingredients
     ?.filter((ingredient) => !ingredient.isHeading && ingredient.title)
-    .map((ingredient) => ingredient.title);
+    .map((ingredient) => {
+      ingredient.title = ingredient.title.charAt(0).toUpperCase() + ingredient.title.slice(1);
+
+      return ingredient.title;
+    });
 
   // create the json schema for the steps
   const steps = recipe?.steps?.map((step) => {

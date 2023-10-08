@@ -66,7 +66,7 @@ export const recipeSchema = createInsertSchema(recipes, {
   ingredients: ingredientSchema.array().optional(),
 });
 
-const ratingsSchema = createInsertSchema(ratings);
+export const ratingsSchema = createInsertSchema(ratings);
 
 // extend the recipe schema to include the info and ingredients
 export const recipeFormSchema = recipeSchema.extend({
@@ -86,3 +86,5 @@ export const recipesSelect = recipeSchemaSelect.extend({
 });
 
 export const userSchema = createInsertSchema(users);
+
+

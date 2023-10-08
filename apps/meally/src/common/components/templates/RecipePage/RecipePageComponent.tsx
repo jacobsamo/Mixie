@@ -14,7 +14,6 @@ interface RecipePageComponentProps {
   recipe: Recipe;
 }
 
-// TODO: user `next-seo` for ld+json for the recipe schema
 const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
   return (
     <>
@@ -24,7 +23,7 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
           <h1 id="title" className="text-center text-step2 font-semibold">
             {recipe.title}
           </h1>
-          <StarRating rating={recipe.info?.rating || 0} />
+          <StarRating rating={recipe.info?.rating || 0} recipeId={recipe.uid} />
         </div>
         <Info info={recipe.info} />
         <div className="w-full">
@@ -50,7 +49,7 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
                 <Link
                   href={recipe.source}
                   target="_blank"
-                  className="absolute right-2 flex cursor-pointer flex-row items-center gap-1 rounded-lg bg-white p-1 dark:bg-grey "
+                  className="flex cursor-pointer flex-row items-center gap-1 rounded-lg bg-white p-1 dark:bg-grey "
                 >
                   {" "}
                   <ExternalLinkIcon className="h-5 w-5" />

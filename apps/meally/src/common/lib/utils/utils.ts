@@ -242,6 +242,7 @@ export function constructMetadata({
   noIndex?: boolean;
 } = {}): Metadata {
   return {
+    
     title,
     description,
     openGraph: {

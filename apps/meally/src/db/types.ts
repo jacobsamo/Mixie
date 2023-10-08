@@ -12,6 +12,7 @@ import {
   stepSchema,
   recipeFormSchema,
   recipesSelect,
+  ratingsSchema,
 } from "./zodSchemas";
 
 // users
@@ -57,6 +58,8 @@ export type {
   Info,
   NewInfo,
 };
+
+export type Rating = z.infer<typeof ratingsSchema>;
 
 // groups
 // type Group = InferModel<typeof groups>;

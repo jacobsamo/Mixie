@@ -5,12 +5,6 @@ import { db } from "@/src/db";
 import { info } from "@/src/db/schemas";
 
 export async function GET(req: NextRequest) {
-  const app = await isApp(req);
-
-  if (!app) {
-    return NextResponse.json("Unauthorized", { status: 403 });
-  }
-
   const recipes = await db.query.info.findMany({
     columns: {
       recipeId: true,

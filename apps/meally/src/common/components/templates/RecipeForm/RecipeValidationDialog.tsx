@@ -83,7 +83,10 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
             ariaLabel="save"
             type="button"
             className="m-2 w-52"
-            onClick={handleSubmit(onSubmit)}
+            onClick={() => {
+              handleSubmit(onSubmit);
+              setOpen(false);
+            }}
           >
             Save
           </Button>

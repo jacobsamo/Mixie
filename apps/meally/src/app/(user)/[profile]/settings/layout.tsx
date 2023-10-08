@@ -25,6 +25,9 @@ export default function SettingsLayout({
   children: React.ReactNode;
   params: SettingsParams;
 }) {
+  const pathname = usePathname();
+  const lastSegment = pathname.substring(pathname.lastIndexOf("/") + 1);
+  const firstSegment = pathname.split("/")[1];
   const { data: session } = useSession();
 
   if (session?.user?.id !== params.profile) {
@@ -34,10 +37,6 @@ export default function SettingsLayout({
       </main>
     );
   }
-
-  const pathname = usePathname();
-  const lastSegment = pathname.substring(pathname.lastIndexOf("/") + 1);
-  const firstSegment = pathname.split("/")[1];
 
   return (
     <main>

@@ -14,12 +14,15 @@ import {
 import { Button } from "../../ui/button";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { Rating } from "@/src/db/types";
+import { toast } from "../../ui/use-toast";
 
 interface StarRatingProps {
+  recipeId: string;
   rating: number | undefined;
 }
 
-const StarRating = ({ rating }: StarRatingProps) => {
+const StarRating = ({ recipeId, rating }: StarRatingProps) => {
   const { user } = useUser();
   const [hoverRating, setHoverRating] = useState<number>(0);
   const [internalRating, setInternalRating] = useState<number>(0);
@@ -32,6 +35,26 @@ const StarRating = ({ rating }: StarRatingProps) => {
       return;
     }
     setInternalRating(rating);
+    fetch(`http://localhost:3000/api/recipes/${recipeId}/setRating`, {
+      method: "POST",
+      body: JSON.stringify({
+        recipeId: recipeId,
+        rating: rating,
+        userId: user.id,
+      } as Rating),
+    }).then((res) => {
+      if (res.status === 200) {
+        toast({
+          title: "Rating set!",
+        });
+      } else {
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: "There was an error while rating the recipe.",
+          variant: "destructive",
+        });
+      }
+    });
   }
 
   return (

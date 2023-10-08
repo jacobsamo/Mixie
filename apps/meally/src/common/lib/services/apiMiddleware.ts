@@ -1,10 +1,8 @@
-import type { NextRequest } from "next/server";
-import * as crypto from "crypto";
 import { env } from "@/env.mjs";
-import { getServerSession } from "next-auth";
 import { authOptions } from "@/src/db/next-auth-adapter";
-import JWT from "./apiHandle";
 import * as jose from "jose";
+import { getServerSession } from "next-auth";
+import type { NextRequest } from "next/server";
 
 export const isApp = async (req: NextRequest) => {
   try {

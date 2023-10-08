@@ -1,16 +1,14 @@
 "use client";
 import Fuse from "fuse.js";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { useFetchAllRecipe } from '../../lib/services/RecipeService';
 import { Info } from "@/src/db/types";
-import { useToggleWithShortcut } from "../../hooks/useToggleWithShortCut";
-import Link from "next/link";
-import { recipeId } from "../../lib/utils/utils";
 import { Dialog, DialogContent } from "@components/ui/dialog";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
-import recipeService from "../../lib/services/RecipeService";
-import { Request } from "../../lib/services/apiHandle";
+import { useToggleWithShortcut } from "../../hooks/useToggleWithShortCut";
+import { recipeId } from "../../lib/utils/utils";
 
 interface SearchProps {
   externalOpen?: boolean;
@@ -48,7 +46,13 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
 
   React.useEffect(() => {
     const fetchRecipes = async () => {
-      const recipes = await Request<Info[]>("/api/recipes");
+      const req = await fetch(`http://localhost:3000/api/recipes`, {
+        next: {
+          revalidate: 60 * 60 * 24,
+        },
+      });
+
+      const recipes = (await req.json()) as Info[];
 
       setRecipes(recipes);
     };
