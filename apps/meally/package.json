@@ -22,6 +22,7 @@
   "dependencies": {
     "@auth/core": "^0.15.1",
     "@auth/drizzle-adapter": "^0.3.2",
+    "@dnd-kit/core": "^6.0.8",
     "@hookform/resolvers": "^3.3.1",
     "@planetscale/database": "^1.11.0",
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -73,6 +74,7 @@
     "react-email": "^1.9.4",
     "react-hook-form": "^7.46.2",
     "react-select": "^5.7.5",
+    "react-slick": "^0.29.0",
     "resend": "^1.1.0",
     "sharp": "^0.32.6",
     "tailwind-merge": "^1.14.0",
@@ -85,6 +87,7 @@
     "@types/node": "^20.6.4",
     "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
+    "@types/react-slick": "^0.23.10",
     "drizzle-kit": "^0.19.13",
     "eslint-config-custom": "workspace:*",
     "globby": "^13.2.2",

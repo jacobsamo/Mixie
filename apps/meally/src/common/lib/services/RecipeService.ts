@@ -1,5 +1,6 @@
 import { Info } from "@/src/db/types";
 import React from "react";
+import { Request } from "./apiHandle";
 
 class RecipeService {
   async getAllRecipeCards(
@@ -15,11 +16,9 @@ class RecipeService {
       process.env.NODE_ENV === "production"
         ? "https://www.meally.com.au"
         : "http://localhost:3000";
-    const req = await fetch(`${baseUrl}/api/recipes`, {
-      next: { revalidate: 60 * 60 * 24 },
-    });
-    const recipes = await req.json();
-    return recipes.recipes as Info[];
+    const recipes = await Request<Info[]>(`api/recipes`);
+
+    return recipes as Info[];
   }
 
   //   async getRatingByRecipeId(id: string) {

@@ -98,7 +98,7 @@ export const Request = async <T>(
 ) => {
   const jwt = new JWT();
 
-  const req = await fetch(url, {
+  const req = await fetch(`${env.NEXT_PUBLIC_APP_URL}/${url}`, {
     method: method,
     body: JSON.stringify(data),
     headers: {

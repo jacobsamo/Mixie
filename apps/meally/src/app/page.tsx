@@ -7,10 +7,9 @@ import { serverClient } from "../common/trpc/serverClient";
 import { Info } from "../db/types";
 import { Request } from "../common/lib/services/apiHandle";
 import { Button } from "../common/components/ui/button";
+import Slider, { Settings } from "react-slick";
 
 export default async function Page() {
-  const latestRecipes = await Request<Info[]>(`api/recipes`);
-
   return (
     <>
       <section className="flex h-52 flex-col items-center justify-center">
@@ -31,11 +30,7 @@ export default async function Page() {
         </SearchTrigger>
       </section>
       <section className="pt-9 ">
-        {/* <Slides>
-          {latestRecipes?.map((recipe) => {
-            return <CardRectangle key={recipe.id} recipe={recipe} />;
-          })}
-        </Slides> */}
+      
       </section>
     </>
   );

@@ -2,15 +2,7 @@
 import React from "react";
 import Slider, { Settings } from "react-slick";
 
-interface SlidesTemplateProps {
-  children: React.ReactNode;
-}
-
-/**
- * Simple use of the Slides component
- * @param children - JSX of the slides to be displayed in the Slides with the SlidesSlide component.
- */
-const Slides = ({ children }: SlidesTemplateProps) => {
+const TestPage = () => {
   const settings: Settings = {
     arrows: true,
     dots: true,
@@ -22,6 +14,7 @@ const Slides = ({ children }: SlidesTemplateProps) => {
     autoplay: true,
     autoplaySpeed: 2000,
     cssEase: "linear",
+    
     // responsive: [
     //   {
     //     breakpoint: 1024,
@@ -50,7 +43,28 @@ const Slides = ({ children }: SlidesTemplateProps) => {
     // ],
   };
 
-  return <Slider {...settings}>{children}</Slider>;
+  return (
+    <Slider {...settings}>
+      <div>
+        <h3>1</h3>
+      </div>
+      <div>
+        <h3>2</h3>
+      </div>
+      <div>
+        <h3>3</h3>
+      </div>
+      <div>
+        <h3>4</h3>
+      </div>
+      <div>
+        <h3>5</h3>
+      </div>
+      <div>
+        <h3>6</h3>
+      </div>
+    </Slider>
+  );
 };
 
-export default Slides;
+export default TestPage;

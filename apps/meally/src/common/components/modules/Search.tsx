@@ -46,7 +46,7 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
 
   React.useEffect(() => {
     const fetchRecipes = async () => {
-      const req = await fetch(`http://localhost:3000/api/recipes`, {
+      const req = await fetch(`api/recipes`, {
         next: {
           revalidate: 60 * 60 * 24,
         },
