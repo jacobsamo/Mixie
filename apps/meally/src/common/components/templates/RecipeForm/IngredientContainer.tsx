@@ -1,13 +1,15 @@
-import { useCallback } from "react";
-import { Ingredient } from "./Ingredient";
-import { useFieldArray, useFormContext } from "react-hook-form";
-import { DraggAbleCard } from "./Dragableitem";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { Button } from "../../ui/button";
-import { PlusCircleIcon } from "lucide-react";
 import { recipeFormSchema } from "@/src/db/zodSchemas";
+import { PlusCircleIcon } from "lucide-react";
+import { useCallback } from "react";
+import {
+  type DropResult
+} from "react-beautiful-dnd";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import * as z from "zod";
+import { Button } from "../../ui/button";
+import DraggableContainer from "./Dragablecontainer";
+import DraggableItem from "./DraggableItem";
+import { Ingredient } from "./Ingredient";
 
 const IngredientContainer = () => {
   const { control, register } =
@@ -45,7 +47,11 @@ const IngredientContainer = () => {
   }, [append]);
 
   const handleSwap = useCallback(
-    (sourceIndex: number, targetIndex: number) => {
+    (drop: DropResult) => {
+      if (drop.destination == null) return;
+      const sourceIndex = drop.source.index;
+      const targetIndex = drop.destination.index;
+
       move(sourceIndex, targetIndex);
     },
     [move]
@@ -54,16 +60,9 @@ const IngredientContainer = () => {
   return (
     <>
       <section className="flex h-fit w-fit flex-col gap-3 rounded-lg bg-white p-4  shadow dark:bg-grey">
-        <DndProvider backend={HTML5Backend}>
+        <DraggableContainer droppableId="ingredients" onDragEnd={handleSwap}>
           {fields.map((field, index) => (
-            <DraggAbleCard
-              index={index}
-              id={field.id}
-              key={field.id}
-              acceptType="ingredient"
-              moveCard={handleSwap}
-              showHandle
-            >
+            <DraggableItem index={index} id={field.id} key={field.id}>
               <Ingredient
                 index={index}
                 values={{
@@ -76,9 +75,9 @@ const IngredientContainer = () => {
                 handleDelete={handleDelete}
                 key={field.id}
               />
-            </DraggAbleCard>
+            </DraggableItem>
           ))}
-        </DndProvider>
+        </DraggableContainer>
         <button
           type="button"
           onClick={() => handleHeadingClick()}

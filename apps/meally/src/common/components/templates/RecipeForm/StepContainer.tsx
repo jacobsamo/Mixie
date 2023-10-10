@@ -1,16 +1,13 @@
 import React, { useCallback } from "react";
-
 import { Step } from "./Step";
-
 import { useFieldArray, useFormContext } from "react-hook-form";
-
-import { DraggAbleCard } from "./Dragableitem";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import { Button } from "../../ui/button";
 import { PlusCircleIcon } from "lucide-react";
 import { recipeFormSchema } from "@/src/db/zodSchemas";
 import * as z from "zod";
+import DraggableContainer from "./Dragablecontainer";
+import DraggableItem from "./DraggableItem";
+import { DropResult } from "react-beautiful-dnd";
 
 const StepContainer = () => {
   const { control } = useFormContext<z.infer<typeof recipeFormSchema>>();
@@ -31,7 +28,11 @@ const StepContainer = () => {
   }, [append]);
 
   const handleSwap = useCallback(
-    (sourceIndex: number, targetIndex: number) => {
+    (drop: DropResult) => {
+      if (drop.destination == null) return;
+      const sourceIndex = drop.source.index;
+      const targetIndex = drop.destination.index;
+
       move(sourceIndex, targetIndex);
     },
     [move]
@@ -39,21 +40,15 @@ const StepContainer = () => {
 
   return (
     <section className="flex w-full flex-col gap-2">
-      <DndProvider backend={HTML5Backend}>
+      <DraggableContainer droppableId="steps" onDragEnd={handleSwap}>
         {fields.map((field, index: number) => {
           return (
-            <DraggAbleCard
-              key={field.id}
-              index={index}
-              id={field.id}
-              acceptType="step"
-              moveCard={handleSwap}
-            >
+            <DraggableItem index={index} id={field.id} key={field.id}>
               <Step index={index} handleDelete={handleDelete} key={field.id} />
-            </DraggAbleCard>
+            </DraggableItem>
           );
         })}
-      </DndProvider>
+      </DraggableContainer>
       <Button
         ariaLabel="Add an Step"
         className="mt-3 flex h-9 flex-row items-center gap-2 rounded-xl border text-step--2"
