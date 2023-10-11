@@ -32,13 +32,17 @@ export default async function Page() {
         </SearchTrigger>
       </section>
       <section className="pt-9 ">
-        <Slides>
-          {latestRecipes.map((recipe) => (
-            <SwiperSlide>
-              <CardRectangle key={recipe.id} recipe={recipe} />
-            </SwiperSlide>
-          ))}
-        </Slides>
+        {/* <Slides
+          render={() => (
+            <>
+              {latestRecipes.map((recipe) => (
+                <SwiperSlide key={recipe.id}>
+                  <CardRectangle key={recipe.id} recipe={recipe} />
+                </SwiperSlide>
+              ))}
+            </>
+          )}
+        /> */}
       </section>
     </>
   );

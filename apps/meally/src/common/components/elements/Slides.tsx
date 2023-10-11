@@ -8,14 +8,14 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 interface SlidesTemplateProps {
-  children: React.ReactNode;
+  render: () => JSX.Element;
 }
 
 /**
  * Simple use of the Slides component
  * @param children - JSX of the slides to be displayed in the Slides with the SlidesSlide component.
  */
-const Slides = ({ children }: SlidesTemplateProps) => {
+const Slides = ({ render }: SlidesTemplateProps) => {
   return (
     <Swiper
       spaceBetween={50}
@@ -26,7 +26,7 @@ const Slides = ({ children }: SlidesTemplateProps) => {
       navigation={true}
       modules={[Navigation]}
     >
-      {children}
+      {render()}
     </Swiper>
   );
 };
