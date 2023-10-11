@@ -3,28 +3,40 @@ import React, { useState, useEffect } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 
 interface CarouselProps {
+  /**
+   * The cards - items that will be rendered in the carousel
+   */
   children: React.ReactNode;
+  /**
+   * Auto moves slides
+   */
   autoplay?: boolean;
+  /**
+   * how fast the autoplay will play
+   */
   speed?: number;
+  /**
+   * The number of slides that will be shown if screen sizes allows it
+   */
+  count?: number;
 }
 
-const Carousel = ({ children, autoplay = true, speed = 3000 }) => {
+/**
+ *
+ * @param {React.ReactNode} children - the slides to be rendered
+ * @param {boolean} autoplay - will automatically move slides
+ * @param {number} speed - how fast the autoplay will go
+ * @param {number} count - number of slides shown
+ * @returns {React.JSX.Element} Carousel
+ */
+const Carousel = ({
+  children,
+  autoplay = true,
+  speed = 500,
+  count = 3,
+}: CarouselProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const numSlides = React.Children.count(children);
-
-  useEffect(() => {
-    let timer;
-
-    if (autoplay) {
-      timer = setInterval(() => {
-        setCurrentSlide((currentSlide + 1) % numSlides);
-      }, speed);
-    }
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, [currentSlide, numSlides, autoplay, speed]);
 
   const nextSlide = () => {
     setCurrentSlide((currentSlide + 1) % numSlides);
@@ -35,33 +47,32 @@ const Carousel = ({ children, autoplay = true, speed = 3000 }) => {
   };
 
   return (
-    <div className="relative">
-      <div className="flex">
-        <button
-          onClick={prevSlide}
-          className="absolute left-2 top-1/2 z-10 -translate-y-1/2 transform"
+    <div className="relative flex w-full flex-row justify-between">
+      <button aria-label="back" onClick={prevSlide}>
+        <ChevronLeft />
+      </button>
+      <div className="relative w-full">
+        <div
+          id="track"
+          className="flex h-full w-full flex-row items-center justify-center gap-4 overflow-hidden"
         >
-          <ChevronLeft size={24} />
-        </button>
-        <div className="relative overflow-hidden">
-          <div
-            className="flex transition-transform duration-300 ease-in-out"
-            style={{
-              transform: `translateX(-${currentSlide * 100}%)`,
-            }}
-          >
-            {React.Children.map(children, (child, index) => (
-              <div className="w-full">{child}</div>
-            ))}
-          </div>
+          {React.Children.map(children, (child, index) => (
+            <div
+              id={`card-${index}`}
+              key={index}
+              className="w-full translate-x-0 transform transition-transform duration-300 ease-in-out"
+              style={{
+                transform: `translateX(-${currentSlide * 100}%)`,
+              }}
+            >
+              {child}
+            </div>
+          ))}
         </div>
-        <button
-          onClick={nextSlide}
-          className="absolute right-2 top-1/2 z-10 -translate-y-1/2 transform"
-        >
-          <ChevronRight size={24} />
-        </button>
       </div>
+      <button aria-label="forward" onClick={nextSlide}>
+        <ChevronRight />
+      </button>
     </div>
   );
 };

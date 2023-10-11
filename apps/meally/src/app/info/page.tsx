@@ -10,9 +10,9 @@ import Carousel from "@/src/common/components/elements/Carousel";
 export default () => {
   return (
     <Carousel autoplay={true} speed={3000}>
-      <div className="bg-red-500 h-64">1</div>
-      <div className="bg-blue-500 h-64">2</div>
-      <div className="bg-green-500 h-64">3</div>
+      <div className="bg-yellow h-64 w-64">1</div>
+      <div className="bg-peach h-64 w-64 rounded-md">2</div>
+      <div className="bg-red h-64 w-64 rounded-md">3</div>
     </Carousel>
   );
 };
