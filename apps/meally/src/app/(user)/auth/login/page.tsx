@@ -34,7 +34,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="m-auto flex max-w-md flex-col items-center gap-3 rounded-3xl bg-white p-3 text-center dark:bg-grey">
+    <div className="m-auto flex max-w-md flex-col items-center gap-3 rounded-3xl bg-white p-3 text-center shadow dark:bg-grey">
       <div className="flex flex-col items-center">
         <Image
           src="/favicon.ico"
@@ -91,7 +91,7 @@ const LoginPage = () => {
           className="color-white shadow-[0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)] flex w-56 max-w-sm cursor-pointer items-center  rounded-lg border-none bg-[#181717] px-2 py-6 text-center text-step--3"
           onClick={() => signInWithGithub()}
         >
-          Sign in with Github
+          <p className="text-white">Sign in with Github</p>
         </Button>
         {/* <Button
           ariaLabel="sign in with google"

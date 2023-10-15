@@ -15,5 +15,5 @@ export default function SettingsLayout({
     router.push("/");
   }
 
-  return <main>{children}</main>;
+  return <main className="h-full w-full">{children}</main>;
 }
