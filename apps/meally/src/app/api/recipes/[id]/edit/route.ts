@@ -10,10 +10,9 @@ import { getServerSession } from "next-auth";
 import { type NextRequest, NextResponse } from "next/server";
 
 export async function PUT(req: NextRequest) {
-  const app = await isApp(req);
   const session = await getServerSession(authOptions);
   
-  if (!session || !app) {
+  if (!session) {
     return NextResponse.json("Unauthorized", { status: 403 });
   }
   

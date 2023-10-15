@@ -7,12 +7,12 @@ export default async function RecipeViewPage() {
   const recipes = await Request<Info[]>("/api/recipes");
 
   return (
-    <>
+    <main className="h-full w-full">
       <section className="flex flex-wrap gap-2 p-3">
         {recipes.map((recipe) => {
           return <CardSquare key={recipe.id} recipe={recipe} />;
         })}
       </section>
-    </>
+    </main>
   );
 }

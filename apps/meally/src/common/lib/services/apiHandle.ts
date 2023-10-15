@@ -6,76 +6,76 @@ interface JWTResponse<T> {
   app: string;
 }
 
-class JWT {
-  async signJWT(payload?: object) {
-    try {
-      const secret = new TextEncoder().encode(env.JWT_SECRET);
-      return new jose.SignJWT({
-        items: payload,
-        app: env.API_APP_TOKEN,
-      })
-        .setProtectedHeader({ alg: "HS256", typ: "JWT" })
-        .setIssuedAt()
-        .setExpirationTime("1h")
-        .sign(secret);
-    } catch (error) {
-      throw new Error(error);
-    }
-  }
+// class JWT {
+//   async signJWT(payload?: object) {
+//     try {
+//       const secret = new TextEncoder().encode(env.JWT_SECRET);
+//       return new jose.SignJWT({
+//         items: payload,
+//         app: env.NEXT_API_APP_TOKEN,
+//       })
+//         .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+//         .setIssuedAt()
+//         .setExpirationTime("1h")
+//         .sign(secret);
+//     } catch (error) {
+//       throw new Error(error);
+//     }
+//   }
 
-  /**
-   * Sets the payload to be signed in a jwt to be sent back to the client so that certain data is private
-   */
-  async setPayload<T>(payload: T) {
-    try {
-      const secret = new TextEncoder().encode(env.JWT_SECRET);
-      return new jose.SignJWT({
-        payload,
-      })
-        .setProtectedHeader({ alg: "HS256", typ: "JWT" })
-        .sign(secret);
-    } catch (error) {
-      throw new Error(error);
-    }
-  }
+//   /**
+//    * Sets the payload to be signed in a jwt to be sent back to the client so that certain data is private
+//    */
+//   async setPayload<T>(payload: T) {
+//     try {
+//       const secret = new TextEncoder().encode(env.JWT_SECRET);
+//       return new jose.SignJWT({
+//         payload,
+//       })
+//         .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+//         .sign(secret);
+//     } catch (error) {
+//       throw new Error(error);
+//     }
+//   }
 
-  async verifyJWT<T>(token: string): Promise<JWTResponse<T>> {
-    console.log("token: ", token);
+//   async verifyJWT<T>(token: string): Promise<JWTResponse<T>> {
+//     console.log("token: ", token);
 
-    try {
-      const payload = (
-        await jose.jwtVerify(
-          token,
-          new TextEncoder().encode(process.env.JWT_SECRET_KEY)
-        )
-      ).payload;
-      console.log("payload: ", payload);
-      return {
-        items: payload.items as T,
-        app: payload.app as string,
-      };
-    } catch (error) {
-      console.log(error);
-      throw new Error("Your token has expired.");
-    }
-  }
+//     try {
+//       const payload = (
+//         await jose.jwtVerify(
+//           token,
+//           new TextEncoder().encode(process.env.JWT_SECRET_KEY)
+//         )
+//       ).payload;
+//       console.log("payload: ", payload);
+//       return {
+//         items: payload.items as T,
+//         app: payload.app as string,
+//       };
+//     } catch (error) {
+//       console.log(error);
+//       throw new Error("Your token has expired.");
+//     }
+//   }
 
-  async decodeJWT<T>(token: string): Promise<T> {
-    try {
-      return (
-        await jose.jwtDecrypt(
-          token,
-          new TextEncoder().encode(process.env.JWT_SECRET_KEY)
-        )
-      ).payload as T;
-    } catch (error) {
-      console.log(error);
-      throw new Error("Your token has expired.");
-    }
-  }
-}
+//   async decodeJWT<T>(token: string): Promise<T> {
+//     try {
+//       return (
+//         await jose.jwtDecrypt(
+//           token,
+//           new TextEncoder().encode(process.env.JWT_SECRET_KEY)
+//         )
+//       ).payload as T;
+//     } catch (error) {
+//       console.log(error);
+//       throw new Error("Your token has expired.");
+//     }
+//   }
+// }
 
-export default new JWT();
+// export default new JWT();
 
 interface BaseRequest {
   url: RequestInfo | URL;
@@ -96,14 +96,12 @@ export const Request = async <T>(
     nextOptions,
   }: Partial<BaseRequest> = {}
 ) => {
-  const jwt = new JWT();
-
   const req = await fetch(`${env.NEXT_PUBLIC_APP_URL}/${url}`, {
     method: method,
     body: JSON.stringify(data),
     headers: {
       ...headers,
-      authorization: await jwt.signJWT(),
+      authorization: `Bearer ${env.NEXT_API_APP_TOKEN}`,
     },
     next: {
       ...nextOptions,

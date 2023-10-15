@@ -59,13 +59,13 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
             </span>
           </div>
           <p className="md:w-9/12">{recipe.description}</p>
-          {recipe.notes && (
-            <div>
-              <h2>Notes: </h2>
-              <p>{recipe.notes}</p>
-            </div>
-          )}
         </div>
+        {recipe.notes && (
+          <div className="mt-4">
+            <h2 className="font-bold">Notes*: </h2>
+            <p className="italic">{recipe.notes}</p>
+          </div>
+        )}
         <span className="my-2 mb-4 h-[0.125rem] w-full rounded-md bg-grey dark:bg-white md:w-[800px]" />
         <Details
           ingredients={recipe.ingredients || []}

@@ -19,12 +19,11 @@ export const env = createEnv({
     TWITTER_API_KEY: z.string().min(1),
     TWITTER_API_SECRET: z.string().min(1),
     RESEND_API_KEY: z.string().min(1),
-    API_APP_TOKEN: z.string().min(1),
-    JWT_SECRET: z.string().min(1),
     UPLOADTHING_SECRET: z.string().min(1),
     UPLOADTHING_APP_ID: z.string().min(1),
   },
   client: {
+    NEXT_API_APP_TOKEN: z.string().min(1),
     NEXT_PUBLIC_FIREBASE_API_KEY: z.string().min(1),
     NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: z.string().min(1),
     NEXT_PUBLIC_FIREBASE_PROJECT_ID: z.string().min(1),
@@ -53,6 +52,7 @@ export const env = createEnv({
 
     // App
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+    NEXT_API_APP_TOKEN: process.env.NEXT_API_APP_TOKEN,
 
     // Server
     DATABASE_URL: process.env.DATABASE_URL,

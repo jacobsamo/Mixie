@@ -14,7 +14,7 @@ import Carousel from "../common/components/elements/Carousel";
 export default async function Page() {
   const latestRecipes = await Request<Info[]>(`api/recipes`);
   return (
-    <>
+    <main className="w-full h-full">
       <section className="flex h-52 flex-col items-center justify-center">
         {/* <Image
             src="https://images.unsplash.com/photo-1605210055810-bdd1c4d1f343?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
@@ -43,6 +43,6 @@ export default async function Page() {
           ))}
         </Carousel>
       </section>
-    </>
+    </main>
   );
 }

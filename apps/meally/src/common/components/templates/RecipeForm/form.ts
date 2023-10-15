@@ -164,6 +164,7 @@ export const onSubmit = async (recipe: z.infer<typeof recipeFormSchema>) => {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      authorization: `Bearer ${process.env.NEXT_PUBLIC_APP_TOKEN}`,
     },
     body: JSON.stringify(recipe),
   }).then((res) => {

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Step from "./Step";
 import { Step as StepType, Ingredient } from "@/src/db/types";
@@ -14,12 +15,14 @@ const StepContainer = ({
   ingredients,
   className,
 }: StepContainerProps) => {
+  const [checked, setChecked] = React.useState(false);
+
   return (
-    <div className="flex w-full flex-col gap-2">
+    <ul className="flex w-full flex-col gap-2">
       {steps.map((step, index) => (
         <Step key={index} index={index} step={step} ingredients={ingredients} />
       ))}
-    </div>
+    </ul>
   );
 };
 
