@@ -9,6 +9,7 @@ import { Request } from "../common/lib/services/apiHandle";
 import { Button } from "../common/components/ui/button";
 import Slider, { Settings } from "react-slick";
 import { SwiperSlide } from "swiper/react";
+import Carousel from "../common/components/elements/Carousel";
 
 export default async function Page() {
   const latestRecipes = await Request<Info[]>(`api/recipes`);
@@ -32,17 +33,15 @@ export default async function Page() {
         </SearchTrigger>
       </section>
       <section className="pt-9 ">
-        {/* <Slides
-          render={() => (
-            <>
-              {latestRecipes.map((recipe) => (
-                <SwiperSlide key={recipe.id}>
-                  <CardRectangle key={recipe.id} recipe={recipe} />
-                </SwiperSlide>
-              ))}
-            </>
-          )}
-        /> */}
+        <Carousel
+          autoplay={true}
+          averageWidth={400}
+          count={latestRecipes.length}
+        >
+          {latestRecipes.map((recipe) => (
+            <CardRectangle key={recipe.id} recipe={recipe} />
+          ))}
+        </Carousel>
       </section>
     </>
   );

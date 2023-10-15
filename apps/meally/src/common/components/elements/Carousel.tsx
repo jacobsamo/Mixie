@@ -1,12 +1,21 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
+import {
+  animate,
+  motion,
+  useMotionValue,
+  LazyMotion,
+  domAnimation,
+  ValueAnimationTransition,
+  PanInfo,
+} from "framer-motion";
 
 interface CarouselProps {
   /**
    * The cards - items that will be rendered in the carousel
    */
-  children: React.ReactNode;
+  children: React.ReactNode | React.ReactNode[];
   /**
    * Auto moves slides
    */
@@ -14,63 +23,124 @@ interface CarouselProps {
   /**
    * how fast the autoplay will play
    */
-  speed?: number;
+  autoPlayDelay?: number;
   /**
    * The number of slides that will be shown if screen sizes allows it
    */
   count?: number;
+  loop?: boolean;
+  transition?: ValueAnimationTransition<number>;
+  averageWidth?: number;
 }
 
-/**
- *
- * @param {React.ReactNode} children - the slides to be rendered
- * @param {boolean} autoplay - will automatically move slides
- * @param {number} speed - how fast the autoplay will go
- * @param {number} count - number of slides shown
- * @returns {React.JSX.Element} Carousel
- */
 const Carousel = ({
   children,
-  autoplay = true,
-  speed = 500,
+  autoplay = false,
   count = 3,
+  loop = true,
+  transition = {
+    ease: "easeInOut",
+    duration: 0.5,
+  },
+  averageWidth = 300,
 }: CarouselProps) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const numSlides = React.Children.count(children);
+  const x = useMotionValue(0);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const [index, setIndex] = React.useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStartX, setDragStartX] = useState(0);
+  const [dragEndX, setDragEndX] = useState(0);
+  const childrens: any = React.Children.toArray(children);
 
-  const nextSlide = () => {
-    setCurrentSlide((currentSlide + 1) % numSlides);
+  const calculateNewX = React.useCallback(
+    () => -index * averageWidth,
+    [index, averageWidth]
+  );
+
+  const handleNext = React.useCallback(() => {
+    const idx = loop ? 0 : index;
+    const nextIndex = index + 1 === childrens.length ? idx : index + 1;
+    console.log(`Next index is: ${nextIndex}`);
+    setIndex(nextIndex);
+  }, [index, loop, childrens.length]);
+
+  const handlePrev = () => {
+    console.log("handlePrev called");
+    const idx = loop ? childrens.length - 1 : 0;
+    console.log("idx", idx);
+    const newIndex = index - 1 < 0 ? idx : index - 1;
+    console.log("newIndex", newIndex);
+    setIndex(newIndex);
   };
 
-  const prevSlide = () => {
-    setCurrentSlide((currentSlide - 1 + numSlides) % numSlides);
+  const handleDragStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    setDragStartX(event.touches[0].clientX);
   };
+
+  const handleDragEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    setIsDragging(false);
+    setDragEndX(event.changedTouches[0].clientX);
+    if (dragStartX - dragEndX > 50) {
+      handleNext();
+    } else if (dragStartX - dragEndX < -50) {
+      handlePrev();
+    }
+  };
+
+  React.useEffect(() => {
+    const controls = animate(x, calculateNewX(), transition);
+
+    return controls.stop;
+  }, [calculateNewX, index, x, transition]);
+
+  React.useEffect(() => {
+    window.addEventListener("resize", () => {
+      animate(x, calculateNewX(), transition);
+    });
+  }, [calculateNewX, transition, x]);
 
   return (
-    <div className="relative flex w-full flex-row justify-between">
-      <button aria-label="back" onClick={prevSlide}>
+    <div className="relative overflow-hidden" ref={containerRef}>
+      <button
+        aria-label="back"
+        id="back-arrow"
+        onClick={handlePrev}
+        className="absolute left-0 top-1/2 z-10 -translate-y-1/2 transform"
+      >
         <ChevronLeft />
       </button>
-      <div className="relative w-full">
-        <div
-          id="track"
-          className="flex h-full w-full flex-row items-center justify-center gap-4 overflow-hidden"
-        >
-          {React.Children.map(children, (child, index) => (
-            <div
-              id={`card-${index}`}
-              key={index}
-              className="w-full translate-x-0 transform transition-transform duration-300 ease-in-out"
-              style={{
-                transform: `translateX(-${currentSlide * 100}%)`,
-              }}
-            >
-              {child}
-            </div>
-          ))}
-        </div>
-      </div>
-      <button aria-label="forward" onClick={nextSlide}>
+
+      <motion.div
+        id="track"
+        className="flex flex-row gap-4"
+        onTouchStart={handleDragStart}
+        onTouchEnd={handleDragEnd}
+        style={{
+          x,
+          cursor: isDragging ? "grabbing" : "grab",
+        }}
+      >
+        {React.Children.map(children, (child, index) => (
+          <motion.div
+            id={`card-${index}`}
+            key={index}
+            style={{
+              x,
+            }}
+            className="inline-block  flex-none"
+          >
+            {child}
+          </motion.div>
+        ))}
+      </motion.div>
+
+      <button
+        aria-label="forward"
+        id="forward-arrow"
+        onClick={handleNext}
+        className="absolute right-0 top-1/2 z-10 -translate-y-1/2 transform"
+      >
         <ChevronRight />
       </button>
     </div>

@@ -12,14 +12,14 @@
   "packageManager": "pnpm@7.15.0",
   "dependencies": {
     "@manypkg/cli": "^0.21.0",
-    "@turbo/gen": "^1.10.14",
+    "@turbo/gen": "^1.10.15",
     "dotenv-cli": "^7.3.0",
-    "eslint": "^8.50.0",
+    "eslint": "^8.51.0",
     "eslint-config-custom": "workspace:*",
     "prettier": "^3.0.3",
-    "turbo": "^1.10.14"
+    "turbo": "^1.10.15"
   },
   "devDependencies": {
-    "prettier-plugin-tailwindcss": "^0.5.4"
+    "prettier-plugin-tailwindcss": "^0.5.6"
   }
 }
