@@ -1,15 +1,9 @@
 import { CardRectangle } from "@components/elements/Cards";
-import "@splidejs/react-splide/css";
-import Slides from "../common/components/elements/Slides";
 import { SearchIcon } from "lucide-react";
-import SearchTrigger from "../common/components/modules/SearchTrigger";
-import { serverClient } from "../common/trpc/serverClient";
-import { Info } from "../db/types";
-import { Request } from "../common/lib/services/apiHandle";
-import { Button } from "../common/components/ui/button";
-import Slider, { Settings } from "react-slick";
-import { SwiperSlide } from "swiper/react";
 import Carousel from "../common/components/elements/Carousel";
+import SearchTrigger from "../common/components/modules/SearchTrigger";
+import { Request } from "../common/lib/services/apiHandle";
+import { Info } from "../db/types";
 
 export default async function Page() {
   const latestRecipes = await Request<Info[]>(`api/recipes`);

@@ -6,7 +6,6 @@ import { Recipe } from "@/src/db/types";
 import { eq, or } from "drizzle-orm";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 interface EditPageProps {
   params: {
@@ -47,5 +46,5 @@ export default async function EditPage({
   if (recipe) return <RecipeForm recipe={recipe} />;
 
   return <div>Recipe not found</div>;
-  // return <RecipeForm />
+  // return <RecipeForm recipe={mockRecipe} />;
 }

@@ -2,7 +2,10 @@ import { recipeFormSchema } from "@/src/db/zodSchemas";
 import { PlusCircleIcon } from "lucide-react";
 import { useCallback } from "react";
 import {
-  type DropResult
+  DragDropContext,
+  Draggable,
+  Droppable,
+  type DropResult,
 } from "react-beautiful-dnd";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import * as z from "zod";
@@ -10,6 +13,7 @@ import { Button } from "../../ui/button";
 import DraggableContainer from "./Dragablecontainer";
 import DraggableItem from "./DraggableItem";
 import { Ingredient } from "./Ingredient";
+import { StrictModeDroppable } from "./StrictModeDroppable";
 
 const IngredientContainer = () => {
   const { control, register } =
@@ -62,7 +66,7 @@ const IngredientContainer = () => {
       <section className="flex h-fit w-fit flex-col gap-3 rounded-lg bg-white p-4  shadow dark:bg-grey">
         <DraggableContainer droppableId="ingredients" onDragEnd={handleSwap}>
           {fields.map((field, index) => (
-            <DraggableItem index={index} id={field.id} key={field.id}>
+            <DraggableItem index={index} id={field.id}>
               <Ingredient
                 index={index}
                 values={{
@@ -78,6 +82,7 @@ const IngredientContainer = () => {
             </DraggableItem>
           ))}
         </DraggableContainer>
+
         <button
           type="button"
           onClick={() => handleHeadingClick()}

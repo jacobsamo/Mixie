@@ -1,13 +1,9 @@
-import type { Identifier, XYCoord } from "dnd-core";
-import type { FC } from "react";
-import { useRef } from "react";
-import { useDrag, useDrop, DropTargetHookSpec } from "react-dnd";
 import {
   DragDropContext,
-  Draggable,
   Droppable,
   type DropResult,
 } from "react-beautiful-dnd";
+import { StrictModeDroppable } from "./StrictModeDroppable";
 
 export interface DraggableContainer {
   droppableId: string;
@@ -22,17 +18,20 @@ const DraggableContainer = ({
 }: DraggableContainer) => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId={droppableId}>
+      <StrictModeDroppable droppableId={droppableId}>
         {(provided, snapshot) => (
-          <div
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-            className="flex flex-col gap-4"
-          >
-            {children}
-          </div>
+          <>
+            <div
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+              className="flex flex-col gap-4"
+            >
+              {children}
+            </div>
+            {provided.placeholder}
+          </>
         )}
-      </Droppable>
+      </StrictModeDroppable>
     </DragDropContext>
   );
 };

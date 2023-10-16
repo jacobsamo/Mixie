@@ -13,12 +13,13 @@ export interface DraggableItemProps {
 
 const DraggableItem = ({ id, index, children }: DraggableItemProps) => {
   return (
-    <Draggable draggableId={id} index={index}>
+    <Draggable key={id} draggableId={id} index={index}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          
           className="flex flex-row items-center hover:cursor-pointer"
         >
           {children}

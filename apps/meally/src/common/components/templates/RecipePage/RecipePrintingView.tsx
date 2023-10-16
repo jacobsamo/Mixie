@@ -12,7 +12,7 @@ interface RecipePrintingViewProps {
 const RecipePrintingView = ({ recipe }: RecipePrintingViewProps) => {
   return (
     <div className="hidden w-full flex-col items-start print:flex">
-      <p className="flex flex-row gap-1">
+      <span className="flex flex-row gap-1">
         {/* Logo image */}
         <Image
           width={44}
@@ -23,7 +23,7 @@ const RecipePrintingView = ({ recipe }: RecipePrintingViewProps) => {
         />
         {/* Logo text */}
         <h1 className="text-step--1">Meally</h1>
-      </p>
+      </span>
 
       <section>
         <div className="flex flex-wrap items-center gap-4">
