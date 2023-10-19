@@ -27,8 +27,11 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
 
   if (values.isHeading) {
     return (
-      <div className="flex flex-row flex-wrap items-center gap-1">
-        <Input {...register(`ingredients.${index}.title` as const)} />
+      <div className="mt-4 flex flex-row flex-wrap items-center gap-1">
+        <Input
+          {...register(`ingredients.${index}.title` as const)}
+          placeholder="Heading..."
+        />
         <Button
           ariaLabel="delete ingredient"
           onClick={() => handleDelete(index)}

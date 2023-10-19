@@ -24,6 +24,7 @@ const Step = ({ index, step, ingredients }: StepProps) => {
         onClick={() => setChecked(!checked)}
         role="checkbox"
         data-checked={checked}
+        aria-checked={checked}
         type="button"
       >
         <span className="flex items-center space-x-1">

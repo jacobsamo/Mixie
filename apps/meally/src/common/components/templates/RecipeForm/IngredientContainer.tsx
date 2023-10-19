@@ -66,7 +66,7 @@ const IngredientContainer = () => {
       <section className="flex h-fit w-fit flex-col gap-3 rounded-lg bg-white p-4  shadow dark:bg-grey">
         <DraggableContainer droppableId="ingredients" onDragEnd={handleSwap}>
           {fields.map((field, index) => (
-            <DraggableItem index={index} id={field.id}>
+            <DraggableItem index={index} id={field.id} key={field.id}>
               <Ingredient
                 index={index}
                 values={{
@@ -77,7 +77,6 @@ const IngredientContainer = () => {
                   amount: field.amount,
                 }}
                 handleDelete={handleDelete}
-                key={field.id}
               />
             </DraggableItem>
           ))}

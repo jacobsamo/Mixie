@@ -20,6 +20,7 @@ const Ingredient = ({ ingredient }: IngredientProps) => {
         role="checkbox"
         data-checked={checked}
         type="button"
+        aria-checked={checked}
       >
         {checked ? (
           <CheckCircleIcon className="shrink-0 text-yellow" />
