@@ -24,37 +24,18 @@ export const infoSchema = createInsertSchema(info, {
     .optional(),
 });
 
-export const amount = z
-  .enum(["not_set", "1/8", "1/2", "1/3", "2/3", "1/4", "3/4"])
-  .default("not_set");
 
-export const unit = z
-  .enum([
-    "not_set",
-    "grams",
-    "kg",
-    "cup",
-    "ml",
-    "litre",
-    "tsp",
-    "tbsp",
-    "pinch",
-    "item",
-    "handful",
-    "slice",
-    "piece",
-    "can",
-    "bunch",
-    "bottle",
-  ])
-  .default("grams");
+const selectValue = z.object({
+  value: z.string(),
+  label: z.string(),
+});
 
 export const ingredientSchema = z.object({
   isHeading: z.boolean(),
   title: z.string(),
-  unit: unit,
+  unit: selectValue,
   quantity: z.number().optional().nullable(),
-  amount: amount,
+  amount: selectValue,
 });
 
 export const stepSchema = z.object({
@@ -86,5 +67,3 @@ export const recipesSelect = recipeSchemaSelect.extend({
 });
 
 export const userSchema = createInsertSchema(users);
-
-

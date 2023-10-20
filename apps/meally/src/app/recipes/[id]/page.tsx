@@ -1,5 +1,5 @@
 import RecipePageComponent from "@components/templates/RecipePage/RecipePageComponent";
-import React, { cache } from "react";
+import React from "react";
 import { mockRecipe } from "@/src/common/lib/services/data";
 import { db } from "@/src/db";
 import { info as infoSchema, recipes as recipeSchema } from "@/src/db/schemas";
@@ -8,20 +8,22 @@ import type { Recipe } from "@/src/db/types";
 import { RecipeJsonLd } from "next-seo";
 import { Metadata } from "next";
 import { constructMetadata } from "@/src/common/lib/utils/utils";
+import { notFound, redirect } from "next/navigation";
 
-const getRecipes = cache(async () => {
+const getRecipes = async () => {
   const recipes = await db.query.recipes.findMany({
     with: { info: true },
     // where: eq(recipeSchema.isPublic, true),
   });
+  console.log("Recipes: ", recipes);
   return recipes;
-});
+};
 
 export async function generateStaticParams() {
   const recipes = await getRecipes();
 
-  return recipes.map((post) => ({
-    id: post.id,
+  return recipes.map((recipe) => ({
+    id: recipe.id,
   }));
 }
 
@@ -31,8 +33,8 @@ export async function generateMetadata({
   params: { id: string };
 }): Promise<Metadata | undefined> {
   const recipes = await getRecipes();
-  const recipe = recipes?.find((post) => {
-    post.id == params.id;
+  const recipe = recipes?.find((recipe) => {
+    recipe.id == params.id;
   });
   if (!recipe) {
     return;
@@ -49,7 +51,7 @@ export async function generateMetadata({
 
 export default async function RecipePage({ params }) {
   const recipes = await getRecipes();
-  const recipe = recipes?.find((post) => post.id == params.id);
+  const recipe = recipes?.find((recipe) => recipe.id == params.id);
 
   if (recipe) {
     return (
@@ -62,7 +64,7 @@ export default async function RecipePage({ params }) {
           ingredients={
             recipe?.ingredients?.map((ingredient) => {
               return `${ingredient.quantity} ${
-                ingredient.amount == "not_set" ? null : ingredient.amount
+                ingredient.amount.value == "not_set" ? null : ingredient.amount
               } ${ingredient.unit} ${ingredient.title}`;
             }) || []
           }
@@ -87,5 +89,5 @@ export default async function RecipePage({ params }) {
     );
   }
 
-  return <div>Recipe not found</div>;
+  return notFound();
 }

@@ -7,6 +7,7 @@ import { recipeFormSchema } from "@/src/db/zodSchemas";
 import * as z from "zod";
 import { Button } from "../../ui/button";
 import { SelectComponent } from "../../ui/SelectComponent";
+import { useEffect } from "react";
 
 interface IngredientProps {
   index: number;
@@ -76,7 +77,7 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
           },
         })}
       />
-      {["cup", "tbsp", "tsp"].includes(activeUnit) ? (
+      {["cup", "tbsp", "tsp"].includes(activeUnit.value) ? (
         <Controller
           control={control}
           name={`ingredients.${index}.amount`}
@@ -84,7 +85,8 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
             <SelectComponent
               clearable={false}
               options={[
-                { value: "1/2", label: "1/2" },
+                { value: "not_set", label: " " },
+                { value: "1/8", label: "1/8" },
                 { value: "1/2", label: "1/2" },
                 { value: "1/3", label: "1/3" },
                 { value: "2/3", label: "2/3" },

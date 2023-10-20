@@ -16,7 +16,7 @@ const Step = ({ index, step, ingredients }: StepProps) => {
   return (
     <li className="">
       <button
-        className={`flex flex-grow flex-col gap-1 rounded-2xl bg-white p-4 text-left shadow dark:bg-grey ${
+        className={`w-full flex-grow  flex flex-col gap-1 rounded-2xl bg-white p-4 text-left shadow dark:bg-grey ${
           checked ? "opacity-60" : ""
         } `}
         id={`step-${index + 1}`}

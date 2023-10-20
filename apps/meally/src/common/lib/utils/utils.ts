@@ -167,13 +167,16 @@ export function calculateIngredient(
   batchAmount: number
 ): Ingredient {
   const q = ingredient.quantity || 0;
-  switch (ingredient.unit) {
+  switch (ingredient.unit.value) {
     case "grams":
       const gramQuantity = q * batchAmount;
       return {
         ...ingredient,
         quantity: gramQuantity >= 1000 ? gramQuantity / 1000 : gramQuantity,
-        unit: gramQuantity >= 1000 ? "kg" : "grams",
+        unit: {
+          value: gramQuantity >= 1000 ? "kg" : "grams",
+          label: gramQuantity >= 1000 ? "kg" : "grams",
+        },
       };
     case "kg":
       return {
@@ -186,20 +189,26 @@ export function calculateIngredient(
       const multipliedQuantity = q * batchAmount;
       const { quantity, amount } = calculateCupUnits(
         multipliedQuantity,
-        ingredient.amount || "not_set",
+        ingredient.amount.value || "not_set",
         batchAmount
       );
       return {
         ...ingredient,
         quantity: quantity,
-        amount: amount,
+        amount: {
+          value: amount,
+          label: amount,
+        },
       };
     case "ml":
       const mlQuantity = q * batchAmount;
       return {
         ...ingredient,
         quantity: mlQuantity >= 1000 ? mlQuantity / 1000 : mlQuantity,
-        unit: mlQuantity >= 1000 ? "litre" : "ml",
+        unit: {
+          value: mlQuantity >= 1000 ? "litre" : "ml",
+          label: mlQuantity >= 1000 ? "litre" : "ml",
+        },
       };
     case "litre":
       return {
@@ -242,7 +251,6 @@ export function constructMetadata({
   noIndex?: boolean;
 } = {}): Metadata {
   return {
-    
     title,
     description,
     openGraph: {

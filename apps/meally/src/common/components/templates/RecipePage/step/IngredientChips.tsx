@@ -20,8 +20,12 @@ const IngredientChips = ({ step, ingredients }: IngredientChipsProps) => {
           className="h-fit w-fit rounded-lg bg-yellow p-1 text-center text-step--4 text-black opacity-80"
         >
           {ingredient.quantity}{" "}
-          {ingredient.amount == "not_set" ? null : ingredient.amount}{" "}
-          {ingredient.unit == "not_set" ? null : ingredient.unit}{" "}
+          {ingredient.amount.value == "not_set"
+            ? null
+            : ingredient.amount.label}{" "}
+          {ingredient.unit.value == "not_set"
+            ? null
+            : ingredient.unit.label.replace("item", "")}{" "}
           {ingredient.title}{" "}
         </p>
       ))}

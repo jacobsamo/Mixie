@@ -17,6 +17,7 @@ import VersionChip from "../modules/VersionChip";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useToast } from "../ui/use-toast";
+import { env } from "@/env.mjs";
 
 const createRecipeSchema = z.object({
   title: z.string().optional(),
@@ -42,6 +43,9 @@ const CreateRecipeDialog = () => {
     setLoading(true);
     fetch("/api/recipes/create", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ title: values.title, link: values.link }),
     }).then((res) => {
       if (res.status == 200) {
@@ -59,10 +63,10 @@ const CreateRecipeDialog = () => {
           title: "An Error Occurred",
           description: "This Error more the likely occurred due to a bug",
         });
+        setLoading(false);
+        setOpen(false);
       }
     });
-    setLoading(false);
-    setOpen(false);
   }
 
   useEffect(() => {
@@ -102,6 +106,7 @@ const CreateRecipeDialog = () => {
           <Button
             ariaLabel="continue with creating the recipe"
             className="items-center font-semibold"
+            disabled={loading}
           >
             Create Recipe
             {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}

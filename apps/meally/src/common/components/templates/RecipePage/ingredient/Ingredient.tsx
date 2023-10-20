@@ -29,8 +29,10 @@ const Ingredient = ({ ingredient }: IngredientProps) => {
         )}
         <h3 className={checked ? "line-through opacity-60" : ""}>
           {ingredient.quantity}{" "}
-          {ingredient.amount == "not_set" ? null : ingredient.amount}{" "}
-          {ingredient.unit == "not_set" ? null : ingredient.unit}{" "}
+          {ingredient.amount.value == "not_set" ? null : ingredient.amount.label}{" "}
+          {ingredient.unit.value == "not_set"
+            ? null
+            : ingredient.unit.label.replace("item", "")}{" "}
           {ingredient.title}{" "}
         </h3>
       </button>

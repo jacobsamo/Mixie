@@ -20,10 +20,9 @@ const createRecipeSchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
-  const app = await isApp(req);
   const session = await getServerSession(authOptions);
 
-  if (!session || !app) {
+  if (!session) {
     return NextResponse.json("Unauthorized", { status: 403 });
   }
   const { user } = session;
