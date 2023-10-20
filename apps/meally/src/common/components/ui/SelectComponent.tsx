@@ -66,19 +66,21 @@ type SelectComponentProps = {
   isMulti?: boolean;
   isDisabled?: boolean;
   isLoading?: boolean;
-  createAble: boolean;
+  createAble?: boolean;
   placeholder?: string;
+  clearable?: boolean;
 };
 
 export const SelectComponent = ({
   options,
   value,
   onChange,
-  isMulti,
+  isMulti = false,
   isDisabled,
   isLoading,
-  createAble,
+  createAble = false,
   placeholder,
+  clearable = true,
   ...props
 }: SelectComponentProps) => {
   const animatedComponents = makeAnimated();
@@ -87,7 +89,7 @@ export const SelectComponent = ({
     <>
       <Comp
         unstyled
-        isClearable
+        isClearable={clearable}
         isSearchable
         value={value}
         isDisabled={isDisabled}

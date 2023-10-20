@@ -82,13 +82,11 @@ export default function RootLayout({
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextAuthProvider>
-            <TrpcProvider headers={headers()}>
-              <Navbar />
-              {/* <Search /> */}
-              {children}
-              <Toaster />
-              <Footer />
-            </TrpcProvider>
+            <Navbar />
+            {/* <Search /> */}
+            {children}
+            <Toaster />
+            <Footer />
           </NextAuthProvider>
         </ThemeProvider>
         <Analytics />

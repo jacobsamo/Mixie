@@ -13,7 +13,7 @@ import {
   meal_times,
   sweet_savoury,
 } from "@lib/services/data";
-import { SelectComponent } from "../../ui/multiSelect";
+import { SelectComponent } from "../../ui/SelectComponent";
 import TagInput from "../../ui/taginput";
 import RecipePageComponent from "../RecipePage/RecipePageComponent";
 import ImageUpload from "./ImageUpload";
@@ -166,7 +166,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
                   </label>
                   <SelectComponent
                     options={sweet_savoury}
-                    createAble
+                    clearable={false}
                     onChange={field.onChange}
                     value={field.value || undefined}
                     placeholder="Sweet or Savoury"
