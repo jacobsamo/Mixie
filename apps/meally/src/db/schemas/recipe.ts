@@ -12,7 +12,6 @@ import {
 } from "drizzle-orm/mysql-core";
 // imoport
 import { Ingredient, SelectValue, Step } from "../types";
-import { mealTime } from "./enums";
 
 // Recipes
 export const recipes = mysqlTable("recipes", {
@@ -23,15 +22,15 @@ export const recipes = mysqlTable("recipes", {
   notes: text("notes"),
   steps: json("steps").$type<Step[]>(),
   ingredients: json("ingredients").$type<Ingredient[]>(),
-  mealTime: json("mealTime").$type<SelectValue[]>(),
+  mealTime: json("mealTime"),
   version: double("version").default(1.0),
   source: varchar("source", { length: 191 }),
 
   // little extras for searching
-  dietary: json("dietary").$type<SelectValue[]>(),
+  dietary: json("dietary"),
   allergens: json("allergens"),
-  sweet_savoury: json("sweet_savoury").$type<SelectValue>(),
-  difficulty_level: json("difficulty_level").$type<SelectValue>(),
+  sweet_savoury: json("sweet_savoury"),
+  difficulty_level: json("difficulty_level"),
   cuisine: json("cuisine"),
   isPublic: boolean("isPublic").default(false),
 

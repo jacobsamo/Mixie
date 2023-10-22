@@ -2,10 +2,7 @@ import { recipeFormSchema } from "@/src/db/zodSchemas";
 import { PlusCircleIcon } from "lucide-react";
 import { useCallback } from "react";
 import {
-  DragDropContext,
-  Draggable,
-  Droppable,
-  type DropResult,
+  type DropResult
 } from "react-beautiful-dnd";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import * as z from "zod";
@@ -13,7 +10,6 @@ import { Button } from "../../ui/button";
 import DraggableContainer from "./Dragablecontainer";
 import DraggableItem from "./DraggableItem";
 import { Ingredient } from "./Ingredient";
-import { StrictModeDroppable } from "./StrictModeDroppable";
 
 const IngredientContainer = () => {
   const { control, register } =
@@ -33,10 +29,16 @@ const IngredientContainer = () => {
   const handleAddClick = useCallback(() => {
     append({
       title: "",
-      unit: "grams",
+      unit: {
+        label: "grams",
+        value: "grams",
+      },
       quantity: null,
       isHeading: false,
-      amount: "not_set",
+      amount: {
+        label: "not_set",
+        value: "not_set",
+      },
     });
   }, [append]);
 
@@ -44,9 +46,15 @@ const IngredientContainer = () => {
     append({
       title: "",
       isHeading: true,
-      unit: "not_set",
+      unit: {
+        label: "not_set",
+        value: "not_set",
+      },
       quantity: null,
-      amount: "not_set",
+      amount: {
+        label: "not_set",
+        value: "not_set",
+      },
     });
   }, [append]);
 
@@ -106,3 +114,4 @@ const IngredientContainer = () => {
 };
 
 export { IngredientContainer };
+

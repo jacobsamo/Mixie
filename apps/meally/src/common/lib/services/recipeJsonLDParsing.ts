@@ -60,8 +60,14 @@ export async function convertIngredients(
     const parts = ingredient.split(/[,|\-|\s]/);
     // Initialize the default values for the Ingredient object
     let title = ingredient.trim();
-    let unit: Ingredient["unit"] = "not_set";
-    let amount: Ingredient["amount"] = "not_set";
+    let unit: Ingredient["unit"] = {
+      value: "not_set",
+      label: "not_set",
+    };
+    let amount: Ingredient["amount"] = {
+      value: "not_set",
+      label: "not_set",
+    };
     let quantity: Ingredient["quantity"] = null;
 
     // set quantity
@@ -76,22 +82,31 @@ export async function convertIngredients(
       const part = parts[i].trim();
 
       // Check for unit
-      if (unit === "not_set") {
+      if (unit.value === "not_set") {
         units.forEach((unitObject: any) => {
           const key = Object.keys(unitObject)[0];
           const values = unitObject[key];
           if (values.includes(part.toLowerCase())) {
-            unit = key as Ingredient["unit"];
+            unit = {
+              value: key,
+              label: key,
+            } as Ingredient["unit"];
             title = title.replace(parts[i], "");
           }
         });
       }
 
       // Check for amount
-      if (amount === "not_set" || ["not_set", "tsp", "tbsp"].includes(unit)) {
+      if (
+        amount.value === "not_set" ||
+        ["not_set", "tsp", "tbsp"].includes(unit.value)
+      ) {
         const amountMatch = part.match(/(1\/8|1\/2|1\/3|2\/3|1\/4|3\/4)/);
         if (amountMatch) {
-          amount = amountMatch[0] as Ingredient["amount"];
+          amount = {
+            value: amountMatch[0],
+            label: amountMatch[0],
+          } as Ingredient["amount"];
           title = title.replace(parts[i], "");
           continue;
         }

@@ -26,8 +26,8 @@ const Step = ({ index, step, ingredients }: StepProps) => {
         {matchedIngredients
           .map(
             (ingredient) => `${ingredient.quantity} 
-        ${ingredient.amount == "not_set" ? "" : ingredient.amount} 
-        ${ingredient.unit == "not_set" ? "" : ingredient.unit} 
+        ${ingredient.amount.value == "not_set" ? "" : ingredient.amount.label} 
+        ${ingredient.unit.value == "not_set" ? "" : ingredient.unit.label} 
         ${ingredient.title}`
           )
           .join(" | ")}

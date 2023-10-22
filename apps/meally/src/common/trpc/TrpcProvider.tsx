@@ -1,11 +1,9 @@
 // src/trpc/react.tsx
 "use client";
 
-import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { unstable_httpBatchStreamLink } from "@trpc/client";
-import { createTRPCReact } from "@trpc/react-query";
-import type { AppRouter } from "@/src/server";
+import { useState } from "react";
 import { trpc } from "./client";
 
 export default function TRPCReactProvider(props: {

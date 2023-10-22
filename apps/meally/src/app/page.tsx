@@ -4,11 +4,19 @@ import Carousel from "../common/components/elements/Carousel";
 import SearchTrigger from "../common/components/modules/SearchTrigger";
 import { Request } from "../common/lib/services/apiHandle";
 import { Info } from "../db/types";
+import { env } from "@/env.mjs";
 
 export default async function Page() {
-  const latestRecipes = await Request<Info[]>(`api/recipes`);
+  const req = await fetch(`${env.NEXT_PUBLIC_APP_URL}/api/recipes`, {
+    next: {
+      revalidate: 60 * 60 * 24,
+    },
+  });
+
+  const latestRecipes = (await req.json()) as Info[];
+
   return (
-    <main className="w-full h-full">
+    <main className="h-full w-full">
       <section className="flex h-52 flex-col items-center justify-center">
         {/* <Image
             src="https://images.unsplash.com/photo-1605210055810-bdd1c4d1f343?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"

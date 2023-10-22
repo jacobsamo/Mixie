@@ -88,6 +88,7 @@ const Navbar = () => {
         <button
           type="button"
           className="flex flex-col items-end justify-center gap-1 sm:hidden"
+          aria-label="Open sidebar"
           onClick={() => setIsOpen(!isOpen)}
         >
           <span

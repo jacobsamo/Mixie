@@ -8,12 +8,13 @@ import {
   recipeSchema,
   infoSchema,
   ingredientSchema,
-  amount,
   stepSchema,
   recipeFormSchema,
   recipesSelect,
   ratingsSchema,
 } from "./zodSchemas";
+
+import { amount } from "./zodEnums";
 
 // users
 type User = InferSelectModel<typeof users>;
@@ -21,11 +22,6 @@ type NewUser = InferInsertModel<typeof users>;
 
 export type { User, NewUser };
 
-// recipes
-// type PartialRecipe = InferModel<typeof recipes, 'select'>;
-// type NewPartialRecipe = InferModel<typeof recipes, 'insert'>;
-// type Info = InferModel<typeof info, 'select'>;
-// type NewInfo = InferModel<typeof info, 'insert'>;
 
 type PartialRecipe = z.infer<typeof recipeSchema>;
 type NewPartialRecipe = z.infer<typeof recipeSchema>;
@@ -34,6 +30,8 @@ type NewInfo = z.infer<typeof infoSchema>;
 
 type Recipe = z.infer<typeof recipesSelect>;
 type NewRecipe = z.infer<typeof recipeFormSchema>;
+
+
 // ingredients
 export type Ingredient = z.infer<typeof ingredientSchema>;
 
@@ -46,9 +44,6 @@ export type SelectValue = {
   value: string;
 };
 
-// set the recipe type to have the info and ingredients but ingredients as an array
-
-// type Recipe = PartialRecipe & Info & Ingredient[];
 
 export type {
   Recipe,

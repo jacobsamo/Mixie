@@ -12,10 +12,6 @@ class RecipeService {
     //   limit: limit,
     // });
 
-    const baseUrl =
-      process.env.NODE_ENV === "production"
-        ? "https://www.meally.com.au"
-        : "http://localhost:3000";
     const recipes = await Request<Info[]>(`api/recipes`);
 
     return recipes as Info[];

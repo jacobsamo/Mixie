@@ -1,10 +1,15 @@
+import { env } from "@/env.mjs";
 import { CardSquare } from "@/src/common/components/elements/Cards";
-import { Request } from "@/src/common/lib/services/apiHandle";
-import { serverClient } from "@/src/common/trpc/serverClient";
 import { Info } from "@/src/db/types";
 
 export default async function RecipeViewPage() {
-  const recipes = await Request<Info[]>("/api/recipes");
+  const req = await fetch(`${env.NEXT_PUBLIC_APP_URL}/api/recipes`, {
+    next: {
+      revalidate: 60 * 60 * 24,
+    },
+  });
+
+  const recipes = (await req.json()) as Info[];
 
   return (
     <main className="h-full w-full">
