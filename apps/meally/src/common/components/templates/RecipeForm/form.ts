@@ -1,6 +1,6 @@
 import { calculateTotalTime } from "@/src/common/lib/utils/utils";
-import type { Ingredient } from "@/src/db/types";
-import { recipeFormSchema } from "@/src/db/zodSchemas";
+import type { Ingredient } from "@db/types";
+import { recipeFormSchema } from "@db/zodSchemas";
 import * as z from "zod";
 import { toast } from "../../ui/use-toast";
 

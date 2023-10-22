@@ -1,4 +1,4 @@
-import { Info } from "@/src/db/types";
+import { Info } from "@db/types";
 import React from "react";
 import { Request } from "./apiHandle";
 

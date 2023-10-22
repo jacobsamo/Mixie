@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import type { Info, Recipe } from "@/src/db/types";
+import type { Info, Recipe } from "@db/types";
 import { HeartIcon } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "../ui/use-toast";

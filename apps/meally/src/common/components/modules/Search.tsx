@@ -2,7 +2,7 @@
 import Fuse from "fuse.js";
 import React, { useEffect, useState } from "react";
 // import { useFetchAllRecipe } from '../../lib/services/RecipeService';
-import { Info } from "@/src/db/types";
+import { Info } from "@db/types";
 import { Dialog, DialogContent } from "@components/ui/dialog";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import Link from "next/link";

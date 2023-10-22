@@ -1,22 +1,20 @@
 import { and, eq } from "drizzle-orm";
-import { type GetServerSidePropsContext } from "next";
 import {
   getServerSession,
-  type NextAuthOptions,
   type DefaultSession,
-  type AuthOptions,
+  type NextAuthOptions,
 } from "next-auth";
-import { type Adapter } from "next-auth/adapters";
+
+import { env } from "@/env.mjs";
+import { db } from "@server/db";
+import * as schema from "@server/db/schemas";
 
 import GitHubProvider from "next-auth/providers/github";
 import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
 import TwitterProvider from "next-auth/providers/twitter";
 import EmailProvider from "next-auth/providers/email";
-
-import { env } from "@/env.mjs";
-import { db } from ".";
-import * as schema from "./schemas";
+import { Adapter } from "@auth/core/adapters";
 import { sendVerificationRequest } from "./send-verification-request";
 
 /**
@@ -46,10 +44,6 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
-  // pages: {
-  //   signIn: '/login',
-  //   signOut: '/logout',
-  // },\
   pages: {
     signIn: "/auth/login",
     verifyRequest: "/auth/verify",
@@ -112,32 +106,14 @@ export const authOptions: NextAuthOptions = {
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */
-export const getServerAuthSession = (ctx: {
-  req: GetServerSidePropsContext["req"];
-  res: GetServerSidePropsContext["res"];
-}) => {
-  return getServerSession(ctx.req, ctx.res, authOptions);
-};
-
-/**
- * Adapter for Drizzle ORM. This is not yet available in NextAuth directly, so we inhouse our own.
- * When the official one is out, we will switch to that.
- *
- * @see
- * https://github.com/nextauthjs/next-auth/pull/7165/files#diff-142e7d6584eed63a73316fbc041fb93a0564a1cbb0da71200b92628ca66024b5
- */
+export const getServerAuthSession = () => getServerSession(authOptions);
 
 export function DrizzleAdapter(): Adapter {
   const { users, sessions, accounts, verificationTokens } = schema;
+
   return {
     async createUser(data) {
       const id = crypto.randomUUID();
-
-      if (!data.image) {
-        data.image = `https:ui-avatars.com/api/?name=${data.name
-          ?.split(" ")
-          .join("+")}"&size=256&background=random`;
-      }
 
       await db.insert(users).values({ ...data, id });
 
@@ -216,10 +192,7 @@ export function DrizzleAdapter(): Adapter {
         .then((res) => res[0]);
     },
     async linkAccount(rawAccount) {
-      await db
-        .insert(accounts)
-        .values(rawAccount)
-        .then((res) => res[0]);
+      await db.insert(accounts).values(rawAccount);
     },
     async getUserByAccount(account) {
       const dbAccount =

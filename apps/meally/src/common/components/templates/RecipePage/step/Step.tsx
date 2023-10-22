@@ -1,5 +1,5 @@
 "use client";
-import { Step, Ingredient } from "@/src/db/types";
+import { Step, Ingredient } from "@db/types";
 import React from "react";
 import IngredientChips from "./IngredientChips";
 import { CheckCircleIcon, Circle } from "lucide-react";
@@ -16,7 +16,7 @@ const Step = ({ index, step, ingredients }: StepProps) => {
   return (
     <li className="">
       <button
-        className={`w-full flex-grow  flex flex-col gap-1 rounded-2xl bg-white p-4 text-left shadow dark:bg-grey ${
+        className={`flex w-full  flex-grow flex-col gap-1 rounded-2xl bg-white p-4 text-left shadow dark:bg-grey ${
           checked ? "opacity-60" : ""
         } `}
         id={`step-${index + 1}`}

@@ -1,8 +1,8 @@
 import { isApp } from "@/src/common/lib/services/apiMiddleware";
 import { NextResponse, NextRequest } from "next/server";
 import { eq } from "drizzle-orm";
-import { db } from "@/src/db";
-import { info } from "@/src/db/schemas";
+import { db } from "@db/index";
+import { info } from "@db/schemas";
 
 export async function GET(req: NextRequest) {
   const recipes = await db.query.info.findMany({

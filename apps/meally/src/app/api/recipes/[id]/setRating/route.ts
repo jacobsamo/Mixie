@@ -1,8 +1,8 @@
 import { isApp } from "@/src/common/lib/services/apiMiddleware";
-import { db } from "@/src/db";
-import { authOptions } from "@/src/db/next-auth-adapter";
-import { ratings, recipes } from "@/src/db/schemas";
-import { ratingsSchema } from "@/src/db/zodSchemas";
+import { db } from "@db/index";
+import { authOptions } from "@db/next-auth-adapter";
+import { ratings, recipes } from "@db/schemas";
+import { ratingsSchema } from "@db/zodSchemas";
 import { eq, or } from "drizzle-orm";
 import { getServerSession } from "next-auth";
 import { NextResponse, type NextRequest } from "next/server";

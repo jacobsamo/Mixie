@@ -5,10 +5,10 @@ import {
   splitTime,
 } from "@/src/common/lib/services/recipeJsonLDParsing";
 import { recipeId } from "@/src/common/lib/utils/utils";
-import { db } from "@/src/db";
-import { authOptions } from "@/src/db/next-auth-adapter";
-import { info, recipes } from "@/src/db/schemas";
-import { NewInfo, NewPartialRecipe } from "@/src/db/types";
+import { db } from "@db/index";
+import { authOptions } from "@db/next-auth-adapter";
+import { info, recipes } from "@db/schemas";
+import { NewInfo, NewPartialRecipe } from "@db/types";
 import { getServerSession } from "next-auth";
 import { type NextRequest, NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";

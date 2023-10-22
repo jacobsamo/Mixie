@@ -1,21 +1,21 @@
 import { isApp } from "@/src/common/lib/services/apiMiddleware";
 import { calculateTotalTime, recipeId } from "@/src/common/lib/utils/utils";
-import { db } from "@/src/db";
-import { authOptions } from "@/src/db/next-auth-adapter";
-import { info, recipes } from "@/src/db/schemas";
-import { NewInfo, NewPartialRecipe } from "@/src/db/types";
-import { recipeFormSchema } from "@/src/db/zodSchemas";
+import { db } from "@db/index";
+import { authOptions } from "@db/next-auth-adapter";
+import { info, recipes } from "@db/schemas";
+import { NewInfo, NewPartialRecipe } from "@db/types";
+import { recipeFormSchema } from "@db/zodSchemas";
 import { eq } from "drizzle-orm";
 import { getServerSession } from "next-auth";
 import { type NextRequest, NextResponse } from "next/server";
 
 export async function PUT(req: NextRequest) {
   const session = await getServerSession(authOptions);
-  
+
   if (!session) {
     return NextResponse.json("Unauthorized", { status: 403 });
   }
-  
+
   const { user } = session;
 
   const json = await req.json();
@@ -30,7 +30,8 @@ export async function PUT(req: NextRequest) {
   const ingredients = recipe?.ingredients
     ?.filter((ingredient) => !ingredient.isHeading && ingredient.title)
     .map((ingredient) => {
-      ingredient.title = ingredient.title.charAt(0).toUpperCase() + ingredient.title.slice(1);
+      ingredient.title =
+        ingredient.title.charAt(0).toUpperCase() + ingredient.title.slice(1);
 
       return ingredient.title;
     });

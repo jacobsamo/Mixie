@@ -1,4 +1,4 @@
-import { Step, Ingredient } from "@/src/db/types";
+import { Step, Ingredient } from "@db/types";
 import React from "react";
 import IngredientChips from "./IngredientChips";
 import { matchIngredients } from "@/src/common/lib/utils/utils";

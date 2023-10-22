@@ -2,7 +2,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import StepContainer from "./step/StepContainer";
 import AddBatch from "./ingredient/AddBatch";
-import type { Ingredient as IngredientType, Step } from "@/src/db/types";
+import type { Ingredient as IngredientType, Step } from "@db/types";
 import Ingredient from "./ingredient/Ingredient";
 import { cva, type VariantProps } from "class-variance-authority";
 import { set } from "zod";
@@ -58,7 +58,7 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
 
   return (
     <>
-      <div className="flex flex-row items-center w-full gap-x-[50%] px-2 pb-2 md:w-[800px]">
+      <div className="flex w-full flex-row items-center gap-x-[50%] px-2 pb-2 md:w-[800px]">
         <button
           onClick={() => {
             if (window.innerWidth <= 768) {

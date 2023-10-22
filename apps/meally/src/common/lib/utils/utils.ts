@@ -59,7 +59,7 @@ export function recipeId(title: string): string {
   return title.replace(/\s/g, "-").toLowerCase();
 }
 
-import { Amount, Step, type Ingredient } from "@/src/db/types";
+import { Amount, Step, type Ingredient } from "@db/types";
 import { Metadata } from "next";
 
 /**

@@ -1,9 +1,9 @@
 import { SearchCard } from "@/src/common/components/elements/Cards";
 import { constructMetadata } from "@/src/common/lib/utils/utils";
-import { db } from "@/src/db";
-import { authOptions } from "@/src/db/next-auth-adapter";
-import { info, users } from "@/src/db/schemas";
-import { Info, User } from "@/src/db/types";
+import { db } from "@db/index";
+import { authOptions } from "@db/next-auth-adapter";
+import { info, users } from "@db/schemas";
+import { Info, User } from "@db/types";
 import { and, eq, or } from "drizzle-orm";
 import { Pencil, ScrollText } from "lucide-react";
 import { Metadata } from "next";

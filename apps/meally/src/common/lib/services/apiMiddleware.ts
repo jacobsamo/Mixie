@@ -1,12 +1,12 @@
 import { env } from "@/env.mjs";
-import { authOptions } from "@/src/db/next-auth-adapter";
+import { authOptions } from "@db/next-auth-adapter";
 import { getServerSession } from "next-auth";
 import type { NextRequest } from "next/server";
 
 export const isApp = async (req: NextRequest) => {
   try {
     const authorization = req.headers.get("authorization");
-    console.log(authorization)
+    console.log(authorization);
 
     if (!authorization) {
       return false;

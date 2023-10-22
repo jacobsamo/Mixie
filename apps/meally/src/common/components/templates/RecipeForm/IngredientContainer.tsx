@@ -1,9 +1,7 @@
-import { recipeFormSchema } from "@/src/db/zodSchemas";
+import { recipeFormSchema } from "@db/zodSchemas";
 import { PlusCircleIcon } from "lucide-react";
 import { useCallback } from "react";
-import {
-  type DropResult
-} from "react-beautiful-dnd";
+import { type DropResult } from "react-beautiful-dnd";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "../../ui/button";
@@ -114,4 +112,3 @@ const IngredientContainer = () => {
 };
 
 export { IngredientContainer };
-

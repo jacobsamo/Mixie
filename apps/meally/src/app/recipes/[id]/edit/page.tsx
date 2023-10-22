@@ -1,9 +1,9 @@
 import RecipeForm from "@/src/common/components/templates/RecipeForm/RecipeForm";
 import { mockRecipe } from "@/src/common/lib/services/data";
-import { db } from "@/src/db";
-import { authOptions } from "@/src/db/next-auth-adapter";
-import { recipes } from "@/src/db/schemas";
-import { Recipe } from "@/src/db/types";
+import { db } from "@db/index";
+import { authOptions } from "@db/next-auth-adapter";
+import { recipes } from "@db/schemas";
+import { Recipe } from "@db/types";
 import { eq, or } from "drizzle-orm";
 import { getServerSession } from "next-auth";
 import Link from "next/link";

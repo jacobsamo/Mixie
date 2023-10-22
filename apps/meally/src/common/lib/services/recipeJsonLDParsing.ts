@@ -1,4 +1,4 @@
-import { Amount, Ingredient } from "@/src/db/types";
+import { Amount, Ingredient } from "@db/types";
 import { parseSecondsToTime } from "../utils/utils";
 import * as cheerio from "cheerio";
 

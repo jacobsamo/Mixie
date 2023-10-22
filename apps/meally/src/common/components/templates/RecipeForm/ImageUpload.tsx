@@ -11,7 +11,7 @@ import {
 import { Button } from "@components/ui/button";
 import { ImagePlus, Loader2 } from "lucide-react";
 import { Input } from "../../ui/input";
-import { recipeFormSchema } from "@/src/db/zodSchemas";
+import { recipeFormSchema } from "@db/zodSchemas";
 import { useFormContext } from "react-hook-form";
 import * as z from "zod";
 import ImageUploadDialog from "../../elements/ImageUploadDialog";

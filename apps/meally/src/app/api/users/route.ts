@@ -1,5 +1,5 @@
 import { isApp } from "@/src/common/lib/services/apiMiddleware";
-import { db } from "@/src/db";
+import { db } from "@db/index";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {

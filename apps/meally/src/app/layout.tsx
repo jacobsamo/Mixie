@@ -4,9 +4,11 @@ import { NextAuthProvider } from "@components/layouts/NextAuthProvider";
 import { ThemeProvider } from "../common/components/modules/theme-provider";
 import { Toaster } from "@components/ui/toaster";
 import { Analytics } from "@vercel/analytics/react";
-import TrpcProvider from "../common/trpc/TrpcProvider";
-import Footer from "../common/components/modules/Footer";
 import { headers } from "next/headers";
+
+import { TRPCReactProvider } from "@/src/common/trpc/react";
+
+import Footer from "../common/components/modules/Footer";
 
 const siteConfig = {
   name: "Meally",
@@ -82,11 +84,13 @@ export default function RootLayout({
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextAuthProvider>
-            <Navbar />
-            {/* <Search /> */}
-            {children}
-            <Toaster />
-            <Footer />
+            <TRPCReactProvider headers={headers()}>
+              <Navbar />
+              {/* <Search /> */}
+              {children}
+              <Toaster />
+              <Footer />
+            </TRPCReactProvider>
           </NextAuthProvider>
         </ThemeProvider>
         <Analytics />

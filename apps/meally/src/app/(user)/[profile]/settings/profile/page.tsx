@@ -3,9 +3,9 @@
 // import { Input } from "@/src/common/components/ui/input";
 // import { Textarea } from "@/src/common/components/ui/textarea";
 // import { trpc } from "@/src/common/trpc/client";
-// import { db } from "@/src/db";
-// import { users } from "@/src/db/schemas";
-// import { User } from "@/src/db/types";
+// import { db } from "@db/index";
+// import { users } from "@db/schemas";
+// import { User } from "@db/types";
 // import { useQuery } from "@tanstack/react-query";
 // import { eq } from "drizzle-orm";
 // import Image from "next/image";

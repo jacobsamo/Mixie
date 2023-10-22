@@ -1,6 +1,6 @@
 import { env } from "@/env.mjs";
 import { CardSquare } from "@/src/common/components/elements/Cards";
-import { Info } from "@/src/db/types";
+import { Info } from "@db/types";
 
 export default async function RecipeViewPage() {
   const req = await fetch(`${env.NEXT_PUBLIC_APP_URL}/api/recipes`, {

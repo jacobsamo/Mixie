@@ -1,5 +1,5 @@
 "use client";
-import { NewRecipe, Recipe } from "@/src/db/types";
+import { NewRecipe, Recipe } from "@db/types";
 import { Input } from "@components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
@@ -7,7 +7,7 @@ import { Controller, FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
 import { Textarea } from "../../ui/textarea";
 
-import { recipeFormSchema } from "@/src/db/zodSchemas";
+import { recipeFormSchema } from "@db/zodSchemas";
 import {
   dietaryRequirements,
   meal_times,

@@ -1,10 +1,10 @@
 import RecipePageComponent from "@components/templates/RecipePage/RecipePageComponent";
 import React from "react";
 import { mockRecipe } from "@/src/common/lib/services/data";
-import { db } from "@/src/db";
-import { info as infoSchema, recipes as recipeSchema } from "@/src/db/schemas";
+import { db } from "@db/index";
+import { info as infoSchema, recipes as recipeSchema } from "@db/schemas";
+import type { Recipe } from "@db/types";
 import { eq, or } from "drizzle-orm";
-import type { Recipe } from "@/src/db/types";
 import { RecipeJsonLd } from "next-seo";
 import { Metadata } from "next";
 import { constructMetadata } from "@/src/common/lib/utils/utils";

@@ -1,5 +1,5 @@
 "use client";
-import type { Ingredient } from "@/src/db/types";
+import type { Ingredient } from "@db/types";
 import React from "react";
 import { CheckCircleIcon, Circle } from "lucide-react";
 
@@ -29,7 +29,9 @@ const Ingredient = ({ ingredient }: IngredientProps) => {
         )}
         <h3 className={checked ? "line-through opacity-60" : ""}>
           {ingredient.quantity}{" "}
-          {ingredient.amount.value == "not_set" ? null : ingredient.amount.label}{" "}
+          {ingredient.amount.value == "not_set"
+            ? null
+            : ingredient.amount.label}{" "}
           {ingredient.unit.value == "not_set"
             ? null
             : ingredient.unit.label.replace("item", "")}{" "}

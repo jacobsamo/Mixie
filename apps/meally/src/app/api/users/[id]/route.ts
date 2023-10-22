@@ -1,7 +1,7 @@
 import { isApp } from "@/src/common/lib/services/apiMiddleware";
-import { db } from "@/src/db";
-import { users } from "@/src/db/schemas";
-import { userSchema } from "@/src/db/zodSchemas";
+import { db } from "@db/index";
+import { users } from "@db/schemas";
+import { userSchema } from "@db/zodSchemas";
 import { eq, or } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
 

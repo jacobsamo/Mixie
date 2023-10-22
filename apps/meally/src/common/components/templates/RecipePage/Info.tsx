@@ -1,4 +1,4 @@
-import type { Info, NewInfo } from "@/src/db/types";
+import type { Info, NewInfo } from "@db/types";
 import React from "react";
 import { PieChart, Clock, Timer, AlarmClock } from "lucide-react";
 
