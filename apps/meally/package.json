@@ -42,6 +42,7 @@
     "@trpc/next": "^10.41.0",
     "@trpc/react-query": "^10.41.0",
     "@trpc/server": "^10.41.0",
+    "@uploadthing/react": "^5.7.0",
     "@vercel/analytics": "^1.1.1",
     "autoprefixer": "^10.4.16",
     "cheerio": "1.0.0-rc.12",
