@@ -10,7 +10,10 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
-    NEXTAUTH_URL: z.string().url().min(1),
+    NEXTAUTH_URL: z.preprocess(
+      (str) => process.env.VERCEL_URL ?? str,
+      process.env.VERCEL ? z.string() : z.string.url()
+    ),
     NEXTAUTH_SECRET:
       process.env.NODE_ENV === "production"
         ? z.string()
@@ -31,7 +34,10 @@ export const env = createEnv({
   },
   client: {
     NEXT_API_APP_TOKEN: z.string().min(1),
-    NEXT_PUBLIC_APP_URL: z.string().url(),
+    NEXT_PUBLIC_APP_URL: z.preprocess(
+      (str) => process.env.VERCEL_URL ?? str,
+      process.env.VERCEL ? z.string() : z.string.url()
+    ),
   },
   runtimeEnv: {
     // App
