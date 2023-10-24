@@ -1,12 +1,10 @@
-import Navbar from "@components/modules/Navbar";
-import "@styles/globals.css";
 import { NextAuthProvider } from "@components/layouts/NextAuthProvider";
-import { ThemeProvider } from "../common/components/modules/theme-provider";
+import Navbar from "@components/modules/Navbar";
 import { Toaster } from "@components/ui/toaster";
+import "@styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
-import { headers } from "next/headers";
+import { ThemeProvider } from "../common/components/modules/theme-provider";
 
-import { TRPCReactProvider } from "@/src/common/trpc/react";
 
 import Footer from "../common/components/modules/Footer";
 
@@ -84,13 +82,11 @@ export default function RootLayout({
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <NextAuthProvider>
-            <TRPCReactProvider headers={headers()}>
-              <Navbar />
-              {/* <Search /> */}
-              {children}
-              <Toaster />
-              <Footer />
-            </TRPCReactProvider>
+            <Navbar />
+            {/* <Search /> */}
+            {children}
+            <Toaster />
+            <Footer />
           </NextAuthProvider>
         </ThemeProvider>
         <Analytics />

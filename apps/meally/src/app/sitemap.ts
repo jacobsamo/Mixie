@@ -1,6 +1,15 @@
 import { MetadataRoute } from "next";
+import { Info } from "../server/db/types";
+import { env } from "@/env.mjs";
+import { db } from "../server/db";
+import { eq } from "drizzle-orm";
+import { info } from "../server/db/schemas";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const recipes = await db.query.info.findMany({
+    where: eq(info.isPublic, true),
+  });
+
   
 
   return [
@@ -16,6 +25,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily",
       priority: 0.8,
     },
+    ...recipes.map((recipe) => ({
+      url: `https://meally.com.au/recipes/${recipe.id}`,
+      lastModified: recipe.lastUpdated || new Date(),
+    })),
     {
       url: "https://meally.com.au/info/privacy_policy",
       lastModified: new Date("2023-08-04"),

@@ -13,7 +13,7 @@ importers:
         version: 0.21.0
       '@turbo/gen':
         specifier: ^1.10.16
-        version: 1.10.16(@types/node@20.8.7)(typescript@5.2.2)
+        version: 1.10.16(@types/node@20.8.8)(typescript@5.2.2)
       dotenv-cli:
         specifier: ^7.3.0
         version: 7.3.0
@@ -37,11 +37,11 @@ importers:
   apps/meally:
     dependencies:
       '@auth/core':
-        specifier: ^0.17.0
-        version: 0.17.0(nodemailer@6.9.6)
+        specifier: ^0.18.0
+        version: 0.18.0(nodemailer@6.9.7)
       '@auth/drizzle-adapter':
-        specifier: ^0.3.4
-        version: 0.3.4(nodemailer@6.9.6)
+        specifier: ^0.3.5
+        version: 0.3.5(nodemailer@6.9.7)
       '@hookform/resolvers':
         specifier: ^3.3.2
         version: 3.3.2(react-hook-form@7.47.0)
@@ -158,7 +158,7 @@ importers:
         version: 13.5.6(react-dom@18.2.0)(react@18.2.0)
       next-auth:
         specifier: ^4.24.3
-        version: 4.24.3(next@13.5.6)(nodemailer@6.9.6)(react-dom@18.2.0)(react@18.2.0)
+        version: 4.24.3(next@13.5.6)(nodemailer@6.9.7)(react-dom@18.2.0)(react@18.2.0)
       next-seo:
         specifier: ^6.1.0
         version: 6.1.0(next@13.5.6)(react-dom@18.2.0)(react@18.2.0)
@@ -166,8 +166,8 @@ importers:
         specifier: ^0.2.1
         version: 0.2.1(next@13.5.6)(react-dom@18.2.0)(react@18.2.0)
       nodemailer:
-        specifier: ^6.9.6
-        version: 6.9.6
+        specifier: ^6.9.7
+        version: 6.9.7
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -193,8 +193,8 @@ importers:
         specifier: ^0.32.6
         version: 0.32.6
       superjson:
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.1.0
+        version: 2.1.0
       swiper:
         specifier: ^10.3.1
         version: 10.3.1
@@ -215,8 +215,8 @@ importers:
         version: 3.22.4
     devDependencies:
       '@types/node':
-        specifier: ^20.8.7
-        version: 20.8.7
+        specifier: ^20.8.8
+        version: 20.8.8
       '@types/react':
         specifier: ^18.2.31
         version: 18.2.31
@@ -303,8 +303,8 @@ packages:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
 
-  /@auth/core@0.17.0(nodemailer@6.9.6):
-    resolution: {integrity: sha512-YkbWuXny6sv0gF/sYm7KD3GxnnGxJomoQJzibzhJuwVOYjPUjjYBv/JMTkYcfpBuPHoHZwTVR3y1J+/W18oRxA==}
+  /@auth/core@0.18.0(nodemailer@6.9.7):
+    resolution: {integrity: sha512-Xb41H3FIv4PlTZmwoFvntaNlVTwIqFxIg7i0/ieHOOxf/7H8EJpGTWoNrqKhwMyZEPU6fHp+VcUiqdX3vFrWSg==}
     peerDependencies:
       nodemailer: ^6.8.0
     peerDependenciesMeta:
@@ -314,16 +314,16 @@ packages:
       '@panva/hkdf': 1.1.1
       cookie: 0.5.0
       jose: 4.15.4
-      nodemailer: 6.9.6
+      nodemailer: 6.9.7
       oauth4webapi: 2.3.0
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
     dev: false
 
-  /@auth/drizzle-adapter@0.3.4(nodemailer@6.9.6):
-    resolution: {integrity: sha512-3N734pgz7UJa+p1GBBl4OaORD7Ka6AIgfgM8W9b3UZjvIMnyT1dUZB6JleNg52Qskzh9ULtBuT1Lzb9/gKxsgQ==}
+  /@auth/drizzle-adapter@0.3.5(nodemailer@6.9.7):
+    resolution: {integrity: sha512-pZCnZ8vrqUD+C4uc4MiRj+Ox7NLXze6yzWHdtAgK1QMj9PgvUtBsJu02mAYJCyCchWVzdvPG25e9+B6L2mLRBg==}
     dependencies:
-      '@auth/core': 0.17.0(nodemailer@6.9.6)
+      '@auth/core': 0.18.0(nodemailer@6.9.7)
     transitivePeerDependencies:
       - nodemailer
     dev: false
@@ -1463,7 +1463,7 @@ packages:
     engines: {node: ^8.13.0 || >=10.10.0}
     dependencies:
       '@grpc/proto-loader': 0.7.10
-      '@types/node': 20.8.7
+      '@types/node': 20.8.8
     dev: false
 
   /@grpc/proto-loader@0.7.10:
@@ -3154,7 +3154,7 @@ packages:
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
     dev: false
 
-  /@turbo/gen@1.10.16(@types/node@20.8.7)(typescript@5.2.2):
+  /@turbo/gen@1.10.16(@types/node@20.8.8)(typescript@5.2.2):
     resolution: {integrity: sha512-PzyluADjVuy5OcIi+/aRcD70OElQpRVRDdfZ9fH8G5Fv75lQcNrjd1bBGKmhjSw+g+eTEkXMGnY7s6gsCYjYTQ==}
     hasBin: true
     dependencies:
@@ -3166,7 +3166,7 @@ packages:
       minimatch: 9.0.3
       node-plop: 0.26.3
       proxy-agent: 6.3.1
-      ts-node: 10.9.1(@types/node@20.8.7)(typescript@5.2.2)
+      ts-node: 10.9.1(@types/node@20.8.8)(typescript@5.2.2)
       update-check: 1.5.4
       validate-npm-package-name: 5.0.0
     transitivePeerDependencies:
@@ -3199,7 +3199,7 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 20.8.7
+      '@types/node': 20.8.8
     dev: false
 
   /@types/hoist-non-react-statics@3.3.4:
@@ -3223,7 +3223,7 @@ packages:
   /@types/keyv@3.1.4:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
-      '@types/node': 20.8.7
+      '@types/node': 20.8.8
     dev: false
 
   /@types/minimatch@5.1.2:
@@ -3234,8 +3234,8 @@ packages:
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
     dev: false
 
-  /@types/node@20.8.7:
-    resolution: {integrity: sha512-21TKHHh3eUHIi2MloeptJWALuCu5H7HQTdTrWIFReA8ad+aggoX+lRes3ex7/FtpC+sVUpFMQ+QTfYr74mruiQ==}
+  /@types/node@20.8.8:
+    resolution: {integrity: sha512-YRsdVxq6OaLfmR9Hy816IMp33xOBjfyOgUd77ehqg96CFywxAPbDbXvAsuN2KVg2HOT8Eh6uAfU+l4WffwPVrQ==}
     dependencies:
       undici-types: 5.25.3
 
@@ -3286,7 +3286,7 @@ packages:
   /@types/responselike@1.0.2:
     resolution: {integrity: sha512-/4YQT5Kp6HxUDb4yhRkm0bJ7TbjvTddqX7PZ5hz6qV3pxSo72f/6YPRo+Mu2DU307tm9IioO69l7uAwn5XNcFA==}
     dependencies:
-      '@types/node': 20.8.7
+      '@types/node': 20.8.8
     dev: false
 
   /@types/scheduler@0.16.5:
@@ -3299,7 +3299,7 @@ packages:
   /@types/through@0.0.32:
     resolution: {integrity: sha512-7XsfXIsjdfJM2wFDRAtEWp3zb2aVPk5QeyZxGlVK57q4u26DczMHhJmlhr0Jqv0THwxam/L8REXkj8M2I/lcvw==}
     dependencies:
-      '@types/node': 20.8.7
+      '@types/node': 20.8.8
     dev: false
 
   /@types/tinycolor2@1.4.5:
@@ -3659,7 +3659,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.22.1
-      caniuse-lite: 1.0.30001551
+      caniuse-lite: 1.0.30001553
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -3766,8 +3766,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001551
-      electron-to-chromium: 1.4.563
+      caniuse-lite: 1.0.30001553
+      electron-to-chromium: 1.4.565
       node-releases: 2.0.13
       update-browserslist-db: 1.0.13(browserslist@4.22.1)
     dev: false
@@ -3851,8 +3851,8 @@ packages:
     engines: {node: '>=14.16'}
     dev: true
 
-  /caniuse-lite@1.0.30001551:
-    resolution: {integrity: sha512-vtBAez47BoGMMzlbYhfXrMV1kvRF2WP/lqiMuDu1Sb4EE4LKEgjopFDSRtZfdVnslNRpOqV/woE+Xgrwj6VQlg==}
+  /caniuse-lite@1.0.30001553:
+    resolution: {integrity: sha512-N0ttd6TrFfuqKNi+pMgWJTb9qrdJu4JSpgPFLe/lrD19ugC6fZgF0pUewRowDwzdDnb9V41mFcdlYgl/PyKf4A==}
     dev: false
 
   /chainsaw@0.1.0:
@@ -4604,8 +4604,8 @@ packages:
       semver: 7.5.4
     dev: false
 
-  /electron-to-chromium@1.4.563:
-    resolution: {integrity: sha512-dg5gj5qOgfZNkPNeyKBZQAQitIQ/xwfIDmEQJHCbXaD9ebTZxwJXUsDYcBlAvZGZLi+/354l35J1wkmP6CqYaw==}
+  /electron-to-chromium@1.4.565:
+    resolution: {integrity: sha512-XbMoT6yIvg2xzcbs5hCADi0dXBh4//En3oFXmtPX+jiyyiCTiM9DGFT2SLottjpEs9Z8Mh8SqahbR96MaHfuSg==}
     dev: false
 
   /emoji-regex@8.0.0:
@@ -6719,7 +6719,7 @@ packages:
     engines: {node: '>= 0.4.0'}
     dev: false
 
-  /next-auth@4.24.3(next@13.5.6)(nodemailer@6.9.6)(react-dom@18.2.0)(react@18.2.0):
+  /next-auth@4.24.3(next@13.5.6)(nodemailer@6.9.7)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-n1EvmY7MwQMSOkCh6jhI6uBneB6VVtkYELVMEwVaCLD1mBD3IAAucwk+90kgxramW09nSp5drvynwfNCi1JjaQ==}
     peerDependencies:
       next: ^12.2.5 || ^13
@@ -6735,7 +6735,7 @@ packages:
       cookie: 0.5.0
       jose: 4.15.4
       next: 13.5.6(react-dom@18.2.0)(react@18.2.0)
-      nodemailer: 6.9.6
+      nodemailer: 6.9.7
       oauth: 0.9.15
       openid-client: 5.6.1
       preact: 10.18.1
@@ -6791,7 +6791,7 @@ packages:
       '@next/env': 13.5.6
       '@swc/helpers': 0.5.2
       busboy: 1.6.0
-      caniuse-lite: 1.0.30001551
+      caniuse-lite: 1.0.30001553
       postcss: 8.4.31
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -6874,8 +6874,8 @@ packages:
     resolution: {integrity: sha512-uYr7J37ae/ORWdZeQ1xxMJe3NtdmqMC/JZK+geofDrkLUApKRHPd18/TxtBOJ4A0/+uUIliorNrfYV6s1b02eQ==}
     dev: false
 
-  /nodemailer@6.9.6:
-    resolution: {integrity: sha512-s7pDtWwe5fLMkQUhw8TkWB/wnZ7SRdd9HRZslq/s24hlZvBP3j32N/ETLmnqTpmj4xoBZL9fOWyCIZ7r2HORHg==}
+  /nodemailer@6.9.7:
+    resolution: {integrity: sha512-rUtR77ksqex/eZRLmQ21LKVH5nAAsVicAtAYudK7JgwenEDZ0UIQ1adUGqErz7sMkWYxWTTU1aeP2Jga6WQyJw==}
     engines: {node: '>=6.0.0'}
     dev: false
 
@@ -7561,7 +7561,7 @@ packages:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
-      '@types/node': 20.8.7
+      '@types/node': 20.8.8
       long: 5.2.3
     dev: false
 
@@ -8502,8 +8502,8 @@ packages:
       pirates: 4.0.6
       ts-interface-checker: 0.1.13
 
-  /superjson@2.0.0:
-    resolution: {integrity: sha512-W3n+NJ7TFjaLle8ihIIvsr/bbuKpnxeatsyjmhy7iSkom+/cshaHziCQAWXrHGWJVQSQFDOuES6C3nSEvcbrQg==}
+  /superjson@2.1.0:
+    resolution: {integrity: sha512-VrMxSzMeE2nLmTvxOl0gEuz45kErw5oNNIzmZJ+eCmtSO89sUzRIIOhATJOdkSOn4eChekU835RtmPqp33S7JQ==}
     engines: {node: '>=16'}
     dependencies:
       copy-anything: 3.0.5
@@ -8756,7 +8756,7 @@ packages:
   /ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
 
-  /ts-node@10.9.1(@types/node@20.8.7)(typescript@5.2.2):
+  /ts-node@10.9.1(@types/node@20.8.8)(typescript@5.2.2):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -8775,7 +8775,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 20.8.7
+      '@types/node': 20.8.8
       acorn: 8.10.0
       acorn-walk: 8.2.0
       arg: 4.1.3

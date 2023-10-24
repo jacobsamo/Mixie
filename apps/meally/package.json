@@ -20,8 +20,8 @@
     "db:pull": "drizzle-kit introspect:mysql --config=drizzle.config.ts"
   },
   "dependencies": {
-    "@auth/core": "^0.17.0",
-    "@auth/drizzle-adapter": "^0.3.4",
+    "@auth/core": "^0.18.0",
+    "@auth/drizzle-adapter": "^0.3.5",
     "@hookform/resolvers": "^3.3.2",
     "@planetscale/database": "^1.11.0",
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -63,7 +63,7 @@
     "next-auth": "^4.24.3",
     "next-seo": "^6.1.0",
     "next-themes": "^0.2.1",
-    "nodemailer": "^6.9.6",
+    "nodemailer": "^6.9.7",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
@@ -72,7 +72,7 @@
     "react-select": "^5.7.7",
     "resend": "^1.1.0",
     "sharp": "^0.32.6",
-    "superjson": "^2.0.0",
+    "superjson": "^2.1.0",
     "swiper": "^10.3.1",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
@@ -81,7 +81,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/node": "^20.8.7",
+    "@types/node": "^20.8.8",
     "@types/react": "^18.2.31",
     "@types/react-beautiful-dnd": "^13.1.6",
     "@types/react-dom": "^18.2.14",

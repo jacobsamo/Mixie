@@ -1,6 +1,10 @@
 import "./env.mjs";
 import { env } from "./env.mjs";
 
+if (process.env.NODE_ENV === "development") {
+  process.env.NEXT_PUBLIC_APP_URL = "http://localhost:3000";
+}
+
 if (process.env.VERCEL_URL && !process.env.NEXT_PUBLIC_APP_URL) {
   process.env.NEXT_PUBLIC_APP_URL = `https://${process.env.VERCEL_URL}`;
 }
