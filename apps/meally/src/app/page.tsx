@@ -1,14 +1,12 @@
+import { env } from "@/env.mjs";
 import { CardRectangle } from "@components/elements/Cards";
+import { Info } from "@db/types";
 import { SearchIcon } from "lucide-react";
 import Carousel from "../common/components/elements/Carousel";
 import SearchTrigger from "../common/components/modules/SearchTrigger";
-import { Request } from "../common/lib/services/apiHandle";
-import { Info } from "@db/types";
-import { env } from "@/env.mjs";
-import { api } from "../common/trpc/server";
 
 export default async function Page() {
-  const req = await fetch(`${env.NEXT_PUBLIC_APP_URL}/api/recipes`, {
+  const req = await fetch(`${env.NODE_ENV == "development" ? "http://" : "https://"}${env.NEXT_PUBLIC_APP_URL}/api/recipes`, {
     next: {
       revalidate: 60 * 60 * 24,
     },

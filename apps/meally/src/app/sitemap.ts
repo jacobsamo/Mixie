@@ -10,8 +10,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     where: eq(info.isPublic, true),
   });
 
-  
-
   return [
     {
       url: "https://meally.com.au",
