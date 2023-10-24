@@ -73,7 +73,7 @@ const LoginPage = () => {
               viewBox="0 0 24 24"
               className="h-8"
             >
-              <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+              <g strokeWidth="0" id="SVGRepo_bgCarrier"></g>
               <g
                 stroke-linejoin="round"
                 stroke-linecap="round"
@@ -136,7 +136,7 @@ const LoginPage = () => {
               fill="#ffffff"
               className="h-8"
             >
-              <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+              <g strokeWidth="0" id="SVGRepo_bgCarrier"></g>
               <g
                 stroke-linejoin="round"
                 stroke-linecap="round"

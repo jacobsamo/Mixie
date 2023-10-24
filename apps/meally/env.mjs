@@ -7,9 +7,16 @@ export const env = createEnv({
     DATABASE_HOST: z.string().min(1),
     DATABASE_USERNAME: z.string().min(1),
     DATABASE_PASSWORD: z.string().min(1),
-    NODE_ENV: z.enum(["development", "test", "production"]),
-    NEXTAUTH_URL: z.string().min(1),
-    NEXTAUTH_SECRET: z.string().min(1),
+    NODE_ENV: z
+      .enum(["development", "test", "production"])
+      .default("development"),
+    NEXTAUTH_URL: z.string().url().min(1),
+    NEXTAUTH_SECRET:
+      process.env.NODE_ENV === "production"
+        ? z.string()
+        : z.string().optional(),
+
+    // client ids / secrets
     GITHUB_CLIENT_ID: z.string().min(1),
     GITHUB_CLIENT_SECRET: z.string().min(1),
     GOOGLE_CLIENT_ID: z.string().min(1),
@@ -24,7 +31,7 @@ export const env = createEnv({
   },
   client: {
     NEXT_API_APP_TOKEN: z.string().min(1),
-    NEXT_PUBLIC_APP_URL: z.string().min(1),
+    NEXT_PUBLIC_APP_URL: z.string().url(),
   },
   runtimeEnv: {
     // App
@@ -48,7 +55,7 @@ export const env = createEnv({
     // NextAuth
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
     GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    NEXTAUTH_URL: process.env.NEXT_PUBLIC_APP_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
