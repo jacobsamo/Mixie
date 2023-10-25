@@ -8,7 +8,7 @@ export const metadata = constructMetadata({
 });
 
 export default async function RecipeViewPage() {
-  const req = await fetch(`${process.env.VERCEL_URL}/api/recipes`, {
+  const req = await fetch(`${env.NODE_ENV == "development" ? "http://" : "https://"}${process.env.VERCEL_URL}/api/recipes`, {
     next: {
       revalidate: 60 * 60 * 24,
     },

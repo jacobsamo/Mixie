@@ -6,11 +6,16 @@ import Carousel from "../common/components/elements/Carousel";
 import SearchTrigger from "../common/components/modules/SearchTrigger";
 
 export default async function Page() {
-  const req = await fetch(`${process.env.VERCEL_URL}/api/recipes`, {
-    next: {
-      revalidate: 60 * 60 * 24,
-    },
-  });
+  const req = await fetch(
+    `${env.NODE_ENV == "development" ? "http://" : "https://"}${
+      process.env.VERCEL_URL
+    }/api/recipes`,
+    {
+      next: {
+        revalidate: 60 * 60 * 24,
+      },
+    }
+  );
 
   const latestRecipes = (await req.json()) as Info[];
 
