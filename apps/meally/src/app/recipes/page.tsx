@@ -8,16 +8,11 @@ export const metadata = constructMetadata({
 });
 
 export default async function RecipeViewPage() {
-  const req = await fetch(
-    `${env.NODE_ENV == "development" ? "http://" : "https://"}${
-      env.NEXT_PUBLIC_APP_URL
-    }/api/recipes`,
-    {
-      next: {
-        revalidate: 60 * 60 * 24,
-      },
-    }
-  );
+  const req = await fetch(`${env.NEXT_PUBLIC_APP_URL}/api/recipes`, {
+    next: {
+      revalidate: 60 * 60 * 24,
+    },
+  });
 
   const recipes = (await req.json()) as Info[];
 
