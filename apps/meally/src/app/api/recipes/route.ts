@@ -1,21 +1,21 @@
-import { env } from "@/env.mjs";
+import { isApp } from "@/src/common/lib/services/apiMiddleware";
+import { NextResponse, NextRequest } from "next/server";
+import { eq } from "drizzle-orm";
+import { db } from "@db/index";
+import { info } from "@db/schemas";
 
-import { db } from "@/src/db";
-import { recipes as recipeSchema } from "@/src/db/schemas";
-import { desc, asc } from "drizzle-orm";
-
-import { type NextRequest, NextResponse } from "next/server";
-
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const limit = parseInt(searchParams.get("limit") || "10");
-  const offset = parseInt(searchParams.get("offset") || "0");
-
+export async function GET(req: NextRequest) {
   const recipes = await db.query.info.findMany({
-    limit: limit,
-    offset: offset,
-    orderBy: [asc(recipeSchema.lastUpdated)],
+    columns: {
+      recipeId: true,
+      id: true,
+      title: true,
+      imgAlt: true,
+      imgUrl: true,
+      total: true,
+    },
+    where: eq(info.isPublic, true),
   });
 
-  return NextResponse.json({ recipes });
+  return NextResponse.json(recipes);
 }

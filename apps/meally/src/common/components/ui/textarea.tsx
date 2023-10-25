@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn } from "@lib/utils";
+import { cn } from "@/src/common/lib/utils/utils";
 import { Control, Controller, RegisterOptions } from "react-hook-form";
 import {
   Tooltip,

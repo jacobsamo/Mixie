@@ -22,7 +22,11 @@ const AddBatch = ({ add, setAdd }: AddBatchProps) => {
   return (
     <>
       <div className="flew-row flex items-center py-2" aria-label="Add a batch">
-        <button data-testid="plus_button" onClick={addBatch}>
+        <button
+          aria-label="Add a batch"
+          data-testid="plus_button"
+          onClick={addBatch}
+        >
           <PlusCircleIcon className="h-9 w-9" />
         </button>
         <button

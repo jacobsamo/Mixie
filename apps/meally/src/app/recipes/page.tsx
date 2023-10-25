@@ -1,31 +1,28 @@
+import { env } from "@/env.mjs";
+import { CardSquare } from "@/src/common/components/elements/Cards";
+import { constructMetadata } from "@/src/common/lib/utils/utils";
 import { Info } from "@db/types";
-import { db } from "@/src/db";
-import { info } from "@/src/db/schemas";
-import { desc, asc } from "drizzle-orm";
-import {
-  BaseCard,
-  CardRectangle,
-  CardRectangleSmall,
-  CardSquare,
-} from "@/src/common/components/elements/Cards";
-import Link from "next/link";
-import Image from "next/image";
+
+export const metadata = constructMetadata({
+  title: "Recipes",
+});
 
 export default async function RecipeViewPage() {
-  const recipes = (await db.query.info.findMany({
-    limit: 100,
-    offset: 0,
-    orderBy: [asc(info.lastUpdated)],
-  })) as Info[];
+  const req = await fetch(`${env.NEXT_PUBLIC_APP_URL}/api/recipes`, {
+    next: {
+      revalidate: 60 * 60 * 24,
+    },
+  });
+
+  const recipes = (await req.json()) as Info[];
 
   return (
-    <>
-      <h1>Recipes</h1>
-      <section>
+    <main className="h-full w-full">
+      <section className="flex flex-wrap gap-2 p-3">
         {recipes.map((recipe) => {
           return <CardSquare key={recipe.id} recipe={recipe} />;
         })}
       </section>
-    </>
+    </main>
   );
 }

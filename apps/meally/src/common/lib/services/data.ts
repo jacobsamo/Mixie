@@ -203,6 +203,7 @@ export const dietaryRequirements = [
 ];
 
 export const units = [
+  { value: "not_set", label: " " },
   { value: "grams", label: "grams" },
   { value: "kg", label: "kg" },
   { value: "cup", label: "cup" },
@@ -212,6 +213,12 @@ export const units = [
   { value: "tbsp", label: "tbsp" },
   { value: "pinch", label: "pinch" },
   { value: "item", label: "item" },
+  { value: "handful", label: "handful" },
+  { value: "slice", label: "slice" },
+  { value: "piece", label: "piece" },
+  { value: "can", label: "can" },
+  { value: "bunch", label: "bunch" },
+  { value: "bottle", label: "bottle" },
 ];
 
 export const sweet_savoury = [

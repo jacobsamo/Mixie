@@ -2,12 +2,12 @@
 // import { cva } from 'class-variance-authority';
 // import React from 'react';
 // import { useForm } from 'react-hook-form';
-// import { authOptions } from '@/src/db/next-auth-adapter';
+// import { authOptions } from '@db/next-auth-adapter';
 // import { getServerSession } from 'next-auth';
-// import { db } from '@/src/db';
+// import { db } from '@db';
 // import { eq, or } from 'drizzle-orm';
-// import { info, users } from '@/src/db/schemas';
-// import { Info, User } from '@/src/db/types';
+// import { info, users } from '@db/schemas';
+// import { Info, User } from '@db/types';
 // import { z } from 'zod';
 // import {
 //   theme,
@@ -25,7 +25,7 @@
 //   allergens as zAllergens,
 //   loveCooking as zLoveCooking,
 //   averageTimeToCook as zAverageTimeToCook,
-// } from '@/src/db/zodEnums';
+// } from '@db/zodEnums';
 
 // interface CustomizationPageProps {
 //   params: {

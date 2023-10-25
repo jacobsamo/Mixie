@@ -20,7 +20,7 @@ const Overlay = ({ onPreview, onSave, onPublish }: OverlayProps) => {
     <>
       <div className="fixed inset-0 inset-y-16  mr-3 flex flex-col items-end justify-between">
         {/* Top Bar */}
-        <div className="z-50 flex  w-fit justify-end rounded-md bg-white p-4 shadow dark:bg-grey ">
+        <div className="z-50 flex   w-fit justify-end rounded-md bg-white p-4 shadow dark:bg-grey ">
           <Button
             ariaLabel="Preview"
             type="button"

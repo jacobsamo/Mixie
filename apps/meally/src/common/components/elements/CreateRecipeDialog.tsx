@@ -1,5 +1,4 @@
 "use client";
-import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,14 +7,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@components/ui/dialog";
-import { Input } from "../ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { Button } from "../ui/button";
 import { Loader2, PlusCircleIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import VersionChip from "../modules/VersionChip";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 import { useToast } from "../ui/use-toast";
+import { env } from "@/env.mjs";
 
 const createRecipeSchema = z.object({
   title: z.string().optional(),
@@ -39,29 +41,32 @@ const CreateRecipeDialog = () => {
 
   function onSubmit(values: z.infer<typeof createRecipeSchema>) {
     setLoading(true);
-
-    if (values.title) {
-      fetch("/api/recipes/create", {
-        method: "POST",
-        body: JSON.stringify({ title: values.title }),
-      }).then((res) => {
-        if (res.status == 200) {
-          res.json().then((data) => {
-            router.push(`/recipes/${data.id}/edit`);
+    fetch("/api/recipes/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title: values.title, link: values.link }),
+    }).then((res) => {
+      if (res.status == 200) {
+        res.json().then((data) => {
+          toast({
+            title: "Recipe Created",
           });
+          router.push(`/recipes/${data.id}/edit`);
           setLoading(false);
           setOpen(false);
-        }
-        if (res.status == 400) {
-          toast({
-            title: "An Error Occurred",
-            description: "This Error more the likely occurred due to a bug",
-          });
-        }
-      });
-      setLoading(false);
-      setOpen(false);
-    }
+        });
+      }
+      if (res.status == 400) {
+        toast({
+          title: "An Error Occurred",
+          description: "This Error more the likely occurred due to a bug",
+        });
+        setLoading(false);
+        setOpen(false);
+      }
+    });
   }
 
   useEffect(() => {
@@ -86,19 +91,22 @@ const CreateRecipeDialog = () => {
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <Input {...register("title")} label="Title" />
-          {/* <p className="mx-auto">OR</p>
+          <p className="mx-auto">OR</p>
 
           <div>
-            import a recipe
+            <div className="flex flex-row items-center gap-4">
+              import a recipe <VersionChip release="beta" />
+            </div>
             <Input
-              {...register('link')}
+              {...register("link")}
               label="Recipe Url"
               placeholder="https://"
             />
-          </div> */}
+          </div>
           <Button
             ariaLabel="continue with creating the recipe"
             className="items-center font-semibold"
+            disabled={loading}
           >
             Create Recipe
             {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}

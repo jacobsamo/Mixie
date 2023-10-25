@@ -1,26 +1,44 @@
-import type { Ingredient } from "@/src/db/types";
+"use client";
+import type { Ingredient } from "@db/types";
 import React from "react";
-import { Checkbox } from "@components/ui/checkbox";
+import { CheckCircleIcon, Circle } from "lucide-react";
 
 interface IngredientProps {
   ingredient: Ingredient;
 }
 
 const Ingredient = ({ ingredient }: IngredientProps) => {
+  const [checked, setChecked] = React.useState(false);
+
   return (
-    <div className="flex flex-row items-center gap-3 py-1">
-      {/*TODO:change the style of this checkbox */}
-      <input
-        type="checkbox"
-        id="checkbox"
-        className="h-4 w-4 rounded-xl border-white checked:text-white"
-      />
-      <h3 className="">
-        {ingredient.quantity}{" "}
-        {ingredient.amount == "not_set" ? null : ingredient.amount}{" "}
-        {ingredient.unit} {ingredient.title}{" "}
-      </h3>
-    </div>
+    <li>
+      <button
+        className="mb-4 flex space-x-1"
+        id={`ingredient-${ingredient.title}`}
+        aria-label={`Check off Ingredient, ${ingredient.title}`}
+        onClick={() => setChecked(!checked)}
+        role="checkbox"
+        data-checked={checked}
+        type="button"
+        aria-checked={checked}
+      >
+        {checked ? (
+          <CheckCircleIcon className="shrink-0 text-yellow" />
+        ) : (
+          <Circle className="shrink-0" />
+        )}
+        <h3 className={checked ? "line-through opacity-60" : ""}>
+          {ingredient.quantity}{" "}
+          {ingredient.amount.value == "not_set"
+            ? null
+            : ingredient.amount.label}{" "}
+          {ingredient.unit.value == "not_set"
+            ? null
+            : ingredient.unit.label.replace("item", "")}{" "}
+          {ingredient.title}{" "}
+        </h3>
+      </button>
+    </li>
   );
 };
 

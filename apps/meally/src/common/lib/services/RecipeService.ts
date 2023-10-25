@@ -1,16 +1,6 @@
-import * as puppeteer from "puppeteer";
-import { recipeId } from "../utils";
-import { db } from "@/src/db";
-import { env } from "@/env.mjs";
-import { Info, NewRecipe, Recipe } from "@/src/db/types";
-import { authOptions } from "@/src/db/next-auth-adapter";
-import { getServerSession } from "next-auth/next";
-import { info, recipes } from "@/src/db/schemas";
-import * as z from "zod";
-import {} from "@/src/db/types";
-import { asc, eq, or, sql } from "drizzle-orm";
-import { recipeFormSchema } from "@/src/db/zodSchemas";
-import React, { cache } from "react";
+import { Info } from "@db/types";
+import React from "react";
+import { Request } from "./apiHandle";
 
 class RecipeService {
   async getAllRecipeCards(
@@ -22,15 +12,9 @@ class RecipeService {
     //   limit: limit,
     // });
 
-    const baseUrl =
-      process.env.NODE_ENV === "production"
-        ? "https://www.meally.com.au"
-        : "http://localhost:3000";
-    const req = await fetch(`${baseUrl}/api/recipes`, {
-      next: { revalidate: 60 * 60 * 24 },
-    });
-    const recipes = await req.json();
-    return recipes.recipes as Info[];
+    const recipes = await Request<Info[]>(`api/recipes`);
+
+    return recipes as Info[];
   }
 
   //   async getRatingByRecipeId(id: string) {

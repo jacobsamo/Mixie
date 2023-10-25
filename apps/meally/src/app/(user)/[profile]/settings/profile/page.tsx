@@ -1,15 +1,16 @@
-// import React from 'react';
-// import { useForm } from 'react-hook-form';
-// import { authOptions } from '@/src/db/next-auth-adapter';
-// import { getServerSession } from 'next-auth';
-// import { db } from '@/src/db';
-// import { eq, or } from 'drizzle-orm';
-// import { info, users } from '@/src/db/schemas';
-// import { Info, User } from '@/src/db/types';
-// import Image from 'next/image';
-// import { Input } from '@/src/common/components/ui/input';
-// import { Textarea } from '@/src/common/components/ui/textarea';
-// import { Button } from '@/src/common/components/ui/button';
+// "use client";
+// import { Button } from "@/src/common/components/ui/button";
+// import { Input } from "@/src/common/components/ui/input";
+// import { Textarea } from "@/src/common/components/ui/textarea";
+// import { trpc } from "@/src/common/trpc/client";
+// import { db } from "@db/index";
+// import { users } from "@db/schemas";
+// import { User } from "@db/types";
+// import { useQuery } from "@tanstack/react-query";
+// import { eq } from "drizzle-orm";
+// import Image from "next/image";
+// import { useForm } from "react-hook-form";
+// import { Request } from "@/src/common/lib/services/apiHandle";
 
 // interface ProfilePageProps {
 //   params: {
@@ -18,58 +19,64 @@
 // }
 
 // export default async function ProfilePage({ params }: ProfilePageProps) {
-//   const session = await getServerSession(authOptions);
+//   // const session = await getServerSession(authOptions);
+//   const { data: user } = useQuery({
+//     queryKey: ["user", params.profile],
+//     queryFn: async () => {
+//       // const user = await Request<User>({
+//       //   url: `/api/users/${params.profile}`,
+//       //   method: "GET",
+//       // });
+//       // return user as User;
+//       return null;
+//     },
+//   });
 
-//   const user = (await db.query.users.findFirst({
-//     where: eq(users.id, params.profile),
-//   })) as User;
+//   if (!user) {
+//     return null;
+//   }
 
 //   const { register, control, handleSubmit } = useForm({
 //     defaultValues: {
-//       name: user?.name,
-//       userName: user?.userName,
-//       bio: user?.bio,
+//       ...user,
 //     },
 //   });
-//   const onSubmit = async (data: any) => {
+//   const onSubmit = async (data: typeof user) => {
 //     try {
-//       db.update(users)
-//         .set({
-//           name: data.name,
-//           userName: data.userName,
-//           bio: data.bio,
-//         })
-//         .where(eq(users.id, user.id));
+//       await fetch(`/api/users/${params.profile}`, {
+//         method: "PUT",
+//         body: JSON.stringify(data),
+//       });
 //     } catch (error) {
 //       console.error(error);
 //     }
 //   };
 
 //   return (
-//     <main className="flex flex-row mx-auto md:w-2/4 w-full mt-2 md:p-4 justify-center gap-4 dark:bg-dark_grey  bg-white shadow-main rounded-md">
+//     <main className="dark:bg-dark_grey mx-auto mt-2 flex w-full flex-row justify-center gap-4 rounded-md bg-white  shadow-main md:w-2/4 md:p-4">
 //       <form
 //         className="flex flex-col items-start p-2"
 //         onSubmit={handleSubmit(onSubmit)}
 //       >
 //         <div className="flex flex-row items-center gap-2">
 //           <Image
-//             src={user.image || ''}
-//             alt={user.name || 'Profile picture'}
+//             src={user.image || ""}
+//             alt={user.name || "Profile picture"}
 //             width={100}
 //             height={100}
 //             priority
-//             className="rounded-full w-24 h-24 lg:w-48 lg:h-48 m-auto"
+//             className="m-auto h-24 w-24 rounded-full lg:h-48 lg:w-48"
 //           />
 //           <div className="flex flex-col gap-2">
 //             <Input
 //               id="displayName"
 //               label="Name"
-//               {...register('name', { required: true })}
+//               {...register("name", { required: true })}
 //             />
 //             <Input
 //               id="userName"
 //               label="User Name"
-//               {...register('userName', { required: true })}
+//               {...register("userName", { required: true })}
 //             />
 //           </div>
 //         </div>
