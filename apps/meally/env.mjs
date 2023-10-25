@@ -11,7 +11,6 @@ export const env = createEnv({
       .enum(["development", "test", "production"])
       .default("development"),
     NEXTAUTH_URL: z.string().url(),
-
     NEXTAUTH_SECRET:
       process.env.NODE_ENV === "production"
         ? z.string()
@@ -31,13 +30,13 @@ export const env = createEnv({
     UPLOADTHING_APP_ID: z.string().min(1),
   },
   client: {
-    NEXT_API_APP_TOKEN: z.string().min(1),
+    NEXT_PUBLIC_API_APP_TOKEN: z.string().min(1),
     NEXT_PUBLIC_APP_URL: z.string().url(),
   },
   runtimeEnv: {
     // App
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
-    NEXT_API_APP_TOKEN: process.env.NEXT_API_APP_TOKEN,
+    NEXT_PUBLIC_API_APP_TOKEN: process.env.NEXT_PUBLIC_API_APP_TOKEN,
 
     // Server
     DATABASE_URL: process.env.DATABASE_URL,

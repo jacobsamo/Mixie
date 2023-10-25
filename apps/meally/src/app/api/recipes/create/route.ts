@@ -16,7 +16,7 @@ import * as z from "zod";
 
 const createRecipeSchema = z.object({
   title: z.string().optional(),
-  link: z.string().url().optional(),
+  link: z.string().optional(),
 });
 
 export async function POST(req: NextRequest) {

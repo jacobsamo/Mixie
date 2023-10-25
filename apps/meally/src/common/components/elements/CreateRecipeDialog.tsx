@@ -58,7 +58,7 @@ const CreateRecipeDialog = () => {
           setOpen(false);
         });
       }
-      if (res.status == 400) {
+      if (res.status != 200) {
         toast({
           title: "An Error Occurred",
           description: "This Error more the likely occurred due to a bug",
@@ -98,12 +98,16 @@ const CreateRecipeDialog = () => {
               import a recipe <VersionChip release="beta" />
             </div>
             <Input
-              {...register("link")}
+              {...register("link", {
+                required: false,
+              })}
+              required={false}
               label="Recipe Url"
               placeholder="https://"
             />
           </div>
           <Button
+            type="submit"
             ariaLabel="continue with creating the recipe"
             className="items-center font-semibold"
             disabled={loading}
