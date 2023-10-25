@@ -134,7 +134,9 @@ export function DrizzleAdapter(): Adapter {
       const id = crypto.randomUUID();
 
       if (!data.image) {
-        data.image = `https:ui-avatars.com/api/?name=${data.name
+        const name = data.name ?? data.email.split("@")[0][0].toUpperCase();
+        console.log(name);
+        data.image = `https:ui-avatars.com/api/?name=${name
           ?.split(" ")
           .join("+")}"&size=256&background=random`;
       }
