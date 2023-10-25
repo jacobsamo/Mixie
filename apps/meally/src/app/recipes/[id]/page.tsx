@@ -1,26 +1,57 @@
 import RecipePageComponent from "@components/templates/RecipePage/RecipePageComponent";
 import React from "react";
 import { mockRecipe } from "@/src/common/lib/services/data";
-import { db } from "@/src/db";
-import { recipes } from "@/src/db/schemas";
+import { db } from "@db/index";
+import { info as infoSchema, recipes as recipeSchema } from "@db/schemas";
+import type { Recipe } from "@db/types";
 import { eq, or } from "drizzle-orm";
-import RecipeService from "@/src/common/lib/services/RecipeService";
-import type { Recipe } from "@/src/db/types";
 import { RecipeJsonLd } from "next-seo";
+import { Metadata } from "next";
+import { constructMetadata } from "@/src/common/lib/utils/utils";
+import { notFound, redirect } from "next/navigation";
 
-interface RecipePageProps {
-  params: {
-    id: string;
-  };
+const getRecipes = async () => {
+  const recipes = await db.query.recipes.findMany({
+    with: { info: true },
+    // where: eq(recipeSchema.isPublic, true),
+  });
+  console.log("Recipes: ", recipes);
+  return recipes;
+};
+
+export async function generateStaticParams() {
+  const recipes = await getRecipes();
+
+  return recipes.map((recipe) => ({
+    id: recipe.id,
+  }));
 }
 
-export default async function RecipePage({ params }: RecipePageProps) {
-  const recipe = (await db.query.recipes.findFirst({
-    where: or(eq(recipes.id, params.id), eq(recipes.uid, params.id)),
-    with: {
-      info: true,
-    },
-  })) as Recipe;
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata | undefined> {
+  const recipes = await getRecipes();
+  const recipe = recipes?.find((recipe) => {
+    recipe.id == params.id;
+  });
+  if (!recipe) {
+    return;
+  }
+
+  return constructMetadata({
+    title: recipe.title,
+    description: recipe.description || undefined,
+    image: recipe.info.imgUrl || undefined,
+    keywords:
+      recipe.info.keywords?.map((keyword) => keyword.value) || undefined,
+  });
+}
+
+export default async function RecipePage({ params }) {
+  const recipes = await getRecipes();
+  const recipe = recipes?.find((recipe) => recipe.id == params.id);
 
   if (recipe) {
     return (
@@ -33,7 +64,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
           ingredients={
             recipe?.ingredients?.map((ingredient) => {
               return `${ingredient.quantity} ${
-                ingredient.amount == "not_set" ? null : ingredient.amount
+                ingredient.amount.value == "not_set" ? null : ingredient.amount
               } ${ingredient.unit} ${ingredient.title}`;
             }) || []
           }
@@ -58,5 +89,5 @@ export default async function RecipePage({ params }: RecipePageProps) {
     );
   }
 
-  return <div>Recipe not found</div>;
+  return notFound();
 }

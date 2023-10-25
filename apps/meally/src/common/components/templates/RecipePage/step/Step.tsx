@@ -1,6 +1,8 @@
-import { Step, Ingredient } from "@/src/db/types";
+"use client";
+import { Step, Ingredient } from "@db/types";
 import React from "react";
 import IngredientChips from "./IngredientChips";
+import { CheckCircleIcon, Circle } from "lucide-react";
 
 interface StepProps {
   index: number;
@@ -9,12 +11,39 @@ interface StepProps {
 }
 
 const Step = ({ index, step, ingredients }: StepProps) => {
+  const [checked, setChecked] = React.useState(false);
+
   return (
-    <section className="bg-whtie relative flex w-full flex-grow flex-col items-start gap-1 rounded-2xl p-4 shadow dark:bg-grey ">
-      <h2 className="font-Roboto text-step0 font-medium">Step {index + 1}</h2>
-      <p>{step.step_body}</p>
-      <IngredientChips step={step} ingredients={ingredients} />
-    </section>
+    <li className="">
+      <button
+        className={`flex w-full  flex-grow flex-col gap-1 rounded-2xl bg-white p-4 text-left shadow dark:bg-grey ${
+          checked ? "opacity-60" : ""
+        } `}
+        id={`step-${index + 1}`}
+        aria-label={`Check off Step, ${index + 1}`}
+        onClick={() => setChecked(!checked)}
+        role="checkbox"
+        data-checked={checked}
+        aria-checked={checked}
+        type="button"
+      >
+        <span className="flex items-center space-x-1">
+          {checked ? (
+            <CheckCircleIcon className="shrink-0 text-yellow" />
+          ) : (
+            <Circle className="shrink-0" />
+          )}
+          <h2
+            id={`step-${index + 1}`}
+            className="font-Roboto text-step0 font-medium"
+          >
+            Step {index + 1}
+          </h2>
+        </span>
+        <p>{step.step_body}</p>
+        <IngredientChips step={step} ingredients={ingredients} />
+      </button>
+    </li>
   );
 };
 

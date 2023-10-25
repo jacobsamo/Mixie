@@ -1,18 +1,18 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import type { Info, Recipe } from "@/src/db/types";
+import type { Info, Recipe } from "@db/types";
 import { HeartIcon } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "../ui/use-toast";
-import { cn } from "@lib/utils";
+import { cn } from "@/src/common/lib/utils/utils";
 
-function addBookMark(recipe: Info) {
+function addBookMark(recipe: Partial<Info>) {
   throw Error("Function not implemented.");
 }
 
 interface CardProps {
-  recipe: Info;
+  recipe: Partial<Info>;
 }
 
 interface BaseCardProps extends CardProps {
@@ -60,7 +60,7 @@ export const BaseCard = ({
           <h3 className={cn("w-fit whitespace-nowrap", classNames?.cookTime)}>
             {recipe.total}
           </h3>
-          <button
+          {/* <button
             onClick={() => {
               addBookMark(recipe);
               toast({
@@ -68,29 +68,32 @@ export const BaseCard = ({
               });
             }}
             className={classNames?.bookmarkButton}
+            aria-label="Bookmark Recipe"
           >
             <HeartIcon
               className={cn("h-8 w-8 cursor-pointer", classNames?.bookmarkIcon)}
             />
-          </button>
+          </button> */}
         </div>
       ) : (
-        <button
-          onClick={() => {
-            addBookMark(recipe);
-            toast({
-              description: "Recipe has been bookmarked",
-            });
-          }}
-          className={cn(
-            "absolute bottom-2 right-2",
-            classNames?.bookmarkButton
-          )}
-        >
-          <HeartIcon
-            className={cn("h-8 w-8 cursor-pointer", classNames?.bookmarkIcon)}
-          />
-        </button>
+        <></>
+        // <button
+        //   onClick={() => {
+        //     addBookMark(recipe);
+        //     toast({
+        //       description: "Recipe has been bookmarked",
+        //     });
+        //   }}
+        //   className={cn(
+        //     "absolute bottom-2 right-2",
+        //     classNames?.bookmarkButton
+        //   )}
+        //   aria-label="Bookmark Recipe"
+        // >
+        //   <HeartIcon
+        //     className={cn("h-8 w-8 cursor-pointer", classNames?.bookmarkIcon)}
+        //   />
+        // </button>
       )}
 
       <Image
@@ -192,7 +195,7 @@ const CardRectangle = ({ recipe }: CardProps) => {
       recipe={recipe}
       hasCookTime={false}
       classNames={{
-        container: "h-64 w-[43.75rem] resize",
+        container: "h-64 md:w-[43.75rem] resize",
         bookmarkContainer: "absolute right-2 bottom-2",
         image: "h-64 w-[43.75rem] resize",
         title: "text-step0",

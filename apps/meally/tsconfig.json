@@ -6,7 +6,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@db/*": ["./src/db/*"],
+      "@db/*": ["./src/server/db/*"],
+      "@server/*": ["./src/server/*"],
       "@lib/*": ["./src/common/lib/*"],
       "@components/*": ["./src/common/components/*"],
       "@styles/*": ["./src/common/styles/*"]

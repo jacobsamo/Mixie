@@ -1,32 +1,26 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useForm, FormProvider, Controller } from "react-hook-form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@components/ui/select";
+import { NewRecipe, Recipe } from "@db/types";
 import { Input } from "@components/ui/input";
-import { Ingredient, NewRecipe, Recipe } from "@/src/db/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import React, { useState } from "react";
+import { Controller, FormProvider, useForm } from "react-hook-form";
+import * as z from "zod";
 import { Textarea } from "../../ui/textarea";
 
+import { recipeFormSchema } from "@db/zodSchemas";
 import {
   dietaryRequirements,
   meal_times,
   sweet_savoury,
 } from "@lib/services/data";
-import { IngredientContainer } from "./IngredientContainer";
-import { StepContainer } from "./StepContainer";
-import { recipeFormSchema } from "@/src/db/zodSchemas";
+import { SelectComponent } from "../../ui/SelectComponent";
 import TagInput from "../../ui/taginput";
-import ImageUpload from "./ImageUpload";
-import Overlay from "./Overlay";
-import { onSubmit } from "./form";
 import RecipePageComponent from "../RecipePage/RecipePageComponent";
+import ImageUpload from "./ImageUpload";
+import { IngredientContainer } from "./IngredientContainer";
+import Overlay from "./Overlay";
+import { StepContainer } from "./StepContainer";
+import { onSubmit } from "./form";
 
 interface RecipeFormProps {
   recipe: any | Recipe | NewRecipe; //TODO: fix this type to represent the correct type of recipe (not a huge deal but would be useful)
@@ -93,6 +87,11 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
             />
             <Textarea id="description" label="Description" control={control} />
             <Input
+              {...register("source")}
+              label="Source"
+              tooltip="Where you got the recipe from if you got it from another website"
+            />
+            <Input
               {...register("info.prep", {
                 pattern: {
                   value: /^(\d{1,2}[hms]\s?)+$/i,
@@ -134,22 +133,14 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
                   >
                     Dietary Requirements
                   </label>
-                  <Select
-                    name="dietary"
-                    defaultValue={field.value || undefined}
-                    onValueChange={field.onChange}
-                  >
-                    <SelectTrigger className="w-2/3 text-step--2">
-                      <SelectValue placeholder="Dietary Requirements" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {dietaryRequirements.map((item) => (
-                        <SelectItem key={item.value} value={item.value}>
-                          {item.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <SelectComponent
+                    options={dietaryRequirements}
+                    createAble
+                    isMulti
+                    onChange={field.onChange}
+                    value={field.value || undefined}
+                    placeholder="Dietary Requirements"
+                  />
                 </>
               )}
             />
@@ -173,22 +164,13 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
                   >
                     Sweet or Savoury
                   </label>
-                  <Select
-                    name="sweet_savoury"
-                    defaultValue={field.value || undefined}
-                    onValueChange={field.onChange}
-                  >
-                    <SelectTrigger className="w-2/3 text-step--2">
-                      <SelectValue placeholder="Sweet or Savoury" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {sweet_savoury.map((item) => (
-                        <SelectItem key={item.value} value={item.value}>
-                          {item.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <SelectComponent
+                    options={sweet_savoury}
+                    clearable={false}
+                    onChange={field.onChange}
+                    value={field.value || undefined}
+                    placeholder="Sweet or Savoury"
+                  />
                 </>
               )}
             />
@@ -206,22 +188,14 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
                   >
                     Meal Time
                   </label>
-                  <Select
-                    name="mealTime"
-                    defaultValue={field.value || undefined}
-                    onValueChange={field.onChange}
-                  >
-                    <SelectTrigger className="w-2/3 text-step--2">
-                      <SelectValue placeholder="Meal time" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {meal_times.map((item) => (
-                        <SelectItem key={item.value} value={item.value}>
-                          {item.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <SelectComponent
+                    options={meal_times}
+                    createAble
+                    isMulti
+                    onChange={field.onChange}
+                    value={field.value || undefined}
+                    placeholder="Meal time"
+                  />
                 </>
               )}
             />

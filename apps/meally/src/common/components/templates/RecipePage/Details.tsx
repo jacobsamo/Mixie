@@ -2,11 +2,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import StepContainer from "./step/StepContainer";
 import AddBatch from "./ingredient/AddBatch";
-import type { Ingredient as IngredientType, Step } from "@/src/db/types";
+import type { Ingredient as IngredientType, Step } from "@db/types";
 import Ingredient from "./ingredient/Ingredient";
 import { cva, type VariantProps } from "class-variance-authority";
 import { set } from "zod";
-import { calculateAllIngredients } from "@/src/common/lib/utils";
+import { calculateAllIngredients } from "@/src/common/lib/utils/utils";
 
 interface DetailsProps {
   ingredients: IngredientType[];
@@ -37,6 +37,7 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 768px)");
+
     const handleMediaQueryChange = (mediaQuery: any) => {
       if (mediaQuery.matches) {
         setStepsOpen(false);
@@ -46,7 +47,10 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
         setIngredientOpen(true);
       }
     };
+
+    handleMediaQueryChange(mediaQuery); // call the function on initial load
     mediaQuery.addEventListener("change", handleMediaQueryChange);
+
     return () => {
       mediaQuery.removeEventListener("change", handleMediaQueryChange);
     };
@@ -54,7 +58,7 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
 
   return (
     <>
-      <div className="flex flex-row items-center gap-x-[50%] px-2 pb-2 md:w-[800px]">
+      <div className="flex w-full flex-row items-center gap-x-[50%] px-2 pb-2 md:w-[800px]">
         <button
           onClick={() => {
             if (window.innerWidth <= 768) {
@@ -96,17 +100,21 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
 
       <section className="flex w-full flex-row md:w-[800px] md:gap-4 lg:gap-8">
         {ingredientOpen && (
-          <div className="flex h-fit w-full flex-col items-start rounded-lg bg-white p-2 shadow dark:bg-grey md:w-60 ">
+          <div className="flex h-fit w-full min-w-[250px] flex-col items-start rounded-lg bg-white p-2 shadow dark:bg-grey md:w-60 ">
             <AddBatch add={add} setAdd={setAdd} />
-            {calculatedIngredients.map((ingredient, index) => {
-              if (ingredient.isHeading)
-                return (
-                  <h3 key={index} className="text-2xl font-bold">
-                    {ingredient.title}
-                  </h3>
-                );
-              return <Ingredient key={index} ingredient={ingredient} />;
-            })}
+            <ul>
+              {calculatedIngredients.map((ingredient, index) => {
+                if (ingredient.isHeading)
+                  return (
+                    <li>
+                      <h3 key={index} className="text-2xl font-bold">
+                        {ingredient.title}
+                      </h3>
+                    </li>
+                  );
+                return <Ingredient key={index} ingredient={ingredient} />;
+              })}
+            </ul>
           </div>
         )}
         {stepsOpen && (

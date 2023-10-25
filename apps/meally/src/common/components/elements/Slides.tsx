@@ -1,31 +1,33 @@
 "use client";
 import React from "react";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-import "@splidejs/react-splide/css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
 
-interface SwiperTemplateProps {
-  children: React.ReactNode;
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+
+interface SlidesTemplateProps {
+  render: () => JSX.Element;
 }
 
 /**
- * Simple use of the swiper component
- * @param children - JSX of the slides to be displayed in the swiper with the SwiperSlide component.
+ * Simple use of the Slides component
+ * @param children - JSX of the slides to be displayed in the Slides with the SlidesSlide component.
  */
-const Slides = ({ children }: SwiperTemplateProps) => {
+const Slides = ({ render }: SlidesTemplateProps) => {
   return (
-    <Splide
-      options={{
-        type: "loop",
-        gap: "10rem",
-        autoplay: true,
-        pauseOnHover: false,
-        resetProgress: false,
-        // focus: 'center',
-        // perPage: 3,
-      }}
+    <Swiper
+      spaceBetween={50}
+      slidesPerView={3}
+      onSlideChange={() => console.log("slide change")}
+      onSwiper={(swiper) => console.log(swiper)}
+      autoplay
+      navigation={true}
+      modules={[Navigation]}
     >
-      {children}
-    </Splide>
+      {render()}
+    </Swiper>
   );
 };
 

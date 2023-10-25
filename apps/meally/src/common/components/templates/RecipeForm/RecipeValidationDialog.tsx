@@ -16,7 +16,7 @@ import { onSubmit } from "./form";
 import { ArrowLeftIcon } from "lucide-react";
 import { Textarea } from "@components/ui/textarea";
 import TagInput from "@components/ui/taginput";
-import { recipeFormSchema } from "@/src/db/zodSchemas";
+import { recipeFormSchema } from "@db/zodSchemas";
 import { Switch, SwitchInput } from "../../ui/switch";
 
 interface CreateRecipeDialogProps {
@@ -83,7 +83,10 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
             ariaLabel="save"
             type="button"
             className="m-2 w-52"
-            onClick={handleSubmit(onSubmit)}
+            onClick={() => {
+              handleSubmit(onSubmit);
+              setOpen(false);
+            }}
           >
             Save
           </Button>

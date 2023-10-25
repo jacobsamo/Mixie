@@ -1,17 +1,22 @@
-import RecipeService from "@/src/common/lib/services/RecipeService";
-import { db } from "@/src/db";
-import { recipes } from "@/src/db/schemas";
-import { sql } from "drizzle-orm";
-import { NextResponse } from "next/server";
+import { isApp } from "@/src/common/lib/services/apiMiddleware";
+import { db } from "@db/index";
+import { recipes } from "@db/schemas";
+import { eq, or } from "drizzle-orm";
+import { NextResponse, type NextRequest } from "next/server";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const id = searchParams.get("id");
+export async function GET(req: NextRequest, params: { id: string }) {
+  const app = await isApp(req);
 
-  // const recipe = await db
-  //   .select()
-  //   .from(recipes)
-  //   .where(sql`${recipes.id} = ${id} or ${recipes.uid} = ${id}`);
+  if (!app) {
+    return NextResponse.json("Unauthorized", { status: 403 });
+  }
 
-  // return NextResponse.json({ recipe });
+  const recipe = await db.query.recipes.findFirst({
+    where: or(eq(recipes.id, params.id), eq(recipes.uid, params.id)),
+    with: {
+      info: true,
+    },
+  });
+
+  return NextResponse.json(recipe);
 }

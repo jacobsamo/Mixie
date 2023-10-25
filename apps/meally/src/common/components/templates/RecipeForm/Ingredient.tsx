@@ -1,18 +1,13 @@
 import { Trash2Icon } from "lucide-react";
 import { units } from "@/src/common/lib/services/data";
 import { Controller, useFormContext } from "react-hook-form";
-import { Ingredient as IngredientType } from "@/src/db/types";
+import { Ingredient as IngredientType } from "@db/types";
 import { Input } from "../../ui/input";
-import { recipeFormSchema } from "@/src/db/zodSchemas";
+import { recipeFormSchema } from "@db/zodSchemas";
 import * as z from "zod";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@components/ui/select";
 import { Button } from "../../ui/button";
+import { SelectComponent } from "../../ui/SelectComponent";
+import { useEffect } from "react";
 
 interface IngredientProps {
   index: number;
@@ -23,12 +18,15 @@ interface IngredientProps {
 const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
   const { register, getValues, watch, control } =
     useFormContext<z.infer<typeof recipeFormSchema>>();
-  const activeUnit = getValues(`ingredients.${index}.unit`);
+  const activeUnit = watch(`ingredients.${index}.unit`);
 
   if (values.isHeading) {
     return (
-      <div className="flex flex-row flex-wrap items-center gap-1">
-        <Input {...register(`ingredients.${index}.title` as const)} />
+      <div className="mt-4 flex flex-row flex-wrap items-center gap-1">
+        <Input
+          {...register(`ingredients.${index}.title` as const)}
+          placeholder="Heading..."
+        />
         <Button
           ariaLabel="delete ingredient"
           onClick={() => handleDelete(index)}
@@ -54,23 +52,15 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
 
       <Controller
         control={control}
-        name={`ingredients.${index}.unit` as const}
+        name={`ingredients.${index}.unit`}
         render={({ field }) => (
-          <Select
-            defaultValue={field?.value || ""}
-            onValueChange={field.onChange}
-          >
-            <SelectTrigger className="h-10 w-24">
-              <SelectValue placeholder="Unit" />
-            </SelectTrigger>
-            <SelectContent>
-              {units.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <SelectComponent
+            clearable={false}
+            options={units}
+            onChange={field.onChange}
+            value={field?.value}
+            placeholder="Unit"
+          />
         )}
       />
 
@@ -87,28 +77,26 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
           },
         })}
       />
-      {["cup", "tbsp", "tsp"].includes(
-        watch(`ingredients.${index}.unit`) || ""
-      ) ? (
+      {["cup", "tbsp", "tsp"].includes(activeUnit.value) ? (
         <Controller
           control={control}
           name={`ingredients.${index}.amount`}
           render={({ field }) => (
-            <Select
-              defaultValue={field?.value || ""}
-              onValueChange={field.onChange}
-            >
-              <SelectTrigger className="h-10 w-fit min-w-[6rem] p-2">
-                <SelectValue placeholder="Unit" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1/2">1/2 {activeUnit}</SelectItem>
-                <SelectItem value="1/3">1/3 {activeUnit}</SelectItem>
-                <SelectItem value="2/3">2/3 {activeUnit}</SelectItem>
-                <SelectItem value="1/4">1/4 {activeUnit}</SelectItem>
-                <SelectItem value="3/4">3/4 {activeUnit}</SelectItem>
-              </SelectContent>
-            </Select>
+            <SelectComponent
+              clearable={false}
+              options={[
+                { value: "not_set", label: " " },
+                { value: "1/8", label: "1/8" },
+                { value: "1/2", label: "1/2" },
+                { value: "1/3", label: "1/3" },
+                { value: "2/3", label: "2/3" },
+                { value: "1/4", label: "1/4" },
+                { value: "3/4", label: "3/4" },
+              ]}
+              onChange={field.onChange}
+              value={field?.value}
+              placeholder="Cup Unit"
+            />
           )}
         />
       ) : (

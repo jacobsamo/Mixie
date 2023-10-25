@@ -1,10 +1,10 @@
 import { SearchCard } from "@/src/common/components/elements/Cards";
 import useUser from "@/src/common/hooks/useUser";
-import { db } from "@/src/db";
+import { db } from "@db/index";
 import { eq, or } from "drizzle-orm";
-import { authOptions } from "@/src/db/next-auth-adapter";
-import { recipes } from "@/src/db/schemas";
-import { Info, Recipe } from "@/src/db/types";
+import { authOptions } from "@db/next-auth-adapter";
+import { recipes } from "@db/schemas";
+import { Info, Recipe } from "@db/types";
 import { getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
 import React from "react";

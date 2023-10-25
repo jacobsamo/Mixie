@@ -1,32 +1,45 @@
 import RecipeForm from "@/src/common/components/templates/RecipeForm/RecipeForm";
-import RecipeService from "@/src/common/lib/services/RecipeService";
-import { db } from "@/src/db";
-import { recipes } from "@/src/db/schemas";
-import { Recipe } from "@/src/db/types";
+import { mockRecipe } from "@/src/common/lib/services/data";
+import { db } from "@db/index";
+import { authOptions } from "@db/next-auth-adapter";
+import { recipes } from "@db/schemas";
+import { Recipe } from "@db/types";
 import { eq, or } from "drizzle-orm";
-import React from "react";
+import { getServerSession } from "next-auth";
+import Link from "next/link";
 
 interface EditPageProps {
   params: {
     id: string;
   };
-  searchParams: {
-    id: string;
-  };
 }
 
-export default async function EditPage({ params, searchParams }) {
-  const recipe = (await db.query.recipes.findFirst({
-    where: or(eq(recipes.id, params.id), eq(recipes.uid, params.id)),
-    with: {
-      info: true,
-    },
-  })) as Recipe;
+export default async function EditPage({ params }: EditPageProps) {
+  // const user = await getServerSession(authOptions);
 
-  if (recipe) {
-    return <RecipeForm recipe={recipe} />;
-  }
+  // if (!user)
+  //   return (
+  //     <div className="flex flex-col items-center justify-center ">
+  //       Not logged in
+  //       <Link
+  //         href={"/api/auth/signin"}
+  //         className="rounded-md bg-yellow p-1 px-2 font-semibold text-black"
+  //       >
+  //         Login
+  //       </Link>
+  //     </div>
+  //   );
 
-  return <div>Recipe not found</div>;
-  // return <RecipeForm />
+  // const recipe = (await db.query.recipes.findFirst({
+  //   where: or(eq(recipes.id, params.id), eq(recipes.uid, params.id)),
+  //   with: {
+  //     info: true,
+  //   },
+  // })) as Recipe;
+
+  // // console.log(recipe);
+  // if (recipe) return <RecipeForm recipe={recipe} />;
+
+  // return <div>Recipe not found</div>;
+  return <RecipeForm recipe={mockRecipe} />;
 }

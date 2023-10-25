@@ -1,16 +1,18 @@
-import Navbar from "@components/modules/Navbar";
-import "@styles/globals.css";
 import { NextAuthProvider } from "@components/layouts/NextAuthProvider";
-import { ThemeProvider } from "../common/components/modules/theme-provider";
+import Navbar from "@components/modules/Navbar";
 import { Toaster } from "@components/ui/toaster";
+import "@styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
+import { ThemeProvider } from "../common/components/modules/theme-provider";
 
+
+import Footer from "../common/components/modules/Footer";
 
 const siteConfig = {
   name: "Meally",
   description:
     "Meally is a community-driven recipe platform where home cooks and food enthusiasts can collaborate on unique and delicious recipes",
-  url: "https://meally.com.au",
+  url: "https://www.meally.com.au",
   ogImage: "",
 };
 
@@ -67,7 +69,7 @@ export const metadata = {
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
-  manifest: `${siteConfig.url}/manifest.json`,
+  manifest: `/manifest.json`,
 };
 
 export default function RootLayout({
@@ -84,6 +86,7 @@ export default function RootLayout({
             {/* <Search /> */}
             {children}
             <Toaster />
+            <Footer />
           </NextAuthProvider>
         </ThemeProvider>
         <Analytics />

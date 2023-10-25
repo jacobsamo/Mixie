@@ -1,30 +1,21 @@
-import React from "react";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-import "@splidejs/react-splide/css";
-import recipeService from "@lib/services/RecipeService";
+import { env } from "@/env.mjs";
 import { CardRectangle } from "@components/elements/Cards";
-import Slides from "../common/components/elements/Slides";
-
 import { Info } from "@db/types";
-import { db } from "@/src/db";
-import { info } from "@/src/db/schemas";
-import { desc, asc } from "drizzle-orm";
-
-import { SelectWithSearch } from "../common/components/ui/combobox";
-import SearchTrigger from "../common/components/modules/SearchTrigger";
 import { SearchIcon } from "lucide-react";
-import { Button } from "../common/components/ui/button";
+import Carousel from "../common/components/elements/Carousel";
+import SearchTrigger from "../common/components/modules/SearchTrigger";
 
 export default async function Page() {
-  // const latestRecipes = await recipeService.getAllRecipeCards();
-  const latestRecipes = (await db.query.info.findMany({
-    limit: 9,
-    offset: 0,
-    orderBy: [asc(info.lastUpdated)],
-  })) as Info[];
+  const req = await fetch(`${env.NEXT_PUBLIC_APP_URL}/api/recipes`, {
+    next: {
+      revalidate: 60 * 60 * 24,
+    },
+  });
+
+  const latestRecipes = (await req.json()) as Info[];
 
   return (
-    <>
+    <main className="h-full w-full">
       <section className="flex h-52 flex-col items-center justify-center">
         {/* <Image
             src="https://images.unsplash.com/photo-1605210055810-bdd1c4d1f343?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
@@ -43,12 +34,16 @@ export default async function Page() {
         </SearchTrigger>
       </section>
       <section className="pt-9 ">
-        <Slides>
-          {latestRecipes.map((recipe) => {
-            return <CardRectangle key={recipe.id} recipe={recipe} />;
-          })}
-        </Slides>
+        <Carousel
+          autoplay={true}
+          averageWidth={400}
+          count={latestRecipes.length}
+        >
+          {latestRecipes.map((recipe) => (
+            <CardRectangle key={recipe.id} recipe={recipe} />
+          ))}
+        </Carousel>
       </section>
-    </>
+    </main>
   );
 }
