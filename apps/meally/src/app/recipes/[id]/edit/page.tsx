@@ -15,31 +15,31 @@ interface EditPageProps {
 }
 
 export default async function EditPage({ params }: EditPageProps) {
-  // const user = await getServerSession(authOptions);
+  const user = await getServerSession(authOptions);
 
-  // if (!user)
-  //   return (
-  //     <div className="flex flex-col items-center justify-center ">
-  //       Not logged in
-  //       <Link
-  //         href={"/api/auth/signin"}
-  //         className="rounded-md bg-yellow p-1 px-2 font-semibold text-black"
-  //       >
-  //         Login
-  //       </Link>
-  //     </div>
-  //   );
+  if (!user)
+    return (
+      <div className="flex flex-col items-center justify-center ">
+        Not logged in
+        <Link
+          href={"/api/auth/signin"}
+          className="rounded-md bg-yellow p-1 px-2 font-semibold text-black"
+        >
+          Login
+        </Link>
+      </div>
+    );
 
-  // const recipe = (await db.query.recipes.findFirst({
-  //   where: or(eq(recipes.id, params.id), eq(recipes.uid, params.id)),
-  //   with: {
-  //     info: true,
-  //   },
-  // })) as Recipe;
+  const recipe = (await db.query.recipes.findFirst({
+    where: or(eq(recipes.id, params.id), eq(recipes.uid, params.id)),
+    with: {
+      info: true,
+    },
+  })) as Recipe;
 
-  // // console.log(recipe);
-  // if (recipe) return <RecipeForm recipe={recipe} />;
+  // console.log(recipe);
+  if (recipe) return <RecipeForm recipe={recipe} />;
 
-  // return <div>Recipe not found</div>;
-  return <RecipeForm recipe={mockRecipe} />;
+  return <div>Recipe not found</div>;
+  // return <RecipeForm recipe={mockRecipe} />;
 }
