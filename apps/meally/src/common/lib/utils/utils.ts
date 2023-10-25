@@ -240,7 +240,7 @@ export function constructMetadata({
   title = "Meally",
   description = "Meally is a community-driven recipe platform where home cooks and food enthusiasts can collaborate on unique and delicious recipes",
   image = "/favicon.ico",
-  domain = "meally.com.au",
+  domain = "https://www.meally.com.au",
   noIndex = false,
 }: {
   title?: string;

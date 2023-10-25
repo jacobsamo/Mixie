@@ -72,7 +72,7 @@ const RecipePrintingView = ({ recipe }: RecipePrintingViewProps) => {
           </div>
         )}
         <p className="text-blue underline underline-offset-2 opacity-50">
-          https://meally.com.au/recipes/{recipe.id}
+          https://www.meally.com.au/recipes/{recipe.id}
         </p>
       </section>
 

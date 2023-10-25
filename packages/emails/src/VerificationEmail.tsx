@@ -32,7 +32,7 @@ export const VerificationEmail = ({
       <Body className="bg-white font-roboto">
         <Container className="mx-auto mt-5 w-96 rounded-md bg-white p-4 text-center shadow ">
           <Img
-            src={`https://meally.com.au/favicon.ico`}
+            src={`https://www.meally.com.au/favicon.ico`}
             width="128"
             height="128"
             alt="Meally logo"

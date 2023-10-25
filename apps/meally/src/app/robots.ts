@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/private/',
     },
-    sitemap: 'https://meally.com.au/sitemap.xml',
+    sitemap: 'https://www.meally.com.au/sitemap.xml',
   }
 }
