@@ -4,15 +4,20 @@ import { Info } from "@db/types";
 import { SearchIcon } from "lucide-react";
 import Carousel from "../common/components/elements/Carousel";
 import SearchTrigger from "../common/components/modules/SearchTrigger";
+import { db } from "../server/db";
+import { eq } from "drizzle-orm";
+import { info } from "../server/db/schemas";
+import { cache } from "react";
+
+const getRecipes = cache(async () => {
+  const recipes = await db.query.info.findMany({
+    where: eq(info.isPublic, true),
+  });
+  return recipes;
+});
 
 export default async function Page() {
-  const req = await fetch(`${env.NEXT_PUBLIC_APP_URL}/api/recipes`, {
-    next: {
-      revalidate: 60 * 60 * 24,
-    },
-  });
-
-  const latestRecipes = (await req.json()) as Info[];
+  const latestRecipes = await getRecipes();
 
   return (
     <main className="h-full w-full">

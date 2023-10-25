@@ -4,7 +4,7 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "env": ["NEXT_PUBLIC_*", "NODE_ENV", "JWT_SECRET_KEY"],
+      "env": ["NEXT_PUBLIC_*", "NODE_ENV", "VERCEL_URL"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "start": {
