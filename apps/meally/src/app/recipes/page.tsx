@@ -10,7 +10,6 @@ import { cache } from "react";
 const getRecipes = cache(async () => {
   const recipes = await db.query.info.findMany({
     where: eq(info.isPublic, true),
-    // where: eq(recipeSchema.isPublic, true),
   });
   return recipes;
 });
