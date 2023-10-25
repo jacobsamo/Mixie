@@ -6,7 +6,7 @@ import Carousel from "../common/components/elements/Carousel";
 import SearchTrigger from "../common/components/modules/SearchTrigger";
 
 export default async function Page() {
-  const req = await fetch(`${env.NEXT_PUBLIC_APP_URL}/api/recipes`, {
+  const req = await fetch(`${process.env.VERCEL_URL}/api/recipes`, {
     next: {
       revalidate: 60 * 60 * 24,
     },
