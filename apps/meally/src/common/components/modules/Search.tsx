@@ -2,8 +2,9 @@
 import Fuse from "fuse.js";
 import React, { useEffect, useState } from "react";
 // import { useFetchAllRecipe } from '../../lib/services/RecipeService';
-import { Info } from "@db/types";
+import { env } from "@/env.mjs";
 import { Dialog, DialogContent } from "@components/ui/dialog";
+import { Info } from "@db/types";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -47,6 +48,9 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
   React.useEffect(() => {
     const fetchRecipes = async () => {
       const req = await fetch(`api/recipes`, {
+        headers: {
+          authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+        },
         next: {
           revalidate: 60 * 60 * 24,
         },
