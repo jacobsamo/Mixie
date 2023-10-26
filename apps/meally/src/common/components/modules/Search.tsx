@@ -1,5 +1,5 @@
 "use client";
-import Fuse from "fuse.js";
+import Fuse, { IFuseOptions } from "fuse.js";
 import React, { useEffect, useState } from "react";
 // import { useFetchAllRecipe } from '../../lib/services/RecipeService';
 import { env } from "@/env.mjs";
@@ -35,7 +35,7 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
   function searchRecipes(query: string) {
     if (recipes.length === 0) return;
 
-    const options: Fuse.IFuseOptions<Info> = {
+    const options: IFuseOptions<Info> = {
       includeScore: true,
       keys: ["title", "keywords"],
     };
@@ -47,7 +47,7 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
 
   React.useEffect(() => {
     const fetchRecipes = async () => {
-      const req = await fetch(`api/recipes`, {
+      const req = await fetch(`/api/recipes`, {
         headers: {
           authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
         },

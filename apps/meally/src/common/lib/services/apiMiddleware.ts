@@ -6,7 +6,6 @@ import type { NextRequest } from "next/server";
 export const isApp = async (req: NextRequest) => {
   try {
     const authorization = req.headers.get("authorization");
-    console.log(authorization);
 
     if (!authorization) {
       return false;
