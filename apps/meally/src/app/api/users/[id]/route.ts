@@ -24,38 +24,3 @@ export async function GET(
   return NextResponse.json(user);
 }
 
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  try {
-    const app = await isApp(req);
-
-    if (!app) {
-      return NextResponse.json("Unauthorized", { status: 403 });
-    }
-
-    const json = await req.body;
-
-    const newUser = userSchema.parse(json);
-
-    
-    await db.update(users).set(newUser).where(eq(users.id, params.id));
-    
-    console.log("newUser", newUser)
-    return NextResponse.json(
-      {
-        message: "User updated successfully",
-      },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.error(error);
-
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(JSON.stringify(error.issues), { status: 422 });
-    }
-
-    return NextResponse.json(null, { status: 500 });
-  }
-}

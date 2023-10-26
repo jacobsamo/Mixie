@@ -2,6 +2,7 @@
 import { env } from "@/env.mjs";
 import { Button } from "@/src/common/components/ui/button";
 import { Input } from "@/src/common/components/ui/input";
+import { toast } from "@/src/common/components/ui/use-toast";
 import { User } from "@/src/server/db/types";
 import { userSchema } from "@/src/server/db/zodSchemas";
 import ImageUploadDialog from "@components/elements/ImageUploadDialog";
@@ -63,22 +64,39 @@ export default function ProfilePage({ params }: ProfilePageProps) {
     setUploadLoading(false);
   };
 
+  const onSubmit = async (data: User) => {
+    if (!data) return;
+
+    fetch(`/api/users/${params.profile}/updateUser`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${process.env.NEXT_PUBLIC_APP_TOKEN}`,
+      },
+      body: JSON.stringify(data),
+    }).then((res) => {
+      if (res.status === 200) {
+        toast({
+          title: "Success!",
+          description: "Your profile has been updated",
+        });
+      } else {
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: "There was an error while updating your profile",
+          variant: "destructive",
+        });
+      }
+    });
+  };
+
   return (
     <>
       {loading && <Loader2 className="m-auto h-8 w-8 animate-spin" />}
       {!loading && (
         <form
           className="mx-auto mt-2 flex w-full flex-col items-start  justify-center  gap-4 rounded-md bg-white p-2 shadow-main  dark:bg-grey md:w-2/4 md:p-4"
-          onSubmit={handleSubmit(async (data: User) => {
-            console.log("User data", data);
-            await fetch(`/api/users/${params.profile}`, {
-              method: "PUT",
-              headers: {
-                authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
-              },
-              body: JSON.stringify(data),
-            });
-          })}
+          onSubmit={handleSubmit(onSubmit)}
         >
           <div className="flex flex-row items-center gap-2">
             <ImageUploadDialog
@@ -147,6 +165,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
             variant="primary"
             ariaLabel="Save profile changes"
             className="m-auto mt-12"
+            onClick={handleSubmit(onSubmit)}
           >
             Save
           </Button>
