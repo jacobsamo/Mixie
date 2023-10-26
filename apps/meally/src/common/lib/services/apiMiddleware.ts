@@ -12,7 +12,7 @@ export const isApp = async (req: NextRequest) => {
       return false;
     }
 
-    if (authorization == `Bearer ${env.NEXT_API_APP_TOKEN}`) {
+    if (authorization == `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`) {
       return true;
     }
   } catch (error) {

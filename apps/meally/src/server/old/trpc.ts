@@ -22,7 +22,7 @@ export const isAuthenticated = middleware(async (opts) => {
 export const isApp = middleware(async (opts) => {
   const { headers } = opts.ctx;
   const hash = crypto.createHash("sha256");
-  const token = hash.update(env.NEXT_API_APP_TOKEN).digest("hex");
+  const token = hash.update(env.NEXT_PUBLIC_API_APP_TOKEN).digest("hex");
 
   if (headers?.authorization == token) {
     return opts.next();

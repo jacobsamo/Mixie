@@ -35,16 +35,16 @@ const MultiValueRemove = (props: MultiValueRemoveProps) => {
 };
 
 const controlStyles = {
-  base: "border border-white rounded-lg bg-grey hover:cursor-pointer hover:bg-secondary",
+  base: "border border-white rounded-lg dark:bg-grey bg-white shadow hover:cursor-pointer hover:bg-secondary",
   focus: "border-white ring-white/70 ring-primary-500",
   nonFocus: "border-white",
 };
-const placeholderStyles = "text-white text-sm ml-1";
+const placeholderStyles = " text-sm ml-1";
 const selectInputStyles = "text-foreground text-sm ml-1";
 const valueContainerStyles = "text-foreground text-sm";
 const singleValueStyles = "ml-1";
 const multiValueStyles =
-  "ml-1 bg-grey border border-white rounded items-center py-0.5 pl-2 pr-1 gap-1.5";
+  "ml-1 dark:bg-grey bg-white shadow border border-grey rounded items-center py-0.5 pl-2 pr-1 gap-1.5";
 const multiValueLabelStyles = "leading-6 py-0.5";
 const multiValueRemoveStyles =
   "border border-grey bg-white hover:bg-red hover:text-white hover:border-red rounded-md dark:bg-grey bg-white";

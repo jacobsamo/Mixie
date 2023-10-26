@@ -75,8 +75,8 @@ const LoginPage = () => {
             >
               <g strokeWidth="0" id="SVGRepo_bgCarrier"></g>
               <g
-                stroke-linejoin="round"
-                stroke-linecap="round"
+                strokeLinejoin="round"
+                strokeLinecap="round"
                 id="SVGRepo_tracerCarrier"
               ></g>
               <g id="SVGRepo_iconCarrier">
@@ -138,8 +138,8 @@ const LoginPage = () => {
             >
               <g strokeWidth="0" id="SVGRepo_bgCarrier"></g>
               <g
-                stroke-linejoin="round"
-                stroke-linecap="round"
+                strokeLinejoin="round"
+                strokeLinecap="round"
                 id="SVGRepo_tracerCarrier"
               ></g>
               <g id="SVGRepo_iconCarrier">
