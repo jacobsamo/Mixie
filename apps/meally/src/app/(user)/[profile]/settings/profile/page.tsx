@@ -4,15 +4,13 @@ import { Button } from "@/src/common/components/ui/button";
 import { Input } from "@/src/common/components/ui/input";
 import { toast } from "@/src/common/components/ui/use-toast";
 import { User } from "@/src/server/db/types";
-import { userSchema } from "@/src/server/db/zodSchemas";
 import ImageUploadDialog from "@components/elements/ImageUploadDialog";
 import { DialogTrigger } from "@components/ui/dialog";
 import { Textarea } from "@components/ui/textarea";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { UploadFileResponse } from "uploadthing/client";
 
 interface ProfilePageProps {
@@ -22,18 +20,18 @@ interface ProfilePageProps {
 }
 
 export default function ProfilePage({ params }: ProfilePageProps) {
-  const [user, setUser] = useState<User | undefined>(undefined);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const methods = useForm<User>({
-    resolver: zodResolver(userSchema),
+    // resolver: zodResolver(userSchema),
     defaultValues: async () => {
       const res = await fetch(`/api/users/${params.profile}`, {
         headers: {
           authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
         },
       });
-      const user = await res.json();
+      const user = (await res.json()) as User;
+
       return user;
     },
   });
@@ -46,30 +44,34 @@ export default function ProfilePage({ params }: ProfilePageProps) {
     setValue("image", image.url);
   };
 
-  const onSubmit: SubmitHandler<User> = async (data) => {
-    if (!data) return;
-
-    fetch(`/api/users/${params.profile}/updateUser`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${process.env.NEXT_PUBLIC_APP_TOKEN}`,
-      },
-      body: JSON.stringify(data),
-    }).then((res) => {
-      if (res.status === 200) {
-        toast({
-          title: "Success!",
-          description: "Your profile has been updated",
-        });
-      } else {
-        toast({
-          title: "Uh oh! Something went wrong.",
-          description: "There was an error while updating your profile",
-          variant: "destructive",
-        });
-      }
-    });
+  const onSubmit: SubmitHandler<User> = (data) => {
+    try {
+      setLoading(true);
+      fetch(`/api/users/${params.profile}/updateUser`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+        },
+        body: JSON.stringify(data),
+      }).then((res) => {
+        if (res.status === 200) {
+          toast({
+            title: "Success!",
+            description: "Your profile has been updated",
+          });
+        } else {
+          toast({
+            title: "Uh oh! Something went wrong.",
+            description: "There was an error while updating your profile",
+            variant: "destructive",
+          });
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
   };
 
   return (
@@ -145,41 +147,11 @@ export default function ProfilePage({ params }: ProfilePageProps) {
           variant="primary"
           ariaLabel="Save profile changes"
           className="m-auto mt-12"
-          onClick={handleSubmit(onSubmit)}
+          disabled={loading}
         >
           Save
+          {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
         </Button>
-        {/* <div className="flex flex-col gap-2">
-          <h1 className="text-step--1">Profile Social</h1>
-          <Input
-            id="twitter"
-            name="Twitter"
-            label="Twitter"
-            control={control}
-            defaultValue={user.socials?.Twitter}
-          />
-          <Input
-            id="instagram"
-            name="Instagram"
-            label="Instagram"
-            control={control}
-            defaultValue={user.socials?.Instagram}
-          />
-          <Input
-            id="facebook"
-            name="Facebook"
-            label="Facebook"
-            control={control}
-            defaultValue={user.socials?.Facebook}
-          />
-          <Input
-            id="website"
-            name="Website"
-            label="Website"
-            control={control}
-            defaultValue={user.socials?.Website}
-          />
-        </div> */}
       </form>
     </>
   );

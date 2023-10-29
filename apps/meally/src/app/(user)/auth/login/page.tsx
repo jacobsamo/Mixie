@@ -4,7 +4,7 @@ import { Input } from "@/src/common/components/ui/input";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 interface EmailFormProps {
   email: string;
@@ -14,7 +14,7 @@ const LoginPage = () => {
   const { register, handleSubmit } = useForm<EmailFormProps>();
   const router = useRouter();
 
-  const onSubmit = async (data: EmailFormProps) => {
+  const onSubmit: SubmitHandler<EmailFormProps> = async (data) => {
     signIn("email", { email: data.email, callbackUrl: "/", redirect: false });
     router.push(
       "/auth/verify?" + new URLSearchParams({ email: data.email }).toString()

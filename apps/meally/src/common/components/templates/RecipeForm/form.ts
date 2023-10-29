@@ -1,10 +1,13 @@
 import { calculateTotalTime } from "@/src/common/lib/utils/utils";
 import type { Ingredient } from "@db/types";
 import { recipeFormSchema } from "@db/zodSchemas";
+import { SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { toast } from "../../ui/use-toast";
 
-export const onSubmit = async (recipe: z.infer<typeof recipeFormSchema>) => {
+export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
+  recipe
+) => {
   if (!recipe) return;
 
   const totalTime =

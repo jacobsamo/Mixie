@@ -11,13 +11,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, PlusCircleIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import VersionChip from "../modules/VersionChip";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useToast } from "../ui/use-toast";
-import { env } from "@/env.mjs";
 
 const createRecipeSchema = z.object({
   title: z.string().optional(),
@@ -39,7 +38,7 @@ const CreateRecipeDialog = () => {
     formState: { errors },
   } = methods;
 
-  function onSubmit(values: z.infer<typeof createRecipeSchema>) {
+  const onSubmit: SubmitHandler<z.infer<typeof createRecipeSchema>> = (values) => {
     setLoading(true);
     fetch("/api/recipes/create", {
       method: "POST",

@@ -1,12 +1,10 @@
 "use client";
+import { env } from "@/env.mjs";
 import OtpInput from "@/src/common/components/elements/OtpInput";
 import { Button } from "@/src/common/components/ui/button";
-import React from "react";
-import { useForm, Controller } from "react-hook-form";
 import Image from "next/image";
-import { getCsrfToken, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { env } from "@/env.mjs";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 interface CodeFormProps {
   code: string;
@@ -16,7 +14,7 @@ const VerificationPage = () => {
   const router = useRouter();
   const { control, handleSubmit } = useForm<CodeFormProps>();
 
-  const onSubmit = async (data: CodeFormProps) => {
+  const onSubmit: SubmitHandler<CodeFormProps>  = async (data) => {
     router.push(
       `/api/auth/callback/email?callbackUrl=${env.NEXT_PUBLIC_APP_URL}&token=${data.code}&email=jacob35422%40gmail.com`
     );
