@@ -45,7 +45,7 @@ export const metadata = {
       url: siteConfig.url,
     },
   ],
-  themeColor: [
+  viewport: [
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },
   ],

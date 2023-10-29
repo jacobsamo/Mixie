@@ -19,10 +19,12 @@ import {
 
 const UserProfile = () => {
   const { session, user } = useUser();
+  const [open, setOpen] = useState(false);
 
   if (!user) {
     return (
       <Link
+        onClick={() => setOpen}
         href={"/api/auth/signin"}
         className="rounded-md bg-yellow p-1 px-2 font-semibold text-black"
       >
@@ -32,7 +34,7 @@ const UserProfile = () => {
   }
 
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Image
           width={42}
@@ -46,16 +48,25 @@ const UserProfile = () => {
         />
       </PopoverTrigger>
       <PopoverContent className="flex w-fit flex-col gap-2">
-        <Link href={`/${user?.id}`} className="flex flex-row gap-1">
+        <Link
+          onClick={() => setOpen(false)}
+          href={`/${user?.id}`}
+          className="flex flex-row gap-1"
+        >
           <UserCircle2 /> Profile
         </Link>
-        <Link href={`/${user?.id}/bookmarks`} className="flex flex-row gap-1">
+        <Link
+          onClick={() => setOpen(false)}
+          href={`/${user?.id}/bookmarks`}
+          className="flex flex-row gap-1"
+        >
           {" "}
           <Bookmark />
           Bookmarks
         </Link>
         <CreateRecipeDialog />
         <Link
+          onClick={() => setOpen(false)}
           href={`/${user?.id}/settings/profile`}
           className="flex flex-row gap-1"
         >
@@ -63,7 +74,11 @@ const UserProfile = () => {
           <Settings />
           Settings
         </Link>
-        <Link href={"/api/auth/signout"} className="flex flex-row gap-1">
+        <Link
+          onClick={() => setOpen(false)}
+          href={"/api/auth/signout"}
+          className="flex flex-row gap-1"
+        >
           {" "}
           <ArrowUpRightSquare />
           Signout
