@@ -2,8 +2,9 @@
 import React from "react";
 import Link from "next/link";
 import { cva } from "class-variance-authority";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { Button } from "@/src/common/components/ui/button";
 
 interface SettingsParams {
   profile: string;
@@ -25,35 +26,52 @@ export default function SettingsLayout({
   children: React.ReactNode;
   params: SettingsParams;
 }) {
-  const pathname = usePathname();
-  const lastSegment = pathname.substring(pathname.lastIndexOf("/") + 1);
-  const firstSegment = pathname.split("/")[1];
-  const { data: session } = useSession();
+  const searchParams = useSearchParams();
+  const activeLink = searchParams.get("activeLink") || "profile";
 
+  const router = useRouter();
+  const pathName = usePathname();
+
+  const createQueryString = (name, value) => {
+    const params = new URLSearchParams();
+    params.set(name, value);
+
+    return params.toString();
+  };
 
   return (
     <main className="h-full w-full">
       <header className="mx-auto mt-2 flex w-full flex-row justify-center gap-4 rounded-md bg-white p-1 shadow-main dark:bg-grey md:w-2/4">
-        <Link
-          href={`/${firstSegment}/settings/profile`}
-          className={linkStyles({ selected: lastSegment === "profile" })}
+        <Button
+        unstyled
+          ariaLabel="Go to edit profile page"
+          onClick={() => {
+            router.push("?" + createQueryString("activeLink", "profile"));
+          }}
+          className={linkStyles({ selected: activeLink === "profile" })}
         >
           Profile
-        </Link>
-        <Link
-          href={`/${firstSegment}/settings/customization`}
-          className={linkStyles({
-            selected: lastSegment === "customization",
-          })}
+        </Button>
+        <Button
+        unstyled
+          ariaLabel="Go to edit profile page"
+          onClick={() => {
+            router.push("?" + createQueryString("activeLink", "customization"));
+          }}
+          className={linkStyles({ selected: activeLink === "customization" })}
         >
           Customization
-        </Link>
-        <Link
-          href={`/${firstSegment}/settings/account`}
-          className={linkStyles({ selected: lastSegment === "account" })}
+        </Button>
+        <Button
+        unstyled
+          ariaLabel="Go to edit profile page"
+          onClick={() => {
+            router.push("?" + createQueryString("activeLink", "account"));
+          }}
+          className={linkStyles({ selected: activeLink === "account" })}
         >
           Account
-        </Link>
+        </Button>
       </header>
       {children}
     </main>

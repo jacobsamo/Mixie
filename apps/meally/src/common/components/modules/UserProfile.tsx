@@ -67,7 +67,7 @@ const UserProfile = () => {
         <CreateRecipeDialog />
         <Link
           onClick={() => setOpen(false)}
-          href={`/${user?.id}/settings/profile`}
+          href={`/${user?.id}/settings?activeLink=profile`}
           className="flex flex-row gap-1"
         >
           {" "}
