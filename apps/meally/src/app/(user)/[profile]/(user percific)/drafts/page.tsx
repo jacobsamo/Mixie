@@ -1,15 +1,12 @@
 import { SearchCard } from "@/src/common/components/elements/Cards";
-import useUser from "@/src/common/hooks/useUser";
 import { db } from "@db/index";
-import { eq, or } from "drizzle-orm";
-import { authOptions } from "@db/next-auth-adapter";
+import { authOptions } from "@server/auth";
 import { recipes } from "@db/schemas";
-import { Info, Recipe } from "@db/types";
+import { Info } from "@db/types";
+import { eq, or } from "drizzle-orm";
 import { getServerSession } from "next-auth";
-import { useSession } from "next-auth/react";
-import React from "react";
 
-const DraftsPage = async () => {
+export default async function DraftsPage() {
   const session = await getServerSession(authOptions);
 
   if (!session?.user) {
@@ -35,6 +32,4 @@ const DraftsPage = async () => {
       </div>
     </main>
   );
-};
-
-export default DraftsPage;
+}

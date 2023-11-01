@@ -12,6 +12,7 @@ import {
   recipeFormSchema,
   recipesSelect,
   ratingsSchema,
+  bookmarkSchema,
 } from "./zodSchemas";
 
 import { amount } from "./zodEnums";
@@ -55,6 +56,10 @@ export type {
 };
 
 export type Rating = z.infer<typeof ratingsSchema>;
+
+// bookmarks
+
+export type Bookmark = z.infer<typeof bookmarkSchema>;
 
 // groups
 // type Group = InferModel<typeof groups>;

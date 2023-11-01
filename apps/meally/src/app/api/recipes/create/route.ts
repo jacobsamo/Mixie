@@ -5,7 +5,7 @@ import {
 } from "@/src/common/lib/services/recipeJsonLDParsing";
 import { recipeId } from "@/src/common/lib/utils/utils";
 import { db } from "@db/index";
-import { authOptions } from "@db/next-auth-adapter";
+import { authOptions } from "@server/auth";
 import { info, recipes } from "@db/schemas";
 import { NewInfo, NewPartialRecipe } from "@db/types";
 import { getServerSession } from "next-auth";

@@ -1,7 +1,7 @@
 import RecipeForm from "@/src/common/components/templates/RecipeForm/RecipeForm";
 import { mockRecipe } from "@/src/common/lib/services/data";
 import { db } from "@db/index";
-import { authOptions } from "@db/next-auth-adapter";
+import { authOptions } from "@server/auth";
 import { recipes } from "@db/schemas";
 import { Recipe } from "@db/types";
 import { eq, or } from "drizzle-orm";

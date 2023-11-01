@@ -1,21 +1,23 @@
 import { and, eq } from "drizzle-orm";
+import { type GetServerSidePropsContext } from "next";
 import {
   getServerSession,
   type DefaultSession,
   type NextAuthOptions,
 } from "next-auth";
+import { type Adapter } from "next-auth/adapters";
+
+import EmailProvider from "next-auth/providers/email";
+import FacebookProvider from "next-auth/providers/facebook";
+import GitHubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 
 import { env } from "@/env.mjs";
-import { db } from "@server/db";
-import * as schema from "@server/db/schemas";
-
-import GitHubProvider from "next-auth/providers/github";
-import FacebookProvider from "next-auth/providers/facebook";
-import GoogleProvider from "next-auth/providers/google";
-import TwitterProvider from "next-auth/providers/twitter";
-import EmailProvider from "next-auth/providers/email";
-import { Adapter } from "@auth/core/adapters";
-import { sendVerificationRequest } from "./send-verification-request";
+import { db } from "@db/index";
+import { sendVerificationRequest } from "@server/send-verification-request";
+import * as schema from "@db/schemas";
+import { TFont, TTheme } from "@db/enum-types";
+import { User as DbUser } from "@db/types";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -27,15 +29,19 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
+      bio: string;
+      userName: string;
+      theme: TTheme;
+      font: TFont;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface User extends DbUser {
+    // ...other properties
+    // role: UserRole;
+  }
 }
 
 /**
@@ -44,6 +50,10 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+  // pages: {
+  //   signIn: '/login',
+  //   signOut: '/logout',
+  // },\
   pages: {
     signIn: "/auth/login",
     verifyRequest: "/auth/verify",
@@ -57,6 +67,10 @@ export const authOptions: NextAuthOptions = {
       user: {
         ...session.user,
         id: user.id,
+        userName: user.userName,
+        bio: user.bio,
+        font: user.font,
+        email: user.email,
       },
     }),
   },
@@ -106,14 +120,34 @@ export const authOptions: NextAuthOptions = {
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */
-export const getServerAuthSession = () => getServerSession(authOptions);
+export const getServerAuthSession = (ctx: {
+  req: GetServerSidePropsContext["req"];
+  res: GetServerSidePropsContext["res"];
+}) => {
+  return getServerSession(ctx.req, ctx.res, authOptions);
+};
+
+/**
+ * Adapter for Drizzle ORM. This is not yet available in NextAuth directly, so we inhouse our own.
+ * When the official one is out, we will switch to that.
+ *
+ * @see
+ * https://github.com/nextauthjs/next-auth/pull/7165/files#diff-142e7d6584eed63a73316fbc041fb93a0564a1cbb0da71200b92628ca66024b5
+ */
 
 export function DrizzleAdapter(): Adapter {
   const { users, sessions, accounts, verificationTokens } = schema;
-
   return {
     async createUser(data) {
       const id = crypto.randomUUID();
+
+      if (!data.image) {
+        const name = data.name ?? data.email.split("@")[0][0].toUpperCase();
+        console.log(name);
+        data.image = `https:ui-avatars.com/api/?name=${name
+          ?.split(" ")
+          .join("+")}"&size=256&background=random`;
+      }
 
       await db.insert(users).values({ ...data, id });
 
@@ -192,7 +226,10 @@ export function DrizzleAdapter(): Adapter {
         .then((res) => res[0]);
     },
     async linkAccount(rawAccount) {
-      await db.insert(accounts).values(rawAccount);
+      await db
+        .insert(accounts)
+        .values(rawAccount)
+        .then((res) => res[0]);
     },
     async getUserByAccount(account) {
       const dbAccount =

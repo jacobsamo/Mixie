@@ -1,4 +1,4 @@
-import { authOptions } from "@db/next-auth-adapter";
+import { authOptions } from "@server/auth";
 import { getServerSession } from "next-auth";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 

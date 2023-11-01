@@ -1,5 +1,5 @@
 import { env } from "@/env.mjs";
-import { authOptions } from "@db/next-auth-adapter";
+import { authOptions } from "@server/auth";
 import { getServerSession } from "next-auth";
 import type { NextRequest } from "next/server";
 

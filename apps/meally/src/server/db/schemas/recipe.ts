@@ -103,3 +103,14 @@ export const ratingsRelation = relations(info, ({ one }) => ({
     references: [ratings.recipeId],
   }),
 }));
+
+export const bookmarks = mysqlTable("bookmarks", {
+  recipeId: char("recipeId", { length: 36 }).primaryKey().notNull(),
+  id: varchar("id", { length: 191 }).notNull(),
+  title: varchar("title", { length: 191 }).notNull(),
+  imgUrl: text("imgUrl"),
+  imgAlt: text("imgAlt"),
+  total: varchar("total", { length: 191 }),
+  isPublic: boolean("isPublic").default(false),
+  userId: varchar("userId", { length: 191 }).notNull(),
+});

@@ -1,7 +1,7 @@
 import { db } from "@db/index";
 import { authOptions } from "@server/auth";
-import { ratings } from "@db/schemas";
-import { ratingsSchema } from "@db/zodSchemas";
+import { bookmarks, ratings } from "@db/schemas";
+import { bookmarkSchema, ratingsSchema } from "@db/zodSchemas";
 import { getServerSession } from "next-auth";
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
@@ -16,14 +16,14 @@ export async function POST(req: NextRequest, params: { id: string }) {
 
     const json = await req.json();
 
-    const rating = ratingsSchema.parse(json);
-    console.log(rating);
+    const bookmark = bookmarkSchema.parse(json);
 
-    //   db.update(ratings).set(rating).where(eq(ratings.recipeId, params.id));
-    db.insert(ratings).values(rating);
+    db.insert(bookmarks).values(bookmark);
+
+    console.log(`Recipe ${bookmark.id} has been bookmarked`);
 
     return NextResponse.json({
-      message: "Rating updated successfully",
+      message: `Recipe ${bookmark.id} has been bookmarked`,
     });
   } catch (error) {
     console.error(error);

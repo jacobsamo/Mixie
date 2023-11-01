@@ -1,23 +1,19 @@
-import RecipePageComponent from "@components/templates/RecipePage/RecipePageComponent";
-import React from "react";
-import { mockRecipe } from "@/src/common/lib/services/data";
-import { db } from "@db/index";
-import { info as infoSchema, recipes as recipeSchema } from "@db/schemas";
-import type { Recipe } from "@db/types";
-import { eq, or } from "drizzle-orm";
-import { RecipeJsonLd } from "next-seo";
-import { Metadata } from "next";
 import { constructMetadata } from "@/src/common/lib/utils/utils";
-import { notFound, redirect } from "next/navigation";
+import RecipePageComponent from "@components/templates/RecipePage/RecipePageComponent";
+import { db } from "@db/index";
+import type { Recipe } from "@db/types";
+import { Metadata } from "next";
+import { RecipeJsonLd } from "next-seo";
+import { notFound } from "next/navigation";
 
 const getRecipes = async () => {
   const recipes = await db.query.recipes.findMany({
     with: { info: true },
     // where: eq(recipeSchema.isPublic, true),
   });
-  console.log("Recipes: ", recipes);
   return recipes;
 };
+
 
 export async function generateStaticParams() {
   const recipes = await getRecipes();
