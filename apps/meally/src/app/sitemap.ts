@@ -1,8 +1,6 @@
-import { MetadataRoute } from "next";
-import { Info } from "../server/db/types";
-import { env } from "@/env.mjs";
-import { db } from "../server/db";
 import { eq } from "drizzle-orm";
+import { MetadataRoute } from "next";
+import { db } from "../server/db";
 import { info } from "../server/db/schemas";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

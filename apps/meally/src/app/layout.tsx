@@ -3,10 +3,9 @@ import Navbar from "@components/modules/Navbar";
 import { Toaster } from "@components/ui/toaster";
 import "@styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
-import { ThemeProvider } from "../common/components/modules/theme-provider";
-
-
+import { getServerSession } from "next-auth";
 import Footer from "../common/components/modules/Footer";
+import { ThemeProvider } from "../common/components/modules/theme-provider";
 
 const siteConfig = {
   name: "Meally",
@@ -46,6 +45,7 @@ export const metadata = {
     },
   ],
   viewport: [
+    { name: "viewport", content: "width=device-width, initial-scale=1" },
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },
   ],
@@ -72,15 +72,19 @@ export const metadata = {
   manifest: `/manifest.json`,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession();
+  const theme = session?.user?.theme || "system";
+  console.log(theme);
+
   return (
     <html lang="en">
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme={theme} enableSystem>
           <NextAuthProvider>
             <Navbar />
             {/* <Search /> */}

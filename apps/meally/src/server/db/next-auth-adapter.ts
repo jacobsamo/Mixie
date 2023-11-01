@@ -2,22 +2,20 @@ import { and, eq } from "drizzle-orm";
 import { type GetServerSidePropsContext } from "next";
 import {
   getServerSession,
-  type NextAuthOptions,
   type DefaultSession,
-  type AuthOptions,
+  type NextAuthOptions
 } from "next-auth";
 import { type Adapter } from "next-auth/adapters";
 
-import GitHubProvider from "next-auth/providers/github";
-import FacebookProvider from "next-auth/providers/facebook";
-import GoogleProvider from "next-auth/providers/google";
-import TwitterProvider from "next-auth/providers/twitter";
 import EmailProvider from "next-auth/providers/email";
+import FacebookProvider from "next-auth/providers/facebook";
+import GitHubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 
 import { env } from "@/env.mjs";
 import { db } from ".";
-import * as schema from "./schemas";
 import { sendVerificationRequest } from "../send-verification-request";
+import * as schema from "./schemas";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -29,6 +27,10 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
+      bio: string;
+      userName: string;
+      theme: string;
+      font: string;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];

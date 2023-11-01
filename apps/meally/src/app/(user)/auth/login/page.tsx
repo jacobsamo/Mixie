@@ -1,20 +1,34 @@
 "use client";
 import { Button } from "@/src/common/components/ui/button";
+import { Checkbox } from "@/src/common/components/ui/checkbox";
 import { Input } from "@/src/common/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import * as z from "zod";
 
-interface EmailFormProps {
-  email: string;
-}
+const emailForm = z.object({
+  email: z.string().email(),
+  acceptTerms: z.boolean().refine((data) => data === true, {
+    message: "You must accept the terms and conditions to continue",
+  }),
+});
 
 const LoginPage = () => {
-  const { register, handleSubmit } = useForm<EmailFormProps>();
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<z.infer<typeof emailForm>>({
+    resolver: zodResolver(emailForm),
+  });
   const router = useRouter();
 
-  const onSubmit: SubmitHandler<EmailFormProps> = async (data) => {
+  const onSubmit: SubmitHandler<z.infer<typeof emailForm>> = async (data) => {
     signIn("email", { email: data.email, callbackUrl: "/", redirect: false });
     router.push(
       "/auth/verify?" + new URLSearchParams({ email: data.email }).toString()
@@ -54,6 +68,56 @@ const LoginPage = () => {
           type="email"
           placeholder="john@example.com"
           {...register("email")}
+        />
+        <Controller
+          control={control}
+          name="acceptTerms"
+          defaultValue={false}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <div className=" flex flex-col items-start gap-2">
+              <div className="flex flex-row items-center gap-3">
+                <Checkbox
+                  name="acceptTerms"
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+
+                <label
+                  htmlFor="acceptTerms"
+                  className={`text-step--4 font-medium ${
+                    errors.acceptTerms ? "text-red-500" : ""
+                  }`}
+                >
+                  Accept terms and conditions
+                </label>
+              </div>
+              {errors.acceptTerms && (
+                <p className="text-step--4 text-red">
+                  {errors.acceptTerms.message}
+                </p>
+              )}
+              <p className="text-step--4 opacity-90">
+                You agree to our{" "}
+                <Link
+                  href="https://meally.com.au/info/terms_service"
+                  target="_blank"
+                  className="text-[#188FA7] underline underline-offset-2"
+                >
+                  Terms of Service
+                </Link>{" "}
+                and{" "}
+                <Link
+                  href="https://meally.com.au/info/privacy_policy"
+                  target="_blank"
+                  className="text-[#188FA7] underline underline-offset-2"
+                >
+                  Privacy Policy
+                </Link>
+                .
+              </p>
+            </div>
+          )}
         />
         <Button
           type="submit"
