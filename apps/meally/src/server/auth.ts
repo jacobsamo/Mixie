@@ -18,6 +18,7 @@ import { sendVerificationRequest } from "@server/send-verification-request";
 import * as schema from "@db/schemas";
 import { TFont, TTheme } from "@db/enum-types";
 import { User as DbUser } from "@db/types";
+import * as jose from "jose";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -50,10 +51,6 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
-  // pages: {
-  //   signIn: '/login',
-  //   signOut: '/logout',
-  // },\
   pages: {
     signIn: "/auth/login",
     verifyRequest: "/auth/verify",
@@ -61,18 +58,12 @@ export const authOptions: NextAuthOptions = {
   theme: {
     logo: "/favicon.ico",
   },
-  callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-        userName: user.userName,
-        bio: user.bio,
-        font: user.font,
-        email: user.email,
-      },
-    }),
+  secret: env.NEXTAUTH_SECRET,
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: { httpOnly: false },
+    },
   },
   adapter: DrizzleAdapter(),
   providers: [
@@ -90,14 +81,6 @@ export const authOptions: NextAuthOptions = {
     }),
     EmailProvider({
       server: `smtp://resend:${env.RESEND_API_KEY}@smtp.resend.com:465`,
-      // server: {
-      //   host: "smtp.resend.com",
-      //   port: 465,
-      //   auth: {
-      //     user: "resend",
-      //     pass: env.RESEND_API_KEY,
-      //   },
-      // },
       from: "cook@meally.com.au",
       sendVerificationRequest,
       async generateVerificationToken() {
@@ -113,6 +96,34 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    signIn: async ({ user, account, profile, email, credentials }) => {
+      console.log("User signed in: ", { user, account, profile });
+
+      return true;
+    },
+    session: async ({ session, user, token }) => {
+      session.user = {
+        ...session.user,
+        id: user.id,
+        userName: user.userName || "",
+        bio: user.bio || "",
+        font: user.font || "default",
+        email: user.email,
+      };
+
+      return session;
+    },
+    jwt: async ({ token, account, user, trigger }) => {
+      if (user) {
+        token.user = user;
+      }
+      if (account?.accessToken) {
+        token.accessToken = account.accessToken;
+      }
+      return token;
+    },
+  },
 };
 
 /**
