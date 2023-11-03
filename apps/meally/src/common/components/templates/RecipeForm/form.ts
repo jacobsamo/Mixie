@@ -51,7 +51,8 @@ export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
     if (res.status === 200) {
       toast({
         title: "Recipe created.",
-        description: "Your recipe has been created.",
+        description:
+          "Your recipe has been created. Changes will be reflected within an hour",
       });
     } else {
       toast({

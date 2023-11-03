@@ -6,9 +6,17 @@ import { HeartIcon } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "../ui/use-toast";
 import { cn } from "@/src/common/lib/utils/utils";
+import { env } from "@/env.mjs";
 
 function addBookMark(recipe: Partial<Info>) {
-  throw Error("Function not implemented.");
+  fetch(`/api/recipes/${recipe.id}/bookmark`, {
+    method: "POST",
+    body: JSON.stringify(recipe),
+    headers: {  
+      "Content-Type": "application/json",
+      authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+    },
+  });
 }
 
 interface CardProps {

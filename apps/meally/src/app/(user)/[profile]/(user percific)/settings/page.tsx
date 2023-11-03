@@ -83,7 +83,8 @@ export default function ProfilePage({ params }: ProfilePageProps) {
         if (res.status === 200) {
           toast({
             title: "Success!",
-            description: "Your profile has been updated",
+            description:
+              "Your profile has been updated, changes will be reflected within the hour",
           });
         } else {
           toast({

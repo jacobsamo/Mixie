@@ -18,7 +18,8 @@ import { sendVerificationRequest } from "@server/send-verification-request";
 import * as schema from "@db/schemas";
 import { TFont, TTheme } from "@db/enum-types";
 import { User as DbUser } from "@db/types";
-import * as jose from "jose";
+import { sendEmail } from "@server/emails";
+import LoginLink from "@server/emails/login";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -82,7 +83,18 @@ export const authOptions: NextAuthOptions = {
     EmailProvider({
       server: `smtp://resend:${env.RESEND_API_KEY}@smtp.resend.com:465`,
       from: "cook@meally.com.au",
-      sendVerificationRequest,
+      sendVerificationRequest({ identifier, url, token }) {
+        if (process.env.NODE_ENV === "development") {
+          console.log(`Login link: ${url}, token: ${token}`);
+          return;
+        } else {
+          sendEmail({
+            email: identifier,
+            subject: "Your Meally login link",
+            react: LoginLink({ url, email: identifier, token: token }),
+          });
+        }
+      },
       async generateVerificationToken() {
         const digits = "0123456789";
         let verificationCode = "";

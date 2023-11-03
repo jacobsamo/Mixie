@@ -6,6 +6,8 @@ import { Metadata } from "next";
 import { RecipeJsonLd } from "next-seo";
 import { notFound } from "next/navigation";
 
+export const revalidate = 60 * 60
+
 const getRecipes = async () => {
   const recipes = await db.query.recipes.findMany({
     with: { info: true },
