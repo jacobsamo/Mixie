@@ -28,22 +28,21 @@ import LoginLink from "@server/emails/login";
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
 declare module "next-auth" {
-  interface Session extends DefaultSession {
+  /**
+   * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
+   */
+  interface Session {
     user: {
       id: string;
       bio: string;
       userName: string;
       theme: TTheme;
       font: TFont;
-      // ...other properties
-      // role: UserRole;
+      email: string;
     } & DefaultSession["user"];
   }
 
-  interface User extends DbUser {
-    // ...other properties
-    // role: UserRole;
-  }
+  interface User extends DbUser {}
 }
 
 /**
@@ -81,8 +80,6 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
     EmailProvider({
-      server: `smtp://resend:${env.RESEND_API_KEY}@smtp.resend.com:465`,
-      from: "cook@meally.com.au",
       sendVerificationRequest({ identifier, url, token }) {
         if (process.env.NODE_ENV === "development") {
           console.log(`Login link: ${url}, token: ${token}`);

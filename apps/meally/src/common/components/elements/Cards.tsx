@@ -7,20 +7,54 @@ import Link from "next/link";
 import { useToast } from "../ui/use-toast";
 import { cn } from "@/src/common/lib/utils/utils";
 import { env } from "@/env.mjs";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { Bookmark } from "@db/types";
 
-function addBookMark(recipe: Partial<Info>) {
-  fetch(`/api/recipes/${recipe.id}/bookmark`, {
+function addBookMark(recipe: Info) {
+  const { data: session } = useSession();
+  const { toast } = useToast();
+  const router = useRouter();
+
+  if (!session) return router.push("/auth/login");
+
+  const bookmark: Bookmark = {
+    recipeId: recipe.recipeId,
+    id: recipe.id,
+    title: recipe.title,
+    imgAlt: recipe.imgAlt,
+    imgUrl: recipe.imgUrl,
+    isPublic: recipe.isPublic,
+    total: recipe.total,
+    userId: session.user.id,
+  };
+
+  fetch(`/api/recipes/${bookmark.recipeId}/bookmark`, {
     method: "POST",
-    body: JSON.stringify(recipe),
-    headers: {  
+    body: JSON.stringify(bookmark),
+    headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
     },
+  }).then((res) => {
+    if (res.status === 200) {
+      toast({
+        title: "Recipe created.",
+        description:
+          "Your recipe has been created. Changes will be reflected within an hour",
+      });
+    } else {
+      toast({
+        title: "Uh oh! Something went wrong.",
+        description: "There was an error while creating your recipe.",
+        variant: "destructive",
+      });
+    }
   });
 }
 
 interface CardProps {
-  recipe: Partial<Info>;
+  recipe: Info;
 }
 
 interface BaseCardProps extends CardProps {
@@ -42,8 +76,6 @@ export const BaseCard = ({
   hasCookTime = true,
   classNames,
 }: BaseCardProps) => {
-  const { toast } = useToast();
-
   return (
     <div
       className={cn(
@@ -68,12 +100,9 @@ export const BaseCard = ({
           <h3 className={cn("w-fit whitespace-nowrap", classNames?.cookTime)}>
             {recipe.total}
           </h3>
-          {/* <button
+          <button
             onClick={() => {
               addBookMark(recipe);
-              toast({
-                description: "Recipe has been bookmarked",
-              });
             }}
             className={classNames?.bookmarkButton}
             aria-label="Bookmark Recipe"
@@ -81,27 +110,25 @@ export const BaseCard = ({
             <HeartIcon
               className={cn("h-8 w-8 cursor-pointer", classNames?.bookmarkIcon)}
             />
-          </button> */}
+          </button>
         </div>
       ) : (
-        <></>
-        // <button
-        //   onClick={() => {
-        //     addBookMark(recipe);
-        //     toast({
-        //       description: "Recipe has been bookmarked",
-        //     });
-        //   }}
-        //   className={cn(
-        //     "absolute bottom-2 right-2",
-        //     classNames?.bookmarkButton
-        //   )}
-        //   aria-label="Bookmark Recipe"
-        // >
-        //   <HeartIcon
-        //     className={cn("h-8 w-8 cursor-pointer", classNames?.bookmarkIcon)}
-        //   />
-        // </button>
+        <>
+          <button
+            onClick={() => {
+              addBookMark(recipe);
+            }}
+            className={cn(
+              "absolute bottom-2 right-2",
+              classNames?.bookmarkButton
+            )}
+            aria-label="Bookmark Recipe"
+          >
+            <HeartIcon
+              className={cn("h-8 w-8 cursor-pointer", classNames?.bookmarkIcon)}
+            />
+          </button>
+        </>
       )}
 
       <Image

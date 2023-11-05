@@ -7,6 +7,7 @@ import { Recipe } from "@db/types";
 import { eq, or } from "drizzle-orm";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 interface EditPageProps {
   params: {
@@ -40,6 +41,6 @@ export default async function EditPage({ params }: EditPageProps) {
   // console.log(recipe);
   if (recipe) return <RecipeForm recipe={recipe} />;
 
-  return <div>Recipe not found</div>;
+  return notFound();
   // return <RecipeForm recipe={mockRecipe} />;
 }
