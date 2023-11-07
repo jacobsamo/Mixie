@@ -11,48 +11,6 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Bookmark } from "@db/types";
 
-function addBookMark(recipe: Info | Bookmark) {
-  const { data: session } = useSession();
-  const { toast } = useToast();
-  const router = useRouter();
-
-  if (!session) return router.push("/auth/login");
-
-  const bookmark: Bookmark = {
-    recipeId: recipe.recipeId,
-    id: recipe.id,
-    title: recipe.title,
-    imgAlt: recipe.imgAlt,
-    imgUrl: recipe.imgUrl,
-    isPublic: recipe.isPublic,
-    total: recipe.total,
-    userId: session.user.id,
-  };
-
-  fetch(`/api/recipes/${bookmark.recipeId}/bookmark`, {
-    method: "POST",
-    body: JSON.stringify(bookmark),
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
-    },
-  }).then((res) => {
-    if (res.status === 200) {
-      toast({
-        title: "Recipe created.",
-        description:
-          "Your recipe has been created. Changes will be reflected within an hour",
-      });
-    } else {
-      toast({
-        title: "Uh oh! Something went wrong.",
-        description: "There was an error while creating your recipe.",
-        variant: "destructive",
-      });
-    }
-  });
-}
-
 interface CardProps {
   recipe: Info | Bookmark;
 }
@@ -76,6 +34,48 @@ export const BaseCard = ({
   hasCookTime = true,
   classNames,
 }: BaseCardProps) => {
+  function addBookMark(recipe: Info | Bookmark) {
+    const { data: session } = useSession();
+    const { toast } = useToast();
+    const router = useRouter();
+
+    if (!session) return router.push("/auth/login");
+
+    const bookmark: Bookmark = {
+      recipeId: recipe.recipeId,
+      id: recipe.id,
+      title: recipe.title,
+      imgAlt: recipe.imgAlt,
+      imgUrl: recipe.imgUrl,
+      isPublic: recipe.isPublic,
+      total: recipe.total,
+      userId: session.user.id,
+    };
+
+    fetch(`/api/recipes/${bookmark.recipeId}/bookmark`, {
+      method: "POST",
+      body: JSON.stringify(bookmark),
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+      },
+    }).then((res) => {
+      if (res.status === 200) {
+        toast({
+          title: "Recipe created.",
+          description:
+            "Your recipe has been created. Changes will be reflected within an hour",
+        });
+      } else {
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: "There was an error while creating your recipe.",
+          variant: "destructive",
+        });
+      }
+    });
+  }
+
   return (
     <div
       className={cn(
@@ -177,6 +177,48 @@ interface SearchCardProps extends CardProps {
 }
 
 const SearchCard = ({ as, edit, recipe }: SearchCardProps) => {
+  function addBookMark(recipe: Info | Bookmark) {
+    const { data: session } = useSession();
+    const { toast } = useToast();
+    const router = useRouter();
+
+    if (!session) return router.push("/auth/login");
+
+    const bookmark: Bookmark = {
+      recipeId: recipe.recipeId,
+      id: recipe.id,
+      title: recipe.title,
+      imgAlt: recipe.imgAlt,
+      imgUrl: recipe.imgUrl,
+      isPublic: recipe.isPublic,
+      total: recipe.total,
+      userId: session.user.id,
+    };
+
+    fetch(`/api/recipes/${bookmark.recipeId}/bookmark`, {
+      method: "POST",
+      body: JSON.stringify(bookmark),
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+      },
+    }).then((res) => {
+      if (res.status === 200) {
+        toast({
+          title: "Recipe created.",
+          description:
+            "Your recipe has been created. Changes will be reflected within an hour",
+        });
+      } else {
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: "There was an error while creating your recipe.",
+          variant: "destructive",
+        });
+      }
+    });
+  }
+
   const Tag = as;
   return (
     <Tag className="relative flex h-32 w-full max-w-[600px] flex-row gap-2 rounded-md bg-grey">

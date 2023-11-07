@@ -258,11 +258,10 @@ export function constructMetadata({
       locale: "en_AU",
       title,
       description,
-      images: [
-        {
-          url: image,
-        },
-      ],
+      images: {
+        url: image || '/banner.png',
+        alt: title,
+      }
     },
     twitter: {
       card: "summary_large_image",
