@@ -1,14 +1,13 @@
 import { db } from "@db/index";
-import { authOptions } from "@server/auth";
-import { bookmarks, ratings } from "@db/schemas";
-import { bookmarkSchema, ratingsSchema } from "@db/zodSchemas";
-import { getServerSession } from "next-auth";
+import { bookmarks } from "@db/schemas";
+import { bookmarkSchema } from "@db/zodSchemas";
+import { getServerAuthSession } from "@server/auth";
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 
 export async function POST(req: NextRequest, params: { id: string }) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getServerAuthSession();
 
     if (!session) {
       return NextResponse.json("Unauthorized", { status: 403 });

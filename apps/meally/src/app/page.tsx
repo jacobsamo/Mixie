@@ -1,13 +1,11 @@
-import { env } from "@/env.mjs";
 import { CardRectangle } from "@components/elements/Cards";
-import { Info } from "@db/types";
+import { eq } from "drizzle-orm";
 import { SearchIcon } from "lucide-react";
+import { cache } from "react";
 import Carousel from "../common/components/elements/Carousel";
 import SearchTrigger from "../common/components/modules/SearchTrigger";
 import { db } from "../server/db";
-import { eq } from "drizzle-orm";
 import { info } from "../server/db/schemas";
-import { cache } from "react";
 
 const getRecipes = cache(async () => {
   const recipes = await db.query.info.findMany({

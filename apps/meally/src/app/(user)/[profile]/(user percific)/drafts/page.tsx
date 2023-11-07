@@ -4,13 +4,14 @@ import { authOptions } from "@server/auth";
 import { recipes } from "@db/schemas";
 import { Info } from "@db/types";
 import { eq, or } from "drizzle-orm";
-import { getServerSession } from "next-auth";
+import { getServerAuthSession } from "@server/auth";
+import { notFound } from "next/navigation";
 
 export default async function DraftsPage() {
-  const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
 
   if (!session?.user) {
-    return <h1>No recipes found</h1>;
+    return notFound();
   }
 
   const gotRecipes = (await db.query.info.findMany({
@@ -21,15 +22,13 @@ export default async function DraftsPage() {
   })) as Info[];
 
   return (
-    <main>
-      <div className="mt-4">
-        <h1 className="mb-2 text-center text-step0">Draft Recipes</h1>
-        <ul className="flex flex-row flex-wrap justify-center gap-4">
-          {gotRecipes.map((recipe, index) => {
-            return <SearchCard as="li" key={index} recipe={recipe} />;
-          })}
-        </ul>
-      </div>
-    </main>
+    <div className="mt-4">
+      <h1 className="mb-2 text-center text-step0">Draft Recipes</h1>
+      <ul className="flex flex-row flex-wrap justify-center gap-4">
+        {gotRecipes.map((recipe, index) => {
+          return <SearchCard as="li" key={index} recipe={recipe} />;
+        })}
+      </ul>
+    </div>
   );
 }

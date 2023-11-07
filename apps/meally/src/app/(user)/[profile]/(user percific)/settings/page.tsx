@@ -16,6 +16,8 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { UploadFileResponse } from "uploadthing/client";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { userSchema } from "@/src/server/db/zodSchemas";
 
 interface ProfilePageProps {
   params: {
@@ -50,7 +52,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
 
   const { handleSubmit, register, control, setValue, watch, getValues } =
     useForm<User>({
-      // resolver: zodResolver(userSchema),
+      resolver: zodResolver(userSchema),
       defaultValues: async () => {
         const res = await fetch(`/api/users/${params.profile}`, {
           headers: {

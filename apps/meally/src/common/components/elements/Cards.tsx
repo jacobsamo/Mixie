@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Bookmark } from "@db/types";
 
-function addBookMark(recipe: Info) {
+function addBookMark(recipe: Info | Bookmark) {
   const { data: session } = useSession();
   const { toast } = useToast();
   const router = useRouter();
@@ -54,7 +54,7 @@ function addBookMark(recipe: Info) {
 }
 
 interface CardProps {
-  recipe: Info;
+  recipe: Info | Bookmark;
 }
 
 interface BaseCardProps extends CardProps {
@@ -202,17 +202,19 @@ const SearchCard = ({ as, edit, recipe }: SearchCardProps) => {
         </Link>
         {recipe.keywords && (
           <div className="flex w-full flex-row flex-wrap gap-1">
-            {recipe?.keywords?.slice(0, 5).map((keyword, index) => {
-              return (
-                <p
-                  key={index}
-                  className="h-fit w-fit rounded-lg bg-yellow p-1 text-center text-step--4 text-black opacity-80"
-                >
-                  {keyword.value}
-                </p>
-              );
-            }) || null}
-            {recipe?.keywords?.length > 5 && (
+            {(Array.isArray(recipe?.keywords) &&
+              recipe?.keywords?.slice(0, 5).map((keyword, index) => {
+                return (
+                  <p
+                    key={index}
+                    className="h-fit w-fit rounded-lg bg-yellow p-1 text-center text-step--4 text-black opacity-80"
+                  >
+                    {keyword.value}
+                  </p>
+                );
+              })) ||
+              null}
+            {Array.isArray(recipe?.keywords) && recipe?.keywords.length > 5 && (
               <p className="text-center text-step--4 text-black opacity-80">
                 ...
               </p>

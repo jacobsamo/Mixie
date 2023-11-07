@@ -140,12 +140,10 @@ export const authOptions: NextAuthOptions = {
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */
-export const getServerAuthSession = (ctx: {
-  req: GetServerSidePropsContext["req"];
-  res: GetServerSidePropsContext["res"];
-}) => {
-  return getServerSession(ctx.req, ctx.res, authOptions);
+export const getServerAuthSession = () => {
+  return getServerSession(authOptions);
 };
+
 
 /**
  * Adapter for Drizzle ORM. This is not yet available in NextAuth directly, so we inhouse our own.

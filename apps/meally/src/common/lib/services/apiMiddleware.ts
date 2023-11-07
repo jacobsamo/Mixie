@@ -1,6 +1,6 @@
 import { env } from "@/env.mjs";
 import { authOptions } from "@server/auth";
-import { getServerSession } from "next-auth";
+import { getServerAuthSession } from "@server/auth";
 import type { NextRequest } from "next/server";
 
 export const isApp = async (req: NextRequest) => {

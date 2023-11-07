@@ -5,13 +5,13 @@ import { info, recipes } from "@db/schemas";
 import { NewInfo, NewPartialRecipe } from "@db/types";
 import { recipeFormSchema } from "@db/zodSchemas";
 import { eq } from "drizzle-orm";
-import { getServerSession } from "next-auth";
+import { getServerAuthSession } from "@server/auth";
 import { NextResponse, type NextRequest } from "next/server";
 import * as z from "zod";
 
 export async function PUT(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getServerAuthSession();
 
     if (!session) {
       return NextResponse.json("Unauthorized", { status: 403 });

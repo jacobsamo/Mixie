@@ -1,9 +1,7 @@
-import { env } from "@/env.mjs";
 import { CardSquare } from "@/src/common/components/elements/Cards";
 import { constructMetadata } from "@/src/common/lib/utils/utils";
 import { db } from "@/src/server/db";
 import { info } from "@/src/server/db/schemas";
-import { Info } from "@db/types";
 import { eq } from "drizzle-orm";
 import { cache } from "react";
 

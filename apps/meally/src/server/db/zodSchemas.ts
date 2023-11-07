@@ -1,4 +1,4 @@
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { createInsertSchema, createSelectSchema } from "./drizzle-zod";
 import { z } from "zod";
 import { recipes, info, ratings, users, bookmarks } from "./schemas";
 import { unit, amount } from "./zodEnums";
@@ -73,6 +73,5 @@ export const recipesSelect = recipeSchemaSelect.extend({
 });
 
 export const userSchema = createInsertSchema(users);
-
 
 export const bookmarkSchema = createInsertSchema(bookmarks);

@@ -112,5 +112,6 @@ export const bookmarks = mysqlTable("bookmarks", {
   imgAlt: text("imgAlt"),
   total: varchar("total", { length: 191 }),
   isPublic: boolean("isPublic").default(false),
+  keywords: json("keywords").$type<{ value: string }[]>(),
   userId: varchar("userId", { length: 191 }).notNull(),
 });

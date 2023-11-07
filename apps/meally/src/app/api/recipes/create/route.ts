@@ -8,7 +8,7 @@ import { db } from "@db/index";
 import { authOptions } from "@server/auth";
 import { info, recipes } from "@db/schemas";
 import { NewInfo, NewPartialRecipe } from "@db/types";
-import { getServerSession } from "next-auth";
+import { getServerAuthSession } from "@server/auth";
 import { NextResponse, type NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 import * as z from "zod";
@@ -20,7 +20,7 @@ const createRecipeSchema = z.object({
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getServerAuthSession();
 
     if (!session) {
       return NextResponse.json("Unauthorized", { status: 403 });

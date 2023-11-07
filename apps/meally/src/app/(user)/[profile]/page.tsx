@@ -1,18 +1,17 @@
 import { SearchCard } from "@/src/common/components/elements/Cards";
 import { constructMetadata } from "@/src/common/lib/utils/utils";
 import { db } from "@db/index";
-import { authOptions } from "@server/auth";
+import { getServerAuthSession } from "@server/auth";
 import { info, users } from "@db/schemas";
 import { Info, User } from "@db/types";
 import { and, eq, or } from "drizzle-orm";
 import { Heart, Pencil, ScrollText } from "lucide-react";
 import { Metadata } from "next";
-import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 import { cache } from "react";
 
-export const revalidate = 60 * 60
+export const revalidate = 60 * 60;
 
 const getUsers = cache(async () => {
   const users = await db.query.users.findMany();
@@ -48,7 +47,7 @@ export async function generateMetadata({
 }
 
 export default async function ProfilePage({ params }) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
 
   const user = (await db.query.users.findFirst({
     where: eq(users.id, params.profile),

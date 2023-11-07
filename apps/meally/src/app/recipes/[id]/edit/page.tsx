@@ -1,11 +1,9 @@
 import RecipeForm from "@/src/common/components/templates/RecipeForm/RecipeForm";
-import { mockRecipe } from "@/src/common/lib/services/data";
 import { db } from "@db/index";
-import { authOptions } from "@server/auth";
 import { recipes } from "@db/schemas";
 import { Recipe } from "@db/types";
+import { getServerAuthSession } from "@server/auth";
 import { eq, or } from "drizzle-orm";
-import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -16,7 +14,7 @@ interface EditPageProps {
 }
 
 export default async function EditPage({ params }: EditPageProps) {
-  const user = await getServerSession(authOptions);
+  const user = await getServerAuthSession();
 
   if (!user)
     return (

@@ -3,7 +3,7 @@ import Navbar from "@components/modules/Navbar";
 import { Toaster } from "@components/ui/toaster";
 import "@styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
-import { getServerSession } from "next-auth";
+import { getServerAuthSession } from "@server/auth";
 import Footer from "../common/components/modules/Footer";
 import { ThemeProvider } from "../common/components/modules/theme-provider";
 
@@ -77,7 +77,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
+  const session = await getServerAuthSession();
   const theme = session?.user?.theme || "system";
   console.log(theme);
 
