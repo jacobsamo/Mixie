@@ -1,26 +1,26 @@
 "use client";
-import { NewRecipe, Recipe } from "@db/types";
 import { Input } from "@components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
-import { Controller, FormProvider, useForm } from "react-hook-form";
-import * as z from "zod";
-import { Textarea } from "../../ui/textarea";
-
+import { NewRecipe, Recipe } from "@db/types";
 import { recipeFormSchema } from "@db/zodSchemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   dietaryRequirements,
   meal_times,
   sweet_savoury,
 } from "@lib/services/data";
+import React, { useState } from "react";
+import { Controller, FormProvider, useForm } from "react-hook-form";
+import * as z from "zod";
 import { SelectComponent } from "../../ui/SelectComponent";
 import TagInput from "../../ui/taginput";
+import { Textarea } from "../../ui/textarea";
 import RecipePageComponent from "../RecipePage/RecipePageComponent";
 import ImageUpload from "./ImageUpload";
 import { IngredientContainer } from "./IngredientContainer";
 import Overlay from "./Overlay";
 import { StepContainer } from "./StepContainer";
-import { onSubmit, recipeSchema } from "./form";
+import { onSubmit } from "./form";
+
 
 interface RecipeFormProps {
   recipe: any | Recipe | NewRecipe; //TODO: fix this type to represent the correct type of recipe (not a huge deal but would be useful)
@@ -35,7 +35,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
   const [preview, setPreview] = useState(false);
 
   const methods = useForm<z.infer<typeof recipeFormSchema>>({
-    // resolver: zodResolver(recipeSchema),
+    resolver: zodResolver(recipeFormSchema),
     defaultValues: {
       // apply the recipe values if they exist using something like ...recipe
       ...recipe,
@@ -69,9 +69,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
           className="relative z-0 mx-auto mb-[20%] flex w-full flex-col p-2 md:p-0 lg:w-1/2"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <Overlay
-            onPreview={() => setPreview(!preview)}
-          />
+          <Overlay onPreview={() => setPreview(!preview)} />
 
           {!preview && (
             <>
