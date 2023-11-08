@@ -12,6 +12,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { cache } from "react";
 
+export const revalidate = 60 * 60;
+
 const getUsers = cache(async () => {
   const users = await db.query.users.findMany();
   return users;
