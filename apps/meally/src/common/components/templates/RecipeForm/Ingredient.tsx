@@ -42,7 +42,6 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
 
   return (
     <div
-      key={index}
       className="flex flex-row flex-wrap items-center gap-1 rounded-md"
     >
       <Input
@@ -53,6 +52,7 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
       <Controller
         control={control}
         name={`ingredients.${index}.unit`}
+        defaultValue={getValues(`ingredients.${index}.unit`)}
         render={({ field }) => (
           <SelectComponent
             clearable={false}
@@ -67,16 +67,19 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
       <Input
         type="number"
         {...register(`ingredients.${index}.quantity`, {
-          min: 0,
           valueAsNumber: true,
           validate: (value) => {
-            if (value === 0) {
-              return "Quantity cannot be 0";
+            if (value === null) {
+              return true; // It's not required, so null is allowed
+            }
+            if (value < 1) {
+              return "Quantity cannot be less than 1";
             }
             return true;
           },
         })}
       />
+
       {["cup", "tbsp", "tsp"].includes(activeUnit.value) ? (
         <Controller
           control={control}

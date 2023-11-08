@@ -32,7 +32,7 @@ const Step = ({ index, handleDelete }: StepProps) => {
         </Button>
       </div>
       <Textarea
-        defaultValue={getValues(`steps.${index}.step_body`)}
+        defaultValue={getValues(`steps.${index}.step_body`) || ""}
         id={`steps.${index}.step_body`}
         label=""
         name={`steps.${index}.step_body`}

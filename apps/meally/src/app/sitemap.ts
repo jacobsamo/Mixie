@@ -5,6 +5,8 @@ import { db } from "../server/db";
 import { eq } from "drizzle-orm";
 import { info } from "../server/db/schemas";
 
+export const revalidate = 60 * 60;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const recipes = await db.query.info.findMany({
     where: eq(info.isPublic, true),

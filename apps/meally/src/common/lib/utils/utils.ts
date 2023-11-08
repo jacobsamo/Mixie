@@ -152,7 +152,7 @@ function calculateCupUnits(
   const value = (Number(fr[0]) / Number(fr[1])) * batchAmount;
   const fraction = new Fraction(value).toFraction(true);
   const split = fraction.split(" ");
-  const newQuantity = split.length > 1 ? parseInt(split[0]) : undefined;
+  const newQuantity = split.length > 1 ? parseInt(split[0]) : null;
   const newMeasurement =
     split.length > 1 ? (split[1] as Amount) : (split[0] as Amount);
 
@@ -258,11 +258,10 @@ export function constructMetadata({
       locale: "en_AU",
       title,
       description,
-      images: [
-        {
-          url: image,
-        },
-      ],
+      images: {
+        url: image,
+        alt: title,
+      },
     },
     twitter: {
       card: "summary_large_image",
