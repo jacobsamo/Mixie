@@ -4,6 +4,7 @@ import { recipeFormSchema } from "@db/zodSchemas";
 import { SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { toast } from "../../ui/use-toast";
+import { stepSchema, ingredientSchema } from "@db/zodSchemas";
 
 export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
   recipe
@@ -16,7 +17,7 @@ export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
       : null;
 
   const ingredients = recipe?.ingredients?.map((ingredient: Ingredient) => {
-    if (!["cup", "tbsp", "tsp"].includes(ingredient.unit.value || "")) {
+    if (!["cup", "tbsp", "tsp"].includes(ingredient.unit?.value ?? "")) {
       ingredient.amount = {
         value: "not_set",
         label: "not_set",

@@ -1,7 +1,9 @@
-import { constructMetadata } from "@/src/common/lib/utils/utils";
+import { constructMetadata, displayIngredient } from "@/src/common/lib/utils/utils";
 import RecipePageComponent from "@components/templates/RecipePage/RecipePageComponent";
 import { db } from "@db/index";
+import { recipes as recipeSchema } from "@db/schemas";
 import type { Recipe } from "@db/types";
+import { eq } from "drizzle-orm";
 import { Metadata } from "next";
 import { RecipeJsonLd } from "next-seo";
 import { notFound } from "next/navigation";
@@ -11,7 +13,7 @@ export const revalidate = 60 * 60;
 const getRecipes = async () => {
   const recipes = await db.query.recipes.findMany({
     with: { info: true },
-    // where: eq(recipeSchema.isPublic, true),
+    where: eq(recipeSchema.isPublic, true),
   });
   return recipes;
 };
@@ -60,9 +62,7 @@ export default async function RecipePage({ params }) {
           yields={recipe?.info.serves?.toString() || ""}
           ingredients={
             recipe?.ingredients?.map((ingredient) => {
-              return `${ingredient.quantity} ${
-                ingredient.amount.value == "not_set" ? null : ingredient.amount
-              } ${ingredient.unit} ${ingredient.title}`;
+              return displayIngredient(ingredient);
             }) || []
           }
           instructions={

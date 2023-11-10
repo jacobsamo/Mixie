@@ -13,12 +13,13 @@ interface EditPageProps {
   };
 }
 
+
 export default async function EditPage({ params }: EditPageProps) {
   const user = await getServerAuthSession();
 
   if (!user)
     return (
-      <div className="flex flex-col items-center justify-center ">
+      <main className="flex h-full w-full flex-col items-center justify-center ">
         Not logged in
         <Link
           href={"/api/auth/signin"}
@@ -26,7 +27,7 @@ export default async function EditPage({ params }: EditPageProps) {
         >
           Login
         </Link>
-      </div>
+      </main>
     );
 
   const recipe = (await db.query.recipes.findFirst({
