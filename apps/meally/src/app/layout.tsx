@@ -5,7 +5,6 @@ import "@styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "../common/components/modules/theme-provider";
 
-
 import Footer from "../common/components/modules/Footer";
 
 const siteConfig = {
@@ -56,14 +55,16 @@ export const metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     siteName: siteConfig.name,
+    images: "/favicon.ico",
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
-    images: [`${siteConfig.url}/og.jpg`],
+    images: [`${siteConfig.url}/favicon.ico`],
     creator: "@meally",
   },
+  metadataBase: new URL(siteConfig.url),
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon-16x16.png",

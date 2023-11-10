@@ -1,4 +1,7 @@
-import { constructMetadata } from "@/src/common/lib/utils/utils";
+import {
+  constructMetadata,
+  displayIngredient,
+} from "@/src/common/lib/utils/utils";
 import RecipePageComponent from "@components/templates/RecipePage/RecipePageComponent";
 import { db } from "@db/index";
 import { recipes as recipeSchema } from "@db/schemas";
@@ -63,9 +66,7 @@ export default async function RecipePage({ params }) {
           yields={recipe?.info.serves?.toString() || ""}
           ingredients={
             recipe?.ingredients?.map((ingredient) => {
-              return `${ingredient.quantity} ${
-                ingredient.amount.value == "not_set" ? null : ingredient.amount
-              } ${ingredient.unit} ${ingredient.title}`;
+              return displayIngredient(ingredient);
             }) || []
           }
           instructions={

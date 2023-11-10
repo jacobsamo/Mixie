@@ -1,7 +1,10 @@
 import { Step, Ingredient } from "@db/types";
 import React from "react";
 import IngredientChips from "./IngredientChips";
-import { matchIngredients } from "@/src/common/lib/utils/utils";
+import {
+  displayIngredient,
+  matchIngredients,
+} from "@/src/common/lib/utils/utils";
 
 interface StepProps {
   index: number;
@@ -24,12 +27,7 @@ const Step = ({ index, step, ingredients }: StepProps) => {
       <span>
         <p className="font-bold">Ingredients:</p>{" "}
         {matchedIngredients
-          .map(
-            (ingredient) => `${ingredient.quantity} 
-        ${ingredient.amount.value == "not_set" ? "" : ingredient.amount.label} 
-        ${ingredient.unit.value == "not_set" ? "" : ingredient.unit.label} 
-        ${ingredient.title}`
-          )
+          .map((ingredient) => displayIngredient(ingredient))
           .join(" | ")}
       </span>
     </section>

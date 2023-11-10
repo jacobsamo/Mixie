@@ -41,9 +41,7 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
   }
 
   return (
-    <div
-      className="flex flex-row flex-wrap items-center gap-1 rounded-md"
-    >
+    <div className="flex flex-row flex-wrap items-center gap-1 rounded-md">
       <Input
         {...register(`ingredients.${index}.title` as const)}
         placeholder="Ingredient"
@@ -58,7 +56,7 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
             clearable={false}
             options={units}
             onChange={field.onChange}
-            value={field?.value}
+            value={field.value}
             placeholder="Unit"
           />
         )}
@@ -80,7 +78,7 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
         })}
       />
 
-      {["cup", "tbsp", "tsp"].includes(activeUnit.value) ? (
+      {["cup", "tbsp", "tsp"].includes(activeUnit?.value ?? "not_set") && (
         <Controller
           control={control}
           name={`ingredients.${index}.amount`}
@@ -88,22 +86,20 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
             <SelectComponent
               clearable={false}
               options={[
-                { value: "not_set", label: " " },
+                { value: "not_set", label: "not_set" },
                 { value: "1/8", label: "1/8" },
-                { value: "1/2", label: "1/2" },
-                { value: "1/3", label: "1/3" },
-                { value: "2/3", label: "2/3" },
                 { value: "1/4", label: "1/4" },
+                { value: "1/3", label: "1/3" },
+                { value: "1/2", label: "1/2" },
+                { value: "2/3", label: "2/3" },
                 { value: "3/4", label: "3/4" },
               ]}
               onChange={field.onChange}
-              value={field?.value}
+              value={field.value}
               placeholder="Cup Unit"
             />
           )}
         />
-      ) : (
-        <></>
       )}
 
       <Button

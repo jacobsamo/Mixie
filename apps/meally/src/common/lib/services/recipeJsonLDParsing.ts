@@ -98,7 +98,7 @@ export async function convertIngredients(
 
       // Check for amount
       if (
-        amount.value === "not_set" ||
+        amount && amount.value === "not_set" ||
         ["not_set", "tsp", "tbsp"].includes(unit.value)
       ) {
         const amountMatch = part.match(/(1\/8|1\/2|1\/3|2\/3|1\/4|3\/4)/);

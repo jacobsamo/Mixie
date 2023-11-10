@@ -8,7 +8,7 @@ import {
   meal_times,
   sweet_savoury,
 } from "@lib/services/data";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
 import { SelectComponent } from "../../ui/SelectComponent";
@@ -20,7 +20,6 @@ import { IngredientContainer } from "./IngredientContainer";
 import Overlay from "./Overlay";
 import { StepContainer } from "./StepContainer";
 import { onSubmit } from "./form";
-
 
 interface RecipeFormProps {
   recipe: any | Recipe | NewRecipe; //TODO: fix this type to represent the correct type of recipe (not a huge deal but would be useful)
@@ -42,10 +41,13 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
       ingredients: recipe?.ingredients || [
         {
           title: "",
-          unit: "grams",
+          unit: {
+            label: "grams",
+            value: "grams",
+          },
           quantity: null,
           isHeading: false,
-          amount: "not_set",
+          amount: null,
         },
       ],
       steps: recipe?.steps || [{ step_body: "" }],
@@ -59,6 +61,14 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
     getValues,
     formState: { errors, isDirty, isValid },
   } = methods;
+
+  useEffect(() => {
+    if (errors)
+      console.log("Errors: ", {
+        errors: errors,
+        values: getValues(),
+      });
+  }, [errors]);
 
   const gotRecipe = getValues() as Recipe;
 

@@ -2,6 +2,7 @@
 import type { Ingredient } from "@db/types";
 import React from "react";
 import { CheckCircleIcon, Circle } from "lucide-react";
+import { displayIngredient } from "@/src/common/lib/utils/utils";
 
 interface IngredientProps {
   ingredient: Ingredient;
@@ -28,14 +29,7 @@ const Ingredient = ({ ingredient }: IngredientProps) => {
           <Circle className="shrink-0" />
         )}
         <h3 className={checked ? "line-through opacity-60" : ""}>
-          {ingredient.quantity}{" "}
-          {ingredient.amount.value == "not_set"
-            ? null
-            : ingredient.amount.label}{" "}
-          {ingredient.unit.value == "not_set"
-            ? null
-            : ingredient.unit.label.replace("item", "")}{" "}
-          {ingredient.title}{" "}
+          {displayIngredient(ingredient)}
         </h3>
       </button>
     </li>

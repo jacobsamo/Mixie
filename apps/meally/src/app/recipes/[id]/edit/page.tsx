@@ -1,12 +1,13 @@
 import RecipeForm from "@/src/common/components/templates/RecipeForm/RecipeForm";
-import { mockRecipe } from "@/src/common/lib/services/data";
 import { db } from "@db/index";
 import { authOptions } from "@db/next-auth-adapter";
 import { recipes } from "@db/schemas";
 import { Recipe } from "@db/types";
 import { eq, or } from "drizzle-orm";
+import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 interface EditPageProps {
   params: {
@@ -14,12 +15,13 @@ interface EditPageProps {
   };
 }
 
+
 export default async function EditPage({ params }: EditPageProps) {
   const user = await getServerSession(authOptions);
 
   if (!user)
     return (
-      <div className="flex flex-col items-center justify-center ">
+      <main className="flex h-full w-full flex-col items-center justify-center ">
         Not logged in
         <Link
           href={"/api/auth/signin"}
@@ -27,7 +29,7 @@ export default async function EditPage({ params }: EditPageProps) {
         >
           Login
         </Link>
-      </div>
+      </main>
     );
 
   const recipe = (await db.query.recipes.findFirst({
@@ -40,6 +42,6 @@ export default async function EditPage({ params }: EditPageProps) {
   // console.log(recipe);
   if (recipe) return <RecipeForm recipe={recipe} />;
 
-  return <div>Recipe not found</div>;
+  return notFound();
   // return <RecipeForm recipe={mockRecipe} />;
 }

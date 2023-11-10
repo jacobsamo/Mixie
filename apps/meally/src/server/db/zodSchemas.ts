@@ -33,15 +33,25 @@ const selectValue = z.object({
 export const ingredientSchema = z.object({
   isHeading: z.boolean(),
   title: z.string(),
-  unit: selectValue.extend({
-    value: unit,
-    label: unit,
-  }),
+  unit: selectValue
+    .extend({
+      value: unit,
+      label: unit,
+    })
+    .default({
+      label: "grams",
+      value: "grams",
+    }).nullable(),
   quantity: z.number().nullable(),
-  amount: selectValue.extend({
-    value: amount,
-    label: amount,
-  }),
+  amount: selectValue
+    .extend({
+      value: amount,
+      label: amount,
+    })
+    .default({
+      label: "not_set",
+      value: "not_set",
+    }).nullable(),
 });
 
 export const stepSchema = z.object({

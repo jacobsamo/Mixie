@@ -6,6 +6,17 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export const displayIngredient = (ingredient: IngredientType) =>
+  `${ingredient.quantity} ${
+    ingredient.amount && ingredient.amount.value == "not_set"
+      ? null
+      : ingredient.amount?.label
+  } ${
+    ingredient.unit && ingredient.unit.value == "not_set"
+      ? null
+      : ingredient.unit?.label.replace("item", "")
+  } ${ingredient.title}`;
+
 export function matchIngredients(step: Step, ingredients: Ingredient[]) {
   const stepWords = step.step_body.toLowerCase().split(/\s+/);
 
@@ -59,8 +70,9 @@ export function recipeId(title: string): string {
   return title.replace(/\s/g, "-").toLowerCase();
 }
 
-import { Amount, Step, type Ingredient } from "@db/types";
+import { Amount, Step, type Ingredient as IngredientType } from "@db/types";
 import { Metadata } from "next";
+import Ingredient from "../../components/templates/RecipePage/ingredient/Ingredient";
 
 /**
  * Takes in a time string matching `/^(\d{1,2}[hms]\s?)+$/i` and returns the total time in seconds
@@ -165,9 +177,11 @@ function calculateCupUnits(
 export function calculateIngredient(
   ingredient: Ingredient,
   batchAmount: number
-): Ingredient {
+): IngredientType {
   const q = ingredient.quantity || 0;
-  switch (ingredient.unit.value) {
+  if (ingredient.isHeading) return ingredient;
+
+  switch (ingredient.unit?.value) {
     case "grams":
       const gramQuantity = q * batchAmount;
       return {
@@ -189,7 +203,7 @@ export function calculateIngredient(
       const multipliedQuantity = q * batchAmount;
       const { quantity, amount } = calculateCupUnits(
         multipliedQuantity,
-        ingredient.amount.value || "not_set",
+        ingredient.amount?.value ?? "not_set",
         batchAmount
       );
       return {

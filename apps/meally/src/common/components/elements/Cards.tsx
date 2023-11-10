@@ -160,7 +160,9 @@ const SearchCard = ({ as, edit, recipe }: SearchCardProps) => {
       </button>
       <div>
         <Link
-          href={`/recipes/${recipe.id}${edit ? "/edit" : ""}`}
+          href={`/recipes/${edit ? recipe.recipeId : recipe.id}${
+            edit ? "/edit" : ""
+          }`}
           className="text-step--1"
         >
           {recipe.title}

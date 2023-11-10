@@ -86,7 +86,7 @@ export const onSubmit = async (recipe: z.infer<typeof recipeFormSchema>) => {
       : null;
 
   const ingredients = recipe?.ingredients?.map((ingredient: Ingredient) => {
-    if (!["cup", "tbsp", "tsp"].includes(ingredient.unit.value || "")) {
+    if (!["cup", "tbsp", "tsp"].includes(ingredient.unit?.value ?? "")) {
       ingredient.amount = {
         value: "not_set",
         label: "not_set",
