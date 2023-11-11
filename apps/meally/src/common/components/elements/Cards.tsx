@@ -10,6 +10,7 @@ import { env } from "@/env.mjs";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Bookmark } from "@db/types";
+import { redirect } from "next/navigation";
 
 interface CardProps {
   recipe: Info | Bookmark;
@@ -34,12 +35,11 @@ export const BaseCard = ({
   hasCookTime = true,
   classNames,
 }: BaseCardProps) => {
-  function addBookMark(recipe: Info | Bookmark) {
-    const { data: session } = useSession();
-    const { toast } = useToast();
-    const router = useRouter();
+  const { data: session } = useSession();
+  const { toast } = useToast();
 
-    if (!session) return router.push("/auth/login");
+  function addBookMark(recipe: Info | Bookmark) {
+    if (!session) return redirect("/auth/login");
 
     const bookmark: Bookmark = {
       recipeId: recipe.recipeId,
@@ -100,34 +100,25 @@ export const BaseCard = ({
           <h3 className={cn("w-fit whitespace-nowrap", classNames?.cookTime)}>
             {recipe.total}
           </h3>
-          <button
-            onClick={() => {
-              addBookMark(recipe);
-            }}
-            className={classNames?.bookmarkButton}
-            aria-label="Bookmark Recipe"
-          >
-            <HeartIcon
-              className={cn("h-8 w-8 cursor-pointer", classNames?.bookmarkIcon)}
-            />
-          </button>
+          {session && (
+            <button
+              onClick={() => addBookMark(recipe)}
+              className="absolute bottom-2 right-2"
+            >
+              <HeartIcon className={`h-8 w-8 cursor-pointer`} />
+            </button>
+          )}
         </div>
       ) : (
         <>
-          <button
-            onClick={() => {
-              addBookMark(recipe);
-            }}
-            className={cn(
-              "absolute bottom-2 right-2",
-              classNames?.bookmarkButton
-            )}
-            aria-label="Bookmark Recipe"
-          >
-            <HeartIcon
-              className={cn("h-8 w-8 cursor-pointer", classNames?.bookmarkIcon)}
-            />
-          </button>
+          {session && (
+            <button
+              onClick={() => addBookMark(recipe)}
+              className="absolute bottom-2 right-2"
+            >
+              <HeartIcon className={`h-8 w-8 cursor-pointer`} />
+            </button>
+          )}
         </>
       )}
 
@@ -177,12 +168,11 @@ interface SearchCardProps extends CardProps {
 }
 
 const SearchCard = ({ as, edit, recipe }: SearchCardProps) => {
-  function addBookMark(recipe: Info | Bookmark) {
-    const { data: session } = useSession();
-    const { toast } = useToast();
-    const router = useRouter();
+  const { data: session } = useSession();
+  const { toast } = useToast();
 
-    if (!session) return router.push("/auth/login");
+  function addBookMark(recipe: Info | Bookmark) {
+    if (!session) return redirect("/auth/login");
 
     const bookmark: Bookmark = {
       recipeId: recipe.recipeId,
@@ -229,12 +219,14 @@ const SearchCard = ({ as, edit, recipe }: SearchCardProps) => {
         height={100}
         className="h-32 w-2/5 rounded-lg object-cover"
       />
-      <button
-        onClick={() => addBookMark(recipe)}
-        className="absolute bottom-2 right-2"
-      >
-        <HeartIcon className={`h-8 w-8 cursor-pointer`} />
-      </button>
+      {session && (
+        <button
+          onClick={() => addBookMark(recipe)}
+          className="absolute bottom-2 right-2"
+        >
+          <HeartIcon className={`h-8 w-8 cursor-pointer`} />
+        </button>
+      )}
       <div>
         <Link
           href={`/recipes/${edit ? recipe.recipeId : recipe.id}${

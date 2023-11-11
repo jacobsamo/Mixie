@@ -18,7 +18,6 @@ export async function POST(req: NextRequest, params: { id: string }) {
     const rating = ratingsSchema.parse(json);
     console.log(rating);
 
-    //   db.update(ratings).set(rating).where(eq(ratings.recipeId, params.id));
     db.insert(ratings).values(rating);
 
     return NextResponse.json({

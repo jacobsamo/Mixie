@@ -52,7 +52,7 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
           authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
         },
         next: {
-          revalidate: 60 * 60 * 24,
+          revalidate: 60 * 60,
         },
       });
 

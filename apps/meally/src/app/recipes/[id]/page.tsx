@@ -1,4 +1,7 @@
-import { constructMetadata, displayIngredient } from "@/src/common/lib/utils/utils";
+import {
+  constructMetadata,
+  displayIngredient,
+} from "@/src/common/lib/utils/utils";
 import RecipePageComponent from "@components/templates/RecipePage/RecipePageComponent";
 import { db } from "@db/index";
 import { recipes as recipeSchema } from "@db/schemas";
@@ -35,6 +38,7 @@ export async function generateMetadata({
   const recipe = recipes?.find((recipe) => {
     recipe.id == params.id;
   });
+
   if (!recipe) {
     return;
   }

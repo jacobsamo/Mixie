@@ -9,11 +9,11 @@ import { Heart, Pencil, ScrollText } from "lucide-react";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { cache } from "react";
+import { unstable_cache } from "next/cache";
 
 export const revalidate = 60 * 60;
 
-const getUsers = cache(async () => {
+const getUsers = unstable_cache(async () => {
   const users = await db.query.users.findMany();
   return users;
 });
@@ -65,7 +65,7 @@ export default async function ProfilePage({ params }) {
 
   if (user) {
     return (
-      <main>
+      <main className="h-full w-full">
         <div className="m-auto mt-4 flex flex-col items-center justify-center rounded-xl bg-white p-1 shadow-main dark:bg-grey dark:shadow-none sm:w-full md:w-3/5 lg:h-80">
           <Image
             src={user.image || "/images/placeholder.webp"}

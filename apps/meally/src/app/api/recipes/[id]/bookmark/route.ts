@@ -19,7 +19,9 @@ export async function POST(req: NextRequest, params: { id: string }) {
 
     db.insert(bookmarks).values(bookmark);
 
-    console.log(`Recipe ${bookmark.id} has been bookmarked`);
+    console.log(
+      `Recipe ${bookmark.id} has been bookmarked by ${session.user.name} (${session.user.id})`
+    );
 
     return NextResponse.json({
       message: `Recipe ${bookmark.id} has been bookmarked`,

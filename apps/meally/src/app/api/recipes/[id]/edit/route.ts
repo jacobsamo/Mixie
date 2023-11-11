@@ -26,6 +26,8 @@ export async function PUT(req: NextRequest) {
     json.info.lastUpdated = new Date(json.info.lastUpdated);
     const recipe = recipeFormSchema.parse(json);
 
+    const isPublic = recipe?.info?.isPublic || false;
+
     // get all ingredients and set them to the info, only include ingredients that have isHeading set to false
 
     const ingredients = recipe?.ingredients
@@ -62,6 +64,7 @@ export async function PUT(req: NextRequest) {
       createdBy: recipe.info?.createdBy || user.id,
       lastUpdatedBy: user.id,
       lastUpdatedByName: user.name! || "",
+      isPublic: isPublic,
     };
     await db.update(info).set(newInfo).where(eq(info.recipeId, recipe.uid));
 
@@ -73,6 +76,7 @@ export async function PUT(req: NextRequest) {
       ...recipe,
       // id: ,
       id: recipeId(recipe.title) || recipe.id,
+      isPublic: isPublic,
       steps: steps,
       lastUpdatedBy: user.id,
       lastUpdatedByName: user.name! || "",

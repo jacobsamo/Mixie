@@ -9,11 +9,11 @@ export function cn(...inputs: ClassValue[]) {
 export const displayIngredient = (ingredient: IngredientType) =>
   `${ingredient.quantity} ${
     ingredient.amount && ingredient.amount.value == "not_set"
-      ? null
+      ? ""
       : ingredient.amount?.label
   } ${
     ingredient.unit && ingredient.unit.value == "not_set"
-      ? null
+      ? ""
       : ingredient.unit?.label.replace("item", "")
   } ${ingredient.title}`;
 

@@ -106,10 +106,8 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
               {calculatedIngredients.map((ingredient, index) => {
                 if (ingredient.isHeading)
                   return (
-                    <li>
-                      <h3 key={index} className="text-2xl font-bold">
-                        {ingredient.title}
-                      </h3>
+                    <li key={index}>
+                      <h3 className="text-2xl font-bold">{ingredient.title}</h3>
                     </li>
                   );
                 return <Ingredient key={index} ingredient={ingredient} />;

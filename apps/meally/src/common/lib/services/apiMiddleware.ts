@@ -21,8 +21,8 @@ export const isApp = async (req: NextRequest) => {
   return false;
 };
 
-export const isAuthenticated = (req: NextRequest): boolean => {
-  const session = getServerSession(authOptions);
+export const isAuthenticated = async (req: NextRequest) => {
+  const session = await getServerAuthSession();
 
   if (!session) {
     return false;

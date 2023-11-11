@@ -58,7 +58,6 @@ export type {
 export type Rating = z.infer<typeof ratingsSchema>;
 
 // bookmarks
-
 export type Bookmark = z.infer<typeof bookmarkSchema>;
 
 // groups
