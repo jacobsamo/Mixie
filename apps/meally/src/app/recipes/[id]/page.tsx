@@ -18,7 +18,6 @@ const getRecipes = async () => {
     with: { info: true },
     where: eq(recipeSchema.isPublic, true),
   });
-  console.log("Recipes: ", recipes);
   return recipes;
 };
 
@@ -39,6 +38,7 @@ export async function generateMetadata({
   const recipe = recipes?.find((recipe) => {
     recipe.id == params.id;
   });
+
   if (!recipe) {
     return;
   }

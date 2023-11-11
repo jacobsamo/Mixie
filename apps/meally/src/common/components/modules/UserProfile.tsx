@@ -23,6 +23,7 @@ const UserProfile = () => {
   if (!user) {
     return (
       <Link
+        onClick={() => setOpen}
         href={"/api/auth/signin"}
         className="rounded-md bg-yellow p-1 px-2 font-semibold text-black"
       >
@@ -65,7 +66,7 @@ const UserProfile = () => {
         <CreateRecipeDialog />
         <Link
           onClick={() => setOpen(false)}
-          href={`/${user?.id}/settings/profile`}
+          href={`/${user?.id}/settings?activeLink=profile`}
           className="flex flex-row gap-1"
         >
           {" "}

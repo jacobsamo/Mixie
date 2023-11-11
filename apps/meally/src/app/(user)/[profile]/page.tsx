@@ -1,20 +1,19 @@
 import { SearchCard } from "@/src/common/components/elements/Cards";
 import { constructMetadata } from "@/src/common/lib/utils/utils";
 import { db } from "@db/index";
-import { authOptions } from "@db/next-auth-adapter";
+import { getServerAuthSession } from "@server/auth";
 import { info, users } from "@db/schemas";
 import { Info, User } from "@db/types";
 import { and, eq, or } from "drizzle-orm";
-import { Pencil, ScrollText } from "lucide-react";
+import { Heart, Pencil, ScrollText } from "lucide-react";
 import { Metadata } from "next";
-import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
-import { cache } from "react";
+import { unstable_cache } from "next/cache";
 
 export const revalidate = 60 * 60;
 
-const getUsers = cache(async () => {
+const getUsers = unstable_cache(async () => {
   const users = await db.query.users.findMany();
   return users;
 });
@@ -41,14 +40,14 @@ export async function generateMetadata({
   }
 
   return constructMetadata({
-    title: user.name || "",
+    title: `${user.name} profile` || "",
     description: undefined,
     image: user.image || undefined,
   });
 }
 
 export default async function ProfilePage({ params }) {
-  const session = await getServerSession(authOptions);
+  const session = await getServerAuthSession();
 
   const user = (await db.query.users.findFirst({
     where: eq(users.id, params.profile),
@@ -66,10 +65,10 @@ export default async function ProfilePage({ params }) {
 
   if (user) {
     return (
-      <main>
+      <main className="h-full w-full">
         <div className="m-auto mt-4 flex flex-col items-center justify-center rounded-xl bg-white p-1 shadow-main dark:bg-grey dark:shadow-none sm:w-full md:w-3/5 lg:h-80">
           <Image
-            src={user.image || "/images/default-profile.png"}
+            src={user.image || "/images/placeholder.webp"}
             alt={user.name || "default-profile"}
             width={100}
             height={100}
@@ -82,15 +81,22 @@ export default async function ProfilePage({ params }) {
             <span className="mt-4 flex flex-row gap-4">
               <Link
                 href={`/${user.id}/settings`}
-                className="text-step-2 flex flex-row items-center gap-2 text-center underline underline-offset-1"
+                className="text-step-2 flex flex-row items-center gap-2 text-center underline underline-offset-2"
               >
                 <Pencil className="h-4 w-4" /> Edit Profile
               </Link>
               <Link
                 href={`/${user.id}/drafts`}
-                className="text-step-2 flex flex-row items-center gap-2 text-center underline underline-offset-1"
+                className="text-step-2 flex flex-row items-center gap-2 text-center underline underline-offset-2"
               >
                 <ScrollText className="h-4 w-4" /> Drafts
+              </Link>
+
+              <Link
+                href={`/${user.id}/bookmarks`}
+                className="text-step-2 flex flex-row items-center gap-2 text-center underline underline-offset-2"
+              >
+                <Heart className="h-4 w-4" /> Bookmarks
               </Link>
             </span>
           )}

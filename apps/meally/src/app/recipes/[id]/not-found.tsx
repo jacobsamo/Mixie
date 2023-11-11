@@ -4,8 +4,7 @@ export default async function NotFound() {
   return (
     <main className="h-full w-full">
       <h2>Could not find the Recipe you were looking for</h2>
-      <p>Could not find requested resource</p>
-      <p>
+      <p className="text-[#188FA7] underline underline-offset-2">
         View <Link href="/recipes">all recipes</Link>
       </p>
     </main>

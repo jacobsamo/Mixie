@@ -31,6 +31,7 @@ export default {
       black: "hsl(222, 28% 7%)",
       grey: "hsl(224, 19% 12%)",
       white: "hsl(30, 36%, 96%)",
+      blue: "#188FA7",
       yellow: "hsl(42, 100%, 54%)",
       peach: "hsl(351, 65%, 64%)",
       red: "hsl(355, 78%, 56%)",

@@ -46,7 +46,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ) => {
     return (
       <div
-        className={cn("flex flex-col gap-1", classNames?.container)}
+        className={cn("flex flex-col gap-1 z-0", classNames?.container)}
         data-input="container"
       >
         {label && (

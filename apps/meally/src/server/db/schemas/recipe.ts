@@ -32,7 +32,7 @@ export const recipes = mysqlTable("recipes", {
   sweet_savoury: json("sweet_savoury"),
   difficulty_level: json("difficulty_level"),
   cuisine: json("cuisine"),
-  isPublic: boolean("isPublic").default(false),
+  isPublic: boolean("isPublic").default(false).notNull(),
 
   // users
   createdAt: timestamp("createdAt").default(sql`CURRENT_TIMESTAMP`),
@@ -69,7 +69,7 @@ export const info = mysqlTable("info", {
   serves: tinyint("serves"),
   keywords: json("keywords").$type<{ value: string }[]>(),
   ingredients: json("ingredients").$type<string[]>(),
-  isPublic: boolean("isPublic").default(false),
+  isPublic: boolean("isPublic").default(false).notNull(),
   rating: tinyint("rating").default(0),
 
   // users
@@ -103,3 +103,15 @@ export const ratingsRelation = relations(info, ({ one }) => ({
     references: [ratings.recipeId],
   }),
 }));
+
+export const bookmarks = mysqlTable("bookmarks", {
+  recipeId: char("recipeId", { length: 36 }).primaryKey().notNull(),
+  id: varchar("id", { length: 191 }).notNull(),
+  title: varchar("title", { length: 191 }).notNull(),
+  imgUrl: text("imgUrl"),
+  imgAlt: text("imgAlt"),
+  total: varchar("total", { length: 191 }),
+  isPublic: boolean("isPublic").default(false),
+  keywords: json("keywords"),
+  userId: varchar("userId", { length: 191 }).notNull(),
+});

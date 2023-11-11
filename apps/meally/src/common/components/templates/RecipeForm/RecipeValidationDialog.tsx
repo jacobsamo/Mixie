@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { Button } from "@components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,15 +9,15 @@ import {
   DialogTitle,
 } from "@components/ui/dialog";
 import { Input } from "@components/ui/input";
-import * as z from "zod";
-import { Controller, useFormContext } from "react-hook-form";
-import { Button } from "@components/ui/button";
-import { onSubmit } from "./form";
-import { ArrowLeftIcon } from "lucide-react";
-import { Textarea } from "@components/ui/textarea";
 import TagInput from "@components/ui/taginput";
+import { Textarea } from "@components/ui/textarea";
 import { recipeFormSchema } from "@db/zodSchemas";
-import { Switch, SwitchInput } from "../../ui/switch";
+import { ArrowLeftIcon } from "lucide-react";
+import { useState } from "react";
+import { Controller, useFormContext } from "react-hook-form";
+import * as z from "zod";
+import { SwitchInput } from "../../ui/switch";
+import { onSubmit } from "./form";
 
 interface CreateRecipeDialogProps {
   open: boolean;
@@ -81,7 +81,7 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
           </Button>
           <Button
             ariaLabel="save"
-            type="button"
+            type="submit"
             className="m-2 w-52"
             onClick={() => {
               handleSubmit(onSubmit);
