@@ -40,7 +40,7 @@ export async function generateMetadata({
   }
 
   return constructMetadata({
-    title: user.name || "",
+    title: `${user.name} profile` || "",
     description: undefined,
     image: user.image || undefined,
   });

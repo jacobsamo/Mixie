@@ -6,73 +6,10 @@ import "@styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "../common/components/modules/theme-provider";
 import Footer from "../common/components/modules/Footer";
+import { constructMetadata } from "../common/lib/utils/utils";
 
-const siteConfig = {
-  name: "Meally",
-  description:
-    "Meally is a community-driven recipe platform where home cooks and food enthusiasts can collaborate on unique and delicious recipes",
-  url: "https://www.meally.com.au",
-  ogImage: "",
-};
 
-export const metadata = {
-  title: {
-    default: siteConfig.name,
-    template: `%s | ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
-  keywords: [
-    "cooking",
-    "recipes",
-    "recipe",
-    "food",
-    "meals",
-    "meal",
-    "ingredients",
-    "ingredient",
-    "nutrition",
-    "nutritional",
-    "nutrients",
-    "nutrient",
-    "calories",
-    "calorie",
-    "diet",
-  ],
-  authors: [
-    {
-      name: "meally",
-      url: siteConfig.url,
-    },
-  ],
-  viewport: [
-    { name: "viewport", content: "width=device-width, initial-scale=1" },
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
-  openGraph: {
-    type: "website",
-    locale: "en_AU",
-    url: siteConfig.url,
-    title: siteConfig.name,
-    description: siteConfig.description,
-    siteName: siteConfig.name,
-    images: "/favicon.ico",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: siteConfig.name,
-    description: siteConfig.description,
-    images: [`${siteConfig.url}/favicon.ico`],
-    creator: "@meally",
-  },
-  metadataBase: new URL(siteConfig.url),
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
-  },
-  manifest: `/manifest.json`,
-};
+export const metadata = constructMetadata();
 
 export default async function RootLayout({
   children,

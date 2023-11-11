@@ -254,34 +254,45 @@ export function constructMetadata({
   title = "Meally",
   description = "Meally is a community-driven recipe platform where home cooks and food enthusiasts can collaborate on unique and delicious recipes",
   image = "/favicon.ico",
-  domain = "https://www.meally.com.au",
+  url = "https://www.meally.com.au",
   noIndex = false,
 }: {
   title?: string;
   description?: string;
   keywords?: string[];
   image?: string;
-  domain?: string;
+  url?: string;
   noIndex?: boolean;
 } = {}): Metadata {
   return {
-    title,
+    title: {
+      default: title,
+      template: `%s | ${title}`,
+    },
     description,
+    authors: [
+      {
+        name: "meally",
+        url: url,
+      },
+    ],
     openGraph: {
       type: "website",
       locale: "en_AU",
       title,
       description,
       images: {
-        url: image || '/banner.png',
+        url: image || "/banner.png",
         alt: title,
-      }
+      },
+      url: url,
+      siteName: "Meally",
     },
     twitter: {
       card: "summary_large_image",
-      title,
-      description,
-      images: [image],
+      title: title,
+      description: description,
+      images: [`${url}/favicon.ico`],
       creator: "@meally",
     },
     icons: {
@@ -289,7 +300,7 @@ export function constructMetadata({
       shortcut: "/favicon-16x16.png",
       apple: "/apple-touch-icon.png",
     },
-    metadataBase: new URL(domain),
+    metadataBase: new URL(url),
     themeColor: [
       { media: "(prefers-color-scheme: light)", color: "white" },
       { media: "(prefers-color-scheme: dark)", color: "black" },
@@ -301,5 +312,22 @@ export function constructMetadata({
       },
     }),
     manifest: `/manifest.json`,
+    keywords: [
+      "cooking",
+      "recipes",
+      "recipe",
+      "food",
+      "meals",
+      "meal",
+      "ingredients",
+      "ingredient",
+      "nutrition",
+      "nutritional",
+      "nutrients",
+      "nutrient",
+      "calories",
+      "calorie",
+      "diet",
+    ],
   };
 }

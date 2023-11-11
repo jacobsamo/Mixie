@@ -8,7 +8,7 @@ interface SettingsParams {
   profile: string;
 }
 
-export default function SettingsLayout({
+export default function UserLayout({
   children,
   params,
 }: {

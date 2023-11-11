@@ -50,20 +50,36 @@ export default function ProfilePage({ params }: ProfilePageProps) {
   const activeLink = searchParams.get("activeLink") || "profile";
   const [loading, setLoading] = useState(false);
 
-  const { handleSubmit, register, control, setValue, watch, getValues } =
-    useForm<User>({
-      resolver: zodResolver(userSchema),
-      defaultValues: async () => {
-        const res = await fetch(`/api/users/${params.profile}`, {
-          headers: {
-            authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
-          },
-        });
-        const user = (await res.json()) as User;
-        console.log(user);
-        return user;
-      },
-    });
+  const {
+    handleSubmit,
+    register,
+    control,
+    setValue,
+    watch,
+    getValues,
+    formState: { errors },
+  } = useForm<User>({
+    resolver: zodResolver(userSchema),
+    defaultValues: async () => {
+      const res = await fetch(`/api/users/${params.profile}`, {
+        headers: {
+          authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+        },
+      });
+      const user = (await res.json()) as User;
+      if (user.emailVerified) user.emailVerified = new Date(user.emailVerified);
+      console.log(user);
+      return user;
+    },
+  });
+
+  useEffect(() => {
+    if (errors)
+      console.log("Errors: ", {
+        errors: errors,
+        values: getValues(),
+      });
+  }, [errors]);
 
   const setImages = (images: UploadFileResponse[]) => {
     const image = images[0];

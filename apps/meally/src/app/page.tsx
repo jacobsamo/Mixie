@@ -7,6 +7,8 @@ import SearchTrigger from "../common/components/modules/SearchTrigger";
 import { db } from "../server/db";
 import { info } from "../server/db/schemas";
 
+export const revalidate = 60 * 60;
+
 const getRecipes = cache(async () => {
   const recipes = await db.query.info.findMany({
     where: eq(info.isPublic, true),
