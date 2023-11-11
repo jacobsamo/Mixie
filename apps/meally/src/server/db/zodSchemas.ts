@@ -1,6 +1,6 @@
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { createInsertSchema, createSelectSchema } from "./drizzle-zod";
 import { z } from "zod";
-import { recipes, info, ratings, users } from "./schemas";
+import { recipes, info, ratings, users, bookmarks } from "./schemas";
 import { unit, amount } from "./zodEnums";
 
 // join the info and ingredients to the recipe
@@ -33,15 +33,25 @@ const selectValue = z.object({
 export const ingredientSchema = z.object({
   isHeading: z.boolean(),
   title: z.string(),
-  unit: selectValue.extend({
-    value: unit,
-    label: unit,
-  }),
-  quantity: z.number().optional().nullable(),
-  amount: selectValue.extend({
-    value: amount,
-    label: amount,
-  }),
+  unit: selectValue
+    .extend({
+      value: unit,
+      label: unit,
+    })
+    .default({
+      label: "grams",
+      value: "grams",
+    }).nullable(),
+  quantity: z.number().nullable(),
+  amount: selectValue
+    .extend({
+      value: amount,
+      label: amount,
+    })
+    .default({
+      label: "not_set",
+      value: "not_set",
+    }).nullable(),
 });
 
 export const stepSchema = z.object({
@@ -73,3 +83,5 @@ export const recipesSelect = recipeSchemaSelect.extend({
 });
 
 export const userSchema = createInsertSchema(users);
+
+export const bookmarkSchema = createInsertSchema(bookmarks);

@@ -6,13 +6,14 @@ import { HeartIcon } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "../ui/use-toast";
 import { cn } from "@/src/common/lib/utils/utils";
-
-function addBookMark(recipe: Partial<Info>) {
-  throw Error("Function not implemented.");
-}
+import { env } from "@/env.mjs";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { Bookmark } from "@db/types";
+import { redirect } from "next/navigation";
 
 interface CardProps {
-  recipe: Partial<Info>;
+  recipe: Info | Bookmark;
 }
 
 interface BaseCardProps extends CardProps {
@@ -34,7 +35,46 @@ export const BaseCard = ({
   hasCookTime = true,
   classNames,
 }: BaseCardProps) => {
+  const { data: session } = useSession();
   const { toast } = useToast();
+
+  function addBookMark(recipe: Info | Bookmark) {
+    if (!session) return redirect("/auth/login");
+
+    const bookmark: Bookmark = {
+      recipeId: recipe.recipeId,
+      id: recipe.id,
+      title: recipe.title,
+      imgAlt: recipe.imgAlt,
+      imgUrl: recipe.imgUrl,
+      isPublic: recipe.isPublic,
+      total: recipe.total,
+      userId: session.user.id,
+    };
+
+    fetch(`/api/recipes/${bookmark.recipeId}/bookmark`, {
+      method: "POST",
+      body: JSON.stringify(bookmark),
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+      },
+    }).then((res) => {
+      if (res.status === 200) {
+        toast({
+          title: "Recipe created.",
+          description:
+            "Your recipe has been created. Changes will be reflected within an hour",
+        });
+      } else {
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: "There was an error while creating your recipe.",
+          variant: "destructive",
+        });
+      }
+    });
+  }
 
   return (
     <div
@@ -60,40 +100,26 @@ export const BaseCard = ({
           <h3 className={cn("w-fit whitespace-nowrap", classNames?.cookTime)}>
             {recipe.total}
           </h3>
-          {/* <button
-            onClick={() => {
-              addBookMark(recipe);
-              toast({
-                description: "Recipe has been bookmarked",
-              });
-            }}
-            className={classNames?.bookmarkButton}
-            aria-label="Bookmark Recipe"
-          >
-            <HeartIcon
-              className={cn("h-8 w-8 cursor-pointer", classNames?.bookmarkIcon)}
-            />
-          </button> */}
+          {session && (
+            <button
+              onClick={() => addBookMark(recipe)}
+              className="absolute bottom-2 right-2"
+            >
+              <HeartIcon className={`h-8 w-8 cursor-pointer`} />
+            </button>
+          )}
         </div>
       ) : (
-        <></>
-        // <button
-        //   onClick={() => {
-        //     addBookMark(recipe);
-        //     toast({
-        //       description: "Recipe has been bookmarked",
-        //     });
-        //   }}
-        //   className={cn(
-        //     "absolute bottom-2 right-2",
-        //     classNames?.bookmarkButton
-        //   )}
-        //   aria-label="Bookmark Recipe"
-        // >
-        //   <HeartIcon
-        //     className={cn("h-8 w-8 cursor-pointer", classNames?.bookmarkIcon)}
-        //   />
-        // </button>
+        <>
+          {session && (
+            <button
+              onClick={() => addBookMark(recipe)}
+              className="absolute bottom-2 right-2"
+            >
+              <HeartIcon className={`h-8 w-8 cursor-pointer`} />
+            </button>
+          )}
+        </>
       )}
 
       <Image
@@ -142,6 +168,47 @@ interface SearchCardProps extends CardProps {
 }
 
 const SearchCard = ({ as, edit, recipe }: SearchCardProps) => {
+  const { data: session } = useSession();
+  const { toast } = useToast();
+
+  function addBookMark(recipe: Info | Bookmark) {
+    if (!session) return redirect("/auth/login");
+
+    const bookmark: Bookmark = {
+      recipeId: recipe.recipeId,
+      id: recipe.id,
+      title: recipe.title,
+      imgAlt: recipe.imgAlt,
+      imgUrl: recipe.imgUrl,
+      isPublic: recipe.isPublic,
+      total: recipe.total,
+      userId: session.user.id,
+    };
+
+    fetch(`/api/recipes/${bookmark.recipeId}/bookmark`, {
+      method: "POST",
+      body: JSON.stringify(bookmark),
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+      },
+    }).then((res) => {
+      if (res.status === 200) {
+        toast({
+          title: "Recipe created.",
+          description:
+            "Your recipe has been created. Changes will be reflected within an hour",
+        });
+      } else {
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: "There was an error while creating your recipe.",
+          variant: "destructive",
+        });
+      }
+    });
+  }
+
   const Tag = as;
   return (
     <Tag className="relative flex h-32 w-full max-w-[600px] flex-row gap-2 rounded-md bg-grey">
@@ -152,32 +219,38 @@ const SearchCard = ({ as, edit, recipe }: SearchCardProps) => {
         height={100}
         className="h-32 w-2/5 rounded-lg object-cover"
       />
-      <button
-        onClick={() => addBookMark(recipe)}
-        className="absolute bottom-2 right-2"
-      >
-        <HeartIcon className={`h-8 w-8 cursor-pointer`} />
-      </button>
+      {session && (
+        <button
+          onClick={() => addBookMark(recipe)}
+          className="absolute bottom-2 right-2"
+        >
+          <HeartIcon className={`h-8 w-8 cursor-pointer`} />
+        </button>
+      )}
       <div>
         <Link
-          href={`/recipes/${recipe.id}${edit ? "/edit" : ""}`}
+          href={`/recipes/${edit ? recipe.recipeId : recipe.id}${
+            edit ? "/edit" : ""
+          }`}
           className="text-step--1"
         >
           {recipe.title}
         </Link>
         {recipe.keywords && (
           <div className="flex w-full flex-row flex-wrap gap-1">
-            {recipe?.keywords?.slice(0, 5).map((keyword, index) => {
-              return (
-                <p
-                  key={index}
-                  className="h-fit w-fit rounded-lg bg-yellow p-1 text-center text-step--4 text-black opacity-80"
-                >
-                  {keyword.value}
-                </p>
-              );
-            }) || null}
-            {recipe?.keywords?.length > 5 && (
+            {(Array.isArray(recipe?.keywords) &&
+              recipe?.keywords?.slice(0, 5).map((keyword, index) => {
+                return (
+                  <p
+                    key={index}
+                    className="h-fit w-fit rounded-lg bg-yellow p-1 text-center text-step--4 text-black opacity-80"
+                  >
+                    {keyword.value}
+                  </p>
+                );
+              })) ||
+              null}
+            {Array.isArray(recipe?.keywords) && recipe?.keywords.length > 5 && (
               <p className="text-center text-step--4 text-black opacity-80">
                 ...
               </p>

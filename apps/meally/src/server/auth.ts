@@ -1,21 +1,25 @@
 import { and, eq } from "drizzle-orm";
+import { type GetServerSidePropsContext } from "next";
 import {
   getServerSession,
   type DefaultSession,
   type NextAuthOptions,
 } from "next-auth";
+import { type Adapter } from "next-auth/adapters";
+
+import EmailProvider from "next-auth/providers/email";
+import FacebookProvider from "next-auth/providers/facebook";
+import GitHubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 
 import { env } from "@/env.mjs";
-import { db } from "@server/db";
-import * as schema from "@server/db/schemas";
-
-import GitHubProvider from "next-auth/providers/github";
-import FacebookProvider from "next-auth/providers/facebook";
-import GoogleProvider from "next-auth/providers/google";
-import TwitterProvider from "next-auth/providers/twitter";
-import EmailProvider from "next-auth/providers/email";
-import { Adapter } from "@auth/core/adapters";
-import { sendVerificationRequest } from "./send-verification-request";
+import { db } from "@db/index";
+import { sendVerificationRequest } from "@server/send-verification-request";
+import * as schema from "@db/schemas";
+import { TFont, TTheme } from "@db/enum-types";
+import { User as DbUser } from "@db/types";
+import { sendEmail } from "@server/emails";
+import LoginLink from "@server/emails/login";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -24,18 +28,21 @@ import { sendVerificationRequest } from "./send-verification-request";
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
 declare module "next-auth" {
-  interface Session extends DefaultSession {
+  /**
+   * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
+   */
+  interface Session {
     user: {
       id: string;
-      // ...other properties
-      // role: UserRole;
+      bio: string;
+      userName: string;
+      theme: TTheme;
+      font: TFont;
+      email: string;
     } & DefaultSession["user"];
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface User extends DbUser {}
 }
 
 /**
@@ -51,14 +58,12 @@ export const authOptions: NextAuthOptions = {
   theme: {
     logo: "/favicon.ico",
   },
-  callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+  secret: env.NEXTAUTH_SECRET,
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: { httpOnly: false },
+    },
   },
   adapter: DrizzleAdapter(),
   providers: [
@@ -75,17 +80,18 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
     EmailProvider({
-      server: `smtp://resend:${env.RESEND_API_KEY}@smtp.resend.com:465`,
-      // server: {
-      //   host: "smtp.resend.com",
-      //   port: 465,
-      //   auth: {
-      //     user: "resend",
-      //     pass: env.RESEND_API_KEY,
-      //   },
-      // },
-      from: "cook@meally.com.au",
-      sendVerificationRequest,
+      sendVerificationRequest({ identifier, url, token }) {
+        if (process.env.NODE_ENV === "development") {
+          console.log(`Login link: ${url}, token: ${token}`);
+          return;
+        } else {
+          sendEmail({
+            email: identifier,
+            subject: "Your Meally login link",
+            react: LoginLink({ url, email: identifier, token: token }),
+          });
+        }
+      },
       async generateVerificationToken() {
         const digits = "0123456789";
         let verificationCode = "";
@@ -99,6 +105,34 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    signIn: async ({ user, account, profile, email, credentials }) => {
+      console.log("User signed in: ", { user, account, profile });
+
+      return true;
+    },
+    session: async ({ session, user, token }) => {
+      session.user = {
+        ...session.user,
+        id: user.id,
+        userName: user.userName || "",
+        bio: user.bio || "",
+        font: user.font || "default",
+        email: user.email,
+      };
+
+      return session;
+    },
+    jwt: async ({ token, account, user, trigger }) => {
+      if (user) {
+        token.user = user;
+      }
+      if (account?.accessToken) {
+        token.accessToken = account.accessToken;
+      }
+      return token;
+    },
+  },
 };
 
 /**
@@ -106,14 +140,32 @@ export const authOptions: NextAuthOptions = {
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */
-export const getServerAuthSession = () => getServerSession(authOptions);
+export const getServerAuthSession = () => {
+  return getServerSession(authOptions);
+};
+
+
+/**
+ * Adapter for Drizzle ORM. This is not yet available in NextAuth directly, so we inhouse our own.
+ * When the official one is out, we will switch to that.
+ *
+ * @see
+ * https://github.com/nextauthjs/next-auth/pull/7165/files#diff-142e7d6584eed63a73316fbc041fb93a0564a1cbb0da71200b92628ca66024b5
+ */
 
 export function DrizzleAdapter(): Adapter {
   const { users, sessions, accounts, verificationTokens } = schema;
-
   return {
     async createUser(data) {
       const id = crypto.randomUUID();
+
+      if (!data.image) {
+        const name = data.name ?? data.email.split("@")[0][0].toUpperCase();
+        console.log(name);
+        data.image = `https:ui-avatars.com/api/?name=${name
+          ?.split(" ")
+          .join("+")}"&size=256&background=random`;
+      }
 
       await db.insert(users).values({ ...data, id });
 
@@ -192,7 +244,10 @@ export function DrizzleAdapter(): Adapter {
         .then((res) => res[0]);
     },
     async linkAccount(rawAccount) {
-      await db.insert(accounts).values(rawAccount);
+      await db
+        .insert(accounts)
+        .values(rawAccount)
+        .then((res) => res[0]);
     },
     async getUserByAccount(account) {
       const dbAccount =

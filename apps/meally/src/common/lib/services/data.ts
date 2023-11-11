@@ -203,7 +203,7 @@ export const dietaryRequirements = [
 ];
 
 export const units = [
-  { value: "not_set", label: " " },
+  { value: "not_set", label: "not_set" },
   { value: "grams", label: "grams" },
   { value: "kg", label: "kg" },
   { value: "cup", label: "cup" },

@@ -1,13 +1,11 @@
 "use client";
+import clsx from "clsx";
+import { SearchIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
-import UserProfile from "./UserProfile";
-import { SearchIcon } from "lucide-react";
-import clsx from "clsx";
+import { useEffect, useState } from "react";
 import SearchTrigger from "./SearchTrigger";
-import { Button } from "../ui/button";
-import recipeService from "../../lib/services/RecipeService";
+import UserProfile from "./UserProfile";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +29,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="flex print:hidden h-14 w-full flex-row items-center justify-between bg-transparent px-2">
+    <nav className="flex h-14 w-full flex-row items-center justify-between bg-transparent px-2 print:hidden">
       {/* Logo & name - always show */}
       <Link href="/" className="flex flex-row gap-1">
         {/* Logo image */}
@@ -48,11 +46,13 @@ const Navbar = () => {
 
       {/* Links - show in sidebar under 640px (sm:), otherwise always show */}
       <div
-        className={clsx("flex flex-col gap-8 sm:flex-row", {
-          hidden: isMobile && !isOpen,
-          "absolute left-0 top-14 z-50 flex h-screen w-full bg-white dark:bg-black":
-            isOpen,
-        })}
+        className={`flex flex-col gap-8 sm:flex-row ${
+          isMobile && !isOpen ? "hidden" : ""
+        } ${
+          isOpen
+            ? "absolute left-0 top-14 z-50 flex h-screen w-full bg-white dark:bg-black"
+            : ""
+        }`}
       >
         <Link
           href={"/recipes"}

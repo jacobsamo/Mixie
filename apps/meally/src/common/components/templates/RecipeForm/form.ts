@@ -1,10 +1,14 @@
 import { calculateTotalTime } from "@/src/common/lib/utils/utils";
 import type { Ingredient } from "@db/types";
 import { recipeFormSchema } from "@db/zodSchemas";
+import { SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { toast } from "../../ui/use-toast";
+import { stepSchema, ingredientSchema } from "@db/zodSchemas";
 
-export const onSubmit = async (recipe: z.infer<typeof recipeFormSchema>) => {
+export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
+  recipe
+) => {
   if (!recipe) return;
 
   const totalTime =
@@ -13,7 +17,7 @@ export const onSubmit = async (recipe: z.infer<typeof recipeFormSchema>) => {
       : null;
 
   const ingredients = recipe?.ingredients?.map((ingredient: Ingredient) => {
-    if (!["cup", "tbsp", "tsp"].includes(ingredient.unit.value || "")) {
+    if (!["cup", "tbsp", "tsp"].includes(ingredient.unit?.value ?? "")) {
       ingredient.amount = {
         value: "not_set",
         label: "not_set",
@@ -48,7 +52,8 @@ export const onSubmit = async (recipe: z.infer<typeof recipeFormSchema>) => {
     if (res.status === 200) {
       toast({
         title: "Recipe created.",
-        description: "Your recipe has been created.",
+        description:
+          "Your recipe has been created. Changes will be reflected within an hour",
       });
     } else {
       toast({

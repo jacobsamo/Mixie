@@ -1,6 +1,9 @@
 import React from "react";
 import { Ingredient, Step } from "@db/types";
-import { matchIngredients } from "@/src/common/lib/utils/utils";
+import {
+  displayIngredient,
+  matchIngredients,
+} from "@/src/common/lib/utils/utils";
 
 interface IngredientChipsProps {
   step: Step;
@@ -19,14 +22,7 @@ const IngredientChips = ({ step, ingredients }: IngredientChipsProps) => {
           key={index}
           className="h-fit w-fit rounded-lg bg-yellow p-1 text-center text-step--4 text-black opacity-80"
         >
-          {ingredient.quantity}{" "}
-          {ingredient.amount.value == "not_set"
-            ? null
-            : ingredient.amount.label}{" "}
-          {ingredient.unit.value == "not_set"
-            ? null
-            : ingredient.unit.label.replace("item", "")}{" "}
-          {ingredient.title}{" "}
+          {displayIngredient(ingredient)}
         </p>
       ))}
     </div>

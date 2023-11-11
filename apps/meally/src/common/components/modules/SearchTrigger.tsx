@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Search from "./Search";
+import { Button } from "../ui/button";
 
 interface SearchTriggerProps {
   children: React.ReactNode;
@@ -11,12 +12,13 @@ const SearchTrigger = ({ children }: SearchTriggerProps) => {
 
   return (
     <>
-      <button
-        aria-label="Open dialog to search for recipes"
+      <Button
+        ariaLabel="Search by keyword, ingredient or recipes" 
+        unstyled
         onClick={() => setOpen(!open)}
       >
         {children}
-      </button>
+      </Button>
       <Search externalOpen={open} setExternalOpen={setOpen} />
     </>
   );

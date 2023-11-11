@@ -6,27 +6,27 @@ export default function Privacy_PolicyPage() {
     <>
       <main className="mx-auto my-0 max-w-[800px] p-10">
         <h1 className="mb-5 text-step1 font-bold">Privacy Policy</h1>
-        <h2 className="mb-5 text-step--2 font-bold">Last updated: 19/9/23</h2>
+        <h2 className="mb-5 text-step--2 font-bold">Last updated: 1/11/23</h2>
         <p className="mb-5 text-step--3">
-          Welcome to Meally, where your privacy and data security are our top
-          priorities. We are committed to ensuring that your personal
-          information is handled with care and used only for legitimate
-          purposes. This privacy policy outlines how we collect, use, and
-          protect your information.
+          Welcome to Meally, your trusted platform for culinary exploration and
+          collaboration. At Meally, we prioritize your privacy and data
+          security. This Privacy Policy outlines our commitment to safeguarding
+          your personal information, detailing how we collect, use, protect, and
+          share your data.
         </p>
         <p>
-          At Meally, we value your trust and are dedicated to safeguarding your
-          privacy. This policy explains how we collect, use, share, and protect
-          your personal information. By using our platform, you agree to the
-          practices described herein.
+          By using Meally, you consent to the practices described in this
+          Privacy Policy. Your trust is essential to us, and we are dedicated to
+          ensuring your data is handled with care and utilized only for
+          legitimate purposes.
         </p>
         <br />
         <ol className="mb-5 list-decimal pl-5">
           <li className="mb-5 text-step--3">
             Information we collect:
             <p className="mb-5 text-step--3">
-              When you sign up on our website, we collect the following
-              information voluntarily:
+              When you register on our website, we collect the following
+              personal information:
               <br />
               <ul className="ml-8 list-disc">
                 <li>Your name</li>
@@ -38,10 +38,27 @@ export default function Privacy_PolicyPage() {
               </ul>
               <br />
               <p>
+                We also collect certain preferences voluntarily shared by you to
+                enhance your Meally experience, including:
+              </p>
+              <br />
+              <ul>
+                <li>Site theme</li>
+                <li>Preferred text font</li>
+                <li>Allergies</li>
+                <li>Dietary preferences</li>
+                <li>Cooking ability</li>
+              </ul>
+              <br />
+              <p>
                 Additionally, we collect data related to the recipes you
                 interact with, including those you have clicked on, made, or
-                created. This information is stored securely within our platform
-                and is not shared with third parties.
+                created.
+              </p>
+              <p>
+                All the data collected is kept confidential and is not shared
+                with any third parties except for the service providers who
+                assist us in delivering our products and services.
               </p>
             </p>
           </li>
@@ -66,7 +83,9 @@ export default function Privacy_PolicyPage() {
               >
                 Google Adsense
               </Link>
-              . We may also collect analytics data to enhance user experience.
+              . We also collect analytics data to enhance user experience, this
+              The data we collect related to your recipe interactions is not
+              personally identifying and does not link to you in any way.
               {/* You can manage your preferences for cookies and tracking
               technologies in your account settings. */}
             </p>
@@ -78,7 +97,7 @@ export default function Privacy_PolicyPage() {
               marketing purposes. However, we may share your information with
               service providers who assist us in delivering our products and
               services. We will also disclose information if required by law or
-              if we believe it is necessary to protect our rights or the rights
+              if we believe it's necessary to protect our rights or the rights
               of others.
             </p>
           </li>
@@ -89,7 +108,7 @@ export default function Privacy_PolicyPage() {
               from unauthorized access, use, or disclosure. While we implement
               robust security protocols, please understand that no online method
               is entirely secure. Nevertheless, we are committed to doing
-              everything within our power to ensure the safety of your data. .
+              everything within our power to ensure the safety of your data.
             </p>
           </li>
           <li className="mb-5 text-step--3">
@@ -97,10 +116,10 @@ export default function Privacy_PolicyPage() {
             <p className="mb-3 text-step--3">
               You have the right to opt out of receiving marketing
               communications from us at any time, including newsletters and
-              updates. and updates. You can request access to your information,
-              which may take up to 24 hours to process. Additionally, you have
-              the option to delete your Meally account; however, please note
-              that this action will not delete your recipes.
+              updates. You can request access to your information, which may
+              take up to 24 hours to process. Additionally, you have the option
+              to delete your Meally account; however, please note that this
+              action won't delete your recipes. For more details.
               {/* For more details, please read
               our [Account Deletion Policy](#link-to-account-deletion-policy). */}
             </p>
@@ -108,9 +127,9 @@ export default function Privacy_PolicyPage() {
           <li className="mb-5 text-step--3">
             Data Retention
             <p className="mb-3 text-step--3">
-              We retain your data only for as long as necessary to fulfill the
-              purposes outlined in this policy or as required by law. Afterward,
-              we may anonymize or delete your data securely.
+              We retain your data only for as long as necessary to fulfil the
+              purposes outlined in this policy or as required by law.
+              Afterwards, we may anonymize or delete your data securely.
             </p>
           </li>
           <li className="mb-5 text-step--3">

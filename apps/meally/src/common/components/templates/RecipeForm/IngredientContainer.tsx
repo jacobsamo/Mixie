@@ -33,10 +33,7 @@ const IngredientContainer = () => {
       },
       quantity: null,
       isHeading: false,
-      amount: {
-        label: "not_set",
-        value: "not_set",
-      },
+      amount: null,
     });
   }, [append]);
 
@@ -44,15 +41,9 @@ const IngredientContainer = () => {
     append({
       title: "",
       isHeading: true,
-      unit: {
-        label: "not_set",
-        value: "not_set",
-      },
+      unit: null,
       quantity: null,
-      amount: {
-        label: "not_set",
-        value: "not_set",
-      },
+      amount: null,
     });
   }, [append]);
 

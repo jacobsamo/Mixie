@@ -98,7 +98,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
                 name={name}
                 placeholder={label || props.placeholder}
                 onChange={field.onChange}
-                value={field.value}
+                value={field.value || ""}
                 ref={field.ref}
                 rows={
                   /\n/.test(field.value?.toString() || "")

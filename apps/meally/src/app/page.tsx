@@ -1,15 +1,16 @@
-import { env } from "@/env.mjs";
 import { CardRectangle } from "@components/elements/Cards";
-import { Info } from "@db/types";
+import { eq } from "drizzle-orm";
 import { SearchIcon } from "lucide-react";
 import Carousel from "../common/components/elements/Carousel";
 import SearchTrigger from "../common/components/modules/SearchTrigger";
 import { db } from "../server/db";
-import { eq } from "drizzle-orm";
 import { info } from "../server/db/schemas";
-import { cache } from "react";
+import { unstable_cache } from "next/cache";
 
-const getRecipes = cache(async () => {
+
+export const revalidate = 60 * 60;
+
+const getRecipes = unstable_cache(async () => {
   const recipes = await db.query.info.findMany({
     where: eq(info.isPublic, true),
   });
