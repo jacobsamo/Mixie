@@ -30,14 +30,6 @@ const getUsers = unstable_cache(
   }
 );
 
-export async function generateStaticParams() {
-  const users = await getUsers();
-
-  return users.map((post) => ({
-    id: post.id,
-  }));
-}
-
 export async function generateMetadata({
   params,
 }: ProfilePageProps): Promise<Metadata | undefined> {
