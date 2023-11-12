@@ -1,12 +1,10 @@
-import { NextAuthProvider } from "@components/layouts/NextAuthProvider";
+import Footer from "@components/modules/Footer";
 import Navbar from "@components/modules/Navbar";
+import Providers from "@components/modules/Providers";
 import { Toaster } from "@components/ui/toaster";
-import { getServerAuthSession } from "@server/auth";
+import { constructMetadata } from "@lib/utils/utils";
 import "@styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
-import { ThemeProvider } from "../common/components/modules/theme-provider";
-import Footer from "../common/components/modules/Footer";
-import { constructMetadata } from "../common/lib/utils/utils";
 import { Viewport } from "next";
 
 export const metadata = constructMetadata();
@@ -23,21 +21,16 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerAuthSession();
-  const theme = session?.user?.theme || "system";
-
   return (
     <html lang="en">
       <body>
-        <ThemeProvider attribute="class" defaultTheme={theme} enableSystem>
-          <NextAuthProvider>
-            <Navbar />
-            {/* <Search /> */}
-            {children}
-            <Toaster />
-            <Footer />
-          </NextAuthProvider>
-        </ThemeProvider>
+        <Providers>
+          <Navbar />
+          {/* <Search /> */}
+          {children}
+          <Toaster />
+          <Footer />
+        </Providers>
         <Analytics />
       </body>
     </html>

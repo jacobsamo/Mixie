@@ -85,31 +85,33 @@ const Navbar = () => {
         <SearchTrigger>
           <SearchIcon className="h-8 w-8" />
         </SearchTrigger>
-        <button
-          type="button"
-          className="flex flex-col items-end justify-center gap-1 sm:hidden"
-          aria-label="Open sidebar"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <span
-            className={clsx(
-              "shadow-[0px 4px 4px rgba(0, 0, 0, 0.25)] box-border block h-[2.3px] w-4 rounded-sm bg-black transition-all delay-[0.3s] ease-in-out dark:bg-white",
-              { "w-[1.625rem] translate-y-[6px] rotate-45": isOpen }
-            )}
-          ></span>
-          <span
-            className={clsx(
-              "shadow-[0px 4px 4px rgba(0, 0, 0, 0.25)] box-border block h-[2.3px] w-[1.625rem] rounded-sm bg-black transition-all delay-[0.3s] ease-in-out dark:bg-white",
-              { "opacity-0": isOpen }
-            )}
-          ></span>
-          <span
-            className={clsx(
-              "shadow-[0px 4px 4px rgba(0, 0, 0, 0.25)] box-border block h-[2.3px] w-[1.3125rem] rounded-sm bg-black transition-all delay-[0.3s] ease-in-out dark:bg-white",
-              { "w-[1.625rem] -translate-y-[6px] -rotate-45": isOpen }
-            )}
-          ></span>
-        </button>
+        {isMobile && (
+          <button
+            type="button"
+            className="flex flex-col items-end justify-center gap-1 sm:hidden"
+            aria-label="Open sidebar"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <span
+              className={clsx(
+                "shadow-[0px 4px 4px rgba(0, 0, 0, 0.25)] box-border block h-[2.3px] w-4 rounded-sm bg-black transition-all delay-[0.3s] ease-in-out dark:bg-white",
+                { "w-[1.625rem] translate-y-[6px] rotate-45": isOpen }
+              )}
+            ></span>
+            <span
+              className={clsx(
+                "shadow-[0px 4px 4px rgba(0, 0, 0, 0.25)] box-border block h-[2.3px] w-[1.625rem] rounded-sm bg-black transition-all delay-[0.3s] ease-in-out dark:bg-white",
+                { "opacity-0": isOpen }
+              )}
+            ></span>
+            <span
+              className={clsx(
+                "shadow-[0px 4px 4px rgba(0, 0, 0, 0.25)] box-border block h-[2.3px] w-[1.3125rem] rounded-sm bg-black transition-all delay-[0.3s] ease-in-out dark:bg-white",
+                { "w-[1.625rem] -translate-y-[6px] -rotate-45": isOpen }
+              )}
+            ></span>
+          </button>
+        )}
         <UserProfile />
       </div>
     </nav>

@@ -23,11 +23,17 @@ export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
         label: "not_set",
       };
     }
+
+    if (!ingredient.amount) {
+      ingredient.amount = null;
+    }
+
     // check if the quantity is a number if not then set the value to null
     if (
       typeof ingredient?.quantity != "number" ||
       isNaN(ingredient?.quantity) ||
-      ingredient?.quantity === 0
+      ingredient?.quantity === 0 ||
+      !ingredient?.quantity
     ) {
       ingredient.quantity = null;
     }
