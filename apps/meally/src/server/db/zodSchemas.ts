@@ -43,7 +43,7 @@ export const ingredientSchema = z.object({
       value: "grams",
     })
     .nullable(),
-  quantity: z.number().nullable().optional(),
+  quantity: z.number().optional().nullable(),
   amount: selectValue
     .extend({
       value: amount,

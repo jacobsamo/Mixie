@@ -1,10 +1,9 @@
 import { SearchCard } from "@/src/common/components/elements/Cards";
 import { db } from "@db/index";
-import { authOptions } from "@server/auth";
 import { bookmarks } from "@db/schemas";
 import { Bookmark } from "@db/types";
-import { eq, or } from "drizzle-orm";
 import { getServerAuthSession } from "@server/auth";
+import { eq, or } from "drizzle-orm";
 import { notFound } from "next/navigation";
 
 export default async function BookmarksPage() {

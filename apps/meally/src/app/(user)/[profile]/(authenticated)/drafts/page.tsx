@@ -1,23 +1,22 @@
 import { SearchCard } from "@/src/common/components/elements/Cards";
 import { db } from "@db/index";
-import { authOptions } from "@server/auth";
 import { recipes } from "@db/schemas";
 import { Info } from "@db/types";
-import { eq, or } from "drizzle-orm";
 import { getServerAuthSession } from "@server/auth";
+import { eq, or } from "drizzle-orm";
 import { notFound } from "next/navigation";
 
-export default async function DraftsPage() {
-  const session = await getServerAuthSession();
+interface DraftsPageProps {
+  params: {
+    profile: string;
+  };
+}
 
-  if (!session?.user) {
-    return notFound();
-  }
-
+export default async function DraftsPage({ params }: DraftsPageProps) {
   const gotRecipes = (await db.query.info.findMany({
     where: or(
-      eq(recipes.createdBy, session.user.id),
-      eq(recipes.lastUpdatedBy, session.user.id)
+      eq(recipes.createdBy, params.profile),
+      eq(recipes.lastUpdatedBy, params.profile)
     ),
   })) as Info[];
 
