@@ -64,18 +64,7 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
 
       <Input
         type="number"
-        {...register(`ingredients.${index}.quantity`, {
-          valueAsNumber: true,
-          validate: (value) => {
-            if (value === null) {
-              return true; // It's not required, so null is allowed
-            }
-            if (value < 1) {
-              return "Quantity cannot be less than 1";
-            }
-            return true;
-          },
-        })}
+        {...register(`ingredients.${index}.quantity`, { valueAsNumber: true })}
       />
 
       {["cup", "tbsp", "tsp"].includes(activeUnit?.value ?? "not_set") && (

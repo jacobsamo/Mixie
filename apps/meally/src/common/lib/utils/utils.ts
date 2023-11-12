@@ -301,10 +301,6 @@ export function constructMetadata({
       apple: "/apple-touch-icon.png",
     },
     metadataBase: new URL(url),
-    themeColor: [
-      { media: "(prefers-color-scheme: light)", color: "white" },
-      { media: "(prefers-color-scheme: dark)", color: "black" },
-    ],
     ...(noIndex && {
       robots: {
         index: false,

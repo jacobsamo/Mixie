@@ -7,9 +7,16 @@ import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "../common/components/modules/theme-provider";
 import Footer from "../common/components/modules/Footer";
 import { constructMetadata } from "../common/lib/utils/utils";
-
+import { Viewport } from "next";
 
 export const metadata = constructMetadata();
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
+};
 
 export default async function RootLayout({
   children,
