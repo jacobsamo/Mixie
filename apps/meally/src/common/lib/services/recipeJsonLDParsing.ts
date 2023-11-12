@@ -73,7 +73,7 @@ export async function convertIngredients(
     // set quantity
     const quantityMatch = ingredient.match(/[\d.]+/g);
     if (quantityMatch && quantity == null) {
-      quantity = parseFloat(quantityMatch[0]);
+      quantity = quantityMatch[0] ? parseInt(quantityMatch[0]) : null;
       title = title.replace(quantityMatch[0], "");
     }
 
@@ -98,7 +98,7 @@ export async function convertIngredients(
 
       // Check for amount
       if (
-        amount && amount.value === "not_set" ||
+        (amount && amount.value === "not_set") ||
         ["not_set", "tsp", "tbsp"].includes(unit.value)
       ) {
         const amountMatch = part.match(/(1\/8|1\/2|1\/3|2\/3|1\/4|3\/4)/);

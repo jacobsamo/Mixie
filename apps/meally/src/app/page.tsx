@@ -7,15 +7,20 @@ import { db } from "../server/db";
 import { info } from "../server/db/schemas";
 import { unstable_cache } from "next/cache";
 
-
 export const revalidate = 60 * 60;
 
-const getRecipes = unstable_cache(async () => {
-  const recipes = await db.query.info.findMany({
-    where: eq(info.isPublic, true),
-  });
-  return recipes;
-});
+const getRecipes = unstable_cache(
+  async () => {
+    const recipes = await db.query.info.findMany({
+      where: eq(info.isPublic, true),
+    });
+    return recipes;
+  },
+  ["recipes"],
+  {
+    revalidate: 60 * 60,
+  }
+);
 
 export default async function Page() {
   const latestRecipes = await getRecipes();

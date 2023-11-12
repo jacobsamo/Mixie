@@ -41,8 +41,9 @@ export const ingredientSchema = z.object({
     .default({
       label: "grams",
       value: "grams",
-    }).nullable(),
-  quantity: z.number().nullable(),
+    })
+    .nullable(),
+  quantity: z.number().optional().nullable(),
   amount: selectValue
     .extend({
       value: amount,
@@ -51,7 +52,8 @@ export const ingredientSchema = z.object({
     .default({
       label: "not_set",
       value: "not_set",
-    }).nullable(),
+    })
+    .nullable(),
 });
 
 export const stepSchema = z.object({

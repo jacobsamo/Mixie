@@ -64,7 +64,6 @@ const ImageUploadDialog = ({
             onUploadBegin={() => setLoading(true)}
             onClientUploadComplete={(res) => {
               // Do something with the response
-              console.log("Files: ", res?.map((file) => file.url));
               setImage && res && setImage(res);
 
               setLoading(false);

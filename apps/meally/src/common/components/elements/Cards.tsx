@@ -62,14 +62,12 @@ export const BaseCard = ({
     }).then((res) => {
       if (res.status === 200) {
         toast({
-          title: "Recipe created.",
-          description:
-            "Your recipe has been created. Changes will be reflected within an hour",
+          title: "Recipe bookmarked.",
         });
       } else {
         toast({
           title: "Uh oh! Something went wrong.",
-          description: "There was an error while creating your recipe.",
+          description: "There was an error while bookmarking the recipe.",
           variant: "destructive",
         });
       }
@@ -195,14 +193,12 @@ const SearchCard = ({ as, edit, recipe }: SearchCardProps) => {
     }).then((res) => {
       if (res.status === 200) {
         toast({
-          title: "Recipe created.",
-          description:
-            "Your recipe has been created. Changes will be reflected within an hour",
+          title: "Recipe bookmarked.",
         });
       } else {
         toast({
           title: "Uh oh! Something went wrong.",
-          description: "There was an error while creating your recipe.",
+          description: "There was an error while bookmarking the recipe.",
           variant: "destructive",
         });
       }

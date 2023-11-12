@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const displayIngredient = (ingredient: IngredientType) =>
-  `${ingredient.quantity} ${
+  `${ingredient.quantity ?? ""} ${
     ingredient.amount && ingredient.amount.value == "not_set"
       ? ""
       : ingredient.amount?.label
@@ -301,10 +301,6 @@ export function constructMetadata({
       apple: "/apple-touch-icon.png",
     },
     metadataBase: new URL(url),
-    themeColor: [
-      { media: "(prefers-color-scheme: light)", color: "white" },
-      { media: "(prefers-color-scheme: dark)", color: "black" },
-    ],
     ...(noIndex && {
       robots: {
         index: false,

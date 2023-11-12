@@ -1,6 +1,4 @@
-"use client";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
+import { getServerAuthSession } from "@/src/server/auth";
 import { notFound } from "next/navigation";
 import React from "react";
 
@@ -8,14 +6,14 @@ interface SettingsParams {
   profile: string;
 }
 
-export default function UserLayout({
+export default async function UserLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
   params: SettingsParams;
 }) {
-  const { data: session } = useSession();
+  const session = await getServerAuthSession();
 
   if (session?.user.id != params.profile) return notFound();
 
