@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const displayIngredient = (ingredient: IngredientType) =>
-  `${ingredient.quantity} ${
+  `${ingredient.quantity ?? ""} ${
     ingredient.amount && ingredient.amount.value == "not_set"
       ? ""
       : ingredient.amount?.label

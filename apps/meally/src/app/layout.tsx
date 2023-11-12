@@ -25,7 +25,6 @@ export default async function RootLayout({
 }) {
   const session = await getServerAuthSession();
   const theme = session?.user?.theme || "system";
-  console.log(theme);
 
   return (
     <html lang="en">
