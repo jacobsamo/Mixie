@@ -9,6 +9,7 @@ import * as z from "zod";
 import Link from "next/link";
 import { ExternalLinkIcon } from "lucide-react";
 import RecipePrintingView from "./RecipePrintingView";
+import ShareDialog from "@components/elements/ShareDialog";
 
 interface RecipePageComponentProps {
   recipe: Recipe;
@@ -49,13 +50,23 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
                 <Link
                   href={recipe.source}
                   target="_blank"
-                  className="flex cursor-pointer flex-row items-center gap-1 rounded-lg bg-white p-1 dark:bg-grey "
+                  className="flex cursor-pointer flex-row items-center gap-1 rounded-lg bg-white p-1 dark:bg-grey"
                 >
                   {" "}
                   <ExternalLinkIcon className="h-5 w-5" />
                   Source
                 </Link>
               )}
+
+              <ShareDialog
+                url={`https://www.meally.com.au/recipes/${recipe.id}`}
+                image={recipe.info.imgUrl || ""}
+                title={recipe.title}
+                hashtags={recipe.info?.keywords
+                  ?.splice(0, 5)
+                  ?.map((keyword) => keyword.value)
+                  .join(", ")}
+              />
             </span>
           </div>
           <p className="md:w-9/12">{recipe.description}</p>

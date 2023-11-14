@@ -77,8 +77,8 @@ export default async function RecipePage({ params }) {
             }) || []
           }
           description={recipe.description! || ""}
-          datePublished={recipe.createdAt?.toTimeString()}
-          dateModified={recipe.lastUpdated?.toTimeString()}
+          datePublished={new Date(recipe.createdAt).toDateString()}
+          dateModified={new Date(recipe.lastUpdated).toDateString()}
           keywords={
             recipe.info.keywords?.map((keyword) => keyword.value).join(", ") ||
             ""
