@@ -89,6 +89,7 @@ export const authOptions: NextAuthOptions = {
         return verificationCode;
       },
       async sendVerificationRequest({ identifier, url, token }) {
+        console.log("Sending verification request to: ", identifier);
         await sendEmail({
           email: identifier,
           subject: "Your Meally login link",

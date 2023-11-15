@@ -6,6 +6,7 @@ import { constructMetadata } from "@lib/utils/utils";
 import "@styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { Viewport } from "next";
+import { getServerAuthSession } from "../server/auth";
 
 export const metadata = constructMetadata();
 
@@ -21,6 +22,10 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerAuthSession();
+  const theme = session?.user?.theme || "system";
+  console.log(theme);
+
   return (
     <html lang="en">
       <body>

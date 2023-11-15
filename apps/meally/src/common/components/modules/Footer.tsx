@@ -7,7 +7,13 @@ const Footer = () => {
     <>
       <footer className="bottom-0 flex h-48 w-full flex-col items-center justify-between bg-white px-4 py-2 dark:bg-grey print:hidden sm:flex-row md:h-28">
         <div className="flex flex-row items-center justify-center gap-1">
-          <Image src="/icons/icon.jpg" alt="Meally Logo" width={60} height={60} className="rounded-full" />
+          <Image
+            src="/icons/icon.jpg"
+            alt="Meally Logo"
+            width={60}
+            height={60}
+            className="rounded-full"
+          />
           <h1 className="text-step1">Meally</h1>
         </div>
         <div className="flex flex-col items-center gap-4 ">

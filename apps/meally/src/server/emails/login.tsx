@@ -32,7 +32,7 @@ export default function LoginLink({
             <Section className="mt-8">
               <Img
                 src={
-                  "https://www.meally.com.au/icons/maskable_icons/maskable_icon_x128.png"
+                  "https://www.meally.com.au/icons/icon_x128.png"
                 }
                 width="40"
                 height="40"

@@ -145,7 +145,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(JSON.stringify(error.issues), { status: 422 });
     }
 
-
     return NextResponse.json(null, { status: 500 });
   }
 }
