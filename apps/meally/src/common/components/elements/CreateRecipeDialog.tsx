@@ -17,6 +17,7 @@ import VersionChip from "../modules/VersionChip";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useToast } from "../ui/use-toast";
+import { env } from "@/env.mjs";
 
 const createRecipeSchema = z.object({
   title: z.string().optional(),
@@ -38,15 +39,19 @@ const CreateRecipeDialog = () => {
     formState: { errors },
   } = methods;
 
-  const onSubmit: SubmitHandler<z.infer<typeof createRecipeSchema>> = (values) => {
+  const onSubmit: SubmitHandler<z.infer<typeof createRecipeSchema>> = (
+    values
+  ) => {
     setLoading(true);
     fetch("/api/recipes/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
       },
       body: JSON.stringify({ title: values.title, link: values.link }),
     }).then((res) => {
+      console.log(res);
       if (res.status == 200) {
         res.json().then((data) => {
           toast({
@@ -66,7 +71,7 @@ const CreateRecipeDialog = () => {
         setOpen(false);
       }
     });
-  }
+  };
 
   useEffect(() => {
     if (!open) {

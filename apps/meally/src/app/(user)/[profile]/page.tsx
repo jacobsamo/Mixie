@@ -13,24 +13,26 @@ import { unstable_cache } from "next/cache";
 
 export const revalidate = 60 * 60;
 
-const getUsers = unstable_cache(async () => {
-  const users = await db.query.users.findMany();
-  return users;
-});
-
-export async function generateStaticParams() {
-  const users = await getUsers();
-
-  return users.map((post) => ({
-    id: post.id,
-  }));
+interface ProfilePageProps {
+  params: {
+    profile: string;
+  };
 }
+
+const getUsers = unstable_cache(
+  async () => {
+    const users = await db.query.users.findMany();
+    return users;
+  },
+  ["users"],
+  {
+    revalidate: 60 * 60,
+  }
+);
 
 export async function generateMetadata({
   params,
-}: {
-  params: { profile: string };
-}): Promise<Metadata | undefined> {
+}: ProfilePageProps): Promise<Metadata | undefined> {
   const users = await getUsers();
   const user = users?.find((user) => {
     user.id == params.profile;
@@ -46,12 +48,14 @@ export async function generateMetadata({
   });
 }
 
-export default async function ProfilePage({ params }) {
+export default async function ProfilePage({ params }: ProfilePageProps) {
   const session = await getServerAuthSession();
 
-  const user = (await db.query.users.findFirst({
-    where: eq(users.id, params.profile),
-  })) as User;
+  const users = await getUsers();
+  users?.forEach((user) => {
+    console.log(user);
+  });
+  const user = users?.find((user) => user.id == params.profile);
 
   const gotRecipes = (await db.query.info.findMany({
     where: and(
@@ -77,7 +81,7 @@ export default async function ProfilePage({ params }) {
           />
           <h1 className="text-center text-step0">{user.name}</h1>
           <h2 className="text-step-1 text-center">{user.userName}</h2>
-          {session?.user.id == user.id && (
+          {session?.user.id == user.id && session.user.id == params.profile && (
             <span className="mt-4 flex flex-row gap-4">
               <Link
                 href={`/${user.id}/settings`}

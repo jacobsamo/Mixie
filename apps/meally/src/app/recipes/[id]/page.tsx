@@ -9,25 +9,24 @@ import type { Recipe } from "@db/types";
 import { eq } from "drizzle-orm";
 import { Metadata } from "next";
 import { RecipeJsonLd } from "next-seo";
+import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 
 export const revalidate = 60 * 60;
 
-const getRecipes = async () => {
-  const recipes = await db.query.recipes.findMany({
-    with: { info: true },
-    where: eq(recipeSchema.isPublic, true),
-  });
-  return recipes;
-};
-
-export async function generateStaticParams() {
-  const recipes = await getRecipes();
-
-  return recipes.map((recipe) => ({
-    id: recipe.id,
-  }));
-}
+const getRecipes = unstable_cache(
+  async () => {
+    const recipes = await db.query.recipes.findMany({
+      with: { info: true },
+      where: eq(recipeSchema.isPublic, true),
+    });
+    return recipes;
+  },
+  ["fullRecipes"],
+  {
+    revalidate: 60 * 60,
+  }
+);
 
 export async function generateMetadata({
   params,
@@ -78,8 +77,8 @@ export default async function RecipePage({ params }) {
             }) || []
           }
           description={recipe.description! || ""}
-          datePublished={recipe.createdAt?.toTimeString()}
-          dateModified={recipe.lastUpdated?.toTimeString()}
+          datePublished={new Date(recipe.createdAt).toDateString()}
+          dateModified={new Date(recipe.lastUpdated).toDateString()}
           keywords={
             recipe.info.keywords?.map((keyword) => keyword.value).join(", ") ||
             ""

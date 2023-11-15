@@ -16,7 +16,7 @@ interface IngredientProps {
 }
 
 const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
-  const { register, getValues, watch, control } =
+  const { register, getValues, setValue, watch, control } =
     useFormContext<z.infer<typeof recipeFormSchema>>();
   const activeUnit = watch(`ingredients.${index}.unit`);
 
@@ -65,16 +65,7 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
       <Input
         type="number"
         {...register(`ingredients.${index}.quantity`, {
-          valueAsNumber: true,
-          validate: (value) => {
-            if (value === null) {
-              return true; // It's not required, so null is allowed
-            }
-            if (value < 1) {
-              return "Quantity cannot be less than 1";
-            }
-            return true;
-          },
+          setValueAs: (v) => (v ? parseInt(v) : null),
         })}
       />
 

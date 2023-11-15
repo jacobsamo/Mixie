@@ -7,12 +7,13 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const displayIngredient = (ingredient: IngredientType) =>
-  `${ingredient.quantity} ${
-    ingredient.amount && ingredient.amount.value == "not_set"
+  `${ingredient.quantity ?? ""} ${
+    ingredient.amount &&
+    (ingredient.amount.value == "not_set" || !ingredient.amount)
       ? ""
       : ingredient.amount?.label
   } ${
-    ingredient.unit && ingredient.unit.value == "not_set"
+    ingredient.unit && (!ingredient.unit || ingredient.unit.value == "not_set")
       ? ""
       : ingredient.unit?.label.replace("item", "")
   } ${ingredient.title}`;
@@ -253,7 +254,7 @@ export function calculateAllIngredients(
 export function constructMetadata({
   title = "Meally",
   description = "Meally is a community-driven recipe platform where home cooks and food enthusiasts can collaborate on unique and delicious recipes",
-  image = "/favicon.ico",
+  image = "/icons/icon.jpg",
   url = "https://www.meally.com.au",
   noIndex = false,
 }: {
@@ -282,7 +283,7 @@ export function constructMetadata({
       title,
       description,
       images: {
-        url: image || "/banner.png",
+        url: image || "/images/banner.png",
         alt: title,
       },
       url: url,
@@ -292,19 +293,15 @@ export function constructMetadata({
       card: "summary_large_image",
       title: title,
       description: description,
-      images: [`${url}/favicon.ico`],
+      images: [`${url}/icons/icon.jpg`],
       creator: "@meally",
     },
     icons: {
       icon: "/favicon.ico",
-      shortcut: "/favicon-16x16.png",
-      apple: "/apple-touch-icon.png",
+      shortcut: "/icons/icon_x128.jpg",
+      apple: "/icons/icon_x128.jpg",
     },
     metadataBase: new URL(url),
-    themeColor: [
-      { media: "(prefers-color-scheme: light)", color: "white" },
-      { media: "(prefers-color-scheme: dark)", color: "black" },
-    ],
     ...(noIndex && {
       robots: {
         index: false,

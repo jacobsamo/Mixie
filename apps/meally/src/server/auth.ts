@@ -56,15 +56,9 @@ export const authOptions: NextAuthOptions = {
     verifyRequest: "/auth/verify",
   },
   theme: {
-    logo: "/favicon.ico",
+    logo: "/icons/icon_x128.jpg",
   },
   secret: env.NEXTAUTH_SECRET,
-  cookies: {
-    sessionToken: {
-      name: `next-auth.session-token`,
-      options: { httpOnly: false },
-    },
-  },
   adapter: DrizzleAdapter(),
   providers: [
     GitHubProvider({
@@ -80,18 +74,9 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
     EmailProvider({
-      sendVerificationRequest({ identifier, url, token }) {
-        if (process.env.NODE_ENV === "development") {
-          console.log(`Login link: ${url}, token: ${token}`);
-          return;
-        } else {
-          sendEmail({
-            email: identifier,
-            subject: "Your Meally login link",
-            react: LoginLink({ url, email: identifier, token: token }),
-          });
-        }
-      },
+      server: `smtp://resend:${env.RESEND_API_KEY}@smtp.resend.com:465`,
+      from: "cook@meally.com.au",
+      maxAge: 24 * 60 * 60, // How long email links are valid for (default 24h)
       async generateVerificationToken() {
         const digits = "0123456789";
         let verificationCode = "";
@@ -103,12 +88,23 @@ export const authOptions: NextAuthOptions = {
 
         return verificationCode;
       },
+      async sendVerificationRequest({ identifier, url, token }) {
+        console.log("Sending verification request to: ", identifier);
+        await sendEmail({
+          email: identifier,
+          subject: "Your Meally login link",
+          react: LoginLink({ url, email: identifier, token: token }),
+        });
+
+        if (process.env.NODE_ENV === "development") {
+          console.log(`Login link: ${url}, token: ${token}`);
+          return;
+        }
+      },
     }),
   ],
   callbacks: {
     signIn: async ({ user, account, profile, email, credentials }) => {
-      console.log("User signed in: ", { user, account, profile });
-
       return true;
     },
     session: async ({ session, user, token }) => {
@@ -144,7 +140,6 @@ export const getServerAuthSession = () => {
   return getServerSession(authOptions);
 };
 
-
 /**
  * Adapter for Drizzle ORM. This is not yet available in NextAuth directly, so we inhouse our own.
  * When the official one is out, we will switch to that.
@@ -161,7 +156,6 @@ export function DrizzleAdapter(): Adapter {
 
       if (!data.image) {
         const name = data.name ?? data.email.split("@")[0][0].toUpperCase();
-        console.log(name);
         data.image = `https:ui-avatars.com/api/?name=${name
           ?.split(" ")
           .join("+")}"&size=256&background=random`;

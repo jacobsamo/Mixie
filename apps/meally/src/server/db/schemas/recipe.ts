@@ -35,12 +35,15 @@ export const recipes = mysqlTable("recipes", {
   isPublic: boolean("isPublic").default(false).notNull(),
 
   // users
-  createdAt: timestamp("createdAt").default(sql`CURRENT_TIMESTAMP`),
+  createdAt: timestamp("createdAt")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
   createdBy: varchar("createdBy", { length: 191 }).notNull(),
   createByName: varchar("createByName", { length: 191 }).notNull(),
   lastUpdated: timestamp("lastUpdated")
     .default(sql`CURRENT_TIMESTAMP`)
-    .onUpdateNow(),
+    .onUpdateNow()
+    .notNull(),
   lastUpdatedBy: varchar("lastUpdatedBy", { length: 191 }).notNull(),
   lastUpdatedByName: varchar("lastUpdatedByName", { length: 191 }).notNull(),
 });
@@ -73,12 +76,15 @@ export const info = mysqlTable("info", {
   rating: tinyint("rating").default(0),
 
   // users
-  createdAt: timestamp("createdAt").default(sql`CURRENT_TIMESTAMP`),
+  createdAt: timestamp("createdAt")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
   createdBy: varchar("createdBy", { length: 191 }).notNull(),
   createByName: varchar("createByName", { length: 191 }).notNull(),
   lastUpdated: timestamp("lastUpdated")
     .default(sql`CURRENT_TIMESTAMP`)
-    .onUpdateNow(),
+    .onUpdateNow()
+    .notNull(),
   lastUpdatedBy: varchar("lastUpdatedBy", { length: 191 }).notNull(),
   lastUpdatedByName: varchar("lastUpdatedByName", { length: 191 }).notNull(),
 });

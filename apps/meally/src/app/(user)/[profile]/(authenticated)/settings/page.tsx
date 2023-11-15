@@ -68,7 +68,6 @@ export default function ProfilePage({ params }: ProfilePageProps) {
       });
       const user = (await res.json()) as User;
       if (user.emailVerified) user.emailVerified = new Date(user.emailVerified);
-      console.log(user);
       return user;
     },
   });
@@ -87,7 +86,6 @@ export default function ProfilePage({ params }: ProfilePageProps) {
   };
 
   const onSubmit: SubmitHandler<User> = (data) => {
-    console.log(data);
     try {
       setLoading(true);
       fetch(`/api/users/${params.profile}/updateUser`, {
@@ -259,6 +257,8 @@ export default function ProfilePage({ params }: ProfilePageProps) {
                 </div>
               </div>
             )}
+
+            {activeLink == "profile" && <h1>Work in progress</h1>}
 
             <Button
               type="submit"
