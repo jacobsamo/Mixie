@@ -1,5 +1,4 @@
 import { and, eq } from "drizzle-orm";
-import { type GetServerSidePropsContext } from "next";
 import {
   getServerSession,
   type DefaultSession,
@@ -13,10 +12,9 @@ import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
 import { env } from "@/env.mjs";
-import { db } from "@db/index";
-import { sendVerificationRequest } from "@server/send-verification-request";
-import * as schema from "@db/schemas";
 import { TFont, TTheme } from "@db/enum-types";
+import { db } from "@db/index";
+import * as schema from "@db/schemas";
 import { User as DbUser } from "@db/types";
 import { sendEmail } from "@server/emails";
 import LoginLink from "@server/emails/login";
@@ -104,9 +102,6 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    signIn: async ({ user, account, profile, email, credentials }) => {
-      return true;
-    },
     session: async ({ session, user, token }) => {
       session.user = {
         ...session.user,
