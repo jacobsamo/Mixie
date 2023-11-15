@@ -36,7 +36,7 @@ const Navbar = () => {
         <Image
           width={44}
           height={44}
-          src="/favicon.ico"
+          src="/icons/icon.jpg"
           alt="Logo"
           className="h-11 w-11 rounded-full"
         />

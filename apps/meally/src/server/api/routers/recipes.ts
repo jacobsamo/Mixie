@@ -8,12 +8,11 @@ import {
 import { recipes, info } from "@server/db/schemas";
 
 export const recipesRouter = createTRPCRouter({
-  hello: publicProcedure
-    .query(({ input }) => {
-      return {
-        greeting: `Hello test`,
-      };
-    }),
+  hello: publicProcedure.query(({ input }) => {
+    return {
+      greeting: `Hello test`,
+    };
+  }),
 
   // create: protectedProcedure
   //   .input(z.object({ name: z.string().min(1) }))
@@ -27,11 +26,11 @@ export const recipesRouter = createTRPCRouter({
   //     });
   //   }),
 
-  recipes: publicProcedure.query(({ ctx }) => {
-    return ctx.db.query.info.findMany({
-      orderBy: (info, { desc }) => [desc(info.createdAt)],
-    });
-  }),
+  // recipes: publicProcedure.query(({ ctx }) => {
+  //   return ctx.db.query.info.findMany({
+  //     orderBy: (info, { desc }) => [desc(info.createdAt)],
+  //   });
+  // }),
 
   // getLatest: publicProcedure.query(({ ctx }) => {
   //   return ctx.db.query.recipes.findFirst({

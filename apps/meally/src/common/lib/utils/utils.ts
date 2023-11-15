@@ -254,7 +254,7 @@ export function calculateAllIngredients(
 export function constructMetadata({
   title = "Meally",
   description = "Meally is a community-driven recipe platform where home cooks and food enthusiasts can collaborate on unique and delicious recipes",
-  image = "/favicon.ico",
+  image = "/icons/icon.jpg",
   url = "https://www.meally.com.au",
   noIndex = false,
 }: {
@@ -293,13 +293,13 @@ export function constructMetadata({
       card: "summary_large_image",
       title: title,
       description: description,
-      images: [`${url}/favicon.ico`],
+      images: [`${url}/icons/icon.jpg`],
       creator: "@meally",
     },
     icons: {
       icon: "/favicon.ico",
-      shortcut: "/icons/maskable_icons/maskable_icon_x128.png",
-      apple: "/icons/maskable_icons/maskable_icon_x128.png",
+      shortcut: "/icons/icon_x128.jpg",
+      apple: "/icons/icon_x128.jpg",
     },
     metadataBase: new URL(url),
     ...(noIndex && {

@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
     const { title, link } = createRecipeSchema.parse(json);
     const uid = uuidv4();
 
-    if (title) {
+    if (title && !link) {
       const id = recipeId(title);
       // general info about the recipe
       const newInfo: NewInfo = {
@@ -42,10 +42,11 @@ export async function POST(req: NextRequest) {
         createdBy: user.id,
         lastUpdatedBy: user.id,
         lastUpdatedByName: user.name! || "",
+        isPublic: false,
       };
-      console.log(newInfo);
+
       // the recipe itself
-      const recipe: NewPartialRecipe = {
+      const newRecipe: NewPartialRecipe = {
         uid: uid,
         id,
         title,
@@ -53,13 +54,16 @@ export async function POST(req: NextRequest) {
         createdBy: user.id,
         lastUpdatedBy: user.id,
         lastUpdatedByName: user.name! || "",
+        isPublic: false,
       };
-      console.log(recipe);
+      console.log("Info: ", newInfo);
+      console.log("Recipe: ", newRecipe);
+
       await db.insert(info).values(newInfo);
-      await db.insert(recipes).values(recipe);
+      await db.insert(recipes).values(newRecipe);
 
       return NextResponse.json(
-        { message: `Recipe successfully created`, id: uid },
+        { message: `Recipe successfully created using title`, id: uid },
         {
           status: 200,
         }
@@ -113,14 +117,14 @@ export async function POST(req: NextRequest) {
           source: link,
         };
 
-        console.log("Info: ", info);
+        console.log("Info: ", newInfo);
         console.log("Recipe: ", newRecipe);
 
         await db.insert(info).values(newInfo);
         await db.insert(recipes).values(newRecipe);
 
         return NextResponse.json(
-          { message: `Recipe successfully created`, id: uid },
+          { message: `Recipe successfully created using link`, id: uid },
           {
             status: 200,
           }
@@ -135,9 +139,12 @@ export async function POST(req: NextRequest) {
       }
     }
   } catch (error) {
+    console.error(error);
+    
     if (error instanceof z.ZodError) {
       return NextResponse.json(JSON.stringify(error.issues), { status: 422 });
     }
+
 
     return NextResponse.json(null, { status: 500 });
   }

@@ -56,7 +56,7 @@ export const authOptions: NextAuthOptions = {
     verifyRequest: "/auth/verify",
   },
   theme: {
-    logo: "/favicon.ico",
+    logo: "/icons/icon_x128.jpg",
   },
   secret: env.NEXTAUTH_SECRET,
   adapter: DrizzleAdapter(),

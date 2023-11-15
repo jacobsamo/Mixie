@@ -27,7 +27,7 @@ const VerificationPage = () => {
     >
       <div className="flex flex-col items-center">
         <Image
-          src="/favicon.ico"
+          src="/icons/icon.jpg"
           alt="Logo"
           width={128}
           height={128}
