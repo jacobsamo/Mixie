@@ -2,9 +2,7 @@ import { SearchCard } from "@/src/common/components/elements/Cards";
 import { db } from "@db/index";
 import { recipes } from "@db/schemas";
 import { Info } from "@db/types";
-import { getServerAuthSession } from "@server/auth";
 import { eq, or } from "drizzle-orm";
-import { notFound } from "next/navigation";
 
 interface DraftsPageProps {
   params: {

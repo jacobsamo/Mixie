@@ -1,7 +1,4 @@
 import { getServerAuthSession } from "@/src/server/auth";
-import { get } from "http";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
 

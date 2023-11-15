@@ -51,7 +51,7 @@ const LoginPage = () => {
     <div className="m-auto flex max-w-md flex-col items-center gap-3 rounded-3xl bg-white p-3 text-center shadow dark:bg-grey">
       <div className="flex flex-col items-center">
         <Image
-          src="/favicon.ico"
+          src="/icons/icon.jpg"
           alt="Logo"
           width={128}
           height={128}

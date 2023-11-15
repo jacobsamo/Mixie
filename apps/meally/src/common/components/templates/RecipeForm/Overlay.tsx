@@ -16,7 +16,7 @@ const Overlay = ({ onPreview }: OverlayProps) => {
   const { handleSubmit } = useFormContext();
   return (
     <>
-      <div className="fixed right-3 z-50 flex w-fit justify-end rounded-md bg-white p-4 shadow dark:bg-grey ">
+      <div className="fixed right-3 top-3 z-50 flex w-fit justify-end rounded-md bg-white p-4 shadow dark:bg-grey ">
         <Button
           ariaLabel="Preview"
           type="button"
@@ -28,6 +28,7 @@ const Overlay = ({ onPreview }: OverlayProps) => {
         </Button>
         <Button
           ariaLabel="Publish"
+          type="button"
           onClick={() => {
             setOpen(true);
           }}

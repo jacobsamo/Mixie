@@ -7,6 +7,7 @@ import {
 import {
   ArrowUpRightSquare,
   Bookmark,
+  ScrollText,
   Settings,
   UserCircle2,
 } from "lucide-react";
@@ -54,6 +55,7 @@ const UserProfile = () => {
         >
           <UserCircle2 /> Profile
         </Link>
+        <CreateRecipeDialog />
         <Link
           onClick={() => setOpen(false)}
           href={`/${user?.id}/bookmarks`}
@@ -63,7 +65,13 @@ const UserProfile = () => {
           <Bookmark />
           Bookmarks
         </Link>
-        <CreateRecipeDialog />
+        <Link
+          onClick={() => setOpen(false)}
+          href={`/${user?.id}/drafts`}
+          className="flex flex-row gap-1"
+        >
+          <ScrollText /> Drafts
+        </Link>
         <Link
           onClick={() => setOpen(false)}
           href={`/${user?.id}/settings?activeLink=profile`}

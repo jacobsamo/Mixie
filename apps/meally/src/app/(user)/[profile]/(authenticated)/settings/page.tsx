@@ -258,6 +258,8 @@ export default function ProfilePage({ params }: ProfilePageProps) {
               </div>
             )}
 
+            {activeLink == "profile" && <h1>Work in progress</h1>}
+
             <Button
               type="submit"
               variant="primary"
