@@ -283,7 +283,7 @@ export function constructMetadata({
       title,
       description,
       images: {
-        url: image || "/banner.png",
+        url: image || "/images/banner.png",
         alt: title,
       },
       url: url,
@@ -298,8 +298,8 @@ export function constructMetadata({
     },
     icons: {
       icon: "/favicon.ico",
-      shortcut: "/favicon-16x16.png",
-      apple: "/apple-touch-icon.png",
+      shortcut: "/icons/maskable_icons/maskable_icon_x128.png",
+      apple: "/icons/maskable_icons/maskable_icon_x128.png",
     },
     metadataBase: new URL(url),
     ...(noIndex && {
