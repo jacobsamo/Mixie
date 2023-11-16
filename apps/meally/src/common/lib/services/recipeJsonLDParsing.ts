@@ -79,14 +79,14 @@ export async function convertIngredients(
 
     // Check for unit and amount in the remaining parts
     for (let i = 1; i < parts.length; i++) {
-      const part = parts[i].trim();
+      const part = parts[i].trim().toLowerCase();
 
       // Check for unit
       if (unit.value === "not_set") {
         units.forEach((unitObject: any) => {
-          const key = Object.keys(unitObject)[0];
-          const values = unitObject[key];
-          if (values.includes(part.toLowerCase())) {
+          const key = Object.keys(unitObject)[0].toLowerCase();
+          const values = unitObject[key].toLowerCase();
+          if (values.includes(part)) {
             unit = {
               value: key,
               label: key,
