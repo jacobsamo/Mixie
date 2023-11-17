@@ -6,7 +6,7 @@ import { constructMetadata } from "@lib/utils/utils";
 import "@styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { Viewport } from "next";
-import { getServerAuthSession } from "../server/auth";
+import { getServerAuthSession } from "@server/auth";
 
 export const metadata = constructMetadata();
 

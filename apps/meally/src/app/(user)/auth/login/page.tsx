@@ -157,7 +157,7 @@ const LoginPage = () => {
         >
           <p className="text-white">Sign in with Github</p>
         </Button>
-        {/* <Button
+        <Button
           ariaLabel="sign in with google"
           LeadingIcon={
             <svg
@@ -188,7 +188,7 @@ const LoginPage = () => {
           onClick={() => signInWithGoogle()}
         >
           Sign in with Google
-        </Button> */}
+        </Button>
         {/* <Button
           LeadingIcon={
             <svg
