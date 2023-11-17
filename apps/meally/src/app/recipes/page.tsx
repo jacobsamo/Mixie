@@ -6,21 +6,28 @@ import { info } from "@/src/server/db/schemas";
 import { eq } from "drizzle-orm";
 import { SearchIcon } from "lucide-react";
 import { unstable_cache } from "next/cache";
+import { cache } from "react";
 
 export const revalidate = 60 * 60;
 
-const getRecipes = unstable_cache(
-  async () => {
-    const recipes = await db.query.info.findMany({
-      where: eq(info.isPublic, true),
-    });
-    return recipes;
-  },
-  ["recipes"],
-  {
-    revalidate: 60 * 60,
-  }
-);
+// const getRecipes = unstable_cache(
+//   async () => {
+//     const recipes = await db.query.info.findMany({
+//       where: eq(info.isPublic, true),
+//     });
+//     return recipes;
+//   },
+//   ["recipes"],
+//   {
+//     revalidate: 60 * 60,
+//   }
+// );
+const getRecipes = cache(async () => {
+  const recipes = await db.query.info.findMany({
+    where: eq(info.isPublic, true),
+  });
+  return recipes;
+});
 
 export const metadata = constructMetadata({
   title: "Recipes",

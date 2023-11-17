@@ -1,8 +1,5 @@
 import { generateSiteMap } from "@/src/common/lib/services/generateSitemap";
-import {
-  constructMetadata,
-  displayIngredient,
-} from "@lib/utils";
+import { constructMetadata, displayIngredient } from "@lib/utils";
 import RecipePageComponent from "@components/templates/RecipePage/RecipePageComponent";
 import { db } from "@db/index";
 import { recipes as recipeSchema } from "@db/schemas";
@@ -35,7 +32,14 @@ export async function generateMetadata({
   params: { id: string };
 }): Promise<Metadata | undefined> {
   const recipes = await getRecipes();
-  await generateSiteMap(recipes, "recipes", "recipes");
+  await generateSiteMap(
+    {
+      fileName: "recipes",
+      route: "recipes",
+    },
+    recipes
+  );
+
   const recipe = recipes?.find((recipe) => {
     recipe.id == params.id;
   });
@@ -47,7 +51,8 @@ export async function generateMetadata({
   return constructMetadata({
     title: recipe.title,
     description: recipe.description || undefined,
-    image: recipe.info.imgUrl || undefined,
+    image: recipe.info.imgUrl || "/images/banner.png",
+    url: `https://www.meally.com.au/recipes/${recipe.id}`,
     keywords:
       recipe.info.keywords?.map((keyword) => keyword.value) || undefined,
   });

@@ -1,28 +1,53 @@
 import prettier from "prettier";
 import fs from "fs";
 
-export async function generateSiteMap<
-  T extends {
-    id?: string;
-    userName?: string;
-    lastUpdated?: Date;
-    createdAt: Date;
-  },
->(data: T[], route: string, fileName: string) {
+interface RequiredFelids {
+  /**the id of the item */
+  id: string;
+  /**
+   * The date the item was created
+   */
+  createdAt: Date;
+  /**
+   * The date the item was last updated
+   */
+  lastUpdated?: Date;
+}
+
+export interface SitemapProps {
+  /**
+   * This is the route between the domain and the id
+   * e.g. https://meally.com.au/restaurant/123456
+   * the route is `restaurant` in this case
+   */
+  route: string;
+  /**
+   * The name of the file to be generated
+   * @example
+   * generateSiteMap(1, 'restaurant', 1, new Date(), new Date(), 'restaurant')
+   *
+   * This will generate a file called `sitemap-restaurant.xml`
+   */
+  fileName: string;
+}
+
+export async function generateSiteMap<T extends RequiredFelids>(
+  options: SitemapProps,
+  data: T[]
+) {
   const prettierConfig = await prettier.resolveConfig(
     "../../../../../../prettier.config.js"
   );
   const sitemap = `
       <?xml version="1.0" encoding="UTF-8"?>
       <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      
           ${data
             .map((data) => {
               const time = data.lastUpdated || data.createdAt;
               return `
                 <url>
-                    <loc>${`https://meally.com.au/${route}/${
-                      data.id || data.userName
-                    }`}</loc>
+                    <loc>${`https://meally.com.au/${options.route}/${data.id}`}</loc>
                     <lastmod>${time.toString()}</lastmod>
                 </url>
               `;
@@ -37,5 +62,5 @@ export async function generateSiteMap<
   });
 
   // eslint-disable-next-line no-sync
-  fs.writeFileSync(`sitemap-${fileName}.xml`, formatted);
+  fs.writeFileSync(`sitemap-${options.fileName}.xml`, formatted);
 }
