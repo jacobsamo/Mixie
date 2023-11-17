@@ -91,7 +91,7 @@ export async function convertIngredients(
               value: key,
               label: key,
             } as Ingredient["unit"];
-            title = title.replace(parts[i], "");
+            title = ingredient.replace(parts[i], "");
           }
         });
       }
