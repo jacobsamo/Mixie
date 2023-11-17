@@ -18,16 +18,20 @@ export const sendEmail = async ({
   react: ReactElement<any, string | JSXElementConstructor<any>>;
   test?: boolean;
 }) => {
-  if (!resend) {
-    console.error(
-      "Resend is not configured. You need to add a RESEND_API_KEY in your .env file for emails to work."
-    );
-    return Promise.resolve();
+  try {
+    if (!resend) {
+      console.error(
+        "Resend is not configured. You need to add a RESEND_API_KEY in your .env file for emails to work."
+      );
+      return Promise.resolve();
+    }
+    return resend.emails.send({
+      from: "cook@meally.com.au",
+      to: test ? "delivered@resend.dev" : email,
+      subject,
+      react,
+    });
+  } catch (error) {
+    console.log("Error sending email", error);
   }
-  return resend.emails.send({
-    from: "cook@meally.com.au",
-    to: test ? "delivered@resend.dev" : email,
-    subject,
-    react,
-  });
 };

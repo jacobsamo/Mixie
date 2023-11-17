@@ -58,18 +58,22 @@ export const authOptions: NextAuthOptions = {
   },
   secret: env.NEXTAUTH_SECRET,
   adapter: DrizzleAdapter(),
+  debug: true,
   providers: [
     GitHubProvider({
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
     FacebookProvider({
       clientId: env.FACEBOOK_APP_ID,
       clientSecret: env.FACEBOOK_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
     EmailProvider({
       server: `smtp://resend:${env.RESEND_API_KEY}@smtp.resend.com:465`,
@@ -145,6 +149,7 @@ export const getServerAuthSession = () => {
 
 export function DrizzleAdapter(): Adapter {
   const { users, sessions, accounts, verificationTokens } = schema;
+
   return {
     async createUser(data) {
       const id = crypto.randomUUID();
@@ -233,10 +238,7 @@ export function DrizzleAdapter(): Adapter {
         .then((res) => res[0]);
     },
     async linkAccount(rawAccount) {
-      await db
-        .insert(accounts)
-        .values(rawAccount)
-        .then((res) => res[0]);
+      await db.insert(accounts).values(rawAccount);
     },
     async getUserByAccount(account) {
       const dbAccount =
