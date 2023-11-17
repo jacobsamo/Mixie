@@ -2,7 +2,7 @@
 import type { Ingredient } from "@db/types";
 import React from "react";
 import { CheckCircleIcon, Circle } from "lucide-react";
-import { displayIngredient } from "@/src/common/lib/utils/utils";
+import { displayIngredient } from "@lib/utils";
 
 interface IngredientProps {
   ingredient: Ingredient;

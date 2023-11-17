@@ -2,8 +2,8 @@ import {
   convertIngredients,
   getRecipeJsonLd,
   splitTime,
-} from "@/src/common/lib/services/recipeJsonLDParsing";
-import { recipeId } from "@/src/common/lib/utils/utils";
+} from "@lib/services/recipeJsonLDParsing";
+import { recipeId } from "@lib/utils";
 import { db } from "@db/index";
 import { authOptions } from "@server/auth";
 import { info, recipes } from "@db/schemas";

@@ -3,7 +3,7 @@ import { Ingredient, Step } from "@db/types";
 import {
   displayIngredient,
   matchIngredients,
-} from "@/src/common/lib/utils/utils";
+} from "@lib/utils";
 
 interface IngredientChipsProps {
   step: Step;

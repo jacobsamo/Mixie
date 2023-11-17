@@ -1,5 +1,5 @@
 import { Amount, Ingredient } from "@db/types";
-import { parseSecondsToTime } from "../utils/utils";
+import { parseSecondsToTime } from "@lib/utils";
 import * as cheerio from "cheerio";
 
 /**

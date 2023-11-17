@@ -1,6 +1,6 @@
 import { CardSquare } from "@/src/common/components/elements/Cards";
 import SearchTrigger from "@/src/common/components/modules/SearchTrigger";
-import { constructMetadata } from "@/src/common/lib/utils/utils";
+import { constructMetadata } from "@lib/utils";
 import { db } from "@/src/server/db";
 import { info } from "@/src/server/db/schemas";
 import { eq } from "drizzle-orm";

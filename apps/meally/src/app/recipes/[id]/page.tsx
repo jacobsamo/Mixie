@@ -1,7 +1,8 @@
+import { generateSiteMap } from "@/src/common/lib/services/generateSitemap";
 import {
   constructMetadata,
   displayIngredient,
-} from "@/src/common/lib/utils/utils";
+} from "@lib/utils";
 import RecipePageComponent from "@components/templates/RecipePage/RecipePageComponent";
 import { db } from "@db/index";
 import { recipes as recipeSchema } from "@db/schemas";
@@ -34,6 +35,7 @@ export async function generateMetadata({
   params: { id: string };
 }): Promise<Metadata | undefined> {
   const recipes = await getRecipes();
+  await generateSiteMap(recipes, "recipes", "recipes");
   const recipe = recipes?.find((recipe) => {
     recipe.id == params.id;
   });

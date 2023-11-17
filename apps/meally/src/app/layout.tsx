@@ -2,7 +2,7 @@ import Footer from "@components/modules/Footer";
 import Navbar from "@components/modules/Navbar";
 import Providers from "@components/modules/Providers";
 import { Toaster } from "@components/ui/toaster";
-import { constructMetadata } from "@lib/utils/utils";
+import { constructMetadata } from "@lib/utils";
 import "@styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { Viewport } from "next";

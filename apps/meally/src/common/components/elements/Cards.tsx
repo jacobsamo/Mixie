@@ -5,7 +5,7 @@ import type { Info, Recipe } from "@db/types";
 import { HeartIcon } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "../ui/use-toast";
-import { cn } from "@/src/common/lib/utils/utils";
+import { cn } from "@lib/utils";
 import { env } from "@/env.mjs";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";

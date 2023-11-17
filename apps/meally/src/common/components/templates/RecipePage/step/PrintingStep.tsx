@@ -1,10 +1,7 @@
 import { Step, Ingredient } from "@db/types";
 import React from "react";
 import IngredientChips from "./IngredientChips";
-import {
-  displayIngredient,
-  matchIngredients,
-} from "@/src/common/lib/utils/utils";
+import { displayIngredient, matchIngredients } from "@lib/utils";
 
 interface StepProps {
   index: number;
