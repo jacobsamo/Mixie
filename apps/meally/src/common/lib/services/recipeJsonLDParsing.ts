@@ -12,20 +12,6 @@ export function splitTime(time: string): string {
   return parseSecondsToTime(parseInt(string) * 60);
 }
 
-/*
-"recipeIngredient": [
-      "18.20 gm extra virgin olive oil",
-      "2kg Whole Lamb Leg Roast",
-      "2 tsp cracked black pepper",
-      "3 rosemary sprigs",
-      "8 garlic cloves, peeled",
-      "250ml chicken stock",
-      "600g baby potatoes, halved",
-      "1 bunch Dutch carrots, trimmed",
-      "Steamed greens, to serve"
-    ], 
-*/
-
 const units: any = [
   { tsp: ["tsp", "teaspoon", "teaspoons", "t", "tsps"] },
   { tbsp: ["tbsp", "tablespoon", "tablespoons", "T", "tbsps"] },
@@ -49,17 +35,14 @@ const units: any = [
  * @param {string[]} ingredients - ingredients array
  * @returns {Ingredient[]} - return an array of Ingredient objects
  */
-export async function convertIngredients(
-  ingredients: string[]
-): Promise<Ingredient[]> {
+export function convertIngredients(ingredients: string[]): Ingredient[] {
   const ingredientList: Ingredient[] = [];
 
   for (const ingredient of ingredients) {
-    // Split the ingredient string into parts based on comma, semicolon, or hyphen
-    // const parts = ingredient.split(" ");
-    const parts = ingredient.split(/[,|\-|\s]/);
-    // Initialize the default values for the Ingredient object
-    let title = ingredient.trim();
+    const cleanedIngredient = ingredient.replace(/[\(|/)]/gi, "").trim();
+    const parts = cleanedIngredient.split(/[\,|\-|\s]+/g);
+
+    let title = cleanedIngredient;
     let unit: Ingredient["unit"] = {
       value: "not_set",
       label: "not_set",
@@ -68,38 +51,36 @@ export async function convertIngredients(
       value: "not_set",
       label: "not_set",
     };
-    let quantity: Ingredient["quantity"] = null;
+    let quantity: number | null = null;
 
-    // set quantity
-    const quantityMatch = ingredient.match(/[\d.]+/g);
-    if (quantityMatch && quantity == null) {
-      quantity = quantityMatch[0] ? parseInt(quantityMatch[0]) : null;
-      title = title.replace(quantityMatch[0], "");
-    }
-
-    // Check for unit and amount in the remaining parts
     for (let i = 1; i < parts.length; i++) {
       const part = parts[i].trim();
+      const digits = part.match(/[\d.]+/g);
 
-      // Check for unit
-      if (unit.value === "not_set") {
+      if (digits) {
+        const letterMatch = part.toLowerCase().match(/[a-z]/gi) || "";
+        const findNextTo = parts[i + 1].toLowerCase().trim();
+
         units.forEach((unitObject: any) => {
           const key = Object.keys(unitObject)[0];
           const values = unitObject[key];
-          if (values.includes(part.toLowerCase())) {
+
+          if (values.includes(letterMatch[0]) || values.includes(findNextTo)) {
             unit = {
               value: key,
               label: key,
             } as Ingredient["unit"];
-            title = ingredient.replace(parts[i], "");
+            title = cleanedIngredient.replace(parts[i], "").trim();
           }
         });
+
+        quantity = parseInt(digits[0]);
       }
 
-      // Check for amount
       if (
-        (amount && amount.value === "not_set") ||
-        ["not_set", "tsp", "tbsp"].includes(unit.value)
+        (amount?.value === "not_set" ||
+          ["cup", "tsp", "tbsp"].includes(unit.value)) &&
+        !isNaN(quantity as number)
       ) {
         const amountMatch = part.match(/(1\/8|1\/2|1\/3|2\/3|1\/4|3\/4)/);
         if (amountMatch) {
@@ -107,18 +88,24 @@ export async function convertIngredients(
             value: amountMatch[0],
             label: amountMatch[0],
           } as Ingredient["amount"];
-          title = title.replace(parts[i], "");
+          title = title.replace(parts[i], "").trim();
           continue;
         }
       }
-
-      // set quantity
     }
 
-    // Create the Ingredient object and push it to the list
+    const newTitle = title
+      .replace(unit.value, "")
+      .replace(amount?.value || "", "")
+      .replace(/\s\s+/g, " ")
+      .replace(quantity?.toString() || "", "")
+      .trim()
+      .charAt(0)
+      .toUpperCase();
+
     const ingredientObject: Ingredient = {
-      title: title.replace("  ", " ").trim(),
-      isHeading: false, // Default value
+      title: newTitle,
+      isHeading: false,
       unit,
       amount,
       quantity,
@@ -126,6 +113,7 @@ export async function convertIngredients(
 
     ingredientList.push(ingredientObject);
   }
+
   return ingredientList;
 }
 
