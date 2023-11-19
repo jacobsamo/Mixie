@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,10 +8,10 @@ import {
   DialogTrigger,
 } from "@components/ui/dialog";
 import { CopyIcon, PrinterIcon, Share2 } from "lucide-react";
-import { Button } from "../ui/button";
 import Link from "next/link";
-import { useToast } from "../ui/use-toast";
+import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { useToast } from "../ui/use-toast";
 
 interface ShareDialogProps {
   /**
@@ -58,6 +57,14 @@ const ShareDialog = ({
       });
   };
 
+  const twitterLink = `https://twitter.com/intent/tweet?url=${url}&text=${title}&via=${via}${
+    hashtags ? `&hashtags=${hashtags}` : ""
+  }`;
+  const facebookLink = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+  const pinterestLink = `http://pinterest.com/pin/create/button/?url=${url}&description=${title}&media=${image}`;
+
+
+  
   return (
     <Dialog>
       <DialogTrigger className="flex cursor-pointer flex-row items-center gap-1 rounded-lg bg-white p-1 px-2 dark:bg-grey">
@@ -81,7 +88,7 @@ const ShareDialog = ({
 
         <div className="flex flex-row gap-4 overflow-scroll">
           <Link
-            href={`https://www.facebook.com/sharer/sharer.php?u=${url}`}
+            href={facebookLink}
             target="_blank"
             aria-label="Share to Facebook"
             className="flex h-12 w-12 items-center justify-center rounded-full bg-white"
@@ -100,9 +107,7 @@ const ShareDialog = ({
             className="flex h-12 w-12  items-center justify-center rounded-full bg-white"
             target="_blank"
             aria-label="Share to Twitter"
-            href={`https://twitter.com/intent/tweet?url=${url}&text=${title}&via=${via}${
-              hashtags ? `&hashtags=${hashtags}` : ""
-            }`}
+            href={twitterLink}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -117,7 +122,7 @@ const ShareDialog = ({
           </Link>
           <Link
             className="flex h-12 w-12  items-center justify-center rounded-full bg-white"
-            href={`http://pinterest.com/pin/create/button/?url=${url}&description=${title}&media=${image}`}
+            href={pinterestLink}
             target="_blank"
             aria-label="Share to Pinterest"
           >
