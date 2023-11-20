@@ -63,8 +63,6 @@ const ShareDialog = ({
   const facebookLink = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
   const pinterestLink = `http://pinterest.com/pin/create/button/?url=${url}&description=${title}&media=${image}`;
 
-
-  
   return (
     <Dialog>
       <DialogTrigger className="flex cursor-pointer flex-row items-center gap-1 rounded-lg bg-white p-1 px-2 dark:bg-grey">

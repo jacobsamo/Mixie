@@ -19,7 +19,6 @@ const DraggableItem = ({ id, index, children }: DraggableItemProps) => {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          
           className="flex flex-row items-center hover:cursor-pointer"
         >
           {children}

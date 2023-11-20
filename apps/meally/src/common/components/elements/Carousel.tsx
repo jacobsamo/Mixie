@@ -60,14 +60,13 @@ const Carousel = ({
   const handleNext = React.useCallback(() => {
     const idx = loop ? 0 : index;
     const nextIndex = index + 1 === childrens.length ? idx : index + 1;
-  
+
     setIndex(nextIndex);
   }, [index, loop, childrens.length]);
 
   const handlePrev = () => {
-    
     const idx = loop ? childrens.length - 1 : 0;
-  
+
     const newIndex = index - 1 < 0 ? idx : index - 1;
 
     setIndex(newIndex);

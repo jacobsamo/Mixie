@@ -1,9 +1,6 @@
 import React from "react";
 import { Ingredient, Step } from "@db/types";
-import {
-  displayIngredient,
-  matchIngredients,
-} from "@lib/utils";
+import { displayIngredient, matchIngredients } from "@lib/utils";
 
 interface IngredientChipsProps {
   step: Step;

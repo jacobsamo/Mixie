@@ -30,8 +30,8 @@ type MapInsertColumnToZod<
 > = TColumn["_"]["notNull"] extends false
   ? z.ZodOptional<z.ZodNullable<TType>>
   : TColumn["_"]["hasDefault"] extends true
-  ? z.ZodOptional<TType>
-  : TType;
+    ? z.ZodOptional<TType>
+    : TType;
 
 type MapSelectColumnToZod<
   TColumn extends Column,
@@ -58,26 +58,28 @@ type GetZodType<TColumn extends Column> =
     ? TDataType extends "custom"
       ? z.ZodAny
       : TDataType extends "json"
-      ? z.ZodType<Json>
-      : TColumn extends { enumValues: [string, ...string[]] }
-      ? Equal<TColumn["enumValues"], [string, ...string[]]> extends true
-        ? z.ZodString
-        : z.ZodEnum<TColumn["enumValues"]>
-      : TDataType extends "array"
-      ? z.ZodArray<
-          GetZodType<Assume<TColumn["_"], { baseColumn: Column }>["baseColumn"]>
-        >
-      : TDataType extends "bigint"
-      ? z.ZodBigInt
-      : TDataType extends "number"
-      ? z.ZodNumber
-      : TDataType extends "string"
-      ? z.ZodString
-      : TDataType extends "boolean"
-      ? z.ZodBoolean
-      : TDataType extends "date"
-      ? z.ZodDate
-      : z.ZodAny
+        ? z.ZodType<Json>
+        : TColumn extends { enumValues: [string, ...string[]] }
+          ? Equal<TColumn["enumValues"], [string, ...string[]]> extends true
+            ? z.ZodString
+            : z.ZodEnum<TColumn["enumValues"]>
+          : TDataType extends "array"
+            ? z.ZodArray<
+                GetZodType<
+                  Assume<TColumn["_"], { baseColumn: Column }>["baseColumn"]
+                >
+              >
+            : TDataType extends "bigint"
+              ? z.ZodBigInt
+              : TDataType extends "number"
+                ? z.ZodNumber
+                : TDataType extends "string"
+                  ? z.ZodString
+                  : TDataType extends "boolean"
+                    ? z.ZodBoolean
+                    : TDataType extends "date"
+                      ? z.ZodDate
+                      : z.ZodAny
     : never;
 
 type ValueOrUpdater<T, TUpdaterArg> = T | ((arg: TUpdaterArg) => T);

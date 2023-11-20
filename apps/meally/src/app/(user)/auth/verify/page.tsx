@@ -14,7 +14,7 @@ const VerificationPage = () => {
   const router = useRouter();
   const { control, handleSubmit } = useForm<CodeFormProps>();
 
-  const onSubmit: SubmitHandler<CodeFormProps>  = async (data) => {
+  const onSubmit: SubmitHandler<CodeFormProps> = async (data) => {
     router.push(
       `/api/auth/callback/email?callbackUrl=${env.NEXT_PUBLIC_APP_URL}&token=${data.code}&email=jacob35422%40gmail.com`
     );

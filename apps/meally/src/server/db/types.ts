@@ -23,7 +23,6 @@ type NewUser = InferInsertModel<typeof users>;
 
 export type { User, NewUser };
 
-
 type PartialRecipe = z.infer<typeof recipeSchema>;
 type NewPartialRecipe = z.infer<typeof recipeSchema>;
 type Info = z.infer<typeof infoSchema>;
@@ -31,7 +30,6 @@ type NewInfo = z.infer<typeof infoSchema>;
 
 type Recipe = z.infer<typeof recipesSelect>;
 type NewRecipe = z.infer<typeof recipeFormSchema>;
-
 
 // ingredients
 export type Ingredient = z.infer<typeof ingredientSchema>;
@@ -44,7 +42,6 @@ export type SelectValue = {
   label: string;
   value: string;
 };
-
 
 export type {
   Recipe,

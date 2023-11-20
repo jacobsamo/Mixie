@@ -31,9 +31,7 @@ export default function LoginLink({
           <Container className="border-gray-200 mx-auto my-10 max-w-[500px] rounded border border-solid px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={
-                  "https://www.meally.com.au/icons/icon_x128.png"
-                }
+                src={"https://www.meally.com.au/icons/icon_x128.png"}
                 width="40"
                 height="40"
                 alt="Meally"
