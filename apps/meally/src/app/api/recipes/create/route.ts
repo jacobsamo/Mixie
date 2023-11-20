@@ -145,7 +145,6 @@ export async function POST(req: NextRequest) {
     }
   } catch (error) {
     console.error(error);
-
     if (error instanceof z.ZodError) {
       return NextResponse.json(JSON.stringify(error.issues), { status: 422 });
     }
