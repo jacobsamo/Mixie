@@ -63,7 +63,7 @@ export function constructMetadata({
       card: "summary_large_image",
       title: title,
       description: description,
-      images: [`${url}/icons/icon.jpg`],
+      images: image || "/images/banner.png",
       creator: "@meally",
     },
     icons: {

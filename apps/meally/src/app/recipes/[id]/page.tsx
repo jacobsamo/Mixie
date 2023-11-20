@@ -48,7 +48,7 @@ export async function generateMetadata({
     return;
   }
 
-  return constructMetadata({
+  const metaData = await constructMetadata({
     title: recipe.title,
     description: recipe.description || undefined,
     image: recipe.info.imgUrl || "/images/banner.png",
@@ -56,6 +56,8 @@ export async function generateMetadata({
     keywords:
       recipe.info.keywords?.map((keyword) => keyword.value) || undefined,
   });
+
+  return metaData;
 }
 
 export default async function RecipePage({ params }) {

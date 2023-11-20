@@ -77,9 +77,16 @@ const ShareDialog = ({
         </DialogHeader>
 
         <div className="flex flex-row gap-4 ">
-          <Input type="text" name="link" id="link" value={url} size={45} />
+          <Input
+            type="text"
+            name="link"
+            id="link"
+            value={url}
+            size={45}
+            autoFocus={false}
+          />
 
-          <Button ariaLabel="copy url" unstyled={true} onClick={() => copy()}>
+          <Button ariaLabel="copy url" unstyled={true} onClick={() => copy()} autoFocus={true}>
             <CopyIcon className="m-auto" />
           </Button>
         </div>
