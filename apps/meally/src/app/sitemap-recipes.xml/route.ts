@@ -8,23 +8,32 @@ export async function GET() {
     where: eq(info.isPublic, true),
   });
 
-  return new Response(`
-  <?xml version="1.0" encoding="UTF-8"?>
-  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  
-      ${recipes
-        .map((data) => {
-          // turn date into the correct string for the sitemap
-          const time = new Date(data.lastUpdated || data.createdAt);
-          // const time = new Date();
-          return `
-            <url>
-                <loc>${`https://meally.com.au/recipes/${data.id}`}</loc>
-                <lastmod>${time.toString()}</lastmod>
-            </url>
-          `;
-        })
-        .join("")}
-  </urlset>
-  `);
+  // add headers for the return type
+  // this is required for the sitemap to be generated
+  return new Response(
+    `
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    ${recipes
+      .map((data) => {
+        // turn date into the correct string for the sitemap
+        const time = new Date(data.lastUpdated || data.createdAt);
+        // const time = new Date();
+        return `
+        <url>
+            <loc>${`https://meally.com.au/recipes/${data.id}`}</loc>
+            <lastmod>${time.toISOString()}</lastmod>        
+        </url>
+        `;
+      })
+      .join("")}
+    </urlset>
+    `,
+    {
+      headers: {
+        "Content-Type": "application/xml",
+        "Cache-Control": "public, max-age=3600",
+      },
+      status: 200,
+    }
+  );
 }
