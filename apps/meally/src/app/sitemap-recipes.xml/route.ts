@@ -14,7 +14,9 @@ export async function GET() {
   
       ${recipes
         .map((data) => {
-          const time = data.lastUpdated || data.createdAt;
+          // turn date into the correct string for the sitemap
+          const time = new Date(data.lastUpdated || data.createdAt);
+          // const time = new Date();
           return `
             <url>
                 <loc>${`https://meally.com.au/recipes/${data.id}`}</loc>
