@@ -1,19 +1,16 @@
-import { Step, Ingredient } from "@db/types";
+import type { Step as TStep, Ingredient } from "@db/types";
 import React from "react";
 import IngredientChips from "./IngredientChips";
-import {
-  displayIngredient,
-  matchIngredients,
-} from "@/src/common/lib/utils/utils";
+import { displayIngredient, matchIngredients } from "@lib/utils";
 
 interface StepProps {
   index: number;
-  step: Step;
+  step: TStep;
   ingredients: Ingredient[];
 }
 
 const Step = ({ index, step, ingredients }: StepProps) => {
-  const matchedIngredients = matchIngredients(step, ingredients);
+  const matchedIngredients = matchIngredients(ingredients, step);
 
   return (
     <section className="relative flex w-96 flex-grow flex-col items-start gap-1 rounded-2xl p-4">

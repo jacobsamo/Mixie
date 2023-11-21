@@ -2,8 +2,8 @@ import {
   convertIngredients,
   getRecipeJsonLd,
   splitTime,
-} from "@/src/common/lib/services/recipeJsonLDParsing";
-import { recipeId } from "@/src/common/lib/utils/utils";
+} from "@lib/services/recipeJsonLDParsing";
+import { recipeId } from "@lib/utils";
 import { db } from "@db/index";
 import { info, recipes } from "@db/schemas";
 import { NewInfo, NewPartialRecipe } from "@db/types";
@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
           rating: recipe.aggregateRating?.ratingValue || null,
           serves: recipe.recipeYield || null,
           imgUrl: recipe.image.url || null,
-          imgAlt: recipe.image.alt || null,
+          imgAlt: recipe.image.alt || recipe.name || "recipe image",
           isPublic: false,
           keywords: recipe.keywords.split(",").map((keyword: string) => {
             return { value: keyword };
@@ -108,7 +108,11 @@ export async function POST(req: NextRequest) {
           createdBy: user.id,
           lastUpdatedBy: user.id,
           lastUpdatedByName: user.name! || "",
-          description: recipe.description || null,
+          description:
+            recipe.description.replace(
+              /<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g,
+              ""
+            ) || null,
           isPublic: false,
           steps:
             recipe.recipeInstructions.map((step: string) => {
@@ -141,7 +145,6 @@ export async function POST(req: NextRequest) {
     }
   } catch (error) {
     console.error(error);
-
     if (error instanceof z.ZodError) {
       return NextResponse.json(JSON.stringify(error.issues), { status: 422 });
     }

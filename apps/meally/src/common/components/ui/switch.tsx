@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 
-import { cn } from "@/src/common/lib/utils/utils";
+import { cn } from "@lib/utils";
 import {
   Tooltip,
   TooltipContent,

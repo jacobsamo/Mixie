@@ -1,3 +1,4 @@
-import * as defaultConfig from "tailwind-config/tailwind.config";
+import { withUt } from "uploadthing/tw";
+import defaultConfig from "tailwind-config/tailwind.config";
 
-export default defaultConfig;
+export default withUt(defaultConfig);

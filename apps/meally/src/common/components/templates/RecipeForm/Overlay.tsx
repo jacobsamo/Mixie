@@ -7,11 +7,12 @@ import { EyeIcon } from "lucide-react";
 
 interface OverlayProps {
   onPreview: () => void;
+  isDisabled: boolean;
   // handle submit property that is passed to the form with the correct onSubmit function
   // handleSubmit: (e: DOMAttributes<HTMLFormElement>) => void;
 }
 
-const Overlay = ({ onPreview }: OverlayProps) => {
+const Overlay = ({ onPreview, isDisabled }: OverlayProps) => {
   const [open, setOpen] = useState(false);
   const { handleSubmit } = useFormContext();
   return (

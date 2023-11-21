@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -18,15 +18,23 @@ import ImageUploadDialog from "../../elements/ImageUploadDialog";
 import { UploadFileResponse } from "uploadthing/client";
 
 const ImageUpload = () => {
-  const { register, setValue } =
-    useFormContext<z.infer<typeof recipeFormSchema>>();
+  const {
+    register,
+    setValue,
+    formState: { errors },
+  } = useFormContext<z.infer<typeof recipeFormSchema>>();
   const [open, setOpen] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
 
-  const setImages = (images: UploadFileResponse[]) => {
+  useEffect(() => {
+    if (errors.info?.imgUrl || errors.info?.imgAlt) {
+      setOpen(true);
+    }
+  }, []);
+
+  const setImages = (image: string) => {
     setUploadLoading(true);
-    const image = images[0];
-    setValue("info.imgUrl", image.url);
+    setValue("info.imgUrl", image);
     setUploadLoading(false);
   };
 
@@ -35,6 +43,8 @@ const ImageUpload = () => {
       title="Edit Image"
       description="Upload an image for your recipe"
       setImage={setImages}
+      externalOpen={open}
+      setExternalOpen={setOpen}
       Trigger={
         <DialogTrigger asChild>
           <Button
@@ -67,6 +77,7 @@ const ImageUpload = () => {
           {...register("info.imgAlt", {
             required: true,
           })}
+          error={errors.info?.imgAlt}
           required
           label="Img Alt Text"
           tooltip="A short description of the image, this helps people with screen readers to understand the image"
