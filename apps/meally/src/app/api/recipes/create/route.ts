@@ -5,7 +5,6 @@ import {
 } from "@/src/common/lib/services/recipeJsonLDParsing";
 import { recipeId } from "@/src/common/lib/utils/utils";
 import { db } from "@db/index";
-import { authOptions } from "@server/auth";
 import { info, recipes } from "@db/schemas";
 import { NewInfo, NewPartialRecipe } from "@db/types";
 import { getServerAuthSession } from "@server/auth";
@@ -94,6 +93,7 @@ export async function POST(req: NextRequest) {
           serves: recipe.recipeYield || null,
           imgUrl: recipe.image.url || null,
           imgAlt: recipe.image.alt || null,
+          isPublic: false,
           keywords: recipe.keywords.split(",").map((keyword: string) => {
             return { value: keyword };
           }),
@@ -109,6 +109,7 @@ export async function POST(req: NextRequest) {
           lastUpdatedBy: user.id,
           lastUpdatedByName: user.name! || "",
           description: recipe.description || null,
+          isPublic: false,
           steps:
             recipe.recipeInstructions.map((step: string) => {
               return { step_body: step };
