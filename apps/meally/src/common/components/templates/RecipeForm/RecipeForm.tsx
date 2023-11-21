@@ -1,5 +1,4 @@
 "use client";
-import { Input } from "@components/ui/input";
 import { NewRecipe, Recipe } from "@db/types";
 import { recipeFormSchema } from "@db/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,15 +10,19 @@ import {
 import React, { useEffect, useState } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
-import { SelectComponent } from "../../ui/SelectComponent";
-import TagInput from "../../ui/taginput";
-import { Textarea } from "../../ui/textarea";
+
+import { onSubmit } from "./form";
+import { Input } from "@components/ui/input";
+import { SelectComponent } from "@components/ui/SelectComponent";
+import TagInput from "@components/ui/taginput";
+import { Textarea } from "@components/ui/textarea";
 import RecipePageComponent from "../RecipePage/RecipePageComponent";
-import ImageUpload from "./ImageUpload";
 import { IngredientContainer } from "./IngredientContainer";
 import Overlay from "./Overlay";
 import { StepContainer } from "./StepContainer";
-import { onSubmit } from "./form";
+import dynamic from "next/dynamic";
+
+const ImageUpload = dynamic(() => import("./ImageUpload"), { ssr: false });
 
 interface RecipeFormProps {
   recipe: any | Recipe | NewRecipe; //TODO: fix this type to represent the correct type of recipe (not a huge deal but would be useful)
@@ -32,6 +35,7 @@ interface RecipeFormProps {
  */
 const RecipeForm = ({ recipe }: RecipeFormProps) => {
   const [preview, setPreview] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const methods = useForm<z.infer<typeof recipeFormSchema>>({
     resolver: zodResolver(recipeFormSchema),
@@ -79,7 +83,10 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
           className="relative z-0 mx-auto mb-[20%] flex w-full flex-col p-2 md:p-0 lg:w-1/2"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <Overlay onPreview={() => setPreview(!preview)} />
+          <Overlay
+            onPreview={() => setPreview(!preview)}
+            isDisabled={isDisabled}
+          />
 
           {!preview && (
             <>

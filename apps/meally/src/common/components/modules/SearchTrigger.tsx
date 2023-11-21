@@ -13,7 +13,7 @@ const SearchTrigger = ({ children }: SearchTriggerProps) => {
   return (
     <>
       <Button
-        ariaLabel="Search by keyword, ingredient or recipes" 
+        ariaLabel="Search by keyword, ingredient or recipes"
         unstyled
         onClick={() => setOpen(!open)}
       >

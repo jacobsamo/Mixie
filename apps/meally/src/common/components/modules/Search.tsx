@@ -9,7 +9,7 @@ import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useToggleWithShortcut } from "../../hooks/useToggleWithShortCut";
-import { recipeId } from "../../lib/utils/utils";
+import { recipeId } from "@lib/utils";
 
 interface SearchProps {
   externalOpen?: boolean;

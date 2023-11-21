@@ -1,4 +1,4 @@
-import { Trash2Icon } from "lucide-react";
+import { GripVertical, Trash2Icon } from "lucide-react";
 import { units } from "@/src/common/lib/services/data";
 import { Controller, useFormContext } from "react-hook-form";
 import { Ingredient as IngredientType } from "@db/types";
@@ -7,7 +7,7 @@ import { recipeFormSchema } from "@db/zodSchemas";
 import * as z from "zod";
 import { Button } from "../../ui/button";
 import { SelectComponent } from "../../ui/SelectComponent";
-import { useEffect } from "react";
+
 
 interface IngredientProps {
   index: number;
@@ -23,9 +23,14 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
   if (values.isHeading) {
     return (
       <div className="mt-4 flex flex-row flex-wrap items-center gap-1">
+        <GripVertical />
+
         <Input
           {...register(`ingredients.${index}.title` as const)}
           placeholder="Heading..."
+          classNames={{
+            container: "h-12",
+          }}
         />
         <Button
           ariaLabel="delete ingredient"
@@ -42,6 +47,8 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
 
   return (
     <div className="flex flex-row flex-wrap items-center gap-1 rounded-md">
+      <GripVertical />
+
       <Input
         {...register(`ingredients.${index}.title` as const)}
         placeholder="Ingredient"

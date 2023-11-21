@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn } from "@/src/common/lib/utils/utils";
+import { cn } from "@lib/utils";
 import {
   Tooltip,
   TooltipContent,
@@ -46,7 +46,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ) => {
     return (
       <div
-        className={cn("flex flex-col gap-1 z-0", classNames?.container)}
+        className={cn("z-0 flex flex-col gap-1", classNames?.container)}
         data-input="container"
       >
         {label && (

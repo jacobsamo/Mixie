@@ -13,7 +13,6 @@ interface EditPageProps {
   };
 }
 
-
 export default async function EditPage({ params }: EditPageProps) {
   const user = await getServerAuthSession();
 

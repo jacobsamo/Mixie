@@ -1,4 +1,5 @@
 import { isApp } from "@/src/common/lib/services/apiMiddleware";
+import { getServerAuthSession } from "@/src/server/auth";
 import { db } from "@db/index";
 import { users } from "@db/schemas";
 import { userSchema } from "@db/zodSchemas";
@@ -12,8 +13,11 @@ export async function PUT(
 ) {
   try {
     const app = await isApp(req);
+    const session = await getServerAuthSession();
 
-    if (!app) {
+    const requestedUserData = session?.user.id === params.id;
+
+    if ((!app || !session) && !requestedUserData) {
       return NextResponse.json("Unauthorized", { status: 403 });
     }
 
@@ -26,7 +30,7 @@ export async function PUT(
     await db.update(users).set(newUser).where(eq(users.id, params.id));
 
     console.log("User updated: ", newUser);
-    
+
     return NextResponse.json(
       {
         message: "User updated successfully",
