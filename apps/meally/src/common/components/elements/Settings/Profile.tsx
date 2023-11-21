@@ -10,9 +10,8 @@ import { useFormContext } from "react-hook-form";
 const Profile = () => {
   const { getValues, register, setValue, control } = useFormContext<User>();
 
-  const setImages = (images: any) => {
-    const image = images[0];
-    setValue("image", image.url);
+  const setImages = (image: string) => {
+    setValue("image", image);
   };
 
   return (

@@ -9,6 +9,7 @@ import { Metadata } from "next";
 import { RecipeJsonLd } from "next-seo";
 import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
+import { env } from "@/env.mjs";
 
 export const revalidate = 60 * 60;
 
@@ -32,13 +33,14 @@ export async function generateMetadata({
   params: { id: string };
 }): Promise<Metadata | undefined> {
   const recipes = await getRecipes();
-  await generateSiteMap(
-    {
-      fileName: "recipes",
-      route: "recipes",
-    },
-    recipes
-  );
+  if (env.NODE_ENV !== "development")
+    await generateSiteMap(
+      {
+        fileName: "recipes",
+        route: "recipes",
+      },
+      recipes
+    );
 
   const recipe = recipes?.find((recipe) => {
     recipe.id == params.id;

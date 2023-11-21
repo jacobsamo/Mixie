@@ -1,7 +1,7 @@
 // import Ingredient from "@components/templates/RecipePage/ingredient/Ingredient";
 import { Amount, Step, type Ingredient } from "@db/types";
 import Fraction from "fraction.js";
-import * as fuzzball from 'fuzzball';
+import * as fuzzball from "fuzzball";
 
 /**
  * Turns an ingredient into a string that can be displayed
@@ -21,61 +21,62 @@ export const displayIngredient = (ingredient: Ingredient) =>
   } ${ingredient.title}`;
 
 /**
+ * Removes all non word letters e.g , . / ( )
+ * @param {string} str string to input
+ * @returns {string}
+ */
+const normalizeString = (str: string): string =>
+  str
+    .toLowerCase()
+    .replace(/[^\w\s]/gi, "")
+    .toLowerCase();
+
+/**
  * Takes in a step to search for any ingredients that might be in the step,
  * @param {Step} step the step
  * @param {Ingredient} ingredients ingredients to search through
  * @returns {Ingredient[]} found ingredients
  */
 export function matchIngredients(ingredients: Ingredient[], step: Step) {
-  /**s
-   * Removes all non word letters e.g , . / ( )
-   * @param {string} str string to input
-   * @returns {string}
-   */
-  const normalizeString = (str: string): string =>
-    str
-      .toLowerCase()
-      .replace(/[^\w\s]/g, "")
-      .toLowerCase();
-
   const stepWords = normalizeString(step.step_body).split(/\s+/);
 
   const found: Ingredient[] = [];
 
-    ingredients.forEach((passed, index, arr) => {
-      if (passed.isHeading || !passed.title) return;
-      // get rid of any unwanted characters
-      const ingredient = normalizeString(passed.title);
-      // remove not word characters and split into parts
-      const ingredientArr = normalizeString(passed.title).split(/\s+|\,/);
+  ingredients.forEach((passed, index, arr) => {
+    if (passed.isHeading || !passed.title) return;
+    // get rid of any unwanted characters
+    const ingredient = normalizeString(passed.title);
+    // remove not word characters and split into parts
+    const ingredientArr = normalizeString(passed.title).split(/\s+|\,/);
 
-      // loop over each word
-      stepWords.forEach((step_word, word_index, word_arr) => {
-        // if the ingredient arr includes the word continue
-        if (ingredientArr.includes(step_word)) {
-          // create a new string from a selection
-          // minus the current index by the length to set the start
-          // plus the current index by the length and plus 2
-          const newString = word_arr
-            .splice(
-              word_index - 1,
-              index + 2
-            )
-            .join(" ");
+    // loop over each word
+    stepWords.forEach((step_word, word_index, word_arr) => {
+      if (ingredientArr.length == 1 && ingredient == step_word) {
+        found.push(passed);
+        return;
+      }
 
-          const ratio = fuzzball.ratio(newString, ingredient);
-          console.log("Ratio: ", ratio);
-          // create a percentage
+      // if the ingredient arr includes the word continue
+      if (ingredientArr.includes(step_word)) {
+        /*
+        Find the index of the word, get the length of the ingredient 
+        get a certain number of chacters before asnd after, 
+        get rid of spaces
+        */
+        const newString = stepWords
+          .slice(word_index, word_index + ingredientArr.length)
+          .join("");
 
-          // if this is greater then 0.5 or 50% push the ingredient
-          if (ratio >= 50) found.push(passed);
-        }
-      });
+        const ratio = fuzzball.ratio(newString, ingredient);
+
+        if (ratio >= 45) found.push(passed);
+      }
     });
+  });
 
-
-
-  return found;
+  return found.filter(
+    (v, i, a) => a.findIndex((t) => t.title === v.title) === i
+  );
 }
 
 /**

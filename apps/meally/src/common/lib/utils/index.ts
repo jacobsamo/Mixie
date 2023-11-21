@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 export * from "./ingredients";
 export * from "./metadata";
 export * from "./time";
-export * from "./uploadthing";
+
 
 /**
  * @param {ClassValue[]} inputs

@@ -20,8 +20,8 @@
     "db:pull": "drizzle-kit introspect:mysql --config=drizzle.config.ts"
   },
   "dependencies": {
-    "@auth/core": "^0.18.1",
-    "@auth/drizzle-adapter": "^0.3.6",
+    "@auth/core": "^0.18.2",
+    "@auth/drizzle-adapter": "^0.3.7",
     "@hookform/resolvers": "^3.3.2",
     "@planetscale/database": "^1.11.0",
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -42,7 +42,7 @@
     "@trpc/next": "^10.43.6",
     "@trpc/react-query": "^10.43.6",
     "@trpc/server": "^10.43.6",
-    "@uploadthing/react": "^6.0.0",
+    "@uploadthing/react": "^6.0.1",
     "@vercel/analytics": "^1.1.1",
     "autoprefixer": "^10.4.16",
     "cheerio": "1.0.0-rc.12",
@@ -75,16 +75,16 @@
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
-    "uploadthing": "^6.0.1",
+    "uploadthing": "^6.0.2",
     "uuid": "^9.0.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
-    "@types/node": "^20.9.2",
-    "@types/react": "^18.2.37",
+    "@types/node": "^20.9.3",
+    "@types/react": "^18.2.38",
     "@types/react-beautiful-dnd": "^13.1.7",
-    "@types/react-dom": "^18.2.15",
+    "@types/react-dom": "^18.2.16",
     "drizzle-kit": "^0.20.4",
     "emails": "workspace:*",
     "eslint-config-custom": "workspace:*",
@@ -94,6 +94,6 @@
     "tailwind-config": "workspace:*",
     "tailwindcss": "^3.3.5",
     "tsconfig": "workspace:*",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.2"
   }
 }

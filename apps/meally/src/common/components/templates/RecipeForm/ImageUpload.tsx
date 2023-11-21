@@ -32,10 +32,9 @@ const ImageUpload = () => {
     }
   }, []);
 
-  const setImages = (images: any) => {
+  const setImages = (image: string) => {
     setUploadLoading(true);
-    const image = images[0];
-    setValue("info.imgUrl", image.url);
+    setValue("info.imgUrl", image);
     setUploadLoading(false);
   };
 

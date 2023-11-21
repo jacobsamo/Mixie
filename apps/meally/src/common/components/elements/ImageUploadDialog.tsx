@@ -23,7 +23,7 @@ interface ImageUploadDialogProps {
   description?: string;
   externalOpen?: boolean;
   setExternalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-  setImage?: (images: UploadFileResponse[]) => any;
+  setImage?: (imageUrl: string) => any;
   children?: React.ReactNode;
 }
 
@@ -64,7 +64,7 @@ const ImageUploadDialog = ({
             onUploadBegin={() => setLoading(true)}
             onClientUploadComplete={(res) => {
               // Do something with the response
-              setImage && res && setImage(res);
+              setImage && res && setImage(res[0].url);
 
               setLoading(false);
               toast({
