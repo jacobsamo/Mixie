@@ -1,12 +1,12 @@
 "use client";
-import { Step, Ingredient } from "@db/types";
+import type { Step as TStep, Ingredient } from "@db/types";
 import React from "react";
 import IngredientChips from "./IngredientChips";
 import { CheckCircleIcon, Circle } from "lucide-react";
 
 interface StepProps {
   index: number;
-  step: Step;
+  step: TStep;
   ingredients: Ingredient[];
 }
 

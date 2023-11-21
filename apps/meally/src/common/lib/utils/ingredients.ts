@@ -1,6 +1,7 @@
 // import Ingredient from "@components/templates/RecipePage/ingredient/Ingredient";
 import { Amount, Step, type Ingredient } from "@db/types";
 import Fraction from "fraction.js";
+import * as fuzzball from 'fuzzball';
 
 /**
  * Turns an ingredient into a string that can be displayed
@@ -25,45 +26,56 @@ export const displayIngredient = (ingredient: Ingredient) =>
  * @param {Ingredient} ingredients ingredients to search through
  * @returns {Ingredient[]} found ingredients
  */
-export function matchIngredients(step: Step, ingredients: Ingredient[]) {
-  const stepWords = step.step_body.toLowerCase().split(/\s+/);
+export function matchIngredients(ingredients: Ingredient[], step: Step) {
+  /**s
+   * Removes all non word letters e.g , . / ( )
+   * @param {string} str string to input
+   * @returns {string}
+   */
+  const normalizeString = (str: string): string =>
+    str
+      .toLowerCase()
+      .replace(/[^\w\s]/g, "")
+      .toLowerCase();
 
-  const matchedIngredients = ingredients
-    .filter((ingredient, index, arr) => {
-      if (ingredient.isHeading || !ingredient.title) {
-        return false;
-      }
+  const stepWords = normalizeString(step.step_body).split(/\s+/);
 
-      const ingredientWords = ingredient.title.toLowerCase().split(/\s+/);
+  const found: Ingredient[] = [];
 
-      // Check if any ingredient word is a substring of any step word
-      return ingredientWords.some((ingredientWord) =>
-        stepWords.some((stepWord) => stepWord.toLowerCase() === ingredientWord)
-      );
-    })
-    .filter((ingredient, index, arr) => {
-      // Filter out duplicate ingredients
-      return arr.findIndex((i) => i.title === ingredient.title) === index;
+    ingredients.forEach((passed, index, arr) => {
+      if (passed.isHeading || !passed.title) return;
+      // get rid of any unwanted characters
+      const ingredient = normalizeString(passed.title);
+      // remove not word characters and split into parts
+      const ingredientArr = normalizeString(passed.title).split(/\s+|\,/);
+
+      // loop over each word
+      stepWords.forEach((step_word, word_index, word_arr) => {
+        // if the ingredient arr includes the word continue
+        if (ingredientArr.includes(step_word)) {
+          // create a new string from a selection
+          // minus the current index by the length to set the start
+          // plus the current index by the length and plus 2
+          const newString = word_arr
+            .splice(
+              word_index - 1,
+              index + 2
+            )
+            .join(" ");
+
+          const ratio = fuzzball.ratio(newString, ingredient);
+          console.log("Ratio: ", ratio);
+          // create a percentage
+
+          // if this is greater then 0.5 or 50% push the ingredient
+          if (ratio >= 50) found.push(passed);
+        }
+      });
     });
 
-  const uniqueMatchedIngredients = matchedIngredients.filter(
-    (ingredient, index) => {
-      const ingredientWords = ingredient.title.toLowerCase().split(/\s+/); // Split ingredient title into words
 
-      // Check if any ingredient word is a substring of any step word
-      return !ingredientWords.some((ingredientWord) =>
-        matchedIngredients
-          .slice(index + 1)
-          .some((matchedIngredient) =>
-            matchedIngredient.title
-              .toLowerCase()
-              .includes(ingredientWord.toLowerCase())
-          )
-      );
-    }
-  );
 
-  return uniqueMatchedIngredients;
+  return found;
 }
 
 /**

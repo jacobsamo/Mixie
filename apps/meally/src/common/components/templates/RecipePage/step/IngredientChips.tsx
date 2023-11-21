@@ -8,9 +8,7 @@ interface IngredientChipsProps {
 }
 
 const IngredientChips = ({ step, ingredients }: IngredientChipsProps) => {
-  //TODO: Fix miss matches in the as in something getting matched when it shouldn't e.g "brown sugar" matching "sugar"
-  //TODO: make sure that the matched ingredients are unique so there are no duplicates as this could happen
-  const uniqueMatchedIngredients = matchIngredients(step, ingredients);
+  const uniqueMatchedIngredients = matchIngredients(ingredients, step);
 
   return (
     <div className="flex flex-wrap gap-1">
