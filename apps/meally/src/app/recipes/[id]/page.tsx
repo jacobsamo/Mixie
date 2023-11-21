@@ -1,7 +1,5 @@
-import {
-  constructMetadata,
-  displayIngredient,
-} from "@/src/common/lib/utils/utils";
+import { generateSiteMap } from "@/src/common/lib/services/generateSitemap";
+import { constructMetadata, displayIngredient } from "@lib/utils";
 import RecipePageComponent from "@components/templates/RecipePage/RecipePageComponent";
 import { db } from "@db/index";
 import { recipes as recipeSchema } from "@db/schemas";
@@ -11,6 +9,7 @@ import { Metadata } from "next";
 import { RecipeJsonLd } from "next-seo";
 import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
+import { env } from "@/env.mjs";
 
 export const revalidate = 60 * 60;
 
@@ -34,6 +33,15 @@ export async function generateMetadata({
   params: { id: string };
 }): Promise<Metadata | undefined> {
   const recipes = await getRecipes();
+  if (env.NODE_ENV !== "development")
+    await generateSiteMap(
+      {
+        fileName: "recipes",
+        route: "recipes",
+      },
+      recipes
+    );
+
   const recipe = recipes?.find((recipe) => {
     recipe.id == params.id;
   });
@@ -42,13 +50,16 @@ export async function generateMetadata({
     return;
   }
 
-  return constructMetadata({
+  const metaData = await constructMetadata({
     title: recipe.title,
     description: recipe.description || undefined,
-    image: recipe.info.imgUrl || undefined,
+    image: recipe.info.imgUrl || "/images/banner.png",
+    url: `https://www.meally.com.au/recipes/${recipe.id}`,
     keywords:
       recipe.info.keywords?.map((keyword) => keyword.value) || undefined,
   });
+
+  return metaData;
 }
 
 export default async function RecipePage({ params }) {

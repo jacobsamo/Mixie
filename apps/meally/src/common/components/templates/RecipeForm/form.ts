@@ -1,4 +1,4 @@
-import { calculateTotalTime } from "@/src/common/lib/utils/utils";
+import { calculateTotalTime } from "@lib/utils";
 import type { Ingredient } from "@db/types";
 import { recipeFormSchema } from "@db/zodSchemas";
 import { SubmitHandler } from "react-hook-form";

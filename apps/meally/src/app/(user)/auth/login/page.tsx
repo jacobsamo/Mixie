@@ -59,7 +59,7 @@ const LoginPage = () => {
         />
         <h1 className="text-step--1">Welcome to Meally</h1>
       </div>
-      <form
+      {/* <form
         className="flex w-2/3 flex-col  gap-4"
         onSubmit={handleSubmit(onSubmit)}
       >
@@ -127,37 +127,9 @@ const LoginPage = () => {
           Log in
         </Button>
       </form>
-      <span className="my-2 mb-4 h-[0.125rem] w-3/4 rounded-md bg-grey dark:bg-white"></span>
+    <span className="my-2 mb-4 h-[0.125rem] w-3/4 rounded-md bg-grey dark:bg-white"></span> */}
       <div className="flex flex-col gap-4">
         <Button
-          LeadingIcon={
-            <svg
-              fill="#ffffff"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              className="h-8"
-            >
-              <g strokeWidth="0" id="SVGRepo_bgCarrier"></g>
-              <g
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                id="SVGRepo_tracerCarrier"
-              ></g>
-              <g id="SVGRepo_iconCarrier">
-                {" "}
-                <title>github</title>{" "}
-                <rect fill="none" height="24" width="24"></rect>{" "}
-                <path d="M12,2A10,10,0,0,0,8.84,21.5c.5.08.66-.23.66-.5V19.31C6.73,19.91,6.14,18,6.14,18A2.69,2.69,0,0,0,5,16.5c-.91-.62.07-.6.07-.6a2.1,2.1,0,0,1,1.53,1,2.15,2.15,0,0,0,2.91.83,2.16,2.16,0,0,1,.63-1.34C8,16.17,5.62,15.31,5.62,11.5a3.87,3.87,0,0,1,1-2.71,3.58,3.58,0,0,1,.1-2.64s.84-.27,2.75,1a9.63,9.63,0,0,1,5,0c1.91-1.29,2.75-1,2.75-1a3.58,3.58,0,0,1,.1,2.64,3.87,3.87,0,0,1,1,2.71c0,3.82-2.34,4.66-4.57,4.91a2.39,2.39,0,0,1,.69,1.85V21c0,.27.16.59.67.5A10,10,0,0,0,12,2Z"></path>{" "}
-              </g>
-            </svg>
-          }
-          ariaLabel="sign in with github"
-          className="color-white shadow-[0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)] flex w-56 max-w-sm cursor-pointer items-center  rounded-lg border-none bg-[#181717] px-2 py-6 text-center text-step--3"
-          onClick={() => signInWithGithub()}
-        >
-          <p className="text-white">Sign in with Github</p>
-        </Button>
-        {/* <Button
           ariaLabel="sign in with google"
           LeadingIcon={
             <svg
@@ -188,7 +160,35 @@ const LoginPage = () => {
           onClick={() => signInWithGoogle()}
         >
           Sign in with Google
-        </Button> */}
+        </Button>
+        <Button
+          LeadingIcon={
+            <svg
+              fill="#ffffff"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              className="h-8"
+            >
+              <g strokeWidth="0" id="SVGRepo_bgCarrier"></g>
+              <g
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                id="SVGRepo_tracerCarrier"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                {" "}
+                <title>github</title>{" "}
+                <rect fill="none" height="24" width="24"></rect>{" "}
+                <path d="M12,2A10,10,0,0,0,8.84,21.5c.5.08.66-.23.66-.5V19.31C6.73,19.91,6.14,18,6.14,18A2.69,2.69,0,0,0,5,16.5c-.91-.62.07-.6.07-.6a2.1,2.1,0,0,1,1.53,1,2.15,2.15,0,0,0,2.91.83,2.16,2.16,0,0,1,.63-1.34C8,16.17,5.62,15.31,5.62,11.5a3.87,3.87,0,0,1,1-2.71,3.58,3.58,0,0,1,.1-2.64s.84-.27,2.75,1a9.63,9.63,0,0,1,5,0c1.91-1.29,2.75-1,2.75-1a3.58,3.58,0,0,1,.1,2.64,3.87,3.87,0,0,1,1,2.71c0,3.82-2.34,4.66-4.57,4.91a2.39,2.39,0,0,1,.69,1.85V21c0,.27.16.59.67.5A10,10,0,0,0,12,2Z"></path>{" "}
+              </g>
+            </svg>
+          }
+          ariaLabel="sign in with github"
+          className="color-white shadow-[0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)] flex w-56 max-w-sm cursor-pointer items-center  rounded-lg border-none bg-[#181717] px-2 py-6 text-center text-step--3"
+          onClick={() => signInWithGithub()}
+        >
+          <p className="text-white">Sign in with Github</p>
+        </Button>
         {/* <Button
           LeadingIcon={
             <svg

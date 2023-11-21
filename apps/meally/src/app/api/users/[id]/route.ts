@@ -1,4 +1,5 @@
 import { isApp } from "@/src/common/lib/services/apiMiddleware";
+import { getServerAuthSession } from "@/src/server/auth";
 import { db } from "@db/index";
 import { users } from "@db/schemas";
 import { eq } from "drizzle-orm";
@@ -8,17 +9,22 @@ export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const app = await isApp(req);
+  try {
+    const app = await isApp(req);
+    const session = await getServerAuthSession();
 
-  if (!app) {
-    console.log("Unauthorized");
-    return NextResponse.json("Unauthorized", { status: 403 });
+    const requestedUserData = session?.user.id === params.id;
+
+    if ((!app || !session) && !requestedUserData) {
+      return NextResponse.json("Unauthorized", { status: 403 });
+    }
+
+    const user = await db.query.users.findFirst({
+      where: eq(users.id, params.id),
+    });
+
+    return NextResponse.json(user);
+  } catch (error) {
+    console.error(error);
   }
-
-  const user = await db.query.users.findFirst({
-    where: eq(users.id, params.id),
-  });
-
-  return NextResponse.json(user);
 }
-
