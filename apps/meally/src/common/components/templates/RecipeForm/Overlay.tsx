@@ -29,8 +29,9 @@ const Overlay = ({ onPreview, isDisabled }: OverlayProps) => {
         </Button>
         <Button
           ariaLabel="Publish"
-          type="button"
+          type="submit"
           onClick={() => {
+            handleSubmit(onSubmit);
             setOpen(true);
           }}
         >
