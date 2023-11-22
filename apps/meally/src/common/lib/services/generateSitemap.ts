@@ -62,5 +62,5 @@ export async function generateSiteMap<T extends RequiredFelids>(
   });
 
   // eslint-disable-next-line no-sync
-  fs.writeFileSync(`sitemap-${options.fileName}.xml`, formatted);
+  fs.writeFileSync(`public/sitemap-${options.fileName}.xml`, formatted);
 }
