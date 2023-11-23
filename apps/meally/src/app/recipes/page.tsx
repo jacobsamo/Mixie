@@ -9,6 +9,9 @@ import { eq } from "drizzle-orm";
 import { Loader2, SearchIcon } from "lucide-react";
 import { IFuseOptions } from "fuse.js";
 import { Info } from "@/src/server/db/types";
+
+export const revalidate = 60 * 60;
+
 // const getRecipes = unstable_cache(
 //   async () => {
 //     const recipes = await db.query.info.findMany({
@@ -55,8 +58,6 @@ async function searchRecipes({
 export const metadata = constructMetadata({
   title: "Recipes",
 });
-
-export const revalidate = 60 * 60;
 
 export default async function RecipeViewPage({
   searchParams,

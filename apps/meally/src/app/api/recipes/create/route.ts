@@ -55,8 +55,12 @@ export async function POST(req: NextRequest) {
         lastUpdatedByName: user.name! || "",
         isPublic: false,
       };
-      console.log("Info: ", newInfo);
-      console.log("Recipe: ", newRecipe);
+
+      console.log(`Created recipe: ${newRecipe.uid}`, {
+        message: `Recipe successfully created`,
+        recipe: newRecipe,
+        info: newInfo,
+      });
 
       await db.insert(info).values(newInfo);
       await db.insert(recipes).values(newRecipe);
@@ -70,10 +74,9 @@ export async function POST(req: NextRequest) {
     }
 
     if (link) {
+      // parse the recipe
       const recipe = await getRecipeJsonLd(link);
       const ingredients = await convertIngredients(recipe.recipeIngredient);
-
-      // parse the recipe
 
       if (recipe) {
         const uid = uuidv4();
@@ -122,8 +125,11 @@ export async function POST(req: NextRequest) {
           source: link,
         };
 
-        console.log("Info: ", newInfo);
-        console.log("Recipe: ", newRecipe);
+        console.log(`Created recipe: ${newRecipe.uid}`, {
+          message: `Recipe successfully created`,
+          recipe: newRecipe,
+          info: newInfo,
+        });
 
         await db.insert(info).values(newInfo);
         await db.insert(recipes).values(newRecipe);
@@ -144,7 +150,7 @@ export async function POST(req: NextRequest) {
       }
     }
   } catch (error) {
-    console.error(error);
+    console.error("Error on /recipes/create", error);
     if (error instanceof z.ZodError) {
       return NextResponse.json(JSON.stringify(error.issues), { status: 422 });
     }

@@ -58,7 +58,7 @@ export const authOptions: NextAuthOptions = {
   },
   secret: env.NEXTAUTH_SECRET,
   adapter: DrizzleAdapter(),
-  debug: true,
+  // debug: true,
   providers: [
     GitHubProvider({
       clientId: env.GITHUB_CLIENT_ID,

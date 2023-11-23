@@ -33,14 +33,6 @@ export async function generateMetadata({
   params: { id: string };
 }): Promise<Metadata | undefined> {
   const recipes = await getRecipes();
-  // if (env.NODE_ENV !== "development")
-  //   await generateSiteMap(
-  //     {
-  //       fileName: "recipes",
-  //       route: "recipes",
-  //     },
-  //     recipes
-  //   );
 
   const recipe = recipes?.find((recipe) => {
     recipe.id == params.id;

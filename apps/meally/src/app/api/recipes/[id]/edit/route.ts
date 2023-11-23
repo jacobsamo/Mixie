@@ -87,7 +87,7 @@ export async function PUT(req: NextRequest) {
       .set(newRecipe)
       .where(eq(recipes.uid, recipe.uid));
 
-    console.log("Created Recipe", {
+    console.log(`Edited recipe ${newRecipe.uid}`, {
       message: `Recipe successfully created, ${setRecipe}`,
       recipe: newRecipe,
       info: newInfo,
@@ -102,7 +102,7 @@ export async function PUT(req: NextRequest) {
       }
     );
   } catch (error) {
-    console.error(error);
+    console.error("Error on /recipes/[id]/edit", error);
 
     if (error instanceof z.ZodError) {
       return NextResponse.json(JSON.stringify(error.issues), { status: 422 });

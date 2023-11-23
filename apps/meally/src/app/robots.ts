@@ -5,8 +5,11 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: "/private/",
+      disallow: ["/private/", "/auth"],
     },
-    sitemap: "https://www.meally.com.au/sitemap.xml",
+    sitemap: [
+      "https://www.meally.com.au/sitemap.xml",
+      "https://www.meally.com.au/sitemap-recipes.xml",
+    ],
   };
 }
