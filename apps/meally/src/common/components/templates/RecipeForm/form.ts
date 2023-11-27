@@ -4,6 +4,7 @@ import { calculateTotalTime } from "@lib/utils";
 import { SubmitHandler } from "react-hook-form";
 import * as z from "zod";
 import { toast } from "../../ui/use-toast";
+import { redirect, useRouter } from "next/navigation";
 
 export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
   recipe
@@ -64,6 +65,8 @@ export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
         description:
           "Your recipe has been created. Changes will be reflected within an hour",
       });
+      // redirect to the recipe page
+      window.location.href = `/recipes/preview/${recipe.uid}`;
     } else {
       toast({
         title: "Uh oh! Something went wrong.",

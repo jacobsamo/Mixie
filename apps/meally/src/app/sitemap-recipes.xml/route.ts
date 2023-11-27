@@ -4,9 +4,14 @@ import { info } from "@/src/server/db/schemas";
 import { eq } from "drizzle-orm";
 
 export async function GET() {
-  const recipes = await db.query.info.findMany({
-    where: eq(info.isPublic, true),
-  });
+  const recipes = await db
+    .select({
+      id: info.id,
+      lastUpdated: info.lastUpdated,
+      createdAt: info.createdAt,
+    })
+    .from(info)
+    .where(eq(info.isPublic, true));
 
   // add headers for the return type
   // this is required for the sitemap to be generated

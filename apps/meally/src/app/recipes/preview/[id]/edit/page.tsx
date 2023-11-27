@@ -17,7 +17,7 @@ export default async function EditPage({ params }: EditPageProps) {
   const session = await getServerAuthSession();
 
   if (!session) {
-    return redirect("/api/auth/login");
+    return redirect("/auth/login");
   }
 
   const recipe = (await db.query.recipes.findFirst({
@@ -33,7 +33,6 @@ export default async function EditPage({ params }: EditPageProps) {
     },
   })) as Recipe;
 
-  // console.log(recipe);
   if (recipe) return <RecipeForm recipe={recipe} />;
 
   return notFound();
