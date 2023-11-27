@@ -1,11 +1,11 @@
 import RecipeForm from "@/src/common/components/templates/RecipeForm/RecipeForm";
 import { db } from "@db/index";
-import { recipes } from "@db/schemas";
+import { recipes as recipeSchema } from "@db/schemas";
 import { Recipe } from "@db/types";
 import { getServerAuthSession } from "@server/auth";
-import { eq, or } from "drizzle-orm";
+import { and, eq, or } from "drizzle-orm";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 interface EditPageProps {
   params: {
@@ -14,23 +14,20 @@ interface EditPageProps {
 }
 
 export default async function EditPage({ params }: EditPageProps) {
-  const user = await getServerAuthSession();
+  const session = await getServerAuthSession();
 
-  if (!user)
-    return (
-      <main className="flex h-full w-full flex-col items-center justify-center ">
-        Not logged in
-        <Link
-          href={"/api/auth/signin"}
-          className="rounded-md bg-yellow p-1 px-2 font-semibold text-black"
-        >
-          Login
-        </Link>
-      </main>
-    );
+  if (!session) {
+    return redirect("/api/auth/login");
+  }
 
   const recipe = (await db.query.recipes.findFirst({
-    where: or(eq(recipes.id, params.id), eq(recipes.uid, params.id)),
+    where: and(
+      or(
+        eq(recipeSchema.lastUpdatedBy, session.user.id),
+        eq(recipeSchema.createdBy, session.user.id)
+      ),
+      eq(recipeSchema.uid, params.id)
+    ),
     with: {
       info: true,
     },
