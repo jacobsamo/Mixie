@@ -44,7 +44,6 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      console.log("Key: ", e.key);
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         setDialogOpen((dialogOpen) => !dialogOpen);
@@ -99,7 +98,7 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
               >
                 <UserCircle2 /> Profile
               </Link>
-              <CreateRecipeDialog onClick={() => setDialogOpen(false)} />
+              <CreateRecipeDialog />
               <Link
                 id="2"
                 onKeyUp={handleKeyUp}

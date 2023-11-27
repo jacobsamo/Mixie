@@ -39,7 +39,6 @@ async function searchRecipes({
   recipes: Info[];
 }) {
   if (query == undefined) return;
-  console.log("Query: ", query);
 
   const options: IFuseOptions<Info> = {
     includeScore: true,
@@ -50,7 +49,6 @@ async function searchRecipes({
   const Fuse = (await import("fuse.js")).default;
   const fuse = new Fuse(recipes, options);
   const result = fuse.search(query);
-  console.log("Result: ", result);
 
   return result.map((item) => item.item);
 }

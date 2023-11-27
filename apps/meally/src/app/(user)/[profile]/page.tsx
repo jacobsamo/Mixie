@@ -52,9 +52,6 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   const session = await getServerAuthSession();
 
   const users = await getUsers();
-  users?.forEach((user) => {
-    console.log(user);
-  });
   const user = users?.find((user) => user.id == params.profile);
 
   const gotRecipes = (await db.query.info.findMany({

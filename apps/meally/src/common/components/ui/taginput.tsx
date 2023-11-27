@@ -54,11 +54,11 @@ const TagInput = ({
 
   return (
     <div className="mt-4">
-      <div className="flex w-full flex-row flex-wrap gap-1">
+      <div className="flex w-full flex-row flex-wrap gap-1 overflow-scroll h-24">
         {fields.map((field: any, index: any) => (
           <span
             key={index}
-            className="mb-2 flex h-6 w-fit items-center justify-center gap-1 rounded-lg p-4 text-step--2 dark:bg-grey dark:text-white  "
+            className="mb-2 flex h-6 w-fit items-center justify-center gap-1 rounded-lg p-4 text-step--2 shadow-md dark:bg-grey dark:text-white  "
           >
             {field.value}
             {handleRemove ? (
