@@ -25,6 +25,6 @@ export async function GET(
 
     return NextResponse.json(user);
   } catch (error) {
-    console.error(error);
+    console.error("Error on /users/[id]", error);
   }
 }

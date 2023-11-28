@@ -100,11 +100,11 @@ export default function ProfilePage({ params }: ProfilePageProps) {
           )}
           {values.email && (
             <>
-              {activeLink == "profile" && <Profile />}
+              {activeLink === "profile" && <Profile />}
 
-              {activeLink == "customization" && <Customization />}
+              {activeLink === "customization" && <Customization />}
 
-              {activeLink == "profile" && <Account />}
+              {activeLink === "account" && <Account />}
 
               <Button
                 type="submit"

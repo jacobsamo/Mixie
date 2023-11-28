@@ -1,18 +1,17 @@
-"use client";
+import { getServerAuthSession } from "@/src/server/auth";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import React from "react";
 
-export default function SettingsLayout({
+export default async function SettingsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { data } = useSession();
-  const router = useRouter();
+  const session = await getServerAuthSession();
 
-  if (data?.user) {
-    router.push("/");
+  if (session) {
+    return redirect("/");
   }
 
   return <main className="h-full w-full">{children}</main>;

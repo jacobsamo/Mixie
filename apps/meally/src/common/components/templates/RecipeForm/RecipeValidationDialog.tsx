@@ -17,7 +17,6 @@ import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import * as z from "zod";
 import { SwitchInput } from "../../ui/switch";
-import { onSubmit } from "./form";
 
 interface CreateRecipeDialogProps {
   open: boolean;
@@ -38,7 +37,7 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
             The final steps before you publish your recipe
           </DialogDescription>
         </DialogHeader>
-        <div className="mx-auto flex flex-col p-2 md:p-0">
+        <form className="mx-auto flex flex-col p-2 md:p-0">
           <Input
             {...register("title", {
               required: true,
@@ -67,30 +66,22 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
               />
             )}
           />
-        </div>
-        <DialogFooter>
-          <Button
-            ariaLabel="go back"
-            variant={"destructive"}
-            type="button"
-            className="m-2 w-52"
-            onClick={() => setOpen(false)}
-            LeadingIcon={<ArrowLeftIcon />}
-          >
-            Go Back
-          </Button>
-          <Button
-            ariaLabel="save"
-            type="submit"
-            className="m-2 w-52"
-            onClick={() => {
-              handleSubmit(onSubmit);
-              setOpen(false);
-            }}
-          >
-            Save
-          </Button>
-        </DialogFooter>
+          <DialogFooter>
+            <Button
+              ariaLabel="go back"
+              variant={"destructive"}
+              type="button"
+              className="m-2 w-52"
+              onClick={() => setOpen(false)}
+              LeadingIcon={<ArrowLeftIcon />}
+            >
+              Go Back
+            </Button>
+            <Button ariaLabel="save recipe" type="submit" className="m-2 w-52">
+              Save
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

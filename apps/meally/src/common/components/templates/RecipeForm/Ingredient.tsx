@@ -8,7 +8,6 @@ import * as z from "zod";
 import { Button } from "../../ui/button";
 import { SelectComponent } from "../../ui/SelectComponent";
 
-
 interface IngredientProps {
   index: number;
   values: IngredientType;

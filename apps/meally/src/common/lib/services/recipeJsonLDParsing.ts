@@ -53,13 +53,15 @@ export function convertIngredients(ingredients: string[]): Ingredient[] {
     };
     let quantity: number | null = null;
 
-    for (let i = 1; i < parts.length; i++) {
+    for (let i = 0; i < parts.length; i++) {
       const part = parts[i].trim();
       const digits = part.match(/[\d.]+/g);
 
       if (digits) {
         const letterMatch = part.toLowerCase().match(/[a-z]/gi) || "";
         const findNextTo = parts[i + 1].toLowerCase().trim();
+
+        let match = "";
 
         units.forEach((unitObject: any) => {
           const key = Object.keys(unitObject)[0];
@@ -70,11 +72,23 @@ export function convertIngredients(ingredients: string[]): Ingredient[] {
               value: key,
               label: key,
             } as Ingredient["unit"];
-            title = cleanedIngredient.replace(parts[i], "").trim();
+
+            values.forEach((value: string) => {
+              const m = value == letterMatch[0] || value == findNextTo;
+
+              if (m) match = value;
+            });
+
+            return;
           }
         });
 
         quantity = parseInt(digits[0]);
+
+        title = cleanedIngredient
+          .replace(match, "")
+          .replace(digits[0].toString(), "")
+          .trim();
       }
 
       if (
@@ -94,14 +108,9 @@ export function convertIngredients(ingredients: string[]): Ingredient[] {
       }
     }
 
-    const newTitle = title
-      .replace(unit.value, "")
-      .replace(amount?.value || "", "")
-      .replace(/\s\s+/g, " ")
-      .replace(quantity?.toString() || "", "")
-      .trim()
-      .charAt(0)
-      .toUpperCase();
+    const newTitle =
+      title.charAt(0).toUpperCase() +
+      title.replace(/\s\s+/g, " ").slice(1).trim();
 
     const ingredientObject: Ingredient = {
       title: newTitle,

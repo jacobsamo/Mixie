@@ -38,7 +38,7 @@ export async function PUT(
       { status: 200 }
     );
   } catch (error) {
-    console.error(error);
+    console.error("Error on /users/[id]/updateUser", error);
 
     if (error instanceof z.ZodError) {
       return NextResponse.json(JSON.stringify(error.issues), { status: 422 });

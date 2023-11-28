@@ -37,6 +37,7 @@ const Step = ({ index, handleDelete }: StepProps) => {
         label=""
         name={`steps.${index}.step_body`}
         control={control}
+        border={false}
         classNames={{
           inputWrapper: "border border-solid border-white rounded-md",
         }}
