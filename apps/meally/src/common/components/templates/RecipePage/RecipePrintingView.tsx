@@ -35,9 +35,12 @@ const RecipePrintingView = ({ recipe }: RecipePrintingViewProps) => {
           {[...Array(5)].map((star, index) => {
             index += 1;
             return recipe.info.rating && index <= recipe.info.rating ? (
-              <StarIcon className="h-w-8 w-8 fill-[#ffe14cf6] text-[#ffe14cf6]" />
+              <StarIcon
+                key={index}
+                className="h-w-8 w-8 fill-[#ffe14cf6] text-[#ffe14cf6]"
+              />
             ) : (
-              <StarIcon className="h-w-8 w-8" />
+              <StarIcon key={index} className="h-w-8 w-8" />
             );
           })}
         </span>

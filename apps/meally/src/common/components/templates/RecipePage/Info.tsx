@@ -1,3 +1,4 @@
+"use client";
 import useUser from "@/src/common/hooks/useUser";
 import type { Info } from "@db/types";
 import { AlarmClock, Clock, PencilIcon, PieChart, Timer } from "lucide-react";
