@@ -76,7 +76,7 @@ const FeedbackDialog = () => {
           <span className="flex flex-row gap-2">
             {["bug", "feature", "other"].map((type, index) => (
               <Button
-              key={index}
+                key={index}
                 ariaLabel={`get feedback type to ${type}`}
                 unstyled
                 onClick={() => {

@@ -18,7 +18,6 @@ import { Controller, useFormContext } from "react-hook-form";
 import * as z from "zod";
 import { SwitchInput } from "../../ui/switch";
 
-
 interface CreateRecipeDialogProps {
   open: boolean;
   setOpen: (open: boolean) => void;

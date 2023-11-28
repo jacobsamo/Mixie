@@ -54,7 +54,7 @@ const TagInput = ({
 
   return (
     <div className="mt-4">
-      <div className="flex w-full flex-row flex-wrap gap-1 overflow-scroll h-24">
+      <div className="flex h-24 w-full flex-row flex-wrap gap-1 overflow-scroll">
         {fields.map((field: any, index: any) => (
           <span
             key={index}

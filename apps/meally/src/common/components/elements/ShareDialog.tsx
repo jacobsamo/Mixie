@@ -86,7 +86,12 @@ const ShareDialog = ({
             autoFocus={false}
           />
 
-          <Button ariaLabel="copy url" unstyled={true} onClick={() => copy()} autoFocus={true}>
+          <Button
+            ariaLabel="copy url"
+            unstyled={true}
+            onClick={() => copy()}
+            autoFocus={true}
+          >
             <CopyIcon className="m-auto" />
           </Button>
         </div>

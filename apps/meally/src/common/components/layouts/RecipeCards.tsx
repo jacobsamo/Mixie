@@ -11,8 +11,6 @@ interface RecipeCardsProps {
 }
 
 const RecipeCards = ({ recipes }: RecipeCardsProps) => {
-
-
   return (
     <section className="flex flex-wrap gap-2 p-3">
       {recipes.map((recipe) => {

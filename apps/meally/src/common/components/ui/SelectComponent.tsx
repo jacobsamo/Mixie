@@ -55,7 +55,7 @@ const dropdownIndicatorStyles = "p-1 hover:text-foreground";
 const menuStyles =
   "mt-2 p-2 border border-white dark:bg-grey bg-white text-sm rounded-lg";
 
-const menuList = "min-w-fit"  
+const menuList = "min-w-fit";
 const optionsStyle =
   "dark:bg-grey bg-white p-2 border-0 text-base hover:bg-secondary hover:cursor-pointer";
 const groupHeadingStyles = "ml-3 mt-2 mb-1  text-sm dark:bg-grey bg-white";
