@@ -1,16 +1,10 @@
-import { generateSiteMap } from "@/src/common/lib/services/generateSitemap";
-import { constructMetadata, displayIngredient } from "@lib/utils";
+import { getServerAuthSession } from "@/src/server/auth";
 import RecipePageComponent from "@components/templates/RecipePage/RecipePageComponent";
 import { db } from "@db/index";
 import { recipes as recipeSchema } from "@db/schemas";
 import type { Recipe } from "@db/types";
 import { and, eq, or } from "drizzle-orm";
-import { Metadata } from "next";
-import { RecipeJsonLd } from "next-seo";
-import { unstable_cache } from "next/cache";
 import { notFound, redirect } from "next/navigation";
-import { env } from "@/env.mjs";
-import { getServerAuthSession } from "@/src/server/auth";
 
 interface PreviewRecipePageProps {
   params: {

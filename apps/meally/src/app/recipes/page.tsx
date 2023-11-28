@@ -1,35 +1,34 @@
-import { cache } from "react";
-
 import { CardSquare } from "@/src/common/components/elements/Cards";
 import SearchTrigger from "@/src/common/components/modules/SearchTrigger";
 import { db } from "@/src/server/db";
 import { info } from "@/src/server/db/schemas";
+import { Info } from "@/src/server/db/types";
 import { constructMetadata } from "@lib/utils";
 import { eq } from "drizzle-orm";
-import { Loader2, SearchIcon } from "lucide-react";
 import { IFuseOptions } from "fuse.js";
-import { Info } from "@/src/server/db/types";
+import { SearchIcon } from "lucide-react";
+import { unstable_cache } from "next/cache";
 
 export const revalidate = 60 * 60;
 
-// const getRecipes = unstable_cache(
-//   async () => {
-//     const recipes = await db.query.info.findMany({
-//       where: eq(info.isPublic, true),
-//     });
-//     return recipes;
-//   },
-//   ["recipes"],
-//   {
-//     revalidate: 60 * 60,
-//   }
-// );
-const getRecipes = cache(async () => {
-  const recipes = await db.query.info.findMany({
-    where: eq(info.isPublic, true),
-  });
-  return recipes;
-});
+const getRecipes = unstable_cache(
+  async () => {
+    const recipes = await db.query.info.findMany({
+      where: eq(info.isPublic, true),
+    });
+    return recipes;
+  },
+  ["recipes"],
+  {
+    revalidate: 60 * 60,
+  }
+);
+// const getRecipes = cache(async () => {
+//   const recipes = await db.query.info.findMany({
+//     where: eq(info.isPublic, true),
+//   });
+//   return recipes;
+// });
 
 async function searchRecipes({
   query,

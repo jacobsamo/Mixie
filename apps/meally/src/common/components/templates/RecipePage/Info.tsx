@@ -1,27 +1,27 @@
-import type { Info, NewInfo } from "@db/types";
-import React from "react";
+import useUser from "@/src/common/hooks/useUser";
+import type { Info } from "@db/types";
 import {
-  PieChart,
-  Clock,
-  Timer,
   AlarmClock,
-  Pencil,
+  Clock,
   PencilIcon,
+  PieChart,
+  Timer
 } from "lucide-react";
-import { getServerAuthSession } from "@/src/server/auth";
 import Link from "next/link";
-import { Button } from "../../ui/button";
+import { usePathname } from "next/navigation";
 
 interface InfoProps {
   info: Info;
 }
 
-const Info = async ({ info }: InfoProps) => {
-  const session = await getServerAuthSession();
+const Info = ({ info }: InfoProps) => {
+  const session = useUser();
+  const pathName = usePathname();
 
   const showEdit =
-    session?.user?.id === info?.createdBy ||
-    session?.user?.id === info?.lastUpdatedBy;
+    (session?.user?.id === info?.createdBy ||
+      session?.user?.id === info?.lastUpdatedBy) &&
+    !pathName.includes("edit");
 
   return (
     <>

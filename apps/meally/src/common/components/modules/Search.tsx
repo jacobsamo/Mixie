@@ -27,7 +27,6 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
   const router = useRouter();
 
   const { open, setOpen } = useToggleWithShortcut(setExternalOpen);
-  const [search, setSearch] = useState("");
   const [activeIndex, setActiveIndex] = useState(1);
 
   const { register, watch, getValues } = useForm<{ search: string }>({
@@ -36,15 +35,13 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
     },
   });
 
-  const searchValue = watch("search");
-
   const dialogOpen = externalOpen !== undefined ? externalOpen : open;
   const setDialogOpen =
     setExternalOpen !== undefined ? setExternalOpen : setOpen;
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+      if (e.key == "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         setDialogOpen((dialogOpen) => !dialogOpen);
       }
@@ -55,16 +52,12 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
   }, []);
 
   const handleKeyUp = (e: React.KeyboardEvent<any>) => {
-    if (e.key === "ArrowUp") {
-      setActiveIndex(activeIndex + 1);
-      document.getElementById((activeIndex + 1).toString())?.focus();
-      return;
-    }
-
-    if (e.key === "ArrowDown") {
-      setActiveIndex(activeIndex - 1);
-      document.getElementById((activeIndex - 1).toString())?.focus();
-      return;
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+      e.preventDefault();
+      const direction = e.key === "ArrowUp" ? -1 : 1;
+      const newIndex = (activeIndex + direction + 5) % 5 || 5;
+      setActiveIndex(newIndex);
+      document.getElementById(newIndex.toString())?.focus();
     }
   };
 
@@ -79,7 +72,7 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
                 className="text-sm placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 outline-none disabled:cursor-not-allowed disabled:opacity-50"
                 {...register("search")}
                 onKeyDown={(e) => {
-                  if ((e.key == "Enter")) {
+                  if (e.key == "Enter") {
                     router.push(`/recipes?search=${getValues("search")}`);
                   } else {
                     handleKeyUp(e);
@@ -88,60 +81,62 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
               />
             </div>
 
-            <div id="quick-access">
-              <Link
-                id="1"
-                onKeyUp={handleKeyUp}
-                onClick={() => setDialogOpen(false)}
-                href={`/${user?.id}`}
-                className="flex flex-row gap-1"
-              >
-                <UserCircle2 /> Profile
-              </Link>
-              <CreateRecipeDialog />
-              <Link
-                id="2"
-                onKeyUp={handleKeyUp}
-                onClick={() => setDialogOpen(false)}
-                href={`/${user?.id}/bookmarks`}
-                className="flex flex-row gap-1"
-              >
-                {" "}
-                <Bookmark />
-                Bookmarks
-              </Link>
-              <Link
-                id="3"
-                onKeyUp={handleKeyUp}
-                onClick={() => setDialogOpen(false)}
-                href={`/${user?.id}/drafts`}
-                className="flex flex-row gap-1"
-              >
-                <ScrollText /> Drafts
-              </Link>
-              <Link
-                id="4"
-                onKeyUp={handleKeyUp}
-                onClick={() => setDialogOpen(false)}
-                href={`/${user?.id}/settings?activeLink=profile`}
-                className="flex flex-row gap-1"
-              >
-                {" "}
-                <Settings />
-                Settings
-              </Link>
-              <Link
-                id="5"
-                onKeyUp={handleKeyUp}
-                onClick={() => setDialogOpen(false)}
-                href={"/api/auth/signout"}
-                className="flex flex-row gap-1"
-              >
-                {" "}
-                <ArrowUpRightSquare />
-                Signout
-              </Link>
-            </div>
+            {user && (
+              <div id="quick-access" className="flex flex-col gap-2">
+                <Link
+                  id="1"
+                  onKeyUp={handleKeyUp}
+                  onClick={() => setDialogOpen(false)}
+                  href={`/${user?.id}`}
+                  className="flex flex-row gap-1"
+                >
+                  <UserCircle2 /> Profile
+                </Link>
+                <CreateRecipeDialog />
+                <Link
+                  id="2"
+                  onKeyUp={handleKeyUp}
+                  onClick={() => setDialogOpen(false)}
+                  href={`/${user?.id}/bookmarks`}
+                  className="flex flex-row gap-1"
+                >
+                  {" "}
+                  <Bookmark />
+                  Bookmarks
+                </Link>
+                <Link
+                  id="3"
+                  onKeyUp={handleKeyUp}
+                  onClick={() => setDialogOpen(false)}
+                  href={`/${user?.id}/drafts`}
+                  className="flex flex-row gap-1"
+                >
+                  <ScrollText /> Drafts
+                </Link>
+                <Link
+                  id="4"
+                  onKeyUp={handleKeyUp}
+                  onClick={() => setDialogOpen(false)}
+                  href={`/${user?.id}/settings?activeLink=profile`}
+                  className="flex flex-row gap-1"
+                >
+                  {" "}
+                  <Settings />
+                  Settings
+                </Link>
+                <Link
+                  id="5"
+                  onKeyUp={handleKeyUp}
+                  onClick={() => setDialogOpen(false)}
+                  href={"/api/auth/signout"}
+                  className="flex flex-row gap-1"
+                >
+                  {" "}
+                  <ArrowUpRightSquare />
+                  Signout
+                </Link>
+              </div>
+            )}
           </div>
         </DialogContent>
       </Dialog>

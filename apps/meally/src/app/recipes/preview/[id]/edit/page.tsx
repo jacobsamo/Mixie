@@ -1,10 +1,8 @@
 import RecipeForm from "@/src/common/components/templates/RecipeForm/RecipeForm";
 import { db } from "@db/index";
 import { recipes as recipeSchema } from "@db/schemas";
-import { Recipe } from "@db/types";
 import { getServerAuthSession } from "@server/auth";
 import { and, eq, or } from "drizzle-orm";
-import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
 interface EditPageProps {
@@ -20,7 +18,7 @@ export default async function EditPage({ params }: EditPageProps) {
     return redirect("/auth/login");
   }
 
-  const recipe = (await db.query.recipes.findFirst({
+  const recipe = await db.query.recipes.findFirst({
     where: and(
       or(
         eq(recipeSchema.lastUpdatedBy, session.user.id),
@@ -31,10 +29,10 @@ export default async function EditPage({ params }: EditPageProps) {
     with: {
       info: true,
     },
-  })) as Recipe;
+  });
 
+  // return <RecipeForm recipe={mockRecipe} />;
   if (recipe) return <RecipeForm recipe={recipe} />;
 
   return notFound();
-  // return <RecipeForm recipe={mockRecipe} />;
 }
