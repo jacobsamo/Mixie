@@ -8,6 +8,7 @@ import { eq } from "drizzle-orm";
 import { IFuseOptions } from "fuse.js";
 import { SearchIcon } from "lucide-react";
 import { unstable_cache } from "next/cache";
+import { cache } from "react";
 
 export const revalidate = 60 * 60;
 
