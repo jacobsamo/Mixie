@@ -6,7 +6,6 @@ export * from "./ingredients";
 export * from "./metadata";
 export * from "./time";
 
-
 /**
  * @param {ClassValue[]} inputs
  * @returns {string}

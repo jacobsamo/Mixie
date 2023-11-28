@@ -1,14 +1,14 @@
 import * as React from "react";
 
-import { cn } from "@lib/utils";
-import { Control, Controller, RegisterOptions } from "react-hook-form";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@components/ui/tooltip";
+import { cn } from "@lib/utils";
 import { HelpCircleIcon } from "lucide-react";
+import { Control, Controller, RegisterOptions } from "react-hook-form";
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -24,6 +24,7 @@ export interface TextareaProps
   defaultValue?: string | number | undefined;
   options?: RegisterOptions;
   className?: string;
+  border?: boolean;
   classNames?: {
     input?: string;
     inputWrapper?: string;
@@ -48,6 +49,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       hint,
       error,
       className,
+      border = true,
       classNames,
       ...props
     },
@@ -60,7 +62,12 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         defaultValue={defaultValue || ""}
         rules={{ required: required, ...options }}
         render={({ field }) => (
-          <div className={cn("flex flex-col gap-1", classNames?.container)}>
+          <div
+            className={cn(
+              "flex flex-col gap-1 rounded-md",
+              classNames?.container
+            )}
+          >
             {label && (
               <span className="flex flex-row items-center gap-2">
                 <label
@@ -91,7 +98,16 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
                 {error}
               </span>
             )}
-            <div className="flec-col text-sm focus-visible:ring-ring flex min-h-[60px] w-full  rounded-md  bg-transparent bg-white px-3 py-2 shadow-sm  focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-grey">
+            <div
+              className={cn(
+                "text-sm flex min-h-[60px] w-full flex-col rounded-md   bg-transparent  bg-white px-3 py-2  focus-visible:outline-none  focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50  dark:bg-grey",
+                `${
+                  border
+                    ? "border border-black shadow-sm dark:border-white"
+                    : ""
+                }`
+              )}
+            >
               {Icon && <span>{Icon}</span>}
               <textarea
                 id={id}
@@ -105,7 +121,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
                     ? Number(field.value?.match(/\n/g)?.length) + 2
                     : 3
                 }
-                className="w-full resize-none rounded-md border-none bg-transparent outline-none"
+                className="w-full resize-none rounded-md border-none bg-transparent outline-none "
                 {...props}
               />
             </div>

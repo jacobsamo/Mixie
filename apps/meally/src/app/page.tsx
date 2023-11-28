@@ -1,34 +1,34 @@
 import { CardRectangle } from "@components/elements/Cards";
 import { eq } from "drizzle-orm";
 import { SearchIcon } from "lucide-react";
+import { unstable_cache } from "next/cache";
 import Carousel from "../common/components/elements/Carousel";
 import SearchTrigger from "../common/components/modules/SearchTrigger";
 import { db } from "../server/db";
 import { info } from "../server/db/schemas";
-import { unstable_cache } from "next/cache";
-import { cache } from "react";
 
 export const revalidate = 60 * 60;
 
-// const getRecipes = unstable_cache(
-//   async () => {
-//     const recipes = await db.query.info.findMany({
-//       where: eq(info.isPublic, true),
-//     });
-//     return recipes;
-//   },
-//   ["recipes"],
-//   {
-//     revalidate: 60 * 60,
-//   }
-// );
+const getRecipes = unstable_cache(
+  async () => {
+    const recipes = await db.query.info.findMany({
+      where: eq(info.isPublic, true),
+    });
+    return recipes;
+  },
+  ["recipes"],
+  {
+    revalidate: 60 * 60,
+  }
+);
 
-const getRecipes = cache(async () => {
-  const recipes = await db.query.info.findMany({
-    where: eq(info.isPublic, true),
-  });
-  return recipes;
-});
+
+// const getRecipes = cache(async () => {
+//   const recipes = await db.query.info.findMany({
+//     where: eq(info.isPublic, true),
+//   });
+//   return recipes;
+// });
 
 export default async function Page() {
   const latestRecipes = await getRecipes();

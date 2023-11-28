@@ -57,7 +57,7 @@ const CreateRecipeDialog = () => {
           toast({
             title: "Recipe Created",
           });
-          router.push(`/recipes/${data.id}/edit`);
+          router.push(`/recipes/preview/${data.id}/edit`);
           setLoading(false);
           setOpen(false);
         });

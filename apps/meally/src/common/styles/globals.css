@@ -16,14 +16,15 @@ div#__next > div {
 
 .dark {
   @apply bg-black text-white;
+
+  scrollbar-width: 4px;
+  scrollbar-color: hsl(30 36% 96%) transparent;
 }
-
-
 
 /* Works on Firefox */
 * {
   scrollbar-width: 4px;
-  scrollbar-color: hsl(30 36% 96%) transparent;
+  scrollbar-color: hsl(224 19% 12%) transparent;
 }
 
 /* Works on Chrome, Edge, and Safari */
@@ -36,5 +37,5 @@ div#__next > div {
 }
 
 *::-webkit-scrollbar-thumb {
-  @apply rounded-xl bg-white;
+  @apply rounded-xl bg-grey dark:bg-white;
 }

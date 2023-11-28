@@ -24,7 +24,7 @@ export async function POST(req: NextRequest, params: { id: string }) {
       message: "Rating updated successfully",
     });
   } catch (error) {
-    console.error(error);
+    console.error("Error on /recipes/[id]/setRating", error);
 
     if (error instanceof z.ZodError) {
       return NextResponse.json(JSON.stringify(error.issues), { status: 422 });

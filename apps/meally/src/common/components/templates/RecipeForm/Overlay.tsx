@@ -1,9 +1,22 @@
-import React, { DOMAttributes, useState } from "react";
+"use client";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@components/ui/dialog";
+import { Input } from "@components/ui/input";
+import TagInput from "@components/ui/taginput";
+import { Textarea } from "@components/ui/textarea";
+import { ArrowLeftIcon, EyeIcon } from "lucide-react";
+import { useState } from "react";
+import { Controller, useFormContext } from "react-hook-form";
 import { Button } from "../../ui/button";
-import RecipeValidationDialog from "./RecipeValidationDialog";
-import { useFormContext } from "react-hook-form";
+import { SwitchInput } from "../../ui/switch";
 import { onSubmit } from "./form";
-import { EyeIcon } from "lucide-react";
+import RecipeValidationDialog from "./RecipeValidationDialog";
 
 interface OverlayProps {
   onPreview: () => void;
@@ -14,7 +27,8 @@ interface OverlayProps {
 
 const Overlay = ({ onPreview, isDisabled }: OverlayProps) => {
   const [open, setOpen] = useState(false);
-  const { handleSubmit } = useFormContext();
+  const { handleSubmit, control, register } = useFormContext();
+
   return (
     <>
       <div className="fixed right-3 top-3 z-50 flex w-fit justify-end rounded-md bg-white p-4 shadow dark:bg-grey ">
@@ -40,7 +54,7 @@ const Overlay = ({ onPreview, isDisabled }: OverlayProps) => {
 
       {/* Bottom Bar */}
       <div className="fixed bottom-5 right-3 z-50 flex justify-end">
-        <Button ariaLabel="Save" onClick={handleSubmit(onSubmit)} type="submit">
+        <Button ariaLabel="Save" type="submit">
           Save
         </Button>
       </div>

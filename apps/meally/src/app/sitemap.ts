@@ -1,7 +1,4 @@
-import { eq } from "drizzle-orm";
 import { MetadataRoute } from "next";
-import { db } from "../server/db";
-import { info } from "../server/db/schemas";
 
 export const revalidate = 60 * 60;
 
