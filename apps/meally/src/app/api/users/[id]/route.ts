@@ -16,7 +16,7 @@ export async function GET(
     const requestedUserData = session?.user.id === params.id;
 
     if ((!app || !session) && !requestedUserData) {
-      return NextResponse.json("Unauthorized", { status: 403 });
+      return NextResponse.json("Unauthorized", { status: 401 });
     }
 
     const user = await db.query.users.findFirst({

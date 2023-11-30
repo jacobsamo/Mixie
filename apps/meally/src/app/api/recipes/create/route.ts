@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     const session = await getServerAuthSession();
 
     if (!session) {
-      return NextResponse.json("Unauthorized", { status: 403 });
+      return NextResponse.json("Unauthorized", { status: 401 });
     }
     const { user } = session;
 

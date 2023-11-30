@@ -9,6 +9,7 @@ import {
 import { cn } from "@lib/utils";
 import { HelpCircleIcon } from "lucide-react";
 import { Control, Controller, RegisterOptions } from "react-hook-form";
+import CopyButton from "@components/elements/CopyButton";
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -18,6 +19,7 @@ export interface TextareaProps
   hint?: string;
   error?: string;
   Icon?: React.ReactNode;
+  copyText?: boolean;
   type?: string;
   control: Control<any>;
   required?: boolean;
@@ -41,6 +43,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       label,
       tooltip,
       Icon,
+      copyText = false,
       type,
       control,
       required,
@@ -100,7 +103,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             )}
             <div
               className={cn(
-                "text-sm flex min-h-[60px] w-full flex-col rounded-md   bg-transparent  bg-white px-3 py-2  focus-visible:outline-none  focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50  dark:bg-grey",
+                "text-sm disabled:opacity-50dark:bg-grey flex min-h-[60px] w-full flex-col rounded-md bg-transparent bg-white px-3 py-2 focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed",
                 `${
                   border
                     ? "border border-black shadow-sm dark:border-white"
@@ -109,6 +112,12 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
               )}
             >
               {Icon && <span>{Icon}</span>}
+              {copyText && (
+                <CopyButton
+                  ariaLabel="Copy text in text area"
+                  text={field.value}
+                />
+              )}
               <textarea
                 id={id}
                 name={name}

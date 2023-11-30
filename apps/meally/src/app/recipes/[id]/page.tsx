@@ -11,7 +11,7 @@ import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 import { env } from "@/env.mjs";
 
-export const revalidate = 60 * 60;
+export const revalidate = 3600;
 
 const getRecipes = unstable_cache(
   async () => {
@@ -23,7 +23,7 @@ const getRecipes = unstable_cache(
   },
   ["fullRecipes"],
   {
-    revalidate: 60 * 60,
+    revalidate: 3600,
   }
 );
 

@@ -22,7 +22,6 @@ const VerificationPage = () => {
 
   return (
     <form
-      className="m-auto flex max-w-md flex-col items-center gap-3 rounded-3xl bg-white p-3 text-center dark:bg-grey"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-col items-center">

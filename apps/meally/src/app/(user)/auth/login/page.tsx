@@ -48,7 +48,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="m-auto flex max-w-md flex-col items-center gap-3 rounded-3xl bg-white p-3 text-center shadow dark:bg-grey">
+    <>
       <div className="flex flex-col items-center">
         <Image
           src="/icons/icon.jpg"
@@ -219,7 +219,7 @@ const LoginPage = () => {
           Sign in with Facebook
         </Button> */}
       </div>
-    </div>
+    </>
   );
 };
 

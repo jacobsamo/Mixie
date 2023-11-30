@@ -18,7 +18,7 @@ export async function PUT(
     const requestedUserData = session?.user.id === params.id;
 
     if ((!app || !session) && !requestedUserData) {
-      return NextResponse.json("Unauthorized", { status: 403 });
+      return NextResponse.json("Unauthorized", { status: 401 });
     }
 
     const json = await req.json();

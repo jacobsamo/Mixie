@@ -10,7 +10,7 @@ import { SearchIcon } from "lucide-react";
 import { unstable_cache } from "next/cache";
 import { cache } from "react";
 
-export const revalidate = 60 * 60;
+export const revalidate = 3600;
 
 const getRecipes = unstable_cache(
   async () => {
@@ -21,7 +21,7 @@ const getRecipes = unstable_cache(
   },
   ["recipes"],
   {
-    revalidate: 60 * 60,
+    revalidate: 3600,
   }
 );
 // const getRecipes = cache(async () => {

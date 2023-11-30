@@ -8,7 +8,7 @@ export async function GET(req: NextRequest, params: { id: string }) {
   const app = await isApp(req);
 
   if (!app) {
-    return NextResponse.json("Unauthorized", { status: 403 });
+    return NextResponse.json("Unauthorized", { status: 401 });
   }
 
   const recipe = await db.query.recipes.findFirst({

@@ -14,7 +14,7 @@ export async function PUT(req: NextRequest) {
     const session = await getServerAuthSession();
 
     if (!session) {
-      return NextResponse.json("Unauthorized", { status: 403 });
+      return NextResponse.json("Unauthorized", { status: 401 });
     }
 
     const { user } = session;
@@ -27,6 +27,8 @@ export async function PUT(req: NextRequest) {
     const recipe = recipeFormSchema.parse(json);
 
     const isPublic = recipe?.info?.isPublic || false;
+    const id = recipeId(recipe.title) || recipe.id;
+
 
     // get all ingredients and set them to the info, only include ingredients that have isHeading set to false
 
@@ -53,7 +55,7 @@ export async function PUT(req: NextRequest) {
     const newInfo: NewInfo = {
       ...recipe.info,
       recipeId: recipe.uid,
-      id: recipeId(recipe.title) || recipe.id,
+      id: id,
       title: recipe.title,
       keywords: recipe?.info?.keywords || null,
       ingredients: ingredients || null,
@@ -74,10 +76,9 @@ export async function PUT(req: NextRequest) {
     // define the new recipe
     const newRecipe: NewPartialRecipe = {
       ...recipe,
-      // id: ,
-      id: recipeId(recipe.title) || recipe.id,
+      id: id,
       isPublic: isPublic,
-      steps: steps,
+      // steps: steps,
       lastUpdatedBy: user.id,
       lastUpdatedByName: user.name! || "",
     };

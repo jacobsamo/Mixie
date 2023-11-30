@@ -11,7 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { unstable_cache } from "next/cache";
 
-export const revalidate = 60 * 60;
+export const revalidate = 3600;
 
 interface ProfilePageProps {
   params: {
@@ -26,7 +26,7 @@ const getUsers = unstable_cache(
   },
   ["users"],
   {
-    revalidate: 60 * 60,
+    revalidate: 3600,
   }
 );
 

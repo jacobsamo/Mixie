@@ -12,6 +12,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useToast } from "../ui/use-toast";
+import CopyButton from "./CopyButton";
 
 interface ShareDialogProps {
   /**
@@ -86,14 +87,7 @@ const ShareDialog = ({
             autoFocus={false}
           />
 
-          <Button
-            ariaLabel="copy url"
-            unstyled={true}
-            onClick={() => copy()}
-            autoFocus={true}
-          >
-            <CopyIcon className="m-auto" />
-          </Button>
+          <CopyButton ariaLabel="Copy url" text={url} autoFocus={true} />
         </div>
 
         <div className="flex flex-row gap-4 overflow-scroll">

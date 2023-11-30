@@ -7,7 +7,7 @@ import SearchTrigger from "../common/components/modules/SearchTrigger";
 import { db } from "../server/db";
 import { info } from "../server/db/schemas";
 
-export const revalidate = 60 * 60;
+export const revalidate = 3600;
 
 const getRecipes = unstable_cache(
   async () => {
@@ -18,7 +18,7 @@ const getRecipes = unstable_cache(
   },
   ["recipes"],
   {
-    revalidate: 60 * 60,
+    revalidate: 3600,
   }
 );
 

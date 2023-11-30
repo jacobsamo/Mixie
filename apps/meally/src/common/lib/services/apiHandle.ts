@@ -105,7 +105,7 @@ export const Request = async <T>(
     },
     next: {
       ...nextOptions,
-      revalidate: 60 * 60 * 24,
+      revalidate: 86400,
     },
   });
 
