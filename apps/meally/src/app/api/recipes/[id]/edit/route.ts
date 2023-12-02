@@ -1,11 +1,10 @@
-import { calculateTotalTime, recipeId } from "@lib/utils";
 import { db } from "@db/index";
-import { authOptions } from "@server/auth";
 import { info, recipes } from "@db/schemas";
 import { NewInfo, NewPartialRecipe } from "@db/types";
 import { recipeFormSchema } from "@db/zodSchemas";
-import { eq } from "drizzle-orm";
+import { calculateTotalTime, recipeId } from "@lib/utils";
 import { getServerAuthSession } from "@server/auth";
+import { eq } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
 import * as z from "zod";
 
@@ -27,8 +26,23 @@ export async function PUT(req: NextRequest) {
     const recipe = recipeFormSchema.parse(json);
 
     const isPublic = recipe?.info?.isPublic || false;
+    let titleExists = false;
     const id = recipeId(recipe.title) || recipe.id;
 
+    // check if title exists
+    const titles = await db
+      .select({
+        uid: info.recipeId,
+        id: info.id,
+        isPublic: info.isPublic,
+      })
+      .from(info);
+
+    titles.forEach((title) => {
+      if (title.isPublic && title.id == id) {
+        titleExists = true;
+      }
+    });
 
     // get all ingredients and set them to the info, only include ingredients that have isHeading set to false
 
@@ -89,13 +103,25 @@ export async function PUT(req: NextRequest) {
       .where(eq(recipes.uid, recipe.uid));
 
     console.log(`Edited recipe ${newRecipe.uid}`, {
-      message: `Recipe successfully created, ${setRecipe}`,
+      message: `Recipe successfully edited, ${setRecipe}`,
       recipe: newRecipe,
       info: newInfo,
     });
+
+    if (titleExists) {
+      return NextResponse.json(
+        {
+          message: `Recipe with same name already exists, ${recipe.uid}. your recipe has been saved`,
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
     return NextResponse.json(
       {
-        message: `Recipe successfully created, ${setRecipe}`,
+        message: `Recipe successfully edited, ${setRecipe}`,
         recipe: newRecipe,
       },
       {

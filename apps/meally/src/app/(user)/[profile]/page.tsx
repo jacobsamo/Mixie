@@ -54,7 +54,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   const users = await getUsers();
   const user = users?.find((user) => user.id == params.profile);
 
-  const gotRecipes = (await db.query.info.findMany({
+  const gotRecipes = await db.query.info.findMany({
     where: and(
       eq(info.isPublic, true),
       or(
@@ -62,7 +62,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
         eq(info.lastUpdatedBy, params.profile)
       )
     ),
-  })) as Info[];
+  })
 
   if (user) {
     return (

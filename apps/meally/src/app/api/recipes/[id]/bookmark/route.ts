@@ -1,8 +1,10 @@
+import { Bookmark } from "@/src/server/db/types";
 import { db } from "@db/index";
 import { bookmarks } from "@db/schemas";
 import { bookmarkSchema } from "@db/zodSchemas";
 import { getServerAuthSession } from "@server/auth";
 import { NextResponse, type NextRequest } from "next/server";
+import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 
 export async function POST(req: NextRequest, params: { id: string }) {
@@ -15,16 +17,27 @@ export async function POST(req: NextRequest, params: { id: string }) {
 
     const json = await req.json();
 
-    const bookmark = bookmarkSchema.parse(json);
+    const bookmark = bookmarkSchema
+      .extend({
+        uid: z.string().nullable().default(null),
+      })
+      .parse(json);
 
-    db.insert(bookmarks).values(bookmark);
+    const uid = uuidv4();
+
+    const newBookmark: Bookmark = {
+      ...bookmark,
+      uid: uid,
+    };
+
+    db.insert(bookmarks).values(newBookmark);
 
     console.log(
-      `Recipe ${bookmark.id} has been bookmarked by ${session.user.name} (${session.user.id})`
+      `Recipe ${newBookmark.recipeId} has been bookmarked by ${session.user.name} (${session.user.id})`
     );
 
     return NextResponse.json({
-      message: `Recipe ${bookmark.id} has been bookmarked`,
+      message: `Recipe ${newBookmark.recipeId} has been bookmarked`,
     });
   } catch (error) {
     console.error("Error on /recipes/[id]/bookmark", error);

@@ -1,14 +1,15 @@
+import { toast } from "@components/ui/use-toast";
 import type { Ingredient } from "@db/types";
 import { recipeFormSchema } from "@db/zodSchemas";
 import { calculateTotalTime } from "@lib/utils";
-import { SubmitHandler } from "react-hook-form";
+import { SubmitHandler, useFormContext } from "react-hook-form";
 import * as z from "zod";
-import { toast } from "../../ui/use-toast";
 
 export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
   recipe
 ) => {
   if (!recipe) return;
+  const { setError } = useFormContext();
 
   const totalTime =
     recipe.info && recipe.info.prep && recipe?.info.cook
@@ -66,6 +67,16 @@ export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
       });
       // redirect to the recipe page
       window.location.href = `/recipes/preview/${recipe.uid}`;
+    } else if (res.status == 400) {
+      setError("title", {
+        message: "Recipe with this title already exists",
+      });
+      toast({
+        title: "Uh oh!",
+        description:
+          "A recipe with the same name exists, please change your recipe name.",
+        variant: "destructive",
+      });
     } else {
       toast({
         title: "Uh oh! Something went wrong.",

@@ -1,19 +1,26 @@
 "use client";
-import React from "react";
-import Image from "next/image";
-import type { Info, Recipe } from "@db/types";
-import { HeartIcon } from "lucide-react";
-import Link from "next/link";
-import { useToast } from "../ui/use-toast";
-import { cn } from "@lib/utils";
 import { env } from "@/env.mjs";
+import { cn } from "@lib/utils";
+import { HeartIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { Bookmark } from "@db/types";
+import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
+import { useToast } from "../ui/use-toast";
+
+type Recipe = {
+  recipeId?: string;
+  uid?: string;
+  id: string;
+  title: string;
+  imgUrl: string | null;
+  imgAlt: string | null;
+  total: string | null;
+  keywords: { value: string }[] | null;
+};
 
 interface CardProps {
-  recipe: Info | Bookmark;
+  recipe: Recipe;
 }
 
 interface BaseCardProps extends CardProps {
@@ -38,17 +45,12 @@ export const BaseCard = ({
   const { data: session } = useSession();
   const { toast } = useToast();
 
-  function addBookMark(recipe: Info | Bookmark) {
+  function addBookMark(recipe: Recipe) {
     if (!session) return redirect("/auth/login");
 
-    const bookmark: Bookmark = {
-      recipeId: recipe.recipeId,
-      id: recipe.id,
-      title: recipe.title,
-      imgAlt: recipe.imgAlt,
-      imgUrl: recipe.imgUrl,
-      isPublic: recipe.isPublic,
-      total: recipe.total,
+    const bookmark = {
+      uid: null,
+      recipeId: recipe.recipeId || recipe.uid,
       userId: session.user.id,
     };
 
@@ -165,21 +167,16 @@ interface SearchCardProps extends CardProps {
   edit?: boolean;
 }
 
-const SearchCard = ({ as, edit, recipe }: SearchCardProps) => {
+const SearchCard = ({ as, edit = false, recipe }: SearchCardProps) => {
   const { data: session } = useSession();
   const { toast } = useToast();
 
-  function addBookMark(recipe: Info | Bookmark) {
+  function addBookMark(recipe: Recipe) {
     if (!session) return redirect("/auth/login");
 
-    const bookmark: Bookmark = {
-      recipeId: recipe.recipeId,
-      id: recipe.id,
-      title: recipe.title,
-      imgAlt: recipe.imgAlt,
-      imgUrl: recipe.imgUrl,
-      isPublic: recipe.isPublic,
-      total: recipe.total,
+    const bookmark = {
+      uid: null,
+      recipeId: recipe.recipeId || recipe.uid,
       userId: session.user.id,
     };
 
@@ -273,4 +270,5 @@ const CardRectangle = ({ recipe }: CardProps) => {
   );
 };
 
-export { CardRectangleSmall, CardRectangle, SearchCard, CardSquare };
+export { CardRectangle, CardRectangleSmall, CardSquare, SearchCard };
+

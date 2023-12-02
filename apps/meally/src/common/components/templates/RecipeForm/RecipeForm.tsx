@@ -11,16 +11,17 @@ import React, { useEffect, useState } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { onSubmit } from "./form";
-import { Input } from "@components/ui/input";
 import { SelectComponent } from "@components/ui/SelectComponent";
+import { Input } from "@components/ui/input";
 import TagInput from "@components/ui/taginput";
 import { Textarea } from "@components/ui/textarea";
+import { watch } from "fs";
+import dynamic from "next/dynamic";
 import RecipePageComponent from "../RecipePage/RecipePageComponent";
 import { IngredientContainer } from "./IngredientContainer";
 import Overlay from "./Overlay";
 import { StepContainer } from "./StepContainer";
-import dynamic from "next/dynamic";
+import { onSubmit } from "./form";
 
 const ImageUpload = dynamic(() => import("./ImageUpload"), { ssr: false });
 
@@ -63,6 +64,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
     register,
     control,
     getValues,
+    setError,
     formState: { errors, isDirty, isValid },
   } = methods;
 
@@ -73,6 +75,20 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
         values: getValues(),
       });
   }, [errors]);
+
+  
+  useEffect(() => {
+    const recipe = getValues();
+    if (recipe.info?.isPublic) {
+      fetch(`/api/recipes/checkTitle?title=${recipe.title}`).then((res) => {
+        if (res.status == 400) {
+          setError("title", {
+            message: "Recipe with this title already exists",
+          });
+        }
+      });
+    }
+  }, [watch("title")]);
 
   const gotRecipe = getValues() as Recipe;
 
@@ -94,6 +110,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
                 {...register("title", {
                   required: true,
                 })}
+                error={errors.title}
                 required
                 label="Title"
               />

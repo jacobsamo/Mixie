@@ -1,10 +1,7 @@
 import { recipeId } from "@/src/common/lib/utils";
 import { db } from "@db/index";
-import { info, ratings } from "@db/schemas";
-import { ratingsSchema } from "@db/zodSchemas";
-import { getServerAuthSession } from "@server/auth";
+import { info } from "@db/schemas";
 import { NextResponse, type NextRequest } from "next/server";
-import { z } from "zod";
 
 export const revalidate = 3600;
 export const fetchCache = "default-cache";
@@ -17,7 +14,7 @@ export async function GET(req: NextRequest) {
     if (query === null)
       NextResponse.json(
         { message: "No title provided in search params" },
-        { status: 400 }
+        { status: 401 }
       );
 
     // check if the name exists or not

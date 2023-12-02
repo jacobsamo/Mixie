@@ -11,7 +11,7 @@ import {
   varchar,
 } from "drizzle-orm/mysql-core";
 // imoport
-import { Ingredient, SelectValue, Step } from "../types";
+import { Ingredient, Step } from "../types";
 
 // Recipes
 export const recipes = mysqlTable("recipes", {
@@ -111,13 +111,16 @@ export const ratingsRelation = relations(info, ({ one }) => ({
 }));
 
 export const bookmarks = mysqlTable("bookmarks", {
-  recipeId: char("recipeId", { length: 36 }).primaryKey().notNull(),
-  id: varchar("id", { length: 191 }).notNull(),
-  title: varchar("title", { length: 191 }).notNull(),
-  imgUrl: text("imgUrl"),
-  imgAlt: text("imgAlt"),
-  total: varchar("total", { length: 191 }),
-  isPublic: boolean("isPublic").default(false),
-  keywords: json("keywords"),
+  uid: char("uid", { length: 36 }).primaryKey().notNull(),
+  recipeId: char("recipeId", { length: 36 }).notNull(),
   userId: varchar("userId", { length: 191 }).notNull(),
+  collections: json("collections").$type<string[]>()
 });
+
+export const bookmarksRelation = relations(bookmarks, ({ one }) => ({
+  // book mark links to one recipe
+  recipe: one(info, {
+    fields: [bookmarks.recipeId],
+    references: [info.recipeId],
+  }),
+}));
