@@ -7,6 +7,10 @@ export const resend = env.RESEND_API_KEY
   ? new Resend(env.RESEND_API_KEY)
   : null;
 
+/**
+ * credit to dub.co for their setup of resend
+ * https://github.com/steven-tey/dub/blob/main/apps/web/emails/index.ts 
+ */
 export const sendEmail = async ({
   email,
   subject,

@@ -1,8 +1,8 @@
-import { toast } from "@components/ui/use-toast";
 import type { Ingredient } from "@db/types";
 import { recipeFormSchema } from "@db/zodSchemas";
 import { calculateTotalTime } from "@lib/utils";
 import { SubmitHandler, useFormContext } from "react-hook-form";
+import toast from "react-hot-toast";
 import * as z from "zod";
 
 export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
@@ -51,7 +51,7 @@ export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
   };
 
   // send data to edit the recipe in the db
-  fetch(`/api/recipes/${recipe.id}/edit`, {
+  const editRecipe = fetch(`/api/recipes/${recipe.id}/edit`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -60,29 +60,23 @@ export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
     body: JSON.stringify(recipe),
   }).then((res) => {
     if (res.status === 200) {
-      toast({
-        title: "Recipe created.",
-        description:
-          "Your recipe has been created. Changes will be reflected within an hour",
-      });
+      toast.success(
+        "Recipe created. \n Your recipe has been created. Changes will be reflected within an hour"
+      );
       // redirect to the recipe page
       window.location.href = `/recipes/preview/${recipe.uid}`;
     } else if (res.status == 400) {
       setError("title", {
         message: "Recipe with this title already exists",
       });
-      toast({
-        title: "Uh oh!",
-        description:
-          "A recipe with the same name exists, please change your recipe name.",
-        variant: "destructive",
-      });
+      toast.error(
+        "Uh oh! \n A recipe with the same name exists, please change your recipe name."
+      );
     } else {
-      toast({
-        title: "Uh oh! Something went wrong.",
-        description: "There was an error while creating your recipe.",
-        variant: "destructive",
-      });
+      console.error(res);
+      toast.error(
+        "Uh oh! Something went wrong.\n There was an error while creating your recipe."
+      );
     }
   });
 };

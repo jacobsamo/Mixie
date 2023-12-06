@@ -16,8 +16,9 @@ import * as z from "zod";
 import VersionChip from "../modules/VersionChip";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { useToast } from "../ui/use-toast";
+
 import { env } from "@/env.mjs";
+import toast from "react-hot-toast";
 
 const createRecipeSchema = z.object({
   title: z.string().optional(),
@@ -26,7 +27,7 @@ const createRecipeSchema = z.object({
 
 const CreateRecipeDialog = () => {
   const router = useRouter();
-  const { toast } = useToast();
+
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -43,33 +44,33 @@ const CreateRecipeDialog = () => {
     values
   ) => {
     setLoading(true);
-    fetch("/api/recipes/create", {
+    const createRecipe = fetch("/api/recipes/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
       },
       body: JSON.stringify({ title: values.title, link: values.link }),
-    }).then((res) => {
-      console.log(res);
-      if (res.status == 200) {
-        res.json().then((data) => {
-          toast({
-            title: "Recipe Created",
-          });
+    });
+
+    toast.promise(createRecipe, {
+      loading: "Creating Recipe...",
+      success: (data) => {
+        data.json().then((data) => {
           router.push(`/recipes/preview/${data.id}/edit`);
-          setLoading(false);
-          setOpen(false);
         });
-      }
-      if (res.status != 200) {
-        toast({
-          title: "An Error Occurred",
-          description: "This Error more the likely occurred due to a bug",
-        });
+
+        // router.push(`/recipes/preview/${}/edit`);
         setLoading(false);
         setOpen(false);
-      }
+        return "Recipe Created";
+      },
+      error: (err) => {
+        setLoading(false);
+        setOpen(false);
+        console.error(err);
+        return "Error while creating recipe";
+      },
     });
   };
 

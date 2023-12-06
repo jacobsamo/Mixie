@@ -15,7 +15,7 @@ import { Button } from "../../ui/button";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Rating } from "@db/types";
-import { toast } from "../../ui/use-toast";
+import toast from "react-hot-toast";
 
 interface StarRatingProps {
   recipeId: string;
@@ -35,25 +35,24 @@ const StarRating = ({ recipeId, rating }: StarRatingProps) => {
       return;
     }
     setInternalRating(rating);
-    fetch(`http://localhost:3000/api/recipes/${recipeId}/setRating`, {
+    const setRating = fetch(`/api/recipes/${recipeId}/setRating`, {
       method: "POST",
       body: JSON.stringify({
         recipeId: recipeId,
         rating: rating,
         userId: user.id,
       } as Rating),
-    }).then((res) => {
-      if (res.status === 200) {
-        toast({
-          title: "Rating set!",
-        });
-      } else {
-        toast({
-          title: "Uh oh! Something went wrong.",
-          description: "There was an error while rating the recipe.",
-          variant: "destructive",
-        });
-      }
+    });
+
+    toast.promise(setRating, {
+      loading: "Setting rating...",
+      success: (data) => {
+        return "Rating set!";
+      },
+      error: (err) => {
+        console.log(err);
+        return "There was an error while rating the recipe/";
+      },
     });
   }
 

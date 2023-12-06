@@ -1,7 +1,7 @@
 "use client";
 import { env } from "@/env.mjs";
 import { Button } from "@/src/common/components/ui/button";
-import { toast } from "@/src/common/components/ui/use-toast";
+import toast from "react-hot-toast";
 import { User } from "@/src/server/db/types";
 import { userSchema } from "@/src/server/db/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -57,33 +57,26 @@ export default function ProfilePage({ params }: ProfilePageProps) {
   }, [errors]);
 
   const onSubmit: SubmitHandler<User> = (data) => {
-    try {
-      setLoading(true);
-      fetch(`/api/users/${params.profile}/updateUser`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
-        },
-        body: JSON.stringify(data),
-      }).then((res) => {
-        if (res.status === 200) {
-          toast({
-            title: "Success!",
-            description:
-              "Your profile has been updated, changes will be reflected within the hour",
-          });
-        } else {
-          toast({
-            title: "Uh oh! Something went wrong.",
-            description: "There was an error while updating your profile",
-            variant: "destructive",
-          });
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    setLoading(true);
+
+    const updateUser = fetch(`/api/users/${params.profile}/updateUser`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    toast.promise(updateUser, {
+      loading: "Updating profile...",
+      success: "Profile updated successfully",
+      error: (err) => {
+        console.error(err);
+        return "Error while updating profile";
+      },
+    });
+
     setLoading(false);
   };
 

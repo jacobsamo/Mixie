@@ -15,7 +15,6 @@ import { SelectComponent } from "@components/ui/SelectComponent";
 import { Input } from "@components/ui/input";
 import TagInput from "@components/ui/taginput";
 import { Textarea } from "@components/ui/textarea";
-import { watch } from "fs";
 import dynamic from "next/dynamic";
 import RecipePageComponent from "../RecipePage/RecipePageComponent";
 import { IngredientContainer } from "./IngredientContainer";
@@ -65,6 +64,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
     control,
     getValues,
     setError,
+    watch,
     formState: { errors, isDirty, isValid },
   } = methods;
 
@@ -76,7 +76,6 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
       });
   }, [errors]);
 
-  
   useEffect(() => {
     const recipe = getValues();
     if (recipe.info?.isPublic) {

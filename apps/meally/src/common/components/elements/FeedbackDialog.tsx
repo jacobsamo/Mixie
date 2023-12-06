@@ -11,13 +11,14 @@ import {
 import { InfoIcon, BugIcon, Lightbulb } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { useToast } from "../ui/use-toast";
+
 import { Input } from "../ui/input";
 import useUser from "../../hooks/useUser";
 import { useForm } from "react-hook-form";
 import { register } from "module";
 import { Textarea } from "../ui/textarea";
 import { LetterSpacingIcon } from "@radix-ui/react-icons";
+import toast from "react-hot-toast";
 
 type FeedbackType = "bug" | "feature" | "other";
 
@@ -40,7 +41,6 @@ const TypeIcon = ({ type }: { type: FeedbackType }) => {
 };
 
 const FeedbackDialog = () => {
-  const { toast } = useToast();
   const { user } = useUser();
 
   const { handleSubmit, getValues, setValue, control } =
@@ -53,10 +53,7 @@ const FeedbackDialog = () => {
 
   const onSubmit = (data: FeedbackDialogForm) => {
     console.log(data);
-    toast({
-      title: "Feedback Submitted",
-      description: "Thank you for your feedback!",
-    });
+    toast.success("Feedback Submitted");
   };
 
   return (

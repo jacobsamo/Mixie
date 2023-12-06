@@ -11,8 +11,8 @@ import { CopyIcon, PrinterIcon, Share2 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { useToast } from "../ui/use-toast";
 import CopyButton from "./CopyButton";
+import toast from "react-hot-toast";
 
 interface ShareDialogProps {
   /**
@@ -44,15 +44,10 @@ const ShareDialog = ({
   image,
   via = "Meally",
 }: ShareDialogProps) => {
-  const { toast } = useToast();
   const copy = () => {
     navigator.clipboard
       .writeText(url)
-      .then(() =>
-        toast({
-          title: "Copied to clipboard",
-        })
-      )
+      .then(() => toast.success("Copied to clipboard"))
       .catch((e) => {
         console.log(e);
       });

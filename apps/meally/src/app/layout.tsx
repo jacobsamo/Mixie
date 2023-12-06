@@ -1,7 +1,7 @@
 import Footer from "@components/modules/Footer";
 import Navbar from "@components/modules/Navbar";
 import Providers from "@components/modules/Providers";
-import { Toaster } from "@components/ui/toaster";
+import { Toaster } from "react-hot-toast";
 import { constructMetadata } from "@lib/utils";
 import "@styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
@@ -27,11 +27,20 @@ export default async function RootLayout({
       <body>
         <Providers>
           <Navbar />
-          {/* <Search /> */}
           {children}
-          <Toaster />
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              style: {
+                background: "#333 ",
+                color: "white",
+              },
+            }}
+          />
           <Footer />
         </Providers>
+
+        {/*Have a look at https://posthog.com/ for more advanced analytics */}
         <Analytics />
       </body>
     </html>

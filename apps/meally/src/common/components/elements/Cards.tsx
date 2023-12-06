@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { useToast } from "../ui/use-toast";
+import toast from "react-hot-toast";
 
 type Recipe = {
   recipeId?: string;
@@ -43,7 +43,6 @@ export const BaseCard = ({
   classNames,
 }: BaseCardProps) => {
   const { data: session } = useSession();
-  const { toast } = useToast();
 
   function addBookMark(recipe: Recipe) {
     if (!session) return redirect("/auth/login");
@@ -54,25 +53,22 @@ export const BaseCard = ({
       userId: session.user.id,
     };
 
-    fetch(`/api/recipes/${bookmark.recipeId}/bookmark`, {
+    const setBookmark = fetch(`/api/recipes/${bookmark.recipeId}/bookmark`, {
       method: "POST",
       body: JSON.stringify(bookmark),
       headers: {
         "Content-Type": "application/json",
         authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
       },
-    }).then((res) => {
-      if (res.status === 200) {
-        toast({
-          title: "Recipe bookmarked.",
-        });
-      } else {
-        toast({
-          title: "Uh oh! Something went wrong.",
-          description: "There was an error while bookmarking the recipe.",
-          variant: "destructive",
-        });
-      }
+    });
+
+    toast.promise(setBookmark, {
+      loading: "Setting bookmark...",
+      success: "Bookmark added successfully",
+      error: (err) => {
+        console.error(err);
+        return "Error while bookmarking recipe";
+      },
     });
   }
 
@@ -169,7 +165,6 @@ interface SearchCardProps extends CardProps {
 
 const SearchCard = ({ as, edit = false, recipe }: SearchCardProps) => {
   const { data: session } = useSession();
-  const { toast } = useToast();
 
   function addBookMark(recipe: Recipe) {
     if (!session) return redirect("/auth/login");
@@ -180,25 +175,22 @@ const SearchCard = ({ as, edit = false, recipe }: SearchCardProps) => {
       userId: session.user.id,
     };
 
-    fetch(`/api/recipes/${bookmark.recipeId}/bookmark`, {
+    const setBookmark = fetch(`/api/recipes/${bookmark.recipeId}/bookmark`, {
       method: "POST",
       body: JSON.stringify(bookmark),
       headers: {
         "Content-Type": "application/json",
         authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
       },
-    }).then((res) => {
-      if (res.status === 200) {
-        toast({
-          title: "Recipe bookmarked.",
-        });
-      } else {
-        toast({
-          title: "Uh oh! Something went wrong.",
-          description: "There was an error while bookmarking the recipe.",
-          variant: "destructive",
-        });
-      }
+    });
+
+    toast.promise(setBookmark, {
+      loading: "Setting bookmark...",
+      success: "Bookmark added successfully",
+      error: (err) => {
+        console.error(err);
+        return "Error while bookmarking recipe";
+      },
     });
   }
 
@@ -271,4 +263,3 @@ const CardRectangle = ({ recipe }: CardProps) => {
 };
 
 export { CardRectangle, CardRectangleSmall, CardSquare, SearchCard };
-

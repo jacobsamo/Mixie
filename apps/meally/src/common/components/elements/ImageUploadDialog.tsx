@@ -10,11 +10,11 @@ import {
 } from "@components/ui/dialog";
 import { Loader2, UploadIcon } from "lucide-react";
 import { useState } from "react";
-import { useToast } from "../ui/use-toast";
 import { UploadDropzone } from "@lib/utils/uploadthing";
 import "@uploadthing/react/styles.css";
 import { Button } from "../ui/button";
 import { UploadFileResponse } from "uploadthing/client";
+import toast from "react-hot-toast";
 
 interface ImageUploadDialogProps {
   title: string;
@@ -37,7 +37,6 @@ const ImageUploadDialog = ({
   setImage,
   children,
 }: ImageUploadDialogProps) => {
-  const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [internalOpen, setInternalOpen] = useState(false);
 
@@ -67,19 +66,12 @@ const ImageUploadDialog = ({
               setImage && res && setImage(res[0].url);
 
               setLoading(false);
-              toast({
-                title: "Image uploaded!",
-                description: "Your image has been uploaded successfully.",
-              });
+              toast.success("Image uploaded!");
             }}
             onUploadError={(error: Error) => {
               // Do something with the error.
               setLoading(false);
-              toast({
-                title: "Error uploading image",
-                description: error.message,
-                variant: "destructive",
-              });
+              toast.error("Error uploading image");
               console.error(error);
             }}
           />
