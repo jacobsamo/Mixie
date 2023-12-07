@@ -2,11 +2,11 @@ import { GripVertical, Trash2Icon } from "lucide-react";
 import { units } from "@/src/common/lib/services/data";
 import { Controller, useFormContext } from "react-hook-form";
 import { Ingredient as IngredientType } from "@db/types";
-import { Input } from "../../ui/input";
+import { Input } from "@components/ui/input";
 import { recipeFormSchema } from "@db/zodSchemas";
 import * as z from "zod";
-import { Button } from "../../ui/button";
-import { SelectComponent } from "../../ui/SelectComponent";
+import { Button } from "@components/ui/button";
+import { SelectComponent } from "@components/ui/SelectComponent";
 
 interface IngredientProps {
   index: number;

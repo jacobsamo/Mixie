@@ -114,7 +114,7 @@ export const bookmarks = mysqlTable("bookmarks", {
   uid: char("uid", { length: 36 }).primaryKey().notNull(),
   recipeId: char("recipeId", { length: 36 }).notNull(),
   userId: varchar("userId", { length: 191 }).notNull(),
-  collections: json("collections").$type<string[]>()
+  collections: json("collections"),
 });
 
 export const bookmarksRelation = relations(bookmarks, ({ one }) => ({

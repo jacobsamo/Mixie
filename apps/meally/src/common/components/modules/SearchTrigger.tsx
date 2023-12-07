@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Search from "./Search";
-import { Button } from "../ui/button";
+import { Button } from "@components/ui/button";
 
 interface SearchTriggerProps {
   children: React.ReactNode;

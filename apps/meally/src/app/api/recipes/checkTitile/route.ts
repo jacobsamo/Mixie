@@ -6,11 +6,15 @@ import { NextResponse, type NextRequest } from "next/server";
 export const revalidate = 3600;
 export const fetchCache = "default-cache";
 
-export async function GET(req: NextRequest) {
-  try {
-    const searchParams = req.nextUrl.searchParams;
-    const query = searchParams.get("title");
+async function getSearchParams(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams;
+  const query = searchParams.get("title");
+  return query;
+}
 
+export async function GET(req: NextRequest) {
+  const query = await getSearchParams(req);
+  try {
     if (query === null)
       NextResponse.json(
         { message: "No title provided in search params" },

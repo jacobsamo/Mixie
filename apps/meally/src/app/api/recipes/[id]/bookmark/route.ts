@@ -20,6 +20,7 @@ export async function POST(req: NextRequest, params: { id: string }) {
     const bookmark = bookmarkSchema
       .extend({
         uid: z.string().nullable().default(null),
+        userId: z.string().nullable().default(null),
       })
       .parse(json);
 
@@ -28,6 +29,7 @@ export async function POST(req: NextRequest, params: { id: string }) {
     const newBookmark: Bookmark = {
       ...bookmark,
       uid: uid,
+      userId: session.user.id,
     };
 
     db.insert(bookmarks).values(newBookmark);

@@ -16,7 +16,7 @@ import { ArrowLeftIcon } from "lucide-react";
 import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import * as z from "zod";
-import { SwitchInput } from "../../ui/switch";
+import { SwitchInput } from "@components/ui/switch";
 
 interface CreateRecipeDialogProps {
   open: boolean;

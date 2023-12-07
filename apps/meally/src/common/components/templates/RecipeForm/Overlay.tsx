@@ -13,8 +13,8 @@ import { Textarea } from "@components/ui/textarea";
 import { ArrowLeftIcon, EyeIcon } from "lucide-react";
 import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { Button } from "../../ui/button";
-import { SwitchInput } from "../../ui/switch";
+import { Button } from "@components/ui/button";
+import { SwitchInput } from "@components/ui/switch";
 import { onSubmit } from "./form";
 import RecipeValidationDialog from "./RecipeValidationDialog";
 

@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import { type DropResult } from "react-beautiful-dnd";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import * as z from "zod";
-import { Button } from "../../ui/button";
+import { Button } from "@components/ui/button";
 import DraggableContainer from "./Dragablecontainer";
 import DraggableItem from "./DraggableItem";
 import { Ingredient } from "./Ingredient";

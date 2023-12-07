@@ -1,4 +1,4 @@
-import { CardRectangle } from "@components/elements/Cards";
+import { CardRectangle } from "@/src/common/components/elements/Cards";
 import { eq } from "drizzle-orm";
 import { SearchIcon } from "lucide-react";
 import { unstable_cache } from "next/cache";

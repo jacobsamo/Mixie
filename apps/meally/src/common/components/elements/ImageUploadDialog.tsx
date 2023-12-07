@@ -8,13 +8,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@components/ui/dialog";
-import { Loader2, UploadIcon } from "lucide-react";
-import { useState } from "react";
 import { UploadDropzone } from "@lib/utils/uploadthing";
 import "@uploadthing/react/styles.css";
-import { Button } from "../ui/button";
-import { UploadFileResponse } from "uploadthing/client";
+import { Loader2, UploadIcon } from "lucide-react";
+import { useState } from "react";
 import toast from "react-hot-toast";
+import { Button } from "@components/ui/button";
 
 interface ImageUploadDialogProps {
   title: string;

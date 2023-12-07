@@ -1,4 +1,4 @@
-import { SearchCard } from "@components/elements/Cards";
+import { SearchCard } from "@/src/common/components/elements/Cards";
 import { constructMetadata } from "@lib/utils/";
 import { db } from "@db/index";
 import { getServerAuthSession } from "@server/auth";

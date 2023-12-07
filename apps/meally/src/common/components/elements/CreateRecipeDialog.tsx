@@ -14,8 +14,8 @@ import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import VersionChip from "../modules/VersionChip";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import { Button } from "@components/ui/button";
+import { Input } from "@components/ui/input";
 
 import { env } from "@/env.mjs";
 import toast from "react-hot-toast";

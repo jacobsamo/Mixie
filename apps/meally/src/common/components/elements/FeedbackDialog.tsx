@@ -9,14 +9,14 @@ import {
   DialogTrigger,
 } from "@components/ui/dialog";
 import { InfoIcon, BugIcon, Lightbulb } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "@components/ui/button";
 import Link from "next/link";
 
-import { Input } from "../ui/input";
+import { Input } from "@components/ui/input";
 import useUser from "../../hooks/useUser";
 import { useForm } from "react-hook-form";
 import { register } from "module";
-import { Textarea } from "../ui/textarea";
+import { Textarea } from "@components/ui/textarea";
 import { LetterSpacingIcon } from "@radix-ui/react-icons";
 import toast from "react-hot-toast";
 

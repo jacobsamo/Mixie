@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { Step } from "./Step";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { Button } from "../../ui/button";
+import { Button } from "@components/ui/button";
 import { PlusCircleIcon } from "lucide-react";
 import { recipeFormSchema } from "@db/zodSchemas";
 import * as z from "zod";

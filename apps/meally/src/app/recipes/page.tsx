@@ -84,7 +84,18 @@ export default async function RecipeViewPage({
           ? searchedRecipes
           : recipes
         )?.map((recipe) => {
-          return <CardSquare key={recipe.id} recipe={recipe} />;
+          return (
+            <CardSquare
+              key={recipe.id}
+              recipe={{
+                ...recipe,
+                imgUrl: recipe.imgUrl || null,
+                imgAlt: recipe.imgAlt || null,
+                total: recipe.total || null,
+                keywords: recipe.keywords || null,
+              }}
+            />
+          );
         })}
       </section>
     </main>

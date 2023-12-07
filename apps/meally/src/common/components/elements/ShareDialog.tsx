@@ -9,8 +9,8 @@ import {
 } from "@components/ui/dialog";
 import { CopyIcon, PrinterIcon, Share2 } from "lucide-react";
 import Link from "next/link";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import { Button } from "@components/ui/button";
+import { Input } from "@components/ui/input";
 import CopyButton from "./CopyButton";
 import toast from "react-hot-toast";
 
