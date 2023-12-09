@@ -10,4 +10,4 @@ When reporting a vulnerability please [Email Me](jacob35422@gmail.com) straight 
 2. Steps to replicate the issue
 3. What is / could be compromised
 
-Thankyou for taking your time to read this and help keep Meally safe
+Thankyou for taking your time to read this and help keep Mixie safe

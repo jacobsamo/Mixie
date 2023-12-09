@@ -1,5 +1,5 @@
 {
-  "name": "meally",
+  "name": "mixie",
   "private": true,
   "scripts": {
     "build": "turbo run build",
@@ -11,15 +11,15 @@
   },
   "packageManager": "pnpm@7.15.0",
   "dependencies": {
-    "@manypkg/cli": "^0.21.0",
-    "@turbo/gen": "^1.10.16",
+    "@manypkg/cli": "^0.21.1",
+    "@turbo/gen": "^1.11.0",
     "dotenv-cli": "^7.3.0",
-    "eslint": "^8.54.0",
+    "eslint": "^8.55.0",
     "eslint-config-custom": "workspace:*",
     "prettier": "^3.1.0",
-    "turbo": "^1.10.16"
+    "turbo": "^1.11.0"
   },
   "devDependencies": {
-    "prettier-plugin-tailwindcss": "^0.5.7"
+    "prettier-plugin-tailwindcss": "^0.5.9"
   }
 }

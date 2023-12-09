@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for your interest in making Meally a better website.
+Thank you for your interest in making Mixie a better website.
 
 Due to me being a solo Dev Please make sure when writing code it is readable or commented properly so i can easily accept pull requests. Thank you in advance for you help.
 Look to [getting started](./GETTING_STARTED.md) for more information on how to get started.
@@ -64,7 +64,7 @@ Before requesting a PR please make sure you have the following:
 
 1. Made Tests for what you have added (if applicable)
 2. Run `pnpm dev`
-3. Run `pnpm up --latest && cd apps/meally && pnpm up --latest`
+3. Run `pnpm up --latest && cd apps/mixie && pnpm up --latest`
 4. run `pnpm build`
 5. Fix any issues, bugs or errors in the build step
 6. run `pnpm start` go through your change and test for every case there could be and fix any issues

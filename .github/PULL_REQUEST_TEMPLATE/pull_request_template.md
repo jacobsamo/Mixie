@@ -6,8 +6,8 @@
   commits if your PR already received reviews or comments.
 
   Before submitting a Pull Request, please ensure you've done the following:
-  - 📖 Read the Meally Contributing Guide: https://github.com/Eirfire/Meally/blob/master/CONTRIBUTING.md.
-  - 📖 Read the Meally Code of Conduct: https://github.com/open-sauced/open-sauced/blob/HEAD/CODE_OF_CONDUCT.md.
+  - 📖 Read the Mixie Contributing Guide: https://github.com/Eirfire/Mixie/blob/master/CONTRIBUTING.md.
+  - 📖 Read the Mixie Code of Conduct: https://github.com/open-sauced/open-sauced/blob/HEAD/CODE_OF_CONDUCT.md.
   - 👷‍♀️ Create small PRs. In most cases, this will be possible. If not please make it detailed.
   - ✅ Provide tests for your changes.
   - 📝 Use descriptive commit messages.
