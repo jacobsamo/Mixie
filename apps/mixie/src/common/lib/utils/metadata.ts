@@ -53,7 +53,7 @@ export function constructMetadata({
       title,
       description,
       images: {
-        url: image || "/images/banner.png",
+        url: image || "/images/banner.jpg",
         alt: title,
       },
       url: url,
@@ -63,7 +63,7 @@ export function constructMetadata({
       card: "summary_large_image",
       title: title,
       description: description,
-      images: image || "/images/banner.png",
+      images: image || "/images/banner.jpg",
       creator: "@mixiecooking",
     },
     icons: {
