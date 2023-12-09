@@ -34,7 +34,7 @@ importers:
         specifier: ^0.5.9
         version: 0.5.9(prettier@3.1.0)
 
-  apps/meally:
+  apps/mixie:
     dependencies:
       '@auth/core':
         specifier: ^0.18.4
