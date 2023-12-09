@@ -3,8 +3,8 @@
 First clone the repository and then cd into it
 
 ```bash
-    git clone https://github.com/Eirfire/Meally.git
-    cd Meally
+    git clone https://github.com/Eirfire/Mixie.git
+    cd Mixie
 ```
 
 Then install the dependencies
@@ -33,7 +33,7 @@ Please see our [contributing guide](./CONTRIBUTING.md) for more information on h
 
 ### Good First issues
 
-If you are new to the project and want to help out but don't know where to start than please check out our [good first issues](https://github.com/Eirfire/Meally/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22)
+If you are new to the project and want to help out but don't know where to start than please check out our [good first issues](https://github.com/Eirfire/Mixie/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22)
 
 ## file structure
 

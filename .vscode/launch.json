@@ -7,7 +7,7 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Meally",
+            "name": "Mixie",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}"
         }
