@@ -10,7 +10,7 @@ export default function Terms_ServicesPage() {
       <article>
         <section>
           <p className="mb-5 text-step--3">
-            Thank you for visiting a website, app or service provided by Meally!
+            Thank you for visiting a website, app or service provided by Mixie!
             We are pleased to provide you with our content and services and
             appreciate your patronage. Before you engage with our website, app,
             or services, we encourage you to read these Terms of Service, so you
@@ -18,36 +18,36 @@ export default function Terms_ServicesPage() {
             properties.
           </p>
           <p>
-            These Terms of Service ("Agreement") govern your use of the Meally
+            These Terms of Service ("Agreement") govern your use of the Mixie
             website, app located at{" "}
             <Link
-              href="https://meally.com.au"
+              href="https://mixiecooking.com"
               target="_blank"
               className="text-[#188FA7] underline underline-offset-2"
             >
-              https://meally.com.au
+              https://mixiecooking.com
             </Link>{" "}
-            and any related services provided by Meally (collectively, the
+            and any related services provided by Mixie (collectively, the
             "Service").
           </p>
 
           <p>
             By accessing{" "}
             <Link
-              href="https://meally.com.au"
+              href="https://mixiecooking.com"
               target="_blank"
               className="text-[#188FA7] underline underline-offset-2"
             >
-              https://meally.com.au
+              https://mixiecooking.com
             </Link>
             , you agree to abide by these Terms of Service and to comply with
             all applicable laws and regulations. If you do not agree with these
             Terms of Service, you are prohibited from using or accessing this
-            website or using any other services provided by Meally.
+            website or using any other services provided by Mixie.
           </p>
 
           <p>
-            We, Meally, reserve the right to review and amend any of these Terms
+            We, Mixie, reserve the right to review and amend any of these Terms
             of Service at our sole discretion. Upon doing so, we will update
             this page. Any changes to these Terms of Service will take effect
             immediately from the date of publication.
@@ -103,7 +103,7 @@ export default function Terms_ServicesPage() {
                 or otherwise create derivative works of your content in a manner
                 that is consistent with your privacy preferences and our{" "}
                 <Link
-                  href="https://meally.com.au/info/privacy_policy"
+                  href="https://mixiecooking.com/info/privacy_policy"
                   target="_blank"
                   className="text-[#188FA7] underline underline-offset-2"
                 >
@@ -125,7 +125,7 @@ export default function Terms_ServicesPage() {
                 identifying information associated with your account in a manner
                 that is consistent with your privacy preferences, and our{" "}
                 <Link
-                  href="https://meally.com.au/info/privacy_policy"
+                  href="https://mixiecooking.com/info/privacy_policy"
                   target="_blank"
                   className="text-[#188FA7] underline underline-offset-2"
                 >
@@ -140,7 +140,7 @@ export default function Terms_ServicesPage() {
             <section>
               <p>
                 Our website and the materials on our website are provided on an
-                'as is' basis. To the extent permitted by law, Meally makes no
+                'as is' basis. To the extent permitted by law, Mixie makes no
                 warranties, expressed or implied, and hereby disclaims and
                 negates all other warranties including, without limitation,
                 implied warranties or conditions of merchantability, fitness for
@@ -149,10 +149,10 @@ export default function Terms_ServicesPage() {
               </p>
               <br />
               <p>
-                In no event shall Meally or its suppliers be liable for any
+                In no event shall Mixie or its suppliers be liable for any
                 consequential loss suffered or incurred by you or any third
                 party arising from the use or inability to use this website or
-                the materials on this website, even if Meally or an authorized
+                the materials on this website, even if Mixie or an authorized
                 representative has been notified, orally or in writing, of the
                 possibility of such damage.
               </p>
@@ -178,7 +178,7 @@ export default function Terms_ServicesPage() {
             Accuracy of Materials
             <section>
               The materials appearing on our website are not comprehensive and
-              are for general information purposes only. Meally does not warrant
+              are for general information purposes only. Mixie does not warrant
               or make any representations concerning the accuracy, likely
               results, or reliability of the use of the materials on this
               website, or otherwise relating to such materials or on any
@@ -188,10 +188,10 @@ export default function Terms_ServicesPage() {
           <li className="mb-5 text-step--3">
             Links
             <section>
-              Meally has not reviewed all of the sites linked to its website and
+              Mixie has not reviewed all of the sites linked to its website and
               is not responsible for the contents of any such linked site. The
               inclusion of any link does not imply endorsement, approval, or
-              control by Meally of the site. Use of any such linked site is at
+              control by Mixie of the site. Use of any such linked site is at
               your own risk and we strongly advise you make your own
               investigations with respect to the suitability of those sites.
             </section>
@@ -200,11 +200,11 @@ export default function Terms_ServicesPage() {
             Sponsored/Affiliate Content
             <section>
               Certain portions of the Services may include content that contains
-              links to third party websites for which Meally may receive
+              links to third party websites for which Mixie may receive
               compensation from the operator of the third-party website by
               virtue of your clicking or making a purchase on that site. By
               clicking on these links, you understand and agree that you are
-              leaving a Meally Property and visiting a website that is not{" "}
+              leaving a Mixie Property and visiting a website that is not{" "}
             </section>
           </li>
           <li className="mb-5 text-step--3">
@@ -213,7 +213,7 @@ export default function Terms_ServicesPage() {
               The Services may contain links to third-party services such as
               third-party websites, applications, or ads ("Third-Party Links").
               When you click on such a link, we will not warn you that you are
-              about to or have left the Services. Meally does not control and is
+              about to or have left the Services. Mixie does not control and is
               not responsible for Third-Party Links. We provide these
               Third-Party Links only as a convenience and do not review,
               approve, monitor, endorse, warrant, or make any representations

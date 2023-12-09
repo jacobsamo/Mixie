@@ -6,16 +6,16 @@ export default function Privacy_PolicyPage() {
     <>
       <main className="mx-auto my-0 max-w-[800px] p-10">
         <h1 className="mb-5 text-step1 font-bold">Privacy Policy</h1>
-        <h2 className="mb-5 text-step--2 font-bold">Last updated: 1/11/23</h2>
+        <h2 className="mb-5 text-step--2 font-bold">Last updated: 9/12/23</h2>
         <p className="mb-5 text-step--3">
-          Welcome to Meally, your trusted platform for culinary exploration and
-          collaboration. At Meally, we prioritize your privacy and data
+          Welcome to Mixie, your trusted platform for culinary exploration and
+          collaboration. At Mixie, we prioritize your privacy and data
           security. This Privacy Policy outlines our commitment to safeguarding
           your personal information, detailing how we collect, use, protect, and
           share your data.
         </p>
         <p>
-          By using Meally, you consent to the practices described in this
+          By using Mixie, you consent to the practices described in this
           Privacy Policy. Your trust is essential to us, and we are dedicated to
           ensuring your data is handled with care and utilized only for
           legitimate purposes.
@@ -39,7 +39,7 @@ export default function Privacy_PolicyPage() {
               <br />
               <p>
                 We also collect certain preferences voluntarily shared by you to
-                enhance your Meally experience, including:
+                enhance your Mixie experience, including:
               </p>
               <br />
               <ul>
@@ -118,7 +118,7 @@ export default function Privacy_PolicyPage() {
               communications from us at any time, including newsletters and
               updates. You can request access to your information, which may
               take up to 24 hours to process. Additionally, you have the option
-              to delete your Meally account; however, please note that this
+              to delete your Mixie account; however, please note that this
               action won't delete your recipes. For more details.
               {/* For more details, please read
               our [Account Deletion Policy](#link-to-account-deletion-policy). */}
@@ -143,7 +143,7 @@ export default function Privacy_PolicyPage() {
           <li className="mb-5 text-step--3">
             Consent
             <p className="mb-3 text-step--3">
-              By using Meally, you consent to the collection and use of your
+              By using Mixie, you consent to the collection and use of your
               data as described in this Privacy Policy.
             </p>
           </li>
