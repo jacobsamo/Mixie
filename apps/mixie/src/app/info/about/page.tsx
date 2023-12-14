@@ -35,18 +35,18 @@ export default function AboutPage() {
 
       <h1 className="mb-5 text-step1 font-bold">Mission</h1>
       <p className="mb-5 text-step--3">
-        Our mission at Meally is to have community-driven recipe platform where
+        Our mission at Mixie is to have community-driven recipe platform where
         home cooks and food enthusiasts can collaborate on unique and delicious
         recipes. Our open source approach allows anyone to contribute and share
-        their culinary knowledge. At Meally, we believe that cooking is a
-        journey and strive to provide the tools and resources f or our users to
+        their culinary knowledge. At Mixie, we believe that cooking is a
+        journey and strive to provide the tools and resources for our users to
         explore new horizons and create memorable meals. Join us on the journey
         to cook together!
       </p>
 
       <h1 className="mb-5 text-step1 font-bold">Vision</h1>
       <p className="mb-5 text-step--3">
-        At Meally, our vision is to create a community-driven recipe
+        At Mixie, our vision is to create a community-driven recipe
         collaboration platform where home cooks and food enthusiasts can come
         together to share, create, and perfect delicious and unique recipes. Our
         open source approach means that anyone can contribute to the Meally

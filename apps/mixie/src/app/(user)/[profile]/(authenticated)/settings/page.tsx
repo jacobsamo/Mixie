@@ -92,6 +92,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
             <Loader2 className="m-auto h-16 w-16 animate-spin" />
           )}
           {values.email && (
+          
             <>
               {activeLink === "profile" && <Profile />}
 
