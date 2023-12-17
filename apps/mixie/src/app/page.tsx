@@ -11,17 +11,18 @@ export const revalidate = 3600;
 
 const getRecipes = unstable_cache(
   async () => {
-    const recipes = await db.query.info.findMany({
+    const latestRecipes = await db.query.info.findMany({
       where: eq(info.isPublic, true),
+      limit: 12,
+      orderBy: info.createdAt,
     });
-    return recipes;
+    return latestRecipes;
   },
   ["recipes"],
   {
     revalidate: 3600,
   }
 );
-
 
 // const getRecipes = cache(async () => {
 //   const recipes = await db.query.info.findMany({
@@ -47,7 +48,7 @@ export default async function Page() {
           <div className="relative flex h-[2.8rem] min-w-max max-w-[28rem] resize items-center rounded-xl bg-white p-1 pr-5 shadow-searchBarShadow dark:bg-grey dark:text-white">
             <SearchIcon className="ml-5 h-5 w-5" />
             <span className="m-1">
-              Search by keyword, ingredient or recipes
+              Search for your next taste sensation...
             </span>
           </div>
         </SearchTrigger>
