@@ -6,7 +6,7 @@ import { constructMetadata } from "@lib/utils";
 import "@styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { Viewport } from "next";
-import { getServerAuthSession } from "@server/auth";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata = constructMetadata();
 
@@ -42,6 +42,7 @@ export default async function RootLayout({
 
         {/*Have a look at https://posthog.com/ for more advanced analytics */}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

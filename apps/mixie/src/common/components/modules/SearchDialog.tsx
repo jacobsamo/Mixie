@@ -11,20 +11,22 @@ import {
   UserCircle2,
 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useToggleWithShortcut } from "../../hooks/useToggleWithShortCut";
 import useUser from "../../hooks/useUser";
 import CreateRecipeDialog from "../elements/CreateRecipeDialog";
+import { createUrl } from "../../lib/utils";
 
 interface SearchProps {
   externalOpen?: boolean;
   setExternalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function Search({ externalOpen, setExternalOpen }: SearchProps) {
+export function SearchDialog({ externalOpen, setExternalOpen }: SearchProps) {
   const { user } = useUser();
   const router = useRouter();
+  const pathname = usePathname();
 
   const { open, setOpen } = useToggleWithShortcut(setExternalOpen);
   const [activeIndex, setActiveIndex] = useState(1);
@@ -61,6 +63,16 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
     }
   };
 
+  const handleSearch = (value: string) => {
+    const newParams = new URLSearchParams();
+    newParams.set("search", value);
+    if (pathname.includes("recipes")) {
+      router.push(createUrl(pathname, newParams));
+    } else {
+      router.push(`/recipes?search=${value}`);
+    }
+  };
+
   return (
     <>
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -73,7 +85,7 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
                 {...register("search")}
                 onKeyDown={(e) => {
                   if (e.key == "Enter") {
-                    router.push(`/recipes?search=${getValues("search")}`);
+                    handleSearch(getValues("search"));
                   } else {
                     handleKeyUp(e);
                   }
@@ -144,4 +156,4 @@ export function Search({ externalOpen, setExternalOpen }: SearchProps) {
   );
 }
 
-export default Search;
+export default SearchDialog;

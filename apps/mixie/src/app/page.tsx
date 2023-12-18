@@ -2,10 +2,10 @@ import { CardRectangle } from "@/src/common/components/elements/Cards";
 import { eq } from "drizzle-orm";
 import { SearchIcon } from "lucide-react";
 import { unstable_cache } from "next/cache";
-import Carousel from "../common/components/elements/Carousel";
-import SearchTrigger from "../common/components/modules/SearchTrigger";
-import { db } from "../server/db";
-import { info } from "../server/db/schemas";
+import SearchTrigger from "@components/modules/SearchTrigger";
+import { db } from "@server/db";
+import { info } from "@server/db/schemas";
+import Carousel from "@components/elements/Carousel";
 
 export const revalidate = 3600;
 
@@ -47,18 +47,12 @@ export default async function Page() {
         <SearchTrigger>
           <div className="relative flex h-[2.8rem] min-w-max max-w-[28rem] resize items-center rounded-xl bg-white p-1 pr-5 shadow-searchBarShadow dark:bg-grey dark:text-white">
             <SearchIcon className="ml-5 h-5 w-5" />
-            <span className="m-1">
-              Search for your next taste sensation...
-            </span>
+            <span className="m-1">Search for your next taste sensation</span>
           </div>
         </SearchTrigger>
       </section>
       <section className="pt-9 ">
-        <Carousel
-          autoplay={true}
-          averageWidth={400}
-          count={latestRecipes.length}
-        >
+        <Carousel autoplay={true} fallback_width={500}>
           {latestRecipes.map((recipe) => (
             <CardRectangle key={recipe.id} recipe={recipe} />
           ))}

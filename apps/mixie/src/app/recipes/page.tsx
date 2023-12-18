@@ -1,14 +1,12 @@
 import { CardSquare } from "@/src/common/components/elements/Cards";
-import SearchTrigger from "@/src/common/components/modules/SearchTrigger";
 import { db } from "@/src/server/db";
 import { info } from "@/src/server/db/schemas";
 import { Info } from "@/src/server/db/types";
+import RecipeSearch from "@components/modules/RecipeSearch";
 import { constructMetadata } from "@lib/utils";
 import { eq } from "drizzle-orm";
 import { IFuseOptions } from "fuse.js";
-import { SearchIcon } from "lucide-react";
 import { unstable_cache } from "next/cache";
-import { cache } from "react";
 
 export const revalidate = 3600;
 
@@ -44,11 +42,14 @@ async function searchRecipes({
     includeScore: true,
     isCaseSensitive: true,
     keys: ["title"],
+    threshold: 0.6,
   };
 
   const Fuse = (await import("fuse.js")).default;
   const fuse = new Fuse(recipes, options);
   const result = fuse.search(query);
+
+  console.log("Results: ", result);
 
   return result.map((item) => item.item);
 }
@@ -68,19 +69,12 @@ export default async function RecipeViewPage({
 
   return (
     <main className="h-full w-full">
-      <section className="flex h-52 flex-col items-center justify-center">
-        <SearchTrigger>
-          <div className="relative flex h-[2.8rem] min-w-max max-w-[28rem] resize items-center rounded-xl bg-white p-1 pr-5 shadow-searchBarShadow dark:bg-grey dark:text-white">
-            <SearchIcon className="ml-5 h-5 w-5" />
-            <span className="m-1">
-              Search by keyword, ingredient or recipes
-            </span>
-          </div>
-        </SearchTrigger>
+      <section className="flex h-52 items-center justify-center">
+        <RecipeSearch />
       </section>
 
       <section className="flex flex-wrap gap-2 p-3">
-        {(searchedRecipes && searchedRecipes?.length > 1
+        {(searchedRecipes && searchedRecipes?.length > 0
           ? searchedRecipes
           : recipes
         )?.map((recipe) => {

@@ -13,9 +13,9 @@ const LoginPage = () => {
           height={128}
           className="h-32 w-32 rounded-full"
         />
-        <h1 className="text-step--1">Signout of Meally</h1>
+        <h1 className="text-step--1">Signout of Mixie</h1>
       </div>
-      <Button ariaLabel="singout of meally" onClick={() => signOut()}>
+      <Button ariaLabel="singout of mixie" onClick={() => signOut()}>
         Sign out
       </Button>
     </>

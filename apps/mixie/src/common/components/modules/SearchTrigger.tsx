@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Search from "./Search";
+import SearchDialog from "./SearchDialog";
 import { Button } from "@components/ui/button";
 
 interface SearchTriggerProps {
@@ -19,7 +19,7 @@ const SearchTrigger = ({ children }: SearchTriggerProps) => {
       >
         {children}
       </Button>
-      <Search externalOpen={open} setExternalOpen={setOpen} />
+      <SearchDialog externalOpen={open} setExternalOpen={setOpen} />
     </>
   );
 };

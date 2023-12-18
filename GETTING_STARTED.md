@@ -23,8 +23,6 @@ start just the one you want
 
 ```bash
     npm run dev --filter *app name*
-    # e.g npm run dev --filter meally.com.au
-    # e.g npm run dev --filter meally.com.au
 ```
 
 ## Contributing
@@ -42,7 +40,7 @@ All apps live under the [apps directory](./apps/) and packages that are shared b
 
 ## Workspaces
 
-If you aren't familiar with Workspaces they are pretty much ways of separating where things are in a project. so when installing into a certain workspace it will only install into that workspace and not the others, E.x `pnpm add React --filter meally`. 
+If you aren't familiar with Workspaces they are pretty much ways of separating where things are in a project. so when installing into a certain workspace it will only install into that workspace and not the others, E.x `pnpm add React --filter mixie`. 
 
 ## Consistent coding style
 

@@ -49,12 +49,12 @@ export default function AboutPage() {
         At Mixie, our vision is to create a community-driven recipe
         collaboration platform where home cooks and food enthusiasts can come
         together to share, create, and perfect delicious and unique recipes. Our
-        open source approach means that anyone can contribute to the Meally
+        open source approach means that anyone can contribute to the Mixie
         library, whether by submitting their own recipes, editing and updating
         existing ones, or simply sharing their thoughts and feedback. We believe
         that cooking is a journey, and we're dedicated to providing the tools
         and resources our users need to explore new culinary horizons and create
-        memorable meals for themselves and their loved ones. Join us on Meally
+        memorable meals for themselves and their loved ones. Join us on Mixie
         and let's cook together!
       </p>
     </main>

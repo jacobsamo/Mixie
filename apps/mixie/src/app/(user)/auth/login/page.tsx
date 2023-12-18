@@ -57,7 +57,7 @@ const LoginPage = () => {
           height={128}
           className="h-32 w-32 rounded-full"
         />
-        <h1 className="text-step--1">Welcome to Meally</h1>
+        <h1 className="text-step--1">Welcome to Mixie</h1>
       </div>
       {/* <form
         className="flex w-2/3 flex-col  gap-4"
@@ -100,7 +100,7 @@ const LoginPage = () => {
               <p className="text-step--4 opacity-90">
                 You agree to our{" "}
                 <Link
-                  href="https://meally.com.au/info/terms_service"
+                  href="https://mixiecooking.com/info/terms_service"
                   target="_blank"
                   className="text-[#188FA7] underline underline-offset-2"
                 >
@@ -108,7 +108,7 @@ const LoginPage = () => {
                 </Link>{" "}
                 and{" "}
                 <Link
-                  href="https://meally.com.au/info/privacy_policy"
+                  href="https://mixiecooking.com/info/privacy_policy"
                   target="_blank"
                   className="text-[#188FA7] underline underline-offset-2"
                 >
@@ -121,7 +121,7 @@ const LoginPage = () => {
         />
         <Button
           type="submit"
-          ariaLabel="Log into Meally"
+          ariaLabel="Log into Mixie"
           className="mx-auto w-full"
         >
           Log in
