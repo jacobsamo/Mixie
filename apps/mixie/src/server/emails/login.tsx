@@ -31,7 +31,7 @@ export default function LoginLink({
           <Container className="border-gray-200 mx-auto my-10 max-w-[500px] rounded border border-solid px-10 py-5">
             <Section className="mt-8">
               <Img
-                src={"https://www.mixiecooking.com/icons/icon_x128.png"}
+                src={"https://www.mixiecooking.com/icons/icon_x128.jpg"}
                 width="40"
                 height="40"
                 alt="Mixie"
@@ -49,7 +49,7 @@ export default function LoginLink({
             </Text>
             <Section className="my-8 text-center">
               <Link
-                className="rounded-full bg-[#FFB914] px-6 py-3 text-center text-[12px] font-semibold text-[#0D1017] no-underline"
+                className="rounded-xl bg-[#FFB914] px-6 py-3 text-center text-[12px] font-semibold text-[#0D1017] no-underline"
                 href={url}
               >
                 Sign in
@@ -58,7 +58,7 @@ export default function LoginLink({
             <Text className="text-center">Or</Text>
             <Hr />
             <Text className="text-center">Login with the code below</Text>
-            <Section className="mx-auto mb-3 mt-4 w-fit rounded-md border border-solid border-[#0D1017] px-2 py-3 align-middle">
+            <Section className="mx-auto mb-3 mt-4 w-fit rounded-md border border-solid border-[#0D1017] px-4 py-3 align-middle">
               <Text className="tacking-[6px] font mx-auto my-0 inline-block w-full py-2 text-center text-step--2 font-bold text-[#000]">
                 {token}
               </Text>

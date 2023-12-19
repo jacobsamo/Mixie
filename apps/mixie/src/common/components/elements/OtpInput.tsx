@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { cn } from "../../lib/utils";
 
 /**
  * Let's borrow some props from HTML "input". More info below:
@@ -114,12 +115,13 @@ const OtpInput = (props: Props) => {
              * Add some styling to the input using daisyUI + tailwind.
              * Allows the user to override the classname for a different styling
              */
-            className={
-              className ||
-              `input input-bordered h:14 
-              text-xl md:text-3xl w-10 rounded-md 
-              px-0 text-center md:h-16 md:w-14`
-            }
+            className={cn(
+              `input input-bordered text-xl 
+              md:text-3xl className || h-14 
+              w-14 rounded-md
+              px-0 text-center md:h-16 md:w-14`,
+              className
+            )}
             type="text"
             inputMode="numeric"
             autoComplete="one-time-code"

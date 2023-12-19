@@ -56,7 +56,6 @@ const LoginPage = () => {
         <h1 className="text-step--1">Welcome to Mixie</h1>
       </div>
 
-      <span className="my-2 mb-4 h-[0.125rem] w-3/4 rounded-md bg-grey dark:bg-white"></span>
       <div className="flex flex-col gap-4">
         <Button
           ariaLabel="sign in with google"
@@ -119,6 +118,8 @@ const LoginPage = () => {
           <p className="text-white">Sign in with Github</p>
         </Button>
       </div>
+
+      <span className="my-2 mb-4 h-[0.125rem] w-3/4 rounded-md bg-grey dark:bg-white"></span>
 
       <form
         className="flex w-2/3 flex-col  gap-4"
