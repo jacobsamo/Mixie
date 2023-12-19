@@ -35,7 +35,7 @@ export const BaseCard = ({
     >
       <Link
         href={`/recipes/${recipe.id}`}
-        className={cn("text-center text-step--2", classNames?.title)}
+        className={cn("text-center text-step--2 shadow", classNames?.title)}
       >
         {recipe.title}
       </Link>
