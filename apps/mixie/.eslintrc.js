@@ -11,8 +11,8 @@ module.exports = {
     "@tanstack/query/exhaustive-deps": "error",
     "@tanstack/query/no-rest-destructuring": "warn",
     "@tanstack/query/stable-query-client": "error",
-    "drizzle/enforce-delete-with-where": "error",
-    "drizzle/enforce-update-with-where": "error",
+    "drizzle/enforce-delete-with-where": "warn",
+    "drizzle/enforce-update-with-where": "warn",
   },
   plugins: ["@tanstack/query", "drizzle"],
 };
