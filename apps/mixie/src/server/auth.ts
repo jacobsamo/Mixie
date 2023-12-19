@@ -83,10 +83,10 @@ export const authOptions: NextAuthOptions = {
         const digits = "0123456789";
         let verificationCode = "";
 
-        for (let i = 0; i < 5; i++) {
-          const randomIndex = Math.floor(Math.random() * digits.length);
-          verificationCode += digits.charAt(randomIndex);
-        }
+    //     for (let i = 0; i < 5; i++) {
+    //       const randomIndex = Math.floor(Math.random() * digits.length);
+    //       verificationCode += digits.charAt(randomIndex);
+    //     }
 
         return verificationCode;
       },
@@ -98,12 +98,12 @@ export const authOptions: NextAuthOptions = {
           react: LoginLink({ url, email: identifier, token: token }),
         });
 
-        if (process.env.NODE_ENV === "development") {
-          console.log(`Login link: ${url}, token: ${token}`);
-          return;
-        }
-      },
-    }),
+    //     if (process.env.NODE_ENV === "development") {
+    //       console.log(`Login link: ${url}, token: ${token}`);
+    //       return;
+    //     }
+    //   },
+    // }),
   ],
   callbacks: {
     session: async ({ session, user, token }) => {
