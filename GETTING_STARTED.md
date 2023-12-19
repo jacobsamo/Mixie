@@ -3,8 +3,8 @@
 First clone the repository and then cd into it
 
 ```bash
-    git clone https://github.com/Eirfire/Meally.git
-    cd Meally
+    git clone https://github.com/Eirfire/Mixie.git
+    cd Mixie
 ```
 
 Then install the dependencies
@@ -23,8 +23,6 @@ start just the one you want
 
 ```bash
     npm run dev --filter *app name*
-    # e.g npm run dev --filter meally.com.au
-    # e.g npm run dev --filter meally.com.au
 ```
 
 ## Contributing
@@ -33,7 +31,7 @@ Please see our [contributing guide](./CONTRIBUTING.md) for more information on h
 
 ### Good First issues
 
-If you are new to the project and want to help out but don't know where to start than please check out our [good first issues](https://github.com/Eirfire/Meally/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22)
+If you are new to the project and want to help out but don't know where to start than please check out our [good first issues](https://github.com/Eirfire/Mixie/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22)
 
 ## file structure
 
@@ -42,7 +40,7 @@ All apps live under the [apps directory](./apps/) and packages that are shared b
 
 ## Workspaces
 
-If you aren't familiar with Workspaces they are pretty much ways of separating where things are in a project. so when installing into a certain workspace it will only install into that workspace and not the others, E.x `pnpm add React --filter meally`. 
+If you aren't familiar with Workspaces they are pretty much ways of separating where things are in a project. so when installing into a certain workspace it will only install into that workspace and not the others, E.x `pnpm add React --filter mixie`. 
 
 ## Consistent coding style
 

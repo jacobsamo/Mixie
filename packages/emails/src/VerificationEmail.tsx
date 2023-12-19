@@ -32,20 +32,20 @@ export const VerificationEmail = ({
       <Body className="bg-white font-roboto">
         <Container className="mx-auto mt-5 w-96 rounded-md bg-white p-4 text-center shadow ">
           <Img
-            src={`https://www.meally.com.au/favicon.ico`}
+            src={`https://www.mixiecooking.com/favicon.ico`}
             width="128"
             height="128"
-            alt="Meally logo"
+            alt="Mixie logo"
             className="mx-auto h-32 w-32"
           />
           <Heading className="text-lg text-bold">
-            Your login code for Meally
+            Your login code for Mixie
           </Heading>
           <Text className="text-center">
             The link and code will be valid for the next 12 hours
           </Text>
           <Button href={url} className="rounded-md bg-yellow p-2 text-black">
-            Login to Meally
+            Login to Mixie
           </Button>
           <Text className="text-center">Or</Text>
           <Hr />

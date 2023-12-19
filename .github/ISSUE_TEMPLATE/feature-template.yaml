@@ -1,12 +1,12 @@
 name: "💡 Feature request"
-description: Suggest new feature for Meally
+description: Suggest new feature for Mixie
 title: "[FEATURE]: "
 labels: ["improvements"]
 
 body:
   - type: markdown
     attributes:
-      value: Thanks for taking the time to suggest a new feature idea for Meally! Please fill out this form as completely as possible.
+      value: Thanks for taking the time to suggest a new feature idea for Mixie! Please fill out this form as completely as possible.
   - type: checkboxes
     attributes:
       label: "Is there an existing feature idea like yours?"

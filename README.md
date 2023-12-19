@@ -1,14 +1,14 @@
 <p align="center">
-  <a href="https://www.meally.com.au/">
-    <img src="https://www.meally.com.au/favicon.ico" style="border-radius: 9999px" height="128">
-    <h1 align="center">Meally</h1>
+  <a href="https://www.mixiecooking.com/">
+    <img src="https://www.mixiecooking.com/favicon.ico" style="border-radius: 9999px" height="128">
+    <h1 align="center">Mixie</h1>
   </a>
 </p>
 
 <p align="center">
-    <img alt="Website" src="https://img.shields.io/website?down_color=red&down_message=Offline&label=Website&up_message=Online&url=https%3A%2F%2Fwww.meally.com.au">
-    <img alt="GitHub" src="https://img.shields.io/github/license/eirfire/meally?color=blue">
-    <img alt="GitHub Workflow Status (with branch)" src="https://img.shields.io/github/actions/workflow/status/eirfire/meally/intergrate.yml?branch=master">
+    <img alt="Website" src="https://img.shields.io/website?down_color=red&down_message=Offline&label=Website&up_message=Online&url=https%3A%2F%2Fwww.mixiecooking.com">
+    <img alt="GitHub" src="https://img.shields.io/github/license/eirfire/mixie?color=blue">
+    <img alt="GitHub Workflow Status (with branch)" src="https://img.shields.io/github/actions/workflow/status/eirfire/mixie/intergrate.yml?branch=master">
 </p>
 
 ## Getting started
@@ -25,7 +25,7 @@ Please see our [contributing guide](./CONTRIBUTING.md) for more information on h
 
 ### Good First issues
 
-If you are new to the project and want to help out but don't know where to start than please check out our [good first issues](https://github.com/Eirfire/Meally/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22).
+If you are new to the project and want to help out but don't know where to start than please check out our [good first issues](https://github.com/Eirfire/Mixie/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22).
 
 ## Security Policy
 
@@ -37,7 +37,7 @@ This project is licensed under the [GPL 3.0](./LICENSE) if something isn't quite
 
 ## General idea
 
-As meally is very new most of the features below won't be implemented straight away however these will be implemented going into the future.
+As mixie is very new most of the features below won't be implemented straight away however these will be implemented going into the future.
 
 Here is the general idea: All recipes to be made by the community and approved by the community, meaning there aren't any recipes will spelling mistakes, grammar or a recipe with bad information.
 
