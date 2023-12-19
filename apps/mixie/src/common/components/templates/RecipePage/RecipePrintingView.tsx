@@ -49,7 +49,7 @@ const RecipePrintingView = ({ recipe }: RecipePrintingViewProps) => {
 
       <section className="w-full pb-12">
         <Image
-          src={recipe?.info.imgUrl || "/images/placeholder.png"}
+          src={recipe?.info.imgUrl || "/images/placeholder.webp"}
           alt={recipe?.info.imgAlt || recipe.title || "recipe image"}
           width={800}
           height={600}

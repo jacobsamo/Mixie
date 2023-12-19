@@ -21,9 +21,7 @@ const VerificationPage = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <>
       <div className="flex flex-col items-center">
         <Image
           src="/icons/icon.jpg"
@@ -34,27 +32,29 @@ const VerificationPage = () => {
         />
         <h1 className="text-step--1">Welcome to Mixie</h1>
       </div>
-      <p>Please enter the 5 digit code sent to {}</p>
-      <Controller
-        name="code"
-        defaultValue=""
-        rules={{ minLength: 5, required: true }}
-        render={({ field }) => (
-          <OtpInput
-            value={field.value}
-            size={5}
-            onChange={(val) => {
-              field.onChange(val);
-            }}
-          />
-        )}
-        control={control}
-      />
-      {/* <p>Resend code</p> */}
-      <Button type="submit" ariaLabel="submit verification code">
-        Verify
-      </Button>
-    </form>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <p>Please enter the 5 digit code sent to continue</p>
+        <Controller
+          name="code"
+          defaultValue=""
+          rules={{ minLength: 5, required: true }}
+          render={({ field }) => (
+            <OtpInput
+              value={field.value}
+              size={5}
+              onChange={(val) => {
+                field.onChange(val);
+              }}
+            />
+          )}
+          control={control}
+        />
+        {/* <p>Resend code</p> */}
+        <Button type="submit" ariaLabel="submit verification code" className="mt-8">
+          Verify
+        </Button>
+      </form>
+    </>
   );
 };
 

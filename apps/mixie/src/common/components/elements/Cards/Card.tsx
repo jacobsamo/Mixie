@@ -35,7 +35,7 @@ export const BaseCard = ({
     >
       <Link
         href={`/recipes/${recipe.id}`}
-        className={cn("text-center text-step--2", classNames?.title)}
+        className={cn("text-center text-step--2 shadow", classNames?.title)}
       >
         {recipe.title}
       </Link>
@@ -102,7 +102,8 @@ const CardRectangle = ({ recipe }: CardProps) => {
       recipe={recipe}
       hasCookTime={false}
       classNames={{
-        container: "h-64 md:w-[43.75rem] resize",
+        container:
+          "h-64 min-w-[320px] md:min-w-[30rem] max-w-[43.75rem] resize",
         bookmarkContainer: "absolute right-2 bottom-2",
         image: "h-64 w-[43.75rem] resize",
         title: "text-step0",

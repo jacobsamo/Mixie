@@ -47,7 +47,7 @@ const UserProfile = () => {
           className="h-10 w-10 cursor-pointer rounded-full object-cover"
         />
       </PopoverTrigger>
-      <PopoverContent className="flex w-fit flex-col gap-2">
+      <PopoverContent className="z-50 flex w-fit flex-col gap-2">
         <Link
           onClick={() => setOpen(false)}
           href={`/${user?.id}`}

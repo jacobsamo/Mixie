@@ -105,7 +105,6 @@ const SwitchInput = React.forwardRef<HTMLButtonElement, SwitchInputProps>(
           type={type}
           id={name}
           name={name}
-          placeholder={label}
           ref={ref}
           {...props}
           className={cn("", classNames?.input)}

@@ -9,12 +9,15 @@ import { type Adapter } from "next-auth/adapters";
 import FacebookProvider from "next-auth/providers/facebook";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import EmailProvider from "next-auth/providers/email";
 
 import { env } from "@/env.mjs";
 import { TFont, TTheme } from "@db/enum-types";
 import { db } from "@db/index";
 import * as schema from "@db/schemas";
 import { User as DbUser } from "@db/types";
+import { sendEmail } from "./emails";
+import LoginLink from "./emails/login";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -72,35 +75,35 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.GOOGLE_CLIENT_SECRET,
       allowDangerousEmailAccountLinking: true,
     }),
-    // EmailProvider({
-    //   server: `smtp://resend:${env.RESEND_API_KEY}@smtp.resend.com:465`,
-    //   from: "cook@mixiecooking.com",
-    //   maxAge: 24 * 60 * 60, // How long email links are valid for (default 24h)
-    //   async generateVerificationToken() {
-    //     const digits = "0123456789";
-    //     let verificationCode = "";
+    EmailProvider({
+      server: `smtp://resend:${env.RESEND_API_KEY}@smtp.resend.com:465`,
+      from: "cook@mixiecooking.com",
+      maxAge: 24 * 60 * 60, // How long email links are valid for (default 24h)
+      async generateVerificationToken() {
+        const digits = "0123456789";
+        let verificationCode = "";
 
-    //     for (let i = 0; i < 5; i++) {
-    //       const randomIndex = Math.floor(Math.random() * digits.length);
-    //       verificationCode += digits.charAt(randomIndex);
-    //     }
+        for (let i = 0; i < 5; i++) {
+          const randomIndex = Math.floor(Math.random() * digits.length);
+          verificationCode += digits.charAt(randomIndex);
+        }
 
-    //     return verificationCode;
-    //   },
-    //   async sendVerificationRequest({ identifier, url, token }) {
-    //     console.log("Sending verification request to: ", identifier);
-    //     await sendEmail({
-    //       email: identifier,
-    //       subject: "Your Mixie login link",
-    //       react: LoginLink({ url, email: identifier, token: token }),
-    //     });
+        return verificationCode;
+      },
+      async sendVerificationRequest({ identifier, url, token }) {
+        console.log("Sending verification request to: ", identifier);
+        await sendEmail({
+          email: identifier,
+          subject: "Your Mixie login link",
+          react: LoginLink({ url, email: identifier, token: token }),
+        });
 
-    //     if (process.env.NODE_ENV === "development") {
-    //       console.log(`Login link: ${url}, token: ${token}`);
-    //       return;
-    //     }
-    //   },
-    // }),
+        if (process.env.NODE_ENV === "development") {
+          console.log(`Login link: ${url}, token: ${token}`);
+          return;
+        }
+      },
+    }),
   ],
   callbacks: {
     session: async ({ session, user, token }) => {

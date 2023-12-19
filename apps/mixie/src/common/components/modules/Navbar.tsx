@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import SearchTrigger from "./SearchTrigger";
 import UserProfile from "./UserProfile";
+import VersionChip from "./VersionChip";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +32,7 @@ const Navbar = () => {
   return (
     <nav className="flex h-14 w-full flex-row items-center justify-between bg-transparent px-2 print:hidden">
       {/* Logo & name - always show */}
-      <Link href="/" className="flex flex-row gap-1">
+      <Link href="/" className="flex flex-row items-center gap-1">
         {/* Logo image */}
         <Image
           width={44}
@@ -42,6 +43,7 @@ const Navbar = () => {
         />
         {/* Logo text */}
         <h1 className="text-step--1">Mixie</h1>
+        <VersionChip release="beta" />
       </Link>
 
       {/* Links - show in sidebar under 640px (sm:), otherwise always show */}
