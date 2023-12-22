@@ -35,7 +35,11 @@ export const BaseCard = ({
     >
       <Link
         href={`/recipes/${recipe.id}`}
-        className={cn("text-center text-step--2 shadow", classNames?.title)}
+        className={cn(
+          "text-center text-step--2 drop-shadow-xl",
+          classNames?.title
+        )}
+        style={{ textShadow: "4px 4px 20px rgba(0, 0, 0, 1)" }}
       >
         {recipe.title}
       </Link>
@@ -62,7 +66,7 @@ export const BaseCard = ({
         fill
         sizes="224px"
         className={cn(
-          "-z-20 h-56 w-56 rounded-xl object-cover",
+          "-z-20 h-56 w-56 rounded-xl object-cover object-center",
           classNames?.image
         )}
       />
@@ -75,7 +79,7 @@ const CardSquare = ({ recipe }: CardProps) => {
     <BaseCard
       recipe={recipe}
       classNames={{
-        container: "h-56 w-56 ",
+        container: "h-56 w-56",
         image: "h-56 w-56",
       }}
     />

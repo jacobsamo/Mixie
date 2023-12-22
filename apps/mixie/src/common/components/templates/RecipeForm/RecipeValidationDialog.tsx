@@ -25,7 +25,7 @@ interface CreateRecipeDialogProps {
 
 const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
   const [loading, setLoading] = useState(false);
-  const { handleSubmit, register, control } =
+  const { handleSubmit, register, control, formState } =
     useFormContext<z.infer<typeof recipeFormSchema>>();
 
   return (
@@ -42,6 +42,7 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
             {...register("title", {
               required: true,
             })}
+            error={formState.errors.title}
             required
             label="Title"
           />

@@ -61,7 +61,10 @@ export const BookmarkButton = ({
       onClick={() => addBookMark(recipe)}
       className="absolute bottom-2 right-2"
     >
-      <HeartIcon className={`h-8 w-8 cursor-pointer`} />
+      <HeartIcon
+        className={`h-8 w-8 cursor-pointer drop-shadow-xl`}
+        style={{ textShadow: "4px 4px 20px rgba(0, 0, 0, 1)" }}
+      />
     </button>
   );
 };

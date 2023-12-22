@@ -71,21 +71,11 @@ const ShareDialog = ({
             Share this recipes to your friends
           </DialogDescription>
         </DialogHeader>
-
-        <div className="flex flex-row gap-4 ">
-          <Input
-            type="text"
-            name="link"
-            id="link"
-            value={url}
-            size={45}
-            autoFocus={false}
-          />
-
-          <CopyButton ariaLabel="Copy url" text={url} autoFocus={true} />
-        </div>
-
         <div className="flex flex-row gap-4 overflow-scroll">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white">
+            <CopyButton ariaLabel="Copy url" text={url} autoFocus={true} />
+          </div>
+
           <Link
             href={facebookLink}
             target="_blank"

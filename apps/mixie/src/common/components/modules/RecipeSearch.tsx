@@ -34,7 +34,7 @@ const RecipeSearch = ({ className }: { className?: string }) => {
       ref={searchInputRef}
       placeholder="Search for your next taste sensation"
       classNames={{
-        container: `w-1/2 max-w-[28rem] shadow-searchBarShadow ${className}`,
+        container: `w-3/4 sm:w-1/2 max-w-[28rem] shadow-searchBarShadow ${className}`,
         inputWrapper: "border-none rounded-xl",
       }}
     />

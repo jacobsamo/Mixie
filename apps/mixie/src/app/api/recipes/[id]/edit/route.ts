@@ -26,23 +26,7 @@ export async function PUT(req: NextRequest) {
     const recipe = recipeFormSchema.parse(json);
 
     const isPublic = recipe?.info?.isPublic || false;
-    let titleExists = false;
     const id = recipeId(recipe.title) || recipe.id;
-
-    // check if title exists
-    const titles = await db
-      .select({
-        uid: info.recipeId,
-        id: info.id,
-        isPublic: info.isPublic,
-      })
-      .from(info);
-
-    titles.forEach((title) => {
-      if (title.isPublic && title.id == id) {
-        titleExists = true;
-      }
-    });
 
     // get all ingredients and set them to the info, only include ingredients that have isHeading set to false
 
@@ -107,17 +91,6 @@ export async function PUT(req: NextRequest) {
       recipe: newRecipe,
       info: newInfo,
     });
-
-    if (titleExists) {
-      return NextResponse.json(
-        {
-          message: `Recipe with same name already exists, ${recipe.uid}. your recipe has been saved`,
-        },
-        {
-          status: 400,
-        }
-      );
-    }
 
     return NextResponse.json(
       {
