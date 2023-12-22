@@ -3,10 +3,12 @@
   "style": "default",
   "rsc": true,
   "tailwind": {
-    "config": "tailwind.config.js",
+    "config": "tailwind.config.ts",
     "css": "./src/common/styles/globals.css",
     "baseColor": "neutral",
-    "cssVariables": true
+    "cssVariables": true,
+    "rsc": true,
+    "tsx": true
   },
   "aliases": {
     "components": "@components/",

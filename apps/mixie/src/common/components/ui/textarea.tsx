@@ -103,7 +103,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             )}
             <div
               className={cn(
-                "text-sm disabled:opacity-50 dark:bg-grey flex min-h-[60px] w-full flex-col rounded-md bg-transparent bg-white px-3 py-2 focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed",
+                "text-sm flex min-h-[60px] w-full flex-col rounded-md bg-transparent bg-white px-3 py-2 focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-grey",
                 `${
                   border
                     ? "border border-black shadow-sm dark:border-white"
@@ -114,7 +114,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
               {Icon && <span>{Icon}</span>}
               {copyText && (
                 <CopyButton
-                  ariaLabel="Copy text in text area"
+                  aria-label="Copy text in text area"
                   text={field.value}
                 />
               )}

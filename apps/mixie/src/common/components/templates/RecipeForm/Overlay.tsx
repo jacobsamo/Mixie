@@ -33,7 +33,7 @@ const Overlay = ({ onPreview, isDisabled }: OverlayProps) => {
     <>
       <div className="fixed right-3 top-3 z-50 flex w-fit justify-end rounded-md bg-white p-4 shadow dark:bg-grey ">
         <Button
-          ariaLabel="Preview"
+          aria-label="Preview"
           type="button"
           className="mr-2"
           TrailingIcon={<EyeIcon />}
@@ -42,7 +42,7 @@ const Overlay = ({ onPreview, isDisabled }: OverlayProps) => {
           Preview
         </Button>
         <Button
-          ariaLabel="Publish"
+          aria-label="Publish"
           type="button"
           onClick={() => {
             setOpen(true);
@@ -54,7 +54,7 @@ const Overlay = ({ onPreview, isDisabled }: OverlayProps) => {
 
       {/* Bottom Bar */}
       <div className="fixed bottom-5 right-3 z-50 flex justify-end">
-        <Button ariaLabel="Save" type="submit">
+        <Button aria-label="Save" type="submit">
           Save
         </Button>
       </div>

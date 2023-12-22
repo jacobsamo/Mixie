@@ -23,8 +23,12 @@ import { StepContainer } from "./StepContainer";
 import { onSubmit } from "./form";
 import toast from "react-hot-toast";
 import { env } from "process";
+import LoadingImageUpload from "./loadingstates/LoadingImageUpload";
 
-const ImageUpload = dynamic(() => import("./ImageUpload"), { ssr: false });
+const ImageUpload = dynamic(() => import("./ImageUpload"), {
+  ssr: false,
+  loading: () => <LoadingImageUpload />,
+});
 
 interface RecipeFormProps {
   recipe: any | Recipe | NewRecipe; //TODO: fix this type to represent the correct type of recipe (not a huge deal but would be useful)

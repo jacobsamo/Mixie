@@ -115,7 +115,7 @@ const CreateRecipeDialog = () => {
           </div>
           <Button
             type="submit"
-            ariaLabel="continue with creating the recipe"
+            aria-label="continue with creating the recipe"
             className="items-center font-semibold"
             disabled={loading}
           >

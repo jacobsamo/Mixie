@@ -50,7 +50,7 @@ const StepContainer = () => {
         })}
       </DraggableContainer>
       <Button
-        ariaLabel="Add an Step"
+        aria-label="Add an Step"
         className="mt-3 flex h-9 flex-row items-center gap-2 rounded-xl border text-step--2"
         onClick={() => handleAddClick()}
         name="Ingredient"

@@ -78,7 +78,7 @@ const ImageUploadDialog = ({
         </div>
         <DialogFooter>
           <Button
-            ariaLabel="cancel"
+            aria-label="cancel"
             variant={"destructive"}
             type="button"
             className="m-2 w-52"
@@ -87,7 +87,7 @@ const ImageUploadDialog = ({
             Cancel
           </Button>
           <Button
-            ariaLabel="save"
+            aria-label="save"
             type="button"
             className="m-2 w-52"
             onClick={() => setOpen(false)}

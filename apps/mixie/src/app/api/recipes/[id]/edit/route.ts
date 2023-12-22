@@ -49,12 +49,14 @@ export async function PUT(req: NextRequest) {
         ? await calculateTotalTime(recipe.info.prep, recipe.info.cook)
         : null;
 
+    const title = recipe.title.charAt(0).toUpperCase() + recipe.title.slice(1);
+
     // update info table
     const newInfo: NewInfo = {
       ...recipe.info,
       recipeId: recipe.uid,
       id: id,
-      title: recipe.title,
+      title: title,
       keywords: recipe?.info?.keywords || null,
       ingredients: ingredients || null,
       prep: recipe?.info?.prep || null,
@@ -75,6 +77,7 @@ export async function PUT(req: NextRequest) {
     const newRecipe: NewPartialRecipe = {
       ...recipe,
       id: id,
+      title: title,
       isPublic: isPublic,
       // steps: steps,
       lastUpdatedBy: user.id,

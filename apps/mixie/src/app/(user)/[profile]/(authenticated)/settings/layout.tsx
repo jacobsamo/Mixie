@@ -44,7 +44,7 @@ export default function SettingsLayout({
       <header className="mx-auto mt-2 flex w-full flex-row justify-center gap-4 rounded-md bg-white p-1 shadow-main dark:bg-grey md:w-2/4">
         <Button
           unstyled
-          ariaLabel="Go to edit profile page"
+          aria-label="Go to edit profile page"
           onClick={() => {
             router.push("?" + createQueryString("activeLink", "profile"));
           }}
@@ -54,7 +54,7 @@ export default function SettingsLayout({
         </Button>
         <Button
           unstyled
-          ariaLabel="Go to edit profile page"
+          aria-label="Go to edit profile page"
           onClick={() => {
             router.push("?" + createQueryString("activeLink", "customization"));
           }}
@@ -64,7 +64,7 @@ export default function SettingsLayout({
         </Button>
         <Button
           unstyled
-          ariaLabel="Go to edit profile page"
+          aria-label="Go to edit profile page"
           onClick={() => {
             router.push("?" + createQueryString("activeLink", "account"));
           }}

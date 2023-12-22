@@ -50,7 +50,11 @@ const VerificationPage = () => {
           control={control}
         />
         {/* <p>Resend code</p> */}
-        <Button type="submit" ariaLabel="submit verification code" className="mt-8">
+        <Button
+          type="submit"
+          aria-label="submit verification code"
+          className="mt-8"
+        >
           Verify
         </Button>
       </form>

@@ -40,7 +40,6 @@ export interface ButtonProps
   // tooltip?: string;
   // tooltipSide?: 'top' | 'bottom' | 'left' | 'right';
   // tooltipOffset?: number;
-  ariaLabel: string;
   unstyled?: boolean;
 }
 
@@ -55,8 +54,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       // tooltip,
       // tooltipSide,
       // tooltipOffset,
-      unstyled = false,
-      ariaLabel,
+      unstyled = false,  
       ...props
     },
     ref
@@ -68,7 +66,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             ? cn(buttonVariants({ variant, size, className }))
             : className
         }
-        aria-label={ariaLabel}
         ref={ref}
         {...props}
       >

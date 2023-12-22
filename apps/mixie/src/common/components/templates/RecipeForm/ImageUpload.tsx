@@ -16,6 +16,8 @@ import { useFormContext } from "react-hook-form";
 import * as z from "zod";
 import ImageUploadDialog from "../../elements/ImageUploadDialog";
 import { UploadFileResponse } from "uploadthing/client";
+import { UploadDropzone } from "@lib/utils/uploadthing";
+import toast from "react-hot-toast";
 
 const ImageUpload = () => {
   const {
@@ -24,7 +26,7 @@ const ImageUpload = () => {
     formState: { errors },
   } = useFormContext<z.infer<typeof recipeFormSchema>>();
   const [open, setOpen] = useState(false);
-  const [uploadLoading, setUploadLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (errors.info?.imgUrl || errors.info?.imgAlt) {
@@ -33,32 +35,30 @@ const ImageUpload = () => {
   }, []);
 
   const setImages = (image: string) => {
-    setUploadLoading(true);
+    setLoading(true);
     setValue("info.imgUrl", image);
-    setUploadLoading(false);
+    setLoading(false);
   };
 
   return (
-    <ImageUploadDialog
-      title="Edit Image"
-      description="Upload an image for your recipe"
-      setImage={setImages}
-      externalOpen={open}
-      setExternalOpen={setOpen}
-      Trigger={
-        <DialogTrigger asChild>
-          <Button
-            ariaLabel="edit or upload an image"
-            variant={"secondary"}
-            type="button"
-            className="m-2 w-52"
-            LeadingIcon={<ImagePlus />}
-          >
-            Upload Image
-          </Button>
-        </DialogTrigger>
-      }
-    >
+    <div className="my-8 aspect-video max-h-[600px] max-w-[880px] rounded-xl border p-4">
+      <UploadDropzone
+        endpoint="imageUploader"
+        onUploadBegin={() => setLoading(true)}
+        onClientUploadComplete={(res) => {
+          // Do something with the response
+          res && setImages(res[0].url);
+
+          setLoading(false);
+          toast.success("Image uploaded!");
+        }}
+        onUploadError={(error: Error) => {
+          // Do something with the error.
+          setLoading(false);
+          toast.error("Error uploading image");
+          console.error(error);
+        }}
+      />
       <div>
         <div className="flex items-center">
           <div className="w-1/2 border-t border-grey dark:border-white"></div>
@@ -69,7 +69,8 @@ const ImageUpload = () => {
           {...register("info.imgUrl", {
             required: true,
           })}
-          required
+          error={errors.info?.imgUrl}
+      
           label="Image Url"
           placeholder="https://"
         />
@@ -78,13 +79,12 @@ const ImageUpload = () => {
             required: true,
           })}
           error={errors.info?.imgAlt}
-          required
           label="Img Alt Text"
           tooltip="A short description of the image, this helps people with screen readers to understand the image"
           hint="A short description of the image"
         />
       </div>
-    </ImageUploadDialog>
+    </div>
   );
 };
 

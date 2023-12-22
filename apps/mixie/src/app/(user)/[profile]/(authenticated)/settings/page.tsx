@@ -92,7 +92,6 @@ export default function ProfilePage({ params }: ProfilePageProps) {
             <Loader2 className="m-auto h-16 w-16 animate-spin" />
           )}
           {values.email && (
-          
             <>
               {activeLink === "profile" && <Profile />}
 
@@ -103,7 +102,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
               <Button
                 type="submit"
                 variant="primary"
-                ariaLabel="Save profile changes"
+                aria-label="Save profile changes"
                 className="m-auto mt-12"
                 disabled={loading}
               >

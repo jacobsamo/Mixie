@@ -69,7 +69,7 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
           />
           <DialogFooter>
             <Button
-              ariaLabel="go back"
+              aria-label="go back"
               variant={"destructive"}
               type="button"
               className="m-2 w-52"
@@ -78,7 +78,7 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
             >
               Go Back
             </Button>
-            <Button ariaLabel="save recipe" type="submit" className="m-2 w-52">
+            <Button aria-label="save recipe" type="submit" className="m-2 w-52">
               Save
             </Button>
           </DialogFooter>
