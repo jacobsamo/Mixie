@@ -70,7 +70,6 @@ const ImageUpload = () => {
             required: true,
           })}
           error={errors.info?.imgUrl}
-      
           label="Image Url"
           placeholder="https://"
         />

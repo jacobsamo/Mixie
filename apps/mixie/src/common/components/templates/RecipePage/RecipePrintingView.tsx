@@ -90,7 +90,7 @@ const RecipePrintingView = ({ recipe }: RecipePrintingViewProps) => {
         )}
       </h2>
 
-      <span className="my-2 mb-4 h-[0.125rem] w-full rounded-md bg-grey dark:bg-white md:w-[800px]" />
+      <span className="my-2 mb-4 h-[0.125rem] w-full rounded-md bg-grey md:w-[800px] dark:bg-white" />
 
       <ol className="pb-12">
         {recipe.ingredients &&
@@ -112,7 +112,7 @@ const RecipePrintingView = ({ recipe }: RecipePrintingViewProps) => {
           "No Steps"
         )}
       </h2>
-      <span className="my-2 mb-4 h-[0.125rem] w-full rounded-md bg-grey dark:bg-white md:w-[800px]" />
+      <span className="my-2 mb-4 h-[0.125rem] w-full rounded-md bg-grey md:w-[800px] dark:bg-white" />
       <ul>
         {recipe.steps &&
           recipe.steps.map((step, index) => {

@@ -7,9 +7,7 @@ export default function TextAnim() {
 
   return (
     <span className="">
-      <motion.span>
-          
-      </motion.span>
+      <motion.span></motion.span>
       <CursorBlinker />
     </span>
   );
