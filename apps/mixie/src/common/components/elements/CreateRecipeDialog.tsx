@@ -95,7 +95,8 @@ const CreateRecipeDialog = () => {
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          <Input {...register("title")} label="Title" />
+          <Input {...register("title")} label="Title" autoFocus={false} />
+
           <p className="mx-auto">OR</p>
 
           <div>
@@ -107,13 +108,14 @@ const CreateRecipeDialog = () => {
                 required: false,
               })}
               required={false}
+              autoFocus={false}
               label="Recipe Url"
               placeholder="https://"
             />
           </div>
           <Button
             type="submit"
-            ariaLabel="continue with creating the recipe"
+            aria-label="continue with creating the recipe"
             className="items-center font-semibold"
             disabled={loading}
           >

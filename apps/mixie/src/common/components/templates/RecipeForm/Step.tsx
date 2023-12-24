@@ -21,7 +21,7 @@ const Step = ({ index, handleDelete }: StepProps) => {
       <div className="flex flex-row items-center justify-between">
         <h1 className="font-Roboto text-step0 font-medium">Step {index + 1}</h1>
         <Button
-          ariaLabel="delete ingredient"
+          aria-label="delete ingredient"
           onClick={() => handleDelete(index)}
           type="button"
           className="rounded-md border border-solid border-red bg-transparent  hover:bg-red"

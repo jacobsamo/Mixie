@@ -16,7 +16,7 @@ const LoginPage = () => {
         />
         <h1 className="text-step--1">Signout of Mixie</h1>
       </div>
-      <Button ariaLabel="singout of mixie" onClick={() => signOut()}>
+      <Button aria-label="singout of mixie" onClick={() => signOut()}>
         Sign out
       </Button>
     </>

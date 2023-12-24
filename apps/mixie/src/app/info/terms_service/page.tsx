@@ -10,16 +10,16 @@ export default function Terms_ServicesPage() {
       <article>
         <section>
           <p className="mb-5 text-step--3">
-            Thank you for visiting a website, app or service provided by MixieCooking!
-            We are pleased to provide you with our content and services and
-            appreciate your patronage. Before you engage with our website, app,
-            or services, we encourage you to read these Terms of Service, so you
-            know what to expect when visiting and engaging with our various
-            properties.
+            Thank you for visiting a website, app or service provided by
+            MixieCooking! We are pleased to provide you with our content and
+            services and appreciate your patronage. Before you engage with our
+            website, app, or services, we encourage you to read these Terms of
+            Service, so you know what to expect when visiting and engaging with
+            our various properties.
           </p>
           <p>
-            These Terms of Service ("Agreement") govern your use of the MixieCooking
-            website, app located at{" "}
+            These Terms of Service ("Agreement") govern your use of the
+            MixieCooking website, app located at{" "}
             <Link
               href="https://mixiecooking.com"
               target="_blank"
@@ -47,10 +47,10 @@ export default function Terms_ServicesPage() {
           </p>
 
           <p>
-            We, MixieCooking, reserve the right to review and amend any of these Terms
-            of Service at our sole discretion. Upon doing so, we will update
-            this page. Any changes to these Terms of Service will take effect
-            immediately from the date of publication.
+            We, MixieCooking, reserve the right to review and amend any of these
+            Terms of Service at our sole discretion. Upon doing so, we will
+            update this page. Any changes to these Terms of Service will take
+            effect immediately from the date of publication.
           </p>
         </section>
         <br />
@@ -140,21 +140,21 @@ export default function Terms_ServicesPage() {
             <section>
               <p>
                 Our website and the materials on our website are provided on an
-                'as is' basis. To the extent permitted by law, MixieCooking makes no
-                warranties, expressed or implied, and hereby disclaims and
-                negates all other warranties including, without limitation,
+                'as is' basis. To the extent permitted by law, MixieCooking
+                makes no warranties, expressed or implied, and hereby disclaims
+                and negates all other warranties including, without limitation,
                 implied warranties or conditions of merchantability, fitness for
                 a particular purpose, or non-infringement of intellectual
                 property, or other violation of rights.
               </p>
               <br />
               <p>
-                In no event shall MixieCooking or its suppliers be liable for any
-                consequential loss suffered or incurred by you or any third
+                In no event shall MixieCooking or its suppliers be liable for
+                any consequential loss suffered or incurred by you or any third
                 party arising from the use or inability to use this website or
-                the materials on this website, even if MixieCooking or an authorized
-                representative has been notified, orally or in writing, of the
-                possibility of such damage.
+                the materials on this website, even if MixieCooking or an
+                authorized representative has been notified, orally or in
+                writing, of the possibility of such damage.
               </p>
               <br />
               <p>
@@ -178,9 +178,9 @@ export default function Terms_ServicesPage() {
             Accuracy of Materials
             <section>
               The materials appearing on our website are not comprehensive and
-              are for general information purposes only. MixieCooking does not warrant
-              or make any representations concerning the accuracy, likely
-              results, or reliability of the use of the materials on this
+              are for general information purposes only. MixieCooking does not
+              warrant or make any representations concerning the accuracy,
+              likely results, or reliability of the use of the materials on this
               website, or otherwise relating to such materials or on any
               resources linked to this website.
             </section>
@@ -188,12 +188,13 @@ export default function Terms_ServicesPage() {
           <li className="mb-5 text-step--3">
             Links
             <section>
-              MixieCooking has not reviewed all of the sites linked to its website and
-              is not responsible for the contents of any such linked site. The
-              inclusion of any link does not imply endorsement, approval, or
-              control by MixieCooking of the site. Use of any such linked site is at
-              your own risk and we strongly advise you make your own
-              investigations with respect to the suitability of those sites.
+              MixieCooking has not reviewed all of the sites linked to its
+              website and is not responsible for the contents of any such linked
+              site. The inclusion of any link does not imply endorsement,
+              approval, or control by MixieCooking of the site. Use of any such
+              linked site is at your own risk and we strongly advise you make
+              your own investigations with respect to the suitability of those
+              sites.
             </section>
           </li>
           <li className="mb-5 text-step--3">
@@ -213,8 +214,8 @@ export default function Terms_ServicesPage() {
               The Services may contain links to third-party services such as
               third-party websites, applications, or ads ("Third-Party Links").
               When you click on such a link, we will not warn you that you are
-              about to or have left the Services. MixieCooking does not control and is
-              not responsible for Third-Party Links. We provide these
+              about to or have left the Services. MixieCooking does not control
+              and is not responsible for Third-Party Links. We provide these
               Third-Party Links only as a convenience and do not review,
               approve, monitor, endorse, warrant, or make any representations
               with respect to them, or any content, products, or services

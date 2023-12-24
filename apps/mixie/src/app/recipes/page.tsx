@@ -68,7 +68,7 @@ export default async function RecipeViewPage({
   const searchedRecipes = await searchRecipes({ query: searchValue, recipes });
 
   return (
-    <main className="h-full w-full">
+    <main className="h-fit min-h-full w-full">
       <section className="flex h-52 items-center justify-center">
         <RecipeSearch />
       </section>

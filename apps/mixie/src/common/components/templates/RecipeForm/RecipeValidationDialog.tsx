@@ -25,7 +25,7 @@ interface CreateRecipeDialogProps {
 
 const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
   const [loading, setLoading] = useState(false);
-  const { handleSubmit, register, control } =
+  const { handleSubmit, register, control, formState } =
     useFormContext<z.infer<typeof recipeFormSchema>>();
 
   return (
@@ -42,6 +42,7 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
             {...register("title", {
               required: true,
             })}
+            error={formState.errors.title}
             required
             label="Title"
           />
@@ -68,7 +69,7 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
           />
           <DialogFooter>
             <Button
-              ariaLabel="go back"
+              aria-label="go back"
               variant={"destructive"}
               type="button"
               className="m-2 w-52"
@@ -77,7 +78,7 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
             >
               Go Back
             </Button>
-            <Button ariaLabel="save recipe" type="submit" className="m-2 w-52">
+            <Button aria-label="save recipe" type="submit" className="m-2 w-52">
               Save
             </Button>
           </DialogFooter>

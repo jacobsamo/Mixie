@@ -264,7 +264,7 @@ export default function Carousel({
           onMouseMove={(e) => navButtonHover(e)}
           onMouseLeave={() => setHoverType(null)}
         >
-          <ChevronLeft className="group-enabled:group-hover:text-gray-900 h-10 w-10 stroke-[1.5] transition-colors group-disabled:opacity-50" />
+          <ChevronLeft className="h-10 w-10 stroke-[1.5] transition-colors group-enabled:group-hover:text-gray-900 group-disabled:opacity-50" />
         </button>
 
         <button

@@ -5,7 +5,13 @@ import { unstable_cache } from "next/cache";
 import SearchTrigger from "@components/modules/SearchTrigger";
 import { db } from "@server/db";
 import { info } from "@server/db/schemas";
-import Carousel from "@components/elements/Carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@components/ui/carousel";
 
 export const revalidate = 3600;
 
@@ -52,10 +58,22 @@ export default async function Page() {
         </SearchTrigger>
       </section>
       <section className="pt-9 ">
-        <Carousel autoplay={true} fallback_width={500}>
-          {latestRecipes.map((recipe) => (
-            <CardRectangle key={recipe.id} recipe={recipe} />
-          ))}
+        <Carousel
+          className="w-full"
+          opts={{
+            align: "center",
+            loop: true,
+          }}
+        >
+          <CarouselContent>
+            {latestRecipes.map((recipe) => (
+              <CarouselItem key={recipe.recipeId}>
+                <CardRectangle key={recipe.id} recipe={recipe} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
         </Carousel>
       </section>
     </main>

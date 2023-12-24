@@ -6,9 +6,9 @@ export default function AboutPage() {
       <article>
         <section>
           <p className="mb-5 text-step--3">
-            Welcome to Mixie, Mixie is a community-driven recipe platform
-            where home cooks and food enthusiasts can cook, create & collaborate
-            on unique and delicious recipes.
+            Welcome to Mixie, Mixie is a community-driven recipe platform where
+            home cooks and food enthusiasts can cook, create & collaborate on
+            unique and delicious recipes.
           </p>
         </section>
         <section>
@@ -38,10 +38,10 @@ export default function AboutPage() {
         Our mission at Mixie is to have community-driven recipe platform where
         home cooks and food enthusiasts can collaborate on unique and delicious
         recipes. Our open source approach allows anyone to contribute and share
-        their culinary knowledge. At Mixie, we believe that cooking is a
-        journey and strive to provide the tools and resources for our users to
-        explore new horizons and create memorable meals. Join us on the journey
-        to cook together!
+        their culinary knowledge. At Mixie, we believe that cooking is a journey
+        and strive to provide the tools and resources for our users to explore
+        new horizons and create memorable meals. Join us on the journey to cook
+        together!
       </p>
 
       <h1 className="mb-5 text-step1 font-bold">Vision</h1>

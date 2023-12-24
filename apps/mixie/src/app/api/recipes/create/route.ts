@@ -32,11 +32,14 @@ export async function POST(req: NextRequest) {
 
     if (title && !link) {
       const id = recipeId(title);
+
+      const newTitle = title.charAt(0).toUpperCase() + title.slice(1);
+
       // general info about the recipe
       const newInfo: NewInfo = {
         recipeId: uid,
         id,
-        title,
+        title: newTitle,
         createByName: user.name! || "",
         createdBy: user.id,
         lastUpdatedBy: user.id,
@@ -48,7 +51,7 @@ export async function POST(req: NextRequest) {
       const newRecipe: NewPartialRecipe = {
         uid: uid,
         id,
-        title,
+        title: newTitle,
         createByName: user.name! || "",
         createdBy: user.id,
         lastUpdatedBy: user.id,
