@@ -58,7 +58,7 @@ const LoginPage = () => {
 
       <div className="flex flex-col gap-4">
         <Button
-          ariaLabel="sign in with google"
+          aria-label="sign in with google"
           LeadingIcon={
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +111,7 @@ const LoginPage = () => {
               </g>
             </svg>
           }
-          ariaLabel="sign in with github"
+          aria-label="sign in with github"
           className="color-white shadow-[0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)] flex w-56 max-w-sm cursor-pointer items-center  rounded-lg border-none bg-[#181717] px-2 py-6 text-center text-step--3"
           onClick={() => signInWithGithub()}
         >
@@ -183,7 +183,7 @@ const LoginPage = () => {
         />
         <Button
           type="submit"
-          ariaLabel="Log into Mixie"
+          aria-label="Log into Mixie"
           className="mx-auto w-full"
         >
           Log in

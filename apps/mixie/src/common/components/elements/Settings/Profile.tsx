@@ -24,7 +24,7 @@ const Profile = () => {
           Trigger={
             <DialogTrigger asChild>
               <Button
-                ariaLabel="edit or upload an image"
+                aria-label="edit or upload an image"
                 variant={"secondary"}
                 type="button"
                 unstyled={true}

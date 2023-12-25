@@ -15,7 +15,7 @@ export default async function DraftsPage({ params }: DraftsPageProps) {
       eq(recipes.createdBy, params.profile),
       eq(recipes.lastUpdatedBy, params.profile)
     ),
-  })
+  });
 
   return (
     <div className="mt-4">

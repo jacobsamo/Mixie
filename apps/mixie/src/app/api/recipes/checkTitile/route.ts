@@ -1,20 +1,35 @@
 import { recipeId } from "@/src/common/lib/utils";
 import { db } from "@db/index";
 import { info } from "@db/schemas";
+import { unstable_cache } from "next/cache";
 import { NextResponse, type NextRequest } from "next/server";
 
 export const revalidate = 3600;
-export const fetchCache = "default-cache";
 
-async function getSearchParams(req: NextRequest) {
-  const searchParams = req.nextUrl.searchParams;
-  const query = searchParams.get("title");
-  return query;
-}
+const getRecipes = unstable_cache(
+  async () => {
+    const recipes = await db
+      .select({
+        uid: info.recipeId,
+        id: info.id,
+        isPublic: info.isPublic,
+      })
+      .from(info);
+    return recipes;
+  },
+  ["recipes"],
+  {
+    revalidate: 3600,
+  }
+);
 
-export async function GET(req: NextRequest) {
-  const query = await getSearchParams(req);
+export async function POST(req: NextRequest) {
+  console.log("Title: ", req);
+
   try {
+    const data = await req.json();
+    const query = data.title;
+
     if (query === null)
       NextResponse.json(
         { message: "No title provided in search params" },
@@ -22,13 +37,7 @@ export async function GET(req: NextRequest) {
       );
 
     // check if the name exists or not
-    const titles = await db
-      .select({
-        uid: info.recipeId,
-        id: info.id,
-        isPublic: info.isPublic,
-      })
-      .from(info);
+    const titles = await getRecipes();
 
     const id = recipeId(query!);
 

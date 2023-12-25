@@ -7,7 +7,8 @@ import { unit, amount } from "./zodEnums";
 
 export const infoSchema = createInsertSchema(info, {
   ingredients: z.string().array().nullable().optional(),
-  imgUrl: z.string().url().optional(),
+  imgUrl: z.string().url({ message: "Must be a valid url" }),
+  imgAlt: z.string({ required_error: "Image must have an alt text" }),
   keywords: z.object({ value: z.string() }).array().optional(),
   prep: z
     .string()

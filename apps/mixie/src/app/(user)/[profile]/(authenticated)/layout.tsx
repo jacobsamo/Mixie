@@ -17,5 +17,5 @@ export default async function UserLayout({
 
   if (session?.user.id != params.profile) return notFound();
 
-  return <main className="h-full w-full">{children}</main>;
+  return <main className="h-fit min-h-full w-full">{children}</main>;
 }

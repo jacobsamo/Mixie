@@ -74,7 +74,7 @@ const FeedbackDialog = () => {
             {["bug", "feature", "other"].map((type, index) => (
               <Button
                 key={index}
-                ariaLabel={`get feedback type to ${type}`}
+                aria-label={`get feedback type to ${type}`}
                 unstyled
                 onClick={() => {
                   setValue("type", type as FeedbackType);
@@ -89,7 +89,7 @@ const FeedbackDialog = () => {
 
           <Textarea control={control} id="message" placeholder="Feedback" />
 
-          <Button ariaLabel="submit feedback" type="submit">
+          <Button aria-label="submit feedback" type="submit">
             Submit
           </Button>
         </form>

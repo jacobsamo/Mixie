@@ -32,7 +32,7 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
           }}
         />
         <Button
-          ariaLabel="delete ingredient"
+          aria-label="delete ingredient"
           onClick={() => handleDelete(index)}
           type="button"
           className="rounded-md border border-solid border-red bg-transparent  hover:bg-red"
@@ -100,7 +100,7 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
       )}
 
       <Button
-        ariaLabel="delete ingredient"
+        aria-label="delete ingredient"
         onClick={() => handleDelete(index)}
         type="button"
         className="rounded-md border border-solid border-red bg-transparent  hover:bg-red"

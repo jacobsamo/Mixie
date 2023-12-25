@@ -26,23 +26,7 @@ export async function PUT(req: NextRequest) {
     const recipe = recipeFormSchema.parse(json);
 
     const isPublic = recipe?.info?.isPublic || false;
-    let titleExists = false;
     const id = recipeId(recipe.title) || recipe.id;
-
-    // check if title exists
-    const titles = await db
-      .select({
-        uid: info.recipeId,
-        id: info.id,
-        isPublic: info.isPublic,
-      })
-      .from(info);
-
-    titles.forEach((title) => {
-      if (title.isPublic && title.id == id) {
-        titleExists = true;
-      }
-    });
 
     // get all ingredients and set them to the info, only include ingredients that have isHeading set to false
 
@@ -65,12 +49,14 @@ export async function PUT(req: NextRequest) {
         ? await calculateTotalTime(recipe.info.prep, recipe.info.cook)
         : null;
 
+    const title = recipe.title.charAt(0).toUpperCase() + recipe.title.slice(1);
+
     // update info table
     const newInfo: NewInfo = {
       ...recipe.info,
       recipeId: recipe.uid,
       id: id,
-      title: recipe.title,
+      title: title,
       keywords: recipe?.info?.keywords || null,
       ingredients: ingredients || null,
       prep: recipe?.info?.prep || null,
@@ -91,6 +77,7 @@ export async function PUT(req: NextRequest) {
     const newRecipe: NewPartialRecipe = {
       ...recipe,
       id: id,
+      title: title,
       isPublic: isPublic,
       // steps: steps,
       lastUpdatedBy: user.id,
@@ -107,17 +94,6 @@ export async function PUT(req: NextRequest) {
       recipe: newRecipe,
       info: newInfo,
     });
-
-    if (titleExists) {
-      return NextResponse.json(
-        {
-          message: `Recipe with same name already exists, ${recipe.uid}. your recipe has been saved`,
-        },
-        {
-          status: 400,
-        }
-      );
-    }
 
     return NextResponse.json(
       {

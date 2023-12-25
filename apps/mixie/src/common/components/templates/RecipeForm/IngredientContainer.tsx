@@ -10,7 +10,7 @@ import DraggableItem from "./DraggableItem";
 import { Ingredient } from "./Ingredient";
 
 const IngredientContainer = () => {
-  const { control, register } =
+  const { control, register, formState } =
     useFormContext<z.infer<typeof recipeFormSchema>>();
   const { fields, append, remove, move } = useFieldArray({
     control,
@@ -87,7 +87,7 @@ const IngredientContainer = () => {
           Add Heading
         </button>
         <Button
-          ariaLabel="Add an ingredient"
+          aria-label="Add an ingredient"
           className="mt-3 flex h-9 flex-row items-center gap-2 rounded-xl border text-step--2"
           onClick={() => handleAddClick()}
           name="Ingredient"

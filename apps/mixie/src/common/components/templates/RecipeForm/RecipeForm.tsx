@@ -21,8 +21,14 @@ import { IngredientContainer } from "./IngredientContainer";
 import Overlay from "./Overlay";
 import { StepContainer } from "./StepContainer";
 import { onSubmit } from "./form";
+import toast from "react-hot-toast";
+import { env } from "process";
+import LoadingImageUpload from "./loadingstates/LoadingImageUpload";
 
-const ImageUpload = dynamic(() => import("./ImageUpload"), { ssr: false });
+const ImageUpload = dynamic(() => import("./ImageUpload"), {
+  ssr: false,
+  loading: () => <LoadingImageUpload />,
+});
 
 interface RecipeFormProps {
   recipe: any | Recipe | NewRecipe; //TODO: fix this type to represent the correct type of recipe (not a huge deal but would be useful)
@@ -36,6 +42,7 @@ interface RecipeFormProps {
 const RecipeForm = ({ recipe }: RecipeFormProps) => {
   const [preview, setPreview] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [initialTitle, setInitialTitle] = useState(recipe.title);
 
   const methods = useForm<z.infer<typeof recipeFormSchema>>({
     resolver: zodResolver(recipeFormSchema),
@@ -77,17 +84,26 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
   }, [errors]);
 
   useEffect(() => {
-    const recipe = getValues();
-    if (recipe.info?.isPublic) {
-      fetch(`/api/recipes/checkTitle?title=${recipe.title}`).then((res) => {
+    const recipeValue = getValues();
+    if (initialTitle !== recipeValue.title && recipeValue.info?.isPublic) {
+      fetch(`/api/recipes/checkTitle`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+        },
+        body: JSON.stringify({ title: recipeValue.title }),
+      }).then((res) => {
         if (res.status == 400) {
+          console.log("name already exists");
           setError("title", {
             message: "Recipe with this title already exists",
           });
+          toast.error("Recipe with this title already exists");
         }
       });
     }
-  }, [watch("title")]);
+  }, [watch("title"), watch("info.isPublic")]);
 
   const gotRecipe = getValues() as Recipe;
 

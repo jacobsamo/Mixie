@@ -85,14 +85,13 @@ export default function ProfilePage({ params }: ProfilePageProps) {
     <>
       <FormProvider {...methods}>
         <form
-          className="mx-auto mt-2 flex w-full flex-col items-start  justify-center  gap-4 rounded-md bg-white p-2 shadow-main  dark:bg-grey md:w-2/4 md:p-4"
+          className="mx-auto mt-2 flex w-full flex-col items-start  justify-center  gap-4 rounded-md bg-white p-2 shadow-main  md:w-2/4 md:p-4 dark:bg-grey"
           onSubmit={handleSubmit(onSubmit)}
         >
           {!values.email && (
             <Loader2 className="m-auto h-16 w-16 animate-spin" />
           )}
           {values.email && (
-          
             <>
               {activeLink === "profile" && <Profile />}
 
@@ -103,7 +102,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
               <Button
                 type="submit"
                 variant="primary"
-                ariaLabel="Save profile changes"
+                aria-label="Save profile changes"
                 className="m-auto mt-12"
                 disabled={loading}
               >
