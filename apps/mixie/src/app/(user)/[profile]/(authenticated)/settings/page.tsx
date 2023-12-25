@@ -11,11 +11,15 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
-const Profile = dynamic(() => import("@components/elements/Settings/Profile"));
-const Customization = dynamic(
-  () => import("@components/elements/Settings/Customization")
+const Profile = dynamic(
+  () => import("@/src/common/components/layouts/Settings/Profile")
 );
-const Account = dynamic(() => import("@components/elements/Settings/Account"));
+const Customization = dynamic(
+  () => import("@/src/common/components/layouts/Settings/Customization")
+);
+const Account = dynamic(
+  () => import("@/src/common/components/layouts/Settings/Account")
+);
 
 interface ProfilePageProps {
   params: {
@@ -85,7 +89,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
     <>
       <FormProvider {...methods}>
         <form
-          className="mx-auto mt-2 flex w-full flex-col items-start  justify-center  gap-4 rounded-md bg-white p-2 shadow-main  md:w-2/4 md:p-4 dark:bg-grey"
+          className="mx-auto mt-2 flex w-full flex-col items-start  justify-center  gap-4 rounded-md bg-white p-2 shadow-main  dark:bg-grey md:w-2/4 md:p-4"
           onSubmit={handleSubmit(onSubmit)}
         >
           {!values.email && (
