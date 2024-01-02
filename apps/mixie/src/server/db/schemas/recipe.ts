@@ -50,12 +50,12 @@ export const recipes = mysqlTable("recipes", {
   // little extras for searching
   dietary: json("dietary"),
   allergens: json("allergens"),
+  mealTime: json("mealTime"),
   sweet_savoury: sweet_savoury.default("not_set"),
   difficulty_level: difficulty_level.default("not_set"),
   isPublic: boolean("isPublic").default(false).notNull(),
   keywords: json("keywords").$type<{ value: string }[]>(),
   ingredientsList: json("ingredientsList").$type<string[]>(),
-  mealTime: json("mealTime"),
 
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   createdBy: varchar("createdBy", { length: 191 }).notNull(),

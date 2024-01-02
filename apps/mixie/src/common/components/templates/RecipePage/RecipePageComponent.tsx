@@ -36,7 +36,7 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
             className="aspect-video rounded-xl object-cover"
             priority
             placeholder="blur"
-            blurDataURL={recipe?.info.imgUrl || "/images/placeholder.webp"}
+            blurDataURL={recipe.imgUrl || "/images/placeholder.webp"}
           />
           <div className="py-2">
             <span className="relative flex flex-wrap gap-2">
