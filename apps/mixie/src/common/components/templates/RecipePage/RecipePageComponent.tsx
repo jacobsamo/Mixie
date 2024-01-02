@@ -35,6 +35,8 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
             height={600}
             className="aspect-video rounded-xl object-cover"
             priority
+            placeholder="blur"
+            blurDataURL={recipe?.info.imgUrl || "/images/placeholder.webp"}
           />
           <div className="py-2">
             <span className="relative flex flex-wrap gap-2">
@@ -79,7 +81,7 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
             <p className="italic">{recipe.notes}</p>
           </div>
         )}
-        <span className="my-2 mb-4 h-[0.125rem] w-full rounded-md bg-grey md:w-[800px] dark:bg-white" />
+        <span className="my-2 mb-4 h-[0.125rem] w-full rounded-md bg-grey dark:bg-white md:w-[800px]" />
         <Details
           ingredients={recipe.ingredients || []}
           steps={recipe.steps || []}

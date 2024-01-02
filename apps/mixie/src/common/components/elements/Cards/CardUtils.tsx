@@ -73,5 +73,11 @@ export const RecipeImage = (
   props: ImageProps,
   { className }: { className: clsx.ClassValue }
 ) => (
-  <Image className={cn("object-cover object-center", className)} {...props} />
+  <Image
+    loading="lazy"
+    placeholder="blur"
+    blurDataURL={props.src as string}
+    className={cn("object-cover object-center", className)}
+    {...props}
+  />
 );
