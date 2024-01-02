@@ -15,9 +15,9 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
         <ThemeProvider attribute="class" enableSystem>
           <NextAuthProvider>{children}</NextAuthProvider>
         </ThemeProvider>
-        {process.env.NODE_ENV === "development" && (
+        {/* {process.env.NODE_ENV === "development" && (
           <ReactQueryDevtools initialIsOpen={false} />
-        )}
+        )} */}
       </QueryClientProvider>
     </>
   );

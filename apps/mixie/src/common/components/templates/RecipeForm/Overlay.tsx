@@ -11,7 +11,7 @@ import { Input } from "@components/ui/input";
 import TagInput from "@components/ui/taginput";
 import { Textarea } from "@components/ui/textarea";
 import { ArrowLeftIcon, EyeIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Button } from "@components/ui/button";
 import { SwitchInput } from "@components/ui/switch";
@@ -27,7 +27,11 @@ interface OverlayProps {
 
 const Overlay = ({ onPreview, isDisabled }: OverlayProps) => {
   const [open, setOpen] = useState(false);
-  const { handleSubmit, control, register } = useFormContext();
+  const { handleSubmit, control, register, formState } = useFormContext();
+
+  useEffect(() => {
+    console.log(formState);
+  }, [formState]);
 
   return (
     <>
@@ -54,7 +58,11 @@ const Overlay = ({ onPreview, isDisabled }: OverlayProps) => {
 
       {/* Bottom Bar */}
       <div className="fixed bottom-5 right-3 z-50 flex justify-end">
-        <Button aria-label="Save" type="submit">
+        <Button
+          aria-label="Save"
+          type="submit"
+          disabled={formState.isSubmitting} 
+        >
           Save
         </Button>
       </div>

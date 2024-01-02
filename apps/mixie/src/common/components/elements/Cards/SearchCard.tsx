@@ -28,7 +28,7 @@ export const SearchCard = ({ as, edit = false, recipe }: SearchCardProps) => {
       <div>
         <Link
           href={`/recipes/${
-            edit ? `/preview/${recipe.recipeId}/edit` : recipe.id
+            edit ? `/preview/${recipe.uid}/edit` : recipe.id
           }`}
           className="text-step--1"
         >

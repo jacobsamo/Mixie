@@ -23,6 +23,11 @@ import {
   sweet_savoury,
 } from "./enums";
 
+type SelectValue = {
+  value: string;
+  label: string;
+};
+
 // Recipes
 export const recipes = mysqlTable("recipes", {
   uid: char("uid", { length: 36 }).primaryKey().notNull(),
@@ -43,18 +48,16 @@ export const recipes = mysqlTable("recipes", {
   rating: tinyint("rating").default(0),
 
   // little extras for searching
-  dietary: dietary.default("none"),
-  allergens: allergens.default("none"),
+  dietary: json("dietary"),
+  allergens: json("allergens"),
   sweet_savoury: sweet_savoury.default("not_set"),
   difficulty_level: difficulty_level.default("not_set"),
   isPublic: boolean("isPublic").default(false).notNull(),
   keywords: json("keywords").$type<{ value: string }[]>(),
-  ingredientsList: json("ingredients").$type<string[]>(),
-  mealTime: mealTime.default("not_set"),
+  ingredientsList: json("ingredientsList").$type<string[]>(),
+  mealTime: json("mealTime"),
 
-  createdAt: timestamp("createdAt")
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
   createdBy: varchar("createdBy", { length: 191 }).notNull(),
 });
 

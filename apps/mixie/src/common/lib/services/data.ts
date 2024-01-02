@@ -192,6 +192,17 @@ export const recipes = [
   },
 ];
 
+export const cupUnits = [
+  { value: "not_set", label: "not_set" },
+  { value: "1/8", label: "1/8" },
+  { value: "1/4", label: "1/4" },
+  { value: "1/3", label: "1/3" },
+  { value: "1/2", label: "1/2" },
+  { value: "2/3", label: "2/3" },
+  { value: "3/4", label: "3/4" },
+]
+
+
 export const dietaryRequirements = [
   { value: "none", label: "None" },
   { value: "vegetarian", label: "Vegetarian" },

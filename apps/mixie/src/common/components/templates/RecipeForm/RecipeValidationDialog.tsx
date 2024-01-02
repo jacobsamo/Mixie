@@ -17,6 +17,7 @@ import { ArrowLeftIcon } from "lucide-react";
 import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import * as z from "zod";
+import { onSubmit } from "./form";
 
 interface CreateRecipeDialogProps {
   open: boolean;
@@ -25,11 +26,11 @@ interface CreateRecipeDialogProps {
 
 const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
   const [loading, setLoading] = useState(false);
-  const { handleSubmit, register, control, formState } =
+  const { handleSubmit, register, control, formState, getValues } =
     useFormContext<z.infer<typeof recipeFormSchema>>();
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={setOpen} modal>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Publish Recipe</DialogTitle>
@@ -37,7 +38,10 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
             The final steps before you publish your recipe
           </DialogDescription>
         </DialogHeader>
-        <form className="mx-auto flex flex-col p-2 md:p-0">
+        <form
+          className="mx-auto flex flex-col p-2 md:p-0"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <Input
             {...register("title", {
               required: true,
@@ -78,7 +82,12 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
             >
               Go Back
             </Button>
-            <Button aria-label="save recipe" type="submit" className="m-2 w-52">
+            <Button
+              aria-label="save recipe"
+              type="submit"
+              className="m-2 w-52"
+              disabled={formState.isSubmitting}
+            >
               Save
             </Button>
           </DialogFooter>

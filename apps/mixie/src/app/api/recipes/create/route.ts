@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
             recipe.recipeInstructions.map((step: string) => {
               return { step_body: step };
             }) || null,
-          ingredients,
+          ingredients: ingredients,
           source: link,
           cook: splitTime(recipe.cookTime),
           prep: splitTime(recipe.prepTime),
@@ -90,7 +90,6 @@ export async function POST(req: NextRequest) {
             return { value: keyword };
           }),
           ingredientsList: ingredients.map((ingredient) => ingredient.title),
-
           createdBy: user.id,
         };
 

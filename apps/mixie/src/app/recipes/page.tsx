@@ -15,7 +15,7 @@ const getRecipes = unstable_cache(
     const recipes = await db.query.recipes.findMany({
       where: eq(recipesSchema.isPublic, true),
     });
-    return recipes;
+    return recipes as Recipe[];
   },
   ["recipes"],
   {
@@ -86,7 +86,7 @@ export default async function RecipeViewPage({
                 imgUrl: recipe.imgUrl || null,
                 imgAlt: recipe.imgAlt || null,
                 total: recipe.total || null,
-                keywords: recipe.keywords || null,
+                keywords: (recipe.keywords as { value: string }[]) || null,
               }}
             />
           );

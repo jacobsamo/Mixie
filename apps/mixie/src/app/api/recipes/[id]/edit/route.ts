@@ -1,6 +1,6 @@
 import { db } from "@db/index";
 import { recipes } from "@db/schemas";
-import { NewRecipe } from "@db/types";
+import { NewRecipe, SelectValue } from "@db/types";
 import { recipeFormSchema } from "@db/zodSchemas";
 import { calculateTotalTime, recipeId } from "@lib/utils";
 import { getServerAuthSession } from "@server/auth";
@@ -20,16 +20,12 @@ export async function PUT(req: NextRequest) {
 
     const json = await req.json();
     json.createdAt = new Date(json.createdAt);
-    json.lastUpdated = new Date(json.lastUpdated);
-    json.info.createdAt = new Date(json.info.createdAt);
-    json.info.lastUpdated = new Date(json.info.lastUpdated);
     const recipe = recipeFormSchema.parse(json);
 
     const id = recipeId(recipe.title) || recipe.id;
 
-    // get all ingredients and set them to the info, only include ingredients that have isHeading set to false
-
-    const ingredients = recipe?.ingredients
+    // get all ingredients and set them, only include ingredients that have isHeading set to false
+    const ingredientsList = recipe?.ingredients
       ?.filter((ingredient) => !ingredient.isHeading && ingredient.title)
       .map((ingredient) => {
         ingredient.title =
@@ -38,23 +34,13 @@ export async function PUT(req: NextRequest) {
         return ingredient.title;
       });
 
-    // create the json schema for the steps
-    const steps = recipe?.steps?.map((step) => {
-      return step;
-    });
-
-    const totalTime =
-      recipe && recipe.prep && recipe?.cook
-        ? await calculateTotalTime(recipe.prep, recipe.cook)
-        : null;
-
-    const title = recipe.title.charAt(0).toUpperCase() + recipe.title.slice(1);
 
     // define the new recipe
     const newRecipe: NewRecipe = {
       ...recipe,
       id: id,
-      title: title,
+      title: recipe.title.charAt(0).toUpperCase() + recipe.title.slice(1),
+      ingredientsList: ingredientsList,
     };
 
     const setRecipe = await db

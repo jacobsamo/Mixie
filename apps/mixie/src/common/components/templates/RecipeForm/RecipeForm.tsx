@@ -1,23 +1,23 @@
 "use client";
+import { SelectComponent } from "@components/ui/SelectComponent";
+import { Input } from "@components/ui/input";
+import TagInput from "@components/ui/taginput";
+import { Textarea } from "@components/ui/textarea";
 import { NewRecipe, Recipe } from "@db/types";
 import { recipeFormSchema } from "@db/zodSchemas";
+import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   dietaryRequirements,
   meal_times,
   sweet_savoury,
 } from "@lib/services/data";
-import React, { useEffect, useState } from "react";
-import { Controller, FormProvider, useForm } from "react-hook-form";
-import * as z from "zod";
-
-import { SelectComponent } from "@components/ui/SelectComponent";
-import { Input } from "@components/ui/input";
-import TagInput from "@components/ui/taginput";
-import { Textarea } from "@components/ui/textarea";
 import dynamic from "next/dynamic";
 import { env } from "process";
+import React, { useEffect, useState } from "react";
+import { Controller, FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import * as z from "zod";
 import RecipePageComponent from "../RecipePage/RecipePageComponent";
 import { IngredientContainer } from "./IngredientContainer";
 import Overlay from "./Overlay";
@@ -72,6 +72,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
     getValues,
     setError,
     watch,
+    setValue,
     formState: { errors, isDirty, isValid },
   } = methods;
 
@@ -215,8 +216,14 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
                     <SelectComponent
                       options={sweet_savoury}
                       clearable={false}
-                      onChange={field.onChange}
-                      value={field.value || undefined}
+                      onChange={(value) =>
+                        setValue("sweet_savoury", value.value)
+                      }
+                      value={
+                        sweet_savoury.find(
+                          (item) => item.value === field.value
+                        ) || undefined
+                      }
                       placeholder="Sweet or Savoury"
                     />
                   </>
@@ -240,8 +247,11 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
                       options={meal_times}
                       createAble
                       isMulti
-                      onChange={field.onChange}
-                      value={field.value || undefined}
+                      onChange={(value) => setValue("mealTime", value.value)}
+                      value={
+                        meal_times.find((item) => item.value === field.value) ||
+                        undefined
+                      }
                       placeholder="Meal time"
                     />
                   </>
@@ -265,6 +275,10 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
                 label="Notes, Tips or Suggestions"
               />
             </>
+          )}
+
+          {process.env.NODE_ENV === "development" && (
+            <DevTool control={control} />
           )}
         </form>
         {preview && <RecipePageComponent recipe={gotRecipe} />}
