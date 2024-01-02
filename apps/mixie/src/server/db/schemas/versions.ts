@@ -5,7 +5,7 @@ import {
   json,
   mysqlTable,
   timestamp,
-  varchar
+  varchar,
 } from "drizzle-orm/mysql-core";
 import type { Recipe } from "../types";
 import { users } from "./auth";
@@ -15,8 +15,8 @@ export const recipe_versions = mysqlTable("recipe_versions", {
   uid: char("uid", { length: 36 }).primaryKey().notNull(),
   recipeId: char("recipeId", { length: 36 }).notNull(),
   changes: json("changes").$type<Partial<Recipe>>().notNull(),
-  version: double("version").notNull(),
-  lastUpdated: timestamp("lastUpdated")
+  version: double("version").notNull().default(1.1),
+  updatedAt: timestamp("lastUpdated")
     .default(sql`CURRENT_TIMESTAMP`)
     .onUpdateNow()
     .notNull(),

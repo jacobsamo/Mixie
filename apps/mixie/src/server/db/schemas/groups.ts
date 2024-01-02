@@ -21,25 +21,27 @@
 
 // // generate the team schema
 
-// export const groups = mysqlTable('groups', {
-//   uid: serial('uid').primaryKey().notNull(),
-//   id: text('id').notNull(),
-//   name: text('name').notNull(),
-//   description: text('description'),
-//   isPublic: boolean('isPublic').notNull().default(false),
+// export const groups = mysqlTable("groups", {
+//     uid: char("groupId", { length: 36 }).notNull(),
+//     name: varchar("name", { length: 191 }).notNull(),
+//     description: text("description"),
+//     isPublic: boolean("isPublic").default(false).notNull(),
+//     icon: text("icon"),
+//     banner: text("banner"),
+//     createdAt: timestamp("createdAt")
+//     .default(sql`CURRENT_TIMESTAMP`)
+//     .notNull(),
+//     owner: varchar("owner", { length: 191 }).notNull(),
 // });
 
 // // generate the team members schema and this will extend the users model but add extra fields such as roles and permissions
 
-// export const groupMembers = mysqlTable('groupMembers', {
-//   uid: serial('uid').primaryKey().notNull(),
-//   id: text('id').notNull(),
-//   groupId: text('groupId').notNull(),
-//   userId: text('userId').notNull(),
-//   role: text('role').notNull(),
-//   permissions: json('permissions'),
-// });
-
+// export const groupUsers = mysqlTable("groups_users", {
+//     userId: char("userId", { length: 36 }).primaryKey().notNull(),
+//     groupId: char("groupId", { length: 36 }).notNull(),
+//     role: mysqlEnum("role", ["admin", "member"]).default("member").notNull(),
+//   });
+  
 // export const groupMembersRelation = relations(groups, ({ one }) => ({
 //   groupMembers: one(groupMembers, {
 //     fields: [groups.uid],

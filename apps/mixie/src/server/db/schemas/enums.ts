@@ -61,6 +61,7 @@ export const mealTime = mysqlEnum("mealTime", [
   "dinner",
   "snack",
   "dessert",
+  "snack"
 ]);
 
 // auth
