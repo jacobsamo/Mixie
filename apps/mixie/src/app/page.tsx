@@ -12,6 +12,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@components/ui/carousel";
+import LandingText from "../common/components/elements/LandingText";
 
 export const revalidate = 3600;
 
@@ -49,7 +50,8 @@ export default async function Page() {
             fill
             className={styles.heroImg}
           /> */}
-        <h1 className="pb-2 text-step--1">Want Tasty Recipes</h1>
+        <LandingText delay={1} />
+
         <SearchTrigger>
           <div className="relative flex h-[2.8rem] min-w-max max-w-[28rem] resize items-center rounded-xl bg-white p-1 pr-5 shadow-searchBarShadow dark:bg-grey dark:text-white">
             <SearchIcon className="ml-5 h-5 w-5" />
@@ -58,6 +60,7 @@ export default async function Page() {
         </SearchTrigger>
       </section>
       <section className="pt-9 ">
+        <h2 className="pb-4 text-center text-step--1">Top Recipes</h2>
         <Carousel
           className="w-full"
           opts={{
