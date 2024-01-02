@@ -11,7 +11,14 @@ import {
   varchar,
 } from "drizzle-orm/mysql-core";
 // imoport
-import { Ingredient, Step } from "../types";
+import { Ingredient, Recipe, Step } from "../types";
+import { recipe_versions } from "./versions";
+import { users } from "./auth";
+
+type SelectValue = {
+  label: string;
+  value: string;
+};
 
 // Recipes
 export const recipes = mysqlTable("recipes", {
@@ -27,11 +34,11 @@ export const recipes = mysqlTable("recipes", {
   source: varchar("source", { length: 191 }),
 
   // little extras for searching
-  dietary: json("dietary"),
+  dietary: json("dietary").$type<SelectValue>(),
   allergens: json("allergens"),
-  sweet_savoury: json("sweet_savoury"),
-  difficulty_level: json("difficulty_level"),
-  cuisine: json("cuisine"),
+  sweet_savoury: json("sweet_savoury").$type<SelectValue>(),
+  difficulty_level: json("difficulty_level").$type<SelectValue>(),
+  cuisine: json("cuisine").$type<SelectValue>(),
   isPublic: boolean("isPublic").default(false).notNull(),
 
   // users
@@ -39,13 +46,6 @@ export const recipes = mysqlTable("recipes", {
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
   createdBy: varchar("createdBy", { length: 191 }).notNull(),
-  createByName: varchar("createByName", { length: 191 }).notNull(),
-  lastUpdated: timestamp("lastUpdated")
-    .default(sql`CURRENT_TIMESTAMP`)
-    .onUpdateNow()
-    .notNull(),
-  lastUpdatedBy: varchar("lastUpdatedBy", { length: 191 }).notNull(),
-  lastUpdatedByName: varchar("lastUpdatedByName", { length: 191 }).notNull(),
 });
 
 export const recipesRelation = relations(recipes, ({ one, many }) => ({
@@ -57,6 +57,7 @@ export const recipesRelation = relations(recipes, ({ one, many }) => ({
     fields: [recipes.uid],
     references: [ratings.recipeId],
   }),
+  versions: many(recipe_versions),
 }));
 
 // Info
@@ -80,13 +81,6 @@ export const info = mysqlTable("info", {
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
   createdBy: varchar("createdBy", { length: 191 }).notNull(),
-  createByName: varchar("createByName", { length: 191 }).notNull(),
-  lastUpdated: timestamp("lastUpdated")
-    .default(sql`CURRENT_TIMESTAMP`)
-    .onUpdateNow()
-    .notNull(),
-  lastUpdatedBy: varchar("lastUpdatedBy", { length: 191 }).notNull(),
-  lastUpdatedByName: varchar("lastUpdatedByName", { length: 191 }).notNull(),
 });
 
 export const infoRelations = relations(recipes, ({ one }) => ({
@@ -110,6 +104,8 @@ export const ratingsRelation = relations(info, ({ one }) => ({
   }),
 }));
 
+
+
 export const bookmarks = mysqlTable("bookmarks", {
   uid: char("uid", { length: 36 }).primaryKey().notNull(),
   recipeId: char("recipeId", { length: 36 }).notNull(),
@@ -118,9 +114,12 @@ export const bookmarks = mysqlTable("bookmarks", {
 });
 
 export const bookmarksRelation = relations(bookmarks, ({ one }) => ({
-  // book mark links to one recipe
   recipe: one(info, {
     fields: [bookmarks.recipeId],
     references: [info.recipeId],
+  }),
+  user: one(users, {
+    fields: [bookmarks.userId],
+    references: [users.id],
   }),
 }));
