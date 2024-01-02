@@ -16,13 +16,13 @@ import { Input } from "@components/ui/input";
 import TagInput from "@components/ui/taginput";
 import { Textarea } from "@components/ui/textarea";
 import dynamic from "next/dynamic";
+import { env } from "process";
+import toast from "react-hot-toast";
 import RecipePageComponent from "../RecipePage/RecipePageComponent";
 import { IngredientContainer } from "./IngredientContainer";
 import Overlay from "./Overlay";
 import { StepContainer } from "./StepContainer";
 import { onSubmit } from "./form";
-import toast from "react-hot-toast";
-import { env } from "process";
 import LoadingImageUpload from "./loadingstates/LoadingImageUpload";
 
 const ImageUpload = dynamic(() => import("./ImageUpload"), {
@@ -85,7 +85,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
 
   useEffect(() => {
     const recipeValue = getValues();
-    if (initialTitle !== recipeValue.title && recipeValue.info?.isPublic) {
+    if (initialTitle !== recipeValue.title && recipeValue.isPublic) {
       fetch(`/api/recipes/checkTitle`, {
         method: "POST",
         headers: {
@@ -103,7 +103,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
         }
       });
     }
-  }, [watch("title"), watch("info.isPublic")]);
+  }, [watch("title"), watch("isPublic")]);
 
   const gotRecipe = getValues() as Recipe;
 
@@ -140,32 +140,32 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
                 tooltip="Where you got the recipe from if you got it from another website"
               />
               <Input
-                {...register("info.prep", {
+                {...register("prep", {
                   pattern: {
                     value: /^(\d{1,2}[hms]\s?)+$/i,
                     message:
                       "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
                   },
                 })}
-                error={errors.info?.prep}
+                error={errors.prep}
                 label="Prep Time"
                 hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
               />
               <Input
-                {...register("info.cook", {
+                {...register("cook", {
                   pattern: {
                     value: /^(\d{1,2}[hms]\s?)+$/i,
                     message:
                       "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
                   },
                 })}
-                error={errors.info?.cook}
+                error={errors.cook}
                 label="Cook Time"
                 hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
               />
               <Input
-                {...register("info.serves", { valueAsNumber: true })}
-                error={errors.info?.serves}
+                {...register("serves", { valueAsNumber: true })}
+                error={errors.serves}
                 label="Serves"
                 type="number"
               />
@@ -249,7 +249,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
               />
 
               <TagInput
-                name="info.keywords"
+                name="keywords"
                 control={control}
                 placeholder="Keywords (separated by a comma)"
                 hint="Keywords will be used to help users find your recipe."

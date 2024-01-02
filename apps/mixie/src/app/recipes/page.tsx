@@ -1,7 +1,7 @@
 import { CardSquare } from "@/src/common/components/elements/Cards";
 import { db } from "@/src/server/db";
-import { info } from "@/src/server/db/schemas";
-import { Info } from "@/src/server/db/types";
+import { recipes as recipesSchema } from "@/src/server/db/schemas";
+import { Recipe } from "@/src/server/db/types";
 import RecipeSearch from "@components/modules/RecipeSearch";
 import { constructMetadata } from "@lib/utils";
 import { eq } from "drizzle-orm";
@@ -12,8 +12,8 @@ export const revalidate = 3600;
 
 const getRecipes = unstable_cache(
   async () => {
-    const recipes = await db.query.info.findMany({
-      where: eq(info.isPublic, true),
+    const recipes = await db.query.recipes.findMany({
+      where: eq(recipesSchema.isPublic, true),
     });
     return recipes;
   },
@@ -34,11 +34,11 @@ async function searchRecipes({
   recipes,
 }: {
   query: string | undefined;
-  recipes: Info[];
+  recipes: Recipe[];
 }) {
   if (query == undefined) return;
 
-  const options: IFuseOptions<Info> = {
+  const options: IFuseOptions<Recipe> = {
     includeScore: true,
     isCaseSensitive: true,
     keys: ["title"],

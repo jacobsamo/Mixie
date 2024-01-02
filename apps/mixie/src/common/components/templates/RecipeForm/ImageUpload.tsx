@@ -1,23 +1,10 @@
-import React, { useEffect, useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@components/ui/dialog";
-import { Button } from "@components/ui/button";
-import { ImagePlus, Loader2 } from "lucide-react";
 import { Input } from "@components/ui/input";
 import { recipeFormSchema } from "@db/zodSchemas";
-import { useFormContext } from "react-hook-form";
-import * as z from "zod";
-import ImageUploadDialog from "../../elements/ImageUploadDialog";
-import { UploadFileResponse } from "uploadthing/client";
 import { UploadDropzone } from "@lib/utils/uploadthing";
+import { useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
 import toast from "react-hot-toast";
+import * as z from "zod";
 
 const ImageUpload = () => {
   const {
@@ -29,14 +16,14 @@ const ImageUpload = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (errors.info?.imgUrl || errors.info?.imgAlt) {
+    if (errors.imgUrl || errors.imgAlt) {
       setOpen(true);
     }
   }, []);
 
   const setImages = (image: string) => {
     setLoading(true);
-    setValue("info.imgUrl", image);
+    setValue("imgUrl", image);
     setLoading(false);
   };
 
@@ -66,18 +53,18 @@ const ImageUpload = () => {
           <div className="w-1/2 border-b border-grey dark:border-white"></div>
         </div>
         <Input
-          {...register("info.imgUrl", {
+          {...register("imgUrl", {
             required: true,
           })}
-          error={errors.info?.imgUrl}
+          error={errors.imgUrl}
           label="Image Url"
           placeholder="https://"
         />
         <Input
-          {...register("info.imgAlt", {
+          {...register("imgAlt", {
             required: true,
           })}
-          error={errors.info?.imgAlt}
+          error={errors.imgAlt}
           label="Img Alt Text"
           tooltip="A short description of the image, this helps people with screen readers to understand the image"
           hint="A short description of the image"

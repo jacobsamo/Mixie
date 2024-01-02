@@ -1,7 +1,7 @@
-import type { Ingredient } from "@db/types";
+import type { Ingredient, NewRecipe } from "@db/types";
 import { recipeFormSchema } from "@db/zodSchemas";
 import { calculateTotalTime } from "@lib/utils";
-import { SubmitHandler, useFormContext } from "react-hook-form";
+import { SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
 
@@ -11,8 +11,8 @@ export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
   if (!recipe) return;
 
   const totalTime =
-    recipe.info && recipe.info.prep && recipe?.info.cook
-      ? await calculateTotalTime(recipe.info.prep, recipe.info.cook)
+    recipe && recipe.prep && recipe?.cook
+      ? await calculateTotalTime(recipe.prep, recipe.cook)
       : null;
 
   const ingredients = recipe?.ingredients?.map((ingredient: Ingredient) => {
@@ -40,12 +40,9 @@ export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
     return ingredient;
   }) as Ingredient[];
 
-  const data = {
+  const data: NewRecipe = {
     ...recipe,
-    info: {
-      ...recipe.info,
-      total: totalTime,
-    },
+    total: totalTime,
     ingredients,
   };
 

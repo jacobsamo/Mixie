@@ -24,13 +24,13 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
           <h1 id="title" className="text-center text-step2 font-semibold">
             {recipe.title}
           </h1>
-          <StarRating rating={recipe.info?.rating || 0} recipeId={recipe.uid} />
+          <StarRating rating={recipe.rating || 0} recipeId={recipe.uid} />
         </div>
-        <Info info={recipe.info} />
+        <Info info={recipe} />
         <div className="w-full">
           <Image
-            src={recipe?.info.imgUrl || "/images/placeholder.webp"}
-            alt={recipe?.info.imgAlt || recipe.title || "recipe image"}
+            src={recipe?.imgUrl || "/images/placeholder.webp"}
+            alt={recipe?.imgAlt || recipe.title || "recipe image"}
             width={800}
             height={600}
             className="aspect-video rounded-xl object-cover"
@@ -38,14 +38,16 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
           />
           <div className="py-2">
             <span className="relative flex flex-wrap gap-2">
-              {recipe.info?.keywords?.splice(0, 5).map((keyword, index) => (
-                <p
-                  key={index}
-                  className="h-fit w-fit rounded-lg bg-yellow p-1 text-center text-step--4 text-black opacity-80"
-                >
-                  {keyword.value}
-                </p>
-              ))}
+              {(recipe?.keywords as { value: string }[])
+                ?.splice(0, 5)
+                .map((keyword, index) => (
+                  <p
+                    key={index}
+                    className="h-fit w-fit rounded-lg bg-yellow p-1 text-center text-step--4 text-black opacity-80"
+                  >
+                    {keyword.value}
+                  </p>
+                ))}
               {recipe.source && (
                 <Link
                   href={recipe.source}
@@ -60,9 +62,9 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
 
               <ShareDialog
                 url={`https://www.mixiecooking/recipes/${recipe.id}`}
-                image={recipe.info.imgUrl || ""}
+                image={recipe.imgUrl || ""}
                 title={recipe.title}
-                hashtags={recipe.info?.keywords
+                hashtags={(recipe?.keywords as { value: string }[])
                   ?.splice(0, 5)
                   ?.map((keyword) => keyword.value)
                   .join(", ")}

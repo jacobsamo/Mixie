@@ -13,9 +13,6 @@ export async function GET(req: NextRequest, params: { id: string }) {
 
   const recipe = await db.query.recipes.findFirst({
     where: or(eq(recipes.id, params.id), eq(recipes.uid, params.id)),
-    with: {
-      info: true,
-    },
   });
 
   return NextResponse.json(recipe);

@@ -9,6 +9,7 @@ import {
   DialogTitle,
 } from "@components/ui/dialog";
 import { Input } from "@components/ui/input";
+import { SwitchInput } from "@components/ui/switch";
 import TagInput from "@components/ui/taginput";
 import { Textarea } from "@components/ui/textarea";
 import { recipeFormSchema } from "@db/zodSchemas";
@@ -16,7 +17,6 @@ import { ArrowLeftIcon } from "lucide-react";
 import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import * as z from "zod";
-import { SwitchInput } from "@components/ui/switch";
 
 interface CreateRecipeDialogProps {
   open: boolean;
@@ -48,14 +48,14 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
           />
           <Textarea id="description" label="Description" control={control} />
           <TagInput
-            name="info.keywords"
+            name="keywords"
             control={control}
             placeholder="Keywords (separated by a comma)"
             hint="Keywords will be used to help users find your recipe."
           />
           <Controller
             control={control}
-            name={"info.isPublic"}
+            name={"isPublic"}
             defaultValue={false}
             render={({ field }) => (
               <SwitchInput

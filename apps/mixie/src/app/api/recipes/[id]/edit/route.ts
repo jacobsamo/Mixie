@@ -1,6 +1,6 @@
 import { db } from "@db/index";
-import { info, recipes } from "@db/schemas";
-import { NewInfo, NewPartialRecipe } from "@db/types";
+import { recipes } from "@db/schemas";
+import { NewRecipe } from "@db/types";
 import { recipeFormSchema } from "@db/zodSchemas";
 import { calculateTotalTime, recipeId } from "@lib/utils";
 import { getServerAuthSession } from "@server/auth";
@@ -25,7 +25,6 @@ export async function PUT(req: NextRequest) {
     json.info.lastUpdated = new Date(json.info.lastUpdated);
     const recipe = recipeFormSchema.parse(json);
 
-    const isPublic = recipe?.info?.isPublic || false;
     const id = recipeId(recipe.title) || recipe.id;
 
     // get all ingredients and set them to the info, only include ingredients that have isHeading set to false
@@ -45,43 +44,17 @@ export async function PUT(req: NextRequest) {
     });
 
     const totalTime =
-      recipe.info && recipe.info.prep && recipe?.info.cook
-        ? await calculateTotalTime(recipe.info.prep, recipe.info.cook)
+      recipe && recipe.prep && recipe?.cook
+        ? await calculateTotalTime(recipe.prep, recipe.cook)
         : null;
 
     const title = recipe.title.charAt(0).toUpperCase() + recipe.title.slice(1);
 
-    // update info table
-    const newInfo: NewInfo = {
-      ...recipe.info,
-      recipeId: recipe.uid,
-      id: id,
-      title: title,
-      keywords: recipe?.info?.keywords || null,
-      ingredients: ingredients || null,
-      prep: recipe?.info?.prep || null,
-      cook: recipe?.info?.cook || null,
-      total: totalTime,
-      createByName: recipe.info?.createByName || "",
-      createdBy: recipe.info?.createdBy || user.id,
-      lastUpdatedBy: user.id,
-      lastUpdatedByName: user.name! || "",
-      isPublic: isPublic,
-    };
-    await db.update(info).set(newInfo).where(eq(info.recipeId, recipe.uid));
-
-    // remove the info from the recipe as it's been set on another table
-    delete recipe.info;
-
     // define the new recipe
-    const newRecipe: NewPartialRecipe = {
+    const newRecipe: NewRecipe = {
       ...recipe,
       id: id,
       title: title,
-      isPublic: isPublic,
-      // steps: steps,
-      lastUpdatedBy: user.id,
-      lastUpdatedByName: user.name! || "",
     };
 
     const setRecipe = await db
@@ -92,7 +65,6 @@ export async function PUT(req: NextRequest) {
     console.log(`Edited recipe ${newRecipe.uid}`, {
       message: `Recipe successfully edited, ${setRecipe}`,
       recipe: newRecipe,
-      info: newInfo,
     });
 
     return NextResponse.json(

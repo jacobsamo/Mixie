@@ -34,7 +34,7 @@ const RecipePrintingView = ({ recipe }: RecipePrintingViewProps) => {
         <span className="flex flex-row">
           {[...Array(5)].map((star, index) => {
             index += 1;
-            return recipe.info.rating && index <= recipe.info.rating ? (
+            return recipe.rating && index <= recipe.rating ? (
               <StarIcon
                 key={index}
                 className="h-w-8 w-8 fill-[#ffe14cf6] text-[#ffe14cf6]"
@@ -44,13 +44,13 @@ const RecipePrintingView = ({ recipe }: RecipePrintingViewProps) => {
             );
           })}
         </span>
-        <Info info={recipe.info} />
+        <Info info={recipe} />
       </section>
 
       <section className="w-full pb-12">
         <Image
-          src={recipe?.info.imgUrl || "/images/placeholder.webp"}
-          alt={recipe?.info.imgAlt || recipe.title || "recipe image"}
+          src={recipe?.imgUrl || "/images/placeholder.webp"}
+          alt={recipe?.imgAlt || recipe.title || "recipe image"}
           width={800}
           height={600}
           className="aspect-video rounded-xl object-cover"

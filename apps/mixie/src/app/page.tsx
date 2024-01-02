@@ -1,10 +1,5 @@
 import { CardRectangle } from "@/src/common/components/elements/Cards";
-import { eq } from "drizzle-orm";
-import { SearchIcon } from "lucide-react";
-import { unstable_cache } from "next/cache";
 import SearchTrigger from "@components/modules/SearchTrigger";
-import { db } from "@server/db";
-import { info } from "@server/db/schemas";
 import {
   Carousel,
   CarouselContent,
@@ -12,15 +7,20 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@components/ui/carousel";
+import { db } from "@server/db";
+import { recipes } from "@server/db/schemas";
+import { eq } from "drizzle-orm";
+import { SearchIcon } from "lucide-react";
+import { unstable_cache } from "next/cache";
 
 export const revalidate = 3600;
 
 const getRecipes = unstable_cache(
   async () => {
-    const latestRecipes = await db.query.info.findMany({
-      where: eq(info.isPublic, true),
+    const latestRecipes = await db.query.recipes.findMany({
+      where: eq(recipes.isPublic, true),
       limit: 12,
-      orderBy: info.createdAt,
+      orderBy: recipes.createdAt,
     });
     return latestRecipes;
   },
@@ -67,7 +67,7 @@ export default async function Page() {
         >
           <CarouselContent>
             {latestRecipes.map((recipe) => (
-              <CarouselItem key={recipe.recipeId}>
+              <CarouselItem key={recipe.uid}>
                 <CardRectangle key={recipe.id} recipe={recipe} />
               </CarouselItem>
             ))}

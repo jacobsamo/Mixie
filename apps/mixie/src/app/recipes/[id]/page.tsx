@@ -14,7 +14,6 @@ export const revalidate = 3600;
 const getRecipes = unstable_cache(
   async () => {
     const recipes = await db.query.recipes.findMany({
-      with: { info: true },
       where: eq(recipeSchema.isPublic, true),
     });
     return recipes;
@@ -43,10 +42,9 @@ export async function generateMetadata({
   const metaData = await constructMetadata({
     title: recipe.title,
     description: recipe.description || undefined,
-    image: recipe.info.imgUrl || "/images/banner.jpg",
+    image: recipe.imgUrl || "/images/banner.jpg",
     url: `https://www.mixiecooking.com/recipes/${recipe.id}`,
-    keywords:
-      recipe.info.keywords?.map((keyword) => keyword.value) || undefined,
+    keywords: recipe.keywords?.map((keyword) => keyword.value) || undefined,
   });
 
   return metaData;
@@ -63,7 +61,7 @@ export default async function RecipePage({ params }) {
           useAppDir={true}
           name={recipe?.title || ""}
           authorName={""}
-          yields={recipe?.info.serves?.toString() || ""}
+          yields={recipe?.serves?.toString() || ""}
           ingredients={
             recipe?.ingredients?.map((ingredient) => {
               return displayIngredient(ingredient);
@@ -79,10 +77,8 @@ export default async function RecipePage({ params }) {
           }
           description={recipe.description! || ""}
           datePublished={new Date(recipe.createdAt).toDateString()}
-          dateModified={new Date(recipe.lastUpdated).toDateString()}
           keywords={
-            recipe.info.keywords?.map((keyword) => keyword.value).join(", ") ||
-            ""
+            recipe.keywords?.map((keyword) => keyword.value).join(", ") || ""
           }
         />
         <RecipePageComponent recipe={recipe as Recipe} />

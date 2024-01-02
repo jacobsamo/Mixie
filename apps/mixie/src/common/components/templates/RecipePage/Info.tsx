@@ -1,12 +1,12 @@
 "use client";
 import useUser from "@/src/common/hooks/useUser";
-import type { Info } from "@db/types";
+import type { Recipe } from "@db/types";
 import { AlarmClock, Clock, PencilIcon, PieChart, Timer } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 interface InfoProps {
-  info: Info;
+  info: Recipe;
 }
 
 const Info = ({ info }: InfoProps) => {
@@ -14,9 +14,7 @@ const Info = ({ info }: InfoProps) => {
   const pathName = usePathname();
 
   const showEdit =
-    (session?.user?.id === info?.createdBy ||
-      session?.user?.id === info?.lastUpdatedBy) &&
-    !pathName.includes("edit");
+    session?.user?.id === info?.createdBy && !pathName.includes("edit");
 
   return (
     <>
@@ -40,7 +38,7 @@ const Info = ({ info }: InfoProps) => {
         {showEdit && (
           <li>
             <Link
-              href={`/recipes/preview/${info.recipeId}/edit`}
+              href={`/recipes/preview/${info.uid}/edit`}
               className="flex flex-row items-center justify-center rounded-md bg-yellow px-2 py-1 text-step--3 text-black"
             >
               <PencilIcon className="mr-1 h-5 w-5" />

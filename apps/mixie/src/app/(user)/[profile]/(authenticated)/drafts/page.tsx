@@ -1,7 +1,7 @@
 import { SearchCard } from "@/src/common/components/elements/Cards";
 import { db } from "@db/index";
 import { recipes } from "@db/schemas";
-import { eq, or } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 
 interface DraftsPageProps {
   params: {
@@ -10,11 +10,8 @@ interface DraftsPageProps {
 }
 
 export default async function DraftsPage({ params }: DraftsPageProps) {
-  const gotRecipes = await db.query.info.findMany({
-    where: or(
-      eq(recipes.createdBy, params.profile),
-      eq(recipes.lastUpdatedBy, params.profile)
-    ),
+  const gotRecipes = await db.query.recipes.findMany({
+    where: eq(recipes.createdBy, params.profile),
   });
 
   return (
