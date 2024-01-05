@@ -12,7 +12,7 @@ import {
   varchar,
 } from "drizzle-orm/mysql-core";
 // imoport
-import { Ingredient, Recipe, Step } from "../types";
+import { ImageAttributes, Ingredient, Recipe, Step } from "../types";
 import { recipe_versions } from "./versions";
 import { users } from "./auth";
 import {
@@ -34,7 +34,7 @@ export const recipes = mysqlTable("recipes", {
   id: varchar("id", { length: 191 }).notNull(),
   title: varchar("title", { length: 191 }).notNull(),
   imgUrl: text("imgUrl"),
-  imgAlt: text("imgAlt"),
+  imageAttributes: json("imageAttributes").$type<ImageAttributes>(),
   description: text("description"),
   notes: text("notes"),
   steps: json("steps").$type<Step[]>(),

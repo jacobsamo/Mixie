@@ -10,6 +10,14 @@ const selectValue = z.object({
   label: z.string(),
 });
 
+export const imageAttributesSchema = z.object({
+  alt: z.string(),
+  photographer: z.string().optional(),
+  photographerLink: z.string().url().optional(),
+  width: z.number().optional(),
+  height: z.number().optional(),
+});
+
 export const ingredientSchema = z.object({
   isHeading: z.boolean(),
   title: z.string(),
@@ -23,7 +31,7 @@ export const ingredientSchema = z.object({
       value: "grams",
     })
     .nullable(),
-  quantity: z.number().optional().nullable(),
+  quantity: z.number().nullish(),
   amount: selectValue
     .extend({
       value: amount,
@@ -43,30 +51,66 @@ export const stepSchema = z.object({
 export const recipeSchema = createInsertSchema(recipes, {
   steps: stepSchema.array().optional(),
   ingredients: ingredientSchema.array().optional(),
-  ingredientsList: z.string().array().nullable().optional(),
-  imgUrl: z.string().url({ message: "Must be a valid url" }),
-  imgAlt: z.string({ required_error: "Image must have an alt text" }),
-  keywords: z.object({ value: z.string() }).array().optional(),
+  ingredientsList: z.string().array().nullish(),
+  imgUrl: z
+    .string({
+      required_error: "An image must be present when a recipe is public",
+    })
+    .url({ message: "Must be a valid url" })
+    .nullish(),
+  imageAttributes: imageAttributesSchema.nullish(),
+  keywords: z.object({ value: z.string() }).array().nullish(),
   prep: z
-    .string()
+    .string({ required_error: "Prep time is required for public recipes" })
     .regex(/^(\d{1,2}[hms]\s?)+$/i, {
       message:
         "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
     })
-    .optional(),
+    .nullish(),
   cook: z
-    .string()
+    .string({ required_error: "Cook time is required for public recipes" })
     .regex(/^(\d{1,2}[hms]\s?)+$/i, {
       message:
         "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
     })
-    .optional(),
+    .nullish(),
 });
 
 export const ratingsSchema = createInsertSchema(ratings);
 
 // extend the recipe schema to include the info and ingredients
-export const recipeFormSchema = recipeSchema;
+export const recipeFormSchema = recipeSchema.superRefine((values, ctx) => {
+  // if `isPublic` is `true` make sure cook, prep, keywords, imgUrl, ingredients.length < 0, steps.length < 0
+  // if `isPublic` is `false` make these fields optional & nullable
+  if (values.isPublic) {
+    ["cook", "prep", "imgUrl"].forEach((field) => {
+      if (!values[field]) {
+        ctx.addIssue({
+          code: "custom",
+          message: `${field} is required for public recipes`,
+          path: [field],
+        });
+      }
+    });
+
+    if (!values.ingredients || values.ingredients.length === 0) {
+      ctx.addIssue({
+        code: "custom",
+        message: "At least one ingredient is required for public recipes",
+        path: ["ingredients"],
+      });
+    }
+
+    if (!values.steps || values.steps.length === 0) {
+      ctx.addIssue({
+        code: "custom",
+        message: "At least one step is required for public recipes",
+        path: ["steps"],
+      });
+    }
+  }
+  return values;
+});
 
 // select
 const recipeSchemaSelect = createSelectSchema(recipes, {

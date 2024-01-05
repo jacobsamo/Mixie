@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import Image, { type ImageProps } from "next/image";
 import { cn } from "@/src/common/lib/utils";
 import clsx from "clsx";
+import { ImageAttributes } from "@/src/server/db/types";
 
 export type CardRecipe = {
   recipeId?: string;
@@ -12,7 +13,7 @@ export type CardRecipe = {
   id: string;
   title: string;
   imgUrl: string | null;
-  imgAlt: string | null;
+  imageAttributes: ImageAttributes | null;
   total: string | null;
   keywords: { value: string }[] | null;
 };

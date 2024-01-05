@@ -58,7 +58,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               htmlFor={name}
               className={cn(
                 "block text-step--3 font-medium",
-                classNames?.label
+                classNames?.label,
+                { "text-red": error }
               )}
             >
               {label} {props.required && <span className="text-red">*</span>}
@@ -85,7 +86,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <div
           className={cn(
             "focus-visible:ring-ring flex w-full flex-row items-center rounded-md border border-black bg-white p-1 py-1  text-step--3 shadow-sm transition-colors file:border-0 file:bg-transparent file:font-medium placeholder:text-opacity-70 focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white dark:bg-grey",
-            classNames?.inputWrapper
+            classNames?.inputWrapper,
+            { "border-red ": error }
           )}
           data-input="input-container"
         >

@@ -16,8 +16,8 @@ export const SearchCard = ({ as, edit = false, recipe }: SearchCardProps) => {
   return (
     <Tag className="relative flex h-32 w-full max-w-[600px] flex-row gap-2 rounded-md bg-white shadow dark:bg-grey">
       <RecipeImage
-        src={recipe.imgUrl || ""}
-        alt={recipe.imgAlt || ""}
+        src={recipe.imgUrl || "/images/placeholder.webp"}
+        alt={recipe?.imageAttributes?.alt ?? ""}
         width={100}
         height={100}
         className="h-32 w-2/5 rounded-lg"
@@ -27,9 +27,7 @@ export const SearchCard = ({ as, edit = false, recipe }: SearchCardProps) => {
 
       <div>
         <Link
-          href={`/recipes/${
-            edit ? `/preview/${recipe.uid}/edit` : recipe.id
-          }`}
+          href={`/recipes/${edit ? `/preview/${recipe.uid}/edit` : recipe.id}`}
           className="text-step--1"
         >
           {recipe.title}

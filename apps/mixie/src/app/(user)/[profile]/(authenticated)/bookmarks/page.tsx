@@ -17,7 +17,7 @@ export default async function BookmarksPage() {
           id: true,
           title: true,
           imgUrl: true,
-          imgAlt: true,
+          imageAttributes: true,
           total: true,
           keywords: true,
         },

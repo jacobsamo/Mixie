@@ -5,11 +5,12 @@ import { type InferInsertModel, type InferSelectModel } from "drizzle-orm";
 import { z } from "zod";
 import {
   bookmarkSchema,
+  imageAttributesSchema,
   ingredientSchema,
   ratingsSchema,
   recipeFormSchema,
   recipesSelect,
-  stepSchema
+  stepSchema,
 } from "./zodSchemas";
 
 import { amount } from "./zodEnums";
@@ -22,6 +23,8 @@ export type { NewUser, User };
 
 export type Recipe = z.infer<typeof recipesSelect>;
 export type NewRecipe = z.infer<typeof recipeFormSchema>;
+
+export type ImageAttributes = z.infer<typeof imageAttributesSchema>;
 
 // ingredients
 export type Ingredient = z.infer<typeof ingredientSchema>;

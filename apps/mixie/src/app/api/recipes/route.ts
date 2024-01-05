@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
       uid: true,
       id: true,
       title: true,
-      imgAlt: true,
+      imageAttributes: true,
       imgUrl: true,
       total: true,
     },

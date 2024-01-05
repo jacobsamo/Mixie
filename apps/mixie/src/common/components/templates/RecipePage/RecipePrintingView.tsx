@@ -50,7 +50,7 @@ const RecipePrintingView = ({ recipe }: RecipePrintingViewProps) => {
       <section className="w-full pb-12">
         <Image
           src={recipe?.imgUrl || "/images/placeholder.webp"}
-          alt={recipe?.imgAlt || recipe.title || "recipe image"}
+          alt={recipe?.imageAttributes?.alt ?? recipe.title ?? "recipe image"}
           width={800}
           height={600}
           className="aspect-video rounded-xl object-cover"

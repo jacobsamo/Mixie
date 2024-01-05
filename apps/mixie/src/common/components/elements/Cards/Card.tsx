@@ -62,7 +62,7 @@ export const BaseCard = ({
 
       <RecipeImage
         src={recipe.imgUrl || ""}
-        alt={recipe.imgAlt || ""}
+        alt={recipe?.imageAttributes?.alt ?? ""}
         fill
         sizes="224px"
         className={cn(
