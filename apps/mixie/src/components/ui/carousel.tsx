@@ -1,14 +1,18 @@
 "use client";
-import  * as React from "react";
-import  useEmblaCarousel, {
+import * as React from "react";
+import useEmblaCarousel from "embla-carousel-react";
+
+import {
   type EmblaCarouselType as CarouselApi,
   type EmblaOptionsType as CarouselOptions,
   type EmblaPluginType as CarouselPlugin,
-} from "embla-carousel-react";
-import  { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+} from "embla-carousel";
 
-import  { cn } from "@/lib/utils";
-import  { Button, ButtonProps } from "@/components//ui/button";
+
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import { Button, ButtonProps } from "@/components//ui/button";
 
 type CarouselProps = {
   opts?: CarouselOptions;

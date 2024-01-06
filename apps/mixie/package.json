@@ -54,6 +54,7 @@
     "dotenv": "^16.3.1",
     "drizzle-orm": "^0.29.3",
     "drizzle-zod": "^0.5.1",
+    "embla-carousel": "8.0.0-rc18",
     "embla-carousel-react": "8.0.0-rc18",
     "eslint-plugin-drizzle": "^0.2.3",
     "fraction.js": "^4.3.7",

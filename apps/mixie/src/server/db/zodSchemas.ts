@@ -112,16 +112,6 @@ export const recipeFormSchema = recipeSchema.superRefine((values, ctx) => {
   return values;
 });
 
-// select
-const recipeSchemaSelect = createSelectSchema(recipes, {
-  steps: stepSchema.array().optional(),
-  ingredients: ingredientSchema.array().optional(),
-});
-
-export const recipesSelect = recipeSchemaSelect.extend({
-  ratings: ratingsSchema.optional(),
-});
-
 export const userSchema = createInsertSchema(users);
 
 export const bookmarkSchema = createInsertSchema(bookmarks);

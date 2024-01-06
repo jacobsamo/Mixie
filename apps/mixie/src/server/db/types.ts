@@ -9,7 +9,7 @@ import {
   ingredientSchema,
   ratingsSchema,
   recipeFormSchema,
-  recipesSelect,
+  recipeSchema,
   stepSchema,
 } from "./zodSchemas";
 
@@ -21,7 +21,7 @@ type NewUser = InferInsertModel<typeof users>;
 
 export type { NewUser, User };
 
-export type Recipe = z.infer<typeof recipesSelect>;
+export type Recipe = z.infer<typeof recipeSchema>;
 export type NewRecipe = z.infer<typeof recipeFormSchema>;
 
 export type ImageAttributes = z.infer<typeof imageAttributesSchema>;
