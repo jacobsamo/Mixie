@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from "@components/ui/dialog";
 import { Input } from "@components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/ui/tabs";
+import { Tabs,  TabsList, TabsContent, TabsTrigger} from "@/src/common/components/ui/tabs";
 import { recipeFormSchema } from "@db/zodSchemas";
 import { UploadDropzone } from "@lib/utils/uploadthing";
 import { Edit2, LinkIcon, PlusCircleIcon, Upload } from "lucide-react";
@@ -20,6 +20,7 @@ import { createApi } from "unsplash-js";
 import { Photos } from "unsplash-js/src/methods/search/types/response";
 import * as z from "zod";
 import { Button } from "../../ui/button";
+import { Search } from "lucide-react";
 
 const api = createApi({
   accessKey: env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY,
@@ -60,7 +61,7 @@ const ImageUpload = () => {
   return (
     <div
       className={cn(
-        "group my-8 aspect-video max-h-[600px] max-w-[880px] resize rounded-xl border p-4",
+        "rounded-xl group my-8 aspect-video max-h-[600px] max-w-[880px] resize border p-4",
         {
           "border-red shadow shadow-red":
             errors.imgUrl || errors.imageAttributes?.alt,
@@ -76,7 +77,7 @@ const ImageUpload = () => {
           width={800}
           height={600}
           priority
-          className="aspect-video h-full w-full rounded-xl object-cover"
+          className="rounded-xl aspect-video h-full w-full object-cover"
         />
       )}
 
@@ -115,6 +116,7 @@ const ImageUpload = () => {
                     version="1.1"
                     aria-labelledby="unsplash-home"
                     aria-hidden="false"
+                    className="dark:fill-white"
                   >
                     <desc lang="en-US">Unsplash logo</desc>
                     <path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path>
@@ -134,48 +136,52 @@ const ImageUpload = () => {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="unsplash">
-              <Input
-                label="Search"
-                name="unsplashImageSearch"
-                placeholder="Search for an image"
-                type="search"
-                value={unsplashImageSearch}
-                onChange={(e) => setUnsplashImageSearch(e.target.value)}
-              />
-              <div className="flex h-full w-full flex-wrap gap-2 overflow-scroll">
-                {data?.results.map((photo) => (
-                  <div
-                    key={photo.id}
-                    className="relative flex flex-col items-center justify-center"
-                  >
-                    <Button
-                      unstyled
-                      onClick={() => {
-                        setValue("imgUrl", photo.urls.regular);
-                        setValue(
-                          "imageAttributes.alt",
-                          photo.alt_description ?? ""
-                        );
-                        setValue(
-                          "imageAttributes.photographer",
-                          photo.user.name
-                        );
-                        setValue(
-                          "imageAttributes.photographerLink",
-                          photo.user.portfolio_url ?? photo.user.links.portfolio
-                        );
-                      }}
+              <div>
+                <Input
+                  // label="Search"
+                  name="unsplashImageSearch"
+                  placeholder="Search for an image"
+                  type="search"
+                  LeadingIcon={<Search />}
+                  value={unsplashImageSearch}
+                  onChange={(e) => setUnsplashImageSearch(e.target.value)}
+                />
+                <div className="flex w-full flex-wrap gap-2 overflow-scroll">
+                  {data?.results.map((photo) => (
+                    <div
+                      key={photo.id}
+                      className="relative flex flex-col items-center justify-center"
                     >
-                      <Image
-                        src={photo.urls.small}
-                        alt={photo.alt_description ?? ""}
-                        width={200}
-                        height={200}
-                        className="h-52 w-52 rounded-xl object-cover"
-                      />
-                    </Button>
-                  </div>
-                ))}
+                      <Button
+                        unstyled
+                        onClick={() => {
+                          setValue("imgUrl", photo.urls.regular);
+                          setValue(
+                            "imageAttributes.alt",
+                            photo.alt_description ?? ""
+                          );
+                          setValue(
+                            "imageAttributes.photographer",
+                            photo.user.name
+                          );
+                          setValue(
+                            "imageAttributes.photographerLink",
+                            photo.user.portfolio_url ??
+                              photo.user.links.portfolio
+                          );
+                        }}
+                      >
+                        <Image
+                          src={photo.urls.small}
+                          alt={photo.alt_description ?? ""}
+                          width={200}
+                          height={200}
+                          className="rounded-xl h-52 w-52 object-cover"
+                        />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
               </div>
             </TabsContent>
             <TabsContent value="url">
