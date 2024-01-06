@@ -1,6 +1,6 @@
-import { recipeId } from "@/src/common/lib/utils";
-import { db } from "@db/index";
-import { recipes as recipesSchema } from "@db/schemas";
+import { recipeId } from "@/lib/utils";
+import { db } from "@/server/db/index";
+import { recipes as recipesSchema } from "@/server/db/schemas";
 import { unstable_cache } from "next/cache";
 import { NextResponse, type NextRequest } from "next/server";
 

@@ -1,9 +1,9 @@
-import { CardSquare } from "@/src/common/components/elements/Cards";
-import { db } from "@/src/server/db";
-import { recipes as recipesSchema } from "@/src/server/db/schemas";
-import { Recipe } from "@/src/server/db/types";
-import RecipeSearch from "@components/modules/RecipeSearch";
-import { constructMetadata } from "@lib/utils";
+import { CardSquare } from "@/components/elements/Cards";
+import { db } from "@/server/db";
+import { recipes as recipesSchema } from "@/server/db/schemas";
+import { Recipe } from "@/server/db/types";
+import RecipeSearch from "@/components/modules/RecipeSearch";
+import { constructMetadata } from "@/lib/utils";
 import { eq } from "drizzle-orm";
 import { IFuseOptions } from "fuse.js";
 import { unstable_cache } from "next/cache";

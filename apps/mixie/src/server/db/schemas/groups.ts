@@ -1,4 +1,4 @@
-// import {
+// import  {
 //   boolean,
 //   datetime,
 //   int,
@@ -10,9 +10,9 @@
 //   uniqueIndex,
 //   varchar,
 // } from 'drizzle-orm/mysql-core';
-// import { users } from './auth';
-// import { relations } from 'drizzle-orm';
-// import { recipes } from './recipe';
+// import  { users } from './auth';
+// import  { relations } from 'drizzle-orm';
+// import  { recipes } from './recipe';
 
 // // teams are the groups of people who are working together on different recipes and also allow commenting and editing on recipes
 // // teams are created by users and can be public or private
@@ -41,7 +41,7 @@
 //     groupId: char("groupId", { length: 36 }).notNull(),
 //     role: mysqlEnum("role", ["admin", "member"]).default("member").notNull(),
 //   });
-  
+
 // export const groupMembersRelation = relations(groups, ({ one }) => ({
 //   groupMembers: one(groupMembers, {
 //     fields: [groups.uid],

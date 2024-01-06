@@ -1,8 +1,8 @@
-import { isApp } from "@/src/common/lib/services/apiMiddleware";
-import { getServerAuthSession } from "@/src/server/auth";
-import { db } from "@db/index";
-import { users } from "@db/schemas";
-import { userSchema } from "@db/zodSchemas";
+import { isApp } from "@/lib/services/apiMiddleware";
+import { getServerAuthSession } from "@/server/auth";
+import { db } from "@/server/db/index";
+import { users } from "@/server/db/schemas";
+import { userSchema } from "@/server/db/zodSchemas";
 import { eq } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";

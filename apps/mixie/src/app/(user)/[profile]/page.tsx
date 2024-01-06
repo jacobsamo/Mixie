@@ -1,8 +1,8 @@
-import { SearchCard } from "@/src/common/components/elements/Cards";
-import { db } from "@db/index";
-import { recipes } from "@db/schemas";
-import { constructMetadata } from "@lib/utils/";
-import { getServerAuthSession } from "@server/auth";
+import { SearchCard } from "@/components/elements/Cards";
+import { db } from "@/server/db/index";
+import { recipes } from "@/server/db/schemas";
+import { constructMetadata } from "@/lib/utils/";
+import { getServerAuthSession } from "@/server/auth";
 import { and, eq } from "drizzle-orm";
 import { Heart, Pencil, ScrollText } from "lucide-react";
 import { Metadata } from "next";

@@ -21,8 +21,8 @@ export default function AboutPage() {
           </p>
           <p>
             Mixie was born out of the need for a website that offers
-            straightforward features, easy navigation, clutter free, most
-            importantly, is free!
+            straightforward features, easy navigation, clutter free, most import
+            antly, is free!
           </p>
           <p>
             Mixie has been built with the latest technologies and is constantly

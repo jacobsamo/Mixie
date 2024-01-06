@@ -1,14 +1,14 @@
 import { Toaster } from "react-hot-toast";
-import { constructMetadata } from "@lib/utils";
-import "@styles/globals.css";
+import { constructMetadata } from "@/lib/utils";
+import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { Viewport } from "next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import dynamic from "next/dynamic";
 
-const Providers = dynamic(() => import("@components/modules/Providers"));
-const Navbar = dynamic(() => import("@components/modules/Navbar"));
-const Footer = dynamic(() => import("@components/modules/Footer"));
+const Providers = dynamic(() => import("@/components/modules/Providers"));
+const Navbar = dynamic(() => import("@/components/modules/Navbar"));
+const Footer = dynamic(() => import("@/components/modules/Footer"));
 
 export const metadata = constructMetadata();
 

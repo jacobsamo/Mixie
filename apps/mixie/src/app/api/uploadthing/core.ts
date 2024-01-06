@@ -1,4 +1,4 @@
-import { getServerAuthSession } from "@/src/server/auth";
+import { getServerAuthSession } from "@/server/auth";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 
 const f = createUploadthing();

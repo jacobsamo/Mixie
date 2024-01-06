@@ -1,6 +1,6 @@
-import { SearchCard } from "@/src/common/components/elements/Cards";
-import { db } from "@db/index";
-import { getServerAuthSession } from "@server/auth";
+import { SearchCard } from "@/components/elements/Cards";
+import { db } from "@/server/db/index";
+import { getServerAuthSession } from "@/server/auth";
 import { notFound } from "next/navigation";
 
 export default async function BookmarksPage() {

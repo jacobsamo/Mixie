@@ -1,8 +1,8 @@
-import RecipePageComponent from "@components/templates/RecipePage/RecipePageComponent";
-import { db } from "@db/index";
-import { recipes as recipeSchema } from "@db/schemas";
-import type { Recipe } from "@db/types";
-import { constructMetadata, displayIngredient } from "@lib/utils";
+import RecipePageComponent from "@/components/templates/RecipePage/RecipePageComponent";
+import { db } from "@/server/db/index";
+import { recipes as recipeSchema } from "@/server/db/schemas";
+import type { Recipe } from "@/server/db/types";
+import { constructMetadata, displayIngredient } from "@/lib/utils";
 import { eq } from "drizzle-orm";
 import { Metadata } from "next";
 import { RecipeJsonLd } from "next-seo";

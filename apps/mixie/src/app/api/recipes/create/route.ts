@@ -1,13 +1,13 @@
-import { db } from "@db/index";
-import { recipes } from "@db/schemas";
-import { NewRecipe } from "@db/types";
+import { db } from "@/server/db/index";
+import { recipes } from "@/server/db/schemas";
+import { NewRecipe } from "@/server/db/types";
 import {
   convertIngredients,
   getRecipeJsonLd,
   splitTime,
-} from "@lib/services/recipeJsonLDParsing";
-import { recipeId } from "@lib/utils";
-import { getServerAuthSession } from "@server/auth";
+} from "@/lib/services/recipeJsonLDParsing";
+import { recipeId } from "@/lib/utils";
+import { getServerAuthSession } from "@/server/auth";
 import { NextResponse, type NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 import * as z from "zod";

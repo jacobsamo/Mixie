@@ -11,11 +11,11 @@ import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import EmailProvider from "next-auth/providers/email";
 
-import { env } from "@/env.mjs";
-import { TFont, TTheme } from "@db/enum-types";
-import { db } from "@db/index";
-import * as schema from "@db/schemas";
-import { User as DbUser } from "@db/types";
+import { env } from "env";
+import { TFont, TTheme } from "@/server/db/enum-types";
+import { db } from "@/server/db/index";
+import * as schema from "@/server/db/schemas";
+import { User as DbUser } from "@/server/db/types";
 import { sendEmail } from "./emails";
 import LoginLink from "./emails/login";
 
@@ -131,7 +131,7 @@ export const authOptions: NextAuthOptions = {
 };
 
 /**
- * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
+ * Wrapper for `getServerSession` so that you don't need to import  the `authOptions` in every file.
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */

@@ -1,8 +1,8 @@
-import { getServerAuthSession } from "@/src/server/auth";
-import RecipePageComponent from "@components/templates/RecipePage/RecipePageComponent";
-import { db } from "@db/index";
-import { recipes as recipeSchema } from "@db/schemas";
-import type { Recipe } from "@db/types";
+import { getServerAuthSession } from "@/server/auth";
+import RecipePageComponent from "@/components/templates/RecipePage/RecipePageComponent";
+import { db } from "@/server/db/index";
+import { recipes as recipeSchema } from "@/server/db/schemas";
+import type { Recipe } from "@/server/db/types";
 import { and, eq } from "drizzle-orm";
 import { notFound, redirect } from "next/navigation";
 

@@ -1,7 +1,7 @@
 "use client";
-import { Button } from "@/src/common/components/ui/button";
-import { Checkbox } from "@/src/common/components/ui/checkbox";
-import { Input } from "@/src/common/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import Image from "next/image";

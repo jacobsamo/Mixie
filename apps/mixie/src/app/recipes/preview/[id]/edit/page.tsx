@@ -1,7 +1,7 @@
-import RecipeForm from "@/src/common/components/templates/RecipeForm/RecipeForm";
-import { db } from "@db/index";
-import { recipes as recipeSchema } from "@db/schemas";
-import { getServerAuthSession } from "@server/auth";
+import RecipeForm from "@/components/templates/RecipeForm/RecipeForm";
+import { db } from "@/server/db/index";
+import { recipes as recipeSchema } from "@/server/db/schemas";
+import { getServerAuthSession } from "@/server/auth";
 import { and, eq } from "drizzle-orm";
 import { notFound, redirect } from "next/navigation";
 

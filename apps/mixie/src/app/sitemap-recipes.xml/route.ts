@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic"; // defaults to force-static
-import { db } from "@/src/server/db";
-import { recipes as recipesSchema } from "@/src/server/db/schemas";
+import { db } from "@/server/db";
+import { recipes as recipesSchema } from "@/server/db/schemas";
 import { eq } from "drizzle-orm";
 
 export async function GET() {

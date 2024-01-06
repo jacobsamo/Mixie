@@ -1,6 +1,6 @@
-import { SearchCard } from "@/src/common/components/elements/Cards";
-import { db } from "@db/index";
-import { recipes } from "@db/schemas";
+import { SearchCard } from "@/components/elements/Cards";
+import { db } from "@/server/db/index";
+import { recipes } from "@/server/db/schemas";
 import { eq } from "drizzle-orm";
 
 interface DraftsPageProps {

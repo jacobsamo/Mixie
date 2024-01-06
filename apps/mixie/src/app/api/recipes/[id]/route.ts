@@ -1,6 +1,6 @@
-import { isApp } from "@/src/common/lib/services/apiMiddleware";
-import { db } from "@db/index";
-import { recipes } from "@db/schemas";
+import { isApp } from "@/lib/services/apiMiddleware";
+import { db } from "@/server/db/index";
+import { recipes } from "@/server/db/schemas";
 import { eq, or } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
 

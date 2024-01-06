@@ -1,18 +1,18 @@
-import { CardRectangle } from "@/src/common/components/elements/Cards";
-import SearchTrigger from "@components/modules/SearchTrigger";
+import { CardRectangle } from "@/components/elements/Cards";
+import SearchTrigger from "@/components/modules/SearchTrigger";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@components/ui/carousel";
-import { db } from "@server/db";
-import { recipes } from "@server/db/schemas";
+} from "@/components/ui/carousel";
+import { db } from "@/server/db";
+import { recipes } from "@/server/db/schemas";
 import { eq } from "drizzle-orm";
 import { SearchIcon } from "lucide-react";
 import { unstable_cache } from "next/cache";
-import LandingText from "../common/components/elements/LandingText";
+import LandingText from "@/components/elements/LandingText";
 
 export const revalidate = 3600;
 
