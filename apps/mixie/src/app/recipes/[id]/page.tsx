@@ -42,7 +42,7 @@ export async function generateMetadata({
   const metaData = await constructMetadata({
     title: recipe.title,
     description: recipe.description || undefined,
-    image: recipe.imgUrl || "/images/banner.jpg",
+    image: recipe.imageUrl || "/images/banner.jpg",
     url: `https://www.mixiecooking.com/recipes/${recipe.id}`,
     keywords: recipe.keywords?.map((keyword) => keyword.value) || undefined,
   });

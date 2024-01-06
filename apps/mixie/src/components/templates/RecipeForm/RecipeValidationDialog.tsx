@@ -26,6 +26,7 @@ interface CreateRecipeDialogProps {
 
 const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
   const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { handleSubmit, register, control, formState, getValues } =
     useFormContext<z.infer<typeof recipeFormSchema>>();
 

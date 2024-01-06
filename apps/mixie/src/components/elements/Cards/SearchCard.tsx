@@ -16,7 +16,7 @@ export const SearchCard = ({ as, edit = false, recipe }: SearchCardProps) => {
   return (
     <Tag className="relative flex h-32 w-full max-w-[600px] flex-row gap-2 rounded-md bg-white shadow dark:bg-grey">
       <RecipeImage
-        src={recipe.imgUrl || "/images/placeholder.webp"}
+        src={recipe.imageUrl || "/images/placeholder.webp"}
         alt={recipe?.imageAttributes?.alt ?? ""}
         width={100}
         height={100}

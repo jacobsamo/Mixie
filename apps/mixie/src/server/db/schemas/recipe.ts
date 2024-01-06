@@ -33,7 +33,7 @@ export const recipes = mysqlTable("recipes", {
   uid: char("uid", { length: 36 }).primaryKey().notNull(),
   id: varchar("id", { length: 191 }).notNull(),
   title: varchar("title", { length: 191 }).notNull(),
-  imgUrl: text("imgUrl"),
+  imageUrl: text("imageUrl"),
   imageAttributes: json("imageAttributes").$type<ImageAttributes>(),
   description: text("description"),
   notes: text("notes"),

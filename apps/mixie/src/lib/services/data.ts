@@ -2,7 +2,7 @@ export const mockRecipe = {
   uid: "test-user",
   id: "chocolate-fudge-brownies",
   image: {
-    imgUrl:
+    imageUrl:
       "https://img.taste.com.au/gOpVgvz8/taste/2016/11/classic-chewy-brownie-102727-1.jpeg",
     imgAlt: "Chocolate fudge brownies",
   },
@@ -97,7 +97,7 @@ export const recipes = [
     uid: "test-user",
     id: "chocolate-fudge-brownies",
     image: {
-      imgUrl:
+      imageUrl:
         "https://img.taste.com.au/gOpVgvz8/taste/2016/11/classic-chewy-brownie-102727-1.jpeg",
       imgAlt: "Chocolate fudge brownies",
     },

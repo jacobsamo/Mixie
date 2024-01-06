@@ -61,7 +61,7 @@ export const BaseCard = ({
       {!hasCookTime && <BookmarkButton session={session} recipe={recipe} />}
 
       <RecipeImage
-        src={recipe.imgUrl || ""}
+        src={recipe.imageUrl || ""}
         alt={recipe?.imageAttributes?.alt ?? ""}
         fill
         sizes="224px"

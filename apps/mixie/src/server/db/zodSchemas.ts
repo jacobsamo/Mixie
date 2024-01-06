@@ -14,6 +14,7 @@ export const imageAttributesSchema = z.object({
   alt: z.string(),
   photographer: z.string().optional(),
   photographerLink: z.string().url().optional(),
+  source: z.enum(["unsplash", "pexels", "upload", "other"]).optional(),
   width: z.number().optional(),
   height: z.number().optional(),
 });
@@ -52,7 +53,7 @@ export const recipeSchema = createInsertSchema(recipes, {
   steps: stepSchema.array().optional(),
   ingredients: ingredientSchema.array().optional(),
   ingredientsList: z.string().array().nullish(),
-  imgUrl: z
+  imageUrl: z
     .string({
       required_error: "An image must be present when a recipe is public",
     })
@@ -80,10 +81,8 @@ export const ratingsSchema = createInsertSchema(ratings);
 
 // extend the recipe schema to include the info and ingredients
 export const recipeFormSchema = recipeSchema.superRefine((values, ctx) => {
-  // if `isPublic` is `true` make sure cook, prep, keywords, imgUrl, ingredients.length < 0, steps.length < 0
-  // if `isPublic` is `false` make these fields optional & nullable
   if (values.isPublic) {
-    ["cook", "prep", "imgUrl"].forEach((field) => {
+    ["cook", "prep", "imageUrl"].forEach((field) => {
       if (!values[field]) {
         ctx.addIssue({
           code: "custom",

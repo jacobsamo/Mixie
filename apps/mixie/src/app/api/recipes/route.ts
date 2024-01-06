@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
       id: true,
       title: true,
       imageAttributes: true,
-      imgUrl: true,
+      imageUrl: true,
       total: true,
     },
     where: eq(recipeSchema.isPublic, true),

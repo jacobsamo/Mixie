@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
           total: splitTime(recipe.totalTime),
           rating: recipe.aggregateRating?.ratingValue || null,
           serves: recipe.recipeYield || null,
-          imgUrl: recipe.image.url || null,
+          imageUrl: recipe.image.url || null,
           imageAttributes: recipe.image.alt || recipe.name || "recipe image",
           keywords: recipe.keywords.split(",").map((keyword: string) => {
             return { value: keyword };

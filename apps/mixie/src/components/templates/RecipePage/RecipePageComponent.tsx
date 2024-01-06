@@ -28,16 +28,46 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
         </div>
         <Info info={recipe} />
         <div className="w-full">
-          <Image
-            src={recipe?.imgUrl || "/images/placeholder.webp"}
-            alt={recipe?.imageAttributes?.alt ?? recipe.title ?? "recipe image"}
-            width={800}
-            height={600}
-            className="aspect-video rounded-xl object-cover"
-            priority
-            placeholder="blur"
-            blurDataURL={recipe.imgUrl || "/images/placeholder.webp"}
-          />
+          <div className="relative">
+            <Image
+              src={recipe?.imageUrl || "/images/placeholder.webp"}
+              alt={
+                recipe?.imageAttributes?.alt ?? recipe.title ?? "recipe image"
+              }
+              width={800}
+              height={600}
+              className="aspect-video rounded-xl object-cover"
+              priority
+              placeholder="blur"
+              blurDataURL={recipe.imageUrl || "/images/placeholder.webp"}
+            />
+            {recipe.imageAttributes?.photographer &&
+              recipe.imageAttributes.photographerLink && (
+                <p
+                  className="absolute bottom-2 left-2 bg-gray-700/20 drop-shadow-xl"
+                  style={{ textShadow: "4px 4px 20px rgba(0, 0, 0, 1)" }}
+                >
+                  Photo by{" "}
+                  <Link
+                    href={recipe.imageAttributes.photographerLink}
+                    target="_blank"
+                    className="underline underline-offset-2"
+                  >
+                    {recipe.imageAttributes.photographer}
+                  </Link>{" "}
+                  on{" "}
+                  <Link
+                    href={
+                      "https://unsplash.com?utm_source=mixie&utm_medium=referral"
+                    }
+                    target="_blank"
+                    className="underline underline-offset-2"
+                  >
+                    Unsplash
+                  </Link>
+                </p>
+              )}
+          </div>
           <div className="py-2">
             <span className="relative flex flex-wrap gap-2">
               {(recipe?.keywords as { value: string }[])
@@ -64,7 +94,7 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
 
               <ShareDialog
                 url={`https://www.mixiecooking/recipes/${recipe.id}`}
-                image={recipe.imgUrl || ""}
+                image={recipe.imageUrl || ""}
                 title={recipe.title}
                 hashtags={(recipe?.keywords as { value: string }[])
                   ?.splice(0, 5)

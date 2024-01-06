@@ -83,7 +83,7 @@ export default async function RecipeViewPage({
               key={recipe.id}
               recipe={{
                 ...recipe,
-                imgUrl: recipe.imgUrl || null,
+                imageUrl: recipe.imageUrl || null,
                 imageAttributes: recipe.imageAttributes || null,
                 total: recipe.total || null,
                 keywords: (recipe.keywords as { value: string }[]) || null,

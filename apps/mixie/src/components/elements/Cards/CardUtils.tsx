@@ -12,7 +12,7 @@ export type CardRecipe = {
   uid?: string;
   id: string;
   title: string;
-  imgUrl: string | null;
+  imageUrl: string | null;
   imageAttributes: ImageAttributes | null;
   total: string | null;
   keywords: { value: string }[] | null;
