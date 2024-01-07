@@ -21,12 +21,10 @@ const FeedbackButton = () => {
           <Tooltip>
             <TooltipTrigger>
               <div className="flex flex-row gap-1 border-none outline-none">
-                <MessageCirclePlus className="w-8 h-8" />
+                <MessageCirclePlus className="h-8 w-8" />
               </div>
             </TooltipTrigger>
-            <TooltipContent>
-              Provide feedback to the Mixie team
-            </TooltipContent>
+            <TooltipContent>Provide feedback to the Mixie team</TooltipContent>
           </Tooltip>
         </TooltipProvider>
       }

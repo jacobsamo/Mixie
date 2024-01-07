@@ -8,7 +8,6 @@ import {
   type EmblaPluginType as CarouselPlugin,
 } from "embla-carousel";
 
-
 import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";

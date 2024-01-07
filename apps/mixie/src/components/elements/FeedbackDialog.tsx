@@ -10,7 +10,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BugIcon, Lightbulb, Loader2, MessageCirclePlus, Newspaper } from "lucide-react";
+import {
+  BugIcon,
+  Lightbulb,
+  Loader2,
+  MessageCirclePlus,
+  Newspaper,
+} from "lucide-react";
 import React from "react";
 
 import { DialogClose } from "@radix-ui/react-dialog";
