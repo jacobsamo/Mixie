@@ -1,4 +1,4 @@
-import { getServerAuthSession } from "@/src/server/auth";
+import { getServerAuthSession } from "@/server/auth";
 import { notFound } from "next/navigation";
 import React from "react";
 

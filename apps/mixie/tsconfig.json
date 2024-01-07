@@ -5,12 +5,8 @@
     "strictNullChecks": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@db/*": ["./src/server/db/*"],
-      "@server/*": ["./src/server/*"],
-      "@lib/*": ["./src/common/lib/*"],
-      "@components/*": ["./src/common/components/*"],
-      "@styles/*": ["./src/common/styles/*"]
+      "@/*": ["./src/*"],
+      "env": ["./env.mjs"]
     }
   },
   "include": [

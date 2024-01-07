@@ -1,6 +1,6 @@
-import { recipeId } from "@/src/common/lib/utils";
-import { db } from "@db/index";
-import { info } from "@db/schemas";
+import { recipeId } from "@/lib/utils";
+import { db } from "@/server/db/index";
+import { recipes as recipesSchema } from "@/server/db/schemas";
 import { unstable_cache } from "next/cache";
 import { NextResponse, type NextRequest } from "next/server";
 
@@ -10,11 +10,11 @@ const getRecipes = unstable_cache(
   async () => {
     const recipes = await db
       .select({
-        uid: info.recipeId,
-        id: info.id,
-        isPublic: info.isPublic,
+        uid: recipesSchema.uid,
+        id: recipesSchema.id,
+        isPublic: recipesSchema.isPublic,
       })
-      .from(info);
+      .from(recipesSchema);
     return recipes;
   },
   ["recipes"],

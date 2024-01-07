@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/src/common/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 

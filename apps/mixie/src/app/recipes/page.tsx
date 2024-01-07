@@ -1,9 +1,9 @@
-import { CardSquare } from "@/src/common/components/elements/Cards";
-import { db } from "@/src/server/db";
-import { info } from "@/src/server/db/schemas";
-import { Info } from "@/src/server/db/types";
-import RecipeSearch from "@components/modules/RecipeSearch";
-import { constructMetadata } from "@lib/utils";
+import { CardSquare } from "@/components/elements/Cards";
+import { db } from "@/server/db";
+import { recipes as recipesSchema } from "@/server/db/schemas";
+import { Recipe } from "@/server/db/types";
+import RecipeSearch from "@/components/modules/RecipeSearch";
+import { constructMetadata } from "@/lib/utils";
 import { eq } from "drizzle-orm";
 import { IFuseOptions } from "fuse.js";
 import { unstable_cache } from "next/cache";
@@ -12,10 +12,10 @@ export const revalidate = 3600;
 
 const getRecipes = unstable_cache(
   async () => {
-    const recipes = await db.query.info.findMany({
-      where: eq(info.isPublic, true),
+    const recipes = await db.query.recipes.findMany({
+      where: eq(recipesSchema.isPublic, true),
     });
-    return recipes;
+    return recipes as Recipe[];
   },
   ["recipes"],
   {
@@ -34,11 +34,11 @@ async function searchRecipes({
   recipes,
 }: {
   query: string | undefined;
-  recipes: Info[];
+  recipes: Recipe[];
 }) {
   if (query == undefined) return;
 
-  const options: IFuseOptions<Info> = {
+  const options: IFuseOptions<Recipe> = {
     includeScore: true,
     isCaseSensitive: true,
     keys: ["title"],
@@ -83,10 +83,10 @@ export default async function RecipeViewPage({
               key={recipe.id}
               recipe={{
                 ...recipe,
-                imgUrl: recipe.imgUrl || null,
-                imgAlt: recipe.imgAlt || null,
+                imageUrl: recipe.imageUrl || null,
+                imageAttributes: recipe.imageAttributes || null,
                 total: recipe.total || null,
-                keywords: recipe.keywords || null,
+                keywords: (recipe.keywords as { value: string }[]) || null,
               }}
             />
           );

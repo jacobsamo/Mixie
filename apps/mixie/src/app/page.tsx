@@ -1,27 +1,27 @@
-import { CardRectangle } from "@/src/common/components/elements/Cards";
-import { eq } from "drizzle-orm";
-import { SearchIcon } from "lucide-react";
-import { unstable_cache } from "next/cache";
-import SearchTrigger from "@components/modules/SearchTrigger";
-import { db } from "@server/db";
-import { info } from "@server/db/schemas";
+import { CardRectangle } from "@/components/elements/Cards";
+import SearchTrigger from "@/components/modules/SearchTrigger";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@components/ui/carousel";
-import LandingText from "../common/components/elements/LandingText";
+} from "@/components/ui/carousel";
+import { db } from "@/server/db";
+import { recipes } from "@/server/db/schemas";
+import { eq } from "drizzle-orm";
+import { SearchIcon } from "lucide-react";
+import { unstable_cache } from "next/cache";
+import LandingText from "@/components/elements/LandingText";
 
 export const revalidate = 3600;
 
 const getRecipes = unstable_cache(
   async () => {
-    const latestRecipes = await db.query.info.findMany({
-      where: eq(info.isPublic, true),
+    const latestRecipes = await db.query.recipes.findMany({
+      where: eq(recipes.isPublic, true),
       limit: 12,
-      orderBy: info.createdAt,
+      orderBy: recipes.createdAt,
     });
     return latestRecipes;
   },
@@ -50,7 +50,7 @@ export default async function Page() {
             fill
             className={styles.heroImg}
           /> */}
-        <LandingText delay={1} />
+        <LandingText delay={0.2} />
 
         <SearchTrigger>
           <div className="relative flex h-[2.8rem] min-w-max max-w-[28rem] resize items-center rounded-xl bg-white p-1 pr-5 shadow-searchBarShadow dark:bg-grey dark:text-white">
@@ -70,7 +70,7 @@ export default async function Page() {
         >
           <CarouselContent>
             {latestRecipes.map((recipe) => (
-              <CarouselItem key={recipe.recipeId}>
+              <CarouselItem key={recipe.uid}>
                 <CardRectangle key={recipe.id} recipe={recipe} />
               </CarouselItem>
             ))}

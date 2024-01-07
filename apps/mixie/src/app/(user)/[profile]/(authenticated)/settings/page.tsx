@@ -1,9 +1,9 @@
 "use client";
-import { env } from "@/env.mjs";
-import { Button } from "@/src/common/components/ui/button";
+import { env } from "env";
+import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
-import { User } from "@/src/server/db/types";
-import { userSchema } from "@/src/server/db/zodSchemas";
+import { User } from "@/server/db/types";
+import { userSchema } from "@/server/db/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -11,15 +11,11 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
-const Profile = dynamic(
-  () => import("@/src/common/components/layouts/Settings/Profile")
-);
+const Profile = dynamic(() => import("@/components/layouts/Settings/Profile"));
 const Customization = dynamic(
-  () => import("@/src/common/components/layouts/Settings/Customization")
+  () => import("@/components/layouts/Settings/Customization")
 );
-const Account = dynamic(
-  () => import("@/src/common/components/layouts/Settings/Account")
-);
+const Account = dynamic(() => import("@/components/layouts/Settings/Account"));
 
 interface ProfilePageProps {
   params: {
@@ -89,7 +85,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
     <>
       <FormProvider {...methods}>
         <form
-          className="mx-auto mt-2 flex w-full flex-col items-start  justify-center  gap-4 rounded-md bg-white p-2 shadow-main  dark:bg-grey md:w-2/4 md:p-4"
+          className="mx-auto mt-2 flex w-full flex-col items-start  justify-center  gap-4 rounded-md bg-white p-2 shadow-main  md:w-2/4 md:p-4 dark:bg-grey"
           onSubmit={handleSubmit(onSubmit)}
         >
           {!values.email && (

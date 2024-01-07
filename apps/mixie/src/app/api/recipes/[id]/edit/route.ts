@@ -1,9 +1,9 @@
-import { db } from "@db/index";
-import { info, recipes } from "@db/schemas";
-import { NewInfo, NewPartialRecipe } from "@db/types";
-import { recipeFormSchema } from "@db/zodSchemas";
-import { calculateTotalTime, recipeId } from "@lib/utils";
-import { getServerAuthSession } from "@server/auth";
+import { db } from "@/server/db/index";
+import { recipes } from "@/server/db/schemas";
+import { NewRecipe, SelectValue } from "@/server/db/types";
+import { recipeFormSchema } from "@/server/db/zodSchemas";
+import { calculateTotalTime, recipeId } from "@/lib/utils";
+import { getServerAuthSession } from "@/server/auth";
 import { eq } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
 import * as z from "zod";
@@ -20,17 +20,12 @@ export async function PUT(req: NextRequest) {
 
     const json = await req.json();
     json.createdAt = new Date(json.createdAt);
-    json.lastUpdated = new Date(json.lastUpdated);
-    json.info.createdAt = new Date(json.info.createdAt);
-    json.info.lastUpdated = new Date(json.info.lastUpdated);
     const recipe = recipeFormSchema.parse(json);
 
-    const isPublic = recipe?.info?.isPublic || false;
     const id = recipeId(recipe.title) || recipe.id;
 
-    // get all ingredients and set them to the info, only include ingredients that have isHeading set to false
-
-    const ingredients = recipe?.ingredients
+    // get all ingredients and set them, only include ingredients that have isHeading set to false
+    const ingredientsList = recipe?.ingredients
       ?.filter((ingredient) => !ingredient.isHeading && ingredient.title)
       .map((ingredient) => {
         ingredient.title =
@@ -39,49 +34,12 @@ export async function PUT(req: NextRequest) {
         return ingredient.title;
       });
 
-    // create the json schema for the steps
-    const steps = recipe?.steps?.map((step) => {
-      return step;
-    });
-
-    const totalTime =
-      recipe.info && recipe.info.prep && recipe?.info.cook
-        ? await calculateTotalTime(recipe.info.prep, recipe.info.cook)
-        : null;
-
-    const title = recipe.title.charAt(0).toUpperCase() + recipe.title.slice(1);
-
-    // update info table
-    const newInfo: NewInfo = {
-      ...recipe.info,
-      recipeId: recipe.uid,
-      id: id,
-      title: title,
-      keywords: recipe?.info?.keywords || null,
-      ingredients: ingredients || null,
-      prep: recipe?.info?.prep || null,
-      cook: recipe?.info?.cook || null,
-      total: totalTime,
-      createByName: recipe.info?.createByName || "",
-      createdBy: recipe.info?.createdBy || user.id,
-      lastUpdatedBy: user.id,
-      lastUpdatedByName: user.name! || "",
-      isPublic: isPublic,
-    };
-    await db.update(info).set(newInfo).where(eq(info.recipeId, recipe.uid));
-
-    // remove the info from the recipe as it's been set on another table
-    delete recipe.info;
-
     // define the new recipe
-    const newRecipe: NewPartialRecipe = {
+    const newRecipe: NewRecipe = {
       ...recipe,
       id: id,
-      title: title,
-      isPublic: isPublic,
-      // steps: steps,
-      lastUpdatedBy: user.id,
-      lastUpdatedByName: user.name! || "",
+      title: recipe.title.charAt(0).toUpperCase() + recipe.title.slice(1),
+      ingredientsList: ingredientsList,
     };
 
     const setRecipe = await db
@@ -92,7 +50,6 @@ export async function PUT(req: NextRequest) {
     console.log(`Edited recipe ${newRecipe.uid}`, {
       message: `Recipe successfully edited, ${setRecipe}`,
       recipe: newRecipe,
-      info: newInfo,
     });
 
     return NextResponse.json(

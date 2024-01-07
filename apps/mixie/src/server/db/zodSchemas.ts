@@ -1,34 +1,22 @@
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
-import { recipes, info, ratings, users, bookmarks } from "./schemas";
-import { unit, amount } from "./zodEnums";
+import { bookmarks, ratings, recipes, users } from "./schemas";
+import { amount, unit } from "./zodEnums";
 
 // join the info and ingredients to the recipe
-
-export const infoSchema = createInsertSchema(info, {
-  ingredients: z.string().array().nullable().optional(),
-  imgUrl: z.string().url({ message: "Must be a valid url" }),
-  imgAlt: z.string({ required_error: "Image must have an alt text" }),
-  keywords: z.object({ value: z.string() }).array().optional(),
-  prep: z
-    .string()
-    .regex(/^(\d{1,2}[hms]\s?)+$/i, {
-      message:
-        "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
-    })
-    .optional(),
-  cook: z
-    .string()
-    .regex(/^(\d{1,2}[hms]\s?)+$/i, {
-      message:
-        "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
-    })
-    .optional(),
-});
 
 const selectValue = z.object({
   value: z.string(),
   label: z.string(),
+});
+
+export const imageAttributesSchema = z.object({
+  alt: z.string(),
+  photographer: z.string().optional(),
+  photographerLink: z.string().url().optional(),
+  source: z.enum(["unsplash", "pexels", "upload", "other"]).optional(),
+  width: z.number().optional(),
+  height: z.number().optional(),
 });
 
 export const ingredientSchema = z.object({
@@ -44,7 +32,7 @@ export const ingredientSchema = z.object({
       value: "grams",
     })
     .nullable(),
-  quantity: z.number().optional().nullable(),
+  quantity: z.number().nullish(),
   amount: selectValue
     .extend({
       value: amount,
@@ -64,25 +52,63 @@ export const stepSchema = z.object({
 export const recipeSchema = createInsertSchema(recipes, {
   steps: stepSchema.array().optional(),
   ingredients: ingredientSchema.array().optional(),
+  ingredientsList: z.string().array().nullish(),
+  imageUrl: z
+    .string({
+      required_error: "An image must be present when a recipe is public",
+    })
+    .url({ message: "Must be a valid url" })
+    .nullish(),
+  imageAttributes: imageAttributesSchema.nullish(),
+  keywords: z.object({ value: z.string() }).array().nullish(),
+  prep: z
+    .string({ required_error: "Prep time is required for public recipes" })
+    .regex(/^(\d{1,2}[hms]\s?)+$/i, {
+      message:
+        "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
+    })
+    .nullish(),
+  cook: z
+    .string({ required_error: "Cook time is required for public recipes" })
+    .regex(/^(\d{1,2}[hms]\s?)+$/i, {
+      message:
+        "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
+    })
+    .nullish(),
 });
 
 export const ratingsSchema = createInsertSchema(ratings);
 
 // extend the recipe schema to include the info and ingredients
-export const recipeFormSchema = recipeSchema.extend({
-  info: infoSchema.optional(),
-});
+export const recipeFormSchema = recipeSchema.superRefine((values, ctx) => {
+  if (values.isPublic) {
+    ["cook", "prep", "imageUrl"].forEach((field) => {
+      if (!values[field]) {
+        ctx.addIssue({
+          code: "custom",
+          message: `${field} is required for public recipes`,
+          path: [field],
+        });
+      }
+    });
 
-// select
+    if (!values.ingredients || values.ingredients.length === 0) {
+      ctx.addIssue({
+        code: "custom",
+        message: "At least one ingredient is required for public recipes",
+        path: ["ingredients"],
+      });
+    }
 
-const recipeSchemaSelect = createSelectSchema(recipes, {
-  steps: stepSchema.array().optional(),
-  ingredients: ingredientSchema.array().optional(),
-});
-
-export const recipesSelect = recipeSchemaSelect.extend({
-  info: infoSchema,
-  ratings: ratingsSchema.optional(),
+    if (!values.steps || values.steps.length === 0) {
+      ctx.addIssue({
+        code: "custom",
+        message: "At least one step is required for public recipes",
+        path: ["steps"],
+      });
+    }
+  }
+  return values;
 });
 
 export const userSchema = createInsertSchema(users);
