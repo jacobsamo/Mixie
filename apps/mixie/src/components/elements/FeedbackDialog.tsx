@@ -1,67 +1,37 @@
 "use client";
-import React from "react";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { InfoIcon, BugIcon, Lightbulb } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { BugIcon, Lightbulb, Loader2, MessageCirclePlus, Newspaper } from "lucide-react";
+import React from "react";
 
-import { Input } from "@/components/ui/input";
-import useUser from "../../hooks/useUser";
-import { useForm } from "react-hook-form";
-import { register } from "module";
-import { Textarea } from "@/components/ui/textarea";
-import { LetterSpacingIcon } from "@radix-ui/react-icons";
-import toast from "react-hot-toast";
+import { DialogClose } from "@radix-ui/react-dialog";
 
-type FeedbackType = "bug" | "feature" | "other";
-
-interface FeedbackDialogForm {
-  name: string;
-  email: string;
-  type: FeedbackType;
-  message: string;
+interface FeedbackDialogProps {
+  Trigger?: React.ReactNode;
 }
 
-const TypeIcon = ({ type }: { type: FeedbackType }) => {
-  switch (type) {
-    case "bug":
-      return <BugIcon />;
-    case "feature":
-      return <Lightbulb />;
-    case "other":
-      return <InfoIcon />;
-  }
-};
-
-const FeedbackDialog = () => {
-  const { user } = useUser();
-
-  const { handleSubmit, getValues, setValue, control } =
-    useForm<FeedbackDialogForm>({
-      defaultValues: {
-        name: user?.name || "",
-        email: user?.email,
-      },
-    });
-
-  const onSubmit = (data: FeedbackDialogForm) => {
-    console.log(data);
-    toast.success("Feedback Submitted");
-  };
-
+const FeedbackDialog = ({ Trigger }: FeedbackDialogProps) => {
   return (
     <Dialog>
-      <DialogTrigger className="flex cursor-pointer flex-row items-center gap-1 rounded-lg bg-white p-1 px-2 dark:bg-grey">
-        <LetterSpacingIcon /> Feedback
+      <DialogTrigger>
+        {Trigger ? (
+          Trigger
+        ) : (
+          <div className="flex flex-row gap-1 border-none outline-none">
+            <MessageCirclePlus /> Feedback
+          </div>
+        )}
       </DialogTrigger>
-      <DialogContent className="print:hidden">
+      <DialogContent className="flex h-[80%] max-w-full flex-col gap-2 p-3 lg:max-w-[80%]">
         <DialogHeader>
           <DialogTitle>Feedback</DialogTitle>
           <DialogDescription>
@@ -69,30 +39,41 @@ const FeedbackDialog = () => {
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-          <span className="flex flex-row gap-2">
-            {["bug", "feature", "other"].map((type, index) => (
-              <Button
-                key={index}
-                aria-label={`get feedback type to ${type}`}
-                unstyled
-                onClick={() => {
-                  setValue("type", type as FeedbackType);
-                }}
-                className={`${getValues("type") == type ? "" : "opacity-75"}`}
-              >
-                <TypeIcon type={type as FeedbackType} />
-                {type}
-              </Button>
-            ))}
-          </span>
+        <Tabs defaultValue="feature" className="h-full">
+          <TabsList>
+            <TabsTrigger value="feature" className="flex flex-row gap-2">
+              <Lightbulb />
+              Feature Request
+            </TabsTrigger>
+            <TabsTrigger value="bug" className="flex flex-row gap-2">
+              <BugIcon /> Bug Report
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="feature" className="h-full">
+            <iframe
+              width="100%"
+              height="100%"
+              src="https://docs.google.com/forms/d/e/1FAIpQLSdFXWvAvMdvuCXySmMJSCTjz-YN0X0m1f8pVG1pZ0Pk2kqihg/viewform?embedded=true"
+            >
+              <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+            </iframe>
+          </TabsContent>
+          <TabsContent value="bug" className="h-full">
+            <iframe
+              width="100%"
+              height="100%"
+              src="https://docs.google.com/forms/d/e/1FAIpQLSdydiU39LqmDfraMErw1u8WvfxkRoqnvdct08MAykM5W8vxww/viewform?embedded=true"
+            >
+              <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+            </iframe>
+          </TabsContent>
+        </Tabs>
 
-          <Textarea control={control} id="message" placeholder="Feedback" />
-
-          <Button aria-label="submit feedback" type="submit">
-            Submit
-          </Button>
-        </form>
+        <DialogFooter>
+          <DialogClose>
+            <Button>Done</Button>
+          </DialogClose>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

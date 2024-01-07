@@ -64,4 +64,4 @@ const StepContainer = () => {
   );
 };
 
-export { StepContainer };
+export default StepContainer;

@@ -50,7 +50,7 @@ export default async function Page() {
             fill
             className={styles.heroImg}
           /> */}
-        <LandingText delay={1} />
+        <LandingText delay={0.2} />
 
         <SearchTrigger>
           <div className="relative flex h-[2.8rem] min-w-max max-w-[28rem] resize items-center rounded-xl bg-white p-1 pr-5 shadow-searchBarShadow dark:bg-grey dark:text-white">

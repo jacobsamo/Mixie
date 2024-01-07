@@ -16,6 +16,7 @@ import Link from "next/link";
 import { useState } from "react";
 import useUser from "../../hooks/useUser";
 import CreateRecipeDialog from "../elements/CreateRecipeDialog";
+import FeedbackDialog from "../elements/FeedbackDialog";
 
 const UserProfile = () => {
   const { session, user } = useUser();
@@ -72,6 +73,7 @@ const UserProfile = () => {
         >
           <ScrollText /> Drafts
         </Link>
+        <FeedbackDialog />
         <Link
           onClick={() => setOpen(false)}
           href={`/${user?.id}/settings?activeLink=profile`}

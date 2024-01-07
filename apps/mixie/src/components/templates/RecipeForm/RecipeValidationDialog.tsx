@@ -18,6 +18,7 @@ import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import * as z from "zod";
 import { onSubmit } from "./form";
+import SubmittingButton from "./SubmittingButton";
 
 interface CreateRecipeDialogProps {
   open: boolean;
@@ -83,14 +84,13 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
             >
               Go Back
             </Button>
-            <Button
+            <SubmittingButton
               aria-label="save recipe"
               type="submit"
               className="m-2 w-52"
-              disabled={formState.isSubmitting}
             >
               Save
-            </Button>
+            </SubmittingButton>
           </DialogFooter>
         </form>
       </DialogContent>

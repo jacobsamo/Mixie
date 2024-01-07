@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import SearchTrigger from "./SearchTrigger";
 import UserProfile from "./UserProfile";
 import VersionChip from "./VersionChip";
+import FeedbackButton from "@/components/elements/FeedbackButton";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -87,6 +88,7 @@ const Navbar = () => {
         <SearchTrigger>
           <SearchIcon className="h-8 w-8" />
         </SearchTrigger>
+        <FeedbackButton />
         {isMobile && (
           <button
             type="button"

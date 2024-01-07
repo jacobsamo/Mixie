@@ -84,7 +84,7 @@ const ImageUpload = () => {
           />
           {imageAttributes?.photographer &&
             imageAttributes.photographerLink && (
-              <p className="absolute bottom-3 left-3">
+              <div className="absolute bottom-3 left-3">
                 Photo by{" "}
                 <Link
                   href={imageAttributes.photographerLink}
@@ -103,7 +103,7 @@ const ImageUpload = () => {
                 >
                   Unsplash
                 </Link>
-              </p>
+              </div>
             )}
         </>
       )}
@@ -122,13 +122,13 @@ const ImageUpload = () => {
           <p>{errors.imageUrl?.message}</p>
 
           {image ? (
-            <p className="flex flex-row gap-2">
+            <div className="flex flex-row gap-2">
               <Edit2 /> Edit Image
-            </p>
+            </div>
           ) : (
-            <p className="flex flex-row gap-2">
+            <div className="flex flex-row gap-2">
               <PlusCircleIcon /> Add an Image
-            </p>
+            </div>
           )}
         </DialogTrigger>
         <DialogContent className="h-4/5 w-11/12 overflow-scroll md:w-1/2">

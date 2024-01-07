@@ -1,22 +1,10 @@
 "use client";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import TagInput from "@/components/ui/taginput";
-import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeftIcon, EyeIcon } from "lucide-react";
-import { useEffect, useState } from "react";
-import { Controller, useFormContext } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { SwitchInput } from "@/components/ui/switch";
-import { onSubmit } from "./form";
+import { EyeIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
 import RecipeValidationDialog from "./RecipeValidationDialog";
+import SubmittingButton from "./SubmittingButton";
 
 interface OverlayProps {
   onPreview: () => void;
@@ -58,13 +46,9 @@ const Overlay = ({ onPreview, isDisabled }: OverlayProps) => {
 
       {/* Bottom Bar */}
       <div className="fixed bottom-5 right-3 z-50 flex justify-end">
-        <Button
-          aria-label="Save"
-          type="submit"
-          disabled={formState.isSubmitting}
-        >
+        <SubmittingButton aria-label="Save" type="submit">
           Save
-        </Button>
+        </SubmittingButton>
       </div>
 
       <RecipeValidationDialog open={open} setOpen={setOpen} />

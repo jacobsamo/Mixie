@@ -102,4 +102,4 @@ const IngredientContainer = () => {
   );
 };
 
-export { IngredientContainer };
+export default IngredientContainer;

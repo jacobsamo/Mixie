@@ -19,14 +19,14 @@ import { Controller, FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
 import RecipePageComponent from "../RecipePage/RecipePageComponent";
-import { IngredientContainer } from "./IngredientContainer";
 import Overlay from "./Overlay";
-import { StepContainer } from "./StepContainer";
+// import  StepContainer  from "./StepContainer";
 import { onSubmit } from "./form";
 import LoadingImageUpload from "./loadingstates/LoadingImageUpload";
 
+const IngredientContainer = dynamic(() => import("./IngredientContainer"));
+const StepContainer = dynamic(() => import("./StepContainer"));
 const ImageUpload = dynamic(() => import("./ImageUpload"), {
-  ssr: false,
   loading: () => <LoadingImageUpload />,
 });
 
@@ -275,10 +275,6 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
                 label="Notes, Tips or Suggestions"
               />
             </>
-          )}
-
-          {process.env.NODE_ENV === "development" && (
-            <DevTool control={control} />
           )}
         </form>
         {preview && <RecipePageComponent recipe={gotRecipe} />}

@@ -43,8 +43,8 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
             />
             {recipe.imageAttributes?.photographer &&
               recipe.imageAttributes.photographerLink && (
-                <p
-                  className="absolute bottom-2 left-2 bg-gray-700/20 drop-shadow-xl"
+                <div
+                  className="absolute bottom-2 left-2 bg-gray-700/20 text-white drop-shadow-xl"
                   style={{ textShadow: "4px 4px 20px rgba(0, 0, 0, 1)" }}
                 >
                   Photo by{" "}
@@ -65,7 +65,7 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
                   >
                     Unsplash
                   </Link>
-                </p>
+                </div>
               )}
           </div>
           <div className="py-2">
