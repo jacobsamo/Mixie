@@ -1,4 +1,4 @@
-import { getServerAuthSession } from "@server/auth";
+import { getServerAuthSession } from "@/server/auth";
 import Link from "next/link";
 
 export default async function NotFoundUser() {

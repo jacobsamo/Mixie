@@ -1,13 +1,13 @@
+import { db } from "@/server/db/index";
+import { recipes } from "@/server/db/schemas";
+import { NewRecipe } from "@/server/db/types";
 import {
   convertIngredients,
   getRecipeJsonLd,
   splitTime,
-} from "@lib/services/recipeJsonLDParsing";
-import { recipeId } from "@lib/utils";
-import { db } from "@db/index";
-import { info, recipes } from "@db/schemas";
-import { NewInfo, NewPartialRecipe } from "@db/types";
-import { getServerAuthSession } from "@server/auth";
+} from "@/lib/services/recipeJsonLDParsing";
+import { recipeId } from "@/lib/utils";
+import { getServerAuthSession } from "@/server/auth";
 import { NextResponse, type NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 import * as z from "zod";
@@ -35,37 +35,20 @@ export async function POST(req: NextRequest) {
 
       const newTitle = title.charAt(0).toUpperCase() + title.slice(1);
 
-      // general info about the recipe
-      const newInfo: NewInfo = {
-        recipeId: uid,
-        id,
-        title: newTitle,
-        createByName: user.name! || "",
-        createdBy: user.id,
-        lastUpdatedBy: user.id,
-        lastUpdatedByName: user.name! || "",
-        isPublic: false,
-      };
-
       // the recipe itself
-      const newRecipe: NewPartialRecipe = {
+      const newRecipe: NewRecipe = {
         uid: uid,
         id,
         title: newTitle,
-        createByName: user.name! || "",
         createdBy: user.id,
-        lastUpdatedBy: user.id,
-        lastUpdatedByName: user.name! || "",
         isPublic: false,
       };
 
-      console.log(`Created recipe: ${newRecipe.uid}`, {
+      console.log(`Created recipe by title: ${newRecipe.uid}`, {
         message: `Recipe successfully created`,
         recipe: newRecipe,
-        info: newInfo,
       });
 
-      await db.insert(info).values(newInfo);
       await db.insert(recipes).values(newRecipe);
 
       return NextResponse.json(
@@ -84,53 +67,36 @@ export async function POST(req: NextRequest) {
       if (recipe) {
         const uid = uuidv4();
 
-        const newInfo: NewInfo = {
-          recipeId: uid,
-          id: recipeId(recipe.name),
-          title: recipe.name,
-          createByName: user.name! || "",
-          createdBy: user.id,
-          lastUpdatedBy: user.id,
-          lastUpdatedByName: user.name! || "",
-          cook: splitTime(recipe.cookTime),
-          prep: splitTime(recipe.prepTime),
-          total: splitTime(recipe.totalTime),
-          rating: recipe.aggregateRating?.ratingValue || null,
-          serves: recipe.recipeYield || null,
-          imgUrl: recipe.image.url || null,
-          imgAlt: recipe.image.alt || recipe.name || "recipe image",
-          isPublic: false,
-          keywords: recipe.keywords.split(",").map((keyword: string) => {
-            return { value: keyword };
-          }),
-          ingredients: ingredients.map((ingredient) => ingredient.title),
-        };
-
-        const newRecipe: NewPartialRecipe = {
+        const newRecipe: NewRecipe = {
           uid: uid,
           id: recipeId(recipe.name),
           title: recipe.name,
-          createByName: user.name! || "",
-          createdBy: user.id,
-          lastUpdatedBy: user.id,
-          lastUpdatedByName: user.name! || "",
           description: recipe.description.replace(/<[^>]*>?/gm, "") || null,
           isPublic: false,
           steps:
             recipe.recipeInstructions.map((step: string) => {
               return { step_body: step };
             }) || null,
-          ingredients,
+          ingredients: ingredients,
           source: link,
+          cook: splitTime(recipe.cookTime),
+          prep: splitTime(recipe.prepTime),
+          total: splitTime(recipe.totalTime),
+          rating: recipe.aggregateRating?.ratingValue || null,
+          serves: recipe.recipeYield || null,
+          imageUrl: recipe.image.url || null,
+          imageAttributes: recipe.image.alt || recipe.name || "recipe image",
+          keywords: recipe.keywords.split(",").map((keyword: string) => {
+            return { value: keyword };
+          }),
+          ingredientsList: ingredients.map((ingredient) => ingredient.title),
+          createdBy: user.id,
         };
 
-        console.log(`Created recipe: ${newRecipe.uid}`, {
+        console.log(`Created recipe by link: ${newRecipe.uid}`, {
           message: `Recipe successfully created`,
           recipe: newRecipe,
-          info: newInfo,
         });
-
-        await db.insert(info).values(newInfo);
         await db.insert(recipes).values(newRecipe);
 
         return NextResponse.json(

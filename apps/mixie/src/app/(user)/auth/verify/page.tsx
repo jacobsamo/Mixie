@@ -1,7 +1,7 @@
 "use client";
-import { env } from "@/env.mjs";
-import OtpInput from "@/src/common/components/elements/OtpInput";
-import { Button } from "@/src/common/components/ui/button";
+import { env } from "env";
+import OtpInput from "@/components/elements/OtpInput";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
