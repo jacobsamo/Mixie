@@ -1,5 +1,5 @@
 "use client";
-import type { Ingredient } from "@/server/db/types";
+import type { Ingredient } from "@/types";
 import React from "react";
 import { CheckCircleIcon, Circle } from "lucide-react";
 import { displayIngredient } from "@/lib/utils";

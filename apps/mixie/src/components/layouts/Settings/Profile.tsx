@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { User } from "@/server/db/types";
+import { User } from "@/types";
 import ImageUploadDialog from "@/components/elements/ImageUploadDialog";
 import { DialogTrigger } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";

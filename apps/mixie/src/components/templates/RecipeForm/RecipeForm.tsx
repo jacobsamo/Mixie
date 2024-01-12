@@ -3,8 +3,8 @@ import { SelectComponent } from "@/components/ui/SelectComponent";
 import { Input } from "@/components/ui/input";
 import TagInput from "@/components/ui/taginput";
 import { Textarea } from "@/components/ui/textarea";
-import { NewRecipe, Recipe } from "@/server/db/types";
-import { recipeFormSchema } from "@/server/db/zodSchemas";
+import { NewRecipe, Recipe } from "@/types";
+import { recipeFormSchema } from "@/types/zodSchemas";
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {

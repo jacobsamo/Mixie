@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { SwitchInput } from "@/components/ui/switch";
 import TagInput from "@/components/ui/taginput";
 import { Textarea } from "@/components/ui/textarea";
-import { recipeFormSchema } from "@/server/db/zodSchemas";
+import { recipeFormSchema } from "@/types/zodSchemas";
 import { ArrowLeftIcon } from "lucide-react";
 import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";

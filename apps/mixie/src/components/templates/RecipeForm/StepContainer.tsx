@@ -3,7 +3,7 @@ import { Step } from "./Step";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { PlusCircleIcon } from "lucide-react";
-import { recipeFormSchema } from "@/server/db/zodSchemas";
+import { recipeFormSchema } from "@/types/zodSchemas";
 import * as z from "zod";
 import DraggableContainer from "./Dragablecontainer";
 import DraggableItem from "./DraggableItem";

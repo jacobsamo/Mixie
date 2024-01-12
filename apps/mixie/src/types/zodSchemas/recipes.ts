@@ -1,7 +1,7 @@
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { bookmarks, ratings, recipes } from "@/server/db/schemas";
+import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
-import { bookmarks, ratings, recipes, users } from "./schemas";
-import { amount, unit } from "./zodEnums";
+import { amount, unit } from "./enums";
 
 // join the info and ingredients to the recipe
 
@@ -110,7 +110,5 @@ export const recipeFormSchema = recipeSchema.superRefine((values, ctx) => {
   }
   return values;
 });
-
-export const userSchema = createInsertSchema(users);
 
 export const bookmarkSchema = createInsertSchema(bookmarks);

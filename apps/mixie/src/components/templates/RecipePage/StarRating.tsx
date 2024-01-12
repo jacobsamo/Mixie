@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Rating } from "@/server/db/types";
+import { Rating } from "@/types";
 import toast from "react-hot-toast";
 
 interface StarRatingProps {

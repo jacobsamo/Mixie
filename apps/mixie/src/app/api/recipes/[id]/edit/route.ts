@@ -1,7 +1,7 @@
 import { db } from "@/server/db/index";
 import { recipes } from "@/server/db/schemas";
-import { NewRecipe, SelectValue } from "@/server/db/types";
-import { recipeFormSchema } from "@/server/db/zodSchemas";
+import { NewRecipe, SelectValue } from "@/types";
+import { recipeFormSchema } from "@/types/zodSchemas";
 import { calculateTotalTime, recipeId } from "@/lib/utils";
 import { getServerAuthSession } from "@/server/auth";
 import { eq } from "drizzle-orm";

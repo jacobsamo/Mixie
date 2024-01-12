@@ -2,8 +2,8 @@
 import { env } from "env";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
-import { User } from "@/server/db/types";
-import { userSchema } from "@/server/db/zodSchemas";
+import { User } from "@/types";
+import { userSchema } from "@/types/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import dynamic from "next/dynamic";

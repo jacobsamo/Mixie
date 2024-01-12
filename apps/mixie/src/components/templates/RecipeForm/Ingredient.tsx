@@ -1,9 +1,9 @@
 import { GripVertical, Trash2Icon } from "lucide-react";
 import { units } from "@/lib/services/data";
 import { Controller, useFormContext } from "react-hook-form";
-import { Ingredient as IngredientType } from "@/server/db/types";
+import { Ingredient as IngredientType } from "@/types";
 import { Input } from "@/components/ui/input";
-import { recipeFormSchema } from "@/server/db/zodSchemas";
+import { recipeFormSchema } from "@/types/zodSchemas";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { SelectComponent } from "@/components/ui/SelectComponent";

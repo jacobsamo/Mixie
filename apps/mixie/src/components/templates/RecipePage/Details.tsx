@@ -2,7 +2,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import StepContainer from "./step/StepContainer";
 import AddBatch from "./ingredient/AddBatch";
-import type { Ingredient as IngredientType, Step } from "@/server/db/types";
+import type { Ingredient as IngredientType, Step } from "@/types";
 import Ingredient from "./ingredient/Ingredient";
 import { cva, type VariantProps } from "class-variance-authority";
 import { set } from "zod";

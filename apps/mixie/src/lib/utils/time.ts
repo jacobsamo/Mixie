@@ -1,11 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import Fraction from "fraction.js";
-import {
-  Amount,
-  Step,
-  type Ingredient as IngredientType,
-} from "@/server/db/types";
+import { Amount, Step, type Ingredient as IngredientType } from "@/types";
 import { Metadata } from "next";
 import Ingredient from "@/components/templates/RecipePage/ingredient/Ingredient";
 

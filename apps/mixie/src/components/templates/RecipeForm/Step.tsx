@@ -1,7 +1,7 @@
 import { Trash2Icon } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { useFormContext } from "react-hook-form";
-import { recipeFormSchema } from "@/server/db/zodSchemas";
+import { recipeFormSchema } from "@/types/zodSchemas";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 interface StepProps {

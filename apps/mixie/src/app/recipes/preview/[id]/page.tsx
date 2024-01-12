@@ -2,7 +2,7 @@ import { getServerAuthSession } from "@/server/auth";
 import RecipePageComponent from "@/components/templates/RecipePage/RecipePageComponent";
 import { db } from "@/server/db/index";
 import { recipes as recipeSchema } from "@/server/db/schemas";
-import type { Recipe } from "@/server/db/types";
+import type { Recipe } from "@/types";
 import { and, eq } from "drizzle-orm";
 import { notFound, redirect } from "next/navigation";
 

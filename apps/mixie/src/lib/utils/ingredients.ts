@@ -1,5 +1,5 @@
 // import  Ingredient from "@/components/templates/RecipePage/ingredient/Ingredient";
-import { Amount, Step, type Ingredient } from "@/server/db/types";
+import { Amount, Step, type Ingredient } from "@/types";
 import Fraction from "fraction.js";
 import * as fuzzball from "fuzzball";
 

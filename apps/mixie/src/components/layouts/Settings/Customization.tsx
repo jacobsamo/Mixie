@@ -1,5 +1,5 @@
 import { TFont, TTheme } from "@/server/db/enum-types";
-import { User } from "@/server/db/types";
+import { User } from "@/types";
 import { cva } from "class-variance-authority";
 import { useFormContext } from "react-hook-form";
 

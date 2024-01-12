@@ -1,7 +1,7 @@
 import RecipePageComponent from "@/components/templates/RecipePage/RecipePageComponent";
 import { db } from "@/server/db/index";
 import { recipes as recipeSchema } from "@/server/db/schemas";
-import type { Recipe } from "@/server/db/types";
+import type { Recipe } from "@/types";
 import { constructMetadata, displayIngredient } from "@/lib/utils";
 import { eq } from "drizzle-orm";
 import { Metadata } from "next";

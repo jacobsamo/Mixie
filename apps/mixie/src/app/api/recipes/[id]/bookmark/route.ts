@@ -1,7 +1,7 @@
-import { Bookmark } from "@/server/db/types";
+import { Bookmark } from "@/types";
 import { db } from "@/server/db/index";
 import { bookmarks } from "@/server/db/schemas";
-import { bookmarkSchema } from "@/server/db/zodSchemas";
+import { bookmarkSchema } from "@/types/zodSchemas";
 import { getServerAuthSession } from "@/server/auth";
 import { NextResponse, type NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid";

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs";
-import { recipeFormSchema } from "@/server/db/zodSchemas";
+import { recipeFormSchema } from "@/types/zodSchemas";
 import { UploadDropzone } from "@/lib/utils/uploadthing";
 import { Edit2, LinkIcon, PlusCircleIcon, Upload } from "lucide-react";
 import Image from "next/image";

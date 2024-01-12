@@ -1,5 +1,5 @@
 "use client";
-import type { Step as TStep, Ingredient } from "@/server/db/types";
+import type { Step as TStep, Ingredient } from "@/types";
 import React from "react";
 import IngredientChips from "./IngredientChips";
 import { CheckCircleIcon, Circle } from "lucide-react";

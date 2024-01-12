@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import Image, { type ImageProps } from "next/image";
 import { cn } from "@/lib/utils";
 import clsx from "clsx";
-import { ImageAttributes } from "@/server/db/types";
+import { ImageAttributes } from "@/types";
 
 export type CardRecipe = {
   recipeId?: string;

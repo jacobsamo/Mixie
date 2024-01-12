@@ -1,5 +1,5 @@
 import React from "react";
-import { Ingredient, Step } from "@/server/db/types";
+import { Ingredient, Step } from "@/types";
 import { displayIngredient, matchIngredients } from "@/lib/utils";
 
 interface IngredientChipsProps {

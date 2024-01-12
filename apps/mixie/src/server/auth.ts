@@ -15,7 +15,7 @@ import { env } from "env";
 import { TFont, TTheme } from "@/server/db/enum-types";
 import { db } from "@/server/db/index";
 import * as schema from "@/server/db/schemas";
-import { User as DbUser } from "@/server/db/types";
+import { User as DbUser } from "@/types";
 import { sendEmail } from "./emails";
 import LoginLink from "./emails/login";
 

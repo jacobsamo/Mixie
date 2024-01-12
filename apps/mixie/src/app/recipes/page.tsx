@@ -1,7 +1,7 @@
 import { CardSquare } from "@/components/elements/Cards";
 import { db } from "@/server/db";
 import { recipes as recipesSchema } from "@/server/db/schemas";
-import { Recipe } from "@/server/db/types";
+import { Recipe } from "@/types";
 import RecipeSearch from "@/components/modules/RecipeSearch";
 import { constructMetadata } from "@/lib/utils";
 import { eq } from "drizzle-orm";

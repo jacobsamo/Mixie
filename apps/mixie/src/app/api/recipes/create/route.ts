@@ -1,6 +1,6 @@
 import { db } from "@/server/db/index";
 import { recipes } from "@/server/db/schemas";
-import { NewRecipe } from "@/server/db/types";
+import { NewRecipe } from "@/types";
 import {
   convertIngredients,
   getRecipeJsonLd,
