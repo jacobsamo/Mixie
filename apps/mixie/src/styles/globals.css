@@ -10,6 +10,10 @@ div#__next > div {
   height: 100%;
 }
 
+* {
+  min-width: 0;
+}
+
 :root {
   @apply bg-white text-black;
 }

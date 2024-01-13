@@ -14,8 +14,7 @@ import {
   BugIcon,
   Lightbulb,
   Loader2,
-  MessageCirclePlus,
-  Newspaper,
+  MessageCirclePlus
 } from "lucide-react";
 import React from "react";
 
@@ -59,6 +58,7 @@ const FeedbackDialog = ({ Trigger }: FeedbackDialogProps) => {
             <iframe
               width="100%"
               height="100%"
+              loading="lazy"
               src="https://docs.google.com/forms/d/e/1FAIpQLSdFXWvAvMdvuCXySmMJSCTjz-YN0X0m1f8pVG1pZ0Pk2kqihg/viewform?embedded=true"
             >
               <Loader2 className="ml-2 h-4 w-4 animate-spin" />
@@ -68,6 +68,7 @@ const FeedbackDialog = ({ Trigger }: FeedbackDialogProps) => {
             <iframe
               width="100%"
               height="100%"
+              loading="lazy"
               src="https://docs.google.com/forms/d/e/1FAIpQLSdydiU39LqmDfraMErw1u8WvfxkRoqnvdct08MAykM5W8vxww/viewform?embedded=true"
             >
               <Loader2 className="ml-2 h-4 w-4 animate-spin" />

@@ -10,6 +10,35 @@ const selectValue = z.object({
   label: z.string(),
 });
 
+export const createRecipeSchema = z
+  .object({
+    title: z.string().nullish(),
+    link: z.string().nullish(),
+  })
+  .superRefine((values, ctx) => {
+    if (!values.title && !values.link) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Either a title or a link is required",
+        path: ["title", "link"],
+      });
+    }
+
+    if (values.link) {
+      try {
+        new URL(values.link);
+      } catch (err) {
+        ctx.addIssue({
+          code: "custom",
+          message: "Link must be a valid url",
+          path: ["link"],
+        });
+      }
+    }
+
+    return values;
+  });
+
 export const imageAttributesSchema = z.object({
   alt: z.string(),
   photographer: z.string().optional(),
