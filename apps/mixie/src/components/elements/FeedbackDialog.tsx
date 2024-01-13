@@ -10,12 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  BugIcon,
-  Lightbulb,
-  Loader2,
-  MessageCirclePlus
-} from "lucide-react";
+import { BugIcon, Lightbulb, Loader2, MessageCirclePlus } from "lucide-react";
 import React from "react";
 
 import { DialogClose } from "@radix-ui/react-dialog";
@@ -45,7 +40,7 @@ const FeedbackDialog = ({ Trigger }: FeedbackDialogProps) => {
         </DialogHeader>
 
         <Tabs defaultValue="feature" className="h-full">
-          <TabsList>
+          <TabsList className="">
             <TabsTrigger value="feature" className="flex flex-row gap-2">
               <Lightbulb />
               Feature Request

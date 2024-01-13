@@ -70,9 +70,14 @@ export default async function RecipeViewPage({
   return (
     <main className="h-fit min-h-full w-full">
       <section className="flex h-52 items-center justify-center">
-        <RecipeSearch />
+        <RecipeSearch shouldAutoFilter={true} />
       </section>
 
+      {(!searchedRecipes || searchedRecipes?.length == 0) && searchValue && (
+        <p className="text0-white text-center text-step--2">
+          No recipes found for your search
+        </p>
+      )}
       <section className="flex flex-wrap gap-2 p-3">
         {(searchedRecipes && searchedRecipes?.length > 0
           ? searchedRecipes

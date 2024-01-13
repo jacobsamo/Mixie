@@ -1,13 +1,12 @@
 "use client";
+import FeedbackButton from "@/components/elements/FeedbackButton";
 import clsx from "clsx";
-import { SearchIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import SearchTrigger from "./SearchTrigger";
+import NavbarSearch from "../elements/NavbarSearch";
 import UserProfile from "./UserProfile";
 import VersionChip from "./VersionChip";
-import FeedbackButton from "@/components/elements/FeedbackButton";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -85,9 +84,7 @@ const Navbar = () => {
       {/* hamburger - show under 768px (md:) */}
       <div className="flex flex-row items-center gap-1">
         {/* <SearchDialog buttonType="searchIcon" /> */}
-        <SearchTrigger>
-          <SearchIcon className="h-8 w-8" />
-        </SearchTrigger>
+        <NavbarSearch />
         <FeedbackButton />
         {isMobile && (
           <button

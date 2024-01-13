@@ -1,5 +1,4 @@
 import { CardRectangle } from "@/components/elements/Cards";
-import SearchTrigger from "@/components/modules/SearchTrigger";
 import {
   Carousel,
   CarouselContent,
@@ -13,6 +12,7 @@ import { eq } from "drizzle-orm";
 import { SearchIcon } from "lucide-react";
 import { unstable_cache } from "next/cache";
 import LandingText from "@/components/elements/LandingText";
+import RecipeSearch from "@/components/modules/RecipeSearch";
 
 export const revalidate = 3600;
 
@@ -52,12 +52,7 @@ export default async function Page() {
           /> */}
         <LandingText delay={0.2} />
 
-        <SearchTrigger>
-          <div className="relative flex h-[2.8rem] min-w-max max-w-[28rem] resize items-center rounded-xl bg-white p-1 pr-5 shadow-searchBarShadow dark:bg-grey dark:text-white">
-            <SearchIcon className="ml-5 h-5 w-5" />
-            <span className="m-1">Search for your next taste sensation</span>
-          </div>
-        </SearchTrigger>
+        <RecipeSearch />
       </section>
       <section className="pt-9 ">
         <h2 className="pb-4 text-center text-step--1">Top Recipes</h2>
