@@ -1,4 +1,4 @@
-import { bookmarks, ratings, recipes } from "@/server/db/schemas";
+import { bookmarks, collections, ratings, recipes } from "@/server/db/schemas";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 import { amount, unit } from "./enums";
@@ -141,3 +141,4 @@ export const recipeFormSchema = recipeSchema.superRefine((values, ctx) => {
 });
 
 export const bookmarkSchema = createInsertSchema(bookmarks);
+export const collectionSchema = createInsertSchema(collections);

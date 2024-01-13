@@ -6,6 +6,7 @@ import Image, { type ImageProps } from "next/image";
 import { cn } from "@/lib/utils";
 import clsx from "clsx";
 import { ImageAttributes } from "@/types";
+import BookmarkRecipeDialog from "./BookmarkRecipeDialog";
 
 export type CardRecipe = {
   recipeId?: string;
@@ -29,12 +30,12 @@ export function addBookMark(recipe: CardRecipe) {
     userId: null,
   };
 
-  const setBookmark = fetch(`/api/recipes/${bookmark.recipeId}/bookmark`, {
+  const setBookmark = fetch(`/api/recipes/bookmark/${bookmark.recipeId}`, {
     method: "POST",
     body: JSON.stringify(bookmark),
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+      Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
     },
   });
 
@@ -58,15 +59,7 @@ export const BookmarkButton = ({
   if (!session) return null;
 
   return (
-    <button
-      onClick={() => addBookMark(recipe)}
-      className="absolute bottom-2 right-2"
-    >
-      <HeartIcon
-        className={`h-8 w-8 cursor-pointer drop-shadow-xl`}
-        style={{ textShadow: "4px 4px 20px rgba(0, 0, 0, 1)" }}
-      />
-    </button>
+    <BookmarkRecipeDialog recipeId={recipe.uid!} userId={session.user.id} />
   );
 };
 

@@ -91,7 +91,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+          Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
         },
         body: JSON.stringify({ title: recipeValue.title }),
       }).then((res) => {

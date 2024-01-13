@@ -12,7 +12,7 @@ import {
   varchar,
 } from "drizzle-orm/mysql-core";
 // imoport
-import { ImageAttributes, Ingredient, Recipe, Step } from "../types";
+import { ImageAttributes, Ingredient, Recipe, Step } from "@/types";
 import { recipe_versions } from "./versions";
 import { users } from "./auth";
 import {
@@ -22,11 +22,6 @@ import {
   mealTime,
   sweet_savoury,
 } from "./enums";
-
-type SelectValue = {
-  value: string;
-  label: string;
-};
 
 // Recipes
 export const recipes = mysqlTable("recipes", {
@@ -88,7 +83,8 @@ export const bookmarks = mysqlTable("bookmarks", {
   uid: char("uid", { length: 36 }).primaryKey().notNull(),
   recipeId: char("recipeId", { length: 36 }).notNull(),
   userId: varchar("userId", { length: 191 }).notNull(),
-  collections: json("collections"),
+  collections: text("collections"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
 export const bookmarksRelation = relations(bookmarks, ({ one }) => ({
@@ -98,6 +94,22 @@ export const bookmarksRelation = relations(bookmarks, ({ one }) => ({
   }),
   user: one(users, {
     fields: [bookmarks.userId],
+    references: [users.id],
+  }),
+}));
+
+export const collections = mysqlTable("collections", {
+  uid: char("uid", { length: 36 }).primaryKey().notNull(),
+  title: varchar("title", { length: 191 }).notNull(),
+  description: text("description"),
+  userId: varchar("userId", { length: 191 }).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+
+export const collectionsRelation = relations(collections, ({ one, many }) => ({
+  user: one(users, {
+    fields: [collections.userId],
     references: [users.id],
   }),
 }));

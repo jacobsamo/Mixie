@@ -2,6 +2,8 @@ import { SearchCard } from "@/components/elements/Cards";
 import { db } from "@/server/db/index";
 import { getServerAuthSession } from "@/server/auth";
 import { notFound } from "next/navigation";
+import { eq } from "drizzle-orm";
+import { bookmarks } from "@/server/db/schemas";
 
 export default async function BookmarksPage() {
   const session = await getServerAuthSession();
@@ -23,6 +25,7 @@ export default async function BookmarksPage() {
         },
       },
     },
+    where: eq(bookmarks.userId, session.user.id),
   });
 
   return (

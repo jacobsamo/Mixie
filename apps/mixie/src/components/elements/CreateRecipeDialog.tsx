@@ -44,7 +44,7 @@ const CreateRecipeDialog = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+        Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
       },
       body: JSON.stringify({ title: values.title, link: values.link }),
     });

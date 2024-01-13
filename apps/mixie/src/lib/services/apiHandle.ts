@@ -101,7 +101,7 @@ export const Request = async <T>(
     body: JSON.stringify(data),
     headers: {
       ...headers,
-      authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+      Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
     },
     next: {
       ...nextOptions,
