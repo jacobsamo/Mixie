@@ -1,4 +1,6 @@
 import { CardRectangle } from "@/components/elements/Cards";
+import LandingText from "@/components/elements/LandingText";
+import RecipeSearch from "@/components/modules/RecipeSearch";
 import {
   Carousel,
   CarouselContent,
@@ -6,30 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { db } from "@/server/db";
-import { recipes } from "@/server/db/schemas";
-import { eq } from "drizzle-orm";
-import { SearchIcon } from "lucide-react";
-import { unstable_cache } from "next/cache";
-import LandingText from "@/components/elements/LandingText";
-import RecipeSearch from "@/components/modules/RecipeSearch";
-
-export const revalidate = 3600;
-
-const getRecipes = unstable_cache(
-  async () => {
-    const latestRecipes = await db.query.recipes.findMany({
-      where: eq(recipes.isPublic, true),
-      limit: 12,
-      orderBy: recipes.createdAt,
-    });
-    return latestRecipes;
-  },
-  ["recipes"],
-  {
-    revalidate: 3600,
-  }
-);
+import { getRecipes } from "@/lib/services/data_fetching";
 
 // const getRecipes = cache(async () => {
 //   const recipes = await db.query.info.findMany({
@@ -39,7 +18,7 @@ const getRecipes = unstable_cache(
 // });
 
 export default async function Page() {
-  const latestRecipes = await getRecipes();
+  const latestRecipes = await getRecipes() ;
 
   return (
     <main className="h-full w-full">

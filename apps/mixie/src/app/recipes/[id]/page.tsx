@@ -1,28 +1,10 @@
 import RecipePageComponent from "@/components/templates/RecipePage/RecipePageComponent";
-import { db } from "@/server/db/index";
-import { recipes as recipeSchema } from "@/server/db/schemas";
-import type { Recipe } from "@/types";
+import { getRecipes } from "@/lib/services/data_fetching";
 import { constructMetadata, displayIngredient } from "@/lib/utils";
-import { eq } from "drizzle-orm";
+import type { Recipe } from "@/types";
 import { Metadata } from "next";
 import { RecipeJsonLd } from "next-seo";
-import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
-
-export const revalidate = 3600;
-
-const getRecipes = unstable_cache(
-  async () => {
-    const recipes = await db.query.recipes.findMany({
-      where: eq(recipeSchema.isPublic, true),
-    });
-    return recipes;
-  },
-  ["fullRecipes"],
-  {
-    revalidate: 3600,
-  }
-);
 
 export async function generateMetadata({
   params,
@@ -76,7 +58,11 @@ export default async function RecipePage({ params }) {
             }) || []
           }
           description={recipe.description! || ""}
-          datePublished={new Date(recipe.createdAt).toDateString()}
+          datePublished={
+            recipe.createdAt
+              ? new Date(recipe.createdAt).toDateString()
+              : new Date().toDateString()
+          }
           keywords={
             recipe.keywords?.map((keyword) => keyword.value).join(", ") || ""
           }

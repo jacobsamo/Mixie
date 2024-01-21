@@ -15,12 +15,12 @@
   },
   "packageManager": "pnpm@7.15.0",
   "dependencies": {
-    "@manypkg/cli": "^0.21.1",
+    "@manypkg/cli": "^0.21.2",
     "@turbo/gen": "^1.11.3",
     "dotenv-cli": "^7.3.0",
     "eslint": "^8.56.0",
     "eslint-config-custom": "workspace:*",
-    "prettier": "^3.1.1",
+    "prettier": "^3.2.4",
     "turbo": "^1.11.3"
   },
   "devDependencies": {

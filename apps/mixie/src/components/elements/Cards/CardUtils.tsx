@@ -1,23 +1,27 @@
-import { env } from "env";
-import { HeartIcon } from "lucide-react";
-import { Session } from "next-auth";
-import toast from "react-hot-toast";
-import Image, { type ImageProps } from "next/image";
 import { cn } from "@/lib/utils";
+import { Recipe } from "@/types";
 import clsx from "clsx";
-import { ImageAttributes } from "@/types";
+import { env } from "env";
+import { Session } from "next-auth";
+import Image, { type ImageProps } from "next/image";
+import toast from "react-hot-toast";
 import BookmarkRecipeDialog from "./BookmarkRecipeDialog";
 
-export type CardRecipe = {
-  recipeId?: string;
-  uid?: string;
-  id: string;
-  title: string;
-  imageUrl: string | null;
-  imageAttributes: ImageAttributes | null;
-  total: string | null;
-  keywords: { value: string }[] | null;
-};
+// export type CardRecipe = {
+//   recipeId?: string;
+//   uid?: string;
+//   id: string;
+//   title: string;
+//   imageUrl?: string | null ;
+//   imageAttributes: ImageAttributes | null | undefined;
+//   total: string | null;
+//   keywords: { value: string }[] | null;
+// };
+
+export type CardRecipe = Pick<
+  Recipe,   
+  "uid" | "id" | "title" | "imageUrl" | "imageAttributes" | "total" | "keywords"
+>;
 
 export interface CardProps {
   recipe: CardRecipe;
@@ -26,7 +30,7 @@ export interface CardProps {
 export function addBookMark(recipe: CardRecipe) {
   const bookmark = {
     uid: null,
-    recipeId: recipe.recipeId || recipe.uid,
+    recipeId: recipe.uid,
     userId: null,
   };
 

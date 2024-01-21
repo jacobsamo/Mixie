@@ -1,27 +1,9 @@
 import { CardSquare } from "@/components/elements/Cards";
-import { db } from "@/server/db";
-import { recipes as recipesSchema } from "@/server/db/schemas";
-import { Recipe } from "@/types";
 import RecipeSearch from "@/components/modules/RecipeSearch";
+import { getRecipes } from "@/lib/services/data_fetching";
 import { constructMetadata } from "@/lib/utils";
-import { eq } from "drizzle-orm";
+import { Recipe } from "@/types";
 import { IFuseOptions } from "fuse.js";
-import { unstable_cache } from "next/cache";
-
-export const revalidate = 3600;
-
-const getRecipes = unstable_cache(
-  async () => {
-    const recipes = await db.query.recipes.findMany({
-      where: eq(recipesSchema.isPublic, true),
-    });
-    return recipes as Recipe[];
-  },
-  ["recipes"],
-  {
-    revalidate: 3600,
-  }
-);
 // const getRecipes = cache(async () => {
 //   const recipes = await db.query.info.findMany({
 //     where: eq(info.isPublic, true),
