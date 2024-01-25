@@ -1,9 +1,10 @@
-import { SearchCard } from "@/components/elements/Cards";
-import { db } from "@/server/db/index";
+import CreateCollectionDialog from "@/components/elements/CreateCollectionDialog";
 import { getServerAuthSession } from "@/server/auth";
-import { notFound } from "next/navigation";
+import { db } from "@/server/db/index";
+import { bookmarks, collections } from "@/server/db/schemas";
 import { eq } from "drizzle-orm";
-import { bookmarks } from "@/server/db/schemas";
+import { notFound } from "next/navigation";
+import DisplayElements from "./_DisplayElements";
 
 export default async function BookmarksPage() {
   const session = await getServerAuthSession();
@@ -16,6 +17,7 @@ export default async function BookmarksPage() {
     with: {
       recipe: {
         columns: {
+          uid: true,
           id: true,
           title: true,
           imageUrl: true,
@@ -28,23 +30,16 @@ export default async function BookmarksPage() {
     where: eq(bookmarks.userId, session.user.id),
   });
 
+  const userCollections = await db.query.collections.findMany({
+    where: eq(collections.userId, session.user.id),
+  });
+
   return (
     <div className="mt-4">
       <h1 className="mb-2 text-center text-step0">Bookmarked Recipes</h1>
-      <ul className="flex flex-row flex-wrap justify-center gap-4">
-        {gotRecipes.map((recipe, index) => {
-          return (
-            <SearchCard
-              as="li"
-              key={index}
-              recipe={{
-                ...recipe.recipe,
-                uid: recipe.recipeId,
-              }}
-            />
-          );
-        })}
-      </ul>
+      <CreateCollectionDialog userId={session.user.id} />
+
+      <DisplayElements collections={userCollections} bookmarks={gotRecipes} />
     </div>
   );
 }

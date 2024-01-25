@@ -1,10 +1,8 @@
 import { cn } from "@/lib/utils";
 import { Recipe } from "@/types";
 import clsx from "clsx";
-import { env } from "env";
 import { Session } from "next-auth";
 import Image, { type ImageProps } from "next/image";
-import toast from "react-hot-toast";
 import BookmarkRecipeDialog from "./BookmarkRecipeDialog";
 
 // export type CardRecipe = {
@@ -19,38 +17,12 @@ import BookmarkRecipeDialog from "./BookmarkRecipeDialog";
 // };
 
 export type CardRecipe = Pick<
-  Recipe,   
+  Recipe,
   "uid" | "id" | "title" | "imageUrl" | "imageAttributes" | "total" | "keywords"
 >;
 
 export interface CardProps {
   recipe: CardRecipe;
-}
-
-export function addBookMark(recipe: CardRecipe) {
-  const bookmark = {
-    uid: null,
-    recipeId: recipe.uid,
-    userId: null,
-  };
-
-  const setBookmark = fetch(`/api/recipes/bookmark/${bookmark.recipeId}`, {
-    method: "POST",
-    body: JSON.stringify(bookmark),
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
-    },
-  });
-
-  toast.promise(setBookmark, {
-    loading: "Setting bookmark...",
-    success: "Bookmark added successfully",
-    error: (err) => {
-      console.error(err);
-      return "Error while bookmarking recipe";
-    },
-  });
 }
 
 export const BookmarkButton = ({
@@ -62,9 +34,7 @@ export const BookmarkButton = ({
 }) => {
   if (!session) return null;
 
-  return (
-    <BookmarkRecipeDialog recipeId={recipe.uid!} userId={session.user.id} />
-  );
+  return <BookmarkRecipeDialog recipe={recipe} userId={session.user.id} />;
 };
 
 export const RecipeImage = (

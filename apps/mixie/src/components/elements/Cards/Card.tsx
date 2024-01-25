@@ -1,11 +1,10 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import Link from "next/link";
-import { CardProps, BookmarkButton, RecipeImage } from "./CardUtils";
+import { BookmarkButton, CardProps, RecipeImage } from "./CardUtils";
 
-interface BaseCardProps extends CardProps {
+export interface BaseCardProps extends CardProps {
   hasCookTime?: boolean;
   classNames?: {
     container?: string;

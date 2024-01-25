@@ -1,29 +1,38 @@
 "use client";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { HeartIcon } from "lucide-react";
-import { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import * as z from "zod";
-
-import { Button } from "@/components/ui/button";
-import { type Collection } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { env } from "env";
+import { CheckCircle, HeartIcon, PlusCircle } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import CreateCollectionDialog from "./CreateCollectionDialog";
+import * as z from "zod";
+
+import CreateCollectionDialog from "@/components/elements/CreateCollectionDialog";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { type Collection } from "@/types";
+import { CardRecipe } from "./CardUtils";
 
 const selectCollection = z.object({
   selected: z.string().array().nullish(),
 });
 
-const BookmarkRecipeDialog = ({
-  recipeId,
-  userId,
-}: {
-  recipeId: string;
+export interface BookmarkRecipeDialogProps {
+  recipe: CardRecipe;
   userId: string;
-}) => {
+}
+
+const BookmarkRecipeDialog = ({
+  recipe,
+  userId,
+}: BookmarkRecipeDialogProps) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const { data: collections, isLoading } = useQuery({
@@ -57,7 +66,7 @@ const BookmarkRecipeDialog = ({
 
     const collections = values.selected ? values.selected.join(", ") : null;
 
-    const setBookmark = fetch(`/api/recipes/bookmark/${recipeId}`, {
+    const setBookmark = fetch(`/api/recipes/bookmark/${recipe.uid}`, {
       method: "POST",
       body: JSON.stringify(collections),
       headers: {
@@ -110,7 +119,18 @@ const BookmarkRecipeDialog = ({
           style={{ textShadow: "4px 4px 20px rgba(0, 0, 0, 1)" }}
         />
       </DialogTrigger>
+
       <DialogContent className="flex flex-col justify-between">
+        <DialogHeader className="flex flex-row gap-2">
+          <Image
+            src={recipe.imageUrl!}
+            alt={recipe.imageAttributes?.alt ?? "saved recipe"}
+            width={64}
+            height={64}
+            className="h-16 w-16 rounded-md object-cover object-center"
+          />
+          <h1>{recipe.title}</h1>
+        </DialogHeader>
         <CreateCollectionDialog userId={userId} />
 
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -120,17 +140,20 @@ const BookmarkRecipeDialog = ({
                 const isChecked = watch("selected")?.includes(collection.uid);
 
                 return (
-                  <li className="flex w-1/2 flex-row gap-2 rounded outline">
+                  <li className="w-1/2">
                     <button
                       type="button"
                       onClick={() => handleChange(collection.uid)}
-                      className={`flex w-full flex-row items-center justify-center rounded p-2 outline-none ${
+                      className={`flex w-full flex-row items-center justify-between rounded p-2 outline-none ${
                         isChecked
                           ? "bg-red text-white"
                           : "bg-white text-gray-700"
                       }`}
+                      aria-label={`Add bookmark to collection ${collection.title}`}
                     >
                       {collection.title}
+
+                      {isChecked ? <CheckCircle /> : <PlusCircle />}
                     </button>
                   </li>
                 );
