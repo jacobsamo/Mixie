@@ -6,6 +6,7 @@ import { getServerAuthSession } from "@/server/auth";
 import { NextResponse, type NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
+import { eq } from "drizzle-orm";
 
 export async function POST(
   req: NextRequest,
@@ -27,6 +28,18 @@ export async function POST(
       recipeId: params.id,
       collections: json,
     };
+
+    const findBookmarks = await db.query.bookmarks.findMany({
+      where: eq(bookmarks.userId, session.user.id),
+    });
+
+    const bookmarkExists = findBookmarks.find(
+      (bookmark) => bookmark.recipeId === params.id
+    );
+
+    if (bookmarkExists) {
+      return NextResponse.json("Already bookmarked", { status: 409 });
+    }
 
     await db.insert(bookmarks).values(newBookmark);
 

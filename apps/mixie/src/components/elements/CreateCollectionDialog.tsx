@@ -1,7 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { env } from "env";
-import { PlusCircleIcon } from "lucide-react";
+import { Plus, PlusCircleIcon } from "lucide-react";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -12,8 +12,13 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { collectionSchema } from "@/types";
 
+export interface CreateCollectionDialogProps {
+  userId: string;
+}
 
-const CreateCollectionDialog = ({ userId }: { userId: string }) => {
+const CreateCollectionDialog = ({
+  userId,
+}: CreateCollectionDialogProps) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -62,9 +67,10 @@ const CreateCollectionDialog = ({ userId }: { userId: string }) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="flex flex-row gap-1 border-none outline-none">
-        <PlusCircleIcon /> Create a collection
+      <DialogTrigger className="flex flex-row gap-1 border-none font-semibold text-yellow outline-none">
+        <Plus /> New Collection
       </DialogTrigger>
+
       <DialogContent>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <Input {...register("title")} label="Title" required />

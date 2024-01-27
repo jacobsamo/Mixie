@@ -5,17 +5,6 @@ import { Session } from "next-auth";
 import Image, { type ImageProps } from "next/image";
 import BookmarkRecipeDialog from "./BookmarkRecipeDialog";
 
-// export type CardRecipe = {
-//   recipeId?: string;
-//   uid?: string;
-//   id: string;
-//   title: string;
-//   imageUrl?: string | null ;
-//   imageAttributes: ImageAttributes | null | undefined;
-//   total: string | null;
-//   keywords: { value: string }[] | null;
-// };
-
 export type CardRecipe = Pick<
   Recipe,
   "uid" | "id" | "title" | "imageUrl" | "imageAttributes" | "total" | "keywords"

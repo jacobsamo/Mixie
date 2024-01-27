@@ -35,11 +35,14 @@ export default async function BookmarksPage() {
   });
 
   return (
-    <div className="mt-4">
+    <div className="m-auto mt-4 flex h-fit max-h-[80%] flex-col items-center justify-center rounded-xl bg-white p-1 shadow-main sm:w-full md:w-3/5 lg:min-h-80 dark:bg-grey dark:shadow-none">
       <h1 className="mb-2 text-center text-step0">Bookmarked Recipes</h1>
-      <CreateCollectionDialog userId={session.user.id} />
 
-      <DisplayElements collections={userCollections} bookmarks={gotRecipes} />
+      <DisplayElements
+        collections={userCollections}
+        bookmarks={gotRecipes}
+        session={session}
+      />
     </div>
   );
 }

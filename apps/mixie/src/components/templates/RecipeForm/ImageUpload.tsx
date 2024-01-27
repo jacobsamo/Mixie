@@ -84,10 +84,7 @@ const ImageUpload = () => {
           />
           {imageAttributes?.photographer &&
             imageAttributes.photographerLink && (
-              <div
-                className="absolute bottom-2 left-2 bg-gray-700/20 text-white drop-shadow-xl"
-                style={{ textShadow: "4px 4px 20px rgba(0, 0, 0, 1)" }}
-              >
+              <div className="textOnBackground absolute bottom-2 left-2 bg-gray-700/20 text-white drop-shadow-xl">
                 Photo by{" "}
                 <Link
                   href={imageAttributes.photographerLink}
@@ -192,7 +189,6 @@ const ImageUpload = () => {
                     <Link
                       href={`https://unsplash.com/${photo.user.username}?utm_source=mixie&utm_medium=referral`}
                       className="absolute bottom-0 left-0 bg-gray-700/20 text-step--4 text-white drop-shadow-xl"
-                      style={{ textShadow: "4px 4px 20px rgba(0, 0, 0, 1)" }}
                       target="_blank"
                     >
                       {photo.user.name}

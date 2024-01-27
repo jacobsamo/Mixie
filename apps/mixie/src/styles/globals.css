@@ -10,8 +10,26 @@ div#__next > div {
   height: 100%;
 }
 
+body {
+  min-height: 100dvh;
+}
+
 * {
   min-width: 0;
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 :root {
@@ -42,4 +60,13 @@ div#__next > div {
 
 *::-webkit-scrollbar-thumb {
   @apply rounded-xl bg-grey dark:bg-white;
+}
+
+.textOnBackground {
+  @apply px-1 rounded-md w-fit h-fit;
+  /* From https://css.glass */
+  background: rgba(75, 75, 75, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }

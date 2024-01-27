@@ -14,11 +14,13 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { type Collection } from "@/types";
 import { CardRecipe } from "./CardUtils";
+import { cn } from "@/lib/utils";
 
 const selectCollection = z.object({
   selected: z.string().array().nullish(),
@@ -115,13 +117,12 @@ const BookmarkRecipeDialog = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className="absolute bottom-2 right-2">
         <HeartIcon
-          className={`h-8 w-8 cursor-pointer drop-shadow-xl`}
-          style={{ textShadow: "4px 4px 20px rgba(0, 0, 0, 1)" }}
+          className={`textOnBackground h-8 w-8 cursor-pointer drop-shadow-xl`}
         />
       </DialogTrigger>
 
       <DialogContent className="flex flex-col justify-between">
-        <DialogHeader className="flex flex-row gap-2">
+        <DialogHeader className="flex flex-row  gap-1">
           <Image
             src={recipe.imageUrl!}
             alt={recipe.imageAttributes?.alt ?? "saved recipe"}
@@ -129,26 +130,35 @@ const BookmarkRecipeDialog = ({
             height={64}
             className="h-16 w-16 rounded-md object-cover object-center"
           />
-          <h1>{recipe.title}</h1>
+          <h1 className="w-fit text-wrap text-start text-step--2 font-bold">
+            {recipe.title}
+          </h1>
         </DialogHeader>
-        <CreateCollectionDialog userId={userId} />
+        <span className="flex w-full flex-row justify-between">
+          <h2 className="font-bold">Collections</h2>
+          <CreateCollectionDialog
+            userId={userId}
+          />
+        </span>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           {!isLoading && collections && (
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-2 pb-8">
               {collections.map((collection) => {
                 const isChecked = watch("selected")?.includes(collection.uid);
 
                 return (
-                  <li className="w-1/2">
+                  <li className="md:w-3/5">
                     <button
                       type="button"
                       onClick={() => handleChange(collection.uid)}
-                      className={`flex w-full flex-row items-center justify-between rounded p-2 outline-none ${
-                        isChecked
-                          ? "bg-red text-white"
-                          : "bg-white text-gray-700"
-                      }`}
+                      className={cn(
+                        "flex w-full flex-row items-center justify-between rounded border-none p-2 shadow outline outline-1 outline-slate-400 dark:bg-grey/50 dark:outline-slate-600",
+                        {
+                          "outline-2 outline-slate-600 dark:outline-slate-300":
+                            isChecked,
+                        }
+                      )}
                       aria-label={`Add bookmark to collection ${collection.title}`}
                     >
                       {collection.title}
@@ -161,9 +171,11 @@ const BookmarkRecipeDialog = ({
             </ul>
           )}
 
-          <Button type="submit">
-            {loading ? "Bookmarking..." : "Bookmark"}
-          </Button>
+          <DialogFooter>
+            <Button type="submit">
+              {loading ? "Bookmarking..." : "Bookmark"}
+            </Button>
+          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
