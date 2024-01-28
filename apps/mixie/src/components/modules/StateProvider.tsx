@@ -20,7 +20,7 @@ const StateProvider = ({ children }: { children: React.ReactNode }) => {
   const { data: bookmarkedRecipes, refetch: refetchBookmarks } = useQuery<
     Bookmark[] | null
   >({
-    queryKey: ["bookmarks"],
+    queryKey: ["bookmarks", user, user?.id],
     queryFn: async () => {
       if (!user) return null;
 
@@ -42,7 +42,7 @@ const StateProvider = ({ children }: { children: React.ReactNode }) => {
   const { data: userCollections, refetch: refetchCollections } = useQuery<
     Collection[] | null
   >({
-    queryKey: ["collections"],
+    queryKey: ["collections", user, user?.id],
     queryFn: async () => {
       if (!user) return null;
 
