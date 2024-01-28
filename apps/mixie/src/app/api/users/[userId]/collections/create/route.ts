@@ -10,13 +10,13 @@ import * as z from "zod";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { userId: string } }
 ) {
   try {
     const app = await isApp(req);
     const session = await getServerAuthSession();
 
-    const requestedUserData = session?.user.id === params.id;
+    const requestedUserData = session?.user.id === params.userId;
 
     if ((!app || !session) && !requestedUserData) {
       return NextResponse.json("Unauthorized", { status: 401 });

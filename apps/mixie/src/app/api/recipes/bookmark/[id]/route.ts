@@ -49,6 +49,7 @@ export async function POST(
 
     return NextResponse.json({
       message: `Recipe ${newBookmark.recipeId} has been bookmarked`,
+      bookmarkedRecipe: newBookmark
     });
   } catch (error) {
     console.error("Error on /recipes/bookmark/[id]", error);

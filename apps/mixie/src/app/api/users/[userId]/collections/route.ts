@@ -7,23 +7,23 @@ import { NextResponse, type NextRequest } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { userId: string } }
 ) {
   try {
     const app = await isApp(req);
     const session = await getServerAuthSession();
 
-    const requestedUserData = session?.user.id === params.id;
+    const requestedUserData = session?.user.id === params.userId;
 
     if ((!app || !session) && !requestedUserData) {
       return NextResponse.json("Unauthorized", { status: 401 });
     }
 
     const foundCollections = await db.query.collections.findMany({
-      where: eq(collections.userId, params.id),
+      where: eq(collections.userId, params.userId),
     });
 
-    console.log(`Found collections for user: ${params.id}`, {
+    console.log(`Found collections for user: ${params.userId}`, {
       message: `Found collections for user`,
       collections: foundCollections,
     });

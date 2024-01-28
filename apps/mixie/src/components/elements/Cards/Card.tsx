@@ -35,7 +35,7 @@ export const BaseCard = ({
       <Link
         href={`/recipes/${recipe.id}`}
         className={cn(
-          "text-center text-step--2 textOnBackground",
+          "textOnBackground text-center text-step--2",
           classNames?.title
         )}
       >
@@ -49,7 +49,12 @@ export const BaseCard = ({
             classNames?.bookmarkContainer
           )}
         >
-          <h3 className={cn("textOnBackground w-fit whitespace-nowrap", classNames?.cookTime)}>
+          <h3
+            className={cn(
+              "textOnBackground w-fit whitespace-nowrap",
+              classNames?.cookTime
+            )}
+          >
             {recipe.total}
           </h3>
           {<BookmarkButton session={session} recipe={recipe} />}

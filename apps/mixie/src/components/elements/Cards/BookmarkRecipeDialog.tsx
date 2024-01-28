@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { env } from "env";
 import { CheckCircle, HeartIcon, PlusCircle } from "lucide-react";
 import Image from "next/image";
@@ -21,6 +21,11 @@ import {
 import { type Collection } from "@/types";
 import { CardRecipe } from "./CardUtils";
 import { cn } from "@/lib/utils";
+import { useAtom } from "jotai";
+import {
+  bookmarksAtom,
+  collectionsAtom,
+} from "@/components/modules/StateProvider";
 
 const selectCollection = z.object({
   selected: z.string().array().nullish(),
@@ -37,20 +42,18 @@ const BookmarkRecipeDialog = ({
 }: BookmarkRecipeDialogProps) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const { data: collections, isLoading } = useQuery({
-    queryKey: ["collections"],
-    queryFn: async () => {
-      const res = await fetch(`/api/users/${userId}/collections`, {
-        headers: {
-          Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
-        },
-      });
-      return (await res.json()) as Collection[];
-    },
-  });
+  const [bookmarks, setBookmark] = useAtom(bookmarksAtom);
+  const [collections] = useAtom(collectionsAtom);
+  const isBookmarked = bookmarks?.find(
+    (bookmark) => bookmark.recipeId == recipe.uid
+  );
+
 
   const methods = useForm<z.infer<typeof selectCollection>>({
     resolver: zodResolver(selectCollection),
+    defaultValues: {
+      selected: isBookmarked?.collections?.split(", "),
+    },
   });
   const {
     handleSubmit,
@@ -61,6 +64,70 @@ const BookmarkRecipeDialog = ({
     formState: { errors },
   } = methods;
 
+  const bookmarkRecipe = useMutation({
+    mutationKey: ["bookmarkRecipe"],
+    mutationFn: async (collections: string | null) => {
+      const req = await fetch(`/api/recipes/bookmark/${recipe.uid}`, {
+        method: "POST",
+        body: JSON.stringify(collections),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+        },
+      });
+
+      const res = await req.json();
+
+      setBookmark((prev) =>
+        prev != undefined
+          ? [...prev, res.bookmarkedRecipe]
+          : [res.bookmarkedRecipe]
+      );
+    },
+    onSuccess() {
+      toast.success("Bookmark added successfully!");
+      setOpen(false);
+    },
+    onError(err) {
+      console.error(err);
+
+      toast.error("Error while bookmarking recipe");
+      setOpen(false);
+    },
+  });
+
+  const updateBookmarkedRecipe = useMutation({
+    mutationKey: ["updateBookmarkedRecipe"],
+    mutationFn: async (collections: string | null) => {
+      const req = await fetch(`/api/recipes/bookmark/${recipe.uid}/update`, {
+        method: "POST",
+        body: JSON.stringify(collections),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+        },
+      });
+
+      const res = await req.json();
+
+      setBookmark((prev) =>
+        prev != undefined
+          ? [...prev, res.bookmarkedRecipe]
+          : [res.bookmarkedRecipe]
+      );
+    },
+    onSuccess() {
+      toast.success("Bookmark added successfully!");
+      setOpen(false);
+    },
+    onError(err) {
+      console.error(err);
+
+      toast.error("Error while bookmarking recipe");
+      setOpen(false);
+    },
+  });
+
   const onSubmit: SubmitHandler<z.infer<typeof selectCollection>> = (
     values
   ) => {
@@ -68,29 +135,13 @@ const BookmarkRecipeDialog = ({
 
     const collections = values.selected ? values.selected.join(", ") : null;
 
-    const setBookmark = fetch(`/api/recipes/bookmark/${recipe.uid}`, {
-      method: "POST",
-      body: JSON.stringify(collections),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
-      },
-    });
-
-    toast.promise(setBookmark, {
-      loading: "Bookmarking recipe...",
-      success: (data) => {
-        setLoading(false);
-        setOpen(false);
-        return "Bookmark added successfully!";
-      },
-      error: (err) => {
-        setLoading(false);
-        setOpen(false);
-        console.error(err);
-        return "Error while bookmarking recipe";
-      },
-    });
+    if (isBookmarked !== undefined) {
+      updateBookmarkedRecipe.mutate(collections);
+    }
+       
+    if (isBookmarked === undefined) {
+      bookmarkRecipe.mutate(collections);
+    }
   };
 
   function handleChange(id: string) {
@@ -116,9 +167,15 @@ const BookmarkRecipeDialog = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className="absolute bottom-2 right-2">
-        <HeartIcon
-          className={`textOnBackground h-8 w-8 cursor-pointer drop-shadow-xl`}
-        />
+        {isBookmarked != undefined ? (
+          <HeartIcon
+            className={`textOnBackground h-8 w-8 cursor-pointer  fill-red text-red`}
+          />
+        ) : (
+          <HeartIcon
+            className={`textOnBackground h-8 w-8 cursor-pointer`}
+          />
+        )}
       </DialogTrigger>
 
       <DialogContent className="flex flex-col justify-between">
@@ -136,19 +193,17 @@ const BookmarkRecipeDialog = ({
         </DialogHeader>
         <span className="flex w-full flex-row justify-between">
           <h2 className="font-bold">Collections</h2>
-          <CreateCollectionDialog
-            userId={userId}
-          />
+          <CreateCollectionDialog userId={userId} />
         </span>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          {!isLoading && collections && (
+          {collections && (
             <ul className="flex flex-col gap-2 pb-8">
               {collections.map((collection) => {
                 const isChecked = watch("selected")?.includes(collection.uid);
 
                 return (
-                  <li className="md:w-3/5">
+                  <li className="md:w-3/5" key={collection.uid}>
                     <button
                       type="button"
                       onClick={() => handleChange(collection.uid)}
