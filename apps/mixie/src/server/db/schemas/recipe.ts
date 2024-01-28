@@ -1,27 +1,23 @@
-import { relations, sql } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import {
   boolean,
   char,
   double,
   json,
-  mysqlEnum,
   mysqlTable,
   text,
   timestamp,
   tinyint,
-  varchar,
+  varchar
 } from "drizzle-orm/mysql-core";
 // imoport
-import { ImageAttributes, Ingredient, Recipe, Step } from "@/types";
-import { recipe_versions } from "./versions";
+import { ImageAttributes, Ingredient, Step } from "@/types";
 import { users } from "./auth";
 import {
-  allergens,
-  dietary,
   difficulty_level,
-  mealTime,
-  sweet_savoury,
+  sweet_savoury
 } from "./enums";
+import { recipe_versions } from "./versions";
 
 // Recipes
 export const recipes = mysqlTable("recipes", {

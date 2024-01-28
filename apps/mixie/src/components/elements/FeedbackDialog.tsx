@@ -22,7 +22,7 @@ interface FeedbackDialogProps {
 const FeedbackDialog = ({ Trigger }: FeedbackDialogProps) => {
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger aria-label="click to give feedback">
         {Trigger ? (
           Trigger
         ) : (

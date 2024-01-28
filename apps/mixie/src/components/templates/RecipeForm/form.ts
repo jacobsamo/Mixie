@@ -1,6 +1,6 @@
+import { calculateTotalTime } from "@/lib/utils";
 import type { Ingredient, NewRecipe } from "@/types";
 import { recipeFormSchema } from "@/types/zodSchemas";
-import { calculateTotalTime } from "@/lib/utils";
 import { SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";

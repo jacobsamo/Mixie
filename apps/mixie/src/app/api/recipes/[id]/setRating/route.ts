@@ -1,7 +1,7 @@
+import { getServerAuthSession } from "@/server/auth";
 import { db } from "@/server/db/index";
 import { ratings } from "@/server/db/schemas";
 import { ratingsSchema } from "@/types/zodSchemas";
-import { getServerAuthSession } from "@/server/auth";
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 

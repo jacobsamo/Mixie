@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { createQueryString } from "@/lib/utils";
 import { cva } from "class-variance-authority";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
 interface SettingsParams {
@@ -25,11 +25,9 @@ export default function SettingsLayout({
   children: React.ReactNode;
   params: SettingsParams;
 }) {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const activeLink = searchParams.get("activeLink") || "profile";
-
-  const router = useRouter();
-  const pathName = usePathname();
 
   return (
     <main className="h-full w-full">

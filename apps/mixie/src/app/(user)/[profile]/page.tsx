@@ -7,6 +7,7 @@ import { recipes } from "@/server/db/schemas";
 import { and, eq } from "drizzle-orm";
 import { Heart, Pencil, ScrollText } from "lucide-react";
 import { Metadata } from "next";
+import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 

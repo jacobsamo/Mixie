@@ -1,8 +1,8 @@
 "use client";
-import type { Ingredient } from "@/types";
-import React from "react";
-import { CheckCircleIcon, Circle } from "lucide-react";
 import { displayIngredient } from "@/lib/utils";
+import type { Ingredient } from "@/types";
+import { CheckCircleIcon, Circle } from "lucide-react";
+import React from "react";
 
 interface IngredientProps {
   ingredient: Ingredient;

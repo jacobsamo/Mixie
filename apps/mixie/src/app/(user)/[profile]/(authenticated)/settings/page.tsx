@@ -1,15 +1,15 @@
 "use client";
-import { env } from "env";
 import { Button } from "@/components/ui/button";
-import toast from "react-hot-toast";
 import { User } from "@/types";
 import { userSchema } from "@/types/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { env } from "env";
 import { Loader2 } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const Profile = dynamic(() => import("@/components/layouts/Settings/Profile"));
 const Customization = dynamic(

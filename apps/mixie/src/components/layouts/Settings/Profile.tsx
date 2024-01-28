@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { User } from "@/types";
 import ImageUploadDialog from "@/components/elements/ImageUploadDialog";
+import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { User } from "@/types";
 import Image from "next/image";
 import { useFormContext } from "react-hook-form";
 
