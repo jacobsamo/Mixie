@@ -23,11 +23,6 @@ export async function GET(
       where: eq(collections.userId, params.userId),
     });
 
-    console.log(`Found collections for user: ${params.userId}`, {
-      message: `Found collections for user`,
-      collections: foundCollections,
-    });
-
     return NextResponse.json(foundCollections);
   } catch (error) {
     console.error("Error on /users/[id]/collections", error);

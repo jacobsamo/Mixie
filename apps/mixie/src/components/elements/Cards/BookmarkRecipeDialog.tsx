@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { env } from "env";
 import { CheckCircle, HeartIcon, PlusCircle } from "lucide-react";
 import Image from "next/image";
@@ -10,6 +10,10 @@ import toast from "react-hot-toast";
 import * as z from "zod";
 
 import CreateCollectionDialog from "@/components/elements/CreateCollectionDialog";
+import {
+  bookmarksAtom,
+  collectionsAtom,
+} from "@/components/modules/StateProvider";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -18,14 +22,10 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { type Collection } from "@/types";
-import { CardRecipe } from "./CardUtils";
 import { cn } from "@/lib/utils";
+import { Bookmark } from "@/types";
 import { useAtom } from "jotai";
-import {
-  bookmarksAtom,
-  collectionsAtom,
-} from "@/components/modules/StateProvider";
+import { CardRecipe } from "./CardUtils";
 
 const selectCollection = z.object({
   selected: z.string().array().nullish(),
@@ -47,7 +47,6 @@ const BookmarkRecipeDialog = ({
   const isBookmarked = bookmarks?.find(
     (bookmark) => bookmark.recipeId == recipe.uid
   );
-
 
   const methods = useForm<z.infer<typeof selectCollection>>({
     resolver: zodResolver(selectCollection),
@@ -86,13 +85,11 @@ const BookmarkRecipeDialog = ({
     },
     onSuccess() {
       toast.success("Bookmark added successfully!");
-      setOpen(false);
     },
     onError(err) {
       console.error(err);
 
       toast.error("Error while bookmarking recipe");
-      setOpen(false);
     },
   });
 
@@ -100,8 +97,10 @@ const BookmarkRecipeDialog = ({
     mutationKey: ["updateBookmarkedRecipe"],
     mutationFn: async (collections: string | null) => {
       const req = await fetch(`/api/recipes/bookmark/${recipe.uid}/update`, {
-        method: "POST",
-        body: JSON.stringify(collections),
+        method: "PUT",
+        body: JSON.stringify({
+          collections: collections,
+        } as Bookmark),
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
@@ -117,14 +116,12 @@ const BookmarkRecipeDialog = ({
       );
     },
     onSuccess() {
-      toast.success("Bookmark added successfully!");
-      setOpen(false);
+      toast.success("Bookmark updated successfully!");
     },
     onError(err) {
       console.error(err);
 
-      toast.error("Error while bookmarking recipe");
-      setOpen(false);
+      toast.error("Error while updating bookmark");
     },
   });
 
@@ -138,10 +135,13 @@ const BookmarkRecipeDialog = ({
     if (isBookmarked !== undefined) {
       updateBookmarkedRecipe.mutate(collections);
     }
-       
+
     if (isBookmarked === undefined) {
       bookmarkRecipe.mutate(collections);
     }
+
+    setOpen(false);
+    setLoading(false);
   };
 
   function handleChange(id: string) {
@@ -172,9 +172,7 @@ const BookmarkRecipeDialog = ({
             className={`textOnBackground h-8 w-8 cursor-pointer  fill-red text-red`}
           />
         ) : (
-          <HeartIcon
-            className={`textOnBackground h-8 w-8 cursor-pointer`}
-          />
+          <HeartIcon className={`textOnBackground h-8 w-8 cursor-pointer`} />
         )}
       </DialogTrigger>
 

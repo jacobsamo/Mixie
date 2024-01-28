@@ -1,7 +1,7 @@
 import { isApp } from "@/lib/services/apiMiddleware";
 import { getServerAuthSession } from "@/server/auth";
 import { db } from "@/server/db/index";
-import { collections, users } from "@/server/db/schemas";
+import { collections } from "@/server/db/schemas";
 import { eq } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
 
@@ -24,11 +24,6 @@ export async function GET(
       where: eq(collections.userId, params.userId),
     });
 
-
-    console.log(`Found collections for user: ${params.userId}`, {
-      message: `Found collections for user`,
-      collections: userBookmarks,
-    });
 
     return NextResponse.json(userBookmarks);
   } catch (error) {

@@ -2,7 +2,7 @@
 import useUser from "@/hooks/useUser";
 import { Bookmark, Collection } from "@/types";
 import {
-    useQuery
+  useQuery
 } from "@tanstack/react-query";
 import { env } from "env";
 import { atom, useAtom } from "jotai";
