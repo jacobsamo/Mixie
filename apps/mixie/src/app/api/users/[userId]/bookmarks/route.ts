@@ -10,7 +10,6 @@ export async function GET(
   { params }: { params: { userId: string } }
 ) {
   try {
-    console.log('Request url: ', req);
     const app = await isApp(req);
     const session = await getServerAuthSession();
 

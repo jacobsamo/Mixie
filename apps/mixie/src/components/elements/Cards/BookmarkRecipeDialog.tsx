@@ -226,7 +226,13 @@ const BookmarkRecipeDialog = ({
 
           <DialogFooter>
             <Button type="submit">
-              {loading ? "Bookmarking..." : "Bookmark"}
+              {isBookmarked != undefined
+                ? loading
+                  ? "Updating..."
+                  : "Update"
+                : loading
+                  ? "Bookmarking..."
+                  : "Bookmark"}
             </Button>
           </DialogFooter>
         </form>

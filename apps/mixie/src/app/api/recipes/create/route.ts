@@ -7,7 +7,7 @@ import { recipeId } from "@/lib/utils";
 import { getServerAuthSession } from "@/server/auth";
 import { db } from "@/server/db/index";
 import { recipes } from "@/server/db/schemas";
-import { NewRecipe } from "@/server/db/types";
+import { NewRecipe } from "@/types";
 import { Recipe, createRecipeSchema } from "@/types";
 import { eq, or } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";

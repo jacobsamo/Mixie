@@ -19,7 +19,7 @@ export async function PUT(
 
     const json = (await req.json()) as Partial<Bookmark>;
 
-    await db.update(bookmarks).set(json).where(eq(bookmarks.uid, json.uid));
+    await db.update(bookmarks).set(json).where(eq(bookmarks.uid, json.uid!));
 
     console.log(
       `Recipe ${json.recipeId} has been bookmarked by ${session.user.id}`,

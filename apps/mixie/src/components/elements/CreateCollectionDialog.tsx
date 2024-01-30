@@ -11,16 +11,17 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { collectionSchema } from "@/types";
+import { useAtom } from "jotai";
+import { collectionsAtom } from "../modules/StateProvider";
 
 export interface CreateCollectionDialogProps {
   userId: string;
 }
 
-const CreateCollectionDialog = ({
-  userId,
-}: CreateCollectionDialogProps) => {
+const CreateCollectionDialog = ({ userId }: CreateCollectionDialogProps) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [collections, setCollections] = useAtom(collectionsAtom);
 
   const methods = useForm<z.infer<typeof collectionSchema>>({
     resolver: zodResolver(collectionSchema),
@@ -50,17 +51,20 @@ const CreateCollectionDialog = ({
     });
 
     toast.promise(createCollection, {
-      loading: "Bookmarking recipe...",
+      loading: "Creating collection...",
       success: (data) => {
         setLoading(false);
         setOpen(false);
-        return "Bookmark added successfully!";
+        setCollections((prev) =>
+          prev != undefined ? [...prev, values] : [values]
+        );
+        return "Collection created successfully!";
       },
       error: (err) => {
         setLoading(false);
         setOpen(false);
         console.error(err);
-        return "Error while bookmarking recipe";
+        return "Error while creating collection";
       },
     });
   };
