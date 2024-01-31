@@ -1,24 +1,50 @@
 "use client";
-import { createUrl } from "@/lib/utils";
+import { cn, createUrl } from "@/lib/utils";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useRef } from "react";
-import { Input } from "../ui/input";
+import { useRef, useState } from "react";
+import { Input, InputProps } from "../ui/input";
+import { SearchIcon } from "lucide-react";
+
+interface RecipeSearchProps extends Omit<InputProps, "name"> {
+  className?: string;
+  shouldAutoFilter?: boolean;
+  name?: string;
+}
 
 /**
  * A client component that allows the user to search for recipes using search params
  */
-const RecipeSearch = ({ className }: { className?: string }) => {
+const RecipeSearch = ({
+  className,
+  shouldAutoFilter = false,
+  name = "recipeSearch",
+  ...props
+}: RecipeSearchProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const handleSearch = (value: string) => {
+  const [searchValue, setSearchValue] = useState(
+    searchParams?.get("search") || ""
+  );
+
+  const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const value = searchValue;
     const newParams = new URLSearchParams();
     newParams.set("search", value);
 
     if (value.length == 0) newParams.delete("search");
+
+    if (pathname !== "/recipes") {
+      const paramsString = newParams.toString();
+      console.log(
+        "new string: ",
+        `/recipes${paramsString.length ? "?" : ""}${paramsString}`
+      );
+      router.push(`/recipes${paramsString.length ? "?" : ""}${paramsString}`);
+      return;
+    }
 
     router.push(createUrl(pathname, newParams));
   };
@@ -26,17 +52,28 @@ const RecipeSearch = ({ className }: { className?: string }) => {
   return (
     <Input
       LeadingIcon={
-        <MagnifyingGlassIcon className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+        <SearchIcon className="ml-5 mr-2 h-5 w-5 shrink-0 opacity-50" />
       }
-      name="search"
-      value={searchParams?.get("search") || ""}
-      onChange={(event) => handleSearch(event.target.value)}
-      ref={searchInputRef}
+      id="recipeSearch"
+      name={name}
+      value={searchValue}
+      onChange={(event) => setSearchValue(event.target.value)}
+      onKeyDown={(event) => {
+        if (!shouldAutoFilter && event.key == "Enter") handleSearch(event);
+
+        if (shouldAutoFilter) {
+          handleSearch(event);
+        }
+      }}
       placeholder="Search for your next taste sensation"
       classNames={{
-        container: `w-3/4 sm:w-1/2 max-w-[28rem] shadow-searchBarShadow ${className}`,
+        container: cn(
+          "w-3/4 sm:w-1/2 max-w-[28rem] shadow rounded-xl ",
+          className
+        ),
         inputWrapper: "border-none rounded-xl",
       }}
+      {...props}
     />
   );
 };

@@ -1,15 +1,15 @@
 "use client";
-import { env } from "env";
 import { Button } from "@/components/ui/button";
-import toast from "react-hot-toast";
-import { User } from "@/server/db/types";
-import { userSchema } from "@/server/db/zodSchemas";
+import { User } from "@/types";
+import { userSchema } from "@/types/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { env } from "env";
 import { Loader2 } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const Profile = dynamic(() => import("@/components/layouts/Settings/Profile"));
 const Customization = dynamic(
@@ -33,7 +33,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
     defaultValues: async () => {
       const res = await fetch(`/api/users/${params.profile}`, {
         headers: {
-          authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+          Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
         },
       });
       const user = (await res.json()) as User;
@@ -63,7 +63,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+        Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
       },
       body: JSON.stringify(data),
     });

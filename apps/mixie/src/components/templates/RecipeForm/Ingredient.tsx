@@ -1,12 +1,12 @@
-import { GripVertical, Trash2Icon } from "lucide-react";
-import { units } from "@/lib/services/data";
-import { Controller, useFormContext } from "react-hook-form";
-import { Ingredient as IngredientType } from "@/server/db/types";
-import { Input } from "@/components/ui/input";
-import { recipeFormSchema } from "@/server/db/zodSchemas";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
 import { SelectComponent } from "@/components/ui/SelectComponent";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { units } from "@/lib/services/data";
+import { Ingredient as IngredientType } from "@/types";
+import { recipeFormSchema } from "@/types/zodSchemas";
+import { GripVertical, Trash2Icon } from "lucide-react";
+import { Controller, useFormContext } from "react-hook-form";
+import * as z from "zod";
 
 interface IngredientProps {
   index: number;
@@ -113,3 +113,4 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
 };
 
 export { Ingredient };
+

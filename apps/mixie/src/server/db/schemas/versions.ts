@@ -7,7 +7,7 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/mysql-core";
-import type { Recipe } from "../types";
+import type { Recipe } from "@/types";
 import { users } from "./auth";
 import { recipes } from "./recipe";
 

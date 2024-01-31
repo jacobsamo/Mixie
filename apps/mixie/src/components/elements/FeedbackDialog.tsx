@@ -10,13 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  BugIcon,
-  Lightbulb,
-  Loader2,
-  MessageCirclePlus,
-  Newspaper,
-} from "lucide-react";
+import { BugIcon, Lightbulb, Loader2, MessageCirclePlus } from "lucide-react";
 import React from "react";
 
 import { DialogClose } from "@radix-ui/react-dialog";
@@ -28,7 +22,7 @@ interface FeedbackDialogProps {
 const FeedbackDialog = ({ Trigger }: FeedbackDialogProps) => {
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger aria-label="click to give feedback">
         {Trigger ? (
           Trigger
         ) : (
@@ -46,7 +40,7 @@ const FeedbackDialog = ({ Trigger }: FeedbackDialogProps) => {
         </DialogHeader>
 
         <Tabs defaultValue="feature" className="h-full">
-          <TabsList>
+          <TabsList className="">
             <TabsTrigger value="feature" className="flex flex-row gap-2">
               <Lightbulb />
               Feature Request
@@ -59,6 +53,7 @@ const FeedbackDialog = ({ Trigger }: FeedbackDialogProps) => {
             <iframe
               width="100%"
               height="100%"
+              loading="lazy"
               src="https://docs.google.com/forms/d/e/1FAIpQLSdFXWvAvMdvuCXySmMJSCTjz-YN0X0m1f8pVG1pZ0Pk2kqihg/viewform?embedded=true"
             >
               <Loader2 className="ml-2 h-4 w-4 animate-spin" />
@@ -68,6 +63,7 @@ const FeedbackDialog = ({ Trigger }: FeedbackDialogProps) => {
             <iframe
               width="100%"
               height="100%"
+              loading="lazy"
               src="https://docs.google.com/forms/d/e/1FAIpQLSdydiU39LqmDfraMErw1u8WvfxkRoqnvdct08MAykM5W8vxww/viewform?embedded=true"
             >
               <Loader2 className="ml-2 h-4 w-4 animate-spin" />

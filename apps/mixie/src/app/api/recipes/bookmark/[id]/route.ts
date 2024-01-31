@@ -1,13 +1,17 @@
-import { Bookmark } from "@/server/db/types";
+import { Bookmark } from "@/types";
 import { db } from "@/server/db/index";
 import { bookmarks } from "@/server/db/schemas";
-import { bookmarkSchema } from "@/server/db/zodSchemas";
+import { bookmarkSchema } from "@/types/zodSchemas";
 import { getServerAuthSession } from "@/server/auth";
 import { NextResponse, type NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
+import { eq } from "drizzle-orm";
 
-export async function POST(req: NextRequest, params: { id: string }) {
+export async function POST(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
     const session = await getServerAuthSession();
 
@@ -16,33 +20,39 @@ export async function POST(req: NextRequest, params: { id: string }) {
     }
 
     const json = await req.json();
-
-    const bookmark = bookmarkSchema
-      .extend({
-        uid: z.string().nullable().default(null),
-        userId: z.string().nullable().default(null),
-      })
-      .parse(json);
-
     const uid = uuidv4();
 
     const newBookmark: Bookmark = {
-      ...bookmark,
       uid: uid,
       userId: session.user.id,
+      recipeId: params.id,
+      collections: json,
     };
 
-    db.insert(bookmarks).values(newBookmark);
+    const findBookmarks = await db.query.bookmarks.findMany({
+      where: eq(bookmarks.userId, session.user.id),
+    });
+
+    const bookmarkExists = findBookmarks.find(
+      (bookmark) => bookmark.recipeId === params.id
+    );
+
+    if (bookmarkExists) {
+      return NextResponse.json("Already bookmarked", { status: 409 });
+    }
+
+    await db.insert(bookmarks).values(newBookmark);
 
     console.log(
-      `Recipe ${newBookmark.recipeId} has been bookmarked by ${session.user.name} (${session.user.id})`
+      `Recipe ${newBookmark.recipeId} has been bookmarked by ${session.user.id}`
     );
 
     return NextResponse.json({
       message: `Recipe ${newBookmark.recipeId} has been bookmarked`,
+      bookmarkedRecipe: newBookmark
     });
   } catch (error) {
-    console.error("Error on /recipes/[id]/bookmark", error);
+    console.error("Error on /recipes/bookmark/[id]", error);
 
     if (error instanceof z.ZodError) {
       return NextResponse.json(JSON.stringify(error.issues), { status: 422 });

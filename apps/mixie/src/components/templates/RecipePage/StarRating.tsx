@@ -1,20 +1,17 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 // import  { StarIcon } from '@heroicons/react/24/outline';
-import { StarIcon } from "lucide-react";
-import useUser from "@/hooks/useUser";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  DialogTitle
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import useUser from "@/hooks/useUser";
+import { Rating } from "@/types";
+import { StarIcon } from "lucide-react";
 import Link from "next/link";
-import { Rating } from "@/server/db/types";
 import toast from "react-hot-toast";
 
 interface StarRatingProps {

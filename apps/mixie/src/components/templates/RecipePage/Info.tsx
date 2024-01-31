@@ -1,6 +1,6 @@
 "use client";
 import useUser from "@/hooks/useUser";
-import type { Recipe } from "@/server/db/types";
+import type { Recipe } from "@/types";
 import { AlarmClock, Clock, PencilIcon, PieChart, Timer } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

@@ -1,8 +1,9 @@
 import { SearchCard } from "@/components/elements/Cards";
-import { db } from "@/server/db/index";
-import { recipes } from "@/server/db/schemas";
+import { getUsers } from "@/lib/services/data_fetching";
 import { constructMetadata } from "@/lib/utils/";
 import { getServerAuthSession } from "@/server/auth";
+import { db } from "@/server/db/index";
+import { recipes } from "@/server/db/schemas";
 import { and, eq } from "drizzle-orm";
 import { Heart, Pencil, ScrollText } from "lucide-react";
 import { Metadata } from "next";
@@ -10,24 +11,11 @@ import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 
-export const revalidate = 3600;
-
 interface ProfilePageProps {
   params: {
     profile: string;
   };
 }
-
-const getUsers = unstable_cache(
-  async () => {
-    const users = await db.query.users.findMany();
-    return users;
-  },
-  ["users"],
-  {
-    revalidate: 3600,
-  }
-);
 
 export async function generateMetadata({
   params,

@@ -1,9 +1,9 @@
-import { Trash2Icon } from "lucide-react";
-import { Textarea } from "@/components/ui/textarea";
-import { useFormContext } from "react-hook-form";
-import { recipeFormSchema } from "@/server/db/zodSchemas";
-import * as z from "zod";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { recipeFormSchema } from "@/types/zodSchemas";
+import { Trash2Icon } from "lucide-react";
+import { useFormContext } from "react-hook-form";
+import * as z from "zod";
 interface StepProps {
   index: number;
   handleDelete: (index: number) => void;
@@ -48,3 +48,4 @@ const Step = ({ index, handleDelete }: StepProps) => {
 };
 
 export { Step };
+

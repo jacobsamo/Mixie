@@ -1,7 +1,5 @@
-import type { Step as TStep, Ingredient } from "@/server/db/types";
-import React from "react";
-import IngredientChips from "./IngredientChips";
 import { displayIngredient, matchIngredients } from "@/lib/utils";
+import type { Ingredient, Step as TStep } from "@/types";
 
 interface StepProps {
   index: number;

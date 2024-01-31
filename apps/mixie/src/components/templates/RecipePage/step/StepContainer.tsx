@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Step from "./Step";
-import { Step as StepType, Ingredient } from "@/server/db/types";
+import { Step as StepType, Ingredient } from "@/types";
 import type { ClassValue } from "clsx";
 
 interface StepContainerProps {

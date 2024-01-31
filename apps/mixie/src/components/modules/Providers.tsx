@@ -1,10 +1,13 @@
 "use client";
-import { NextAuthProvider } from "@/components/layouts/NextAuthProvider";
-
+import {
+  QueryClient,
+  QueryClientProvider
+} from "@tanstack/react-query";
+import { Provider as JotaiProvider } from "jotai";
+import { SessionProvider } from "next-auth/react";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 import React from "react";
-import { ThemeProvider } from "@/components/modules/theme-provider";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import StateProvider from "./StateProvider";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = React.useState(() => new QueryClient());
@@ -12,9 +15,15 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider attribute="class" enableSystem>
-          <NextAuthProvider>{children}</NextAuthProvider>
-        </ThemeProvider>
+        <SessionProvider>
+          <JotaiProvider>
+            <StateProvider>
+              <NextThemesProvider attribute="class" enableSystem>
+                {children}
+              </NextThemesProvider>
+            </StateProvider>
+          </JotaiProvider>
+        </SessionProvider>
         {/* {process.env.NODE_ENV === "development" && (
           <ReactQueryDevtools initialIsOpen={false} />
         )} */}

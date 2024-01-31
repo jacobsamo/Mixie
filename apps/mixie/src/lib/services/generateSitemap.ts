@@ -1,5 +1,5 @@
-import prettier from "prettier";
 import fs from "fs";
+import prettier from "prettier";
 
 interface RequiredFelids {
   /**the id of the item */

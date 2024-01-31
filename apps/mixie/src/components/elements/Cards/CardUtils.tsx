@@ -1,51 +1,17 @@
-import { env } from "env";
-import { HeartIcon } from "lucide-react";
-import { Session } from "next-auth";
-import toast from "react-hot-toast";
-import Image, { type ImageProps } from "next/image";
 import { cn } from "@/lib/utils";
+import { Recipe } from "@/types";
 import clsx from "clsx";
-import { ImageAttributes } from "@/server/db/types";
+import { Session } from "next-auth";
+import Image, { type ImageProps } from "next/image";
+import BookmarkRecipeDialog from "./BookmarkRecipeDialog";
 
-export type CardRecipe = {
-  recipeId?: string;
-  uid?: string;
-  id: string;
-  title: string;
-  imageUrl: string | null;
-  imageAttributes: ImageAttributes | null;
-  total: string | null;
-  keywords: { value: string }[] | null;
-};
+export type CardRecipe = Pick<
+  Recipe,
+  "uid" | "id" | "title" | "imageUrl" | "imageAttributes" | "total" | "keywords"
+>;
 
 export interface CardProps {
   recipe: CardRecipe;
-}
-
-export function addBookMark(recipe: CardRecipe) {
-  const bookmark = {
-    uid: null,
-    recipeId: recipe.recipeId || recipe.uid,
-    userId: null,
-  };
-
-  const setBookmark = fetch(`/api/recipes/${bookmark.recipeId}/bookmark`, {
-    method: "POST",
-    body: JSON.stringify(bookmark),
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
-    },
-  });
-
-  toast.promise(setBookmark, {
-    loading: "Setting bookmark...",
-    success: "Bookmark added successfully",
-    error: (err) => {
-      console.error(err);
-      return "Error while bookmarking recipe";
-    },
-  });
 }
 
 export const BookmarkButton = ({
@@ -57,17 +23,7 @@ export const BookmarkButton = ({
 }) => {
   if (!session) return null;
 
-  return (
-    <button
-      onClick={() => addBookMark(recipe)}
-      className="absolute bottom-2 right-2"
-    >
-      <HeartIcon
-        className={`h-8 w-8 cursor-pointer drop-shadow-xl`}
-        style={{ textShadow: "4px 4px 20px rgba(0, 0, 0, 1)" }}
-      />
-    </button>
-  );
+  return <BookmarkRecipeDialog recipe={recipe} userId={session.user.id} />;
 };
 
 export const RecipeImage = (

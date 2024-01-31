@@ -1,27 +1,6 @@
+import { getRecipes } from "@/lib/services/data_fetching";
 import { recipeId } from "@/lib/utils";
-import { db } from "@/server/db/index";
-import { recipes as recipesSchema } from "@/server/db/schemas";
-import { unstable_cache } from "next/cache";
 import { NextResponse, type NextRequest } from "next/server";
-
-export const revalidate = 3600;
-
-const getRecipes = unstable_cache(
-  async () => {
-    const recipes = await db
-      .select({
-        uid: recipesSchema.uid,
-        id: recipesSchema.id,
-        isPublic: recipesSchema.isPublic,
-      })
-      .from(recipesSchema);
-    return recipes;
-  },
-  ["recipes"],
-  {
-    revalidate: 3600,
-  }
-);
 
 export async function POST(req: NextRequest) {
   console.log("Title: ", req);

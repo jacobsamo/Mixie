@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
 import { ReadonlyURLSearchParams } from "next/navigation";
+import { twMerge } from "tailwind-merge";
 
 // export from other files
 export * from "./ingredients";
@@ -41,4 +41,11 @@ export const createUrl = (
   const queryString = `${paramsString.length ? "?" : ""}${paramsString}`;
 
   return `${pathname}${queryString}`;
+};
+
+export const createQueryString = (name, value) => {
+  const params = new URLSearchParams();
+  params.set(name, value);
+
+  return params.toString();
 };

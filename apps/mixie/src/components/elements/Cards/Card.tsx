@@ -1,11 +1,10 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import Link from "next/link";
-import { CardProps, BookmarkButton, RecipeImage } from "./CardUtils";
+import { BookmarkButton, CardProps, RecipeImage } from "./CardUtils";
 
-interface BaseCardProps extends CardProps {
+export interface BaseCardProps extends CardProps {
   hasCookTime?: boolean;
   classNames?: {
     container?: string;
@@ -29,17 +28,16 @@ export const BaseCard = ({
   return (
     <div
       className={cn(
-        "relative flex h-56 w-56 flex-col items-center justify-between rounded-xl  p-2 text-black dark:text-white",
+        "relative flex h-56 w-56 flex-col items-center justify-between rounded-xl  p-2 text-white",
         classNames?.container
       )}
     >
       <Link
         href={`/recipes/${recipe.id}`}
         className={cn(
-          "text-center text-step--2 drop-shadow-xl",
+          "textOnBackground text-center text-step--2",
           classNames?.title
         )}
-        style={{ textShadow: "4px 4px 20px rgba(0, 0, 0, 1)" }}
       >
         {recipe.title}
       </Link>
@@ -51,7 +49,12 @@ export const BaseCard = ({
             classNames?.bookmarkContainer
           )}
         >
-          <h3 className={cn("w-fit whitespace-nowrap", classNames?.cookTime)}>
+          <h3
+            className={cn(
+              "textOnBackground w-fit whitespace-nowrap",
+              classNames?.cookTime
+            )}
+          >
             {recipe.total}
           </h3>
           {<BookmarkButton session={session} recipe={recipe} />}

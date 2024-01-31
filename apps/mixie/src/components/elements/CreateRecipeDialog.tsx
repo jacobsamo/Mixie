@@ -19,11 +19,7 @@ import { Input } from "@/components/ui/input";
 
 import { env } from "env";
 import toast from "react-hot-toast";
-
-const createRecipeSchema = z.object({
-  title: z.string().optional(),
-  link: z.string().optional(),
-});
+import { createRecipeSchema } from "@/types";
 
 const CreateRecipeDialog = () => {
   const router = useRouter();
@@ -48,7 +44,7 @@ const CreateRecipeDialog = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+        Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
       },
       body: JSON.stringify({ title: values.title, link: values.link }),
     });
@@ -95,7 +91,12 @@ const CreateRecipeDialog = () => {
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          <Input {...register("title")} label="Title" autoFocus={false} />
+          <Input
+            {...register("title")}
+            label="Title"
+            autoFocus={false}
+            error={errors.title}
+          />
 
           <p className="mx-auto">OR</p>
 
@@ -104,10 +105,8 @@ const CreateRecipeDialog = () => {
               import a recipe <VersionChip release="beta" />
             </div>
             <Input
-              {...register("link", {
-                required: false,
-              })}
-              required={false}
+              {...register("link")}
+              error={errors.link}
               autoFocus={false}
               label="Recipe Url"
               placeholder="https://"

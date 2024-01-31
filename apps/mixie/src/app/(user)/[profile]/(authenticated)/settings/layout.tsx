@@ -1,10 +1,9 @@
 "use client";
-import React from "react";
-import Link from "next/link";
-import { cva } from "class-variance-authority";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
+import { createQueryString } from "@/lib/utils";
+import { cva } from "class-variance-authority";
+import { useRouter, useSearchParams } from "next/navigation";
+import React from "react";
 
 interface SettingsParams {
   profile: string;
@@ -26,18 +25,9 @@ export default function SettingsLayout({
   children: React.ReactNode;
   params: SettingsParams;
 }) {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const activeLink = searchParams.get("activeLink") || "profile";
-
-  const router = useRouter();
-  const pathName = usePathname();
-
-  const createQueryString = (name, value) => {
-    const params = new URLSearchParams();
-    params.set(name, value);
-
-    return params.toString();
-  };
 
   return (
     <main className="h-full w-full">

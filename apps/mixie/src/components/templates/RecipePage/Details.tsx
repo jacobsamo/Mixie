@@ -1,12 +1,11 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
-import StepContainer from "./step/StepContainer";
-import AddBatch from "./ingredient/AddBatch";
-import type { Ingredient as IngredientType, Step } from "@/server/db/types";
-import Ingredient from "./ingredient/Ingredient";
-import { cva, type VariantProps } from "class-variance-authority";
-import { set } from "zod";
 import { calculateAllIngredients } from "@/lib/utils";
+import type { Ingredient as IngredientType, Step } from "@/types";
+import { cva } from "class-variance-authority";
+import { useEffect, useMemo, useState } from "react";
+import AddBatch from "./ingredient/AddBatch";
+import Ingredient from "./ingredient/Ingredient";
+import StepContainer from "./step/StepContainer";
 
 interface DetailsProps {
   ingredients: IngredientType[];

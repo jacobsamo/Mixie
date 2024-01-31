@@ -3,15 +3,14 @@ import { SelectComponent } from "@/components/ui/SelectComponent";
 import { Input } from "@/components/ui/input";
 import TagInput from "@/components/ui/taginput";
 import { Textarea } from "@/components/ui/textarea";
-import { NewRecipe, Recipe } from "@/server/db/types";
-import { recipeFormSchema } from "@/server/db/zodSchemas";
-import { DevTool } from "@hookform/devtools";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { NewRecipe, Recipe } from "@/types";
+import { recipeFormSchema } from "@/types/zodSchemas";
 import {
   dietaryRequirements,
   meal_times,
   sweet_savoury,
 } from "@/lib/services/data";
+import { zodResolver } from "@hookform/resolvers/zod";
 import dynamic from "next/dynamic";
 import { env } from "process";
 import React, { useEffect, useState } from "react";
@@ -91,7 +90,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+          Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
         },
         body: JSON.stringify({ title: recipeValue.title }),
       }).then((res) => {

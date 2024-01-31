@@ -1,6 +1,6 @@
-import type { Ingredient, NewRecipe } from "@/server/db/types";
-import { recipeFormSchema } from "@/server/db/zodSchemas";
 import { calculateTotalTime } from "@/lib/utils";
+import type { Ingredient, NewRecipe } from "@/types";
+import { recipeFormSchema } from "@/types/zodSchemas";
 import { SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
@@ -51,7 +51,7 @@ export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${process.env.NEXT_PUBLIC_APP_TOKEN}`,
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_APP_TOKEN}`,
     },
     body: JSON.stringify(data),
   }).then((res) => {

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { recipeFormSchema } from "@/server/db/zodSchemas";
+import { recipeFormSchema } from "@/types/zodSchemas";
 import { PlusCircleIcon } from "lucide-react";
 import { useCallback } from "react";
 import { type DropResult } from "react-beautiful-dnd";

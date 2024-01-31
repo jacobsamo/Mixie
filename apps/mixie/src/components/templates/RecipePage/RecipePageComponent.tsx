@@ -1,15 +1,12 @@
-import React from "react";
+import ShareDialog from "@/components/elements/ShareDialog";
+import type { Recipe } from "@/types";
+import { ExternalLinkIcon } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import Details from "./Details";
 import Info from "./Info";
-import StarRating from "./StarRating";
-import type { NewRecipe, Recipe } from "@/server/db/types";
-import Image from "next/image";
-import { recipeFormSchema } from "@/server/db/zodSchemas";
-import * as z from "zod";
-import Link from "next/link";
-import { ExternalLinkIcon } from "lucide-react";
 import RecipePrintingView from "./RecipePrintingView";
-import ShareDialog from "@/components/elements/ShareDialog";
+import StarRating from "./StarRating";
 
 interface RecipePageComponentProps {
   recipe: Recipe;
@@ -43,10 +40,7 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
             />
             {recipe.imageAttributes?.photographer &&
               recipe.imageAttributes.photographerLink && (
-                <div
-                  className="absolute bottom-2 left-2 bg-gray-700/20 text-white drop-shadow-xl"
-                  style={{ textShadow: "4px 4px 20px rgba(0, 0, 0, 1)" }}
-                >
+                <div className="textOnBackground absolute bottom-2 left-2 bg-gray-700/20 text-white drop-shadow-xl">
                   Photo by{" "}
                   <Link
                     href={recipe.imageAttributes.photographerLink}

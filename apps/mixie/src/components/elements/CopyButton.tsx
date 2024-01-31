@@ -10,7 +10,7 @@ export interface CopyButtonProps extends ButtonProps {
   text: string;
 }
 
-const CopyButton = ({ text }: CopyButtonProps, props) => {
+const CopyButton = ({ text, ...props }: CopyButtonProps) => {
   const copy = () => {
     navigator.clipboard
       .writeText(text)

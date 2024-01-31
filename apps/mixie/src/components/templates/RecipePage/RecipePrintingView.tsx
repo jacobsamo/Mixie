@@ -1,8 +1,7 @@
-import { Recipe } from "@/server/db/types";
+import { Recipe } from "@/types";
 import { StarIcon } from "lucide-react";
-import React from "react";
-import Info from "./Info";
 import Image from "next/image";
+import Info from "./Info";
 import PrintingStep from "./step/PrintingStep";
 
 interface RecipePrintingViewProps {

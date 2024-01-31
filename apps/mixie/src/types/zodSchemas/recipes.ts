@@ -1,7 +1,7 @@
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { bookmarks, collections, ratings, recipes } from "@/server/db/schemas";
+import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
-import { bookmarks, ratings, recipes, users } from "./schemas";
-import { amount, unit } from "./zodEnums";
+import { amount, unit } from "./enums";
 
 // join the info and ingredients to the recipe
 
@@ -9,6 +9,35 @@ const selectValue = z.object({
   value: z.string(),
   label: z.string(),
 });
+
+export const createRecipeSchema = z
+  .object({
+    title: z.string().nullish(),
+    link: z.string().nullish(),
+  })
+  .superRefine((values, ctx) => {
+    if (!values.title && !values.link) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Either a title or a link is required",
+        path: ["title", "link"],
+      });
+    }
+
+    if (values.link) {
+      try {
+        new URL(values.link);
+      } catch (err) {
+        ctx.addIssue({
+          code: "custom",
+          message: "Link must be a valid url",
+          path: ["link"],
+        });
+      }
+    }
+
+    return values;
+  });
 
 export const imageAttributesSchema = z.object({
   alt: z.string(),
@@ -111,6 +140,5 @@ export const recipeFormSchema = recipeSchema.superRefine((values, ctx) => {
   return values;
 });
 
-export const userSchema = createInsertSchema(users);
-
 export const bookmarkSchema = createInsertSchema(bookmarks);
+export const collectionSchema = createInsertSchema(collections);
