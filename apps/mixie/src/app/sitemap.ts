@@ -24,7 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     {
       url: "https://www.mixiecooking.com/info/privacy_policy",
-      lastModified: new Date("2023-11-01"),
+      lastModified: new Date("2023-12-14"),
     },
     {
       url: "https://www.mixiecooking.com/info/terms_service",

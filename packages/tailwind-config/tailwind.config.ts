@@ -68,5 +68,4 @@ export default {
       searchBarShadow: "17px 21px 17px rgba(0, 0, 0, 0.25)",
     },
   },
-  // plugins: [require("./shadcnPlugin.js")],
 } satisfies Config;

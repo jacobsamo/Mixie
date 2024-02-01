@@ -16,6 +16,8 @@ export const env = createEnv({
         ? z.string()
         : z.string().optional(),
 
+    UNSPLASH_SECRET: z.string().min(1),
+
     // client ids / secrets
     GITHUB_CLIENT_ID: z.string().min(1),
     GITHUB_CLIENT_SECRET: z.string().min(1),
@@ -32,6 +34,7 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_API_APP_TOKEN: z.string().min(1),
     NEXT_PUBLIC_APP_URL: z.string().url(),
+    NEXT_PUBLIC_UNSPLASH_ACCESS_KEY: z.string().min(1),
   },
   runtimeEnv: {
     // App
@@ -47,6 +50,10 @@ export const env = createEnv({
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     API_APP_TOKEN: process.env.API_APP_TOKEN,
     JWT_SECRET: process.env.JWT_SECRET,
+
+    // unsplash
+    UNSPLASH_SECRET: process.env.UNSPLASH_SECRET,
+    NEXT_PUBLIC_UNSPLASH_ACCESS_KEY: process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY,
 
     // UploadThing
     UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,

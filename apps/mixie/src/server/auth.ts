@@ -6,16 +6,16 @@ import {
 } from "next-auth";
 import { type Adapter } from "next-auth/adapters";
 
+import EmailProvider from "next-auth/providers/email";
 import FacebookProvider from "next-auth/providers/facebook";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import EmailProvider from "next-auth/providers/email";
 
-import { env } from "@/env.mjs";
-import { TFont, TTheme } from "@db/enum-types";
-import { db } from "@db/index";
-import * as schema from "@db/schemas";
-import { User as DbUser } from "@db/types";
+import { TFont, TTheme } from "@/server/db/enum-types";
+import { db } from "@/server/db/index";
+import * as schema from "@/server/db/schemas";
+import { User as DbUser } from "@/types";
+import { env } from "env";
 import { sendEmail } from "./emails";
 import LoginLink from "./emails/login";
 
@@ -131,22 +131,18 @@ export const authOptions: NextAuthOptions = {
 };
 
 /**
- * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
+ * Wrapper for `getServerSession` so that you don't need to import  the `authOptions` in every file.
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */
-export const getServerAuthSession = () => {
-  return getServerSession(authOptions);
-};
+export const getServerAuthSession = () => getServerSession(authOptions);
 
 /**
- * Adapter for Drizzle ORM. This is not yet available in NextAuth directly, so we inhouse our own.
- * When the official one is out, we will switch to that.
+ * Adapter for Drizzle ORM.
  *
  * @see
- * https://github.com/nextauthjs/next-auth/pull/7165/files#diff-142e7d6584eed63a73316fbc041fb93a0564a1cbb0da71200b92628ca66024b5
+ * https://github.com/nextauthjs/next-auth/blob/d7a116558700785880ecb03658b7de7c98bcf4bf/packages/adapter-drizzle/src/index.ts#L254
  */
-
 export function DrizzleAdapter(): Adapter {
   const { users, sessions, accounts, verificationTokens } = schema;
 

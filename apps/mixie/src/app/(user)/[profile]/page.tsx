@@ -1,34 +1,21 @@
-import { SearchCard } from "@/src/common/components/elements/Cards";
-import { constructMetadata } from "@lib/utils/";
-import { db } from "@db/index";
-import { getServerAuthSession } from "@server/auth";
-import { info, users } from "@db/schemas";
-import { Info, User } from "@db/types";
-import { and, eq, or } from "drizzle-orm";
+import { SearchCard } from "@/components/elements/Cards";
+import { getUsers } from "@/lib/services/data_fetching";
+import { constructMetadata } from "@/lib/utils/";
+import { getServerAuthSession } from "@/server/auth";
+import { db } from "@/server/db/index";
+import { recipes } from "@/server/db/schemas";
+import { and, eq } from "drizzle-orm";
 import { Heart, Pencil, ScrollText } from "lucide-react";
 import { Metadata } from "next";
+import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
-import { unstable_cache } from "next/cache";
-
-export const revalidate = 3600;
 
 interface ProfilePageProps {
   params: {
     profile: string;
   };
 }
-
-const getUsers = unstable_cache(
-  async () => {
-    const users = await db.query.users.findMany();
-    return users;
-  },
-  ["users"],
-  {
-    revalidate: 3600,
-  }
-);
 
 export async function generateMetadata({
   params,
@@ -54,13 +41,10 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   const users = await getUsers();
   const user = users?.find((user) => user.id == params.profile);
 
-  const gotRecipes = await db.query.info.findMany({
+  const gotRecipes = await db.query.recipes.findMany({
     where: and(
-      eq(info.isPublic, true),
-      or(
-        eq(info.createdBy, params.profile),
-        eq(info.lastUpdatedBy, params.profile)
-      )
+      eq(recipes.isPublic, true),
+      eq(recipes.createdBy, params.profile)
     ),
   });
 

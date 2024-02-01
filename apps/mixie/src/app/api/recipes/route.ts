@@ -1,6 +1,6 @@
-import { isApp } from "@/src/common/lib/services/apiMiddleware";
-import { db } from "@db/index";
-import { info } from "@db/schemas";
+import { isApp } from "@/lib/services/apiMiddleware";
+import { db } from "@/server/db/index";
+import { recipes as recipeSchema } from "@/server/db/schemas";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -11,16 +11,16 @@ export async function GET(req: NextRequest) {
     return NextResponse.json("Unauthorized", { status: 401 });
   }
 
-  const recipes = await db.query.info.findMany({
+  const recipes = await db.query.recipes.findMany({
     columns: {
-      recipeId: true,
+      uid: true,
       id: true,
       title: true,
-      imgAlt: true,
-      imgUrl: true,
+      imageAttributes: true,
+      imageUrl: true,
       total: true,
     },
-    where: eq(info.isPublic, true),
+    where: eq(recipeSchema.isPublic, true),
   });
 
   return NextResponse.json(recipes);

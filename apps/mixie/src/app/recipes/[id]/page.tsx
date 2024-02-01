@@ -1,29 +1,10 @@
-import RecipePageComponent from "@components/templates/RecipePage/RecipePageComponent";
-import { db } from "@db/index";
-import { recipes as recipeSchema } from "@db/schemas";
-import type { Recipe } from "@db/types";
-import { constructMetadata, displayIngredient } from "@lib/utils";
-import { eq } from "drizzle-orm";
+import RecipePageComponent from "@/components/templates/RecipePage/RecipePageComponent";
+import { getRecipes } from "@/lib/services/data_fetching";
+import { constructMetadata, displayIngredient } from "@/lib/utils";
+import type { Recipe } from "@/types";
 import { Metadata } from "next";
 import { RecipeJsonLd } from "next-seo";
-import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
-
-export const revalidate = 3600;
-
-const getRecipes = unstable_cache(
-  async () => {
-    const recipes = await db.query.recipes.findMany({
-      with: { info: true },
-      where: eq(recipeSchema.isPublic, true),
-    });
-    return recipes;
-  },
-  ["fullRecipes"],
-  {
-    revalidate: 3600,
-  }
-);
 
 export async function generateMetadata({
   params,
@@ -43,10 +24,9 @@ export async function generateMetadata({
   const metaData = await constructMetadata({
     title: recipe.title,
     description: recipe.description || undefined,
-    image: recipe.info.imgUrl || "/images/banner.jpg",
+    image: recipe.imageUrl || "/images/banner.jpg",
     url: `https://www.mixiecooking.com/recipes/${recipe.id}`,
-    keywords:
-      recipe.info.keywords?.map((keyword) => keyword.value) || undefined,
+    keywords: recipe.keywords?.map((keyword) => keyword.value) || undefined,
   });
 
   return metaData;
@@ -63,7 +43,7 @@ export default async function RecipePage({ params }) {
           useAppDir={true}
           name={recipe?.title || ""}
           authorName={""}
-          yields={recipe?.info.serves?.toString() || ""}
+          yields={recipe?.serves?.toString() || ""}
           ingredients={
             recipe?.ingredients?.map((ingredient) => {
               return displayIngredient(ingredient);
@@ -78,11 +58,13 @@ export default async function RecipePage({ params }) {
             }) || []
           }
           description={recipe.description! || ""}
-          datePublished={new Date(recipe.createdAt).toDateString()}
-          dateModified={new Date(recipe.lastUpdated).toDateString()}
+          datePublished={
+            recipe.createdAt
+              ? new Date(recipe.createdAt).toDateString()
+              : new Date().toDateString()
+          }
           keywords={
-            recipe.info.keywords?.map((keyword) => keyword.value).join(", ") ||
-            ""
+            recipe.keywords?.map((keyword) => keyword.value).join(", ") || ""
           }
         />
         <RecipePageComponent recipe={recipe as Recipe} />

@@ -2,20 +2,17 @@ import {
   convertIngredients,
   getRecipeJsonLd,
   splitTime,
-} from "@lib/services/recipeJsonLDParsing";
-import { recipeId } from "@lib/utils";
-import { db } from "@db/index";
-import { info, recipes } from "@db/schemas";
-import { NewInfo, NewPartialRecipe } from "@db/types";
-import { getServerAuthSession } from "@server/auth";
+} from "@/lib/services/recipeJsonLDParsing";
+import { recipeId } from "@/lib/utils";
+import { getServerAuthSession } from "@/server/auth";
+import { db } from "@/server/db/index";
+import { recipes } from "@/server/db/schemas";
+import { NewRecipe } from "@/types";
+import { Recipe, createRecipeSchema } from "@/types";
+import { eq, or } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 import * as z from "zod";
-
-const createRecipeSchema = z.object({
-  title: z.string().optional(),
-  link: z.string().optional(),
-});
 
 export async function POST(req: NextRequest) {
   try {
@@ -24,130 +21,106 @@ export async function POST(req: NextRequest) {
     if (!session) {
       return NextResponse.json("Unauthorized", { status: 401 });
     }
-    const { user } = session;
-
     const json = await req.json();
     const { title, link } = createRecipeSchema.parse(json);
+
+    // set global variables
+    const { user } = session;
     const uid = uuidv4();
+    let newRecipe: NewRecipe | null = null;
 
     if (title && !link) {
       const id = recipeId(title);
 
       const newTitle = title.charAt(0).toUpperCase() + title.slice(1);
 
-      // general info about the recipe
-      const newInfo: NewInfo = {
-        recipeId: uid,
-        id,
-        title: newTitle,
-        createByName: user.name! || "",
-        createdBy: user.id,
-        lastUpdatedBy: user.id,
-        lastUpdatedByName: user.name! || "",
-        isPublic: false,
-      };
-
       // the recipe itself
-      const newRecipe: NewPartialRecipe = {
+      newRecipe = {
         uid: uid,
         id,
         title: newTitle,
-        createByName: user.name! || "",
         createdBy: user.id,
-        lastUpdatedBy: user.id,
-        lastUpdatedByName: user.name! || "",
         isPublic: false,
       };
-
-      console.log(`Created recipe: ${newRecipe.uid}`, {
-        message: `Recipe successfully created`,
-        recipe: newRecipe,
-        info: newInfo,
-      });
-
-      await db.insert(info).values(newInfo);
-      await db.insert(recipes).values(newRecipe);
-
-      return NextResponse.json(
-        { message: `Recipe successfully created using title`, id: uid },
-        {
-          status: 200,
-        }
-      );
     }
 
     if (link) {
+      if (link.includes("mixiecooking.com")) {
+        // split a mixie link to get the recipe id this id would be after /recipes/<recipeId> a recipe link might look like this: https://mixiecooking.com/recipes/5f9b1b5e-5b1a-4b9e-9b9e-9b9e9b9e9b9e
+        const recipeId = link.split("/").pop();
+        if (!recipeId) return NextResponse.json(null, { status: 404 });
+        const findRecipe = (await db.query.recipes.findFirst({
+          where: or(eq(recipes.id, recipeId), eq(recipes.uid, recipeId)),
+        })) as Recipe;
+
+        if (!findRecipe) {
+          return NextResponse.json(null, { status: 404 });
+        }
+
+        newRecipe = {
+          ...findRecipe,
+          uid: uid,
+        };
+      }
+
       // parse the recipe
       const recipe = await getRecipeJsonLd(link);
       const ingredients = await convertIngredients(recipe.recipeIngredient);
 
-      if (recipe) {
-        const uid = uuidv4();
-
-        const newInfo: NewInfo = {
-          recipeId: uid,
-          id: recipeId(recipe.name),
-          title: recipe.name,
-          createByName: user.name! || "",
-          createdBy: user.id,
-          lastUpdatedBy: user.id,
-          lastUpdatedByName: user.name! || "",
-          cook: splitTime(recipe.cookTime),
-          prep: splitTime(recipe.prepTime),
-          total: splitTime(recipe.totalTime),
-          rating: recipe.aggregateRating?.ratingValue || null,
-          serves: recipe.recipeYield || null,
-          imgUrl: recipe.image.url || null,
-          imgAlt: recipe.image.alt || recipe.name || "recipe image",
-          isPublic: false,
-          keywords: recipe.keywords.split(",").map((keyword: string) => {
-            return { value: keyword };
-          }),
-          ingredients: ingredients.map((ingredient) => ingredient.title),
-        };
-
-        const newRecipe: NewPartialRecipe = {
-          uid: uid,
-          id: recipeId(recipe.name),
-          title: recipe.name,
-          createByName: user.name! || "",
-          createdBy: user.id,
-          lastUpdatedBy: user.id,
-          lastUpdatedByName: user.name! || "",
-          description: recipe.description.replace(/<[^>]*>?/gm, "") || null,
-          isPublic: false,
-          steps:
-            recipe.recipeInstructions.map((step: string) => {
-              return { step_body: step };
-            }) || null,
-          ingredients,
-          source: link,
-        };
-
-        console.log(`Created recipe: ${newRecipe.uid}`, {
-          message: `Recipe successfully created`,
-          recipe: newRecipe,
-          info: newInfo,
-        });
-
-        await db.insert(info).values(newInfo);
-        await db.insert(recipes).values(newRecipe);
-
-        return NextResponse.json(
-          { message: `Recipe successfully created using link`, id: uid },
-          {
-            status: 200,
-          }
-        );
-      } else {
+      if (!recipe)
         return NextResponse.json(
           { message: `No recipe found at ${link}` },
           {
             status: 404,
           }
         );
-      }
+
+      newRecipe = {
+        uid: uid,
+        id: recipeId(recipe.name),
+        title: recipe.name,
+        description: recipe.description.replace(/<[^>]*>?/gm, "") || null,
+        isPublic: false,
+        steps:
+          recipe.recipeInstructions.map((step: string) => {
+            return { step_body: step };
+          }) || null,
+        ingredients: ingredients,
+        source: link,
+        cook: splitTime(recipe.cookTime),
+        prep: splitTime(recipe.prepTime),
+        total: splitTime(recipe.totalTime),
+        rating: recipe.aggregateRating?.ratingValue || null,
+        serves: recipe.recipeYield || null,
+        imageUrl: recipe.image.url || null,
+        imageAttributes: recipe.image.alt || recipe.name || "recipe image",
+        keywords: recipe.keywords.split(",").map((keyword: string) => {
+          return { value: keyword };
+        }),
+        ingredientsList: ingredients.map((ingredient) => ingredient.title),
+        createdBy: user.id,
+      };
     }
+
+    if (!newRecipe)
+      return NextResponse.json(
+        { message: "Error could not create recipe" },
+        { status: 404 }
+      );
+
+    await db.insert(recipes).values(newRecipe);
+
+    console.log(`Created recipe by link: ${uid}`, {
+      message: `Recipe successfully created`,
+      recipe: newRecipe,
+    });
+
+    return NextResponse.json(
+      { message: `Recipe successfully created using link`, id: uid },
+      {
+        status: 200,
+      }
+    );
   } catch (error) {
     console.error("Error on /recipes/create", error);
     if (error instanceof z.ZodError) {

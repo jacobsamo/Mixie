@@ -1,27 +1,9 @@
-import { CardSquare } from "@/src/common/components/elements/Cards";
-import { db } from "@/src/server/db";
-import { info } from "@/src/server/db/schemas";
-import { Info } from "@/src/server/db/types";
-import RecipeSearch from "@components/modules/RecipeSearch";
-import { constructMetadata } from "@lib/utils";
-import { eq } from "drizzle-orm";
+import { CardSquare } from "@/components/elements/Cards";
+import RecipeSearch from "@/components/modules/RecipeSearch";
+import { getRecipes } from "@/lib/services/data_fetching";
+import { constructMetadata } from "@/lib/utils";
+import { Recipe } from "@/types";
 import { IFuseOptions } from "fuse.js";
-import { unstable_cache } from "next/cache";
-
-export const revalidate = 3600;
-
-const getRecipes = unstable_cache(
-  async () => {
-    const recipes = await db.query.info.findMany({
-      where: eq(info.isPublic, true),
-    });
-    return recipes;
-  },
-  ["recipes"],
-  {
-    revalidate: 3600,
-  }
-);
 // const getRecipes = cache(async () => {
 //   const recipes = await db.query.info.findMany({
 //     where: eq(info.isPublic, true),
@@ -34,11 +16,11 @@ async function searchRecipes({
   recipes,
 }: {
   query: string | undefined;
-  recipes: Info[];
+  recipes: Recipe[];
 }) {
   if (query == undefined) return;
 
-  const options: IFuseOptions<Info> = {
+  const options: IFuseOptions<Recipe> = {
     includeScore: true,
     isCaseSensitive: true,
     keys: ["title"],
@@ -70,9 +52,14 @@ export default async function RecipeViewPage({
   return (
     <main className="h-fit min-h-full w-full">
       <section className="flex h-52 items-center justify-center">
-        <RecipeSearch />
+        <RecipeSearch shouldAutoFilter={true} />
       </section>
 
+      {(!searchedRecipes || searchedRecipes?.length == 0) && searchValue && (
+        <p className="text0-white text-center text-step--2">
+          No recipes found for your search
+        </p>
+      )}
       <section className="flex flex-wrap gap-2 p-3">
         {(searchedRecipes && searchedRecipes?.length > 0
           ? searchedRecipes
@@ -83,10 +70,10 @@ export default async function RecipeViewPage({
               key={recipe.id}
               recipe={{
                 ...recipe,
-                imgUrl: recipe.imgUrl || null,
-                imgAlt: recipe.imgAlt || null,
+                imageUrl: recipe.imageUrl || null,
+                imageAttributes: recipe.imageAttributes || null,
                 total: recipe.total || null,
-                keywords: recipe.keywords || null,
+                keywords: (recipe.keywords as { value: string }[]) || null,
               }}
             />
           );
