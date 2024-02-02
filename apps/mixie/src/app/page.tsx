@@ -18,7 +18,7 @@ import { getRecipes } from "@/lib/services/data_fetching";
 // });
 
 export default async function Page() {
-  const latestRecipes = await getRecipes() ;
+  const latestRecipes = await getRecipes();
 
   return (
     <main className="h-full w-full">
@@ -41,13 +41,22 @@ export default async function Page() {
             align: "center",
             loop: true,
           }}
+          autoplay={true}
         >
           <CarouselContent>
-            {latestRecipes.map((recipe) => (
-              <CarouselItem key={recipe.uid}>
-                <CardRectangle key={recipe.id} recipe={recipe} />
-              </CarouselItem>
-            ))}
+            {latestRecipes
+              .sort((a, b) => {
+                // check dates and put the latest first
+                const dateA = new Date(a.createdAt!);
+                const dateB = new Date(b.createdAt!);
+                return dateB.getTime() - dateA.getTime();
+              })
+              .splice(0, 8)
+              .map((recipe) => (
+                <CarouselItem key={recipe.uid}>
+                  <CardRectangle key={recipe.id} recipe={recipe} />
+                </CarouselItem>
+              ))}
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />

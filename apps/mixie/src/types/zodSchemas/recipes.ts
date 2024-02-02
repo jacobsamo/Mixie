@@ -104,6 +104,7 @@ export const recipeSchema = createInsertSchema(recipes, {
         "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
     })
     .nullish(),
+  createdAt: z.date(),
 });
 
 export const ratingsSchema = createInsertSchema(ratings);

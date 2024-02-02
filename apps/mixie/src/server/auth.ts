@@ -78,7 +78,7 @@ export const authOptions: NextAuthOptions = {
     EmailProvider({
       server: `smtp://resend:${env.RESEND_API_KEY}@smtp.resend.com:465`,
       from: "cook@mixiecooking.com",
-      maxAge: 24 * 60 * 60, // How long email links are valid for (default 24h)
+      maxAge: 12 * 60 * 60, // How long email links are valid for (default 12h)
       async generateVerificationToken() {
         const digits = "0123456789";
         let verificationCode = "";
@@ -157,7 +157,9 @@ export function DrizzleAdapter(): Adapter {
           .join("+")}"&size=256&background=random`;
       }
 
-      await db.insert(users).values({ ...data, id });
+      const newUser = { ...data, id };
+
+      await db.insert(users).values(newUser);
 
       return await db
         .select()
@@ -166,14 +168,14 @@ export function DrizzleAdapter(): Adapter {
         .then((res) => res[0]);
     },
     async getUser(data) {
-      const thing =
+      const user =
         (await db
           .select()
           .from(users)
           .where(eq(users.id, data))
           .then((res) => res[0])) ?? null;
 
-      return thing;
+      return user;
     },
     async getUserByEmail(data) {
       const user =
