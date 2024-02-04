@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import NavbarSearch from "../elements/NavbarSearch";
 import UserProfile from "./UserProfile";
 import VersionChip from "./VersionChip";
+import { SearchDialog } from "../elements/Search";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -84,7 +85,7 @@ const Navbar = () => {
       {/* hamburger - show under 768px (md:) */}
       <div className="flex flex-row items-center gap-1">
         {/* <SearchDialog buttonType="searchIcon" /> */}
-        <NavbarSearch />
+        <SearchDialog />
         <FeedbackButton />
         {isMobile && (
           <button
