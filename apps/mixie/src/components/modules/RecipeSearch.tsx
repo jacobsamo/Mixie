@@ -1,10 +1,9 @@
 "use client";
 import { cn, createUrl } from "@/lib/utils";
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useRef, useState } from "react";
-import { Input, InputProps } from "../ui/input";
 import { SearchIcon } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { Input, InputProps } from "../ui/input";
 
 interface RecipeSearchProps extends Omit<InputProps, "name"> {
   className?: string;
@@ -38,10 +37,6 @@ const RecipeSearch = ({
 
     if (pathname !== "/recipes") {
       const paramsString = newParams.toString();
-      console.log(
-        "new string: ",
-        `/recipes${paramsString.length ? "?" : ""}${paramsString}`
-      );
       router.push(`/recipes${paramsString.length ? "?" : ""}${paramsString}`);
       return;
     }

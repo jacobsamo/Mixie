@@ -1,7 +1,6 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { env } from "env";
-import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 export interface SearchInputProps {
@@ -17,7 +16,9 @@ export const SearchInput = ({ setSearchResults }: SearchInputProps) => {
       id="recipeSearch"
       type="search"
       placeholder="Search for recipes"
-      className="w-full max-w-full shadow-none sm:w-full"
+      classNames={{
+        container: "w-full max-w-full shadow-none",
+      }}
       onChange={async (e) => {
         if (!setSearchResults) return;
 

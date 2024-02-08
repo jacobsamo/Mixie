@@ -16,8 +16,6 @@ export default async function RecipeViewPage({
 }) {
   const recipes = await getRecipes();
   const { q: searchValue } = searchParams as { [key: string]: string };
-  console.log('Search param: ', searchParams);
-  console.log('Search: ', searchValue);
   const searchedRecipes = await searchRecipes({ query: searchValue, recipes });
 
   return (
@@ -31,6 +29,7 @@ export default async function RecipeViewPage({
           No recipes found for your search
         </p>
       )}
+      
       <section className="flex flex-wrap gap-2 p-3">
         {(searchedRecipes && searchedRecipes?.length > 0
           ? searchedRecipes

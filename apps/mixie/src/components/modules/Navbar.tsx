@@ -4,10 +4,9 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import NavbarSearch from "../elements/NavbarSearch";
+import { SearchDialog } from "../elements/Search";
 import UserProfile from "./UserProfile";
 import VersionChip from "./VersionChip";
-import { SearchDialog } from "../elements/Search";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -85,7 +84,7 @@ const Navbar = () => {
       {/* hamburger - show under 768px (md:) */}
       <div className="flex flex-row items-center gap-1">
         {/* <SearchDialog buttonType="searchIcon" /> */}
-        <SearchDialog />
+        <SearchDialog searchTrigger="icon" />
         <FeedbackButton />
         {isMobile && (
           <button
