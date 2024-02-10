@@ -1,4 +1,5 @@
 import { CardRectangle } from "@/components/elements/Cards";
+import CollectionCard from "@/components/elements/CollectionCard";
 import LandingText from "@/components/elements/LandingText";
 import { SearchDialog } from "@/components/elements/Search";
 import {
@@ -8,7 +9,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { meal_times } from "@/lib/services/data";
 import { getRecipes } from "@/lib/services/data_fetching";
+import { Donut, EggFried, Salad, Sandwich, Soup } from "lucide-react";
 
 export default async function Page() {
   const latestRecipes = await getRecipes();
@@ -20,7 +23,7 @@ export default async function Page() {
 
         <SearchDialog />
       </section>
-      <section className="pt-9 ">
+      <section className="pb-10 pt-9">
         <h2 className="pb-4 text-center text-step--1">Top Recipes</h2>
         <Carousel
           className="w-full"
@@ -31,19 +34,43 @@ export default async function Page() {
           autoplay={true}
         >
           <CarouselContent>
-            {latestRecipes
-            
-              .splice(0, 8)
-              .map((recipe) => (
-                <CarouselItem key={recipe.uid}>
-                  <CardRectangle key={recipe.id} recipe={recipe} />
-                </CarouselItem>
-              ))}
+            {latestRecipes.splice(0, 8).map((recipe) => (
+              <CarouselItem key={recipe.uid}>
+                <CardRectangle key={recipe.id} recipe={recipe} />
+              </CarouselItem>
+            ))}
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />
         </Carousel>
       </section>
+
+      <div className="flex flex-wrap items-center justify-center gap-2">
+        {meal_times.map((meal_time) => {
+          const DisplayIcon = () => {
+            switch (meal_time.value) {
+              case "breakfast":
+                return <EggFried />;
+              case "lunch":
+                return <Sandwich />;
+              case "dinner":
+                return <Soup />;
+              case "snack":
+                return <Donut />;
+              default:
+                return <Salad />;
+            }
+          };
+
+          return (
+            <CollectionCard
+              href={`/recipes?mealTime=${meal_time.value}`}
+              title={meal_time.label}
+              icon={<DisplayIcon />}
+            />
+          );
+        })}
+      </div>
     </main>
   );
 }

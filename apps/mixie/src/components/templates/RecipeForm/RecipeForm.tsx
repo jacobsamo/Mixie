@@ -22,6 +22,7 @@ import Overlay from "./Overlay";
 // import  StepContainer  from "./StepContainer";
 import { onSubmit } from "./form";
 import LoadingImageUpload from "./loadingstates/LoadingImageUpload";
+import Error from "@/components/ui/Error";
 
 const IngredientContainer = dynamic(() => import("./IngredientContainer"));
 const StepContainer = dynamic(() => import("./StepContainer"));
@@ -242,14 +243,18 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
                     >
                       Meal Time
                     </label>
+                    <Error error={errors.mealTime || null} />
                     <SelectComponent
                       options={meal_times}
                       createAble
                       isMulti
                       onChange={(value) => setValue("mealTime", value.value)}
                       value={
-                        meal_times.find((item) => item.value === field.value) ||
-                        undefined
+                        field.value != null && field.value != undefined
+                          ? meal_times.find(
+                              (item) => item.value ===pnpm  field.value
+                            )
+                          : undefined
                       }
                       placeholder="Meal time"
                     />

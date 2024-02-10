@@ -105,6 +105,7 @@ export const recipeSchema = createInsertSchema(recipes, {
     })
     .nullish(),
   createdAt: z.date(),
+  mealTime: selectValue.nullable(),
 });
 
 export const ratingsSchema = createInsertSchema(ratings);
@@ -135,6 +136,14 @@ export const recipeFormSchema = recipeSchema.superRefine((values, ctx) => {
         code: "custom",
         message: "At least one step is required for public recipes",
         path: ["steps"],
+      });
+    }
+
+    if (!values.mealTime) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Meal time is required for public recipes",
+        path: ["mealTime"],
       });
     }
   }

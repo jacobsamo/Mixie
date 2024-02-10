@@ -24,14 +24,11 @@ export async function generateMetadata({
   const user = users?.find((user) => {
     user.id == params.profile;
   });
-  if (!user) {
-    return;
-  }
 
   return constructMetadata({
-    title: `${user.name} profile` || "",
+    title: `${user?.name}'s profile` || "",
     description: undefined,
-    image: user.image || undefined,
+    image: user?.image || undefined,
   });
 }
 

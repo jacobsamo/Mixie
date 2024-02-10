@@ -1,23 +1,80 @@
 import { CardSquare } from "@/components/elements/Cards";
+import CollectionCard from "@/components/elements/CollectionCard";
 import RecipeSearch from "@/components/modules/RecipeSearch";
+import { meal_times } from "@/lib/services/data";
 import { getRecipes } from "@/lib/services/data_fetching";
 import { constructMetadata } from "@/lib/utils";
+import { Donut, EggFried, Grid, Salad, Sandwich, Soup } from "lucide-react";
 
 export const metadata = constructMetadata({
   title: "Recipes",
 });
 
-export default async function RecipeViewPage() {
+export default async function RecipeViewPage({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | undefined };
+}) {
   const recipes = await getRecipes();
+  const { mealTime: collection } = searchParams!;
+  const mealTime = meal_times.find((meal) => meal.value === collection);
+  const mealTimeRecipes = recipes.filter((recipe) => {
+    return recipe.mealTime?.value == mealTime?.value;
+  });
 
   return (
     <main className="h-fit min-h-full w-full">
-      <section className="flex h-52 items-center justify-center">
+      <section className="mb-4 flex h-52 items-center justify-center">
         <RecipeSearch shouldAutoFilter={true} />
       </section>
 
+      <div className="mb-16 flex flex-wrap items-center justify-center gap-2">
+        <CollectionCard
+          href="/recipes"
+          title="All"
+          icon={<Grid />}
+          className={
+            mealTime == undefined ? "bg-gray-800 outline outline-1" : ""
+          }
+        />
+
+        {meal_times.map((meal_time) => {
+          const DisplayIcon = () => {
+            switch (meal_time.value) {
+              case "breakfast":
+                return <EggFried />;
+              case "lunch":
+                return <Sandwich />;
+              case "dinner":
+                return <Soup />;
+              case "snack":
+                return <Donut />;
+              default:
+                return <Salad />;
+            }
+          };
+
+          return (
+            <CollectionCard
+              href={`?mealTime=${meal_time.value}`}
+              title={meal_time.label}
+              icon={<DisplayIcon />}
+              className={
+                meal_time.value === collection
+                  ? "bg-gray-800 outline outline-1"
+                  : ""
+              }
+            />
+          );
+        })}
+      </div>
+
+      {mealTime && (
+        <h2 className="text-center text-step--1">{mealTime.label} Recipes</h2>
+      )}
+
       <section className="flex flex-wrap gap-2 p-3">
-        {recipes.map((recipe) => {
+        {(mealTimeRecipes || recipes).map((recipe) => {
           return (
             <CardSquare
               key={recipe.id}

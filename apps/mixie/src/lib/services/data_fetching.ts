@@ -1,5 +1,6 @@
 import { db } from "@/server/db";
 import { recipes } from "@/server/db/schemas";
+import { Recipe } from "@/types";
 import { asc, eq } from "drizzle-orm";
 import { unstable_cache } from "next/cache";
 
@@ -9,7 +10,7 @@ export const getRecipes = unstable_cache(
       where: eq(recipes.isPublic, true),
       orderBy: asc(recipes.createdAt),
     });
-    return latestRecipes
+    return latestRecipes as Recipe[];
   },
   ["recipes"],
   {

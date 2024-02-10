@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/tooltip";
 import { HelpCircleIcon } from "lucide-react";
 import type { FieldError } from "react-hook-form";
+import Error from "./Error";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -78,11 +79,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             )}
           </span>
         )}
-        {error && (
-          <span className="text-step--3 font-extralight italic text-red">
-            {error.message}
-          </span>
-        )}
+        <Error error={error} />
         <div
           className={cn(
             "focus-visible:ring-ring flex w-full flex-row items-center rounded-md border border-black bg-white p-1 py-1  text-step--3 shadow-sm transition-colors file:border-0 file:bg-transparent file:font-medium placeholder:text-opacity-70 focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white dark:bg-grey",

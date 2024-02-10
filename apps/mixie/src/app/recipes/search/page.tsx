@@ -12,11 +12,14 @@ export const metadata = constructMetadata({
 export default async function RecipeViewPage({
   searchParams,
 }: {
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams?: { [key: string]: string | undefined };
 }) {
   const recipes = await getRecipes();
-  const { q: searchValue } = searchParams as { [key: string]: string };
-  const searchedRecipes = await searchRecipes({ query: searchValue, recipes });
+  const { q: searchValue } = searchParams!;
+  const searchedRecipes =
+    searchValue != undefined
+      ? await searchRecipes({ query: searchValue, recipes })
+      : undefined;
 
   return (
     <main className="h-fit min-h-full w-full">
@@ -29,7 +32,7 @@ export default async function RecipeViewPage({
           No recipes found for your search
         </p>
       )}
-      
+
       <section className="flex flex-wrap gap-2 p-3">
         {(searchedRecipes && searchedRecipes?.length > 0
           ? searchedRecipes
