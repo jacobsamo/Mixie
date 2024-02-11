@@ -65,6 +65,7 @@ export default async function Page() {
 
           return (
             <CollectionCard
+              key={meal_time.value}
               href={`/recipes?mealTime=${meal_time.value}`}
               title={meal_time.label}
               icon={<DisplayIcon />}

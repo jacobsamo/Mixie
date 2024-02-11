@@ -32,6 +32,7 @@ export default async function RecipeViewPage({
 
       <div className="mb-12 flex flex-wrap items-center justify-center gap-2">
         <CollectionCard
+          key="all"
           href="/recipes"
           title="All"
           icon={<Grid />}
@@ -58,6 +59,7 @@ export default async function RecipeViewPage({
 
           return (
             <CollectionCard
+              key={meal_time.value}
               href={`?mealTime=${meal_time.value}`}
               title={meal_time.label}
               icon={<DisplayIcon />}

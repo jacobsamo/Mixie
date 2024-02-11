@@ -23,6 +23,7 @@ import Overlay from "./Overlay";
 import { onSubmit } from "./form";
 import LoadingImageUpload from "./loadingstates/LoadingImageUpload";
 import Error from "@/components/ui/Error";
+import { Item } from "@radix-ui/react-dropdown-menu";
 
 const IngredientContainer = dynamic(() => import("./IngredientContainer"));
 const StepContainer = dynamic(() => import("./StepContainer"));
@@ -109,181 +110,171 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
   const gotRecipe = getValues() as Recipe;
 
   return (
-    <>
-      <FormProvider {...methods}>
-        <form
-          className="relative z-0 mx-auto mb-[20%] flex w-full flex-col p-2 md:p-0 lg:w-1/2"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <Overlay
-            onPreview={() => setPreview(!preview)}
-            isDisabled={isDisabled}
-          />
+    <FormProvider {...methods}>
+      <form
+        className="relative z-0 mx-auto mb-[20%] flex w-full flex-col p-2 md:p-0 lg:w-1/2"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <Overlay
+          onPreview={() => setPreview(!preview)}
+          isDisabled={isDisabled}
+        />
 
-          {!preview && (
-            <>
-              <Input
-                {...register("title", {
-                  required: true,
-                })}
-                error={errors.title}
-                required
-                label="Title"
-              />
-              <Textarea
-                id="description"
-                label="Description"
-                control={control}
-              />
-              <Input
-                {...register("source")}
-                label="Source"
-                tooltip="Where you got the recipe from if you got it from another website"
-              />
-              <Input
-                {...register("prep", {
-                  pattern: {
-                    value: /^(\d{1,2}[hms]\s?)+$/i,
-                    message:
-                      "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
-                  },
-                })}
-                error={errors.prep}
-                label="Prep Time"
-                hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
-              />
-              <Input
-                {...register("cook", {
-                  pattern: {
-                    value: /^(\d{1,2}[hms]\s?)+$/i,
-                    message:
-                      "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
-                  },
-                })}
-                error={errors.cook}
-                label="Cook Time"
-                hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
-              />
-              <Input
-                {...register("serves", { valueAsNumber: true })}
-                error={errors.serves}
-                label="Serves"
-                type="number"
-              />
+        {!preview && (
+          <>
+            <Input
+              {...register("title", {
+                required: true,
+              })}
+              error={errors.title}
+              required
+              label="Title"
+            />
+            <Textarea id="description" label="Description" control={control} />
+            <Input
+              {...register("source")}
+              label="Source"
+              tooltip="Where you got the recipe from if you got it from another website"
+            />
+            <Input
+              {...register("prep", {
+                pattern: {
+                  value: /^(\d{1,2}[hms]\s?)+$/i,
+                  message:
+                    "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
+                },
+              })}
+              error={errors.prep}
+              label="Prep Time"
+              hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
+            />
+            <Input
+              {...register("cook", {
+                pattern: {
+                  value: /^(\d{1,2}[hms]\s?)+$/i,
+                  message:
+                    "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
+                },
+              })}
+              error={errors.cook}
+              label="Cook Time"
+              hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
+            />
+            <Input
+              {...register("serves", { valueAsNumber: true })}
+              error={errors.serves}
+              label="Serves"
+              type="number"
+            />
 
-              <Controller
-                control={control}
-                name="dietary"
-                render={({ field }) => (
-                  <>
-                    <label
-                      htmlFor="dietary"
-                      className="block text-step--3 font-medium"
-                    >
-                      Dietary Requirements
-                    </label>
-                    <SelectComponent
-                      options={dietaryRequirements}
-                      createAble
-                      isMulti
-                      onChange={field.onChange}
-                      value={field.value || undefined}
-                      placeholder="Dietary Requirements"
-                    />
-                  </>
-                )}
-              />
+            <Controller
+              control={control}
+              name="dietary"
+              render={({ field }) => (
+                <>
+                  <label
+                    htmlFor="dietary"
+                    className="block text-step--3 font-medium"
+                  >
+                    Dietary Requirements
+                  </label>
+                  <SelectComponent
+                    options={dietaryRequirements}
+                    createAble
+                    isMulti
+                    onChange={field.onChange}
+                    value={field.value || undefined}
+                    placeholder="Dietary Requirements"
+                  />
+                </>
+              )}
+            />
 
-              <TagInput
-                control={control}
-                name="contains"
-                // label='Contains'
-                placeholder="E.g gluten, dairy, nuts"
-                hint="Allergens (separated by a comma)"
-              />
+            <TagInput
+              control={control}
+              name="contains"
+              // label='Contains'
+              placeholder="E.g gluten, dairy, nuts"
+              hint="Allergens (separated by a comma)"
+            />
 
-              <Controller
-                control={control}
-                name="sweet_savoury"
-                render={({ field }) => (
-                  <>
-                    <label
-                      htmlFor="sweet_savoury"
-                      className="block text-step--3 font-medium"
-                    >
-                      Sweet or Savoury
-                    </label>
-                    <SelectComponent
-                      options={sweet_savoury}
-                      clearable={false}
-                      onChange={(value) =>
-                        setValue("sweet_savoury", value.value)
-                      }
-                      value={
-                        sweet_savoury.find(
-                          (item) => item.value === field.value
-                        ) || undefined
-                      }
-                      placeholder="Sweet or Savoury"
-                    />
-                  </>
-                )}
-              />
+            <Controller
+              control={control}
+              name="sweet_savoury"
+              render={({ field }) => (
+                <>
+                  <label
+                    htmlFor="sweet_savoury"
+                    className="block text-step--3 font-medium"
+                  >
+                    Sweet or Savoury
+                  </label>
+                  <SelectComponent
+                    options={sweet_savoury}
+                    clearable={false}
+                    onChange={(value) => setValue("sweet_savoury", value.value)}
+                    value={
+                      sweet_savoury.find(
+                        (item) => item.value === field.value
+                      ) || undefined
+                    }
+                    placeholder="Sweet or Savoury"
+                  />
+                </>
+              )}
+            />
 
-              <ImageUpload />
+            <ImageUpload />
 
-              <Controller
-                control={control}
-                name="mealTime"
-                render={({ field }) => (
-                  <>
-                    <label
-                      htmlFor="mealTime"
-                      className="block text-step--3 font-medium"
-                    >
-                      Meal Time
-                    </label>
-                    <Error error={errors.mealTime || null} />
-                    <SelectComponent
-                      options={meal_times}
-                      createAble
-                      isMulti
-                      onChange={(value) => setValue("mealTime", value.value)}
-                      value={
-                        field.value != null && field.value != undefined
-                          ? meal_times.find(
-                              (item) => item.value ===pnpm  field.value
-                            )
-                          : undefined
-                      }
-                      placeholder="Meal time"
-                    />
-                  </>
-                )}
-              />
+            <Controller
+              control={control}
+              name="mealTime"
+              render={({ field }) => (
+                <>
+                  <label
+                    htmlFor="mealTime"
+                    className="block text-step--3 font-medium"
+                  >
+                    Meal Time
+                  </label>
+                  <Error error={errors?.mealTime?.message ?? null} />
+                  <SelectComponent
+                    options={meal_times}
+                    createAble
+                    isMulti
+                    onChange={(value) => setValue("mealTime", value.value)}
+                    value={meal_times.find(
+                      (item) =>
+                        typeof field.value === "string" &&
+                        item.value === field.value
+                    )}
+                    placeholder="Meal time"
+                  />
+                </>
+              )}
+            />
 
-              <TagInput
-                name="keywords"
-                control={control}
-                placeholder="Keywords (separated by a comma)"
-                hint="Keywords will be used to help users find your recipe."
-              />
+            <TagInput
+              name="keywords"
+              control={control}
+              placeholder="Keywords (separated by a comma)"
+              hint="Keywords will be used to help users find your recipe."
+            />
 
-              <section className="mb-8 flex flex-row flex-wrap gap-4">
-                <IngredientContainer />
-                <StepContainer />
-              </section>
-              <Textarea
-                id="notes"
-                control={control}
-                label="Notes, Tips or Suggestions"
-              />
-            </>
-          )}
-        </form>
-        {preview && <RecipePageComponent recipe={gotRecipe} />}
-      </FormProvider>
-    </>
+            <section className="mb-8 flex flex-row flex-wrap gap-4">
+              <IngredientContainer />
+              <StepContainer />
+            </section>
+            <Textarea
+              id="notes"
+              control={control}
+              label="Notes, Tips or Suggestions"
+            />
+          </>
+        )}
+      </form>
+      {preview && <RecipePageComponent recipe={gotRecipe} />}
+    </FormProvider>
   );
 };
 
