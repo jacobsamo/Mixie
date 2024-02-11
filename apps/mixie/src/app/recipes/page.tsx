@@ -1,5 +1,6 @@
 import { CardSquare } from "@/components/elements/Cards";
 import CollectionCard from "@/components/elements/CollectionCard";
+import { SearchDialog } from "@/components/elements/Search";
 import RecipeSearch from "@/components/modules/RecipeSearch";
 import { meal_times } from "@/lib/services/data";
 import { getRecipes } from "@/lib/services/data_fetching";
@@ -24,17 +25,17 @@ export default async function RecipeViewPage({
 
   return (
     <main className="h-fit min-h-full w-full">
-      <section className="mb-4 flex h-52 items-center justify-center">
-        <RecipeSearch shouldAutoFilter={true} />
+      <section className="mb-2 flex h-52 items-center justify-center">
+        <SearchDialog searchTrigger="bar" />
       </section>
 
-      <div className="mb-16 flex flex-wrap items-center justify-center gap-2">
+      <div className="mb-12 flex flex-wrap items-center justify-center gap-2">
         <CollectionCard
           href="/recipes"
           title="All"
           icon={<Grid />}
           className={
-            mealTime == undefined ? "bg-gray-800 outline outline-1" : ""
+            mealTime == undefined ? "bg-slate-800 outline outline-1" : ""
           }
         />
 

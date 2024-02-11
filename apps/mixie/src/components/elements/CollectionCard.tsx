@@ -19,7 +19,7 @@ const CollectionCard = ({
     <Link
       href={href}
       className={cn(
-        "inline-flex h-16 w-32 min-w-32 resize items-center justify-center gap-2 rounded-md bg-gray-900 px-4 py-2 md:w-44",
+        "inline-flex h-16 w-32 min-w-32 resize items-center justify-center gap-2 rounded-md bg-grey px-4 py-2 md:w-44",
         className
       )}
     >
