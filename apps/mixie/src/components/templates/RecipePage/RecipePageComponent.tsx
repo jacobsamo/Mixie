@@ -1,12 +1,16 @@
-import ShareDialog from "@/components/elements/ShareDialog";
 import type { Recipe } from "@/types";
 import { ExternalLinkIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Details from "./Details";
 import Info from "./Info";
-import RecipePrintingView from "./RecipePrintingView";
 import StarRating from "./StarRating";
+import dynamic from "next/dynamic";
+
+const ShareDialog = dynamic(() => import("@/components/elements/ShareDialog"));
+const RecipePrintingView = dynamic(
+  () => import("./RecipePrintingView")
+);
 
 interface RecipePageComponentProps {
   recipe: Recipe;

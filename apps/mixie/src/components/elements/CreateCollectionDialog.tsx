@@ -12,7 +12,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { collectionSchema } from "@/types";
 import { useAtom } from "jotai";
-import { collectionsAtom } from "../modules/StateProvider";
+import { collectionsAtom } from "../modules/Providers/StateProvider";
 
 export interface CreateCollectionDialogProps {
   userId: string;

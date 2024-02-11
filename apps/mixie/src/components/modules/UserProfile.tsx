@@ -17,10 +17,13 @@ import { useState } from "react";
 import useUser from "../../hooks/useUser";
 import CreateRecipeDialog from "../elements/CreateRecipeDialog";
 import FeedbackDialog from "../elements/FeedbackDialog";
+import { CreateRecipeTrigger } from "./OpenDialogs";
+import { useAtom } from "jotai";
+import { userDropDownOpen } from "./Providers/StateProvider";
 
 const UserProfile = () => {
   const { session, user } = useUser();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useAtom(userDropDownOpen);
 
   if (!user) {
     return (
@@ -56,7 +59,7 @@ const UserProfile = () => {
         >
           <UserCircle2 /> Profile
         </Link>
-        <CreateRecipeDialog />
+        <CreateRecipeTrigger />
         <Link
           onClick={() => setOpen(false)}
           href={`/${user?.id}/bookmarks`}

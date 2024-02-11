@@ -2,6 +2,7 @@ import { CardRectangle } from "@/components/elements/Cards";
 import CollectionCard from "@/components/elements/CollectionCard";
 import LandingText from "@/components/elements/LandingText";
 import { SearchDialog } from "@/components/elements/Search";
+import { SearchBarTrigger } from "@/components/modules/OpenDialogs";
 import {
   Carousel,
   CarouselContent,
@@ -21,7 +22,7 @@ export default async function Page() {
       <section className="flex h-52 flex-col items-center justify-center">
         <LandingText delay={0.2} />
 
-        <SearchDialog />
+        <SearchBarTrigger />
       </section>
       <section className="pb-10 pt-9">
         <h2 className="pb-4 text-center text-step--1">Top Recipes</h2>

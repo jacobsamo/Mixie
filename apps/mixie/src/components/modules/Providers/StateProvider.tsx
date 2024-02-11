@@ -11,6 +11,7 @@ import React, { useEffect } from "react";
 
 export const bookmarksAtom = atom<Bookmark[] | undefined>(undefined);
 export const collectionsAtom = atom<Collection[] | undefined>(undefined);
+export const userDropDownOpen = atom<boolean>(false);
 
 const StateProvider = ({ children }: { children: React.ReactNode }) => {
   const [bookmarks, setBookmarks] = useAtom(bookmarksAtom);

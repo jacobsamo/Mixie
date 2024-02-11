@@ -3,7 +3,14 @@ import { Recipe } from "@/types";
 import clsx from "clsx";
 import { Session } from "next-auth";
 import Image, { type ImageProps } from "next/image";
-import BookmarkRecipeDialog from "./BookmarkRecipeDialog";
+import dynamic from "next/dynamic";
+
+const BookmarkRecipeDialog = dynamic(
+  () => import("@/components/elements/BookmarkRecipeDialog"),
+  {
+    ssr: true,
+  }
+);
 
 export type CardRecipe = Pick<
   Recipe,

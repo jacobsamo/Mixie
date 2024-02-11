@@ -1,6 +1,7 @@
 import { CardSquare } from "@/components/elements/Cards";
 import CollectionCard from "@/components/elements/CollectionCard";
 import { SearchDialog } from "@/components/elements/Search";
+import { SearchBarTrigger } from "@/components/modules/OpenDialogs";
 import RecipeSearch from "@/components/modules/RecipeSearch";
 import { meal_times } from "@/lib/services/data";
 import { getRecipes } from "@/lib/services/data_fetching";
@@ -26,7 +27,7 @@ export default async function RecipeViewPage({
   return (
     <main className="h-fit min-h-full w-full">
       <section className="mb-2 flex h-52 items-center justify-center">
-        <SearchDialog searchTrigger="bar" />
+        <SearchBarTrigger />
       </section>
 
       <div className="mb-12 flex flex-wrap items-center justify-center gap-2">

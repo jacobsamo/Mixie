@@ -12,10 +12,8 @@ import { SearchIcon, X } from "lucide-react";
 import { useState } from "react";
 import { SearchCard } from "../Cards";
 import { SearchInput } from "./SearchInput";
-
-export interface SearchDialogProps {
-  searchTrigger?: "icon" | "bar";
-}
+import { searchOpen } from "@/components/modules/Providers/Dialogs";
+import { useAtom } from "jotai";
 
 type PartialRecipe = Pick<
   Recipe,
@@ -29,37 +27,12 @@ type PartialRecipe = Pick<
   | "keywords"
 >;
 
-const IconTrigger = () => {
-  return (
-    <DialogTrigger asChild className="cursor-pointer">
-      <SearchIcon className="h-8 w-8" />
-    </DialogTrigger>
-  );
-};
-
-const SearchBarTrigger = () => {
-  return (
-    <DialogTrigger asChild>
-      <Button
-        LeadingIcon={
-          <SearchIcon className="ml-5 mr-2 h-5 w-5 shrink-0 opacity-50" />
-        }
-        unstyled
-        className="sm:1/2 flex w-2/4 max-w-[28rem] flex-row items-center rounded-xl bg-grey p-3 py-3 text-step--3 opacity-70 shadow"
-      >
-        Search for your next taste sensation
-      </Button>
-    </DialogTrigger>
-  );
-};
-
-export const SearchDialog = ({ searchTrigger = "bar" }: SearchDialogProps) => {
+export const SearchDialog = () => {
   const [searchResults, setSearchResults] = useState<PartialRecipe[]>([]);
+  const [open, setOpen] = useAtom(searchOpen);
 
   return (
-    <Dialog>
-      {searchTrigger === "icon" && <IconTrigger />}
-      {searchTrigger === "bar" && <SearchBarTrigger />}
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
         className="flex h-full w-full flex-col overflow-hidden rounded-xl border-none md:h-2/3"
         showClose={false}

@@ -14,15 +14,19 @@ import { BugIcon, Lightbulb, Loader2, MessageCirclePlus } from "lucide-react";
 import React from "react";
 
 import { DialogClose } from "@radix-ui/react-dialog";
+import { useAtom } from "jotai";
+import { giveFeedbackOpen } from "../modules/Providers/Dialogs";
 
 interface FeedbackDialogProps {
   Trigger?: React.ReactNode;
 }
 
 const FeedbackDialog = ({ Trigger }: FeedbackDialogProps) => {
+  const [open, setOpen] = useAtom(giveFeedbackOpen);
+
   return (
-    <Dialog>
-      <DialogTrigger aria-label="click to give feedback">
+    <Dialog open={open} onOpenChange={setOpen}>
+      {/* <DialogTrigger aria-label="click to give feedback">
         {Trigger ? (
           Trigger
         ) : (
@@ -30,7 +34,7 @@ const FeedbackDialog = ({ Trigger }: FeedbackDialogProps) => {
             <MessageCirclePlus /> Feedback
           </div>
         )}
-      </DialogTrigger>
+      </DialogTrigger> */}
       <DialogContent className="flex h-[80%] max-w-full flex-col gap-2 p-3 lg:max-w-[80%]">
         <DialogHeader>
           <DialogTitle>Feedback</DialogTitle>

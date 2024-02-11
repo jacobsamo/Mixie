@@ -20,12 +20,16 @@ import { Input } from "@/components/ui/input";
 import { env } from "env";
 import toast from "react-hot-toast";
 import { createRecipeSchema } from "@/types";
+import { useAtom } from "jotai";
+import { createRecipeOpen } from "../modules/Providers/Dialogs";
+import { userDropDownOpen } from "../modules/Providers/StateProvider";
 
 const CreateRecipeDialog = () => {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useAtom(createRecipeOpen);
+  const [, setUserDropDownOpen] = useAtom(userDropDownOpen);
 
   const methods = useForm<z.infer<typeof createRecipeSchema>>({
     resolver: zodResolver(createRecipeSchema),
@@ -53,12 +57,12 @@ const CreateRecipeDialog = () => {
       loading: "Creating Recipe...",
       success: (data) => {
         data.json().then((data) => {
+          setLoading(false);
+          setUserDropDownOpen(false);
+          setOpen(false);
           router.push(`/recipes/preview/${data.id}/edit`);
         });
 
-        // router.push(`/recipes/preview/${}/edit`);
-        setLoading(false);
-        setOpen(false);
         return "Recipe Created";
       },
       error: (err) => {
@@ -79,9 +83,9 @@ const CreateRecipeDialog = () => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="flex flex-row gap-1 border-none outline-none">
+      {/* <DialogTrigger className="flex flex-row gap-1 border-none outline-none">
         <PlusCircleIcon /> Create a recipe
-      </DialogTrigger>
+      </DialogTrigger> */}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create a new recipe</DialogTitle>

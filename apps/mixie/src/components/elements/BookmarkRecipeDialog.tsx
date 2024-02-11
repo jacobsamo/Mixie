@@ -13,7 +13,7 @@ import CreateCollectionDialog from "@/components/elements/CreateCollectionDialog
 import {
   bookmarksAtom,
   collectionsAtom,
-} from "@/components/modules/StateProvider";
+} from "@/components/modules/Providers/StateProvider";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -25,7 +25,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Bookmark } from "@/types";
 import { useAtom } from "jotai";
-import { CardRecipe } from "./CardUtils";
+import { CardRecipe } from "./Cards/CardUtils";
 
 const selectCollection = z.object({
   selected: z.string().array().nullish(),
