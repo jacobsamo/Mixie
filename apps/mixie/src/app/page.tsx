@@ -1,8 +1,8 @@
-import { CardRectangle } from "@/components/elements/Cards";
-import CollectionCard from "@/components/elements/CollectionCard";
-import LandingText from "@/components/elements/LandingText";
-import { SearchDialog } from "@/components/elements/Search";
-import { SearchBarTrigger } from "@/components/modules/OpenDialogs";
+import { CardRectangle } from "@/components/cards";
+import CollectionCard from "@/components/collection-card";
+import LandingText from "@/components/landing-page-text";
+import { SearchDialog } from "@/components/search";
+import { SearchBarTrigger } from "@/components/open-dialogs";
 import {
   Carousel,
   CarouselContent,

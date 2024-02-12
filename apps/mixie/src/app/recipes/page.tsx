@@ -1,8 +1,8 @@
-import { CardSquare } from "@/components/elements/Cards";
-import CollectionCard from "@/components/elements/CollectionCard";
-import { SearchDialog } from "@/components/elements/Search";
-import { SearchBarTrigger } from "@/components/modules/OpenDialogs";
-import RecipeSearch from "@/components/modules/RecipeSearch";
+import { CardSquare } from "@/components/cards";
+import CollectionCard from "@/components/collection-card";
+import { SearchDialog } from "@/components/search";
+import { SearchBarTrigger } from "@/components/open-dialogs";
+import RecipeSearch from "@/components/search/search-recipes";
 import { meal_times } from "@/lib/services/data";
 import { getRecipes } from "@/lib/services/data_fetching";
 import { constructMetadata } from "@/lib/utils";

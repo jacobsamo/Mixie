@@ -1,5 +1,5 @@
-import { CardSquare } from "@/components/elements/Cards";
-import RecipeSearch from "@/components/modules/RecipeSearch";
+import { CardSquare } from "@/components/cards";
+import RecipeSearch from "@/components/search/search-recipes";
 import { getRecipes } from "@/lib/services/data_fetching";
 import { constructMetadata } from "@/lib/utils";
 

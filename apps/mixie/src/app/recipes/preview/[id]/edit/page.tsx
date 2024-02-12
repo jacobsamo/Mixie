@@ -1,4 +1,4 @@
-import RecipeForm from "@/components/templates/RecipeForm/RecipeForm";
+import RecipeForm from "@/components/recipe-form/recipe-form";
 import { db } from "@/server/db/index";
 import { recipes as recipeSchema } from "@/server/db/schemas";
 import { getServerAuthSession } from "@/server/auth";

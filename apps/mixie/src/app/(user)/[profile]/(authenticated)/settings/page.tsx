@@ -1,5 +1,5 @@
 "use client";
-import { FeedbackButton } from "@/components/modules/OpenDialogs";
+import { FeedbackButton } from "@/components/open-dialogs";
 import { Button } from "@/components/ui/button";
 import { User } from "@/types";
 import { userSchema } from "@/types/zodSchemas";
@@ -12,11 +12,11 @@ import { useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const Profile = dynamic(() => import("@/components/layouts/Settings/Profile"));
+const Profile = dynamic(() => import("@/components/layouts/user-settings/Profile"));
 const Customization = dynamic(
-  () => import("@/components/layouts/Settings/Customization")
+  () => import("@/components/layouts/user-settings/Customization")
 );
-const Account = dynamic(() => import("@/components/layouts/Settings/Account"));
+const Account = dynamic(() => import("@/components/layouts/user-settings/Account"));
 
 interface ProfilePageProps {
   params: {

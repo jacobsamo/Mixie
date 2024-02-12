@@ -1,6 +1,6 @@
 "use client";
-import { SearchCard, type CardRecipe } from "@/components/elements/Cards";
-import CreateCollectionDialog from "@/components/elements/CreateCollectionDialog";
+import { SearchCard, type CardRecipe } from "@/components/cards";
+import CreateCollectionDialog from "@/components/modals/create-collection-modal";
 import { createQueryString } from "@/lib/utils";
 import type { Bookmark, Collection } from "@/types";
 import { Session } from "next-auth";
@@ -92,7 +92,7 @@ const DisplayElements = ({
             {collections.map((collection) => {
               return (
                 <CollectionCard
-                key={collection.uid}
+                  key={collection.uid}
                   collectionId={collection.uid}
                   title={collection.title}
                 />
@@ -113,7 +113,9 @@ const DisplayElements = ({
                 bookmark.collections?.includes(activeCollection.uid)
               )
               .map((bookmark) => {
-                return <SearchCard key={bookmark.uid} recipe={bookmark.recipe} />;
+                return (
+                  <SearchCard key={bookmark.uid} recipe={bookmark.recipe} />
+                );
               })}
           </div>
         </div>

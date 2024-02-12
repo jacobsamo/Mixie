@@ -9,7 +9,7 @@ import {
 import { cn } from "@/lib/utils";
 import { HelpCircleIcon } from "lucide-react";
 import { Control, Controller, RegisterOptions } from "react-hook-form";
-import CopyButton from "@/components/elements/CopyButton";
+import CopyButton from "@/components/copy-to-clipboard";
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {

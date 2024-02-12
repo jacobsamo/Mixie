@@ -1,4 +1,4 @@
-import RecipePageComponent from "@/components/templates/RecipePage/RecipePageComponent";
+import RecipePageComponent from "@/components/recipe-page/recipe-page";
 import { getRecipes } from "@/lib/services/data_fetching";
 import { constructMetadata, displayIngredient } from "@/lib/utils";
 import type { Recipe } from "@/types";
