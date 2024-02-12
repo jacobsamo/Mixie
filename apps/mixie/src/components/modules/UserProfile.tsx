@@ -59,7 +59,7 @@ const UserProfile = () => {
         >
           <UserCircle2 /> Profile
         </Link>
-        <CreateRecipeTrigger />
+        <CreateRecipeTrigger props={{ unstyled: true }} className="inline-flex dark:text-white" />
         <Link
           onClick={() => setOpen(false)}
           href={`/${user?.id}/bookmarks`}

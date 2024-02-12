@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogFooter,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Recipe } from "@/types";
@@ -14,6 +15,10 @@ import { SearchCard } from "../Cards";
 import { SearchInput } from "./SearchInput";
 import { searchOpen } from "@/components/modules/Providers/Dialogs";
 import { useAtom } from "jotai";
+import {
+  CreateRecipeTrigger,
+  FeedbackButton,
+} from "@/components/modules/OpenDialogs";
 
 type PartialRecipe = Pick<
   Recipe,
@@ -44,9 +49,12 @@ export const SearchDialog = () => {
           </DialogClose>
         </div>
 
+
+        <div className="h-4/5">
+
         {searchResults.length > 0 && (
           <motion.ul
-            className="flex flex-col gap-2 overflow-scroll"
+            className="flex  flex-col gap-2 overflow-scroll"
             transition={{ duration: 0.2 }}
           >
             {searchResults.splice(0, 4).map((recipe, index) => (
@@ -56,6 +64,12 @@ export const SearchDialog = () => {
             ))}
           </motion.ul>
         )}
+        </div>
+
+        <DialogFooter className="inline-flex gap-2 mx-auto sm:justify-center">
+          <FeedbackButton  />
+          <CreateRecipeTrigger text="Create your own recipe" />
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

@@ -1,4 +1,5 @@
 "use client";
+import { FeedbackButton } from "@/components/modules/OpenDialogs";
 import { Button } from "@/components/ui/button";
 import { User } from "@/types";
 import { userSchema } from "@/types/zodSchemas";
@@ -85,11 +86,23 @@ export default function ProfilePage({ params }: ProfilePageProps) {
     <>
       <FormProvider {...methods}>
         <form
-          className="mx-auto mt-2 flex w-full flex-col items-start  justify-center  gap-4 rounded-md bg-white p-2 shadow-main  dark:bg-grey md:w-2/4 md:p-4"
+          className="mx-auto mt-2 flex w-full flex-col items-start  justify-center  gap-4 rounded-md bg-white p-2 shadow-main  md:w-2/4 md:p-4 dark:bg-grey"
           onSubmit={handleSubmit(onSubmit)}
         >
           {!values.email && (
-            <Loader2 className="m-auto h-16 w-16 animate-spin" />
+            <>
+              {/* <Loader2 className="m-auto h-16 w-16 animate-spin" /> */}
+              <div className="animate-pulse">
+                <div className="flex flex-row items-center gap-2">
+                  <div className="h-24 w-24 rounded-full bg-gray-800 lg:h-48 lg:w-48"></div>
+                  <div className="flex flex-col gap-2">
+                    <div className="h-10 w-3/4 rounded bg-gray-800"></div>
+                    <div className="h-10 w-3/4 rounded bg-gray-800"></div>
+                  </div>
+                </div>
+                <div className="mt-2 h-24 rounded bg-gray-800"></div>
+              </div>
+            </>
           )}
           {values.email && (
             <>
@@ -111,6 +124,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
               </Button>
             </>
           )}
+          <FeedbackButton className="mx-auto" />
         </form>
       </FormProvider>
     </>
