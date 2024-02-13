@@ -15,7 +15,7 @@ import {
 
 export default function WelcomeToMixie({
   email = "cook@mixiecooking.com",
-  url = "http://localhost:3000/api/auth/callback/email?callbackUrl=http%3A%2F%2Fapp.localhost%3A3000%2Flogin&token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&email=youremail@gmail.com",
+  url = "",
   token = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 }: {
   email: string;
@@ -42,7 +42,7 @@ export default function WelcomeToMixie({
               Welcome to Mixie!
             </Text>
             <Text className="text-step--3 leading-6 text-[#0D1017]">
-              Please click the link below to sign in to your account.
+              We are so excited to see you join our community for home cooks, food enhuists  
             </Text>
           </Container>
         </Body>

@@ -39,9 +39,9 @@ export const SearchDialog = () => {
         className="flex h-full w-full flex-col overflow-hidden rounded-xl border-none md:h-2/3"
         showClose={false}
       >
-        <div className="inline-flex w-full items-center justify-between gap-2">
+        <div className="relative inline-flex w-full items-center gap-2">
           <SearchInput setSearchResults={setSearchResults} />
-          <DialogClose>
+          <DialogClose className="absolute right-2 top-2">
             <X className="hover:text-red" />
           </DialogClose>
         </div>

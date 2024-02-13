@@ -1,6 +1,19 @@
 "use client";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select";
+import {
+  dietaryRequirements,
+  meal_times,
+  sweet_savoury,
+} from "@/lib/services/data";
 import { env } from "env";
+import { FilterIcon } from "lucide-react";
 import React, { useState } from "react";
 
 export interface SearchInputProps {
@@ -9,35 +22,96 @@ export interface SearchInputProps {
 
 export const SearchInput = ({ setSearchResults }: SearchInputProps) => {
   const [search, setSearch] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
+  const [mealTime, setMealTime] = useState<string | undefined>(undefined);
+  const [sweetSavoury, setSweetSavoury] = useState<string | undefined>(
+    undefined
+  );
+  const [dietary, setDietary] = useState<string | undefined>(undefined);
 
   return (
-    <Input
-      name="recipeSearch"
-      id="recipeSearch"
-      type="search"
-      placeholder="Search for recipes"
-      classNames={{
-        container: "w-full max-w-full shadow-none",
-      }}
-      onChange={async (e) => {
-        if (!setSearchResults) return;
+    <div className="flex w-[90%] flex-col gap-4">
+      <div className="inline-flex w-full gap-2">
+        <Input
+          name="recipeSearch"
+          id="recipeSearch"
+          type="search"
+          placeholder="Search for recipes"
+          classNames={{
+            container: "w-full max-w-full shadow-none",
+          }}
+          onChange={async (e) => {
+            if (!setSearchResults) return;
 
-        const req = await fetch(`/api/recipes/search?q=${e.target.value}`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
-          },
-        });
+            const req = await fetch(
+              `/api/recipes/search?q=${e.target.value}&mealTime=${mealTime}&sweetSavoury=${sweetSavoury}&dietary=${dietary}`,
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+                },
+              }
+            );
 
-        const recipes = await req.json();
-        setSearch(e.target.value);
-        setSearchResults(recipes);
-      }}
-      onKeyDown={(event) => {
-        if (event.key == "Enter") {
-          window.location.href = `/recipes/search?q=${search}`;
-        }
-      }}
-    />
+            const recipes = await req.json();
+            setSearch(e.target.value);
+            setSearchResults(recipes);
+          }}
+          onKeyDown={(event) => {
+            if (event.key == "Enter") {
+              window.location.href = `/recipes/search?q=${search}&mealTime=${mealTime}&sweetSavoury=${sweetSavoury}&dietary=${dietary}`;
+            }
+          }}
+        />
+        <button
+          className="h-12 w-12 "
+          onClick={() => setShowFilters(!showFilters)}
+        >
+          <FilterIcon />
+        </button>
+      </div>
+      {showFilters && (
+        <div className="inline-flex w-full gap-2">
+          <Select value={mealTime} onValueChange={setMealTime}>
+            <SelectTrigger>
+              <SelectValue placeholder="Meal time" />
+            </SelectTrigger>
+            <SelectContent>
+              {meal_times.map((meal_time) => (
+                <SelectItem value={meal_time.value}>
+                  {meal_time.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={sweetSavoury} onValueChange={setSweetSavoury}>
+            <SelectTrigger>
+              <SelectValue placeholder="Sweet/Savoury" />
+            </SelectTrigger>
+            <SelectContent>
+              {sweet_savoury.map((meal_time) => (
+                <SelectItem value={meal_time.value}>
+                  {meal_time.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={dietary} onValueChange={setDietary}>
+            <SelectTrigger>
+              <SelectValue placeholder="Dietary" />
+            </SelectTrigger>
+            <SelectContent>
+              {dietaryRequirements.map((meal_time) => (
+                <SelectItem value={meal_time.value}>
+                  {meal_time.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+    </div>
   );
 };

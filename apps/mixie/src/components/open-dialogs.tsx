@@ -111,6 +111,36 @@ export const FeedbackButton = ({
   );
 };
 
+
+export const CreateRecipeIconButton = ({
+  children,
+  className,
+}: OpenDialogsProps) => {
+  const [, setCreateRecipeOpen] = useAtom(createRecipeOpen);
+
+
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>
+          <button
+            onClick={() => setCreateRecipeOpen(true)}
+            aria-label="create your own recipe"
+            className={cn(
+              "flex flex-row gap-1 border-none outline-none",
+              className
+            )}
+          >
+            <PlusCircleIcon className="h-8 w-8" />
+          </button>
+        </TooltipTrigger>
+        <TooltipContent>Create your own recipe</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+};
+
+
 export const CreateRecipeTrigger = ({
   children,
   className,

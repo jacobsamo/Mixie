@@ -1,13 +1,11 @@
 "use client";
-// import FeedbackButton from "@/components/elements/FeedbackButton";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { SearchDialog } from "./search";
+import { CreateRecipeIconButton, FeedbackDialogTrigger } from "./open-dialogs";
 import UserProfile from "./user-profile-dropdown";
 import VersionChip from "./versioning-chips";
-import { FeedbackDialogTrigger, SearchIconTrigger } from "./open-dialogs";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -85,7 +83,7 @@ const Navbar = () => {
       {/* hamburger - show under 768px (md:) */}
       <div className="flex flex-row items-center gap-1">
         {/* <SearchDialog buttonType="searchIcon" /> */}
-        <SearchIconTrigger />
+        <CreateRecipeIconButton />
         <FeedbackDialogTrigger />
         {isMobile && (
           <button
