@@ -9,13 +9,24 @@ export async function GET(req: NextRequest) {
   const app = await isApp(req);
   const searchParams = req.nextUrl.searchParams;
   const query = searchParams.get("q");
+  const mealTime = searchParams.get("mealTime");
+  const sweetSavory = searchParams.get("sweetSavory");
+  const dietary = searchParams.get("dietary");
   const recipes = await getRecipes();
 
   if (!app) return NextResponse.json("Unauthorized", { status: 401 });
   if (query === null)
     return NextResponse.json("No query provided", { status: 401 });
 
-  const results = searchRecipes({ query, recipes });
+  const results = searchRecipes({
+    query,
+    filters: {
+      mealTime,
+      sweetSavory,
+      dietary,
+    },
+    recipes,
+  });
 
   return NextResponse.json(results.splice(0, 2));
 }

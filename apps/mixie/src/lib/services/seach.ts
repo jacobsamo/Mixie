@@ -4,13 +4,27 @@ import Fuse, { IFuseOptions } from "fuse.js";
 import { Recipe } from "@/types";
 import { isApp } from "@/lib/services/apiMiddleware";
 
-export function searchRecipes({
-  query,
-  recipes,
-}: {
+interface SearchRecipesProps {
   query: string;
+  filters?: {
+    mealTime?: string | null;
+    sweetSavory?: string | null;
+    dietary?: string | null;
+  };
   recipes: Recipe[];
-}) {
+}
+
+export function searchRecipes({ query, filters, recipes }: SearchRecipesProps) {
+  if (filters?.mealTime) {
+    recipes.filter((recipe) => recipe.mealTime?.value === filters.mealTime);
+  }
+  if (filters?.sweetSavory) {
+    recipes.filter((recipe) => recipe.sweet_savoury === filters.sweetSavory);
+  }
+  if (filters?.dietary) {
+    recipes.filter((recipe) => recipe.dietary === filters.dietary);
+  }
+
   const options: IFuseOptions<Recipe> = {
     includeScore: true,
     keys: ["title"],
