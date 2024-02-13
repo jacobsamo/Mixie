@@ -5,7 +5,7 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 } from "@/components/ui/select";
 import {
   dietaryRequirements,
@@ -29,6 +29,8 @@ export const SearchInput = ({ setSearchResults }: SearchInputProps) => {
   );
   const [dietary, setDietary] = useState<string | undefined>(undefined);
 
+  const searchUrl = `${mealTime ? `&mealTime=${mealTime}` : ""}${sweetSavoury ? `&sweetSavoury=${sweetSavoury}` : ""}${dietary ? `&dietary=${dietary}` : ""}`;
+
   return (
     <div className="flex w-[90%] flex-col gap-4">
       <div className="inline-flex w-full gap-2">
@@ -44,7 +46,7 @@ export const SearchInput = ({ setSearchResults }: SearchInputProps) => {
             if (!setSearchResults) return;
 
             const req = await fetch(
-              `/api/recipes/search?q=${e.target.value}&mealTime=${mealTime}&sweetSavoury=${sweetSavoury}&dietary=${dietary}`,
+              `/api/recipes/search?q=${e.target.value}${searchUrl}`,
               {
                 headers: {
                   "Content-Type": "application/json",
@@ -59,7 +61,7 @@ export const SearchInput = ({ setSearchResults }: SearchInputProps) => {
           }}
           onKeyDown={(event) => {
             if (event.key == "Enter") {
-              window.location.href = `/recipes/search?q=${search}&mealTime=${mealTime}&sweetSavoury=${sweetSavoury}&dietary=${dietary}`;
+              window.location.href = `/recipes/search?q=${search}${searchUrl}`;
             }
           }}
         />
@@ -78,7 +80,7 @@ export const SearchInput = ({ setSearchResults }: SearchInputProps) => {
             </SelectTrigger>
             <SelectContent>
               {meal_times.map((meal_time) => (
-                <SelectItem value={meal_time.value}>
+                <SelectItem key={meal_time.value} value={meal_time.value}>
                   {meal_time.label}
                 </SelectItem>
               ))}
@@ -91,7 +93,7 @@ export const SearchInput = ({ setSearchResults }: SearchInputProps) => {
             </SelectTrigger>
             <SelectContent>
               {sweet_savoury.map((meal_time) => (
-                <SelectItem value={meal_time.value}>
+                <SelectItem key={meal_time.value} value={meal_time.value}>
                   {meal_time.label}
                 </SelectItem>
               ))}
@@ -104,7 +106,7 @@ export const SearchInput = ({ setSearchResults }: SearchInputProps) => {
             </SelectTrigger>
             <SelectContent>
               {dietaryRequirements.map((meal_time) => (
-                <SelectItem value={meal_time.value}>
+                <SelectItem key={meal_time.value} value={meal_time.value}>
                   {meal_time.label}
                 </SelectItem>
               ))}

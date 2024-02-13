@@ -110,7 +110,7 @@ const ImageUpload = () => {
       <Dialog>
         <DialogTrigger
           className={cn(
-            "absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform flex-col items-center gap-2",
+            "textOnBackground text-center w-fit h-fit px-1 absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform flex-col items-center gap-2",
             {
               "opacity-30 group-hover:opacity-100": image,
               "rounded-xl bg-red p-2 text-white ":

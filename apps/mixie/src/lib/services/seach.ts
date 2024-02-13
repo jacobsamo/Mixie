@@ -15,14 +15,22 @@ interface SearchRecipesProps {
 }
 
 export function searchRecipes({ query, filters, recipes }: SearchRecipesProps) {
-  if (filters?.mealTime) {
-    recipes.filter((recipe) => recipe.mealTime?.value === filters.mealTime);
+  let searchRecipes = recipes;
+
+  if (typeof filters?.mealTime == "string") {
+    searchRecipes = searchRecipes.filter(
+      (recipe) => recipe.mealTime?.value === filters.mealTime
+    );
   }
-  if (filters?.sweetSavory) {
-    recipes.filter((recipe) => recipe.sweet_savoury === filters.sweetSavory);
+  if (typeof filters?.sweetSavory == "string") {
+    searchRecipes = searchRecipes.filter(
+      (recipe) => recipe.sweet_savoury === filters.sweetSavory
+    );
   }
-  if (filters?.dietary) {
-    recipes.filter((recipe) => recipe.dietary === filters.dietary);
+  if (typeof filters?.dietary == "string") {
+    searchRecipes = searchRecipes.filter(
+      (recipe) => recipe.dietary === filters.dietary
+    );
   }
 
   const options: IFuseOptions<Recipe> = {
@@ -31,7 +39,7 @@ export function searchRecipes({ query, filters, recipes }: SearchRecipesProps) {
     threshold: 0.6,
   };
 
-  const fuse = new Fuse(recipes, options);
+  const fuse = new Fuse(searchRecipes, options);
   const results = fuse.search(query);
 
   return results.map((result) => result.item);

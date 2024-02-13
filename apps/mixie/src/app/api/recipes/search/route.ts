@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
   if (query === null)
     return NextResponse.json("No query provided", { status: 401 });
 
-  const results = searchRecipes({
+  const results = await searchRecipes({
     query,
     filters: {
       mealTime,
@@ -28,5 +28,6 @@ export async function GET(req: NextRequest) {
     recipes,
   });
 
-  return NextResponse.json(results.splice(0, 2));
+
+  return NextResponse.json(results);
 }
