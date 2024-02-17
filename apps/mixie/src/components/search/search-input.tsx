@@ -79,6 +79,9 @@ export const SearchInput = ({ setSearchResults }: SearchInputProps) => {
               <SelectValue placeholder="Meal time" />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem key="all" value="all">
+                All
+              </SelectItem>
               {meal_times.map((meal_time) => (
                 <SelectItem key={meal_time.value} value={meal_time.value}>
                   {meal_time.label}

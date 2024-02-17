@@ -1,16 +1,14 @@
-import { getRecipes } from "@/lib/services/data_fetching";
-import { NextRequest, NextResponse } from "next/server";
-import Fuse, { IFuseOptions } from "fuse.js";
-import { Recipe } from "@/types";
 import { isApp } from "@/lib/services/apiMiddleware";
+import { getRecipes } from "@/lib/services/data_fetching";
 import { searchRecipes } from "@/lib/services/seach";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   const app = await isApp(req);
   const searchParams = req.nextUrl.searchParams;
   const query = searchParams.get("q");
   const mealTime = searchParams.get("mealTime");
-  const sweetSavory = searchParams.get("sweetSavory");
+  const sweetSavory = searchParams.get("sweetSavoury");
   const dietary = searchParams.get("dietary");
   const recipes = await getRecipes();
 
@@ -27,7 +25,6 @@ export async function GET(req: NextRequest) {
     },
     recipes,
   });
-
 
   return NextResponse.json(results);
 }
