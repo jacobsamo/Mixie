@@ -105,7 +105,6 @@ export const recipeSchema = createInsertSchema(recipes, {
     })
     .nullish(),
   createdAt: z.date(),
-  mealTime: selectValue.nullable(),
 });
 
 export const ratingsSchema = createInsertSchema(ratings);

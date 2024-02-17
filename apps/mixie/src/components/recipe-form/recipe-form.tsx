@@ -3,13 +3,13 @@ import { SelectComponent } from "@/components/ui/SelectComponent";
 import { Input } from "@/components/ui/input";
 import TagInput from "@/components/ui/taginput";
 import { Textarea } from "@/components/ui/textarea";
-import { NewRecipe, Recipe } from "@/types";
-import { recipeFormSchema } from "@/types/zodSchemas";
 import {
   dietaryRequirements,
   meal_times,
   sweet_savoury,
 } from "@/lib/services/data";
+import { NewRecipe, Recipe } from "@/types";
+import { recipeFormSchema } from "@/types/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import dynamic from "next/dynamic";
 import { env } from "process";
@@ -20,10 +20,9 @@ import * as z from "zod";
 import RecipePageComponent from "../recipe-page/recipe-page";
 import Overlay from "./overlay";
 // import  StepContainer  from "./StepContainer";
+import Error from "@/components/ui/Error";
 import { onSubmit } from "./form";
 import LoadingImageUpload from "./loadingstates/loading-image-upload";
-import Error from "@/components/ui/Error";
-import { Item } from "@radix-ui/react-dropdown-menu";
 
 const IngredientContainer = dynamic(() => import("./ingredient-container"));
 const StepContainer = dynamic(() => import("./step-container"));
@@ -84,6 +83,23 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
         values: getValues(),
       });
   }, [errors]);
+
+
+  // show alert if user tries refreshing or closing the page
+  useEffect(() => {
+    const handlBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue =
+        "Are you sure you want to refresh? you will loose your data if you close this page";
+      return "Are you sure you want to refresh? you will loose your data if you close this page";
+    };
+
+    window.addEventListener("beforeunload", handlBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handlBeforeUnload);
+    };
+  }, []);
 
   useEffect(() => {
     const recipeValue = getValues();
@@ -237,7 +253,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
                   >
                     Meal Time
                   </label>
-                  <Error error={errors?.mealTime?.message ?? null} />
+                  <Error error={errors?.mealTime.message ?? null} />
                   <SelectComponent
                     options={meal_times}
                     createAble
