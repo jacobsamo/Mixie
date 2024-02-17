@@ -52,6 +52,7 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/auth/login",
     verifyRequest: "/auth/verify",
+    signOut: "/auth/signout",
   },
   theme: {
     logo: "/icons/icon_x128.jpg",

@@ -30,8 +30,11 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <Navbar />
-          {children}
+          <main className="h-full w-full">
+            <Navbar />
+            {children}
+            <Footer />
+          </main>
           <Toaster
             position="bottom-right"
             toastOptions={{
@@ -41,7 +44,6 @@ export default async function RootLayout({
               },
             }}
           />
-          <Footer />
         </Providers>
 
         {/*Have a look at https://posthog.com/ for more advanced analytics */}

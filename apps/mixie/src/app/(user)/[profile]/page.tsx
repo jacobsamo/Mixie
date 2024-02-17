@@ -47,7 +47,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 
   if (user) {
     return (
-      <main className="h-full w-full">
+      <>
         <div className="m-auto mt-4 flex flex-col items-center justify-center rounded-xl bg-white p-1 shadow-main sm:w-full md:w-3/5 lg:h-80 dark:bg-grey dark:shadow-none">
           <Image
             src={user.image || "/images/placeholder.webp"}
@@ -92,7 +92,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             })}
           </ul>
         </div>
-      </main>
+      </>
     );
   }
 }

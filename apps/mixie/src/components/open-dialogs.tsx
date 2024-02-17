@@ -54,7 +54,7 @@ export const SearchBarTrigger = ({ children, className }: OpenDialogsProps) => {
       }
       unstyled
       className={cn(
-        "sm:1/2 flex w-2/4 max-w-[28rem] flex-row items-center rounded-xl dark:bg-grey p-3 py-3 text-step--3 opacity-70 shadow",
+        "flex w-11/12 flex-row items-center rounded-xl p-3 py-3 text-step--4 opacity-70 shadow sm:w-1/2 sm:max-w-[28rem] sm:text-step--3 dark:bg-grey",
         className
       )}
     >
@@ -72,17 +72,15 @@ export const FeedbackDialogTrigger = ({
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger>
-          <button
-            onClick={() => setFeedbackOpen(true)}
-            aria-label="give feedback to the mixie team"
-            className={cn(
-              "flex flex-row gap-1 border-none outline-none",
-              className
-            )}
-          >
-            <MessageCirclePlus className="h-8 w-8" />
-          </button>
+        <TooltipTrigger
+          onClick={() => setFeedbackOpen(true)}
+          aria-label="give feedback to the mixie team"
+          className={cn(
+            "flex flex-row gap-1 border-none outline-none",
+            className
+          )}
+        >
+          <MessageCirclePlus className="h-8 w-8" />
         </TooltipTrigger>
         <TooltipContent>Provide feedback to the Mixie team</TooltipContent>
       </Tooltip>
@@ -111,35 +109,30 @@ export const FeedbackButton = ({
   );
 };
 
-
 export const CreateRecipeIconButton = ({
   children,
   className,
 }: OpenDialogsProps) => {
   const [, setCreateRecipeOpen] = useAtom(createRecipeOpen);
 
-
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger>
-          <button
-            onClick={() => setCreateRecipeOpen(true)}
-            aria-label="create your own recipe"
-            className={cn(
-              "flex flex-row gap-1 border-none outline-none",
-              className
-            )}
-          >
-            <PlusCircleIcon className="h-8 w-8" />
-          </button>
+        <TooltipTrigger
+          onClick={() => setCreateRecipeOpen(true)}
+          aria-label="create your own recipe"
+          className={cn(
+            "flex flex-row gap-1 border-none outline-none",
+            className
+          )}
+        >
+          <PlusCircleIcon className="h-8 w-8" />
         </TooltipTrigger>
         <TooltipContent>Create your own recipe</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );
 };
-
 
 export const CreateRecipeTrigger = ({
   children,

@@ -87,19 +87,20 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
 
   // show alert if user tries refreshing or closing the page
   useEffect(() => {
-    const handlBeforeUnload = (e: BeforeUnloadEvent) => {
-      e.preventDefault();
-      e.returnValue =
-        "Are you sure you want to refresh? you will loose your data if you close this page";
-      return "Are you sure you want to refresh? you will loose your data if you close this page";
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (isDirty) {
+        e.preventDefault();
+        e.returnValue =
+          "Are you sure you want to refresh? You will lose your data if you close this page.";
+      }
     };
 
-    window.addEventListener("beforeunload", handlBeforeUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
-      window.removeEventListener("beforeunload", handlBeforeUnload);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, []);
+  }, [isDirty]);
 
   useEffect(() => {
     const recipeValue = getValues();
@@ -253,7 +254,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
                   >
                     Meal Time
                   </label>
-                  <Error error={errors?.mealTime.message ?? null} />
+                  <Error error={errors?.mealTime ?? null} />
                   <SelectComponent
                     options={meal_times}
                     createAble

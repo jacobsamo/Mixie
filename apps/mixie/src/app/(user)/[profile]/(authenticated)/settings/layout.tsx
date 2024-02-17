@@ -30,7 +30,7 @@ export default function SettingsLayout({
   const activeLink = searchParams.get("activeLink") || "profile";
 
   return (
-    <main className="h-full w-full">
+    <>
       <header className="mx-auto mt-2 flex w-full flex-row justify-center gap-4 rounded-md bg-white p-1 shadow-main md:w-2/4 dark:bg-grey">
         <Button
           unstyled
@@ -64,6 +64,6 @@ export default function SettingsLayout({
         </Button>
       </header>
       {children}
-    </main>
+    </>
   );
 }

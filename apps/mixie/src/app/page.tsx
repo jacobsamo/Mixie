@@ -18,7 +18,7 @@ export default async function Page() {
   const latestRecipes = await getRecipes();
 
   return (
-    <main className="h-full w-full">
+    <>
       <section className="flex h-52 flex-col items-center justify-center">
         <LandingText delay={0.2} />
 
@@ -73,6 +73,6 @@ export default async function Page() {
           );
         })}
       </div>
-    </main>
+    </>
   );
 }

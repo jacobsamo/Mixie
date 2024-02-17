@@ -25,7 +25,7 @@ export default async function RecipeViewPage({
   });
 
   return (
-    <main className="h-fit min-h-full w-full">
+    <div className="h-fit min-h-full w-full">
       <section className="mb-2 flex h-52 items-center justify-center">
         <SearchBarTrigger />
       </section>
@@ -93,6 +93,6 @@ export default async function RecipeViewPage({
           );
         })}
       </section>
-    </main>
+    </div>
   );
 }

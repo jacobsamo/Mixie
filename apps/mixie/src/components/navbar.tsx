@@ -3,11 +3,17 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { CreateRecipeIconButton, FeedbackDialogTrigger } from "./open-dialogs";
+import {
+  CreateRecipeIconButton,
+  FeedbackDialogTrigger,
+  SearchIconTrigger,
+} from "./open-dialogs";
 import UserProfile from "./user-profile-dropdown";
 import VersionChip from "./versioning-chips";
+import useUser from "@/hooks/useUser";
 
 const Navbar = () => {
+  const { user } = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -82,9 +88,10 @@ const Navbar = () => {
       {/*user profile - show always? */}
       {/* hamburger - show under 768px (md:) */}
       <div className="flex flex-row items-center gap-1">
-        {/* <SearchDialog buttonType="searchIcon" /> */}
-        <CreateRecipeIconButton />
-        <FeedbackDialogTrigger />
+        <SearchIconTrigger />
+        {user != undefined && <CreateRecipeIconButton />}
+
+        <UserProfile />
         {isMobile && (
           <button
             type="button"
@@ -112,7 +119,6 @@ const Navbar = () => {
             ></span>
           </button>
         )}
-        <UserProfile />
       </div>
     </nav>
   );

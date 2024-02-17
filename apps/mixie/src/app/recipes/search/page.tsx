@@ -30,7 +30,7 @@ export default async function RecipeViewPage({
       : undefined;
 
   return (
-    <main className="h-fit min-h-full w-full">
+    <div className="h-fit min-h-full w-full">
       <section className="flex h-52 items-center justify-center">
         <RecipeSearch shouldAutoFilter={true} />
       </section>
@@ -60,6 +60,6 @@ export default async function RecipeViewPage({
           );
         })}
       </section>
-    </main>
+    </div>
   );
 }
