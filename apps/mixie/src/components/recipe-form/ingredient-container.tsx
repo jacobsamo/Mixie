@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import { type DropResult } from "react-beautiful-dnd";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import * as z from "zod";
-import {DraggableContainer, DraggableItem} from "../dragable";
+import { DraggableContainer, DraggableItem } from "../dragable";
 import { Ingredient } from "./ingredient";
 
 const IngredientContainer = () => {

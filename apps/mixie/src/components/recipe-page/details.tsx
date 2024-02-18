@@ -7,6 +7,7 @@ import AddBatch from "./ingredient/add-batch";
 import Ingredient from "./ingredient/ingredient";
 import StepContainer from "./step/step-container";
 
+
 interface DetailsProps {
   ingredients: IngredientType[];
   steps: Step[];

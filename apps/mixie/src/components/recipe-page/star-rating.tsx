@@ -1,17 +1,16 @@
 "use client";
-import { useState } from "react";
-// import  { StarIcon } from '@heroicons/react/24/outline';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle
+  DialogTitle,
 } from "@/components/ui/dialog";
 import useUser from "@/hooks/useUser";
 import { Rating } from "@/types";
 import { StarIcon } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 interface StarRatingProps {

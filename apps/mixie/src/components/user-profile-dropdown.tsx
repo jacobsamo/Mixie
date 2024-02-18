@@ -19,6 +19,7 @@ import FeedbackDialog from "./modals/feedback-modal";
 import { CreateRecipeTrigger, FeedbackButton } from "./open-dialogs";
 import { userDropDownOpen } from "./providers/state-provider";
 
+
 const UserProfile = () => {
   const { session, user } = useUser();
   const [open, setOpen] = useAtom(userDropDownOpen);

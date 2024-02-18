@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { EyeIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { FeedbackDialogTrigger } from "../open-dialogs";
 import RecipeValidationDialog from "./recipe-validation-dialog";
 import SubmittingButton from "./submitting-button";
-import { FeedbackButton, FeedbackDialogTrigger } from "../open-dialogs";
 
 interface OverlayProps {
   onPreview: () => void;

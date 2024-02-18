@@ -17,8 +17,8 @@ import { ArrowLeftIcon } from "lucide-react";
 import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import * as z from "zod";
-import SubmittingButton from "./submitting-button";
 import { onSubmit } from "./form";
+import SubmittingButton from "./submitting-button";
 
 interface CreateRecipeDialogProps {
   open: boolean;

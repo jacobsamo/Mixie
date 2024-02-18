@@ -4,6 +4,7 @@ import {
   char,
   double,
   json,
+  mysqlEnum,
   mysqlTable,
   text,
   timestamp,
