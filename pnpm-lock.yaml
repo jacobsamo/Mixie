@@ -183,6 +183,9 @@ importers:
       next-auth:
         specifier: ^4.24.6
         version: 4.24.6(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
+      next-axiom:
+        specifier: ^1.1.1
+        version: 1.1.1(next@14.1.0)(react@18.2.0)
       next-seo:
         specifier: ^6.5.0
         version: 6.5.0(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
@@ -7493,6 +7496,19 @@ packages:
       uuid: 8.3.2
     dev: false
 
+  /next-axiom@1.1.1(next@14.1.0)(react@18.2.0):
+    resolution: {integrity: sha512-0r/TJ+/zetD+uDc7B+2E7WpC86hEtQ1U+DuWYrP/JNmUz+ZdPFbrZgzOSqaZ6TwYbXP56VVlPfYwq1YsKHTHYQ==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      next: '>=13.4'
+      react: '>=18.0.0'
+    dependencies:
+      next: 14.1.0(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      remeda: 1.43.0
+      whatwg-fetch: 3.6.20
+    dev: false
+
   /next-seo@6.5.0(next@14.1.0)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-MfzUeWTN/x/rsKp/1n0213eojO97lIl0unxqbeCY+6pAucViHDA8GSLRRcXpgjsSmBxfCFdfpu7LXbt4ANQoNQ==}
     peerDependencies:
@@ -8658,6 +8674,10 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       rc: 1.2.8
+    dev: false
+
+  /remeda@1.43.0:
+    resolution: {integrity: sha512-YMGznJxotoGxoWH15H5v0DtceM+rKsGSO43+qULtPlFJSJ87ZWOHC1JP4iXQmVO9ZT5JFT0SPZQaZUpn4FXJbw==}
     dev: false
 
   /resend@3.2.0:
@@ -9984,6 +10004,10 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
+    dev: false
+
+  /whatwg-fetch@3.6.20:
+    resolution: {integrity: sha512-EqhiFU6daOA8kpjOWTL0olhVOF3i7OrFzSYiGsEMB8GcXS+RrzauAERX65xMeNWVqxA6HXH2m69Z9LaKKdisfg==}
     dev: false
 
   /which-boxed-primitive@1.0.2:
