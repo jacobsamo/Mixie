@@ -8,15 +8,12 @@ import {
   text,
   timestamp,
   tinyint,
-  varchar
+  varchar,
 } from "drizzle-orm/mysql-core";
 // imoport
-import { ImageAttributes, Ingredient, Step } from "@/types";
+import { ImageAttributes, Ingredient, SelectValue, Step } from "@/types";
 import { users } from "./auth";
-import {
-  difficulty_level,
-  sweet_savoury
-} from "./enums";
+import { difficulty_level, sweet_savoury } from "./enums";
 import { recipe_versions } from "./versions";
 
 // Recipes
@@ -101,7 +98,6 @@ export const collections = mysqlTable("collections", {
   userId: varchar("userId", { length: 191 }).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
-
 
 export const collectionsRelation = relations(collections, ({ one, many }) => ({
   user: one(users, {

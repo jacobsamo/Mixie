@@ -9,12 +9,14 @@ import type {
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import * as React from "react";
+import Autoplay from "embla-carousel-autoplay";
 
 type CarouselProps = {
   opts?: CarouselOptions;
   plugins?: CarouselPlugin[];
   orientation?: "horizontal" | "vertical";
   setApi?: (api: CarouselApi) => void;
+  autoplay?: boolean;
 };
 
 type CarouselContextProps = {
@@ -50,6 +52,7 @@ const Carousel = React.forwardRef<
       plugins,
       className,
       children,
+      autoplay = false,
       ...props
     },
     ref
@@ -59,7 +62,7 @@ const Carousel = React.forwardRef<
         ...opts,
         axis: orientation === "horizontal" ? "x" : "y",
       },
-      plugins
+      autoplay == true ? [Autoplay({ delay: 2000 })] : plugins
     );
     const [canScrollPrev, setCanScrollPrev] = React.useState(false);
     const [canScrollNext, setCanScrollNext] = React.useState(false);

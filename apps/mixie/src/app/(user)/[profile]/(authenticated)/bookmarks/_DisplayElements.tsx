@@ -1,6 +1,6 @@
 "use client";
-import { SearchCard, type CardRecipe } from "@/components/elements/Cards";
-import CreateCollectionDialog from "@/components/elements/CreateCollectionDialog";
+import { SearchCard, type CardRecipe } from "@/components/cards";
+import CreateCollectionDialog from "@/components/modals/create-collection-modal";
 import { createQueryString } from "@/lib/utils";
 import type { Bookmark, Collection } from "@/types";
 import { Session } from "next-auth";
@@ -51,7 +51,7 @@ const CollectionCard = ({
 
   return (
     <button
-      className="relative w-1/2 max-w-56 resize-y rounded-md shadow outline outline-1 outline-slate-700 sm:w-1/3 dark:shadow-none"
+      className="relative flex-1 flex-shrink-0 w-1/2 max-w-56 resize-y rounded-md shadow outline outline-1 outline-slate-700 sm:w-1/3 dark:shadow-none"
       onClick={() => {
         router.push("?" + createQueryString("collection", collectionId));
       }}
@@ -79,7 +79,7 @@ const DisplayElements = ({
   const activeCollection = collections.find((col) => col.uid == active);
 
   return (
-    <div className="mb-8 flex h-full max-h-[60%] w-full flex-wrap gap-2 p-2">
+    <div className="mb-8 flex h-full max-h-[60%] w-full flex-wrap gap-1 p-2">
       {!activeCollection && active != "all" && (
         <div className="w-full">
           <div className="flex flex-row items-center justify-between">
@@ -92,7 +92,7 @@ const DisplayElements = ({
             {collections.map((collection) => {
               return (
                 <CollectionCard
-                key={collection.uid}
+                  key={collection.uid}
                   collectionId={collection.uid}
                   title={collection.title}
                 />
@@ -113,7 +113,9 @@ const DisplayElements = ({
                 bookmark.collections?.includes(activeCollection.uid)
               )
               .map((bookmark) => {
-                return <SearchCard key={bookmark.uid} recipe={bookmark.recipe} />;
+                return (
+                  <SearchCard key={bookmark.uid} recipe={bookmark.recipe} />
+                );
               })}
           </div>
         </div>

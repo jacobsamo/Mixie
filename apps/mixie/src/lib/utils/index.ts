@@ -24,7 +24,7 @@ export function cn(...inputs: ClassValue[]) {
  * recipeId('Chicken Tikka Masala') // 'chicken-tikka-masala'
  */
 export function recipeId(title: string): string {
-  return title.replace(/\s/g, "-").toLowerCase();
+  return title.trim().replace(/\s/g, "-").toLowerCase();
 }
 
 /**

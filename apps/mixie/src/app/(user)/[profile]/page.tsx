@@ -1,4 +1,4 @@
-import { SearchCard } from "@/components/elements/Cards";
+import { SearchCard } from "@/components/cards";
 import { getUsers } from "@/lib/services/data_fetching";
 import { constructMetadata } from "@/lib/utils/";
 import { getServerAuthSession } from "@/server/auth";
@@ -24,14 +24,12 @@ export async function generateMetadata({
   const user = users?.find((user) => {
     user.id == params.profile;
   });
-  if (!user) {
-    return;
-  }
 
   return constructMetadata({
-    title: `${user.name} profile` || "",
-    description: undefined,
-    image: user.image || undefined,
+    title: `${user?.name}'s profile` || "",
+    url: `https://www.mixiecooking.com/${user?.id}`,
+    description: `${user?.name}'s profile` || "",
+    image: user?.image || undefined,
   });
 }
 
@@ -50,7 +48,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 
   if (user) {
     return (
-      <main className="h-full w-full">
+      <>
         <div className="m-auto mt-4 flex flex-col items-center justify-center rounded-xl bg-white p-1 shadow-main sm:w-full md:w-3/5 lg:h-80 dark:bg-grey dark:shadow-none">
           <Image
             src={user.image || "/images/placeholder.webp"}
@@ -95,7 +93,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             })}
           </ul>
         </div>
-      </main>
+      </>
     );
   }
 }

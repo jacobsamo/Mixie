@@ -104,6 +104,10 @@ export const recipeSchema = createInsertSchema(recipes, {
         "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
     })
     .nullish(),
+  createdAt: z.date(),
+  dietary: selectValue.array().nullable(),
+  allergens: selectValue.array().nullable(),
+  mealTime: selectValue.array().nullable(),
 });
 
 export const ratingsSchema = createInsertSchema(ratings);
@@ -134,6 +138,14 @@ export const recipeFormSchema = recipeSchema.superRefine((values, ctx) => {
         code: "custom",
         message: "At least one step is required for public recipes",
         path: ["steps"],
+      });
+    }
+
+    if (!values.mealTime) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Meal time is required for public recipes",
+        path: ["mealTime"],
       });
     }
   }

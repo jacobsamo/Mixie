@@ -1,70 +1,89 @@
-import { CardSquare } from "@/components/elements/Cards";
-import RecipeSearch from "@/components/modules/RecipeSearch";
+import { CardSquare } from "@/components/cards";
+import CollectionCard from "@/components/collection-card";
+import { SearchDialog } from "@/components/search";
+import { SearchBarTrigger } from "@/components/open-dialogs";
+import RecipeSearch from "@/components/search/search-recipes";
+import { meal_times } from "@/lib/services/data";
 import { getRecipes } from "@/lib/services/data_fetching";
 import { constructMetadata } from "@/lib/utils";
-import { Recipe } from "@/types";
-import { IFuseOptions } from "fuse.js";
-// const getRecipes = cache(async () => {
-//   const recipes = await db.query.info.findMany({
-//     where: eq(info.isPublic, true),
-//   });
-//   return recipes;
-// });
-
-async function searchRecipes({
-  query,
-  recipes,
-}: {
-  query: string | undefined;
-  recipes: Recipe[];
-}) {
-  if (query == undefined) return;
-
-  const options: IFuseOptions<Recipe> = {
-    includeScore: true,
-    isCaseSensitive: true,
-    keys: ["title"],
-    threshold: 0.6,
-  };
-
-  const Fuse = (await import("fuse.js")).default;
-  const fuse = new Fuse(recipes, options);
-  const result = fuse.search(query);
-
-  console.log("Results: ", result);
-
-  return result.map((item) => item.item);
-}
+import { Donut, EggFried, Grid, Salad, Sandwich, Soup } from "lucide-react";
 
 export const metadata = constructMetadata({
   title: "Recipes",
+  image: "/images/recipes-landing-page.jpg",
+  url: "https://www.mixiecooking.com/recipes",
+  description: "Find delicious recipes for any meal of the day",
 });
 
 export default async function RecipeViewPage({
   searchParams,
 }: {
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams?: { [key: string]: string | undefined };
 }) {
   const recipes = await getRecipes();
-  const { search: searchValue } = searchParams as { [key: string]: string };
-  const searchedRecipes = await searchRecipes({ query: searchValue, recipes });
+  const { mealTime: collection } = searchParams!;
+  const mealTime = meal_times.find((meal) => meal.value === collection);
+  const mealTimeRecipes = recipes.filter((recipe) => {
+    return recipe.mealTime?.values == mealTime?.value;
+  });
 
   return (
-    <main className="h-fit min-h-full w-full">
-      <section className="flex h-52 items-center justify-center">
-        <RecipeSearch shouldAutoFilter={true} />
+    <div className="h-fit min-h-full w-full">
+      <section className="mb-2 flex h-52 items-center justify-center">
+        <SearchBarTrigger />
       </section>
 
-      {(!searchedRecipes || searchedRecipes?.length == 0) && searchValue && (
-        <p className="text0-white text-center text-step--2">
-          No recipes found for your search
-        </p>
+      <div className="mb-12 flex flex-wrap items-center justify-center gap-2">
+        <CollectionCard
+          key="all"
+          href="/recipes"
+          title="All"
+          icon={<Grid />}
+          className={
+            mealTime == undefined
+              ? "bg-white/50 outline outline-1 dark:bg-slate-800"
+              : ""
+          }
+        />
+
+        {meal_times.map((meal_time) => {
+          const DisplayIcon = () => {
+            switch (meal_time.value) {
+              case "breakfast":
+                return <EggFried />;
+              case "lunch":
+                return <Sandwich />;
+              case "dinner":
+                return <Soup />;
+              case "snack":
+                return <Donut />;
+              default:
+                return <Salad />;
+            }
+          };
+
+          return (
+            <CollectionCard
+              key={meal_time.value}
+              href={`?mealTime=${meal_time.value}`}
+              title={meal_time.label}
+              icon={<DisplayIcon />}
+              className={
+                meal_time.value === collection
+                  ? "bg-white/50 outline outline-1 dark:bg-slate-800"
+                  : ""
+              }
+            />
+          );
+        })}
+      </div>
+
+      {mealTime && (
+        <h2 className="text-center text-step--1">{mealTime.label} Recipes</h2>
       )}
+
       <section className="flex flex-wrap gap-2 p-3">
-        {(searchedRecipes && searchedRecipes?.length > 0
-          ? searchedRecipes
-          : recipes
-        )?.map((recipe) => {
+        {(mealTimeRecipes || recipes).map((recipe) => {
           return (
             <CardSquare
               key={recipe.id}
@@ -79,6 +98,6 @@ export default async function RecipeViewPage({
           );
         })}
       </section>
-    </main>
+    </div>
   );
 }

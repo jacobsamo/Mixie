@@ -1,4 +1,5 @@
 "use client";
+import { FeedbackButton } from "@/components/open-dialogs";
 import { Button } from "@/components/ui/button";
 import { User } from "@/types";
 import { userSchema } from "@/types/zodSchemas";
@@ -11,11 +12,15 @@ import { useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const Profile = dynamic(() => import("@/components/layouts/Settings/Profile"));
-const Customization = dynamic(
-  () => import("@/components/layouts/Settings/Customization")
+const Profile = dynamic(
+  () => import("@/components/layouts/user-settings/Profile")
 );
-const Account = dynamic(() => import("@/components/layouts/Settings/Account"));
+const Customization = dynamic(
+  () => import("@/components/layouts/user-settings/Customization")
+);
+const Account = dynamic(
+  () => import("@/components/layouts/user-settings/Account")
+);
 
 interface ProfilePageProps {
   params: {
@@ -36,9 +41,10 @@ export default function ProfilePage({ params }: ProfilePageProps) {
           Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
         },
       });
-      const user = (await res.json()) as User;
+      const user = await res.json();
+
       if (user.emailVerified) user.emailVerified = new Date(user.emailVerified);
-      return user;
+      return user as User;
     },
   });
 
@@ -89,7 +95,19 @@ export default function ProfilePage({ params }: ProfilePageProps) {
           onSubmit={handleSubmit(onSubmit)}
         >
           {!values.email && (
-            <Loader2 className="m-auto h-16 w-16 animate-spin" />
+            <>
+              <Loader2 className="m-auto h-16 w-16 animate-spin" />
+              {/* <div className="animate-pulse">
+                <div className="flex flex-row items-center gap-2">
+                  <div className="h-24 w-24 rounded-full bg-gray-800 lg:h-48 lg:w-48"></div>
+                  <div className="flex flex-col gap-2">
+                    <div className="h-10 w-3/4 rounded bg-gray-800"></div>
+                    <div className="h-10 w-3/4 rounded bg-gray-800"></div>
+                  </div>
+                </div>
+                <div className="mt-2 h-24 rounded bg-gray-800"></div>
+              </div> */}
+            </>
           )}
           {values.email && (
             <>
@@ -111,6 +129,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
               </Button>
             </>
           )}
+          <FeedbackButton className="mx-auto" />
         </form>
       </FormProvider>
     </>

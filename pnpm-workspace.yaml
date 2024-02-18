@@ -2,3 +2,4 @@ packages:
   - "apps/*"
   - "mixie"
   - "packages/*"
+  - "packages/transactional/.react-email"

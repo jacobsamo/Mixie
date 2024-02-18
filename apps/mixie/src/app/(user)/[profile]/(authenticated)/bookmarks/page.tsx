@@ -1,4 +1,4 @@
-import CreateCollectionDialog from "@/components/elements/CreateCollectionDialog";
+import CreateCollectionDialog from "@/components/modals/create-collection-modal";
 import { getServerAuthSession } from "@/server/auth";
 import { db } from "@/server/db/index";
 import { bookmarks, collections } from "@/server/db/schemas";

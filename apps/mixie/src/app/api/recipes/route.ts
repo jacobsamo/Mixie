@@ -19,6 +19,8 @@ export async function GET(req: NextRequest) {
       imageAttributes: true,
       imageUrl: true,
       total: true,
+      ingredientsList: true,
+      keywords: true,
     },
     where: eq(recipeSchema.isPublic, true),
   });

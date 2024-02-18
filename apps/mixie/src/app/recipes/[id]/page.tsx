@@ -1,41 +1,28 @@
-import RecipePageComponent from "@/components/templates/RecipePage/RecipePageComponent";
+import RecipePageComponent from "@/components/recipe-page/recipe-page";
 import { getRecipes } from "@/lib/services/data_fetching";
 import { constructMetadata, displayIngredient } from "@/lib/utils";
 import type { Recipe } from "@/types";
-import { Metadata } from "next";
 import { RecipeJsonLd } from "next-seo";
 import { notFound } from "next/navigation";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { id: string };
-}): Promise<Metadata | undefined> {
+export async function generateMetadata({ params }: { params: { id: string } }) {
   const recipes = await getRecipes();
 
-  const recipe = recipes?.find((recipe) => {
-    recipe.id == params.id;
+  const recipe = recipes?.find((recipe) => recipe.id == params.id);
+
+  return constructMetadata({
+    title: recipe?.title,
+    description: recipe?.description || undefined,
+    image: recipe?.imageUrl || "/images/banner.jpg",
+    url: `https://www.mixiecooking.com/recipes/${recipe?.id}`,
+    keywords: recipe?.keywords?.map((keyword) => keyword.value) || undefined,
   });
-
-  if (!recipe) {
-    return;
-  }
-
-  const metaData = await constructMetadata({
-    title: recipe.title,
-    description: recipe.description || undefined,
-    image: recipe.imageUrl || "/images/banner.jpg",
-    url: `https://www.mixiecooking.com/recipes/${recipe.id}`,
-    keywords: recipe.keywords?.map((keyword) => keyword.value) || undefined,
-  });
-
-  return metaData;
 }
 
 export default async function RecipePage({ params }) {
   const recipes = await getRecipes();
   const recipe = recipes?.find((recipe) => recipe.id == params.id);
-
+  
   if (recipe) {
     return (
       <>
