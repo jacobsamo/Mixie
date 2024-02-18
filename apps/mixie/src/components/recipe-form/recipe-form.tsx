@@ -21,6 +21,7 @@ import RecipePageComponent from "../recipe-page/recipe-page";
 import Overlay from "./overlay";
 // import  StepContainer  from "./StepContainer";
 import Error from "@/components/ui/Error";
+import { FeedbackButton } from "../open-dialogs";
 import { onSubmit } from "./form";
 import LoadingImageUpload from "./loadingstates/loading-image-upload";
 
@@ -83,7 +84,6 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
         values: getValues(),
       });
   }, [errors]);
-
 
   // show alert if user tries refreshing or closing the page
   useEffect(() => {
@@ -287,6 +287,8 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
               control={control}
               label="Notes, Tips or Suggestions"
             />
+
+            <FeedbackButton className="mt-4 bg-grey w-1/2 mx-auto" />
           </>
         )}
       </form>

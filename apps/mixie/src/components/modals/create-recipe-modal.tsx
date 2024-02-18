@@ -1,26 +1,26 @@
 "use client";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  DialogTitle
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, PlusCircleIcon } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 import VersionChip from "../versioning-chips";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
-import { env } from "env";
-import toast from "react-hot-toast";
 import { createRecipeSchema } from "@/types";
+import { env } from "env";
 import { useAtom } from "jotai";
+import toast from "react-hot-toast";
+import { FeedbackButton } from "../open-dialogs";
 import { createRecipeOpen } from "../providers/dialogs";
 import { userDropDownOpen } from "../providers/state-provider";
 
@@ -119,13 +119,17 @@ const CreateRecipeDialog = () => {
           <Button
             type="submit"
             aria-label="continue with creating the recipe"
-            className="items-center font-semibold"
+            className={buttonVariants({
+              className: "items-center font-semibold",
+            })}
             disabled={loading}
           >
             Create Recipe
             {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
           </Button>
         </form>
+
+        <FeedbackButton />
       </DialogContent>
     </Dialog>
   );

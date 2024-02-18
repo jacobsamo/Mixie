@@ -1,14 +1,12 @@
 import {
   CardRectangle,
-  CardRectangleSmall,
-  CardSquare,
+  CardRectangleSmall
 } from "@/components/cards";
 import CollectionCard from "@/components/collection-card";
 import LandingText from "@/components/landing-page-text";
-import { SearchDialog } from "@/components/search";
 import {
   CreateRecipeTrigger,
-  SearchBarTrigger,
+  SearchBarTrigger
 } from "@/components/open-dialogs";
 import {
   Carousel,
@@ -19,11 +17,9 @@ import {
 } from "@/components/ui/carousel";
 import { meal_times } from "@/lib/services/data";
 import { getRecipes } from "@/lib/services/data_fetching";
-import { Donut, EggFried, Salad, Sandwich, Soup } from "lucide-react";
-import { Button, buttonVariants } from "@/components/ui/button";
 import { getServerAuthSession } from "@/server/auth";
+import { Donut, EggFried, Salad, Sandwich, Soup } from "lucide-react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 
 export default async function Page() {
   const session = await getServerAuthSession();
@@ -99,16 +95,19 @@ export default async function Page() {
           Share your recipes with fellow food enthusiasts and explore new
           flavors together!
         </p>
-        {!session ? (
-          <Link
-            className="mt-3 w-11/12 sm:w-2/5 bg-yellow inline-flex items-center justify-center text-step--2 rounded-md py-2 px-4 border border-transparent shadow-sm text-base font-medium text-black hover:bg-yellow/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow/90 transition-colors duration-200 ease-in-out" 
-            href={"/auth/login"}
-          >
-            Join now
-          </Link>
-        ) : (
-          <CreateRecipeTrigger className="mt-3 w-11/12 sm:w-2/5" />
-        )}
+        <div className="flex flex-col items-center gap-2">
+          {!session ? (
+            <Link
+              className="text-base mt-3 inline-flex w-11/12 items-center justify-center rounded-md border border-transparent bg-yellow px-4 py-2 text-step--2 font-medium text-black shadow-sm transition-colors duration-200 ease-in-out hover:bg-yellow/90 focus:outline-none focus:ring-2 focus:ring-yellow/90 focus:ring-offset-2 sm:w-2/5"
+              href={"/auth/login"}
+            >
+              Join now
+            </Link>
+          ) : (
+            <CreateRecipeTrigger className="mt-3 w-11/12 sm:w-2/5" />
+          )}
+        </div>
+        {/* <FeedbackButton className="mt-4 bg-none text-step--4 hover:bg-none" /> */}
       </div>
     </>
   );

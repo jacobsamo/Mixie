@@ -1,11 +1,11 @@
-import { Toaster } from "react-hot-toast";
 import { constructMetadata } from "@/lib/utils";
 import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
-import { Viewport } from "next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import dynamic from "next/dynamic";
+import { Viewport } from "next";
 import { AxiomWebVitals } from "next-axiom";
+import dynamic from "next/dynamic";
+import { Toaster } from "react-hot-toast";
 
 const Providers = dynamic(() => import("@/components/providers"), {
   ssr: false,
@@ -45,7 +45,6 @@ export default async function RootLayout({
           />
         </Providers>
 
-        {/*Have a look at https://posthog.com/ for more advanced analytics */}
         <Analytics />
         <SpeedInsights />
         <AxiomWebVitals />

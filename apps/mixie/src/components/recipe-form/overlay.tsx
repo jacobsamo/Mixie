@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import RecipeValidationDialog from "./recipe-validation-dialog";
 import SubmittingButton from "./submitting-button";
+import { FeedbackButton, FeedbackDialogTrigger } from "../open-dialogs";
 
 interface OverlayProps {
   onPreview: () => void;
@@ -45,7 +46,8 @@ const Overlay = ({ onPreview, isDisabled }: OverlayProps) => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="fixed bottom-5 right-3 z-50 flex justify-end">
+      <div className="fixed bottom-5 right-3 z-50 flex justify-end gap-2">
+        <FeedbackDialogTrigger className="bg-grey" />
         <SubmittingButton aria-label="Save" type="submit">
           Save
         </SubmittingButton>

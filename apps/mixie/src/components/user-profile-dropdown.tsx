@@ -4,6 +4,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useAtom } from "jotai";
 import {
   ArrowUpRightSquare,
   Bookmark,
@@ -13,12 +14,9 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import useUser from "../hooks/useUser";
-import CreateRecipeDialog from "./modals/create-recipe-modal";
 import FeedbackDialog from "./modals/feedback-modal";
-import { CreateRecipeTrigger } from "./open-dialogs";
-import { useAtom } from "jotai";
+import { CreateRecipeTrigger, FeedbackButton } from "./open-dialogs";
 import { userDropDownOpen } from "./providers/state-provider";
 
 const UserProfile = () => {
@@ -89,6 +87,10 @@ const UserProfile = () => {
           <Settings />
           Settings
         </Link>
+        <FeedbackButton
+          props={{ unstyled: true }}
+          className="inline-flex dark:text-white"
+        />
         <Link
           onClick={() => setOpen(false)}
           href={"/api/auth/signout"}

@@ -1,20 +1,20 @@
 "use client";
-import React from "react";
-import { Button, ButtonProps } from "./ui/button";
-import { MessageCirclePlus, PlusCircleIcon, SearchIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { useAtom } from "jotai";
+import { MessageCirclePlus, PlusCircleIcon, SearchIcon } from "lucide-react";
+import React from "react";
 import {
   createRecipeOpen,
   giveFeedbackOpen,
   searchOpen,
 } from "./providers/dialogs";
+import { Button, ButtonProps } from "./ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
-import { cn } from "@/lib/utils";
 
 export interface OpenDialogsProps {
   children?: React.ReactNode;
@@ -23,6 +23,7 @@ export interface OpenDialogsProps {
 
 export interface OpenDialogWithButtonProps extends OpenDialogsProps {
   props?: ButtonProps;
+  text?: string;
 }
 
 // search
@@ -76,7 +77,7 @@ export const FeedbackDialogTrigger = ({
           onClick={() => setFeedbackOpen(true)}
           aria-label="give feedback to the mixie team"
           className={cn(
-            "flex flex-row gap-1 border-none outline-none",
+            "flex flex-row items-center justify-center gap-1 rounded-xl border-none p-2 outline-none",
             className
           )}
         >
@@ -92,6 +93,7 @@ export const FeedbackButton = ({
   children,
   className,
   props,
+  text,
 }: OpenDialogWithButtonProps) => {
   const [, setFeedbackOpen] = useAtom(giveFeedbackOpen);
 
@@ -101,10 +103,13 @@ export const FeedbackButton = ({
       onClick={() => setFeedbackOpen(true)}
       aria-label="give feedback to the mixie team"
       variant={"secondary"}
-      className={cn("border-none text-step--3 outline-none ", className)}
+      className={cn(
+        "border-none text-step--3 outline-none hover:text-white",
+        className
+      )}
       {...props}
     >
-      Give feedback
+      {text ? text : "Give feedback"}
     </Button>
   );
 };
