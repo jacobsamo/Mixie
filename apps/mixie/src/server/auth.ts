@@ -16,8 +16,9 @@ import { db } from "@/server/db/index";
 import * as schema from "@/server/db/schemas";
 import { User as DbUser } from "@/types";
 import { env } from "env";
-import { sendEmail } from "./emails";
-import LoginLink from "./emails/login";
+import { sendEmail } from "./send";
+import LoginLink from "transactional/emails/login";
+import WelcomeEmail from "transactional/emails/welcome";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -118,6 +119,21 @@ export const authOptions: NextAuthOptions = {
       };
 
       return session;
+    },
+    signIn: async ({ user, account, profile }) => {
+      const accountExits = await db.query.users.findFirst({
+        where: eq(schema.users.email, user.email!),
+      });
+
+      if (accountExits == undefined) {
+        await sendEmail({
+          email: user.email!,
+          subject: "Welcome to Mixie!",
+          react: WelcomeEmail({ email: user.email!, name: user.name! }),
+        });
+      }
+
+      return true;
     },
     jwt: async ({ token, account, user, trigger }) => {
       if (user) {

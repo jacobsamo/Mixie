@@ -12,6 +12,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+import * as React from "react";
 
 export default function LoginLink({
   email = "cook@mixiecooking.com",
@@ -32,10 +33,9 @@ export default function LoginLink({
             <Section className="mt-8">
               <Img
                 src={"https://www.mixiecooking.com/icons/icon_x128.jpg"}
-                width="40"
-                height="40"
                 alt="Mixie"
-                className="mx-auto my-0"
+                height={128}
+                className="mx-auto h-32 w-32 rounded-full"
               />
             </Section>
             <Heading className="text-xl mx-0 my-7 p-0 text-center font-semibold text-[#0D1017]">
@@ -58,10 +58,8 @@ export default function LoginLink({
             <Text className="text-center">Or</Text>
             <Hr />
             <Text className="text-center">Login with the code below</Text>
-            <Section className="mx-auto mb-3 mt-4 w-fit rounded-md border border-solid border-[#0D1017] px-4 py-3 align-middle">
-              <Text className="tacking-[6px] font mx-auto my-0 inline-block w-full py-2 text-center text-step--2 font-bold text-[#000]">
-                {token}
-              </Text>
+            <Section style={codeContainer}>
+              <Text style={code}>{token}</Text>
             </Section>
           </Container>
         </Body>
@@ -69,3 +67,26 @@ export default function LoginLink({
     </Html>
   );
 }
+
+const codeContainer = {
+  background: "rgba(0,0,0,.05)",
+  borderRadius: "4px",
+  margin: "16px auto 14px",
+  verticalAlign: "middle",
+  width: "280px",
+};
+
+const code = {
+  color: "#000",
+  display: "inline-block",
+  fontFamily: "HelveticaNeue-Bold",
+  fontSize: "32px",
+  fontWeight: 700,
+  letterSpacing: "6px",
+  lineHeight: "40px",
+  paddingBottom: "8px",
+  paddingTop: "8px",
+  margin: "0 auto",
+  width: "100%",
+  textAlign: "center" as const,
+};

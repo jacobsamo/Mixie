@@ -29,6 +29,11 @@ export const sendEmail = async ({
       );
       return Promise.resolve();
     }
+    console.log("Sending email: ", {
+      email: email,
+      subject: subject,
+    });
+
     return resend.emails.send({
       from: "cook@mixiecooking.com",
       to: test ? "delivered@resend.dev" : email,

@@ -87,7 +87,8 @@
     "uploadthing": "^6.4.0",
     "uuid": "^9.0.1",
     "wonka": "^6.3.4",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "transactional": "workspace:*"
   },
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
