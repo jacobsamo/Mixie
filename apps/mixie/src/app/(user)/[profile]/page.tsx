@@ -27,7 +27,8 @@ export async function generateMetadata({
 
   return constructMetadata({
     title: `${user?.name}'s profile` || "",
-    description: undefined,
+    url: `https://www.mixiecooking.com/${user?.id}`,
+    description: `${user?.name}'s profile` || "",
     image: user?.image || undefined,
   });
 }

@@ -37,7 +37,7 @@ p {
 }
 
 .dark {
-  @apply bg-black text-white;
+  @apply dark:bg-black bg-white text-white;
 
   scrollbar-width: 4px;
   scrollbar-color: hsl(30 36% 96%) transparent;
@@ -51,11 +51,11 @@ p {
 
 /* Works on Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
-  width: 4px;
+  @apply w-1;
 }
 
 *::-webkit-scrollbar-track {
-  background: transparent;
+  @apply bg-transparent;
 }
 
 *::-webkit-scrollbar-thumb {

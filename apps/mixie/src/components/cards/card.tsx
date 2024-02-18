@@ -35,7 +35,7 @@ export const BaseCard = ({
       <Link
         href={`/recipes/${recipe.id}`}
         className={cn(
-          "textOnBackground text-center text-step--2",
+          "textOnBackground max-w-full text-balance text-center text-step--2",
           classNames?.title
         )}
       >
@@ -70,7 +70,8 @@ export const BaseCard = ({
         sizes="224px"
         className={cn(
           "-z-20 h-56 w-56 rounded-xl object-cover object-center",
-          classNames?.image
+          classNames?.image,
+          classNames?.container
         )}
       />
     </div>
@@ -82,8 +83,8 @@ const CardSquare = ({ recipe }: CardProps) => {
     <BaseCard
       recipe={recipe}
       classNames={{
-        container: "h-56 w-56",
-        image: "h-56 w-56",
+        container:
+          "h-36 w-36 grow  sm:h-56 sm:w-56  sm:grow-0",
       }}
     />
   );
@@ -93,11 +94,9 @@ const CardRectangleSmall = ({ recipe }: CardProps) => {
   return (
     <BaseCard
       recipe={recipe}
-      // classNames={{ container: 'h-56 w-46', image: 'h-56 w-46' }}
       classNames={{
-        container: "h-56 w-46",
-        image: "h-56 w-46",
-        title: "text-step--1",
+        container: "h-52 w-36 shrink-0  sm:h-56 sm:w-44 sm:w-48",
+        title: "text-step--2",
       }}
     />
   );

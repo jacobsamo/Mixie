@@ -32,7 +32,7 @@ const StepContainer = ({
         ))}
       </ul>
       <CreateRecipeTrigger
-        className="mx-auto w-1/2"
+        className="mx-auto w-10/12 sm:w-1/2"
         text="Create your own recipe"
       />
     </div>

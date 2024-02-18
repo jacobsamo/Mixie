@@ -23,7 +23,7 @@ export const SearchCard = ({
         alt={recipe?.imageAttributes?.alt ?? ""}
         width={100}
         height={100}
-        className="h-32 w-2/5 rounded-lg"
+        className="h-32 min-w-32 w-2/5 rounded-lg"
       />
 
       {<BookmarkButton session={session} recipe={recipe} />}
@@ -31,32 +31,11 @@ export const SearchCard = ({
       <div>
         <Link
           href={`/recipes/${edit ? `/preview/${recipe.uid}/edit` : recipe.id}`}
-          className="text-step--1"
+          className="text-step--2 sm:text-step--1"
         >
           {recipe.title}
         </Link>
 
-        {recipe.keywords && (
-          <div className="flex w-full flex-row flex-wrap gap-1">
-            {(Array.isArray(recipe?.keywords) &&
-              recipe?.keywords?.slice(0, 5).map((keyword, index) => {
-                return (
-                  <p
-                    key={index}
-                    className="h-fit w-fit rounded-lg bg-yellow p-1 text-center text-step--4 text-black opacity-80"
-                  >
-                    {keyword.value}
-                  </p>
-                );
-              })) ||
-              null}
-            {Array.isArray(recipe?.keywords) && recipe?.keywords.length > 5 && (
-              <p className="text-center text-step--4 text-black opacity-80">
-                ...
-              </p>
-            )}
-          </div>
-        )}
       </div>
     </Tag>
   );

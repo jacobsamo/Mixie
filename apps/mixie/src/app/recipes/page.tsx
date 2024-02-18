@@ -10,6 +10,9 @@ import { Donut, EggFried, Grid, Salad, Sandwich, Soup } from "lucide-react";
 
 export const metadata = constructMetadata({
   title: "Recipes",
+  image: "/images/recipes-landing-page.jpg",
+  url: "https://www.mixiecooking.com/recipes",
+  description: "Find delicious recipes for any meal of the day",
 });
 
 export default async function RecipeViewPage({
@@ -37,7 +40,9 @@ export default async function RecipeViewPage({
           title="All"
           icon={<Grid />}
           className={
-            mealTime == undefined ? "bg-slate-800 outline outline-1" : ""
+            mealTime == undefined
+              ? "bg-white/50 outline outline-1 dark:bg-slate-800"
+              : ""
           }
         />
 
@@ -65,7 +70,7 @@ export default async function RecipeViewPage({
               icon={<DisplayIcon />}
               className={
                 meal_time.value === collection
-                  ? "bg-gray-800 outline outline-1"
+                  ? "bg-white/50 outline outline-1 dark:bg-slate-800"
                   : ""
               }
             />

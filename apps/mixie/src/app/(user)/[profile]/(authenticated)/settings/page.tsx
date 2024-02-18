@@ -12,11 +12,15 @@ import { useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const Profile = dynamic(() => import("@/components/layouts/user-settings/Profile"));
+const Profile = dynamic(
+  () => import("@/components/layouts/user-settings/Profile")
+);
 const Customization = dynamic(
   () => import("@/components/layouts/user-settings/Customization")
 );
-const Account = dynamic(() => import("@/components/layouts/user-settings/Account"));
+const Account = dynamic(
+  () => import("@/components/layouts/user-settings/Account")
+);
 
 interface ProfilePageProps {
   params: {
@@ -37,9 +41,10 @@ export default function ProfilePage({ params }: ProfilePageProps) {
           Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
         },
       });
-      const user = (await res.json()) as User;
+      const user = await res.json();
+
       if (user.emailVerified) user.emailVerified = new Date(user.emailVerified);
-      return user;
+      return user as User;
     },
   });
 
@@ -91,8 +96,8 @@ export default function ProfilePage({ params }: ProfilePageProps) {
         >
           {!values.email && (
             <>
-              {/* <Loader2 className="m-auto h-16 w-16 animate-spin" /> */}
-              <div className="animate-pulse">
+              <Loader2 className="m-auto h-16 w-16 animate-spin" />
+              {/* <div className="animate-pulse">
                 <div className="flex flex-row items-center gap-2">
                   <div className="h-24 w-24 rounded-full bg-gray-800 lg:h-48 lg:w-48"></div>
                   <div className="flex flex-col gap-2">
@@ -101,7 +106,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
                   </div>
                 </div>
                 <div className="mt-2 h-24 rounded bg-gray-800"></div>
-              </div>
+              </div> */}
             </>
           )}
           {values.email && (

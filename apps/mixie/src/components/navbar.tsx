@@ -11,6 +11,7 @@ import {
 import UserProfile from "./user-profile-dropdown";
 import VersionChip from "./versioning-chips";
 import useUser from "@/hooks/useUser";
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const { user } = useUser();
@@ -53,13 +54,18 @@ const Navbar = () => {
 
       {/* Links - show in sidebar under 640px (sm:), otherwise always show */}
       <div
-        className={`flex flex-col gap-8 sm:flex-row ${
-          isMobile && !isOpen ? "hidden" : ""
-        } ${
-          isOpen
-            ? "absolute left-0 top-14 z-50 flex h-screen w-full bg-white dark:bg-black"
-            : ""
-        }`}
+        // className={`flex flex-col gap-8 sm:flex-row ${
+        //   isMobile && !isOpen ? "hidden" : ""
+        // } ${
+        //   isOpen
+        //     ? "absolute left-0 top-14 z-50 flex h-screen w-full bg-white dark:bg-black"
+        //     : ""
+        // }`}
+        className={cn("flex flex-col gap-8 sm:flex-row", {
+          hidden: isMobile && !isOpen,
+          "absolute left-0 top-14 z-50 flex h-screen w-full bg-white dark:bg-black":
+            isOpen,
+        })}
       >
         <Link
           href={"/recipes"}

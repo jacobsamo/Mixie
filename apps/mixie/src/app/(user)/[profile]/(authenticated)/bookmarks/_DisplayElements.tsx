@@ -51,7 +51,7 @@ const CollectionCard = ({
 
   return (
     <button
-      className="relative w-1/2 max-w-56 resize-y rounded-md shadow outline outline-1 outline-slate-700 sm:w-1/3 dark:shadow-none"
+      className="relative flex-1 flex-shrink-0 w-1/2 max-w-56 resize-y rounded-md shadow outline outline-1 outline-slate-700 sm:w-1/3 dark:shadow-none"
       onClick={() => {
         router.push("?" + createQueryString("collection", collectionId));
       }}
@@ -79,7 +79,7 @@ const DisplayElements = ({
   const activeCollection = collections.find((col) => col.uid == active);
 
   return (
-    <div className="mb-8 flex h-full max-h-[60%] w-full flex-wrap gap-2 p-2">
+    <div className="mb-8 flex h-full max-h-[60%] w-full flex-wrap gap-1 p-2">
       {!activeCollection && active != "all" && (
         <div className="w-full">
           <div className="flex flex-row items-center justify-between">

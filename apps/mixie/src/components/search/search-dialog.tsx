@@ -1,21 +1,19 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { CreateRecipeTrigger, FeedbackButton } from "@/components/open-dialogs";
+import { searchOpen } from "@/components/providers/dialogs";
 import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogFooter,
-  DialogTrigger,
+  DialogFooter
 } from "@/components/ui/dialog";
 import { Recipe } from "@/types";
 import { motion } from "framer-motion";
-import { SearchIcon, X } from "lucide-react";
+import { useAtom } from "jotai";
+import { X } from "lucide-react";
 import { useState } from "react";
 import { SearchCard } from "../cards";
 import { SearchInput } from "./search-input";
-import { searchOpen } from "@/components/providers/dialogs";
-import { useAtom } from "jotai";
-import { CreateRecipeTrigger, FeedbackButton } from "@/components/open-dialogs";
 
 type PartialRecipe = Pick<
   Recipe,

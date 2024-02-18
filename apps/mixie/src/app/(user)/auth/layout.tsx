@@ -4,6 +4,12 @@ import { redirect, useRouter } from "next/navigation";
 import React from "react";
 import Image from "next/image";
 import { headers } from "next/headers";
+import { constructMetadata } from "@/lib/utils";
+
+export const metadata = constructMetadata({
+  description: "join the Mixie community",
+  image: "/images/login-page.jpg",
+});
 
 export default async function SettingsLayout({
   children,

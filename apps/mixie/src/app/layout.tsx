@@ -30,7 +30,7 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <main className="h-full w-full">
+          <main className="min-h-full h-fit w-full">
             <Navbar />
             {children}
             <Footer />
