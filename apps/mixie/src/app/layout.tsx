@@ -1,16 +1,17 @@
-import { Toaster } from "react-hot-toast";
 import { constructMetadata } from "@/lib/utils";
 import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
-import { Viewport } from "next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Viewport } from "next";
+import { AxiomWebVitals } from "next-axiom";
 import dynamic from "next/dynamic";
+import { Toaster } from "react-hot-toast";
 
-const Providers = dynamic(() => import("@/components/modules/Providers"), {
+const Providers = dynamic(() => import("@/components/providers"), {
   ssr: false,
 });
-const Navbar = dynamic(() => import("@/components/modules/Navbar"));
-const Footer = dynamic(() => import("@/components/modules/Footer"));
+const Navbar = dynamic(() => import("@/components/navbar"));
+const Footer = dynamic(() => import("@/components/footer"));
 
 export const metadata = constructMetadata();
 
@@ -31,7 +32,8 @@ export default async function RootLayout({
       <body>
         <Providers>
           <Navbar />
-          {children}
+          <main className="h-fit min-h-full w-full">{children}</main>
+          <Footer />
           <Toaster
             position="bottom-right"
             toastOptions={{
@@ -41,12 +43,11 @@ export default async function RootLayout({
               },
             }}
           />
-          <Footer />
         </Providers>
 
-        {/*Have a look at https://posthog.com/ for more advanced analytics */}
         <Analytics />
         <SpeedInsights />
+        <AxiomWebVitals />
       </body>
     </html>
   );

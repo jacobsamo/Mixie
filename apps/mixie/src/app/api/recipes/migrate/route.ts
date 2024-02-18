@@ -1,18 +1,15 @@
-import { isApp } from "@/lib/services/apiMiddleware";
-import { db } from "@/server/db";
-import { recipes } from "@/server/db/schemas";
-import { Recipe } from "@/server/db/types";
-import { NextResponse, type NextRequest } from "next/server";
-import * as z from "zod";
+import { type NextRequest } from "next/server";
+
+
 
 export async function POST(req: NextRequest) {
-  return NextResponse.json(
-    {
-      message:
-        "Only used in development for migrating data to the latest versions",
-    },
-    { status: 404 }
-  );
+  // return NextResponse.json(
+  //   {
+  //     message:
+  //       "Only used in development for migrating data to the latest versions",
+  //   },
+  //   { status: 404 }
+  // );
   // try {
   //   const json = await req.json();
 

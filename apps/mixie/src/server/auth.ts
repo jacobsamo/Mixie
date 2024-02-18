@@ -6,18 +6,19 @@ import {
 } from "next-auth";
 import { type Adapter } from "next-auth/adapters";
 
+import EmailProvider from "next-auth/providers/email";
 import FacebookProvider from "next-auth/providers/facebook";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import EmailProvider from "next-auth/providers/email";
 
-import { env } from "env";
 import { TFont, TTheme } from "@/server/db/enum-types";
 import { db } from "@/server/db/index";
 import * as schema from "@/server/db/schemas";
-import { User as DbUser } from "@/server/db/types";
-import { sendEmail } from "./emails";
-import LoginLink from "./emails/login";
+import { User as DbUser } from "@/types";
+import { env } from "env";
+import { sendEmail } from "./send";
+import LoginLink from "transactional/emails/login";
+import WelcomeEmail from "transactional/emails/welcome";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -52,6 +53,7 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/auth/login",
     verifyRequest: "/auth/verify",
+    signOut: "/auth/signout",
   },
   theme: {
     logo: "/icons/icon_x128.jpg",
@@ -78,7 +80,7 @@ export const authOptions: NextAuthOptions = {
     EmailProvider({
       server: `smtp://resend:${env.RESEND_API_KEY}@smtp.resend.com:465`,
       from: "cook@mixiecooking.com",
-      maxAge: 24 * 60 * 60, // How long email links are valid for (default 24h)
+      maxAge: 12 * 60 * 60, // How long email links are valid for (default 12h)
       async generateVerificationToken() {
         const digits = "0123456789";
         let verificationCode = "";
@@ -117,6 +119,21 @@ export const authOptions: NextAuthOptions = {
       };
 
       return session;
+    },
+    signIn: async ({ user, account, profile }) => {
+      const accountExits = await db.query.users.findFirst({
+        where: eq(schema.users.email, user.email!),
+      });
+
+      if (accountExits == undefined) {
+        await sendEmail({
+          email: user.email!,
+          subject: "Welcome to Mixie!",
+          react: WelcomeEmail({ email: user.email!, name: user.name! }),
+        });
+      }
+
+      return true;
     },
     jwt: async ({ token, account, user, trigger }) => {
       if (user) {
@@ -157,7 +174,9 @@ export function DrizzleAdapter(): Adapter {
           .join("+")}"&size=256&background=random`;
       }
 
-      await db.insert(users).values({ ...data, id });
+      const newUser = { ...data, id };
+
+      await db.insert(users).values(newUser);
 
       return await db
         .select()
@@ -166,14 +185,14 @@ export function DrizzleAdapter(): Adapter {
         .then((res) => res[0]);
     },
     async getUser(data) {
-      const thing =
+      const user =
         (await db
           .select()
           .from(users)
           .where(eq(users.id, data))
           .then((res) => res[0])) ?? null;
 
-      return thing;
+      return user;
     },
     async getUserByEmail(data) {
       const user =

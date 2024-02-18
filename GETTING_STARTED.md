@@ -10,19 +10,19 @@ First clone the repository and then cd into it
 Then install the dependencies
 
 ```bash
-    yarn
+    pnpm i
 ```
 
 Then start the all apps
 
 ```bash
-    yarn dev
+    pnpm dev
 ```
 
 start just the one you want
 
 ```bash
-    npm run dev --filter *app name*
+    pnpm run dev --filter *app name*
 ```
 
 ## Contributing

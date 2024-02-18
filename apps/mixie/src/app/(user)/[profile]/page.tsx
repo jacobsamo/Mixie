@@ -1,8 +1,9 @@
-import { SearchCard } from "@/components/elements/Cards";
-import { db } from "@/server/db/index";
-import { recipes } from "@/server/db/schemas";
+import { SearchCard } from "@/components/cards";
+import { getUsers } from "@/lib/services/data_fetching";
 import { constructMetadata } from "@/lib/utils/";
 import { getServerAuthSession } from "@/server/auth";
+import { db } from "@/server/db/index";
+import { recipes } from "@/server/db/schemas";
 import { and, eq } from "drizzle-orm";
 import { Heart, Pencil, ScrollText } from "lucide-react";
 import { Metadata } from "next";
@@ -10,24 +11,11 @@ import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 
-export const revalidate = 3600;
-
 interface ProfilePageProps {
   params: {
     profile: string;
   };
 }
-
-const getUsers = unstable_cache(
-  async () => {
-    const users = await db.query.users.findMany();
-    return users;
-  },
-  ["users"],
-  {
-    revalidate: 3600,
-  }
-);
 
 export async function generateMetadata({
   params,
@@ -36,14 +24,12 @@ export async function generateMetadata({
   const user = users?.find((user) => {
     user.id == params.profile;
   });
-  if (!user) {
-    return;
-  }
 
   return constructMetadata({
-    title: `${user.name} profile` || "",
-    description: undefined,
-    image: user.image || undefined,
+    title: `${user?.name}'s profile` || "",
+    url: `https://www.mixiecooking.com/${user?.id}`,
+    description: `${user?.name}'s profile` || "",
+    image: user?.image || undefined,
   });
 }
 
@@ -62,7 +48,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 
   if (user) {
     return (
-      <main className="h-full w-full">
+      <>
         <div className="m-auto mt-4 flex flex-col items-center justify-center rounded-xl bg-white p-1 shadow-main sm:w-full md:w-3/5 lg:h-80 dark:bg-grey dark:shadow-none">
           <Image
             src={user.image || "/images/placeholder.webp"}
@@ -107,7 +93,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             })}
           </ul>
         </div>
-      </main>
+      </>
     );
   }
 }

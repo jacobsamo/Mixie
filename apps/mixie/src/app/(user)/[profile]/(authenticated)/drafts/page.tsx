@@ -1,4 +1,5 @@
-import { SearchCard } from "@/components/elements/Cards";
+
+import { SearchCard } from "@/components/cards";
 import { db } from "@/server/db/index";
 import { recipes } from "@/server/db/schemas";
 import { eq } from "drizzle-orm";

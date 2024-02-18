@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
 import { ReadonlyURLSearchParams } from "next/navigation";
+import { twMerge } from "tailwind-merge";
 
 // export from other files
 export * from "./ingredients";
@@ -24,7 +24,7 @@ export function cn(...inputs: ClassValue[]) {
  * recipeId('Chicken Tikka Masala') // 'chicken-tikka-masala'
  */
 export function recipeId(title: string): string {
-  return title.replace(/\s/g, "-").toLowerCase();
+  return title.trim().replace(/\s/g, "-").toLowerCase();
 }
 
 /**
@@ -41,4 +41,11 @@ export const createUrl = (
   const queryString = `${paramsString.length ? "?" : ""}${paramsString}`;
 
   return `${pathname}${queryString}`;
+};
+
+export const createQueryString = (name, value) => {
+  const params = new URLSearchParams();
+  params.set(name, value);
+
+  return params.toString();
 };

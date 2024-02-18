@@ -5,13 +5,13 @@ import type { NextRequest } from "next/server";
 
 export const isApp = async (req: NextRequest) => {
   try {
-    const authorization = req.headers.get("authorization");
+    const Authorization = req.headers.get("Authorization");
 
-    if (!authorization) {
+    if (!Authorization) {
       return false;
     }
 
-    if (authorization == `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`) {
+    if (Authorization == `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`) {
       return true;
     }
   } catch (error) {

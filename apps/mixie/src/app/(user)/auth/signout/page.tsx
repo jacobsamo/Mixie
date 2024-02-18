@@ -16,7 +16,7 @@ const LoginPage = () => {
         />
         <h1 className="text-step--1">Signout of Mixie</h1>
       </div>
-      <Button aria-label="singout of mixie" onClick={() => signOut()}>
+      <Button aria-label="singout of mixie" onClick={() => signOut({callbackUrl: "/", redirect: true})}>
         Sign out
       </Button>
     </>

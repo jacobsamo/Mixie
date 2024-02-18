@@ -1,6 +1,6 @@
 export default function AboutPage() {
   return (
-    <main className="mx-auto my-0 h-full w-full max-w-[800px] p-10">
+    <div className="mx-auto my-0 h-full w-full max-w-[800px] p-10">
       <h1 className="mb-5 text-step1 font-bold">About Us</h1>
 
       <article>
@@ -57,6 +57,6 @@ export default function AboutPage() {
         memorable meals for themselves and their loved ones. Join us on Mixie
         and let's cook together!
       </p>
-    </main>
+    </div>
   );
 }

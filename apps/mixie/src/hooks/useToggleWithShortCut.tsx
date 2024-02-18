@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const useToggleWithShortcut = (
   setExternalOpen?: React.Dispatch<React.SetStateAction<boolean>>
