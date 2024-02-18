@@ -36,9 +36,9 @@ export const recipes = mysqlTable("recipes", {
   rating: tinyint("rating").default(0),
 
   // little extras for searching
-  dietary: json("dietary").$type<SelectValue[]>(),
-  allergens: json("allergens").$type<SelectValue[]>(),
-  mealTime: json("mealTime").$type<SelectValue[]>(),
+  dietary: json("dietary"),
+  allergens: json("allergens"),
+  mealTime: json("mealTime"),
   sweet_savoury: sweet_savoury.default("not_set"),
   difficulty_level: difficulty_level.default("not_set"),
   isPublic: boolean("isPublic").default(false).notNull(),

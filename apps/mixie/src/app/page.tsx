@@ -20,8 +20,10 @@ import {
 import { meal_times } from "@/lib/services/data";
 import { getRecipes } from "@/lib/services/data_fetching";
 import { Donut, EggFried, Salad, Sandwich, Soup } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { getServerAuthSession } from "@/server/auth";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export default async function Page() {
   const session = await getServerAuthSession();
@@ -85,7 +87,7 @@ export default async function Page() {
         })}
       </div>
 
-      <div className="flex flex-wrap items-start justify-center gap-1 sm:gap-2 mt-6 ">
+      <div className="mt-6 flex flex-wrap items-start justify-center gap-1 sm:gap-2 ">
         {latestRecipes.splice(0, 12).map((recipe) => (
           <CardRectangleSmall key={recipe.uid} recipe={recipe} />
         ))}
@@ -98,7 +100,12 @@ export default async function Page() {
           flavors together!
         </p>
         {!session ? (
-          <Button className="mt-3 w-11/12 sm:w-2/5">Join now</Button>
+          <Link
+            className="mt-3 w-11/12 sm:w-2/5 bg-yellow inline-flex items-center justify-center text-step--2 rounded-md py-2 px-4 border border-transparent shadow-sm text-base font-medium text-black hover:bg-yellow/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow/90 transition-colors duration-200 ease-in-out" 
+            href={"/auth/login"}
+          >
+            Join now
+          </Link>
         ) : (
           <CreateRecipeTrigger className="mt-3 w-11/12 sm:w-2/5" />
         )}

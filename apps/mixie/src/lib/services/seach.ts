@@ -27,13 +27,13 @@ export function searchRecipes({ query, filters, recipes }: SearchRecipesProps) {
   const filteredResults = unfilteredResults.filter((recipe) => {
     if (
       filters?.mealTime &&
-      filters.mealTime !== "all" &&
-      recipe.mealTime !== filters.mealTime
+      filters.mealTime !== (recipe.mealTime?.values || "")
     )
       return false;
     if (filters?.sweetSavory && recipe.sweet_savoury !== filters.sweetSavory)
       return false;
-    if (filters?.dietary && recipe.dietary !== filters.dietary) return false;
+    if (filters?.dietary && filters.dietary !== (recipe.dietary?.values || ""))
+      return false;
     return true;
   });
 

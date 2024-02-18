@@ -254,7 +254,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
                   >
                     Meal Time
                   </label>
-                  <Error error={errors?.mealTime ?? null} />
+                  <Error error={errors?.mealTime?.message ?? null} />
                   <SelectComponent
                     options={meal_times}
                     createAble

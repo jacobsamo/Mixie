@@ -31,11 +31,9 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <main className="h-fit min-h-full w-full">
-            <Navbar />
-            {children}
-            <Footer />
-          </main>
+          <Navbar />
+          <main className="h-fit min-h-full w-full">{children}</main>
+          <Footer />
           <Toaster
             position="bottom-right"
             toastOptions={{

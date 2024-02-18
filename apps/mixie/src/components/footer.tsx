@@ -19,7 +19,7 @@ const Footer = () => {
         <div className="flex flex-col items-center gap-4 ">
           <div className="flex flex-row items-start  gap-4">
             <Link href="/">Home</Link>
-            <Link href="/recipes">Recipe</Link>
+            <Link href="/recipes">Recipes</Link>
           </div>
           <div className="flex flex-row items-start  gap-4">
             <Link href="/info/privacy_policy">Privacy Policy</Link>
@@ -27,7 +27,7 @@ const Footer = () => {
             <Link href="/info/about">About Us</Link>
           </div>
         </div>
-        <p className="text-step--4">© 2023 Mixie. All rights reserved.</p>
+        <p className="text-step--4">© 2023 - 2024 Mixie. All rights reserved.</p>
       </footer>
     </>
   );

@@ -105,6 +105,9 @@ export const recipeSchema = createInsertSchema(recipes, {
     })
     .nullish(),
   createdAt: z.date(),
+  dietary: selectValue.array().nullable(),
+  allergens: selectValue.array().nullable(),
+  mealTime: selectValue.array().nullable(),
 });
 
 export const ratingsSchema = createInsertSchema(ratings);

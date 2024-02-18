@@ -24,7 +24,7 @@ export default async function RecipeViewPage({
   const { mealTime: collection } = searchParams!;
   const mealTime = meal_times.find((meal) => meal.value === collection);
   const mealTimeRecipes = recipes.filter((recipe) => {
-    return recipe.mealTime?.value == mealTime?.value;
+    return recipe.mealTime?.values == mealTime?.value;
   });
 
   return (
