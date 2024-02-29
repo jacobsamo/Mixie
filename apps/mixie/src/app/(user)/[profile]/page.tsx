@@ -53,6 +53,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
           <Image
             src={user.image || "/images/placeholder.webp"}
             alt={user.name || "default-profile"}
+            unoptimized
             width={100}
             height={100}
             priority

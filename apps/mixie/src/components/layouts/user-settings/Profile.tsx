@@ -32,6 +32,7 @@ const Profile = () => {
                 <Image
                   src={getValues("image") || ""}
                   alt={getValues("userName") || "Profile picture"}
+                  unoptimized
                   width={100}
                   height={100}
                   priority
