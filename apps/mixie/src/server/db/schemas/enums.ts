@@ -1,6 +1,9 @@
-import { mysqlEnum } from "drizzle-orm/mysql-core";
+import {
 
-export const unit = mysqlEnum("unit", [
+  pgEnum
+} from "drizzle-orm/pg-core";
+
+export const unit = pgEnum("unit", [
   "not_set",
   "grams",
   "kg",
@@ -19,7 +22,7 @@ export const unit = mysqlEnum("unit", [
   "bottle",
 ]);
 
-export const amount = mysqlEnum("amount", [
+export const amount = pgEnum("amount", [
   "not_set",
   "1/8",
   "1/2",
@@ -29,21 +32,21 @@ export const amount = mysqlEnum("amount", [
   "3/4",
 ]);
 
-export const difficulty_level = mysqlEnum("difficulty_level", [
+export const difficulty_level = pgEnum("difficulty_level", [
   "not_set",
   "easy",
   "medium",
   "hard",
 ]);
 
-export const sweet_savoury = mysqlEnum("sweet_savoury", [
+export const sweet_savoury = pgEnum("sweet_savoury", [
   "not_set",
   "sweet",
   "savoury",
   "both",
 ]);
 
-export const dietary = mysqlEnum("dietary", [
+export const dietary = pgEnum("dietary", [
   "none",
   "vegetarian",
   "vegan",
@@ -54,7 +57,7 @@ export const dietary = mysqlEnum("dietary", [
   "egg_free",
 ]);
 
-export const mealTime = mysqlEnum("mealTime", [
+export const mealTime = pgEnum("mealTime", [
   "not_set",
   "breakfast",
   "lunch",
@@ -65,15 +68,15 @@ export const mealTime = mysqlEnum("mealTime", [
 
 // auth
 
-export const theme = mysqlEnum("theme", ["system", "light", "dark"]);
-export const fonts = mysqlEnum("fonts", [
+export const theme = pgEnum("theme", ["system", "light", "dark"]);
+export const fonts = pgEnum("fonts", [
   "default",
   "open_dyslexic",
   "monospace",
   "serif",
   "sans_serif",
 ]);
-export const diet = mysqlEnum("diet", [
+export const diet = pgEnum("diet", [
   "none",
   "vegetarian",
   "vegan",
@@ -84,7 +87,7 @@ export const diet = mysqlEnum("diet", [
   "egg_free",
 ]);
 
-export const allergens = mysqlEnum("allergens", [
+export const allergens = pgEnum("allergens", [
   "none",
   "gluten",
   "dairy",
@@ -100,7 +103,7 @@ export const allergens = mysqlEnum("allergens", [
   "molluscs",
 ]);
 
-export const loveCooking = mysqlEnum("loveCooking", [
+export const loveCooking = pgEnum("loveCooking", [
   "not_set",
   "hate_it",
   "dislike_it",
@@ -109,7 +112,7 @@ export const loveCooking = mysqlEnum("loveCooking", [
   "love_it",
 ]);
 
-export const averageTimeToCook = mysqlEnum("averageTimeToCook", [
+export const averageTimeToCook = pgEnum("averageTimeToCook", [
   "not_set",
   "less_than_15",
   "15_to_30",
