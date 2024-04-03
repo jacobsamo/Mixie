@@ -1,7 +1,7 @@
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
-export const env = createEnv({
+const env = createEnv({
   server: {
     DATABASE_URL: z.string().min(1),
     DATABASE_HOST: z.string().min(1),
@@ -72,3 +72,5 @@ export const env = createEnv({
     TWITTER_API_SECRET: process.env.TWITTER_API_SECRET,
   },
 });
+
+export default env;
