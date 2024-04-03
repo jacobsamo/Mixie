@@ -8,12 +8,11 @@ import {
   pgEnum,
   char,
   json,
-  tinyint,
+  smallint,
   boolean
 } from "drizzle-orm/pg-core";
 // imoport
 import { ImageAttributes, Ingredient, SelectValue, Step } from "@/types";
-import { users } from "./auth";
 import { difficulty_level, sweet_savoury } from "./enums";
 import { recipe_versions } from "./versions";
 
@@ -33,15 +32,15 @@ export const recipes = pgTable("recipes", {
   total: varchar("total", { length: 191 }),
   prep: varchar("prep", { length: 191 }),
   cook: varchar("cook", { length: 191 }),
-  serves: tinyint("serves"),
-  rating: tinyint("rating").default(0),
+  serves: smallint("serves"),
+  rating: smallint("rating").default(0),
 
   // little extras for searching
   dietary: json("dietary"),
   allergens: json("allergens"),
   mealTime: json("mealTime"),
-  sweet_savoury: sweet_savoury.default("not_set"),
-  difficulty_level: difficulty_level.default("not_set"),
+  sweet_savoury: sweet_savoury('sweet_savoury').default("not_set"),
+  difficulty_level: difficulty_level('difficulty_level').default("not_set"),
   isPublic: boolean("isPublic").default(false).notNull(),
   keywords: json("keywords").$type<{ value: string }[]>(),
   ingredientsList: json("ingredientsList").$type<string[]>(),
@@ -59,17 +58,13 @@ export const recipesRelation = relations(recipes, ({ one, many }) => ({
 export const ratings = pgTable("ratings", {
   recipeId: char("recipeId", { length: 36 }).primaryKey().notNull(),
   userId: varchar("userId", { length: 191 }).notNull(),
-  rating: tinyint("rating").notNull().default(0),
+  rating: smallint("rating").notNull().default(0),
 });
 
 export const ratingsRelation = relations(ratings, ({ one }) => ({
   recipe: one(recipes, {
     fields: [ratings.recipeId],
     references: [recipes.uid],
-  }),
-  user: one(users, {
-    fields: [ratings.userId],
-    references: [users.id],
   }),
 }));
 
@@ -86,10 +81,6 @@ export const bookmarksRelation = relations(bookmarks, ({ one }) => ({
     fields: [bookmarks.recipeId],
     references: [recipes.uid],
   }),
-  user: one(users, {
-    fields: [bookmarks.userId],
-    references: [users.id],
-  }),
 }));
 
 export const collections = pgTable("collections", {
@@ -100,9 +91,4 @@ export const collections = pgTable("collections", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
-export const collectionsRelation = relations(collections, ({ one, many }) => ({
-  user: one(users, {
-    fields: [collections.userId],
-    references: [users.id],
-  }),
-}));
+

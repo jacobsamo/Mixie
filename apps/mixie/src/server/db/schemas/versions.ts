@@ -7,10 +7,9 @@ import {
   varchar,
   pgEnum,
   char,
-  json
+  json,
 } from "drizzle-orm/pg-core";
 import type { Recipe } from "@/types";
-import { users } from "./auth";
 import { recipes } from "./recipe";
 
 export const recipe_versions = pgTable("recipe_versions", {
@@ -18,10 +17,7 @@ export const recipe_versions = pgTable("recipe_versions", {
   recipeId: char("recipeId", { length: 36 }).notNull(),
   changes: json("changes").$type<Partial<Recipe>>().notNull(),
   version: doublePrecision("version").notNull().default(1.1),
-  updatedAt: timestamp("lastUpdated")
-    .default(sql`CURRENT_TIMESTAMP`)
-    .onUpdateNow()
-    .notNull(),
+  updatedAt: timestamp("lastUpdated").defaultNow().notNull(),
   updatedBy: varchar("lastUpdatedBy", { length: 191 }).notNull(),
 });
 
@@ -31,10 +27,6 @@ export const recipes_versionsRelation = relations(
     recipe: one(recipes, {
       fields: [recipe_versions.recipeId],
       references: [recipes.uid],
-    }),
-    user: one(users, {
-      fields: [recipe_versions.updatedBy],
-      references: [users.id],
     }),
   })
 );

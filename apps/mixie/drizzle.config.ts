@@ -4,9 +4,7 @@ dotenv.config();
 
 export default {
   schema: "./src/server/db/schemas/",
-  out: "./src/server/db/migrations",
-  driver: "mysql2",
-  dbCredentials: {
-    uri: process.env.DATABASE_URL || "",
-  },
+  out: "./supabase/migrations",
+  driver: "pg",
+  dbCredentials: { connectionString: process.env.SUPABASE_URI! },
 } satisfies Config;
