@@ -69,6 +69,8 @@ DO $$ BEGIN
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
+
+
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "bookmarks" (
 	"uid" char(36) PRIMARY KEY NOT NULL,
@@ -85,12 +87,14 @@ CREATE TABLE IF NOT EXISTS "collections" (
 	"userId" varchar(191) NOT NULL,
 	"createdAt" timestamp DEFAULT now() NOT NULL
 );
+
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "ratings" (
 	"recipeId" char(36) PRIMARY KEY NOT NULL,
 	"userId" varchar(191) NOT NULL,
 	"rating" smallint DEFAULT 0 NOT NULL
 );
+
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "recipes" (
 	"uid" char(36) PRIMARY KEY NOT NULL,

@@ -4,8 +4,8 @@ import {
   splitTime,
 } from "@/lib/services/recipeJsonLDParsing";
 import { recipeId } from "@/lib/utils";
-import { getServerAuthSession } from "@/server/auth";
-import { db } from "@/server/db/index";
+import { getUser } from "@/lib/utils/getUser";
+import db from "@/server/db/index";
 import { recipes } from "@/server/db/schemas";
 import { NewRecipe } from "@/types";
 import { Recipe, createRecipeSchema } from "@/types";
@@ -16,7 +16,7 @@ import * as z from "zod";
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await getServerAuthSession();
+    const session = await getUser();
 
     if (!session) {
       return NextResponse.json("Unauthorized", { status: 401 });
@@ -49,16 +49,17 @@ export async function POST(req: NextRequest) {
         // split a mixie link to get the recipe id this id would be after /recipes/<recipeId> a recipe link might look like this: https://mixiecooking.com/recipes/5f9b1b5e-5b1a-4b9e-9b9e-9b9e9b9e9b9e
         const recipeId = link.split("/").pop();
         if (!recipeId) return NextResponse.json(null, { status: 404 });
-        const findRecipe = (await db.query.recipes.findFirst({
-          where: or(eq(recipes.id, recipeId), eq(recipes.uid, recipeId)),
-        })) as Recipe;
+        const findRecipe = await db
+          .select()
+          .from(recipes)
+          .where(or(eq(recipes.id, recipeId), eq(recipes.uid, recipeId)));
 
         if (!findRecipe) {
           return NextResponse.json(null, { status: 404 });
         }
 
         newRecipe = {
-          ...findRecipe,
+          ...(findRecipe[0] as Recipe),
           uid: uid,
         };
       }

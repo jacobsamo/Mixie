@@ -1,6 +1,6 @@
 import { isApp } from "@/lib/services/apiMiddleware";
-import { getServerAuthSession } from "@/server/auth";
-import { db } from "@/server/db/index";
+import { getUser } from "@/lib/utils/getUser";
+import db from "@/server/db/index";
 import { collections } from "@/server/db/schemas";
 import { Collection, collectionSchema } from "@/types";
 import { eq, or } from "drizzle-orm";
@@ -14,11 +14,11 @@ export async function POST(
 ) {
   try {
     const app = await isApp(req);
-    const session = await getServerAuthSession();
+    const user = await getUser();
 
-    const requestedUserData = session?.user.id === params.userId;
+    const requestedUserData = user ? user.id === params.userId : null;
 
-    if ((!app || !session) && !requestedUserData) {
+    if ((!app || !user) && !requestedUserData) {
       return NextResponse.json("Unauthorized", { status: 401 });
     }
 
@@ -26,13 +26,12 @@ export async function POST(
     const collection = collectionSchema.parse(json);
 
     // set global variables
-    const { user } = session;
     const uid = uuidv4();
 
     const newCollection: Collection = {
       ...collection,
       uid: uid,
-      userId: user.id,
+      userId: user!.id,
     };
 
     await db.insert(collections).values(newCollection);

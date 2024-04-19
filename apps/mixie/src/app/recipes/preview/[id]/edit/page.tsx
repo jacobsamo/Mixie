@@ -1,7 +1,7 @@
 import RecipeForm from "@/components/recipe-form/recipe-form";
-import { db } from "@/server/db/index";
-import { recipes as recipeSchema } from "@/server/db/schemas";
-import { getServerAuthSession } from "@/server/auth";
+import db from "@/server/db/index";
+import { recipes } from "@/server/db/schemas";
+import { getUser } from "@/lib/utils/getUser";
 import { and, eq } from "drizzle-orm";
 import { notFound, redirect } from "next/navigation";
 
@@ -12,21 +12,21 @@ interface EditPageProps {
 }
 
 export default async function EditPage({ params }: EditPageProps) {
-  const session = await getServerAuthSession();
+  const session = await getUser();
 
   if (!session) {
     return redirect("/auth/login");
   }
 
-  const recipe = await db.query.recipes.findFirst({
-    where: and(
-      eq(recipeSchema.createdBy, session.user.id),
-      eq(recipeSchema.uid, params.id)
-    ),
-  });
+  const foundRecipes = await db
+    .select()
+    .from(recipes)
+    .where(
+      and(eq(recipes.createdBy, session.user.id), eq(recipes.uid, params.id))
+    );
 
   // return <RecipeForm recipe={mockRecipe} />;
-  if (recipe) return <RecipeForm recipe={recipe} />;
+  if (foundRecipes[0]) return <RecipeForm recipe={foundRecipes[0]} />;
 
   return notFound();
 }

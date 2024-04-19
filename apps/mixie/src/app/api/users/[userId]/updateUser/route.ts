@@ -1,7 +1,6 @@
 import { isApp } from "@/lib/services/apiMiddleware";
-import { getServerAuthSession } from "@/server/auth";
-import { db } from "@/server/db/index";
-import { users } from "@/server/db/schemas";
+import { getUser } from "@/lib/utils/getUser";
+import db from "@/server/db/index";
 import { userSchema } from "@/types/zodSchemas";
 import { eq } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
@@ -13,11 +12,12 @@ export async function PUT(
 ) {
   try {
     const app = await isApp(req);
-    const session = await getServerAuthSession();
+    const user = await getUser();
+  
 
-    const requestedUserData = session?.user.id === params.userId;
+    const requestedUserData = user ? user.id === params.userId : null;
 
-    if ((!app || !session) && !requestedUserData) {
+    if ((!app || !user) && !requestedUserData) {
       return NextResponse.json("Unauthorized", { status: 401 });
     }
 
@@ -28,6 +28,7 @@ export async function PUT(
     const newUser = userSchema.parse(json);
 
     await db.update(users).set(newUser).where(eq(users.id, params.userId));
+    await 
 
     console.log("User updated: ", newUser);
 

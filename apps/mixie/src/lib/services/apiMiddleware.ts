@@ -1,6 +1,6 @@
 import { env } from "env";
 import { authOptions } from "@/server/auth";
-import { getServerAuthSession } from "@/server/auth";
+import { getUser } from "@/lib/utils/getUser";
 import type { NextRequest } from "next/server";
 
 export const isApp = async (req: NextRequest) => {
@@ -22,7 +22,7 @@ export const isApp = async (req: NextRequest) => {
 };
 
 export const isAuthenticated = async (req: NextRequest) => {
-  const session = await getServerAuthSession();
+  const session = await getUser();
 
   if (!session) {
     return false;

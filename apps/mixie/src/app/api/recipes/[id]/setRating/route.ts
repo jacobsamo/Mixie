@@ -1,5 +1,5 @@
-import { getServerAuthSession } from "@/server/auth";
-import { db } from "@/server/db/index";
+import { getUser } from "@/lib/utils/getUser";
+import db from "@/server/db/index";
 import { ratings } from "@/server/db/schemas";
 import { ratingsSchema } from "@/types/zodSchemas";
 import { NextResponse, type NextRequest } from "next/server";
@@ -7,7 +7,7 @@ import { z } from "zod";
 
 export async function POST(req: NextRequest, params: { id: string }) {
   try {
-    const session = await getServerAuthSession();
+    const session = await getUser();
 
     if (!session) {
       return NextResponse.json("Unauthorized", { status: 401 });

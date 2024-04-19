@@ -1,6 +1,6 @@
 import { recipeId } from "@/lib/utils";
-import { getServerAuthSession } from "@/server/auth";
-import { db } from "@/server/db/index";
+import { getUser } from "@/lib/utils/getUser";
+import db from "@/server/db/index";
 import { recipes } from "@/server/db/schemas";
 import { NewRecipe } from "@/types";
 import { recipeFormSchema } from "@/types/zodSchemas";
@@ -10,7 +10,7 @@ import * as z from "zod";
 
 export async function PUT(req: NextRequest) {
   try {
-    const session = await getServerAuthSession();
+    const session = await getUser();
 
     if (!session) {
       return NextResponse.json("Unauthorized", { status: 401 });

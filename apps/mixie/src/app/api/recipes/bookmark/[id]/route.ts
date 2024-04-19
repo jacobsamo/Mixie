@@ -1,8 +1,8 @@
 import { Bookmark } from "@/types";
-import { db } from "@/server/db/index";
+import db from "@/server/db/index";
 import { bookmarks } from "@/server/db/schemas";
 import { bookmarkSchema } from "@/types/zodSchemas";
-import { getServerAuthSession } from "@/server/auth";
+import { getUser } from "@/lib/utils/getUser";
 import { NextResponse, type NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
@@ -13,7 +13,7 @@ export async function POST(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getServerAuthSession();
+    const session = await getUser();
 
     if (!session) {
       return NextResponse.json("Unauthorized", { status: 401 });
@@ -29,9 +29,10 @@ export async function POST(
       collections: json,
     };
 
-    const findBookmarks = await db.query.bookmarks.findMany({
-      where: eq(bookmarks.userId, session.user.id),
-    });
+    const findBookmarks = await db
+      .select()
+      .from(bookmarks)
+      .where(eq(bookmarks.userId, session.user.id));
 
     const bookmarkExists = findBookmarks.find(
       (bookmark) => bookmark.recipeId === params.id
@@ -49,7 +50,7 @@ export async function POST(
 
     return NextResponse.json({
       message: `Recipe ${newBookmark.recipeId} has been bookmarked`,
-      bookmarkedRecipe: newBookmark
+      bookmarkedRecipe: newBookmark,
     });
   } catch (error) {
     console.error("Error on /recipes/bookmark/[id]", error);

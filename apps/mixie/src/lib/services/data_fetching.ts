@@ -1,15 +1,13 @@
-import { db } from "@/server/db";
+import  db  from "@/server/db";
 import { recipes } from "@/server/db/schemas";
+import { supabaseServer } from "@/server/db/supabase";
 import { Recipe } from "@/types";
 import { asc, eq } from "drizzle-orm";
 import { unstable_cache } from "next/cache";
 
 export const getRecipes = unstable_cache(
   async () => {
-    const latestRecipes = await db.query.recipes.findMany({
-      where: eq(recipes.isPublic, true),
-      orderBy: asc(recipes.createdAt),
-    });
+    const latestRecipes = await db.select().from(recipes).where(eq(recipes.isPublic, true)).orderBy(asc(recipes.createdAt)) 
     return latestRecipes as Recipe[];
   },
   ["recipes"],
@@ -21,7 +19,9 @@ export const getRecipes = unstable_cache(
 
 export const getUsers = unstable_cache(
   async () => {
-    const users = await db.query.users.findMany();
+    const {data: {
+      users
+    }} = await supabaseServer.auth.admin.listUsers()
     return users;
   },
   ["users"],

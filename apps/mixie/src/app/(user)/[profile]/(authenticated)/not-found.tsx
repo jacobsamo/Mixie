@@ -1,8 +1,8 @@
-import { getServerAuthSession } from "@/server/auth";
+import { getUser } from "@/lib/utils/getUser";
 import Link from "next/link";
 
 export default async function NotFoundUser() {
-  const session = await getServerAuthSession();
+  const session = await getUser();
 
   return (
     <>

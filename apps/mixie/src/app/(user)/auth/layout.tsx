@@ -1,4 +1,4 @@
-import { getServerAuthSession } from "@/server/auth";
+import { getUser } from "@/lib/utils/getUser";
 import { useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 import React from "react";

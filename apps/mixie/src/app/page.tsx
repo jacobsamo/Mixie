@@ -1,12 +1,9 @@
-import {
-  CardRectangle,
-  CardRectangleSmall
-} from "@/components/cards";
+import { CardRectangle, CardRectangleSmall } from "@/components/cards";
 import CollectionCard from "@/components/collection-card";
 import LandingText from "@/components/landing-page-text";
 import {
   CreateRecipeTrigger,
-  SearchBarTrigger
+  SearchBarTrigger,
 } from "@/components/open-dialogs";
 import {
   Carousel,
@@ -17,12 +14,12 @@ import {
 } from "@/components/ui/carousel";
 import { meal_times } from "@/lib/services/data";
 import { getRecipes } from "@/lib/services/data_fetching";
-import { getServerAuthSession } from "@/server/auth";
+import { getUser } from "@/lib/utils/getUser";
 import { Donut, EggFried, Salad, Sandwich, Soup } from "lucide-react";
 import Link from "next/link";
 
 export default async function Page() {
-  const session = await getServerAuthSession();
+  const user = await getUser();
   const latestRecipes = await getRecipes();
   const carouselRecipes = latestRecipes.slice(0, 9);
 
@@ -96,7 +93,7 @@ export default async function Page() {
           flavors together!
         </p>
         <div className="flex flex-col items-center gap-2">
-          {!session ? (
+          {!user ? (
             <Link
               className="text-base mt-3 inline-flex w-11/12 items-center justify-center rounded-md border border-transparent bg-yellow px-4 py-2 text-step--2 font-medium text-black shadow-sm transition-colors duration-200 ease-in-out hover:bg-yellow/90 focus:outline-none focus:ring-2 focus:ring-yellow/90 focus:ring-offset-2 sm:w-2/5"
               href={"/auth/login"}

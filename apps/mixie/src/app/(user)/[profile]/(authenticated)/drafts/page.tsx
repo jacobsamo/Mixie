@@ -1,6 +1,5 @@
-
 import { SearchCard } from "@/components/cards";
-import { db } from "@/server/db/index";
+import db from "@/server/db/index";
 import { recipes } from "@/server/db/schemas";
 import { eq } from "drizzle-orm";
 
@@ -11,9 +10,7 @@ interface DraftsPageProps {
 }
 
 export default async function DraftsPage({ params }: DraftsPageProps) {
-  const gotRecipes = await db.query.recipes.findMany({
-    where: eq(recipes.createdBy, params.profile),
-  });
+  const gotRecipes = await db.select().from(recipes).where(eq(recipes.createdBy, params.profile)) 
 
   return (
     <div className="mt-4">

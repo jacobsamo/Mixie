@@ -1,5 +1,5 @@
-import { getServerAuthSession } from "@/server/auth";
-import { db } from "@/server/db/index";
+import { getUser } from "@/lib/utils/getUser";
+import db from "@/server/db/index";
 import { bookmarks } from "@/server/db/schemas";
 import { Bookmark } from "@/types";
 import { eq } from "drizzle-orm";
@@ -11,7 +11,7 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getServerAuthSession();
+    const session = await getUser();
 
     if (!session) {
       return NextResponse.json("Unauthorized", { status: 401 });
