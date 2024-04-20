@@ -14,10 +14,11 @@
     "clean:turbo": "rm -rf .turbo",
     "clean:node_modules": "rm -rf node_modules/",
     "clean:all": "pnpm clean:build && pnpm clean:node && pnpm clean:turbo",
-    "db:push": "drizzle-kit push:pg --config=drizzle.config.ts",
-    "db:migrate": "drizzle-kit generate:pg --config=drizzle.config.ts",
-    "db:studio": "drizzle-kit studio --verbose --config=drizzle.config.ts",
-    "db:pull": "drizzle-kit introspect:pg --config=drizzle.config.ts"
+    "db:types": "supabase gen types typescript --project-id dftoidpracavvgvcbsue > database.types.ts",
+    "db:push": "supabase db push",
+    "db:pull": "supabase db pull",
+    "db:start": "supabase start -x postgres-meta,realtime,studio",
+    "db:stop": "supabase stop"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
