@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { createClient } from "@/server/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
@@ -27,20 +28,26 @@ const LoginPage = () => {
     resolver: zodResolver(emailForm),
   });
   const router = useRouter();
+  const supabase = createClient();
 
   const onSubmit: SubmitHandler<z.infer<typeof emailForm>> = async (data) => {
-    signIn("email", { email: data.email, callbackUrl: "/", redirect: false });
+    await supabase.auth.signInWithOtp({
+      email: data.email,
+      options: {
+        // set this to false if you do not want the user to be automatically signed up
+        shouldCreateUser: false,
+      },
+    });
+
     router.push(
       "/auth/verify?" + new URLSearchParams({ email: data.email }).toString()
     );
   };
 
-  const signInWithGithub = async () => {
-    signIn("github", { callbackUrl: "/" });
-  };
-
   const signInWithGoogle = async () => {
-    signIn("google", { callbackUrl: "/" });
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+    })
   };
 
   return (
@@ -89,7 +96,7 @@ const LoginPage = () => {
         >
           Sign in with Google
         </Button>
-        <Button
+        {/* <Button
           LeadingIcon={
             <svg
               fill="#ffffff"
@@ -116,7 +123,7 @@ const LoginPage = () => {
           onClick={() => signInWithGithub()}
         >
           <p className="text-white">Sign in with Github</p>
-        </Button>
+        </Button> */}
       </div>
 
       <span className="my-2 mb-4 h-[0.125rem] w-3/4 rounded-md bg-grey dark:bg-white"></span>

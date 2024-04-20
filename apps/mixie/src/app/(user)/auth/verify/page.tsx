@@ -3,8 +3,9 @@ import { env } from "env";
 import OtpInput from "@/components/otp-Input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { createClient } from "@/server/supabase/client";
 
 interface CodeFormProps {
   code: string;
@@ -12,12 +13,32 @@ interface CodeFormProps {
 
 const VerificationPage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
   const { control, handleSubmit } = useForm<CodeFormProps>();
+  const supabase = createClient();
+
+  if (!email) router.push("/auth/login");
 
   const onSubmit: SubmitHandler<CodeFormProps> = async (data) => {
-    router.push(
-      `/api/auth/callback/email?callbackUrl=${env.NEXT_PUBLIC_APP_URL}&token=${data.code}&email=jacob35422%40gmail.com`
-    );
+    const {
+      data: { session },
+      error,
+    } = await supabase.auth.verifyOtp({
+      email: email!,
+      token: data.code,
+      type: "email",
+    });
+  };
+
+  const resendOtp = async () => {
+    const { data, error } = await supabase.auth.resend({
+      type: "signup",
+      email: email!,
+      // options: {
+      //   emailRedirectTo: "https://example.com/welcome",
+      // },
+    });
   };
 
   return (

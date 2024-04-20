@@ -1,9 +1,18 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { signOut } from "next-auth/react";
+import { createClient } from "@/server/supabase/client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
+  const supabase = createClient();
+  const router = useRouter();
+
+  const signOut = () => {
+    supabase.auth.signOut();
+    router.push("/");
+  };
+
   return (
     <>
       <div className="flex flex-col items-center">
@@ -16,7 +25,7 @@ const LoginPage = () => {
         />
         <h1 className="text-step--1">Signout of Mixie</h1>
       </div>
-      <Button aria-label="singout of mixie" onClick={() => signOut({callbackUrl: "/", redirect: true})}>
+      <Button aria-label="singout of mixie" onClick={() => signOut()}>
         Sign out
       </Button>
     </>
