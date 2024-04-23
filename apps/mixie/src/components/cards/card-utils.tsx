@@ -14,7 +14,13 @@ const BookmarkRecipeDialog = dynamic(
 
 export type CardRecipe = Pick<
   Recipe,
-  "uid" | "id" | "title" | "imageUrl" | "imageAttributes" | "total" | "keywords"
+  | "recipe_id"
+  | "id"
+  | "title"
+  | "image_url"
+  | "image_attributes"
+  | "total_time"
+  | "keywords"
 >;
 
 export interface CardProps {

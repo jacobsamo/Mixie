@@ -19,7 +19,6 @@ import FeedbackDialog from "./modals/feedback-modal";
 import { CreateRecipeTrigger, FeedbackButton } from "./open-dialogs";
 import { userDropDownOpen } from "./providers/state-provider";
 
-
 const UserProfile = () => {
   const user = useUser();
   const [open, setOpen] = useAtom(userDropDownOpen);
@@ -28,7 +27,7 @@ const UserProfile = () => {
     return (
       <Link
         onClick={() => setOpen}
-        href={"/api/auth/signin"}
+        href={"/auth/login"}
         className="rounded-md bg-yellow p-1 px-2 font-semibold text-black"
       >
         Login

@@ -159,6 +159,9 @@ importers:
       fuzzball:
         specifier: ^2.1.2
         version: 2.1.2
+      input-otp:
+        specifier: ^1.2.4
+        version: 1.2.4(react-dom@18.2.0)(react@18.2.0)
       jose:
         specifier: ^5.2.3
         version: 5.2.3
@@ -8159,6 +8162,16 @@ packages:
 
   /ini@1.3.8:
     resolution: {integrity: sha512-JV/yugV2uzW5iMRSiZAyDtQd+nxtUnjeLt0acNdw98kKLrvuRVyB80tsREOE7yvGVgalhZ6RNXCmEHkUKBKxew==}
+    dev: false
+
+  /input-otp@1.2.4(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-md6rhmD+zmMnUh5crQNSQxq3keBRYvE3odbr4Qb9g2NWzQv9azi+t1a3X4TBTbh98fsGHgEEJlzbe1q860uGCA==}
+    peerDependencies:
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /inquirer@7.3.3:

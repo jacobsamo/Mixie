@@ -21,7 +21,7 @@ import Link from "next/link";
 export default async function Page() {
   const user = await getUser();
   const latestRecipes = await getRecipes();
-  const carouselRecipes = latestRecipes.slice(0, 9);
+  const carouselRecipes = latestRecipes && latestRecipes.slice(0, 9);
 
   return (
     <>
@@ -41,8 +41,8 @@ export default async function Page() {
           autoplay={true}
         >
           <CarouselContent>
-            {carouselRecipes.splice(0, 9).map((recipe) => (
-              <CarouselItem key={recipe.uid}>
+            {carouselRecipes && carouselRecipes.splice(0, 9).map((recipe) => (
+              <CarouselItem key={recipe.recipe_id}>
                 <CardRectangle key={recipe.id} recipe={recipe} />
               </CarouselItem>
             ))}
@@ -81,8 +81,8 @@ export default async function Page() {
       </div>
 
       <div className="mt-6 flex flex-wrap items-start justify-center gap-1 sm:gap-2 ">
-        {latestRecipes.splice(0, 12).map((recipe) => (
-          <CardRectangleSmall key={recipe.uid} recipe={recipe} />
+        {latestRecipes && latestRecipes.splice(0, 12).map((recipe) => (
+          <CardRectangleSmall key={recipe.recipe_id} recipe={recipe} />
         ))}
       </div>
 

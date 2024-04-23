@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { amount, difficulty_level, sweet_savoury, unit } from "./enums";
+import { meal_times } from "@/lib/services/data";
 
 const selectValue = z.object({
   value: z.string(),
@@ -109,32 +110,32 @@ export const recipeSchema = recipes.extend({
   steps: stepSchema.array().optional(),
   ingredients: ingredientSchema.array().optional(),
   ingredientsList: z.string().array().nullish(),
-  imageUrl: z
+  image_url: z
     .string({
       required_error: "An image must be present when a recipe is public",
     })
     .url({ message: "Must be a valid url" })
     .nullish(),
-  imageAttributes: imageAttributesSchema.nullish(),
+    image_attributes: imageAttributesSchema.nullish(),
   keywords: z.object({ value: z.string() }).array().nullish(),
-  prep: z
+  prep_time: z
     .string({ required_error: "Prep time is required for public recipes" })
     .regex(/^(\d{1,2}[hms]\s?)+$/i, {
       message:
         "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
     })
     .nullish(),
-  cook: z
+  cook_time: z
     .string({ required_error: "Cook time is required for public recipes" })
     .regex(/^(\d{1,2}[hms]\s?)+$/i, {
       message:
         "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
     })
     .nullish(),
-  createdAt: z.date(),
+  created_at: z.date(),
   dietary: selectValue.array().nullable(),
   allergens: selectValue.array().nullable(),
-  mealTime: selectValue.array().nullable(),
+  meal_times: selectValue.array().nullable(),
 });
 
 // extend the recipe schema to include the info and ingredients
@@ -166,7 +167,7 @@ export const recipeFormSchema = recipeSchema.superRefine((values, ctx) => {
       });
     }
 
-    if (!values.mealTime) {
+    if (!values.meal_times) {
       ctx.addIssue({
         code: "custom",
         message: "Meal time is required for public recipes",

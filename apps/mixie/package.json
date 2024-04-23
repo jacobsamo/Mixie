@@ -62,6 +62,7 @@
     "framer-motion": "^11.0.24",
     "fuse.js": "^7.0.0",
     "fuzzball": "^2.1.2",
+    "input-otp": "^1.2.4",
     "jose": "^5.2.3",
     "jotai": "^2.7.2",
     "jotai-tanstack-query": "^0.8.5",

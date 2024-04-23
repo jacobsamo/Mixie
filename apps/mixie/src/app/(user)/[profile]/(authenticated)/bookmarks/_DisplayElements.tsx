@@ -76,7 +76,7 @@ const DisplayElements = ({
   const router = useRouter();
   const searchParams = useSearchParams();
   const active = searchParams.get("collection");
-  const activeCollection = collections.find((col) => col.uid == active);
+  const activeCollection = collections.find((col) => col.collection_id == active);
 
   return (
     <div className="mb-8 flex h-full max-h-[60%] w-full flex-wrap gap-1 p-2">
@@ -92,8 +92,8 @@ const DisplayElements = ({
             {collections.map((collection) => {
               return (
                 <CollectionCard
-                  key={collection.uid}
-                  collectionId={collection.uid}
+                  key={collection.collection_id}
+                  collectionId={collection.collection_id}
                   title={collection.title}
                 />
               );

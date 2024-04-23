@@ -35,26 +35,25 @@ export default async function BookmarksPage() {
   //   .leftJoin(recipes, eq(bookmarks.recipeId, recipes.uid))
   //   .where(eq(bookmarks.userId, user.id));
 
-    // const {data: gotRecipes} = await supabase.from("bookmarks").select()
-    // .select({
-    //   recipeId: bookmarks.recipeId,
-    //   userId: bookmarks.userId,
-    //   createdAt: bookmarks.createdAt,
-    //   collections: bookmarks.collections,
-    //   uid: recipes.uid,
-    //   id: recipes.id,
-    //   title: recipes.title,
-    //   imageUrl: recipes.imageUrl,
-    //   imageAttributes: recipes.imageAttributes,
-    //   total: recipes.total,
-    //   keywords: recipes.keywords,
-    // })
-  
-  
+  // const {data: gotRecipes} = await supabase.from("bookmarks").select()
+  // .select({
+  //   recipeId: bookmarks.recipeId,
+  //   userId: bookmarks.userId,
+  //   createdAt: bookmarks.createdAt,
+  //   collections: bookmarks.collections,
+  //   uid: recipes.uid,
+  //   id: recipes.id,
+  //   title: recipes.title,
+  //   imageUrl: recipes.imageUrl,
+  //   imageAttributes: recipes.imageAttributes,
+  //   total: recipes.total,
+  //   keywords: recipes.keywords,
+  // })
 
-  const userCollections = await supabase.from("collections").select("*").eq("userId", user.id);
-
-
+  const {data: userCollections} = await supabase
+    .from("collections")
+    .select("*")
+    .eq("userId", user.id);
 
   return (
     <div className="m-auto mt-4 flex h-fit max-h-[80%] flex-col items-center justify-center rounded-xl bg-white p-1 shadow-main sm:w-full md:w-3/5 lg:min-h-80 dark:bg-grey dark:shadow-none">
