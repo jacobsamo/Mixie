@@ -12,17 +12,17 @@ interface EditPageProps {
 }
 
 export default async function EditPage({ params }: EditPageProps) {
-  const session = await getUser();
+  const user = await getUser();
 
-  if (!session) {
-    return redirect("/auth/login");
+  if (!user) {
+    return redirect("auth/login");
   }
 
   const foundRecipes = await db
     .select()
     .from(recipes)
     .where(
-      and(eq(recipes.createdBy, session.user.id), eq(recipes.uid, params.id))
+      and(eq(recipes.createdBy, user.id), eq(recipes.uid, params.id))
     );
 
   // return <RecipeForm recipe={mockRecipe} />;

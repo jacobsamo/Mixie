@@ -1,26 +1,20 @@
 export const dynamic = "force-dynamic"; // defaults to force-static
-import { db } from "@/server/db";
-import { recipes as recipesSchema } from "@/server/db/schemas";
-import { eq } from "drizzle-orm";
+import { createClient } from "@/server/supabase/server";
 
 export async function GET() {
-  const recipes = await db
-    .select({
-      id: recipesSchema.id,
-      createdAt: recipesSchema.createdAt,
-    })
-    .from(recipesSchema)
-    .where(eq(recipesSchema.isPublic, true));
+  const supabase = createClient();
+  const {data: recipes} = await supabase.from("recipes").select("id, created_at").eq("isPublic", true);
+
 
   // add headers for the return type
   // this is required for the sitemap to be generated
   return new Response(
     `
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    ${recipes
+    ${recipes && recipes
       .map((data) => {
         // turn date into the correct string for the sitemap
-        const time = new Date(data.createdAt);
+        const time = new Date(data.created_at);
         // const time = new Date();
         return `
         <url>

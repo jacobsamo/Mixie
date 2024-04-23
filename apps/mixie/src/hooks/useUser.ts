@@ -1,15 +1,25 @@
 "use client";
-import { useSession } from "next-auth/react";
+import { useState } from "react";
+import { User } from "@supabase/supabase-js";
+import { createClient } from "@/server/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 
 const useUser = () => {
-  const session = useSession();
+  const {data: user} = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const supabase = createClient();
+      const {data: {
+        user
+      }} = await supabase.auth.getUser();
+      return user;
+    }
+  })
+  
+  const supabase = createClient();
+  supabase.auth.getUser();
 
-  return {
-    session,
-    user: session?.data?.user,
-    isLoading: session?.status === "loading",
-    isSignedIn: session?.status === "authenticated",
-  };
+  return user ?? null
 };
 
 export default useUser;

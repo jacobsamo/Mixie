@@ -14,7 +14,7 @@ import useUser from "@/hooks/useUser";
 import { cn } from "@/lib/utils";
 
 const Navbar = () => {
-  const { user } = useUser();
+  const user = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 

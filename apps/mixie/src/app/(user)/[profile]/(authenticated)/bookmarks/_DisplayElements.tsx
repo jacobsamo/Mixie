@@ -3,7 +3,7 @@ import { SearchCard, type CardRecipe } from "@/components/cards";
 import CreateCollectionDialog from "@/components/modals/create-collection-modal";
 import { createQueryString } from "@/lib/utils";
 import type { Bookmark, Collection } from "@/types";
-import { Session } from "next-auth";
+import { User } from "@supabase/supabase-js";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -14,7 +14,7 @@ interface BookmarkWithRecipe extends Bookmark {
 interface DisplayElementsProps {
   collections: Collection[];
   bookmarks: BookmarkWithRecipe[];
-  session: Session;
+  user: User;
 }
 
 const BackButton = () => {
@@ -71,7 +71,7 @@ const CollectionCard = ({
 const DisplayElements = ({
   collections,
   bookmarks,
-  session,
+  user,
 }: DisplayElementsProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -84,7 +84,7 @@ const DisplayElements = ({
         <div className="w-full">
           <div className="flex flex-row items-center justify-between">
             <h2 className="text-step--1">Collections</h2>
-            <CreateCollectionDialog userId={session.user.id} />
+            <CreateCollectionDialog userId={user.id} />
           </div>
 
           <div className="flex flex-wrap gap-2">

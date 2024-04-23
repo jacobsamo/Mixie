@@ -13,9 +13,9 @@ export default async function UserLayout({
   children: React.ReactNode;
   params: SettingsParams;
 }) {
-  const session = await getUser();
+  const user = await getUser();
 
-  if (session?.user.id != params.profile) return notFound();
+  if (!user && user!.id != params.profile) return notFound();
 
   return <div className="h-fit min-h-full w-full">{children}</div>;
 }

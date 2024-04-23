@@ -21,7 +21,7 @@ import { userDropDownOpen } from "./providers/state-provider";
 
 
 const UserProfile = () => {
-  const { session, user } = useUser();
+  const user = useUser();
   const [open, setOpen] = useAtom(userDropDownOpen);
 
   if (!user) {

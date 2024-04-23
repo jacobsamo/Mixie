@@ -1,8 +1,8 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { BookmarkButton, CardProps, RecipeImage } from "./card-utils";
+import useUser from "@/hooks/useUser";
 
 export interface BaseCardProps extends CardProps {
   hasCookTime?: boolean;
@@ -23,7 +23,7 @@ export const BaseCard = ({
   hasCookTime = true,
   classNames,
 }: BaseCardProps) => {
-  const { data: session } = useSession();
+  const user = useUser();
 
   return (
     <div
@@ -57,11 +57,11 @@ export const BaseCard = ({
           >
             {recipe.total}
           </h3>
-          {<BookmarkButton session={session} recipe={recipe} />}
+          {<BookmarkButton user={user} recipe={recipe} />}
         </div>
       )}
 
-      {!hasCookTime && <BookmarkButton session={session} recipe={recipe} />}
+      {!hasCookTime && <BookmarkButton user={user} recipe={recipe} />}
 
       <RecipeImage
         src={recipe.imageUrl || ""}

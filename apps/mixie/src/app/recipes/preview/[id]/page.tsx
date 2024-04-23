@@ -15,9 +15,9 @@ interface PreviewRecipePageProps {
 export default async function PreviewRecipePage({
   params,
 }: PreviewRecipePageProps) {
-  const session = await getUser();
-  if (!session) {
-    return redirect("/api/auth/login");
+  const user = await getUser();
+  if (!user) {
+    return redirect("/auth/login");
   }
 
   const foundRecipe = await db
@@ -25,7 +25,7 @@ export default async function PreviewRecipePage({
     .from(recipes)
     .where(
       and(
-        eq(recipeSchema.createdBy, session.user.id),
+        eq(recipeSchema.createdBy, user.id),
         eq(recipeSchema.uid, params.id)
       )
     );

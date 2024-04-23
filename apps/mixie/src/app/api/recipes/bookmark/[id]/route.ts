@@ -7,15 +7,16 @@ import { NextResponse, type NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 import { eq } from "drizzle-orm";
+import { createClient } from "@/server/supabase/server";
 
 export async function POST(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getUser();
+    const user = await getUser();
 
-    if (!session) {
+    if (!user) {
       return NextResponse.json("Unauthorized", { status: 401 });
     }
 
@@ -24,7 +25,7 @@ export async function POST(
 
     const newBookmark: Bookmark = {
       uid: uid,
-      userId: session.user.id,
+      userId: user.id,
       recipeId: params.id,
       collections: json,
     };
@@ -32,7 +33,7 @@ export async function POST(
     const findBookmarks = await db
       .select()
       .from(bookmarks)
-      .where(eq(bookmarks.userId, session.user.id));
+      .where(eq(bookmarks.userId, user.id));
 
     const bookmarkExists = findBookmarks.find(
       (bookmark) => bookmark.recipeId === params.id
@@ -41,11 +42,12 @@ export async function POST(
     if (bookmarkExists) {
       return NextResponse.json("Already bookmarked", { status: 409 });
     }
+    const supabase = createClient();
 
-    await db.insert(bookmarks).values(newBookmark);
+    await supabase.from("bookmarks").insert(newBookmark);
 
     console.log(
-      `Recipe ${newBookmark.recipeId} has been bookmarked by ${session.user.id}`
+      `Recipe ${newBookmark.recipeId} has been bookmarked by ${user.id}`
     );
 
     return NextResponse.json({

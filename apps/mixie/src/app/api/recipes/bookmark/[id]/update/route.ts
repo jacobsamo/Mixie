@@ -1,6 +1,7 @@
 import { getUser } from "@/lib/utils/getUser";
 import db from "@/server/db/index";
 import { bookmarks } from "@/server/db/schemas";
+import { createClient } from "@/server/supabase/server";
 import { Bookmark } from "@/types";
 import { eq } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
@@ -11,18 +12,20 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getUser();
+    const user = await getUser();
 
-    if (!session) {
+    if (!user) {
       return NextResponse.json("Unauthorized", { status: 401 });
     }
 
     const json = (await req.json()) as Partial<Bookmark>;
 
-    await db.update(bookmarks).set(json).where(eq(bookmarks.uid, json.uid!));
+    const supabase = createClient();
+
+    await supabase.from("bookmarks").update(json).eq("bookmark_id", json.uid);
 
     console.log(
-      `Recipe ${json.recipeId} has been bookmarked by ${session.user.id}`,
+      `Recipe ${json.recipeId} has been bookmarked by ${user.id}`,
       json
     );
 

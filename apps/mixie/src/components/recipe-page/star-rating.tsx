@@ -19,7 +19,7 @@ interface StarRatingProps {
 }
 
 const StarRating = ({ recipeId, rating }: StarRatingProps) => {
-  const { user } = useUser();
+  const user = useUser();
   const [hoverRating, setHoverRating] = useState<number>(0);
   const [internalRating, setInternalRating] = useState<number>(0);
   const [showSignInPrompt, setShowSignInPrompt] = useState(false);

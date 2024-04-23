@@ -7,6 +7,7 @@ import { recipeId } from "@/lib/utils";
 import { getUser } from "@/lib/utils/getUser";
 import db from "@/server/db/index";
 import { recipes } from "@/server/db/schemas";
+import { createClient } from "@/server/supabase/server";
 import { NewRecipe } from "@/types";
 import { Recipe, createRecipeSchema } from "@/types";
 import { eq, or } from "drizzle-orm";
@@ -16,16 +17,15 @@ import * as z from "zod";
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await getUser();
+    const user = await getUser();
 
-    if (!session) {
+    if (!user) {
       return NextResponse.json("Unauthorized", { status: 401 });
     }
     const json = await req.json();
     const { title, link } = createRecipeSchema.parse(json);
 
     // set global variables
-    const { user } = session;
     const uid = uuidv4();
     let newRecipe: NewRecipe | null = null;
 
@@ -109,7 +109,9 @@ export async function POST(req: NextRequest) {
         { status: 404 }
       );
 
-    await db.insert(recipes).values(newRecipe);
+    const supabase = createClient();
+
+    await supabase.from("recipes").insert(newRecipe);
 
     console.log(`Created recipe by link: ${uid}`, {
       message: `Recipe successfully created`,

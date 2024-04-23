@@ -1,5 +1,5 @@
 "use client";
-import { useSession } from "next-auth/react";
+import useUser from "@/hooks/useUser";
 import Link from "next/link";
 import { BookmarkButton, CardProps, RecipeImage } from "./card-utils";
 
@@ -13,7 +13,7 @@ export const SearchCard = ({
   edit = false,
   recipe,
 }: SearchCardProps) => {
-  const { data: session } = useSession();
+  const user = useUser();
 
   const Tag = as;
   return (
@@ -26,7 +26,7 @@ export const SearchCard = ({
         className="h-32 min-w-32 w-2/5 rounded-lg"
       />
 
-      {<BookmarkButton session={session} recipe={recipe} />}
+      {<BookmarkButton user={user} recipe={recipe} />}
 
       <div>
         <Link

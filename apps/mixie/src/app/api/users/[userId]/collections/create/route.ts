@@ -2,6 +2,7 @@ import { isApp } from "@/lib/services/apiMiddleware";
 import { getUser } from "@/lib/utils/getUser";
 import db from "@/server/db/index";
 import { collections } from "@/server/db/schemas";
+import { createClient } from "@/server/supabase/server";
 import { Collection, collectionSchema } from "@/types";
 import { eq, or } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
@@ -33,8 +34,8 @@ export async function POST(
       uid: uid,
       userId: user!.id,
     };
-
-    await db.insert(collections).values(newCollection);
+    const supabase = createClient();
+    await supabase.from("collections").insert(newCollection);
 
     console.log(`Created collection: ${uid}`, {
       message: `Collection successfully created`,

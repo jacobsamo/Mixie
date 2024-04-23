@@ -1,6 +1,7 @@
 import { isApp } from "@/lib/services/apiMiddleware";
 import { getUser } from "@/lib/utils/getUser";
 import db from "@/server/db/index";
+import { createAdminClient } from "@/server/supabase/server";
 import { userSchema } from "@/types/zodSchemas";
 import { eq } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
@@ -27,8 +28,9 @@ export async function PUT(
 
     const newUser = userSchema.parse(json);
 
-    await db.update(users).set(newUser).where(eq(users.id, params.userId));
-    await 
+    const supabase = createAdminClient();
+
+    await supabase.auth.updateUser(newUser);
 
     console.log("User updated: ", newUser);
 

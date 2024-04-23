@@ -22,9 +22,9 @@ export const isApp = async (req: NextRequest) => {
 };
 
 export const isAuthenticated = async (req: NextRequest) => {
-  const session = await getUser();
+  const user = await getUser();
 
-  if (!session) {
+  if (!user) {
     return false;
   }
 

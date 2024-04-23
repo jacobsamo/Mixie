@@ -10,11 +10,10 @@ interface InfoProps {
 }
 
 const Info = ({ info }: InfoProps) => {
-  const session = useUser();
+  const user = useUser();
   const pathName = usePathname();
 
-  const showEdit =
-    session?.user?.id === info?.createdBy && !pathName.includes("edit");
+  const showEdit = user && user.id === info?.createdBy && !pathName.includes("edit");
 
   return (
     <>

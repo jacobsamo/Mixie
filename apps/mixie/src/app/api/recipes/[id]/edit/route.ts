@@ -10,13 +10,11 @@ import * as z from "zod";
 
 export async function PUT(req: NextRequest) {
   try {
-    const session = await getUser();
+    const user = await getUser();
 
-    if (!session) {
+    if (!user) {
       return NextResponse.json("Unauthorized", { status: 401 });
     }
-
-    const { user } = session;
 
     const json = await req.json();
     json.createdAt = new Date(json.createdAt);
