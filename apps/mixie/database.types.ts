@@ -236,8 +236,8 @@ export type Database = {
         Row: {
           category: string | null
           cook_time: string | null
-          create_by: string
           created_at: string
+          created_by: string
           cuisine: string | null
           description: string | null
           difficulty_level: Database["public"]["Enums"]["difficulty_level"]
@@ -265,8 +265,8 @@ export type Database = {
         Insert: {
           category?: string | null
           cook_time?: string | null
-          create_by: string
           created_at?: string
+          created_by: string
           cuisine?: string | null
           description?: string | null
           difficulty_level?: Database["public"]["Enums"]["difficulty_level"]
@@ -294,8 +294,8 @@ export type Database = {
         Update: {
           category?: string | null
           cook_time?: string | null
-          create_by?: string
           created_at?: string
+          created_by?: string
           cuisine?: string | null
           description?: string | null
           difficulty_level?: Database["public"]["Enums"]["difficulty_level"]

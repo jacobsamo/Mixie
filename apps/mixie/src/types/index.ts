@@ -1,27 +1,18 @@
-import { users } from "@/server/db/schemas";
-import { type InferInsertModel, type InferSelectModel } from "drizzle-orm";
+import { Tables } from "database.types";
 import { z } from "zod";
+import { amount } from "./zodSchemas/enums";
 import {
-  bookmarkSchema,
-  collectionSchema,
   imageAttributesSchema,
   ingredientSchema,
-  ratingsSchema,
   recipeFormSchema,
   recipeSchema,
   stepSchema,
+  bookmarkSchema,
+  collectionSchema,
+  ratingsSchema,
 } from "./zodSchemas/recipes";
 
-import { amount } from "./zodSchemas/enums";
-
 export * from "./zodSchemas/recipes";
-export * from "./zodSchemas/users";
-
-// users
-type User = InferSelectModel<typeof users>;
-type NewUser = InferInsertModel<typeof users>;
-
-export type { NewUser, User };
 
 //recipes
 export type Recipe = z.infer<typeof recipeSchema>;

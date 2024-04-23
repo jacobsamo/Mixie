@@ -1,9 +1,5 @@
-import { bookmarks, collections, ratings, recipes } from "@/server/db/schemas";
-import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
-import { amount, unit } from "./enums";
-
-// join the info and ingredients to the recipe
+import { amount, difficulty_level, sweet_savoury, unit } from "./enums";
 
 const selectValue = z.object({
   value: z.string(),
@@ -42,7 +38,7 @@ export const createRecipeSchema = z
 export const imageAttributesSchema = z.object({
   alt: z.string(),
   photographer: z.string().optional(),
-  photographerLink: z.string().url().optional(),
+  photographer_link: z.string().url().optional(),
   source: z.enum(["unsplash", "pexels", "upload", "other"]).optional(),
   width: z.number().optional(),
   height: z.number().optional(),
@@ -78,7 +74,38 @@ export const stepSchema = z.object({
   step_body: z.string(),
 });
 
-export const recipeSchema = createInsertSchema(recipes, {
+const recipes = z.object({
+  category: z.string().nullable(),
+  cook_time: z.string().nullable(),
+  created_by: z.string(),
+  created_at: z.string(),
+  cuisine: z.string().nullable(),
+  description: z.string().nullable(),
+  difficulty_level: difficulty_level.default("not_set").nullable(),
+  id: z.string(),
+  image_attributes: imageAttributesSchema.nullable(),
+  image_url: z.string().nullable(),
+  ingredients: ingredientSchema.array().nullable(),
+  ingredients_list: z.string().array().nullable(),
+  keywords: z.string().array().nullable(),
+  notes: z.string().nullable(),
+  nutrition: z.string().array().nullable(),
+  prep_time: z.string().nullable(),
+  public: z.boolean().default(false),
+  rating: z.number().nullable(),
+  recipe_id: z.string(),
+  source: z.string().nullable(),
+  steps: stepSchema.array().nullable(),
+  suitable_for_diet: z.string().nullable(),
+  sweet_savoury: sweet_savoury.default("not_set").nullable(),
+  title: z.string(),
+  total_time: z.string().nullable(),
+  version: z.string(),
+  yield: z.number().nullable(),
+});
+const recipes_edit = z.object({});
+
+export const recipeSchema = recipes.extend({
   steps: stepSchema.array().optional(),
   ingredients: ingredientSchema.array().optional(),
   ingredientsList: z.string().array().nullish(),
@@ -110,11 +137,9 @@ export const recipeSchema = createInsertSchema(recipes, {
   mealTime: selectValue.array().nullable(),
 });
 
-export const ratingsSchema = createInsertSchema(ratings);
-
 // extend the recipe schema to include the info and ingredients
 export const recipeFormSchema = recipeSchema.superRefine((values, ctx) => {
-  if (values.isPublic) {
+  if (values.public) {
     ["cook", "prep", "imageUrl"].forEach((field) => {
       if (!values[field]) {
         ctx.addIssue({
@@ -152,5 +177,22 @@ export const recipeFormSchema = recipeSchema.superRefine((values, ctx) => {
   return values;
 });
 
-export const bookmarkSchema = createInsertSchema(bookmarks);
-export const collectionSchema = createInsertSchema(collections);
+export const bookmarkSchema = z.object({
+  bookmark_id: z.string(),
+  recipe_id: z.string(),
+  created_at: z.date(),
+  user_id: z.string().optional(),
+});
+export const collectionSchema = z.object({
+  collection_id: z.string(),
+  created_at: z.date(),
+  description: z.string().nullish(),
+  title: z.string(),
+  user_id: z.string().optional(),
+});
+export const ratingsSchema = z.object({
+  rating: z.number(),
+  rating_id: z.string(),
+  recipe_id: z.string(),
+  user_id: z.string(),
+});
