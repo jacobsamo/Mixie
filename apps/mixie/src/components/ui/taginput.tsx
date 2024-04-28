@@ -27,12 +27,11 @@ const TagInput = ({
   ...props
 }: TagInputProps) => {
   const { setValue, register } = useForm();
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
+  const { fields, append, prep_timeend, remove, swap, move, insert } =
+    useFieldArray({
       control,
       name: name as string,
-    }
-  );
+    });
 
   const handleKeyDown = useCallback(
     (e: any) => {

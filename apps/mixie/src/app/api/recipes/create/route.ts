@@ -3,7 +3,7 @@ import {
   getRecipeJsonLd,
   splitTime,
 } from "@/lib/services/recipeJsonLDParsing";
-import { recipeId } from "@/lib/utils";
+import { recipe_id } from "@/lib/utils";
 import { getUser } from "@/lib/utils/getUser";
 import db from "@/server/db/index";
 import { recipes } from "@/server/db/schemas";
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     let newRecipe: NewRecipe | null = null;
 
     if (title && !link) {
-      const id = recipeId(title);
+      const id = recipe_id(title);
 
       const newTitle = title.charAt(0).toUpperCase() + title.slice(1);
 
@@ -39,20 +39,20 @@ export async function POST(req: NextRequest) {
         uid: uid,
         id,
         title: newTitle,
-        createdBy: user.id,
+        created_by: user.id,
         isPublic: false,
       };
     }
 
     if (link) {
       if (link.includes("mixiecooking.com")) {
-        // split a mixie link to get the recipe id this id would be after /recipes/<recipeId> a recipe link might look like this: https://mixiecooking.com/recipes/5f9b1b5e-5b1a-4b9e-9b9e-9b9e9b9e9b9e
-        const recipeId = link.split("/").pop();
-        if (!recipeId) return NextResponse.json(null, { status: 404 });
+        // split a mixie link to get the recipe id this id would be after /recipes/<recipe_id> a recipe link might look like this: https://mixiecooking.com/recipes/5f9b1b5e-5b1a-4b9e-9b9e-9b9e9b9e9b9e
+        const recipe_id = link.split("/").pop();
+        if (!recipe_id) return NextResponse.json(null, { status: 404 });
         const findRecipe = await db
           .select()
           .from(recipes)
-          .where(or(eq(recipes.id, recipeId), eq(recipes.uid, recipeId)));
+          .where(or(eq(recipes.id, recipe_id), eq(recipes.uid, recipe_id)));
 
         if (!findRecipe) {
           return NextResponse.json(null, { status: 404 });
@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
 
       newRecipe = {
         uid: uid,
-        id: recipeId(recipe.name),
+        id: recipe_id(recipe.name),
         title: recipe.name,
         description: recipe.description.replace(/<[^>]*>?/gm, "") || null,
         isPublic: false,
@@ -89,17 +89,17 @@ export async function POST(req: NextRequest) {
         ingredients: ingredients,
         source: link,
         cook: splitTime(recipe.cookTime),
-        prep: splitTime(recipe.prepTime),
+        prep_time: splitTime(recipe.prep_timeTime),
         total: splitTime(recipe.totalTime),
         rating: recipe.aggregateRating?.ratingValue || null,
-        serves: recipe.recipeYield || null,
-        imageUrl: recipe.image.url || null,
-        imageAttributes: recipe.image.alt || recipe.name || "recipe image",
+        yield: recipe.recipeYield || null,
+        image_url: recipe.image.url || null,
+        image_attributes: recipe.image.alt || recipe.name || "recipe image",
         keywords: recipe.keywords.split(",").map((keyword: string) => {
           return { value: keyword };
         }),
         ingredientsList: ingredients.map((ingredient) => ingredient.title),
-        createdBy: user.id,
+        created_by: user.id,
       };
     }
 

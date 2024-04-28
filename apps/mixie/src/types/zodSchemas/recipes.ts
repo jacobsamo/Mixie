@@ -36,7 +36,7 @@ export const createRecipeSchema = z
     return values;
   });
 
-export const imageAttributesSchema = z.object({
+export const image_attributesSchema = z.object({
   alt: z.string(),
   photographer: z.string().optional(),
   photographer_link: z.string().url().optional(),
@@ -84,14 +84,14 @@ const recipes = z.object({
   description: z.string().nullable(),
   difficulty_level: difficulty_level.default("not_set").nullable(),
   id: z.string(),
-  image_attributes: imageAttributesSchema.nullable(),
+  image_attributes: image_attributesSchema.nullable(),
   image_url: z.string().nullable(),
   ingredients: ingredientSchema.array().nullable(),
   ingredients_list: z.string().array().nullable(),
   keywords: z.string().array().nullable(),
   notes: z.string().nullable(),
   nutrition: z.string().array().nullable(),
-  prep_time: z.string().nullable(),
+  prep_time_time: z.string().nullable(),
   public: z.boolean().default(false),
   rating: z.number().nullable(),
   recipe_id: z.string(),
@@ -116,10 +116,10 @@ export const recipeSchema = recipes.extend({
     })
     .url({ message: "Must be a valid url" })
     .nullish(),
-    image_attributes: imageAttributesSchema.nullish(),
+  image_attributes: image_attributesSchema.nullish(),
   keywords: z.object({ value: z.string() }).array().nullish(),
   prep_time: z
-    .string({ required_error: "Prep time is required for public recipes" })
+    .string({ required_error: "prep_time time is required for public recipes" })
     .regex(/^(\d{1,2}[hms]\s?)+$/i, {
       message:
         "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
@@ -141,7 +141,7 @@ export const recipeSchema = recipes.extend({
 // extend the recipe schema to include the info and ingredients
 export const recipeFormSchema = recipeSchema.superRefine((values, ctx) => {
   if (values.public) {
-    ["cook", "prep", "imageUrl"].forEach((field) => {
+    ["cook", "prep_time", "image_url"].forEach((field) => {
       if (!values[field]) {
         ctx.addIssue({
           code: "custom",

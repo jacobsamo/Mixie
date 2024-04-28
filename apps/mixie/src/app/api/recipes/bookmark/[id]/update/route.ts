@@ -25,12 +25,12 @@ export async function PUT(
     await supabase.from("bookmarks").update(json).eq("bookmark_id", json.uid);
 
     console.log(
-      `Recipe ${json.recipeId} has been bookmarked by ${user.id}`,
+      `Recipe ${json.recipe_id} has been bookmarked by ${user.id}`,
       json
     );
 
     return NextResponse.json({
-      message: `Recipe ${json.recipeId} has been bookmarked`,
+      message: `Recipe ${json.recipe_id} has been bookmarked`,
       bookmarkedRecipe: json,
     });
   } catch (error) {

@@ -2,7 +2,7 @@ import { Tables } from "database.types";
 import { z } from "zod";
 import { amount } from "./zodSchemas/enums";
 import {
-  imageAttributesSchema,
+  image_attributesSchema,
   ingredientSchema,
   recipeFormSchema,
   recipeSchema,
@@ -18,7 +18,7 @@ export * from "./zodSchemas/recipes";
 export type Recipe = z.infer<typeof recipeSchema>;
 export type NewRecipe = z.infer<typeof recipeFormSchema>;
 
-export type ImageAttributes = z.infer<typeof imageAttributesSchema>;
+export type image_attributes = z.infer<typeof image_attributesSchema>;
 
 // ingredients
 export type Ingredient = z.infer<typeof ingredientSchema>;

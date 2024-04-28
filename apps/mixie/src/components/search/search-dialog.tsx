@@ -5,7 +5,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogFooter
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Recipe } from "@/types";
 import { motion } from "framer-motion";
@@ -20,8 +20,8 @@ type PartialRecipe = Pick<
   | "uid"
   | "id"
   | "title"
-  | "imageAttributes"
-  | "imageUrl"
+  | "image_attributes"
+  | "image_url"
   | "total"
   | "ingredientsList"
   | "keywords"

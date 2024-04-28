@@ -21,9 +21,9 @@ export function cn(...inputs: ClassValue[]) {
  * @return {string} The id of the recipe
  *
  * @example
- * recipeId('Chicken Tikka Masala') // 'chicken-tikka-masala'
+ * recipe_id('Chicken Tikka Masala') // 'chicken-tikka-masala'
  */
-export function recipeId(title: string): string {
+export function recipe_id(title: string): string {
   return title.trim().replace(/\s/g, "-").toLowerCase();
 }
 

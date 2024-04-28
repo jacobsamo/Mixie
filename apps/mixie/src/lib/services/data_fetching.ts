@@ -13,7 +13,7 @@ export const getRecipes = unstable_cache(
       .from("recipes")
       .select("*")
       .eq("isPublic", true)
-      .order("createdAt", { ascending: true });
+      .order("created_at", { ascending: true });
     return latestRecipes as Recipe[];
   },
   ["recipes"],

@@ -1,4 +1,3 @@
-
 /**
  * Takes in a time string matching `/^(\d{1,2}[hms]\s?)+$/i` and returns the total time in seconds
  * @param {RegExpMatchArray} timeString - time string matching `/^(\d{1,2}[hms]\s?)+$/i`
@@ -49,25 +48,25 @@ export const parseSecondsToTime = (seconds: number): string => {
 };
 
 /**
- * Takes in a prep and cook time string and returns the total time in the same format
- * @param {string} prep - prep time string matching `/^(\d{1,2}[hms]\s?)+$/i`
+ * Takes in a prep_time and cook time string and returns the total time in the same format
+ * @param {string} prep_time - prep_time time string matching `/^(\d{1,2}[hms]\s?)+$/i`
  * @param {string} cook - cook time string matching `/^(\d{1,2}[hms]\s?)+$/i`
  * @returns {string} total time in the same format
  */
-export async function calculateTotalTime(prep: string, cook: string) {
+export async function calculateTotalTime(prep_time: string, cook: string) {
   const matchRegex = /^(\d{1,2}[hms]\s?)+$/i;
 
-  const prepT = prep.match(matchRegex);
+  const prep_timeT = prep_time.match(matchRegex);
   const cookT = cook.match(matchRegex);
 
-  if (!prepT || !cookT) {
+  if (!prep_timeT || !cookT) {
     throw new Error("Invalid time string format");
   }
 
-  const prepTime = parseTimeToSeconds(prepT);
+  const prep_timeTime = parseTimeToSeconds(prep_timeT);
   const cookTime = parseTimeToSeconds(cookT);
 
-  const totalTime = prepTime! + cookTime!;
+  const totalTime = prep_timeTime! + cookTime!;
 
   return parseSecondsToTime(totalTime);
 }

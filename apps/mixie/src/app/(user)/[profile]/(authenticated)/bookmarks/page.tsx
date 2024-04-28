@@ -12,45 +12,45 @@ export default async function BookmarksPage() {
   // uid: true,
   // id: true,
   // title: true,
-  // imageUrl: true,
-  // imageAttributes: true,
+  // image_url: true,
+  // image_attributes: true,
   // total: true,
   // keywords: true,
   const supabase = createClient();
   // const gotRecipes = await db
   //   .select({
-  //     recipeId: bookmarks.recipeId,
+  //     recipe_id: bookmarks.recipe_id,
   //     userId: bookmarks.userId,
-  //     createdAt: bookmarks.createdAt,
+  //     created_at: bookmarks.created_at,
   //     collections: bookmarks.collections,
   //     uid: recipes.uid,
   //     id: recipes.id,
   //     title: recipes.title,
-  //     imageUrl: recipes.imageUrl,
-  //     imageAttributes: recipes.imageAttributes,
+  //     image_url: recipes.image_url,
+  //     image_attributes: recipes.image_attributes,
   //     total: recipes.total,
   //     keywords: recipes.keywords,
   //   })
   //   .from(bookmarks)
-  //   .leftJoin(recipes, eq(bookmarks.recipeId, recipes.uid))
+  //   .leftJoin(recipes, eq(bookmarks.recipe_id, recipes.uid))
   //   .where(eq(bookmarks.userId, user.id));
 
   // const {data: gotRecipes} = await supabase.from("bookmarks").select()
   // .select({
-  //   recipeId: bookmarks.recipeId,
+  //   recipe_id: bookmarks.recipe_id,
   //   userId: bookmarks.userId,
-  //   createdAt: bookmarks.createdAt,
+  //   created_at: bookmarks.created_at,
   //   collections: bookmarks.collections,
   //   uid: recipes.uid,
   //   id: recipes.id,
   //   title: recipes.title,
-  //   imageUrl: recipes.imageUrl,
-  //   imageAttributes: recipes.imageAttributes,
+  //   image_url: recipes.image_url,
+  //   image_attributes: recipes.image_attributes,
   //   total: recipes.total,
   //   keywords: recipes.keywords,
   // })
 
-  const {data: userCollections} = await supabase
+  const { data: userCollections } = await supabase
     .from("collections")
     .select("*")
     .eq("userId", user.id);

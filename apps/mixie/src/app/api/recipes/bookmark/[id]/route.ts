@@ -26,7 +26,7 @@ export async function POST(
     const newBookmark: Bookmark = {
       uid: uid,
       userId: user.id,
-      recipeId: params.id,
+      recipe_id: params.id,
       collections: json,
     };
 
@@ -36,7 +36,7 @@ export async function POST(
       .where(eq(bookmarks.userId, user.id));
 
     const bookmarkExists = findBookmarks.find(
-      (bookmark) => bookmark.recipeId === params.id
+      (bookmark) => bookmark.recipe_id === params.id
     );
 
     if (bookmarkExists) {
@@ -47,11 +47,11 @@ export async function POST(
     await supabase.from("bookmarks").insert(newBookmark);
 
     console.log(
-      `Recipe ${newBookmark.recipeId} has been bookmarked by ${user.id}`
+      `Recipe ${newBookmark.recipe_id} has been bookmarked by ${user.id}`
     );
 
     return NextResponse.json({
-      message: `Recipe ${newBookmark.recipeId} has been bookmarked`,
+      message: `Recipe ${newBookmark.recipe_id} has been bookmarked`,
       bookmarkedRecipe: newBookmark,
     });
   } catch (error) {

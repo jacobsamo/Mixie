@@ -26,8 +26,8 @@ const CreateCollectionDialog = ({ userId }: CreateCollectionDialogProps) => {
   const methods = useForm<z.infer<typeof collectionSchema>>({
     resolver: zodResolver(collectionSchema),
     defaultValues: {
-      uid: "",
-      userId: "",
+      collection_id: "",
+      user_id: "",
     },
   });
   const {

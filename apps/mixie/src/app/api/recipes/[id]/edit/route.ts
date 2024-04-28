@@ -1,4 +1,4 @@
-import { recipeId } from "@/lib/utils";
+import { recipe_id } from "@/lib/utils";
 import { getUser } from "@/lib/utils/getUser";
 import db from "@/server/db/index";
 import { recipes } from "@/server/db/schemas";
@@ -17,10 +17,10 @@ export async function PUT(req: NextRequest) {
     }
 
     const json = await req.json();
-    json.createdAt = new Date(json.createdAt);
+    json.created_at = new Date(json.created_at);
     const recipe = recipeFormSchema.parse(json);
 
-    const id = recipeId(recipe.title) || recipe.id;
+    const id = recipe_id(recipe.title) || recipe.id;
 
     // get all ingredients and set them, only include ingredients that have isHeading set to false
     const ingredientsList = recipe?.ingredients
@@ -43,9 +43,9 @@ export async function PUT(req: NextRequest) {
     const setRecipe = await db
       .update(recipes)
       .set(newRecipe)
-      .where(eq(recipes.uid, recipe.uid));
+      .where(eq(recipes.uid, recipe.recipe_id));
 
-    console.log(`Edited recipe ${newRecipe.uid}`, {
+    console.log(`Edited recipe ${newrecipe.recipe_id}`, {
       message: `Recipe successfully edited, ${setRecipe}`,
       recipe: newRecipe,
     });

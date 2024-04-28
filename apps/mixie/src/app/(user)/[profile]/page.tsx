@@ -46,7 +46,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
     .select()
     .from(recipes)
     .where(
-      and(eq(recipes.isPublic, true), eq(recipes.createdBy, params.profile))
+      and(eq(recipes.isPublic, true), eq(recipes.created_by, params.profile))
     );
 
   if (user) {

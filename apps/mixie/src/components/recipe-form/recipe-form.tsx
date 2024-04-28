@@ -154,15 +154,15 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
               tooltip="Where you got the recipe from if you got it from another website"
             />
             <Input
-              {...register("prep", {
+              {...register("prep_time", {
                 pattern: {
                   value: /^(\d{1,2}[hms]\s?)+$/i,
                   message:
                     "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
                 },
               })}
-              error={errors.prep}
-              label="Prep Time"
+              error={errors.prep_time}
+              label="prep_time Time"
               hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
             />
             <Input
@@ -178,9 +178,9 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
               hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
             />
             <Input
-              {...register("serves", { valueAsNumber: true })}
-              error={errors.serves}
-              label="Serves"
+              {...register("yield", { valueAsNumber: true })}
+              error={errors.yield}
+              label="yield"
               type="number"
             />
 
@@ -288,7 +288,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
               label="Notes, Tips or Suggestions"
             />
 
-            <FeedbackButton className="mt-4 bg-grey w-1/2 mx-auto" />
+            <FeedbackButton className="mx-auto mt-4 w-1/2 bg-grey" />
           </>
         )}
       </form>

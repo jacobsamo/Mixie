@@ -40,8 +40,8 @@ const ImageUpload = () => {
 
   const setImages = (image: string) => {
     setLoading(true);
-    setValue("imageUrl", image);
-    setValue("imageAttributes.source", "upload");
+    setValue("image_url", image);
+    setValue("image_attributes.source", "upload");
     setLoading(false);
   };
 
@@ -56,8 +56,8 @@ const ImageUpload = () => {
       });
   }, [unsplashImageSearch]);
 
-  const image = watch("imageUrl");
-  const imageAttributes = watch("imageAttributes");
+  const image = watch("image_url");
+  const image_attributes = watch("image_attributes");
 
   return (
     <div
@@ -65,7 +65,7 @@ const ImageUpload = () => {
         "group relative my-8 aspect-video max-h-[600px] max-w-[880px] resize rounded-xl border p-2",
         {
           "border-red shadow shadow-red":
-            errors.imageUrl || errors.imageAttributes?.alt,
+            errors.image_url || errors.image_attributes?.alt,
         }
       )}
     >
@@ -73,7 +73,7 @@ const ImageUpload = () => {
         <>
           <Image
             src={image ?? "/images/placeholder.webp"}
-            alt={imageAttributes?.alt ?? ""}
+            alt={image_attributes?.alt ?? ""}
             placeholder="blur"
             blurDataURL={image ?? "/images/placeholder.webp"}
             width={800}
@@ -81,16 +81,16 @@ const ImageUpload = () => {
             priority
             className="aspect-video h-full w-full rounded-xl object-cover"
           />
-          {imageAttributes?.photographer &&
-            imageAttributes.photographerLink && (
+          {image_attributes?.photographer &&
+            image_attributes.photographer_link && (
               <div className="textOnBackground absolute bottom-2 left-2 bg-gray-700/20 text-white drop-shadow-xl">
                 Photo by{" "}
                 <Link
-                  href={imageAttributes.photographerLink}
+                  href={image_attributes.photographer_link}
                   target="_blank"
                   className="underline underline-offset-2"
                 >
-                  {imageAttributes.photographer}
+                  {image_attributes.photographer}
                 </Link>{" "}
                 on{" "}
                 <Link
@@ -110,15 +110,15 @@ const ImageUpload = () => {
       <Dialog>
         <DialogTrigger
           className={cn(
-            "textOnBackground text-center w-fit h-fit px-1 absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform flex-col items-center gap-2",
+            "textOnBackground absolute left-1/2 top-1/2 flex h-fit w-fit -translate-x-1/2 -translate-y-1/2 transform flex-col items-center gap-2 px-1 text-center",
             {
               "opacity-30 group-hover:opacity-100": image,
               "rounded-xl bg-red p-2 text-white ":
-                errors.imageUrl || errors.imageAttributes?.alt,
+                errors.image_url || errors.image_attributes?.alt,
             }
           )}
         >
-          <p>{errors.imageUrl?.message}</p>
+          <p>{errors.image_url?.message}</p>
 
           {image ? (
             <div className="flex flex-row gap-2">
@@ -170,17 +170,20 @@ const ImageUpload = () => {
                   <Button
                     unstyled
                     onClick={() => {
-                      setValue("imageUrl", photo.urls.regular);
+                      setValue("image_url", photo.urls.regular);
                       setValue(
-                        "imageAttributes.alt",
+                        "image_attributes.alt",
                         photo.alt_description ?? ""
                       );
-                      setValue("imageAttributes.photographer", photo.user.name);
                       setValue(
-                        "imageAttributes.photographerLink",
+                        "image_attributes.photographer",
+                        photo.user.name
+                      );
+                      setValue(
+                        "image_attributes.photographer_link",
                         `https://unsplash.com/${photo.user.username}?utm_source=mixie&utm_medium=referral`
                       );
-                      setValue("imageAttributes.source", "unsplash");
+                      setValue("image_attributes.source", "unsplash");
                     }}
                     key={photo.id}
                     className="relative flex aspect-video h-[150px] w-[200px] flex-col items-center justify-center rounded-xl"
@@ -205,20 +208,20 @@ const ImageUpload = () => {
             </TabsContent>
             <TabsContent value="url" className="flex flex-col gap-2">
               <Input
-                {...register("imageUrl", {
+                {...register("image_url", {
                   required: true,
                 })}
                 required
-                error={errors.imageUrl}
+                error={errors.image_url}
                 label="Image Url"
                 placeholder="https://"
               />
               <Input
-                {...register("imageAttributes.alt", {
+                {...register("image_attributes.alt", {
                   required: true,
                 })}
                 required
-                error={errors.imageAttributes?.alt}
+                error={errors.image_attributes?.alt}
                 label="Img Alt Text"
                 tooltip="A short description of the image, this helps people with screen readers to understand the image"
                 hint="A short description of the image"
@@ -247,11 +250,11 @@ const ImageUpload = () => {
                 }}
               />
               <Input
-                {...register("imageAttributes.alt", {
+                {...register("image_attributes.alt", {
                   required: true,
                 })}
                 required
-                error={errors.imageAttributes?.alt}
+                error={errors.image_attributes?.alt}
                 label="Img Alt Text"
                 tooltip="A short description of the image, this helps people with screen readers to understand the image"
                 hint="A short description of the image"

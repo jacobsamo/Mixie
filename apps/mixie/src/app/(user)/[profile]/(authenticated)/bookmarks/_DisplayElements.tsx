@@ -110,11 +110,11 @@ const DisplayElements = ({
           <div className="flex flex-col gap-2">
             {bookmarks
               .filter((bookmark) =>
-                bookmark.collections?.includes(activeCollection.uid)
+                bookmark.collections?.includes(activeCollection.collection_id)
               )
               .map((bookmark) => {
                 return (
-                  <SearchCard key={bookmark.uid} recipe={bookmark.recipe} />
+                  <SearchCard key={bookmark.bookmark_id} recipe={bookmark.recipe} />
                 );
               })}
           </div>
@@ -128,7 +128,7 @@ const DisplayElements = ({
 
           <div className="flex flex-col gap-2">
             {bookmarks.map((bookmark) => {
-              return <SearchCard key={bookmark.uid} recipe={bookmark.recipe} />;
+              return <SearchCard key={bookmark.bookmark_id} recipe={bookmark.recipe} />;
             })}
           </div>
         </div>

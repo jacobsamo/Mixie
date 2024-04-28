@@ -14,11 +14,11 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 interface StarRatingProps {
-  recipeId: string;
+  recipe_id: string;
   rating: number | undefined;
 }
 
-const StarRating = ({ recipeId, rating }: StarRatingProps) => {
+const StarRating = ({ recipe_id, rating }: StarRatingProps) => {
   const user = useUser();
   const [hoverRating, setHoverRating] = useState<number>(0);
   const [internalRating, setInternalRating] = useState<number>(0);
@@ -31,12 +31,12 @@ const StarRating = ({ recipeId, rating }: StarRatingProps) => {
       return;
     }
     setInternalRating(rating);
-    const setRating = fetch(`/api/recipes/${recipeId}/setRating`, {
+    const setRating = fetch(`/api/recipes/${recipe_id}/setRating`, {
       method: "POST",
       body: JSON.stringify({
-        recipeId: recipeId,
+        recipe_id: recipe_id,
         rating: rating,
-        userId: user.id,
+        user_id: user.id,
       } as Rating),
     });
 

@@ -6,9 +6,9 @@ import dynamic from "next/dynamic";
 export const createRecipeOpen = atom<boolean>(false);
 export const bookmarkRecipeOpen = atom<{
   open: boolean;
-  recipeId: string | null;
+  recipe_id: string | null;
   userId: string | null;
-}>({ open: false, recipeId: null, userId: null });
+}>({ open: false, recipe_id: null, userId: null });
 
 export const giveFeedbackOpen = atom<boolean>(false);
 export const searchOpen = atom<boolean>(false);

@@ -24,10 +24,7 @@ export default async function PreviewRecipePage({
     .select()
     .from(recipes)
     .where(
-      and(
-        eq(recipeSchema.createdBy, user.id),
-        eq(recipeSchema.uid, params.id)
-      )
+      and(eq(recipeSchema.created_by, user.id), eq(recipeSchema.uid, params.id))
     );
 
   if (!foundRecipe[0]) {

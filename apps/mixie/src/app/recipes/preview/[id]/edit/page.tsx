@@ -21,9 +21,7 @@ export default async function EditPage({ params }: EditPageProps) {
   const foundRecipes = await db
     .select()
     .from(recipes)
-    .where(
-      and(eq(recipes.createdBy, user.id), eq(recipes.uid, params.id))
-    );
+    .where(and(eq(recipes.created_by, user.id), eq(recipes.uid, params.id)));
 
   // return <RecipeForm recipe={mockRecipe} />;
   if (foundRecipes[0]) return <RecipeForm recipe={foundRecipes[0]} />;

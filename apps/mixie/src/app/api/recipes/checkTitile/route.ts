@@ -1,5 +1,5 @@
 import { getRecipes } from "@/lib/services/data_fetching";
-import { recipeId } from "@/lib/utils";
+import { recipe_id } from "@/lib/utils";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     // check if the name exists or not
     const titles = await getRecipes();
 
-    const id = recipeId(query!);
+    const id = recipe_id(query!);
 
     titles.forEach((title) => {
       if (title.isPublic && title.id == id) {

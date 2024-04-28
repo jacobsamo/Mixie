@@ -1,7 +1,5 @@
 import { type NextRequest } from "next/server";
 
-
-
 export async function POST(req: NextRequest) {
   // return NextResponse.json(
   //   {
@@ -12,14 +10,11 @@ export async function POST(req: NextRequest) {
   // );
   // try {
   //   const json = await req.json();
-
   //   console.log("Json: ", json);
-
   //   let newRecipes: Recipe[] = [];
-
   //   json.map(async (recipe: any) => {
   //     const newRecipe: Recipe = {
-  //       uid: recipe.uid,
+  //       uid: recipe.recipe_id,
   //       id: recipe.id,
   //       title: recipe.title,
   //       description: recipe.description,
@@ -34,31 +29,28 @@ export async function POST(req: NextRequest) {
   //       sweet_savoury: recipe.sweet_savoury.value ?? null,
   //       difficulty_level: recipe.difficulty_level,
   //       isPublic: recipe.isPublic,
-
   //       // transform info
-  //       imageUrl: recipe.info.imgUrl,
-  //       imageAttributes: { alt: recipe.info.imgAlt },
+  //       image_url: recipe.info.imgUrl,
+  //       image_attributes: { alt: recipe.info.imgAlt },
   //       total: recipe.info.total,
-  //       prep: recipe.info.prep,
+  //       prep_time: recipe.info.prep_time,
   //       cook: recipe.info.cook,
-  //       serves: recipe.info.serves,
+  //       yield: recipe.info.yield,
   //       keywords: recipe.info.keywords,
   //       ingredientsList: recipe.info.ingredients,
-  //       createdBy: recipe.info.createdBy,
+  //       created_by: recipe.info.created_by,
   //       rating: recipe.info.rating,
   //     };
   //     newRecipes.push(newRecipe);
   //     console.log(newRecipe);
   //     await db.insert(recipes).values(newRecipe);
   //   });
-
   //   return NextResponse.json(newRecipes);
   // } catch (error) {
   //   console.error("Error on /recipes/create", error);
   //   if (error instanceof z.ZodError) {
   //     return NextResponse.json(JSON.stringify(error.issues), { status: 422 });
   //   }
-
   //   return NextResponse.json(null, { status: 500 });
   // }
 }

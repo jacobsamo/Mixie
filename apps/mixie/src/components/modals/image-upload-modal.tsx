@@ -22,7 +22,7 @@ interface ImageUploadDialogProps {
   description?: string;
   externalOpen?: boolean;
   setExternalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-  setImage?: (imageUrl: string) => any;
+  setImage?: (image_url: string) => any;
   children?: React.ReactNode;
 }
 
