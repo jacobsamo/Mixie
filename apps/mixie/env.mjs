@@ -10,6 +10,7 @@ export const env = createEnv({
     UNSPLASH_SECRET: z.string().min(1),
     UPLOADTHING_SECRET: z.string().min(1),
     UPLOADTHING_APP_ID: z.string().min(1),
+    SUPABASE_SERVICE_ROLE: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_API_APP_TOKEN: z.string().min(1),
@@ -19,7 +20,6 @@ export const env = createEnv({
     NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
   },
   runtimeEnv: {
-    
     // Server
     NODE_ENV: process.env.NODE_ENV,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
@@ -37,5 +37,6 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY,
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    SUPABASE_SERVICE_ROLE: process.env.SUPABASE_SERVICE_ROLE,
   },
 });
