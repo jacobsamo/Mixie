@@ -1,8 +1,6 @@
 import { isApp } from "@/lib/services/apiMiddleware";
 import { getUser } from "@/lib/utils/getUser";
-import db from "@/server/db/index";
-import { collections } from "@/server/db/schemas";
-import { eq } from "drizzle-orm";
+import { createClient } from "@/server/supabase/server";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function GET(
@@ -18,11 +16,9 @@ export async function GET(
     if ((!app) && !requestedUserData) {
       return NextResponse.json("Unauthorized", { status: 401 });
     }
+    const supabase = createClient();
+    const foundCollections = await supabase.from("collections").select().eq("user_id", params.userId)
 
-    const foundCollections = await db
-      .select()
-      .from(collections)
-      .where(eq(collections.userId, params.userId));
 
     return NextResponse.json(foundCollections);
   } catch (error) {

@@ -2,8 +2,7 @@ import { SearchCard } from "@/components/cards";
 import { getUsers } from "@/lib/services/data_fetching";
 import { constructMetadata } from "@/lib/utils/";
 import { getUser } from "@/lib/utils/getUser";
-import db from "@/server/db/index";
-import { recipes } from "@/server/db/schemas";
+import { createClient } from "@/server/supabase/server";
 import { User } from "@supabase/supabase-js";
 import { and, eq } from "drizzle-orm";
 import { Heart, Pencil, ScrollText } from "lucide-react";
@@ -41,13 +40,18 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 
   const users = await getUsers();
   const user = users?.find((user: User) => user.id == params.profile);
-
-  const gotRecipes = await db
+  const supabase = createClient();
+  // const gotRecipes = await db
+  //   .select()
+  //   .from(recipes)
+  //   .where(
+  //     and(eq(recipes.isPublic, true), eq(recipes.created_by, params.profile))
+  //   );
+  const gotRecipes = await supabase
+    .from("recipes")
     .select()
-    .from(recipes)
-    .where(
-      and(eq(recipes.isPublic, true), eq(recipes.created_by, params.profile))
-    );
+    .eq("public", true)
+    .eq("created_at", params.profile);
 
   if (user) {
     return (

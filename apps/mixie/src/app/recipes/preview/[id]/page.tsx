@@ -1,9 +1,7 @@
 import RecipePageComponent from "@/components/recipe-page/recipe-page";
 import { getUser } from "@/lib/utils/getUser";
-import db from "@/server/db/index";
-import { recipes, recipes as recipeSchema } from "@/server/db/schemas";
+import { createClient } from "@/server/supabase/server";
 import type { Recipe } from "@/types";
-import { and, eq } from "drizzle-orm";
 import { notFound, redirect } from "next/navigation";
 
 interface PreviewRecipePageProps {
@@ -20,12 +18,10 @@ export default async function PreviewRecipePage({
     return redirect("/auth/login");
   }
 
-  const foundRecipe = await db
-    .select()
-    .from(recipes)
-    .where(
-      and(eq(recipeSchema.created_by, user.id), eq(recipeSchema.uid, params.id))
-    );
+  const supabase = createClient();
+
+  const foundRecipe = await supabase.from("recipes").select().eq("created_at", user.id).eq("recipe_id", params.id)
+
 
   if (!foundRecipe[0]) {
     return notFound();

@@ -1,13 +1,9 @@
-import { Bookmark } from "@/types";
-import db from "@/server/db/index";
-import { bookmarks } from "@/server/db/schemas";
-import { bookmarkSchema } from "@/types/zodSchemas";
 import { getUser } from "@/lib/utils/getUser";
+import { createClient } from "@/server/supabase/server";
+import { TablesInsert } from "database.types";
 import { NextResponse, type NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
-import { eq } from "drizzle-orm";
-import { createClient } from "@/server/supabase/server";
 
 export async function POST(
   req: NextRequest,
@@ -23,26 +19,25 @@ export async function POST(
     const json = await req.json();
     const uid = uuidv4();
 
-    const newBookmark: Bookmark = {
-      uid: uid,
-      userId: user.id,
+    const newBookmark: TablesInsert<"bookmarks"> = {
+      bookmark_id: uid,
+      user_id: user.id,
       recipe_id: params.id,
-      collections: json,
     };
+    const supabase = createClient();
 
-    const findBookmarks = await db
+    const { data: findBookmarks } = await supabase
+      .from("bookmarks")
       .select()
-      .from(bookmarks)
-      .where(eq(bookmarks.userId, user.id));
+      .eq("user_id", user.id);
 
-    const bookmarkExists = findBookmarks.find(
-      (bookmark) => bookmark.recipe_id === params.id
-    );
+    const bookmarkExists =
+      findBookmarks &&
+      findBookmarks.find((bookmark) => bookmark.recipe_id === params.id);
 
     if (bookmarkExists) {
       return NextResponse.json("Already bookmarked", { status: 409 });
     }
-    const supabase = createClient();
 
     await supabase.from("bookmarks").insert(newBookmark);
 

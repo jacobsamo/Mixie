@@ -1,6 +1,4 @@
 import { getUser } from "@/lib/utils/getUser";
-import db from "@/server/db/index";
-import { bookmarks } from "@/server/db/schemas";
 import { createClient } from "@/server/supabase/server";
 import { Bookmark } from "@/types";
 import { eq } from "drizzle-orm";

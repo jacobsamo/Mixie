@@ -5,12 +5,8 @@ import {
 } from "@/lib/services/recipeJsonLDParsing";
 import { recipe_id } from "@/lib/utils";
 import { getUser } from "@/lib/utils/getUser";
-import db from "@/server/db/index";
-import { recipes } from "@/server/db/schemas";
 import { createClient } from "@/server/supabase/server";
-import { NewRecipe } from "@/types";
-import { Recipe, createRecipeSchema } from "@/types";
-import { eq, or } from "drizzle-orm";
+import { NewRecipe, Recipe, createRecipeSchema } from "@/types";
 import { NextResponse, type NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 import * as z from "zod";
@@ -24,6 +20,7 @@ export async function POST(req: NextRequest) {
     }
     const json = await req.json();
     const { title, link } = createRecipeSchema.parse(json);
+    const supabase = createClient();
 
     // set global variables
     const uid = uuidv4();
@@ -36,11 +33,11 @@ export async function POST(req: NextRequest) {
 
       // the recipe itself
       newRecipe = {
-        uid: uid,
+        recipe_id: uid,
         id,
         title: newTitle,
         created_by: user.id,
-        isPublic: false,
+        public: false,
       };
     }
 
@@ -49,10 +46,11 @@ export async function POST(req: NextRequest) {
         // split a mixie link to get the recipe id this id would be after /recipes/<recipe_id> a recipe link might look like this: https://mixiecooking.com/recipes/5f9b1b5e-5b1a-4b9e-9b9e-9b9e9b9e9b9e
         const recipe_id = link.split("/").pop();
         if (!recipe_id) return NextResponse.json(null, { status: 404 });
-        const findRecipe = await db
+
+        const findRecipe = await supabase
+          .from("recipes")
           .select()
-          .from(recipes)
-          .where(or(eq(recipes.id, recipe_id), eq(recipes.uid, recipe_id)));
+          .or(`id.eq.${recipe_id},recipe_id.eq.${recipe_id}`);
 
         if (!findRecipe) {
           return NextResponse.json(null, { status: 404 });
@@ -60,7 +58,7 @@ export async function POST(req: NextRequest) {
 
         newRecipe = {
           ...(findRecipe[0] as Recipe),
-          uid: uid,
+          recipe_id: uid,
         };
       }
 
@@ -77,20 +75,20 @@ export async function POST(req: NextRequest) {
         );
 
       newRecipe = {
-        uid: uid,
+        recipe_id: uid,
         id: recipe_id(recipe.name),
         title: recipe.name,
         description: recipe.description.replace(/<[^>]*>?/gm, "") || null,
-        isPublic: false,
+        public: false,
         steps:
           recipe.recipeInstructions.map((step: string) => {
             return { step_body: step };
           }) || null,
         ingredients: ingredients,
         source: link,
-        cook: splitTime(recipe.cookTime),
+        cook_time: splitTime(recipe.cookTime),
         prep_time: splitTime(recipe.prep_timeTime),
-        total: splitTime(recipe.totalTime),
+        total_time: splitTime(recipe.totalTime),
         rating: recipe.aggregateRating?.ratingValue || null,
         yield: recipe.recipeYield || null,
         image_url: recipe.image.url || null,
@@ -108,8 +106,6 @@ export async function POST(req: NextRequest) {
         { message: "Error could not create recipe" },
         { status: 404 }
       );
-
-    const supabase = createClient();
 
     await supabase.from("recipes").insert(newRecipe);
 

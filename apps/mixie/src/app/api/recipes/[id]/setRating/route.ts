@@ -1,6 +1,4 @@
 import { getUser } from "@/lib/utils/getUser";
-import db from "@/server/db/index";
-import { ratings } from "@/server/db/schemas";
 import { createClient } from "@/server/supabase/server";
 import { ratingsSchema } from "@/types/zodSchemas";
 import { NextResponse, type NextRequest } from "next/server";
@@ -20,7 +18,7 @@ export async function POST(req: NextRequest, params: { id: string }) {
     console.log(rating);
     const supabase = createClient();
 
-    await supabase.from("ratings").insert(rating)
+    await supabase.from("ratings").insert(rating);
 
     return NextResponse.json({
       message: "Rating updated successfully",

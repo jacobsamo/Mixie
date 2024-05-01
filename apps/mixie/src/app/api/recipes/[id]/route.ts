@@ -1,6 +1,4 @@
 import { isApp } from "@/lib/services/apiMiddleware";
-import db from "@/server/db/index";
-import { recipes } from "@/server/db/schemas";
 import { createClient } from "@/server/supabase/server";
 import { eq, or } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
