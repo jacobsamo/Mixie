@@ -22,6 +22,7 @@ export default async function EditPage({ params }: EditPageProps) {
     .from("recipes")
     .select("*")
     .eq("recipe_id", params.id)
+    .eq("created_by", user.id)
     .single();
 
   // return <RecipeForm recipe={mockRecipe} />;
