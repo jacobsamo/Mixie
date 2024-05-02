@@ -24,7 +24,7 @@ export default async function RecipeViewPage({
   const { mealTime: collection } = searchParams!;
   const mealTime = meal_times.find((meal) => meal.value === collection);
   const mealTimeRecipes = recipes.filter((recipe) => {
-    return recipe.mealTime?.values == mealTime?.value;
+    return recipe.meal_times?.values == mealTime?.value;
   });
 
   return (
@@ -91,7 +91,7 @@ export default async function RecipeViewPage({
                 ...recipe,
                 image_url: recipe.image_url || null,
                 image_attributes: recipe.image_attributes || null,
-                total: recipe.total || null,
+                total_time: recipe.total_time || null,
                 keywords: (recipe.keywords as { value: string }[]) || null,
               }}
             />

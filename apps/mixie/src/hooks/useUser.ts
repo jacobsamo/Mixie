@@ -1,6 +1,4 @@
 "use client";
-import { useState } from "react";
-import { User } from "@supabase/supabase-js";
 import { createClient } from "@/server/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 

@@ -4,82 +4,155 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BugIcon, Lightbulb, Loader2, MessageCirclePlus } from "lucide-react";
-import React from "react";
-
-import { DialogClose } from "@radix-ui/react-dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { TablesInsert } from "database.types";
 import { useAtom } from "jotai";
+import { Bug, CircleHelp, Lightbulb } from "lucide-react";
+import { usePathname } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { giveFeedbackOpen } from "../providers/dialogs";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { feedbackSchema } from "@/types/zodSchemas";
+import { env } from "env";
+import { createClient } from "@/server/supabase/client";
+import { useQuery } from "@tanstack/react-query";
+import useUser from "@/hooks/useUser";
 
 interface FeedbackDialogProps {
   Trigger?: React.ReactNode;
 }
 
 const FeedbackDialog = ({ Trigger }: FeedbackDialogProps) => {
+  const path = usePathname();
   const [open, setOpen] = useAtom(giveFeedbackOpen);
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const supabase = createClient();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      return user;
+    },
+  });
+
+  const {
+    register,
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<TablesInsert<"feedback">>({
+    resolver: zodResolver(feedbackSchema),
+    defaultValues: {
+      type: "bug",
+      page: path,
+      user_email: user?.email,
+    },
+  });
+
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
+
+  const onSubmit: SubmitHandler<TablesInsert<"feedback">> = (data) => {
+    try {
+      const create = fetch(`/api/feedback`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+        },
+        body: JSON.stringify(data),
+      });
+
+      toast.promise(create, {
+        loading: "Sending feedback...",
+        success: () => {
+          reset();
+          setOpen(false);
+          return "Thank you for your feedback";
+        },
+        error: "Failed to send your feedback",
+      });
+    } catch (error) {
+      toast.error("Failed to submit feedback");
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      {/* <DialogTrigger aria-label="click to give feedback">
-        {Trigger ? (
-          Trigger
-        ) : (
-          <div className="flex flex-row gap-1 border-none outline-none">
-            <MessageCirclePlus /> Feedback
-          </div>
-        )}
+      {/* <DialogTrigger asChild>
+        <Button variant={"secondary"}>Feedback</Button>
       </DialogTrigger> */}
-      <DialogContent className="flex h-[80%] max-w-full flex-col gap-2 p-3 lg:max-w-[80%]">
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Feedback</DialogTitle>
           <DialogDescription>
-            Share Feedback with the Mixie team
+            Make BuzzTrip better by providing feedback
           </DialogDescription>
         </DialogHeader>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+          <Controller
+            name="type"
+            control={control}
+            render={({ field }) => (
+              <ToggleGroup
+                type="single"
+                value={field.value}
+                onValueChange={field.onChange}
+              >
+                <ToggleGroupItem value="bug" className="inline-flex gap-2">
+                  <Bug /> Bug
+                </ToggleGroupItem>
+                <ToggleGroupItem value="feature" className="inline-flex gap-2">
+                  <Lightbulb /> Feature
+                </ToggleGroupItem>
+                <ToggleGroupItem value="other" className="inline-flex gap-2">
+                  <CircleHelp /> Other
+                </ToggleGroupItem>
+              </ToggleGroup>
+            )}
+          />
+          {!user && (
+            <>
+              <Label htmlFor="user_email">Email</Label>
+              <Input
+                {...register("user_email", { required: true })}
+                required
+                placeholder="Email"
+                error={errors.title}
+              />
+            </>
+          )}
 
-        <Tabs defaultValue="feature" className="h-full">
-          <TabsList className="">
-            <TabsTrigger value="feature" className="flex flex-row gap-2">
-              <Lightbulb />
-              Feature Request
-            </TabsTrigger>
-            <TabsTrigger value="bug" className="flex flex-row gap-2">
-              <BugIcon /> Bug Report
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="feature" className="h-full">
-            <iframe
-              width="100%"
-              height="100%"
-              loading="lazy"
-              src="https://docs.google.com/forms/d/e/1FAIpQLSdFXWvAvMdvuCXySmMJSCTjz-YN0X0m1f8pVG1pZ0Pk2kqihg/viewform?embedded=true"
-            >
-              <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-            </iframe>
-          </TabsContent>
-          <TabsContent value="bug" className="h-full">
-            <iframe
-              width="100%"
-              height="100%"
-              loading="lazy"
-              src="https://docs.google.com/forms/d/e/1FAIpQLSdydiU39LqmDfraMErw1u8WvfxkRoqnvdct08MAykM5W8vxww/viewform?embedded=true"
-            >
-              <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-            </iframe>
-          </TabsContent>
-        </Tabs>
+          <Label htmlFor="title">Title</Label>
+          <Input
+            {...register("title", { required: true })}
+            required
+            placeholder="Title"
+            error={errors.title}
+          />
 
-        <DialogFooter>
-          <DialogClose>
-            <Button>Done</Button>
-          </DialogClose>
-        </DialogFooter>
+          <Label htmlFor="description">Description</Label>
+          <Textarea
+            id="description"
+            control={control}
+            required
+            placeholder="Description"
+            error={(!!errors && errors?.description?.message) || ""}
+          />
+
+          <Button type="submit">Submit</Button>
+        </form>
       </DialogContent>
     </Dialog>
   );

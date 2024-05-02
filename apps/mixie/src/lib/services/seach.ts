@@ -27,7 +27,7 @@ export function searchRecipes({ query, filters, recipes }: SearchRecipesProps) {
   const filteredResults = unfilteredResults.filter((recipe) => {
     if (
       filters?.mealTime &&
-      filters.mealTime !== (recipe.mealTime?.values || "")
+      filters.mealTime !== (recipe.meal_times?.values || "")
     )
       return false;
     if (filters?.sweetSavory && recipe.sweet_savoury !== filters.sweetSavory)

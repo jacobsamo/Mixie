@@ -15,7 +15,6 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import useUser from "../hooks/useUser";
-import FeedbackDialog from "./modals/feedback-modal";
 import { CreateRecipeTrigger, FeedbackButton } from "./open-dialogs";
 import { userDropDownOpen } from "./providers/state-provider";
 
@@ -42,7 +41,7 @@ const UserProfile = () => {
           width={42}
           height={42}
           src={
-            user?.user_metadata.profile_picture ||
+            user?.user_metadata.picture ||
             "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           }
           alt="user profile picture"
@@ -77,7 +76,10 @@ const UserProfile = () => {
         >
           <ScrollText /> Drafts
         </Link>
-        <FeedbackDialog />
+        <FeedbackButton
+          props={{ unstyled: true }}
+          className="inline-flex dark:text-white"
+        />
         <Link
           onClick={() => setOpen(false)}
           href={`/${user?.id}/settings?activeLink=profile`}
@@ -93,7 +95,7 @@ const UserProfile = () => {
         />
         <Link
           onClick={() => setOpen(false)}
-          href={"/api/auth/signout"}
+          href={"/auth/signout"}
           className="flex flex-row gap-1"
         >
           {" "}

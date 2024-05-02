@@ -17,13 +17,13 @@ import { SearchInput } from "./search-input";
 
 type PartialRecipe = Pick<
   Recipe,
-  | "uid"
+  | "recipe_id"
   | "id"
   | "title"
   | "image_attributes"
   | "image_url"
-  | "total"
-  | "ingredientsList"
+  | "total_time"
+  | "ingredients_list"
   | "keywords"
 >;
 

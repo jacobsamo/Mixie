@@ -7,6 +7,7 @@ import { recipe_id } from "@/lib/utils";
 import { getUser } from "@/lib/utils/getUser";
 import { createClient } from "@/server/supabase/server";
 import { NewRecipe, Recipe, createRecipeSchema } from "@/types";
+import { PostgrestError } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 import * as z from "zod";
@@ -23,7 +24,6 @@ export async function POST(req: NextRequest) {
     const supabase = createClient();
 
     // set global variables
-    const uid = uuidv4();
     let newRecipe: NewRecipe | null = null;
 
     if (title && !link) {
@@ -33,11 +33,11 @@ export async function POST(req: NextRequest) {
 
       // the recipe itself
       newRecipe = {
-        recipe_id: uid,
         id,
         title: newTitle,
         created_by: user.id,
         public: false,
+        version: "1.0",
       };
     }
 
@@ -58,7 +58,6 @@ export async function POST(req: NextRequest) {
 
         newRecipe = {
           ...(findRecipe[0] as Recipe),
-          recipe_id: uid,
         };
       }
 
@@ -75,7 +74,6 @@ export async function POST(req: NextRequest) {
         );
 
       newRecipe = {
-        recipe_id: uid,
         id: recipe_id(recipe.name),
         title: recipe.name,
         description: recipe.description.replace(/<[^>]*>?/gm, "") || null,
@@ -96,8 +94,9 @@ export async function POST(req: NextRequest) {
         keywords: recipe.keywords.split(",").map((keyword: string) => {
           return { value: keyword };
         }),
-        ingredientsList: ingredients.map((ingredient) => ingredient.title),
+        ingredients_list: ingredients.map((ingredient) => ingredient.title),
         created_by: user.id,
+        version: "1.0",
       };
     }
 
@@ -107,15 +106,27 @@ export async function POST(req: NextRequest) {
         { status: 404 }
       );
 
-    await supabase.from("recipes").insert(newRecipe);
+    const { data, error } = await supabase
+      .from("recipes")
+      .insert(newRecipe)
+      .select()
+      .single();
 
-    console.log(`Created recipe by link: ${uid}`, {
+      if (error) {
+        console.error("Error on /recipes/create", error);
+        return NextResponse.json("A database error occurred, contact support at support@mixiecooking.com or head to github to log an issue https://github.com/Eirfire/Mixie/issues", { status: 422 });
+      }
+
+    console.log(`Created recipe by link: ${data?.recipe_id}`, {
       message: `Recipe successfully created`,
-      recipe: newRecipe,
+      recipe: data,
     });
 
     return NextResponse.json(
-      { message: `Recipe successfully created using link`, id: uid },
+      {
+        message: `Recipe successfully created using link`,
+        id: data?.recipe_id,
+      },
       {
         status: 200,
       }
@@ -125,6 +136,7 @@ export async function POST(req: NextRequest) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(JSON.stringify(error.issues), { status: 422 });
     }
+
 
     return NextResponse.json(null, { status: 500 });
   }

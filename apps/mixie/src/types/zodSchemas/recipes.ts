@@ -91,7 +91,7 @@ const recipes = z.object({
   keywords: z.string().array().nullable(),
   notes: z.string().nullable(),
   nutrition: z.string().array().nullable(),
-  prep_time_time: z.string().nullable(),
+  prep_time: z.string().nullable(),
   public: z.boolean().default(false),
   rating: z.number().nullable(),
   recipe_id: z.string(),
@@ -104,12 +104,42 @@ const recipes = z.object({
   version: z.string(),
   yield: z.number().nullable(),
 });
-const recipes_edit = z.object({});
 
-export const recipeSchema = recipes.extend({
+
+const recipes_edit = z.object({
+  category: z.string().nullish(),
+  cook_time: z.string().nullish(),
+  created_at: z.string().optional(),
+  created_by: z.string(),
+  cuisine: z.string().nullish(),
+  description: z.string().nullish(),
+  difficulty_level: difficulty_level.default("not_set").optional(),
+  id: z.string(),
+  image_attributes: image_attributesSchema.nullish(),
+  image_url: z.string().nullish(),
+  ingredients: ingredientSchema.array().nullish(),
+  ingredients_list: z.string().array().nullish(),
+  keywords: z.string().array().nullish(),
+  notes: z.string().nullish(),
+  nutrition: z.string().array().nullish(),
+  prep_time: z.string().nullish(),
+  public: z.boolean().default(false).optional(),
+  rating: z.number().nullish(),
+  recipe_id: z.string().optional(),
+  source: z.string().nullish(),
+  steps: stepSchema.array().nullish(),
+  suitable_for_diet: z.string().nullish(),
+  sweet_savoury: sweet_savoury.default("not_set").optional(),
+  title: z.string(),
+  total_time: z.string().nullish(),
+  version: z.string(),
+  yield: z.number().nullish(),
+});
+
+export const recipeSchema = recipes_edit.extend({
   steps: stepSchema.array().optional(),
   ingredients: ingredientSchema.array().optional(),
-  ingredientsList: z.string().array().nullish(),
+  ingredients_list: z.string().array().nullish(),
   image_url: z
     .string({
       required_error: "An image must be present when a recipe is public",
@@ -117,7 +147,6 @@ export const recipeSchema = recipes.extend({
     .url({ message: "Must be a valid url" })
     .nullish(),
   image_attributes: image_attributesSchema.nullish(),
-  keywords: z.object({ value: z.string() }).array().nullish(),
   prep_time: z
     .string({ required_error: "prep_time time is required for public recipes" })
     .regex(/^(\d{1,2}[hms]\s?)+$/i, {
@@ -132,10 +161,9 @@ export const recipeSchema = recipes.extend({
         "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
     })
     .nullish(),
-  created_at: z.date(),
-  dietary: selectValue.array().nullable(),
-  allergens: selectValue.array().nullable(),
-  meal_times: selectValue.array().nullable(),
+  dietary: selectValue.array().nullish(),
+  allergens: selectValue.array().nullish(),
+  meal_times: selectValue.array().nullish(),
 });
 
 // extend the recipe schema to include the info and ingredients
