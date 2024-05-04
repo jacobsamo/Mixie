@@ -17,8 +17,8 @@ export async function GET(
       return NextResponse.json("Unauthorized", { status: 401 });
     }
     const supabase = createClient();
-    const userBookmarks = await supabase
-      .from("bookmarks")
+    const {data: userBookmarks} = await supabase
+      .from("bookmarks_view")
       .select()
       .eq("user_id", params.userId);
 

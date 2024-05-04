@@ -1,12 +1,8 @@
 import { isApp } from "@/lib/services/apiMiddleware";
 import { getUser } from "@/lib/utils/getUser";
-import db from "@/server/db/index";
-import { collections } from "@/server/db/schemas";
 import { createClient } from "@/server/supabase/server";
 import { Collection, collectionSchema } from "@/types";
-import { eq, or } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
-import { v4 as uuidv4 } from "uuid";
 import * as z from "zod";
 
 export async function POST(
@@ -26,24 +22,21 @@ export async function POST(
     const json = await req.json();
     const collection = collectionSchema.parse(json);
 
-    // set global variables
-    const uid = uuidv4();
 
     const newCollection: Collection = {
       ...collection,
-      uid: uid,
-      userId: user!.id,
+      user_id: user!.id,
     };
     const supabase = createClient();
-    await supabase.from("collections").insert(newCollection);
+    const {data} = await supabase.from("collections").insert(newCollection).select().single();
 
-    console.log(`Created collection: ${uid}`, {
+    console.log(`Created collection: ${data!.collection_id}`, {
       message: `Collection successfully created`,
       collection: newCollection,
     });
 
     return NextResponse.json(
-      { message: `Collection successfully created`, id: uid },
+      { message: `Collection successfully created`, id: data!.collection_id },
       {
         status: 200,
       }

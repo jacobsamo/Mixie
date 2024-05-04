@@ -13,8 +13,8 @@ export const userDropDownOpen = atom<boolean>(false);
 const StateProvider = ({ children }: { children: React.ReactNode }) => {
   const [bookmarks, setBookmarks] = useAtom(bookmarksAtom);
   const [collections, setCollections] = useAtom(collectionsAtom);
-
   const user = useUser();
+
   const { data: bookmarkedRecipes, refetch: refetchBookmarks } = useQuery<
     Bookmark[] | null
   >({

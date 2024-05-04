@@ -10,6 +10,7 @@ import {
   bookmarkSchema,
   collectionSchema,
   ratingsSchema,
+  bookmarksWithLinkSchema,
 } from "./zodSchemas/recipes";
 
 export * from "./zodSchemas/recipes";
@@ -35,5 +36,5 @@ export type SelectValue = {
 export type Rating = z.infer<typeof ratingsSchema>;
 
 // bookmarks
-export type Bookmark = z.infer<typeof bookmarkSchema>;
+export type Bookmark = z.infer<typeof bookmarksWithLinkSchema>;
 export type Collection = z.infer<typeof collectionSchema>;

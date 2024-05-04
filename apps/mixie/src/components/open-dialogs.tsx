@@ -109,7 +109,7 @@ export const FeedbackButton = ({
       )}
       {...props}
     >
-      {text ? text : "Give feedback"}
+      {text ? text : "Feedback"}
     </Button>
   );
 };

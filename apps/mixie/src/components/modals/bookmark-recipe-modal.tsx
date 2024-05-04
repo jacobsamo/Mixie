@@ -1,14 +1,5 @@
 "use client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { env } from "env";
-import { CheckCircle, HeartIcon, PlusCircle } from "lucide-react";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import * as z from "zod";
-
+import { bookmarkRouteSchema } from "@/app/api/recipes/bookmark/[id]/route";
 import CreateCollectionDialog from "@/components/modals/create-collection-modal";
 import {
   bookmarksAtom,
@@ -23,8 +14,16 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { Bookmark } from "@/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { env } from "env";
 import { useAtom } from "jotai";
+import { CheckCircle, HeartIcon, PlusCircle } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import * as z from "zod";
 import { CardRecipe } from "../cards/card-utils";
 
 const selectCollection = z.object({
@@ -51,7 +50,7 @@ const BookmarkRecipeDialog = ({
   const methods = useForm<z.infer<typeof selectCollection>>({
     resolver: zodResolver(selectCollection),
     defaultValues: {
-      selected: isBookmarked?.collections?.split(", "),
+      selected: isBookmarked?.collections,
     },
   });
   const {
@@ -102,7 +101,10 @@ const BookmarkRecipeDialog = ({
           method: "PUT",
           body: JSON.stringify({
             collections: collections,
-          } as Bookmark),
+            notes: null,
+            rating: null,
+            tags: null,
+          } as z.infer<typeof bookmarkRouteSchema>),
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
@@ -201,7 +203,9 @@ const BookmarkRecipeDialog = ({
           {collections && (
             <ul className="flex flex-col gap-2 pb-8">
               {collections.map((collection) => {
-                const isChecked = watch("selected")?.includes(collection.collection_id);
+                const isChecked = watch("selected")?.includes(
+                  collection.collection_id
+                );
 
                 return (
                   <li className="md:w-3/5" key={collection.collection_id}>

@@ -1,9 +1,6 @@
 import { isApp } from "@/lib/services/apiMiddleware";
 import { getUser } from "@/lib/utils/getUser";
-import db from "@/server/db/index";
 import { createAdminClient } from "@/server/supabase/server";
-import { userSchema } from "@/types/zodSchemas";
-import { eq } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 
@@ -26,13 +23,12 @@ export async function PUT(
     json.emailVerified = new Date(json.emailVerified);
     console.log("Body: ", json);
 
-    const newUser = userSchema.parse(json);
 
     const supabase = createAdminClient();
 
-    await supabase.auth.updateUser(newUser);
+    await supabase.auth.updateUser(json);
 
-    console.log("User updated: ", newUser);
+    console.log("User updated: ", json);
 
     return NextResponse.json(
       {

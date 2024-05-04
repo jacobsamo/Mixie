@@ -2,8 +2,14 @@ import { getUser } from "@/lib/utils/getUser";
 import { createClient } from "@/server/supabase/server";
 import { TablesInsert } from "database.types";
 import { NextResponse, type NextRequest } from "next/server";
-import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
+
+export const bookmarkRouteSchema = z.object({
+  collections: z.string().array().nullish(),
+  notes: z.string().nullish(),
+  rating: z.number().nullish(),
+  tags: z.string().array().nullish(),
+});
 
 export async function POST(
   req: NextRequest,
@@ -17,29 +23,45 @@ export async function POST(
     }
 
     const json = await req.json();
-    const uid = uuidv4();
+    const bookmark = bookmarkRouteSchema.parse(json);
 
     const newBookmark: TablesInsert<"bookmarks"> = {
-      bookmark_id: uid,
       user_id: user.id,
       recipe_id: params.id,
+      notes: bookmark.notes,
+      rating: bookmark.rating,
+      tags: bookmark.tags,
     };
     const supabase = createClient();
 
-    const { data: findBookmarks } = await supabase
+    const { data: bookmarkExists } = await supabase
       .from("bookmarks")
       .select()
-      .eq("user_id", user.id);
-
-    const bookmarkExists =
-      findBookmarks &&
-      findBookmarks.find((bookmark) => bookmark.recipe_id === params.id);
+      .eq("user_id", user.id)
+      .eq("recipe_id", params.id)
+      .single();
 
     if (bookmarkExists) {
       return NextResponse.json("Already bookmarked", { status: 409 });
     }
 
-    await supabase.from("bookmarks").insert(newBookmark);
+    const { data } = await supabase
+      .from("bookmarks")
+      .insert(newBookmark)
+      .select();
+
+    if (bookmark.collections && data) {
+      bookmark.collections.forEach(async (collection_id) => {
+        const newLink: TablesInsert<"bookmark_link"> = {
+          bookmark_id: data[0].bookmark_id,
+          recipe_id: params.id,
+          collection_id: collection_id,
+          user_id: user.id,
+        };
+
+        await supabase.from("bookmark_link").insert(newLink);
+      });
+    }
 
     console.log(
       `Recipe ${newBookmark.recipe_id} has been bookmarked by ${user.id}`

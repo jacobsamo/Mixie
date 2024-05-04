@@ -19,8 +19,6 @@ export async function POST(req: NextRequest) {
       user_id: user?.id ?? null,
     };
 
-    console.log('Feedback: ', newFeedback);
-
     const {} = await supabase.from("feedback").insert(newFeedback);
 
     return NextResponse.json(

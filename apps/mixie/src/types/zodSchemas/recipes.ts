@@ -105,7 +105,6 @@ const recipes = z.object({
   yield: z.number().nullable(),
 });
 
-
 const recipes_edit = z.object({
   category: z.string().nullish(),
   cook_time: z.string().nullish(),
@@ -208,13 +207,22 @@ export const recipeFormSchema = recipeSchema.superRefine((values, ctx) => {
 
 export const bookmarkSchema = z.object({
   bookmark_id: z.string(),
-  recipe_id: z.string(),
-  created_at: z.date(),
-  user_id: z.string().optional(),
+  created_at: z.string(),
+  notes: z.string().nullable(),
+  rating: z.number().nullable(),
+  tags: z.string().array().nullable(),
+  recipe_id: z.string().nullable(),
+  user_id: z.string().nullable(),
 });
+
+export const bookmarksWithLinkSchema = bookmarkSchema.extend({
+  collections: z.string().array().nullable(),
+  recipes: recipes,
+});
+
 export const collectionSchema = z.object({
   collection_id: z.string(),
-  created_at: z.date(),
+  created_at: z.string(),
   description: z.string().nullish(),
   title: z.string(),
   user_id: z.string().optional(),

@@ -12,23 +12,50 @@ export type Database = {
       bookmark_link: {
         Row: {
           bookmark_id: string
+          collection_id: string
           created_at: string
+          link_id: string
           recipe_id: string | null
           user_id: string | null
         }
         Insert: {
-          bookmark_id?: string
+          bookmark_id: string
+          collection_id: string
           created_at?: string
+          link_id?: string
           recipe_id?: string | null
           user_id?: string | null
         }
         Update: {
           bookmark_id?: string
+          collection_id?: string
           created_at?: string
+          link_id?: string
           recipe_id?: string | null
           user_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "bookmark_link_bookmark_id_fkey"
+            columns: ["bookmark_id"]
+            isOneToOne: false
+            referencedRelation: "bookmarks"
+            referencedColumns: ["bookmark_id"]
+          },
+          {
+            foreignKeyName: "bookmark_link_bookmark_id_fkey"
+            columns: ["bookmark_id"]
+            isOneToOne: false
+            referencedRelation: "bookmarks_view"
+            referencedColumns: ["bookmark_id"]
+          },
+          {
+            foreignKeyName: "bookmark_link_collection_id_fkey"
+            columns: ["collection_id"]
+            isOneToOne: false
+            referencedRelation: "collections"
+            referencedColumns: ["collection_id"]
+          },
           {
             foreignKeyName: "bookmark_link_recipe_id_fkey"
             columns: ["recipe_id"]
@@ -49,19 +76,28 @@ export type Database = {
         Row: {
           bookmark_id: string
           created_at: string
+          notes: string | null
+          rating: number | null
           recipe_id: string | null
+          tags: string[] | null
           user_id: string | null
         }
         Insert: {
           bookmark_id?: string
           created_at?: string
+          notes?: string | null
+          rating?: number | null
           recipe_id?: string | null
+          tags?: string[] | null
           user_id?: string | null
         }
         Update: {
           bookmark_id?: string
           created_at?: string
+          notes?: string | null
+          rating?: number | null
           recipe_id?: string | null
+          tags?: string[] | null
           user_id?: string | null
         }
         Relationships: [
@@ -324,7 +360,35 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      bookmarks_view: {
+        Row: {
+          bookmark_id: string | null
+          collections: Json | null
+          created_at: string | null
+          notes: string | null
+          rating: number | null
+          recipe_id: string | null
+          recipes: Json | null
+          tags: string[] | null
+          user_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookmarks_recipe_id_fkey"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "recipes"
+            referencedColumns: ["recipe_id"]
+          },
+          {
+            foreignKeyName: "bookmarks_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       [_ in never]: never

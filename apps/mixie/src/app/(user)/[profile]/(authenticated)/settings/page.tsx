@@ -1,9 +1,8 @@
 "use client";
 import { FeedbackButton } from "@/components/open-dialogs";
 import { Button } from "@/components/ui/button";
-import { User } from "@/types";
-import { userSchema } from "@/types/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { User } from "@supabase/supabase-js";
 import { env } from "env";
 import { Loader2 } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -34,7 +33,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
   const [loading, setLoading] = useState(false);
 
   const methods = useForm<User>({
-    resolver: zodResolver(userSchema),
+    // resolver: zodResolver(userSchema),
     defaultValues: async () => {
       const res = await fetch(`/api/users/${params.profile}`, {
         headers: {

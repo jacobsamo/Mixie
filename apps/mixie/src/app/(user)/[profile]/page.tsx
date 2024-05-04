@@ -4,10 +4,8 @@ import { constructMetadata } from "@/lib/utils/";
 import { getUser } from "@/lib/utils/getUser";
 import { createClient } from "@/server/supabase/server";
 import { User } from "@supabase/supabase-js";
-import { and, eq } from "drizzle-orm";
 import { Heart, Pencil, ScrollText } from "lucide-react";
 import { Metadata } from "next";
-import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -48,7 +46,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
       `recipe_id, id, title, image_url, image_attributes, total_time, keywords`
     )
     .eq("public", true)
-    .eq("created_at", params.profile);
+    .eq("created_by", params.profile);
 
   if (user) {
     return (
@@ -62,12 +60,8 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             priority
             className="m-auto h-24 w-24 rounded-full lg:h-48 lg:w-48"
           />
-          <h1 className="text-center text-step0">
-            {user.user_metadata.name}
-          </h1>
-          <h2 className="text-step-1 text-center">
-            {user.user_metadata.name}
-          </h2>
+          <h1 className="text-center text-step0">{user.user_metadata.name}</h1>
+          <h2 className="text-step-1 text-center">{user.user_metadata.name}</h2>
           {signedInUser &&
             signedInUser.id == user.id &&
             signedInUser.id == params.profile && (

@@ -2,18 +2,20 @@
 import { SearchCard, type CardRecipe } from "@/components/cards";
 import CreateCollectionDialog from "@/components/modals/create-collection-modal";
 import { createQueryString } from "@/lib/utils";
-import type { Bookmark, Collection } from "@/types";
+import type { Bookmark } from "@/types";
 import { User } from "@supabase/supabase-js";
+import { Tables } from "database.types";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-interface BookmarkWithRecipe extends Bookmark {
+export interface BookmarkWithRecipe extends Bookmark {
   recipe: CardRecipe;
+  collections: string[];
 }
 
 interface DisplayElementsProps {
-  collections: Collection[];
-  bookmarks: BookmarkWithRecipe[];
+  collections: Tables<"collections">[] | null;
+  bookmarks: BookmarkWithRecipe[] | null;
   user: User;
 }
 
@@ -51,7 +53,7 @@ const CollectionCard = ({
 
   return (
     <button
-      className="relative flex-1 flex-shrink-0 w-1/2 max-w-56 resize-y rounded-md shadow outline outline-1 outline-slate-700 sm:w-1/3 dark:shadow-none"
+      className="relative w-1/2 max-w-56 flex-1 flex-shrink-0 resize-y rounded-md shadow outline outline-1 outline-slate-700 sm:w-1/3 dark:shadow-none"
       onClick={() => {
         router.push("?" + createQueryString("collection", collectionId));
       }}
@@ -76,7 +78,8 @@ const DisplayElements = ({
   const router = useRouter();
   const searchParams = useSearchParams();
   const active = searchParams.get("collection");
-  const activeCollection = collections.find((col) => col.collection_id == active);
+  const activeCollection =
+    collections && collections.find((col) => col.collection_id == active);
 
   return (
     <div className="mb-8 flex h-full max-h-[60%] w-full flex-wrap gap-1 p-2">
@@ -89,15 +92,16 @@ const DisplayElements = ({
 
           <div className="flex flex-wrap gap-2">
             <CollectionCard collectionId="all" title="All Saves" />
-            {collections.map((collection) => {
-              return (
-                <CollectionCard
-                  key={collection.collection_id}
-                  collectionId={collection.collection_id}
-                  title={collection.title}
-                />
-              );
-            })}
+            {collections &&
+              collections.map((collection) => {
+                return (
+                  <CollectionCard
+                    key={collection.collection_id}
+                    collectionId={collection.collection_id}
+                    title={collection.title}
+                  />
+                );
+              })}
           </div>
         </div>
       )}
@@ -108,15 +112,19 @@ const DisplayElements = ({
           <h1 className="text-step0">{activeCollection.title}</h1>
 
           <div className="flex flex-col gap-2">
-            {bookmarks
-              .filter((bookmark) =>
-                bookmark.collections?.includes(activeCollection.collection_id)
-              )
-              .map((bookmark) => {
-                return (
-                  <SearchCard key={bookmark.bookmark_id} recipe={bookmark.recipe} />
-                );
-              })}
+            {bookmarks &&
+              bookmarks
+                .filter((bookmark) =>
+                  bookmark.collections?.includes(activeCollection.collection_id)
+                )
+                .map((bookmark) => {
+                  return (
+                    <SearchCard
+                      key={bookmark.bookmark_id}
+                      recipe={bookmark.recipe}
+                    />
+                  );
+                })}
           </div>
         </div>
       )}
@@ -127,9 +135,15 @@ const DisplayElements = ({
           <h1 className="text-step0">All</h1>
 
           <div className="flex flex-col gap-2">
-            {bookmarks.map((bookmark) => {
-              return <SearchCard key={bookmark.bookmark_id} recipe={bookmark.recipe} />;
-            })}
+            {bookmarks &&
+              bookmarks.map((bookmark) => {
+                return (
+                  <SearchCard
+                    key={bookmark.bookmark_id}
+                    recipe={bookmark.recipe}
+                  />
+                );
+              })}
           </div>
         </div>
       )}

@@ -1,15 +1,12 @@
 import { recipe_id } from "@/lib/utils";
 import { getUser } from "@/lib/utils/getUser";
 import { createClient } from "@/server/supabase/server";
-
-import { NewRecipe } from "@/types";
 import { recipeFormSchema } from "@/types/zodSchemas";
 import { TablesUpdate } from "database.types";
-import { eq } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
 import * as z from "zod";
 
-export async function PUT(req: NextRequest) {
+export async function PUT(req: NextRequest, params: { id: string }) {
   try {
     const user = await getUser();
 
@@ -38,14 +35,14 @@ export async function PUT(req: NextRequest) {
       ...recipe,
       id: id,
       title: recipe.title.charAt(0).toUpperCase() + recipe.title.slice(1),
-      ingredients_list: ingredientsList,      
+      ingredients_list: ingredientsList,
     };
     const supabase = createClient();
 
     const setRecipe = await supabase
       .from("recipes")
       .update(newRecipe)
-      .eq("recipe_id", recipe.recipe_id);
+      .eq("recipe_id", params.id);
 
     console.log(`Edited recipe ${newRecipe.recipe_id}`, {
       message: `Recipe successfully edited, ${setRecipe}`,

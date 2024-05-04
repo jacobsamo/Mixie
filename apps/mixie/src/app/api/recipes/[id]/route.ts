@@ -1,6 +1,5 @@
 import { isApp } from "@/lib/services/apiMiddleware";
 import { createClient } from "@/server/supabase/server";
-import { eq, or } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function GET(req: NextRequest, params: { id: string }) {
