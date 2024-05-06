@@ -1,10 +1,6 @@
-import { getServerAuthSession } from "@/server/auth";
-import { useSession } from "next-auth/react";
-import { redirect, useRouter } from "next/navigation";
-import React from "react";
-import Image from "next/image";
-import { headers } from "next/headers";
 import { constructMetadata } from "@/lib/utils";
+import Image from "next/image";
+import React from "react";
 
 export const metadata = constructMetadata({
   description: "join the Mixie community",

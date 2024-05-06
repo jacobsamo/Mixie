@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
-import { FeedbackButton } from "../open-dialogs";
+import FeedbackDialog from "../modals/feedback-modal";
 import { createRecipeOpen } from "../providers/dialogs";
 import { userDropDownOpen } from "../providers/state-provider";
 import VersionChip from "../versioning-chips";
@@ -128,7 +128,7 @@ const CreateRecipeDialog = () => {
           </Button>
         </form>
 
-        <FeedbackButton />
+        <FeedbackDialog />
       </DialogContent>
     </Dialog>
   );

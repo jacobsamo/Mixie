@@ -13,9 +13,9 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   return constructMetadata({
     title: recipe?.title,
     description: recipe?.description || undefined,
-    image: recipe?.imageUrl || "/images/banner.jpg",
+    image: recipe?.image_url || "/images/banner.jpg",
     url: `https://www.mixiecooking.com/recipes/${recipe?.id}`,
-    keywords: recipe?.keywords?.map((keyword) => keyword.value) || undefined,
+    keywords: recipe?.keywords?.map((keyword) => keyword) || undefined,
   });
 }
 
@@ -30,7 +30,7 @@ export default async function RecipePage({ params }) {
           useAppDir={true}
           name={recipe?.title || ""}
           authorName={""}
-          yields={recipe?.serves?.toString() || ""}
+          yields={recipe?.yield?.toString() || ""}
           ingredients={
             recipe?.ingredients?.map((ingredient) => {
               return displayIngredient(ingredient);
@@ -46,12 +46,12 @@ export default async function RecipePage({ params }) {
           }
           description={recipe.description! || ""}
           datePublished={
-            recipe.createdAt
-              ? new Date(recipe.createdAt).toDateString()
+            recipe.created_at
+              ? new Date(recipe.created_at).toDateString()
               : new Date().toDateString()
           }
           keywords={
-            recipe.keywords?.map((keyword) => keyword.value).join(", ") || ""
+            recipe.keywords?.map((keyword) => keyword).join(", ") || ""
           }
         />
         <RecipePageComponent recipe={recipe as Recipe} />

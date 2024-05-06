@@ -7,7 +7,9 @@ import Info from "./info";
 import StarRating from "./star-rating";
 import dynamic from "next/dynamic";
 
-const ShareDialog = dynamic(() => import("@/components/modals/share-resource-modal"));
+const ShareDialog = dynamic(
+  () => import("@/components/modals/share-resource-modal")
+);
 const RecipePrintingView = dynamic(() => import("./recipe-printing-view"));
 
 interface RecipePageComponentProps {
@@ -23,33 +25,36 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
           <h1 id="title" className="text-center text-step2 font-semibold">
             {recipe.title}
           </h1>
-          <StarRating rating={recipe.rating || 0} recipeId={recipe.uid} />
+          <StarRating
+            rating={recipe.rating || 0}
+            recipe_id={recipe?.recipe_id ?? ""}
+          />
         </div>
         <Info info={recipe} />
         <div className="w-full">
           <div className="relative">
             <Image
-              src={recipe?.imageUrl || "/images/placeholder.webp"}
+              src={recipe?.image_url || "/images/placeholder.webp"}
               alt={
-                recipe?.imageAttributes?.alt ?? recipe.title ?? "recipe image"
+                recipe?.image_attributes?.alt ?? recipe.title ?? "recipe image"
               }
               width={800}
               height={600}
               className="aspect-video rounded-xl object-cover"
               priority
               placeholder="blur"
-              blurDataURL={recipe.imageUrl || "/images/placeholder.webp"}
+              blurDataURL={recipe.image_url || "/images/placeholder.webp"}
             />
-            {recipe.imageAttributes?.photographer &&
-              recipe.imageAttributes.photographerLink && (
+            {recipe.image_attributes?.photographer &&
+              recipe.image_attributes.photographer_link && (
                 <div className="textOnBackground absolute bottom-2 left-2 bg-gray-700/20 text-white drop-shadow-xl">
                   Photo by{" "}
                   <Link
-                    href={recipe.imageAttributes.photographerLink}
+                    href={recipe.image_attributes.photographer_link}
                     target="_blank"
                     className="underline underline-offset-2"
                   >
-                    {recipe.imageAttributes.photographer}
+                    {recipe.image_attributes.photographer}
                   </Link>{" "}
                   on{" "}
                   <Link
@@ -66,16 +71,14 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
           </div>
           <div className="py-2">
             <span className="relative flex flex-wrap gap-2">
-              {(recipe?.keywords as { value: string }[])
-                ?.splice(0, 5)
-                .map((keyword, index) => (
-                  <p
-                    key={index}
-                    className="h-fit w-fit rounded-lg bg-yellow p-1 text-center text-step--4 text-black opacity-80"
-                  >
-                    {keyword.value}
-                  </p>
-                ))}
+              {recipe?.keywords?.splice(0, 5).map((keyword, index) => (
+                <p
+                  key={index}
+                  className="h-fit w-fit rounded-lg bg-yellow p-1 text-center text-step--4 text-black opacity-80"
+                >
+                  {keyword}
+                </p>
+              ))}
               {recipe.source && (
                 <Link
                   href={recipe.source}
@@ -90,11 +93,11 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
 
               <ShareDialog
                 url={`https://www.mixiecooking/recipes/${recipe.id}`}
-                image={recipe.imageUrl || ""}
+                image={recipe.image_url || ""}
                 title={recipe.title}
-                hashtags={(recipe?.keywords as { value: string }[])
+                hashtags={recipe?.keywords
                   ?.splice(0, 5)
-                  ?.map((keyword) => keyword.value)
+                  ?.map((keyword) => keyword)
                   .join(", ")}
               />
             </span>

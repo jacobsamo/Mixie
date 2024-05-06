@@ -1,12 +1,13 @@
 "use client";
-import { CreateRecipeTrigger, FeedbackButton } from "@/components/open-dialogs";
+import { CreateRecipeTrigger } from "@/components/open-dialogs";
 import { searchOpen } from "@/components/providers/dialogs";
 import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogFooter
+  DialogFooter,
 } from "@/components/ui/dialog";
+import FeedbackDialog from "@/components/modals/feedback-modal";
 import { Recipe } from "@/types";
 import { motion } from "framer-motion";
 import { useAtom } from "jotai";
@@ -17,13 +18,13 @@ import { SearchInput } from "./search-input";
 
 type PartialRecipe = Pick<
   Recipe,
-  | "uid"
+  | "recipe_id"
   | "id"
   | "title"
-  | "imageAttributes"
-  | "imageUrl"
-  | "total"
-  | "ingredientsList"
+  | "image_attributes"
+  | "image_url"
+  | "total_time"
+  | "ingredients_list"
   | "keywords"
 >;
 
@@ -60,7 +61,7 @@ export const SearchDialog = () => {
         </div>
 
         <DialogFooter className="mx-auto inline-flex gap-2 sm:justify-center">
-          <FeedbackButton />
+          <FeedbackDialog />
           <CreateRecipeTrigger text="Create your own recipe" />
         </DialogFooter>
       </DialogContent>

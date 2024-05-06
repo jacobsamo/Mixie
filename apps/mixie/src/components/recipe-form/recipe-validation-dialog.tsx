@@ -61,7 +61,7 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
           />
           <Controller
             control={control}
-            name={"isPublic"}
+            name={"public"}
             defaultValue={false}
             render={({ field }) => (
               <SwitchInput

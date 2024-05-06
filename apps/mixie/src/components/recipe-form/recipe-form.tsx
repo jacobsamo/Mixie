@@ -21,7 +21,7 @@ import RecipePageComponent from "../recipe-page/recipe-page";
 import Overlay from "./overlay";
 // import  StepContainer  from "./StepContainer";
 import Error from "@/components/ui/Error";
-import { FeedbackButton } from "../open-dialogs";
+import FeedbackDialog from "@/components/modals/feedback-modal";
 import { onSubmit } from "./form";
 import LoadingImageUpload from "./loadingstates/loading-image-upload";
 
@@ -104,7 +104,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
 
   useEffect(() => {
     const recipeValue = getValues();
-    if (initialTitle !== recipeValue.title && recipeValue.isPublic) {
+    if (initialTitle !== recipeValue.title && recipeValue.public) {
       fetch(`/api/recipes/checkTitle`, {
         method: "POST",
         headers: {
@@ -122,12 +122,14 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
         }
       });
     }
-  }, [watch("title"), watch("isPublic")]);
+  }, [watch("title"), watch("public")]);
 
   const gotRecipe = getValues() as Recipe;
 
   return (
     <FormProvider {...methods}>
+      {preview && <RecipePageComponent recipe={gotRecipe} />}
+
       <form
         className="relative z-0 mx-auto mb-[20%] flex w-full flex-col p-2 md:p-0 lg:w-1/2"
         onSubmit={handleSubmit(onSubmit)}
@@ -154,33 +156,33 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
               tooltip="Where you got the recipe from if you got it from another website"
             />
             <Input
-              {...register("prep", {
+              {...register("prep_time", {
                 pattern: {
                   value: /^(\d{1,2}[hms]\s?)+$/i,
                   message:
                     "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
                 },
               })}
-              error={errors.prep}
-              label="Prep Time"
+              error={errors.prep_time}
+              label="prep_time Time"
               hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
             />
             <Input
-              {...register("cook", {
+              {...register("cook_time", {
                 pattern: {
                   value: /^(\d{1,2}[hms]\s?)+$/i,
                   message:
                     "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
                 },
               })}
-              error={errors.cook}
+              error={errors.cook_time}
               label="Cook Time"
               hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
             />
             <Input
-              {...register("serves", { valueAsNumber: true })}
-              error={errors.serves}
-              label="Serves"
+              {...register("yield", { valueAsNumber: true })}
+              error={errors.yield}
+              label="yield"
               type="number"
             />
 
@@ -245,21 +247,21 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
 
             <Controller
               control={control}
-              name="mealTime"
+              name="meal_times"
               render={({ field }) => (
                 <>
                   <label
-                    htmlFor="mealTime"
+                    htmlFor="meal_times"
                     className="block text-step--3 font-medium"
                   >
                     Meal Time
                   </label>
-                  <Error error={errors?.mealTime?.message ?? null} />
+                  <Error error={errors?.meal_times?.message ?? null} />
                   <SelectComponent
                     options={meal_times}
                     createAble
                     isMulti
-                    onChange={(value) => setValue("mealTime", value.value)}
+                    onChange={(value) => setValue("meal_times", value.value)}
                     value={meal_times.find(
                       (item) =>
                         typeof field.value === "string" &&
@@ -287,12 +289,10 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
               control={control}
               label="Notes, Tips or Suggestions"
             />
-
-            <FeedbackButton className="mt-4 bg-grey w-1/2 mx-auto" />
           </>
         )}
       </form>
-      {preview && <RecipePageComponent recipe={gotRecipe} />}
+      <FeedbackDialog className=" mx-auto flex mb-2 mt-0  lg:w-1/2" />
     </FormProvider>
   );
 };

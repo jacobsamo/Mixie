@@ -1,9 +1,7 @@
 import RecipePageComponent from "@/components/recipe-page/recipe-page";
-import { getServerAuthSession } from "@/server/auth";
-import { db } from "@/server/db/index";
-import { recipes as recipeSchema } from "@/server/db/schemas";
+import { getUser } from "@/lib/utils/getUser";
+import { createClient } from "@/server/supabase/server";
 import type { Recipe } from "@/types";
-import { and, eq } from "drizzle-orm";
 import { notFound, redirect } from "next/navigation";
 
 interface PreviewRecipePageProps {
@@ -15,25 +13,31 @@ interface PreviewRecipePageProps {
 export default async function PreviewRecipePage({
   params,
 }: PreviewRecipePageProps) {
-  const session = await getServerAuthSession();
-  if (!session) {
-    return redirect("/api/auth/login");
+  const user = await getUser();
+  if (!user) {
+    return redirect("/auth/login");
   }
 
-  const recipe = await db.query.recipes.findFirst({
-    where: and(
-      eq(recipeSchema.createdBy, session.user.id),
-      eq(recipeSchema.uid, params.id)
-    ),
-  });
+  const supabase = createClient();
 
-  if (!recipe) {
+  const { data: foundRecipe, error } = await supabase
+    .from("recipes")
+    .select()
+    .eq("created_by", user.id)
+    .eq("recipe_id", params.id)
+    .single();
+
+  if (error) {
+    console.log(`Error on /recipes/preview/[id]`, error);
+  }
+
+  if (!foundRecipe) {
     return notFound();
   }
 
   return (
     <>
-      <RecipePageComponent recipe={recipe as Recipe} />
+      <RecipePageComponent recipe={foundRecipe as Recipe} />
     </>
   );
 }

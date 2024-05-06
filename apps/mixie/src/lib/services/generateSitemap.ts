@@ -7,7 +7,7 @@ interface RequiredFelids {
   /**
    * The date the item was created
    */
-  createdAt: Date;
+  created_at: Date;
   /**
    * The date the item was last updated
    */
@@ -44,7 +44,7 @@ export async function generateSiteMap<T extends RequiredFelids>(
       
           ${data
             .map((data) => {
-              const time = data.lastUpdated || data.createdAt;
+              const time = data.lastUpdated || data.created_at;
               return `
                 <url>
                     <loc>${`https://mixiecooking.com/${options.route}/${data.id}`}</loc>

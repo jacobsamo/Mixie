@@ -6,7 +6,7 @@
   "scripts": {
     "clean:all": "rm -rf node_modules/",
     "build:email": "email build",
-    "dev": "email dev --port 3001",
+    "dev:email": "email dev --port 3001",
     "export": "email export"
   },
   "dependencies": {

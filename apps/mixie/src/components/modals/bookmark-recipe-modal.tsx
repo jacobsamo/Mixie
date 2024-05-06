@@ -1,14 +1,4 @@
 "use client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { env } from "env";
-import { CheckCircle, HeartIcon, PlusCircle } from "lucide-react";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import * as z from "zod";
-
 import CreateCollectionDialog from "@/components/modals/create-collection-modal";
 import {
   bookmarksAtom,
@@ -23,9 +13,18 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { Bookmark } from "@/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { env } from "env";
 import { useAtom } from "jotai";
+import { CheckCircle, HeartIcon, PlusCircle } from "lucide-react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import * as z from "zod";
 import { CardRecipe } from "../cards/card-utils";
+import { bookmarkRouteSchema } from "@/types/zodSchemas";
 
 const selectCollection = z.object({
   selected: z.string().array().nullish(),
@@ -45,13 +44,13 @@ const BookmarkRecipeDialog = ({
   const [bookmarks, setBookmark] = useAtom(bookmarksAtom);
   const [collections] = useAtom(collectionsAtom);
   const isBookmarked = bookmarks?.find(
-    (bookmark) => bookmark.recipeId == recipe.uid
+    (bookmark) => bookmark.recipe_id == recipe.recipe_id
   );
 
   const methods = useForm<z.infer<typeof selectCollection>>({
     resolver: zodResolver(selectCollection),
     defaultValues: {
-      selected: isBookmarked?.collections?.split(", "),
+      selected: isBookmarked?.collections,
     },
   });
   const {
@@ -66,7 +65,7 @@ const BookmarkRecipeDialog = ({
   const bookmarkRecipe = useMutation({
     mutationKey: ["bookmarkRecipe"],
     mutationFn: async (collections: string | null) => {
-      const req = await fetch(`/api/recipes/bookmark/${recipe.uid}`, {
+      const req = await fetch(`/api/recipes/bookmark/${recipe.recipe_id}`, {
         method: "POST",
         body: JSON.stringify(collections),
         headers: {
@@ -96,16 +95,22 @@ const BookmarkRecipeDialog = ({
   const updateBookmarkedRecipe = useMutation({
     mutationKey: ["updateBookmarkedRecipe"],
     mutationFn: async (collections: string | null) => {
-      const req = await fetch(`/api/recipes/bookmark/${recipe.uid}/update`, {
-        method: "PUT",
-        body: JSON.stringify({
-          collections: collections,
-        } as Bookmark),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
-        },
-      });
+      const req = await fetch(
+        `/api/recipes/bookmark/${recipe.recipe_id}/update`,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            collections: collections,
+            notes: null,
+            rating: null,
+            tags: null,
+          } as z.infer<typeof bookmarkRouteSchema>),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+          },
+        }
+      );
 
       const res = await req.json();
 
@@ -179,8 +184,8 @@ const BookmarkRecipeDialog = ({
       <DialogContent className="flex flex-col justify-between">
         <DialogHeader className="flex flex-row  gap-1">
           <Image
-            src={recipe.imageUrl!}
-            alt={recipe.imageAttributes?.alt ?? "saved recipe"}
+            src={recipe.image_url!}
+            alt={recipe.image_attributes?.alt ?? "saved recipe"}
             width={64}
             height={64}
             className="h-16 w-16 rounded-md object-cover object-center"
@@ -198,13 +203,15 @@ const BookmarkRecipeDialog = ({
           {collections && (
             <ul className="flex flex-col gap-2 pb-8">
               {collections.map((collection) => {
-                const isChecked = watch("selected")?.includes(collection.uid);
+                const isChecked = watch("selected")?.includes(
+                  collection.collection_id
+                );
 
                 return (
-                  <li className="md:w-3/5" key={collection.uid}>
+                  <li className="md:w-3/5" key={collection.collection_id}>
                     <button
                       type="button"
-                      onClick={() => handleChange(collection.uid)}
+                      onClick={() => handleChange(collection.collection_id)}
                       className={cn(
                         "flex w-full flex-row items-center justify-between rounded border-none p-2 shadow outline outline-1 outline-slate-400 dark:bg-grey/50 dark:outline-slate-600",
                         {

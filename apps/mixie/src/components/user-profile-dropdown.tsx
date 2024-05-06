@@ -15,20 +15,19 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import useUser from "../hooks/useUser";
-import FeedbackDialog from "./modals/feedback-modal";
-import { CreateRecipeTrigger, FeedbackButton } from "./open-dialogs";
+import { CreateRecipeTrigger } from "./open-dialogs";
 import { userDropDownOpen } from "./providers/state-provider";
-
+import FeedbackDialog from "@/components/modals/feedback-modal";
 
 const UserProfile = () => {
-  const { session, user } = useUser();
+  const user = useUser();
   const [open, setOpen] = useAtom(userDropDownOpen);
 
   if (!user) {
     return (
       <Link
         onClick={() => setOpen}
-        href={"/api/auth/signin"}
+        href={"/auth/login"}
         className="rounded-md bg-yellow p-1 px-2 font-semibold text-black"
       >
         Login
@@ -43,7 +42,7 @@ const UserProfile = () => {
           width={42}
           height={42}
           src={
-            user?.image ||
+            user?.user_metadata.picture ||
             "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           }
           unoptimized
@@ -63,7 +62,7 @@ const UserProfile = () => {
           props={{ unstyled: true }}
           className="inline-flex dark:text-white"
         />
-        <Link
+        {/* <Link
           onClick={() => setOpen(false)}
           href={`/${user?.id}/bookmarks`}
           className="flex flex-row gap-1"
@@ -71,7 +70,7 @@ const UserProfile = () => {
           {" "}
           <Bookmark />
           Bookmarks
-        </Link>
+        </Link> */}
         <Link
           onClick={() => setOpen(false)}
           href={`/${user?.id}/drafts`}
@@ -79,8 +78,11 @@ const UserProfile = () => {
         >
           <ScrollText /> Drafts
         </Link>
-        <FeedbackDialog />
-        <Link
+        <FeedbackDialog
+          props={{ unstyled: true }}
+          className="inline-flex dark:text-white"
+        />
+        {/* <Link
           onClick={() => setOpen(false)}
           href={`/${user?.id}/settings?activeLink=profile`}
           className="flex flex-row gap-1"
@@ -88,14 +90,10 @@ const UserProfile = () => {
           {" "}
           <Settings />
           Settings
-        </Link>
-        <FeedbackButton
-          props={{ unstyled: true }}
-          className="inline-flex dark:text-white"
-        />
+        </Link> */}
         <Link
           onClick={() => setOpen(false)}
-          href={"/api/auth/signout"}
+          href={"/auth/signout"}
           className="flex flex-row gap-1"
         >
           {" "}

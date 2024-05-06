@@ -3,63 +3,61 @@ import {
   getRecipeJsonLd,
   splitTime,
 } from "@/lib/services/recipeJsonLDParsing";
-import { recipeId } from "@/lib/utils";
-import { getServerAuthSession } from "@/server/auth";
-import { db } from "@/server/db/index";
-import { recipes } from "@/server/db/schemas";
-import { NewRecipe } from "@/types";
-import { Recipe, createRecipeSchema } from "@/types";
-import { eq, or } from "drizzle-orm";
+import { recipe_id } from "@/lib/utils";
+import { getUser } from "@/lib/utils/getUser";
+import { createClient } from "@/server/supabase/server";
+import { NewRecipe, Recipe, createRecipeSchema } from "@/types";
+import { PostgrestError } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 import * as z from "zod";
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await getServerAuthSession();
+    const user = await getUser();
 
-    if (!session) {
+    if (!user) {
       return NextResponse.json("Unauthorized", { status: 401 });
     }
     const json = await req.json();
     const { title, link } = createRecipeSchema.parse(json);
+    const supabase = createClient();
 
     // set global variables
-    const { user } = session;
-    const uid = uuidv4();
     let newRecipe: NewRecipe | null = null;
 
     if (title && !link) {
-      const id = recipeId(title);
+      const id = recipe_id(title);
 
       const newTitle = title.charAt(0).toUpperCase() + title.slice(1);
 
       // the recipe itself
       newRecipe = {
-        uid: uid,
         id,
         title: newTitle,
-        createdBy: user.id,
-        isPublic: false,
+        created_by: user.id,
+        public: false,
+        version: "1.0",
       };
     }
 
     if (link) {
       if (link.includes("mixiecooking.com")) {
-        // split a mixie link to get the recipe id this id would be after /recipes/<recipeId> a recipe link might look like this: https://mixiecooking.com/recipes/5f9b1b5e-5b1a-4b9e-9b9e-9b9e9b9e9b9e
-        const recipeId = link.split("/").pop();
-        if (!recipeId) return NextResponse.json(null, { status: 404 });
-        const findRecipe = (await db.query.recipes.findFirst({
-          where: or(eq(recipes.id, recipeId), eq(recipes.uid, recipeId)),
-        })) as Recipe;
+        // split a mixie link to get the recipe id this id would be after /recipes/<recipe_id> a recipe link might look like this: https://mixiecooking.com/recipes/5f9b1b5e-5b1a-4b9e-9b9e-9b9e9b9e9b9e
+        const recipe_id = link.split("/").pop();
+        if (!recipe_id) return NextResponse.json(null, { status: 404 });
+
+        const findRecipe = await supabase
+          .from("recipes")
+          .select()
+          .or(`id.eq.${recipe_id},recipe_id.eq.${recipe_id}`);
 
         if (!findRecipe) {
           return NextResponse.json(null, { status: 404 });
         }
 
         newRecipe = {
-          ...findRecipe,
-          uid: uid,
+          ...(findRecipe[0] as Recipe),
         };
       }
 
@@ -76,29 +74,29 @@ export async function POST(req: NextRequest) {
         );
 
       newRecipe = {
-        uid: uid,
-        id: recipeId(recipe.name),
+        id: recipe_id(recipe.name),
         title: recipe.name,
         description: recipe.description.replace(/<[^>]*>?/gm, "") || null,
-        isPublic: false,
+        public: false,
         steps:
           recipe.recipeInstructions.map((step: string) => {
             return { step_body: step };
           }) || null,
         ingredients: ingredients,
         source: link,
-        cook: splitTime(recipe.cookTime),
-        prep: splitTime(recipe.prepTime),
-        total: splitTime(recipe.totalTime),
+        cook_time: splitTime(recipe.cookTime),
+        prep_time: splitTime(recipe.prep_timeTime),
+        total_time: splitTime(recipe.totalTime),
         rating: recipe.aggregateRating?.ratingValue || null,
-        serves: recipe.recipeYield || null,
-        imageUrl: recipe.image.url || null,
-        imageAttributes: recipe.image.alt || recipe.name || "recipe image",
+        yield: recipe.recipeYield || null,
+        image_url: recipe.image.url || null,
+        image_attributes: recipe.image.alt || recipe.name || "recipe image",
         keywords: recipe.keywords.split(",").map((keyword: string) => {
           return { value: keyword };
         }),
-        ingredientsList: ingredients.map((ingredient) => ingredient.title),
-        createdBy: user.id,
+        ingredients_list: ingredients.map((ingredient) => ingredient.title),
+        created_by: user.id,
+        version: "1.0",
       };
     }
 
@@ -108,15 +106,27 @@ export async function POST(req: NextRequest) {
         { status: 404 }
       );
 
-    await db.insert(recipes).values(newRecipe);
+    const { data, error } = await supabase
+      .from("recipes")
+      .insert(newRecipe)
+      .select()
+      .single();
 
-    console.log(`Created recipe by link: ${uid}`, {
+      if (error) {
+        console.error("Error on /recipes/create", error);
+        return NextResponse.json("A database error occurred, contact support at support@mixiecooking.com or head to github to log an issue https://github.com/Eirfire/Mixie/issues", { status: 422 });
+      }
+
+    console.log(`Created recipe by link: ${data?.recipe_id}`, {
       message: `Recipe successfully created`,
-      recipe: newRecipe,
+      recipe: data,
     });
 
     return NextResponse.json(
-      { message: `Recipe successfully created using link`, id: uid },
+      {
+        message: `Recipe successfully created using link`,
+        id: data?.recipe_id,
+      },
       {
         status: 200,
       }
@@ -126,6 +136,7 @@ export async function POST(req: NextRequest) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(JSON.stringify(error.issues), { status: 422 });
     }
+
 
     return NextResponse.json(null, { status: 500 });
   }

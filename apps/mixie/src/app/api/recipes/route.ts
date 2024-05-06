@@ -1,7 +1,5 @@
 import { isApp } from "@/lib/services/apiMiddleware";
-import { db } from "@/server/db/index";
-import { recipes as recipeSchema } from "@/server/db/schemas";
-import { eq } from "drizzle-orm";
+import { createClient } from "@/server/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -11,19 +9,13 @@ export async function GET(req: NextRequest) {
     return NextResponse.json("Unauthorized", { status: 401 });
   }
 
-  const recipes = await db.query.recipes.findMany({
-    columns: {
-      uid: true,
-      id: true,
-      title: true,
-      imageAttributes: true,
-      imageUrl: true,
-      total: true,
-      ingredientsList: true,
-      keywords: true,
-    },
-    where: eq(recipeSchema.isPublic, true),
-  });
+  const supabase = createClient();
+  const gotRecipes = await supabase
+    .from("recipes")
+    .select(
+      "recipe_id, id, title, image_attributes, image_url, total_time, keywords"
+    )
+    .eq("public", true);
 
-  return NextResponse.json(recipes);
+  return NextResponse.json(gotRecipes);
 }

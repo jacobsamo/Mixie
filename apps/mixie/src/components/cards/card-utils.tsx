@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils";
 import { Recipe } from "@/types";
+import { User } from "@supabase/supabase-js";
 import clsx from "clsx";
-import { Session } from "next-auth";
-import Image, { type ImageProps } from "next/image";
 import dynamic from "next/dynamic";
+import Image, { type ImageProps } from "next/image";
 
 const BookmarkRecipeDialog = dynamic(
   () => import("@/components/modals/bookmark-recipe-modal"),
@@ -14,24 +14,30 @@ const BookmarkRecipeDialog = dynamic(
 
 export type CardRecipe = Pick<
   Recipe,
-  "uid" | "id" | "title" | "imageUrl" | "imageAttributes" | "total" | "keywords"
+  | "recipe_id"
+  | "id"
+  | "title"
+  | "image_url"
+  | "image_attributes"
+  | "total_time"
+  | "keywords"
 >;
 
 export interface CardProps {
   recipe: CardRecipe;
 }
 
-export const BookmarkButton = ({
-  session,
-  recipe,
-}: {
-  session: Session | null;
-  recipe: CardRecipe;
-}) => {
-  if (!session) return null;
+// export const BookmarkButton = ({
+//   user,
+//   recipe,
+// }: {
+//   user: User | null;
+//   recipe: CardRecipe;
+// }) => {
+//   if (!user) return null;
 
-  return <BookmarkRecipeDialog recipe={recipe} userId={session.user.id} />;
-};
+//   return <BookmarkRecipeDialog recipe={recipe} userId={user.id} />;
+// };
 
 export const RecipeImage = (
   props: ImageProps,

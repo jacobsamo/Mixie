@@ -74,6 +74,7 @@ export const FeedbackDialogTrigger = ({
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger
+          type="button"
           onClick={() => setFeedbackOpen(true)}
           aria-label="give feedback to the mixie team"
           className={cn(
@@ -109,7 +110,7 @@ export const FeedbackButton = ({
       )}
       {...props}
     >
-      {text ? text : "Give feedback"}
+      {text ? text : "Feedback"}
     </Button>
   );
 };

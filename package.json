@@ -14,15 +14,15 @@
     "update:tailwind": "cd packages/tailwind-config && pnpm up --latest && cd ../.."
   },
   "dependencies": {
-    "@manypkg/cli": "^0.21.2",
-    "@turbo/gen": "^1.12.4",
-    "dotenv-cli": "^7.3.0",
-    "eslint": "^8.56.0",
+    "@manypkg/cli": "^0.21.4",
+    "@turbo/gen": "^1.13.3",
+    "dotenv-cli": "^7.4.1",
+    "eslint": "^9.2.0",
     "eslint-config-custom": "workspace:*",
     "prettier": "^3.2.5",
-    "turbo": "^1.12.4"
+    "turbo": "^1.13.3"
   },
   "devDependencies": {
-    "prettier-plugin-tailwindcss": "^0.5.11"
+    "prettier-plugin-tailwindcss": "^0.5.14"
   }
 }

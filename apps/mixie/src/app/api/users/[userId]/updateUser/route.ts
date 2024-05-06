@@ -1,9 +1,6 @@
 import { isApp } from "@/lib/services/apiMiddleware";
-import { getServerAuthSession } from "@/server/auth";
-import { db } from "@/server/db/index";
-import { users } from "@/server/db/schemas";
-import { userSchema } from "@/types/zodSchemas";
-import { eq } from "drizzle-orm";
+import { getUser } from "@/lib/utils/getUser";
+import { createAdminClient } from "@/server/supabase/server";
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 
@@ -13,11 +10,12 @@ export async function PUT(
 ) {
   try {
     const app = await isApp(req);
-    const session = await getServerAuthSession();
+    const user = await getUser();
+  
 
-    const requestedUserData = session?.user.id === params.userId;
+    const requestedUserData = user ? user.id === params.userId : null;
 
-    if ((!app || !session) && !requestedUserData) {
+    if ((!app || !user) && !requestedUserData) {
       return NextResponse.json("Unauthorized", { status: 401 });
     }
 
@@ -25,11 +23,12 @@ export async function PUT(
     json.emailVerified = new Date(json.emailVerified);
     console.log("Body: ", json);
 
-    const newUser = userSchema.parse(json);
 
-    await db.update(users).set(newUser).where(eq(users.id, params.userId));
+    const supabase = createAdminClient();
 
-    console.log("User updated: ", newUser);
+    await supabase.auth.updateUser(json);
+
+    console.log("User updated: ", json);
 
     return NextResponse.json(
       {

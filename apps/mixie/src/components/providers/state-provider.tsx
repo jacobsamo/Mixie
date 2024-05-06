@@ -1,23 +1,20 @@
 "use client";
 import useUser from "@/hooks/useUser";
 import { Bookmark, Collection } from "@/types";
-import {
-  useQuery
-} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { env } from "env";
 import { atom, useAtom } from "jotai";
 import React, { useEffect } from "react";
 
-
-export const bookmarksAtom = atom<Bookmark[] | undefined>(undefined);
-export const collectionsAtom = atom<Collection[] | undefined>(undefined);
+export const bookmarksAtom = atom<Bookmark[] | null>(null);
+export const collectionsAtom = atom<Collection[] | null>(null);
 export const userDropDownOpen = atom<boolean>(false);
 
 const StateProvider = ({ children }: { children: React.ReactNode }) => {
   const [bookmarks, setBookmarks] = useAtom(bookmarksAtom);
   const [collections, setCollections] = useAtom(collectionsAtom);
+  const user = useUser();
 
-  const { user } = useUser();
   const { data: bookmarkedRecipes, refetch: refetchBookmarks } = useQuery<
     Bookmark[] | null
   >({
@@ -34,7 +31,7 @@ const StateProvider = ({ children }: { children: React.ReactNode }) => {
       });
 
       const bookmarks = (await data.json()) as Bookmark[];
-      
+      console.log(bookmarks)
       setBookmarks(bookmarks);
       return bookmarks;
     },

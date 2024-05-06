@@ -1,8 +1,7 @@
 import { isApp } from "@/lib/services/apiMiddleware";
-import { getServerAuthSession } from "@/server/auth";
-import { db } from "@/server/db/index";
-import { users } from "@/server/db/schemas";
-import { eq } from "drizzle-orm";
+import { getUser } from "@/lib/utils/getUser";
+import { createAdminClient } from "@/server/supabase/server";
+import { User } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function GET(
@@ -11,19 +10,31 @@ export async function GET(
 ) {
   try {
     const app = await isApp(req);
-    const session = await getServerAuthSession();
+    const user = await getUser();
 
-    const requestedUserData = session?.user.id === params.userId;
+    const requestedUserData = user ? user.id === params.userId : null;
 
-    if ((!app || !session) && !requestedUserData) {
+    if ((!app || !user) && !requestedUserData) {
       return NextResponse.json("Unauthorized", { status: 401 });
     }
 
-    const user = await db.query.users.findFirst({
-      where: eq(users.id, params.userId),
-    });
+    const supabseAdmin = createAdminClient();
 
-    return NextResponse.json(user);
+    const {
+      data: { users },
+    } = await supabseAdmin.auth.admin.listUsers();
+
+    if (users.length === 0) {
+      return NextResponse.json("User not found", { status: 404 });
+    }
+
+    // const foundUser = users && users.length !== 0 && users.find(user => user.id === params.userId)
+    const foundUser =
+      users.length !== 0 &&
+      users &&
+      users.find((user: User) => user.id === params.userId);
+
+    return NextResponse.json(foundUser);
   } catch (error) {
     console.error("Error on /users/[id]", error);
 

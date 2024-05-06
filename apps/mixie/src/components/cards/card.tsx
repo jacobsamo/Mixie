@@ -1,8 +1,8 @@
 "use client";
+import useUser from "@/hooks/useUser";
 import { cn } from "@/lib/utils";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { BookmarkButton, CardProps, RecipeImage } from "./card-utils";
+import { CardProps, RecipeImage } from "./card-utils";
 
 export interface BaseCardProps extends CardProps {
   hasCookTime?: boolean;
@@ -23,7 +23,7 @@ export const BaseCard = ({
   hasCookTime = true,
   classNames,
 }: BaseCardProps) => {
-  const { data: session } = useSession();
+  const user = useUser();
 
   return (
     <div
@@ -55,17 +55,17 @@ export const BaseCard = ({
               classNames?.cookTime
             )}
           >
-            {recipe.total}
+            {recipe.total_time}
           </h3>
-          {<BookmarkButton session={session} recipe={recipe} />}
+          {/* {<BookmarkButton user={user} recipe={recipe} />} */}
         </div>
       )}
 
-      {!hasCookTime && <BookmarkButton session={session} recipe={recipe} />}
+      {/* {!hasCookTime && <BookmarkButton user={user} recipe={recipe} />} */}
 
       <RecipeImage
-        src={recipe.imageUrl || ""}
-        alt={recipe?.imageAttributes?.alt ?? ""}
+        src={recipe.image_url || ""}
+        alt={recipe?.image_attributes?.alt ?? ""}
         fill
         sizes="224px"
         className={cn(
@@ -83,8 +83,7 @@ const CardSquare = ({ recipe }: CardProps) => {
     <BaseCard
       recipe={recipe}
       classNames={{
-        container:
-          "h-36 w-36 grow  sm:h-56 sm:w-56  sm:grow-0",
+        container: "h-36 w-36 grow  sm:h-56 sm:w-56  sm:grow-0",
       }}
     />
   );
@@ -119,3 +118,4 @@ const CardRectangle = ({ recipe }: CardProps) => {
 };
 
 export { CardRectangle, CardRectangleSmall, CardSquare };
+

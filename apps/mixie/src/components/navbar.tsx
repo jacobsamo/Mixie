@@ -1,20 +1,19 @@
 "use client";
+import useUser from "@/hooks/useUser";
+import { cn } from "@/lib/utils";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
   CreateRecipeIconButton,
-  FeedbackDialogTrigger,
   SearchIconTrigger,
 } from "./open-dialogs";
 import UserProfile from "./user-profile-dropdown";
 import VersionChip from "./versioning-chips";
-import useUser from "@/hooks/useUser";
-import { cn } from "@/lib/utils";
 
 const Navbar = () => {
-  const { user } = useUser();
+  const user = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 

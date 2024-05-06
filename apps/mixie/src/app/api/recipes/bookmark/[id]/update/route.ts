@@ -1,8 +1,6 @@
-import { getServerAuthSession } from "@/server/auth";
-import { db } from "@/server/db/index";
-import { bookmarks } from "@/server/db/schemas";
+import { getUser } from "@/lib/utils/getUser";
+import { createClient } from "@/server/supabase/server";
 import { Bookmark } from "@/types";
-import { eq } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 
@@ -11,23 +9,29 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getServerAuthSession();
+    const user = await getUser();
 
-    if (!session) {
+    if (!user) {
       return NextResponse.json("Unauthorized", { status: 401 });
+    }
+
+    if (!params) {
+      return NextResponse.json("No Id provided", { status: 401 });
     }
 
     const json = (await req.json()) as Partial<Bookmark>;
 
-    await db.update(bookmarks).set(json).where(eq(bookmarks.uid, json.uid!));
+    const supabase = createClient();
+
+    await supabase.from("bookmarks").update(json).eq("bookmark_id", params.id);
 
     console.log(
-      `Recipe ${json.recipeId} has been bookmarked by ${session.user.id}`,
+      `Recipe ${json.recipe_id} has been bookmarked by ${user.id}`,
       json
     );
 
     return NextResponse.json({
-      message: `Recipe ${json.recipeId} has been bookmarked`,
+      message: `Recipe ${json.recipe_id} has been bookmarked`,
       bookmarkedRecipe: json,
     });
   } catch (error) {

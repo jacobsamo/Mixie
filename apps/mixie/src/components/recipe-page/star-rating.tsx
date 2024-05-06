@@ -14,12 +14,12 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 interface StarRatingProps {
-  recipeId: string;
+  recipe_id: string;
   rating: number | undefined;
 }
 
-const StarRating = ({ recipeId, rating }: StarRatingProps) => {
-  const { user } = useUser();
+const StarRating = ({ recipe_id, rating }: StarRatingProps) => {
+  const user = useUser();
   const [hoverRating, setHoverRating] = useState<number>(0);
   const [internalRating, setInternalRating] = useState<number>(0);
   const [showSignInPrompt, setShowSignInPrompt] = useState(false);
@@ -31,12 +31,12 @@ const StarRating = ({ recipeId, rating }: StarRatingProps) => {
       return;
     }
     setInternalRating(rating);
-    const setRating = fetch(`/api/recipes/${recipeId}/setRating`, {
+    const setRating = fetch(`/api/recipes/${recipe_id}/setRating`, {
       method: "POST",
       body: JSON.stringify({
-        recipeId: recipeId,
+        recipe_id: recipe_id,
         rating: rating,
-        userId: user.id,
+        user_id: user.id,
       } as Rating),
     });
 
@@ -84,7 +84,7 @@ const StarRating = ({ recipeId, rating }: StarRatingProps) => {
               </DialogDescription>
             </DialogHeader>
             <Link
-              href={"/api/auth/signin"}
+              href={"/auth/login"}
               className="flex h-10 items-center justify-center rounded-md bg-yellow px-4 py-2 text-step--2 font-semibold text-black"
             >
               Login

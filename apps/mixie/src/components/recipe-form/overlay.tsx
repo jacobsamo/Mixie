@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { EyeIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { FeedbackDialogTrigger } from "../open-dialogs";
+import FeedbackDialog from "@/components/modals/feedback-modal";
 import RecipeValidationDialog from "./recipe-validation-dialog";
 import SubmittingButton from "./submitting-button";
 
@@ -47,7 +47,7 @@ const Overlay = ({ onPreview, isDisabled }: OverlayProps) => {
 
       {/* Bottom Bar */}
       <div className="fixed bottom-5 right-3 z-50 flex justify-end gap-2">
-        <FeedbackDialogTrigger className="bg-grey" />
+        <FeedbackDialog trigger="icon" className="bg-grey" />
         <SubmittingButton aria-label="Save" type="submit">
           Save
         </SubmittingButton>

@@ -11,8 +11,8 @@ export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
   if (!recipe) return;
 
   const totalTime =
-    recipe && recipe.prep && recipe?.cook
-      ? await calculateTotalTime(recipe.prep, recipe.cook)
+    recipe && recipe.prep_time && recipe?.cook_time
+      ? await calculateTotalTime(recipe.prep_time, recipe.cook_time)
       : null;
 
   const ingredients = recipe?.ingredients?.map((ingredient: Ingredient) => {
@@ -42,12 +42,12 @@ export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
 
   const data: NewRecipe = {
     ...recipe,
-    total: totalTime,
+    total_time: totalTime,
     ingredients,
   };
 
   // send data to edit the recipe in the db
-  fetch(`/api/recipes/${recipe.id}/edit`, {
+  fetch(`/api/recipes/${recipe.recipe_id}/edit`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
         "Recipe created. \n Your recipe has been created. Changes will be reflected within an hour"
       );
       // redirect to the recipe page
-      window.location.href = `/recipes/preview/${recipe.uid}`;
+      window.location.href = `/recipes/preview/${recipe.recipe_id}`;
     } else if (res.status == 400) {
       toast.error(
         "Uh oh! \n A recipe with the same name exists, please change your recipe name."

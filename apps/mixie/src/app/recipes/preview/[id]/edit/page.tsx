@@ -1,8 +1,6 @@
 import RecipeForm from "@/components/recipe-form/recipe-form";
-import { db } from "@/server/db/index";
-import { recipes as recipeSchema } from "@/server/db/schemas";
-import { getServerAuthSession } from "@/server/auth";
-import { and, eq } from "drizzle-orm";
+import { getUser } from "@/lib/utils/getUser";
+import { createClient } from "@/server/supabase/server";
 import { notFound, redirect } from "next/navigation";
 
 interface EditPageProps {
@@ -12,21 +10,23 @@ interface EditPageProps {
 }
 
 export default async function EditPage({ params }: EditPageProps) {
-  const session = await getServerAuthSession();
+  const user = await getUser();
 
-  if (!session) {
-    return redirect("/auth/login");
+  if (!user) {
+    return redirect("auth/login");
   }
 
-  const recipe = await db.query.recipes.findFirst({
-    where: and(
-      eq(recipeSchema.createdBy, session.user.id),
-      eq(recipeSchema.uid, params.id)
-    ),
-  });
+  const supabase = createClient();
+
+  const { data: foundRecipes, error } = await supabase
+    .from("recipes")
+    .select("*")
+    .eq("recipe_id", params.id)
+    .eq("created_by", user.id)
+    .single();
 
   // return <RecipeForm recipe={mockRecipe} />;
-  if (recipe) return <RecipeForm recipe={recipe} />;
+  if (!foundRecipes || error) return notFound();
 
-  return notFound();
+  return <RecipeForm recipe={foundRecipes} />;
 }
