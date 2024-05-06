@@ -80,7 +80,7 @@ const UserProfile = () => {
           props={{ unstyled: true }}
           className="inline-flex dark:text-white"
         />
-        <Link
+        {/* <Link
           onClick={() => setOpen(false)}
           href={`/${user?.id}/settings?activeLink=profile`}
           className="flex flex-row gap-1"
@@ -88,7 +88,7 @@ const UserProfile = () => {
           {" "}
           <Settings />
           Settings
-        </Link>
+        </Link> */}
         <FeedbackButton
           props={{ unstyled: true }}
           className="inline-flex dark:text-white"
