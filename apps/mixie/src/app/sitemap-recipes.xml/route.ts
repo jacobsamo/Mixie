@@ -3,7 +3,7 @@ import { createClient } from "@/server/supabase/server";
 
 export async function GET() {
   const supabase = createClient();
-  const {data: recipes} = await supabase.from("recipes").select("id, created_at").eq("isPublic", true);
+  const {data: recipes} = await supabase.from("recipes").select("id, created_at").eq("public", true);
 
 
   // add headers for the return type

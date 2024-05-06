@@ -7,7 +7,7 @@ export const getRecipes = async () => {
   const { data: latestRecipes } = await supabase
     .from("recipes")
     .select("*")
-    .eq("isPublic", true)
+    .eq("public", true)
     .order("created_at", { ascending: true });
   return latestRecipes as Recipe[];
 };

@@ -27,7 +27,7 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
           </h1>
           <StarRating
             rating={recipe.rating || 0}
-            recipe_id={recipe.recipe_id}
+            recipe_id={recipe?.recipe_id ?? ""}
           />
         </div>
         <Info info={recipe} />
@@ -71,16 +71,14 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
           </div>
           <div className="py-2">
             <span className="relative flex flex-wrap gap-2">
-              {(recipe?.keywords as { value: string }[])
-                ?.splice(0, 5)
-                .map((keyword, index) => (
-                  <p
-                    key={index}
-                    className="h-fit w-fit rounded-lg bg-yellow p-1 text-center text-step--4 text-black opacity-80"
-                  >
-                    {keyword.value}
-                  </p>
-                ))}
+              {recipe?.keywords?.splice(0, 5).map((keyword, index) => (
+                <p
+                  key={index}
+                  className="h-fit w-fit rounded-lg bg-yellow p-1 text-center text-step--4 text-black opacity-80"
+                >
+                  {keyword}
+                </p>
+              ))}
               {recipe.source && (
                 <Link
                   href={recipe.source}
@@ -97,9 +95,9 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
                 url={`https://www.mixiecooking/recipes/${recipe.id}`}
                 image={recipe.image_url || ""}
                 title={recipe.title}
-                hashtags={(recipe?.keywords as { value: string }[])
+                hashtags={recipe?.keywords
                   ?.splice(0, 5)
-                  ?.map((keyword) => keyword.value)
+                  ?.map((keyword) => keyword)
                   .join(", ")}
               />
             </span>

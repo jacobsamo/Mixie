@@ -1,5 +1,4 @@
 import { env } from "env";
-import { authOptions } from "@/server/auth";
 import { getUser } from "@/lib/utils/getUser";
 import type { NextRequest } from "next/server";
 

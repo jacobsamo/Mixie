@@ -23,3 +23,10 @@ export const feedbackSchema = feedback.extend({
   user_email: z.string(),
   user_id: z.string().nullish(),
 });
+
+export const bookmarkRouteSchema = z.object({
+  collections: z.string().array().nullish(),
+  notes: z.string().nullish(),
+  rating: z.number().nullish(),
+  tags: z.string().array().nullish(),
+});

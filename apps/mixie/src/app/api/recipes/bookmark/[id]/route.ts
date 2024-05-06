@@ -1,15 +1,11 @@
 import { getUser } from "@/lib/utils/getUser";
 import { createClient } from "@/server/supabase/server";
+import { bookmarkRouteSchema } from "@/types/zodSchemas";
 import { TablesInsert } from "database.types";
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 
-export const bookmarkRouteSchema = z.object({
-  collections: z.string().array().nullish(),
-  notes: z.string().nullish(),
-  rating: z.number().nullish(),
-  tags: z.string().array().nullish(),
-});
+
 
 export async function POST(
   req: NextRequest,

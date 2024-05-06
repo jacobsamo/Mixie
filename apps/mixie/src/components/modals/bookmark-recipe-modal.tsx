@@ -1,5 +1,4 @@
 "use client";
-import { bookmarkRouteSchema } from "@/app/api/recipes/bookmark/[id]/route";
 import CreateCollectionDialog from "@/components/modals/create-collection-modal";
 import {
   bookmarksAtom,
@@ -25,6 +24,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
 import { CardRecipe } from "../cards/card-utils";
+import { bookmarkRouteSchema } from "@/types/zodSchemas";
 
 const selectCollection = z.object({
   selected: z.string().array().nullish(),

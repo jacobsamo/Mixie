@@ -21,10 +21,10 @@ export async function POST(req: NextRequest) {
     const id = recipe_id(query!);
 
     titles.forEach((title) => {
-      if (title.isPublic && title.id == id) {
+      if (title.public && title.id == id) {
         return NextResponse.json(
           {
-            message: `Recipe with same name already exists, ${title.uid}`,
+            message: `Recipe with same name already exists, ${title.recipe_id}`,
           },
           {
             status: 400,

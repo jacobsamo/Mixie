@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
     description: recipe?.description || undefined,
     image: recipe?.image_url || "/images/banner.jpg",
     url: `https://www.mixiecooking.com/recipes/${recipe?.id}`,
-    keywords: recipe?.keywords?.map((keyword) => keyword.value) || undefined,
+    keywords: recipe?.keywords?.map((keyword) => keyword) || undefined,
   });
 }
 
@@ -51,7 +51,7 @@ export default async function RecipePage({ params }) {
               : new Date().toDateString()
           }
           keywords={
-            recipe.keywords?.map((keyword) => keyword.value).join(", ") || ""
+            recipe.keywords?.map((keyword) => keyword).join(", ") || ""
           }
         />
         <RecipePageComponent recipe={recipe as Recipe} />

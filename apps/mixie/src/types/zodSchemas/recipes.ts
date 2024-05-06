@@ -168,7 +168,7 @@ export const recipeSchema = recipes_edit.extend({
 // extend the recipe schema to include the info and ingredients
 export const recipeFormSchema = recipeSchema.superRefine((values, ctx) => {
   if (values.public) {
-    ["cook", "prep_time", "image_url"].forEach((field) => {
+    ["cook_time", "prep_time", "image_url"].forEach((field) => {
       if (!values[field]) {
         ctx.addIssue({
           code: "custom",
