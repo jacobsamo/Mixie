@@ -60,7 +60,7 @@ const UserProfile = () => {
           props={{ unstyled: true }}
           className="inline-flex dark:text-white"
         />
-        <Link
+        {/* <Link
           onClick={() => setOpen(false)}
           href={`/${user?.id}/bookmarks`}
           className="flex flex-row gap-1"
@@ -68,7 +68,7 @@ const UserProfile = () => {
           {" "}
           <Bookmark />
           Bookmarks
-        </Link>
+        </Link> */}
         <Link
           onClick={() => setOpen(false)}
           href={`/${user?.id}/drafts`}

@@ -1,8 +1,8 @@
 "use client";
+import useUser from "@/hooks/useUser";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { BookmarkButton, CardProps, RecipeImage } from "./card-utils";
-import useUser from "@/hooks/useUser";
+import { CardProps, RecipeImage } from "./card-utils";
 
 export interface BaseCardProps extends CardProps {
   hasCookTime?: boolean;
@@ -57,11 +57,11 @@ export const BaseCard = ({
           >
             {recipe.total_time}
           </h3>
-          {<BookmarkButton user={user} recipe={recipe} />}
+          {/* {<BookmarkButton user={user} recipe={recipe} />} */}
         </div>
       )}
 
-      {!hasCookTime && <BookmarkButton user={user} recipe={recipe} />}
+      {/* {!hasCookTime && <BookmarkButton user={user} recipe={recipe} />} */}
 
       <RecipeImage
         src={recipe.image_url || ""}
@@ -118,3 +118,4 @@ const CardRectangle = ({ recipe }: CardProps) => {
 };
 
 export { CardRectangle, CardRectangleSmall, CardSquare };
+

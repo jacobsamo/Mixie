@@ -1,7 +1,7 @@
 "use client";
 import useUser from "@/hooks/useUser";
 import Link from "next/link";
-import { BookmarkButton, CardProps, RecipeImage } from "./card-utils";
+import { CardProps, RecipeImage } from "./card-utils";
 
 export interface SearchCardProps extends CardProps {
   as?: "li" | "div" | "article" | "section";
@@ -19,14 +19,14 @@ export const SearchCard = ({
   return (
     <Tag className="relative flex h-32 w-full max-w-[600px] flex-row gap-2 rounded-md bg-white shadow dark:bg-grey">
       <RecipeImage
-        src={recipe.image_url || "/images/placeholder.webp"}
+        src={recipe?.image_url ?? "/images/placeholder.webp"}
         alt={recipe?.image_attributes?.alt ?? ""}
         width={100}
         height={100}
         className="h-32 w-2/5 min-w-32 rounded-lg"
       />
 
-      {<BookmarkButton user={user} recipe={recipe} />}
+      {/* {<BookmarkButton user={user} recipe={recipe} />} */}
 
       <div>
         <Link

@@ -27,17 +27,17 @@ export interface CardProps {
   recipe: CardRecipe;
 }
 
-export const BookmarkButton = ({
-  user,
-  recipe,
-}: {
-  user: User | null;
-  recipe: CardRecipe;
-}) => {
-  if (!user) return null;
+// export const BookmarkButton = ({
+//   user,
+//   recipe,
+// }: {
+//   user: User | null;
+//   recipe: CardRecipe;
+// }) => {
+//   if (!user) return null;
 
-  return <BookmarkRecipeDialog recipe={recipe} userId={user.id} />;
-};
+//   return <BookmarkRecipeDialog recipe={recipe} userId={user.id} />;
+// };
 
 export const RecipeImage = (
   props: ImageProps,
