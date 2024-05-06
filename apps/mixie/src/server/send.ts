@@ -1,10 +1,8 @@
 import { JSXElementConstructor, ReactElement } from "react";
 import { Resend } from "resend";
 
-import { env } from "env";
-
-export const resend = env.RESEND_API_KEY
-  ? new Resend(env.RESEND_API_KEY)
+export const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
   : null;
 
 /**
@@ -34,12 +32,15 @@ export const sendEmail = async ({
       subject: subject,
     });
 
-    return resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: "cook@mixiecooking.com",
-      to: test ? "delivered@resend.dev" : email,
+      to: test ? "delivered@resend.dev" : [email],
       subject,
       react,
     });
+    if (error) throw error;
+    
+    console.log("Email sent", data);
   } catch (error) {
     console.log("Error sending email", error);
   }

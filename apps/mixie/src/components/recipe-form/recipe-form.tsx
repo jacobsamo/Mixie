@@ -21,7 +21,7 @@ import RecipePageComponent from "../recipe-page/recipe-page";
 import Overlay from "./overlay";
 // import  StepContainer  from "./StepContainer";
 import Error from "@/components/ui/Error";
-import { FeedbackButton } from "../open-dialogs";
+import FeedbackDialog from "@/components/modals/feedback-modal";
 import { onSubmit } from "./form";
 import LoadingImageUpload from "./loadingstates/loading-image-upload";
 
@@ -292,7 +292,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
           </>
         )}
       </form>
-      <FeedbackButton className=" mx-auto flex mb-2 mt-0  lg:w-1/2" />
+      <FeedbackDialog className=" mx-auto flex mb-2 mt-0  lg:w-1/2" />
     </FormProvider>
   );
 };

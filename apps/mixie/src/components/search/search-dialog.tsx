@@ -1,5 +1,5 @@
 "use client";
-import { CreateRecipeTrigger, FeedbackButton } from "@/components/open-dialogs";
+import { CreateRecipeTrigger } from "@/components/open-dialogs";
 import { searchOpen } from "@/components/providers/dialogs";
 import {
   Dialog,
@@ -7,6 +7,7 @@ import {
   DialogContent,
   DialogFooter,
 } from "@/components/ui/dialog";
+import FeedbackDialog from "@/components/modals/feedback-modal";
 import { Recipe } from "@/types";
 import { motion } from "framer-motion";
 import { useAtom } from "jotai";
@@ -60,7 +61,7 @@ export const SearchDialog = () => {
         </div>
 
         <DialogFooter className="mx-auto inline-flex gap-2 sm:justify-center">
-          <FeedbackButton />
+          <FeedbackDialog />
           <CreateRecipeTrigger text="Create your own recipe" />
         </DialogFooter>
       </DialogContent>

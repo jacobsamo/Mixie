@@ -15,8 +15,9 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import useUser from "../hooks/useUser";
-import { CreateRecipeTrigger, FeedbackButton } from "./open-dialogs";
+import { CreateRecipeTrigger } from "./open-dialogs";
 import { userDropDownOpen } from "./providers/state-provider";
+import FeedbackDialog from "@/components/modals/feedback-modal";
 
 const UserProfile = () => {
   const user = useUser();
@@ -76,7 +77,7 @@ const UserProfile = () => {
         >
           <ScrollText /> Drafts
         </Link>
-        <FeedbackButton
+        <FeedbackDialog
           props={{ unstyled: true }}
           className="inline-flex dark:text-white"
         />
@@ -89,10 +90,6 @@ const UserProfile = () => {
           <Settings />
           Settings
         </Link> */}
-        <FeedbackButton
-          props={{ unstyled: true }}
-          className="inline-flex dark:text-white"
-        />
         <Link
           onClick={() => setOpen(false)}
           href={"/auth/signout"}

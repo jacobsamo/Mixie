@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonProps } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -12,26 +12,40 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { createClient } from "@/server/supabase/client";
+import { feedbackSchema } from "@/types/zodSchemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
 import { TablesInsert } from "database.types";
+import { env } from "env";
 import { useAtom } from "jotai";
-import { Bug, CircleHelp, Lightbulb } from "lucide-react";
+import { Bug, CircleHelp, Lightbulb, MessageCirclePlus } from "lucide-react";
 import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { giveFeedbackOpen } from "../providers/dialogs";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { feedbackSchema } from "@/types/zodSchemas";
-import { env } from "env";
-import { createClient } from "@/server/supabase/client";
-import { useQuery } from "@tanstack/react-query";
-import useUser from "@/hooks/useUser";
+import { cn } from "@/lib/utils";
 
 interface FeedbackDialogProps {
-  Trigger?: React.ReactNode;
+  trigger?: "icon" | "button";
+  props?: ButtonProps;
+  text?: string;
+  className?: string;
 }
 
-const FeedbackDialog = ({ Trigger }: FeedbackDialogProps) => {
+const FeedbackDialog = ({
+  trigger = "button",
+  props,
+  text,
+  className,
+}: FeedbackDialogProps) => {
   const path = usePathname();
   const [open, setOpen] = useAtom(giveFeedbackOpen);
   const { data: user } = useQuery({
@@ -64,7 +78,7 @@ const FeedbackDialog = ({ Trigger }: FeedbackDialogProps) => {
   useEffect(() => {
     console.log(`error`, {
       errors,
-      getValues,
+      values: getValues(),
     });
   }, [errors]);
 
@@ -92,11 +106,50 @@ const FeedbackDialog = ({ Trigger }: FeedbackDialogProps) => {
     }
   };
 
+  const Trigger = () => {
+    if (trigger === "icon") {
+      return (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger
+              type="button"
+              onClick={() => setOpen(true)}
+              aria-label="give feedback to the mixie team"
+              className={cn(
+                "flex flex-row items-center justify-center gap-1 rounded-xl border-none p-2 outline-none",
+                className
+              )}
+            >
+              <MessageCirclePlus className="h-8 w-8" />
+            </TooltipTrigger>
+            <TooltipContent>Provide feedback to the Mixie team</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      );
+    }
+
+    return (
+      <Button
+        LeadingIcon={<MessageCirclePlus />}
+        onClick={() => setOpen(true)}
+        aria-label="give feedback to the mixie team"
+        variant={"secondary"}
+        className={cn(
+          "border-none text-step--3 outline-none hover:text-white",
+          className
+        )}
+        {...props}
+      >
+        {text ? text : "Feedback"}
+      </Button>
+    );
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      {/* <DialogTrigger asChild>
-        <Button variant={"secondary"}>Feedback</Button>
-      </DialogTrigger> */}
+      <DialogTrigger asChild type="button">
+        <Trigger />
+      </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Feedback</DialogTitle>

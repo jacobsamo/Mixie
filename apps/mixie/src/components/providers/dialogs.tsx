@@ -39,7 +39,7 @@ const Dialogs = () => {
   return (
     <>
       <CreateRecipeDialog />
-      <FeedbackDialog />
+      {/* <FeedbackDialog /> */}
       <SearchDialog />
     </>
   );
