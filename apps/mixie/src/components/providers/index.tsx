@@ -1,7 +1,6 @@
 "use client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider as JotaiProvider } from "jotai";
-
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import React from "react";
 import StateProvider from "./state-provider";
