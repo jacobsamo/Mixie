@@ -47,7 +47,7 @@ export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
   };
 
   // send data to edit the recipe in the db
-  fetch(`/api/recipes/${recipe.id}/edit`, {
+  fetch(`/api/recipes/${recipe.recipe_id}/edit`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

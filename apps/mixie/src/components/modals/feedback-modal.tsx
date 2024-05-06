@@ -51,6 +51,7 @@ const FeedbackDialog = ({ Trigger }: FeedbackDialogProps) => {
     handleSubmit,
     reset,
     formState: { errors },
+    getValues,
   } = useForm<TablesInsert<"feedback">>({
     resolver: zodResolver(feedbackSchema),
     defaultValues: {
@@ -61,7 +62,10 @@ const FeedbackDialog = ({ Trigger }: FeedbackDialogProps) => {
   });
 
   useEffect(() => {
-    console.log(errors);
+    console.log(`error`, {
+      errors,
+      getValues,
+    });
   }, [errors]);
 
   const onSubmit: SubmitHandler<TablesInsert<"feedback">> = (data) => {

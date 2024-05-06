@@ -20,16 +20,24 @@ export default async function PreviewRecipePage({
 
   const supabase = createClient();
 
-  const foundRecipe = await supabase.from("recipes").select().eq("created_at", user.id).eq("recipe_id", params.id)
+  const { data: foundRecipe, error } = await supabase
+    .from("recipes")
+    .select()
+    .eq("created_by", user.id)
+    .eq("recipe_id", params.id)
+    .single();
 
+  if (error) {
+    console.log(`Error on /recipes/preview/[id]`, error);
+  }
 
-  if (!foundRecipe[0]) {
+  if (!foundRecipe) {
     return notFound();
   }
 
   return (
     <>
-      <RecipePageComponent recipe={foundRecipe[0] as Recipe} />
+      <RecipePageComponent recipe={foundRecipe as Recipe} />
     </>
   );
 }

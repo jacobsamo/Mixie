@@ -54,7 +54,7 @@ export default async function RecipeViewPage({
                 image_url: recipe.image_url || null,
                 image_attributes: recipe.image_attributes || null,
                 total_time: recipe.total_time || null,
-                keywords: (recipe.keywords as { value: string }[]) || null,
+                keywords: recipe.keywords || null,
               }}
             />
           );

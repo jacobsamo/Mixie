@@ -126,6 +126,13 @@ message_service_sid = ""
 # DO NOT commit your Twilio auth token to git. Use environment variable substitution instead:
 auth_token = "env(SUPABASE_AUTH_SMS_TWILIO_AUTH_TOKEN)"
 
+
+[auth.external.google]
+enabled = true
+client_id="env(GOOGLE_CLIENT_ID)"
+secret="env(GOOGLE_CLIENT_SECRET)"
+
+
 # Use an external OAuth provider. The full list of providers are: `apple`, `azure`, `bitbucket`,
 # `discord`, `facebook`, `github`, `gitlab`, `google`, `keycloak`, `linkedin_oidc`, `notion`, `twitch`,
 # `twitter`, `slack`, `spotify`, `workos`, `zoom`.
