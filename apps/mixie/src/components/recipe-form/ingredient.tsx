@@ -3,11 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { units } from "@/lib/services/data";
 import { Ingredient as IngredientType } from "@/types";
-import { recipeFormSchema } from "@/types/zodSchemas";
+import { recipeClientFormSchema } from "@/types/zodSchemas";
 import { GripVertical, Trash2Icon } from "lucide-react";
 import { Controller, useFormContext } from "react-hook-form";
 import * as z from "zod";
-
 
 interface IngredientProps {
   index: number;
@@ -17,7 +16,7 @@ interface IngredientProps {
 
 const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
   const { register, getValues, setValue, watch, control } =
-    useFormContext<z.infer<typeof recipeFormSchema>>();
+    useFormContext<z.infer<typeof recipeClientFormSchema>>();
   const activeUnit = watch(`ingredients.${index}.unit`);
 
   if (values.isHeading) {

@@ -9,7 +9,6 @@ export async function GET(req: NextRequest) {
   const query = searchParams.get("q");
   const mealTime = searchParams.get("mealTime");
   const sweetSavory = searchParams.get("sweetSavoury");
-  const dietary = searchParams.get("dietary");
   const recipes = await getRecipes();
 
   if (!app) return NextResponse.json("Unauthorized", { status: 401 });
@@ -21,7 +20,6 @@ export async function GET(req: NextRequest) {
     filters: {
       mealTime,
       sweetSavory,
-      dietary,
     },
     recipes,
   });

@@ -4,12 +4,11 @@ import { Input } from "@/components/ui/input";
 import TagInput from "@/components/ui/taginput";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  dietaryRequirements,
   meal_times,
-  sweet_savoury,
+  sweet_savoury
 } from "@/lib/services/data";
 import { NewRecipe, Recipe } from "@/types";
-import { recipeFormSchema } from "@/types/zodSchemas";
+import { recipeClientFormSchema } from "@/types/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import dynamic from "next/dynamic";
 import { env } from "process";
@@ -20,8 +19,8 @@ import * as z from "zod";
 import RecipePageComponent from "../recipe-page/recipe-page";
 import Overlay from "./overlay";
 // import  StepContainer  from "./StepContainer";
-import Error from "@/components/ui/Error";
 import FeedbackDialog from "@/components/modals/feedback-modal";
+import Error from "@/components/ui/Error";
 import { onSubmit } from "./form";
 import LoadingImageUpload from "./loadingstates/loading-image-upload";
 
@@ -45,11 +44,12 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [initialTitle, setInitialTitle] = useState(recipe.title);
 
-  const methods = useForm<z.infer<typeof recipeFormSchema>>({
-    resolver: zodResolver(recipeFormSchema),
+  const methods = useForm<z.infer<typeof recipeClientFormSchema>>({
+    resolver: zodResolver(recipeClientFormSchema),
     defaultValues: {
       // apply the recipe values if they exist using something like ...recipe
       ...recipe,
+      keywords: recipe?.keywords.map((keyword) => ({ value: keyword })) || [],
       ingredients: recipe?.ingredients || [
         {
           title: "",
@@ -74,7 +74,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
     setError,
     watch,
     setValue,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isDirty, isValid, isSubmitting, isSubmitted },
   } = methods;
 
   useEffect(() => {
@@ -88,7 +88,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
   // show alert if user tries refreshing or closing the page
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (isDirty) {
+      if (isDirty && !isSubmitting && !isSubmitted) {
         e.preventDefault();
         e.returnValue =
           "Are you sure you want to refresh? You will lose your data if you close this page.";
@@ -164,7 +164,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
                 },
               })}
               error={errors.prep_time}
-              label="prep_time Time"
+              label="Prep Time"
               hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
             />
             <Input
@@ -182,39 +182,8 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
             <Input
               {...register("yield", { valueAsNumber: true })}
               error={errors.yield}
-              label="yield"
+              label="Serves"
               type="number"
-            />
-
-            <Controller
-              control={control}
-              name="dietary"
-              render={({ field }) => (
-                <>
-                  <label
-                    htmlFor="dietary"
-                    className="block text-step--3 font-medium"
-                  >
-                    Dietary Requirements
-                  </label>
-                  <SelectComponent
-                    options={dietaryRequirements}
-                    createAble
-                    isMulti
-                    onChange={field.onChange}
-                    value={field.value || undefined}
-                    placeholder="Dietary Requirements"
-                  />
-                </>
-              )}
-            />
-
-            <TagInput
-              control={control}
-              name="contains"
-              // label='Contains'
-              placeholder="E.g gluten, dairy, nuts"
-              hint="Allergens (separated by a comma)"
             />
 
             <Controller
@@ -247,25 +216,35 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
 
             <Controller
               control={control}
-              name="meal_times"
+              name="meal_time"
               render={({ field }) => (
                 <>
                   <label
-                    htmlFor="meal_times"
+                    htmlFor="meal_time"
                     className="block text-step--3 font-medium"
                   >
                     Meal Time
                   </label>
-                  <Error error={errors?.meal_times?.message ?? null} />
+                  <Error error={errors?.meal_time?.message ?? null} />
                   <SelectComponent
                     options={meal_times}
-                    createAble
                     isMulti
-                    onChange={(value) => setValue("meal_times", value.value)}
+                    onChange={(value: any) => {
+                      const newMealTime = field!!.value
+                        ? [...field.value, value[0]]
+                        : value;
+                      console.log("Value: ", {
+                        value: JSON.stringify(value),
+                        field: value.value,
+                        newValue: JSON.stringify(newMealTime),
+                      });
+
+                      setValue("meal_time", newMealTime);
+                    }}
                     value={meal_times.find(
                       (item) =>
                         typeof field.value === "string" &&
-                        item.value === field.value
+                        field.value === item.value
                     )}
                     placeholder="Meal time"
                   />
@@ -292,7 +271,7 @@ const RecipeForm = ({ recipe }: RecipeFormProps) => {
           </>
         )}
       </form>
-      <FeedbackDialog className=" mx-auto flex mb-2 mt-0  lg:w-1/2" />
+      <FeedbackDialog className=" mx-auto mb-2 mt-0 flex  lg:w-1/2" />
     </FormProvider>
   );
 };

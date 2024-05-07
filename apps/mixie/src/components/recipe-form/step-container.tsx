@@ -1,15 +1,15 @@
 import { Button } from "@/components/ui/button";
-import { recipeFormSchema } from "@/types/zodSchemas";
+import { recipeClientFormSchema } from "@/types/zodSchemas";
 import { PlusCircleIcon } from "lucide-react";
 import { useCallback } from "react";
 import { DropResult } from "react-beautiful-dnd";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import * as z from "zod";
-import {DraggableContainer, DraggableItem} from "../dragable";
+import { DraggableContainer, DraggableItem } from "../dragable";
 import { Step } from "./step";
 
 const StepContainer = () => {
-  const { control } = useFormContext<z.infer<typeof recipeFormSchema>>();
+  const { control } = useFormContext<z.infer<typeof recipeClientFormSchema>>();
   const { fields, append, remove, move } = useFieldArray({
     control,
     name: "steps",

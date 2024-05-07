@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { SwitchInput } from "@/components/ui/switch";
 import TagInput from "@/components/ui/taginput";
 import { Textarea } from "@/components/ui/textarea";
-import { recipeFormSchema } from "@/types/zodSchemas";
+import { recipeClientFormSchema } from "@/types/zodSchemas";
 import { ArrowLeftIcon } from "lucide-react";
 import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
@@ -29,7 +29,7 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
   const [loading, setLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { handleSubmit, register, control, formState, getValues } =
-    useFormContext<z.infer<typeof recipeFormSchema>>();
+    useFormContext<z.infer<typeof recipeClientFormSchema>>();
 
   return (
     <Dialog open={open} onOpenChange={setOpen} modal>

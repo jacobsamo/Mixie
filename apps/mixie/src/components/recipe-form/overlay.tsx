@@ -1,9 +1,9 @@
 "use client";
+import FeedbackDialog from "@/components/modals/feedback-modal";
 import { Button } from "@/components/ui/button";
 import { EyeIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import FeedbackDialog from "@/components/modals/feedback-modal";
 import RecipeValidationDialog from "./recipe-validation-dialog";
 import SubmittingButton from "./submitting-button";
 
@@ -17,10 +17,6 @@ interface OverlayProps {
 const Overlay = ({ onPreview, isDisabled }: OverlayProps) => {
   const [open, setOpen] = useState(false);
   const { handleSubmit, control, register, formState } = useFormContext();
-
-  useEffect(() => {
-    console.log(formState);
-  }, [formState]);
 
   return (
     <>

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { recipeFormSchema } from "@/types/zodSchemas";
+import { recipeClientFormSchema } from "@/types/zodSchemas";
 import { PlusCircleIcon } from "lucide-react";
 import { useCallback } from "react";
 import { type DropResult } from "react-beautiful-dnd";
@@ -10,7 +10,7 @@ import { Ingredient } from "./ingredient";
 
 const IngredientContainer = () => {
   const { control, register, formState } =
-    useFormContext<z.infer<typeof recipeFormSchema>>();
+    useFormContext<z.infer<typeof recipeClientFormSchema>>();
   const { fields, append, remove, move } = useFieldArray({
     control,
     name: "ingredients",

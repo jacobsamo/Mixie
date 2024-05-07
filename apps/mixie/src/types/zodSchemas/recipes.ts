@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { amount, difficulty_level, sweet_savoury, unit } from "./enums";
-import { meal_times } from "@/lib/services/data";
 
 const selectValue = z.object({
   value: z.string(),
@@ -89,6 +88,7 @@ const recipes = z.object({
   ingredients: ingredientSchema.array().nullable(),
   ingredients_list: z.string().array().nullable(),
   keywords: z.string().array().nullable(),
+  meal_time: selectValue.array().nullish(),
   notes: z.string().nullable(),
   nutrition: z.string().array().nullable(),
   prep_time: z.string().nullable(),
@@ -119,6 +119,7 @@ const recipes_edit = z.object({
   ingredients: ingredientSchema.array().nullish(),
   ingredients_list: z.string().array().nullish(),
   keywords: z.string().array().nullish(),
+  meal_time: selectValue.array().nullish(),
   notes: z.string().nullish(),
   nutrition: z.string().array().nullish(),
   prep_time: z.string().nullish(),
@@ -160,12 +161,57 @@ export const recipeSchema = recipes_edit.extend({
         "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
     })
     .nullish(),
-  dietary: selectValue.array().nullish(),
-  allergens: selectValue.array().nullish(),
-  meal_times: selectValue.array().nullish(),
 });
 
 // extend the recipe schema to include the info and ingredients
+export const recipeClientFormSchema = recipeSchema
+  .extend({
+    keywords: z
+      .object({
+        value: z.string(),
+      })
+      .array()
+      .nullish(),
+  })
+  .superRefine((values, ctx) => {
+    if (values.public) {
+      ["cook_time", "prep_time", "image_url"].forEach((field) => {
+        if (!values[field]) {
+          ctx.addIssue({
+            code: "custom",
+            message: `${field} is required for public recipes`,
+            path: [field],
+          });
+        }
+      });
+
+      if (!values.ingredients || values.ingredients.length === 0) {
+        ctx.addIssue({
+          code: "custom",
+          message: "At least one ingredient is required for public recipes",
+          path: ["ingredients"],
+        });
+      }
+
+      if (!values.steps || values.steps.length === 0) {
+        ctx.addIssue({
+          code: "custom",
+          message: "At least one step is required for public recipes",
+          path: ["steps"],
+        });
+      }
+
+      if (!values.meal_time) {
+        ctx.addIssue({
+          code: "custom",
+          message: "Meal time is required for public recipes",
+          path: ["meal_time"],
+        });
+      }
+    }
+    return values;
+  });
+
 export const recipeFormSchema = recipeSchema.superRefine((values, ctx) => {
   if (values.public) {
     ["cook_time", "prep_time", "image_url"].forEach((field) => {
@@ -194,11 +240,11 @@ export const recipeFormSchema = recipeSchema.superRefine((values, ctx) => {
       });
     }
 
-    if (!values.meal_times) {
+    if (!values.meal_time) {
       ctx.addIssue({
         code: "custom",
         message: "Meal time is required for public recipes",
-        path: ["mealTime"],
+        path: ["meal_time"],
       });
     }
   }

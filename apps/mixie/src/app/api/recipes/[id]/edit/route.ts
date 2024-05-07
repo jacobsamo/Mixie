@@ -48,13 +48,14 @@ export async function PUT(req: NextRequest, params: { id: string }) {
       prep_time: recipe.prep_time,
       public: recipe.public,
       rating: recipe.rating,
-      source: recipe.source,
+      source: recipe.source?.length != 0 ? recipe.source : null,
       steps: recipe.steps,
       suitable_for_diet: recipe.suitable_for_diet,
       sweet_savoury: recipe.sweet_savoury,
       total_time: recipe.total_time,
       version: recipe.version,
       yield: recipe.yield,
+      meal_time: recipe.meal_time,
     };
     const supabase = createClient();
 

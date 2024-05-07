@@ -1,15 +1,15 @@
 "use client";
 
-import * as React from "react";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
+import * as React from "react";
 
-import { cn } from "@/lib/utils";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 import { HelpCircleIcon } from "lucide-react";
 import type { FieldError } from "react-hook-form";
 
@@ -21,6 +21,7 @@ const Switch = React.forwardRef<
   SwitchProps
 >(({ className, ...props }, ref) => (
   <SwitchPrimitives.Root
+    type="button"
     className={cn(
       "peer inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-red disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-yellow data-[state=unchecked]:bg-grey",
       className

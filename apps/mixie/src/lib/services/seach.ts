@@ -6,7 +6,6 @@ interface SearchRecipesProps {
   filters?: {
     mealTime?: string | null;
     sweetSavory?: string | null;
-    dietary?: string | null;
   };
   recipes: Recipe[];
 }
@@ -27,12 +26,10 @@ export function searchRecipes({ query, filters, recipes }: SearchRecipesProps) {
   const filteredResults = unfilteredResults.filter((recipe) => {
     if (
       filters?.mealTime &&
-      filters.mealTime !== (recipe.meal_times?.values || "")
+      filters.mealTime !== (recipe.meal_time?.values || "")
     )
       return false;
     if (filters?.sweetSavory && recipe.sweet_savoury !== filters.sweetSavory)
-      return false;
-    if (filters?.dietary && filters.dietary !== (recipe.dietary?.values || ""))
       return false;
     return true;
   });

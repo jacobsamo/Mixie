@@ -5,10 +5,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import {
-  CreateRecipeIconButton,
-  SearchIconTrigger,
-} from "./open-dialogs";
+import { CreateRecipeIconButton, SearchIconTrigger } from "./open-dialogs";
 import UserProfile from "./user-profile-dropdown";
 import VersionChip from "./versioning-chips";
 
@@ -42,7 +39,7 @@ const Navbar = () => {
         <Image
           width={44}
           height={44}
-          src="/icons/icon.jpg"
+          src="/icons/icon_x48.jpg"
           alt="Logo"
           className="h-11 w-11 rounded-full"
         />

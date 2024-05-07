@@ -1,19 +1,21 @@
 import { calculateTotalTime } from "@/lib/utils";
 import type { Ingredient, NewRecipe } from "@/types";
-import { recipeFormSchema } from "@/types/zodSchemas";
+import { recipeClientFormSchema } from "@/types/zodSchemas";
 import { SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
 
-export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
-  recipe
-) => {
+export const onSubmit: SubmitHandler<
+  z.infer<typeof recipeClientFormSchema>
+> = async (recipe) => {
   if (!recipe) return;
 
   const totalTime =
     recipe && recipe.prep_time && recipe?.cook_time
       ? await calculateTotalTime(recipe.prep_time, recipe.cook_time)
       : null;
+
+  const keywords = recipe?.keywords?.map((keyword) => keyword.value);
 
   const ingredients = recipe?.ingredients?.map((ingredient: Ingredient) => {
     if (!["cup", "tbsp", "tsp"].includes(ingredient.unit?.value ?? "")) {
@@ -42,6 +44,7 @@ export const onSubmit: SubmitHandler<z.infer<typeof recipeFormSchema>> = async (
 
   const data: NewRecipe = {
     ...recipe,
+    keywords: keywords,
     total_time: totalTime,
     ingredients,
   };

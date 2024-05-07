@@ -283,6 +283,7 @@ export type Database = {
           ingredients: Json | null
           ingredients_list: string[] | null
           keywords: string[] | null
+          meal_time: Json | null
           notes: string | null
           nutrition: Json | null
           prep_time: string | null
@@ -312,6 +313,7 @@ export type Database = {
           ingredients?: Json | null
           ingredients_list?: string[] | null
           keywords?: string[] | null
+          meal_time?: Json | null
           notes?: string | null
           nutrition?: Json | null
           prep_time?: string | null
@@ -341,6 +343,7 @@ export type Database = {
           ingredients?: Json | null
           ingredients_list?: string[] | null
           keywords?: string[] | null
+          meal_time?: Json | null
           notes?: string | null
           nutrition?: Json | null
           prep_time?: string | null

@@ -1,8 +1,6 @@
 import { CardSquare } from "@/components/cards";
 import CollectionCard from "@/components/collection-card";
-import { SearchDialog } from "@/components/search";
 import { SearchBarTrigger } from "@/components/open-dialogs";
-import RecipeSearch from "@/components/search/search-recipes";
 import { meal_times } from "@/lib/services/data";
 import { getRecipes } from "@/lib/services/data_fetching";
 import { constructMetadata } from "@/lib/utils";
@@ -10,7 +8,7 @@ import { Donut, EggFried, Grid, Salad, Sandwich, Soup } from "lucide-react";
 
 export const metadata = constructMetadata({
   title: "Recipes",
-  image: "/images/recipes-landing-page.jpg",
+  image: "/images/recipes-landing-page.avif",
   url: "https://www.mixiecooking.com/recipes",
   description: "Find delicious recipes for any meal of the day",
 });
@@ -24,7 +22,7 @@ export default async function RecipeViewPage({
   const { mealTime: collection } = searchParams!;
   const mealTime = meal_times.find((meal) => meal.value === collection);
   const mealTimeRecipes = recipes.filter((recipe) => {
-    return recipe.meal_times?.values == mealTime?.value;
+    return recipe.meal_time?.values == mealTime?.value;
   });
 
   return (

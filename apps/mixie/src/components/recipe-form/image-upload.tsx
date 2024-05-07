@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { UploadDropzone } from "@/lib/utils/uploadthing";
-import { recipeFormSchema } from "@/types/zodSchemas";
+import { recipeClientFormSchema } from "@/types/zodSchemas";
 import { env } from "env";
 import { Edit2, LinkIcon, PlusCircleIcon, Search, Upload } from "lucide-react";
 import Image from "next/image";
@@ -33,7 +33,7 @@ const ImageUpload = () => {
     getValues,
     watch,
     formState: { errors },
-  } = useFormContext<z.infer<typeof recipeFormSchema>>();
+  } = useFormContext<z.infer<typeof recipeClientFormSchema>>();
   const [loading, setLoading] = useState(false);
   const [unsplashImageSearch, setUnsplashImageSearch] = useState("");
   const [data, setPhotosResponse] = useState<Photos | undefined>(undefined);

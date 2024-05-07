@@ -27,9 +27,8 @@ export const SearchInput = ({ setSearchResults }: SearchInputProps) => {
   const [sweetSavoury, setSweetSavoury] = useState<string | undefined>(
     undefined
   );
-  const [dietary, setDietary] = useState<string | undefined>(undefined);
 
-  const searchUrl = `${mealTime ? `&mealTime=${mealTime}` : ""}${sweetSavoury ? `&sweetSavoury=${sweetSavoury}` : ""}${dietary ? `&dietary=${dietary}` : ""}`;
+  const searchUrl = `${mealTime ? `&mealTime=${mealTime}` : ""}${sweetSavoury ? `&sweetSavoury=${sweetSavoury}` : ""}`;
 
   return (
     <div className="flex w-[90%] flex-col gap-4">
@@ -96,19 +95,6 @@ export const SearchInput = ({ setSearchResults }: SearchInputProps) => {
             </SelectTrigger>
             <SelectContent>
               {sweet_savoury.map((meal_time) => (
-                <SelectItem key={meal_time.value} value={meal_time.value}>
-                  {meal_time.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Select value={dietary} onValueChange={setDietary}>
-            <SelectTrigger>
-              <SelectValue placeholder="Dietary" />
-            </SelectTrigger>
-            <SelectContent>
-              {dietaryRequirements.map((meal_time) => (
                 <SelectItem key={meal_time.value} value={meal_time.value}>
                   {meal_time.label}
                 </SelectItem>

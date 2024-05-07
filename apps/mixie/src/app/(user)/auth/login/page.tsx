@@ -49,14 +49,14 @@ const LoginPage = () => {
       options: {
         redirectTo: `${window.location.origin}/api/auth/callback`,
       },
-    })
+    });
   };
 
   return (
     <>
       <div className="flex flex-col items-center">
         <Image
-          src="/icons/icon.jpg"
+          src="/icons/icon_x128"
           alt="Logo"
           width={128}
           height={128}
