@@ -76,25 +76,28 @@ export async function POST(req: NextRequest) {
       newRecipe = {
         id: recipe_id(recipe.name),
         title: recipe.name,
-        description: recipe.description.replace(/<[^>]*>?/gm, "") || null,
+        description: recipe.description?.replace(/<[^>]*>?/gm, "") ?? null,
         public: false,
         steps:
-          recipe.recipeInstructions.map((step: string) => {
+          recipe.recipeInstructions?.map((step: string) => {
             return { step_body: step };
-          }) || null,
+          }) ?? null,
         ingredients: ingredients,
         source: link,
-        cook_time: splitTime(recipe.cookTime),
-        prep_time: splitTime(recipe.prep_timeTime),
-        total_time: splitTime(recipe.totalTime),
-        rating: recipe.aggregateRating?.ratingValue || null,
-        yield: recipe.recipeYield || null,
-        image_url: recipe.image.url || null,
-        image_attributes: recipe.image.alt || recipe.name || "recipe image",
-        keywords: recipe.keywords.split(",").map((keyword: string) => {
-          return { value: keyword };
+        cook_time: recipe?.cookTime ? splitTime(recipe.cookTime) : null,
+        prep_time: recipe?.prepTime ? splitTime(recipe.prepTime) : null,
+        total_time: recipe?.totalTime ? splitTime(recipe.totalTime) : null,
+        rating: recipe.aggregateRating?.ratingValue ? Math.round(recipe.aggregateRating?.ratingValue) : null,
+        yield: recipe?.recipeYield ? Math.round(recipe.recipeYield) : null,
+        image_url: recipe?.image.url ?? null,
+        image_attributes: {
+          alt: recipe.image?.alt || recipe.name || "recipe image",
+        },
+        keywords: recipe.keywords?.split(",").map((keyword: string) => {
+          return keyword.trim();
         }),
-        ingredients_list: ingredients.map((ingredient) => ingredient.title),
+        ingredients_list:
+          ingredients?.map((ingredient) => ingredient.title) ?? null,
         created_by: user.id,
         version: "1.0",
       };
@@ -112,10 +115,17 @@ export async function POST(req: NextRequest) {
       .select()
       .single();
 
-      if (error) {
-        console.error("Error on /recipes/create", error);
-        return NextResponse.json("A database error occurred, contact support at support@mixiecooking.com or head to github to log an issue https://github.com/Eirfire/Mixie/issues", { status: 422 });
-      }
+    if (error) {
+      console.error("Error on /recipes/create", {
+        error,
+        values: newRecipe,
+      });
+
+      return NextResponse.json(
+        "A database error occurred, contact support at support@mixiecooking.com or head to github to log an issue https://github.com/Eirfire/Mixie/issues",
+        { status: 422 }
+      );
+    }
 
     console.log(`Created recipe by link: ${data?.recipe_id}`, {
       message: `Recipe successfully created`,
@@ -133,11 +143,14 @@ export async function POST(req: NextRequest) {
     );
   } catch (error) {
     console.error("Error on /recipes/create", error);
+
     if (error instanceof z.ZodError) {
       return NextResponse.json(JSON.stringify(error.issues), { status: 422 });
     }
 
-
-    return NextResponse.json(null, { status: 500 });
+    return NextResponse.json(error, {
+      status: 500,
+      statusText: "Internal Server Error",
+    });
   }
 }
