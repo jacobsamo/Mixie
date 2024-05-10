@@ -9,7 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
+import { SwitchInput } from "@/components/ui/switch";
 import TagInput from "@/components/ui/taginput";
 import { Textarea } from "@/components/ui/textarea";
 import { recipeClientFormSchema } from "@/types/zodSchemas";
@@ -64,7 +64,7 @@ const CreateRecipeDialog = ({ open, setOpen }: CreateRecipeDialogProps) => {
             name={"public"}
             defaultValue={false}
             render={({ field }) => (
-              <Switch
+              <SwitchInput
                 name={field.name}
                 checked={field.value ? field.value : false}
                 onCheckedChange={field.onChange}
