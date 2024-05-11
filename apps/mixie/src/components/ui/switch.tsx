@@ -2,7 +2,6 @@
 
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 import * as React from "react";
-
 import {
   Tooltip,
   TooltipContent,
@@ -10,7 +9,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { HelpCircleIcon } from "lucide-react";
+import { HelpCircle, HelpCircleIcon } from "lucide-react";
 import type { FieldError } from "react-hook-form";
 
 interface SwitchProps
@@ -18,12 +17,11 @@ interface SwitchProps
 
 const Switch = React.forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,
-  SwitchProps
+  React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>
 >(({ className, ...props }, ref) => (
   <SwitchPrimitives.Root
-    type="button"
     className={cn(
-      "peer inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-red disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-yellow data-[state=unchecked]:bg-grey",
+      "focus-visible:ring-ring focus-visible:ring-offset-background data-[state=checked]:bg-primary data-[state=unchecked]:bg-input peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
       className
     )}
     {...props}
@@ -87,7 +85,7 @@ const SwitchInput = React.forwardRef<HTMLButtonElement, SwitchInputProps>(
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild className="cursor-pointer">
-                    <HelpCircleIcon className="h-5 w-5 opacity-70" />
+                    <HelpCircle className="h-5 w-5 opacity-70" />
                   </TooltipTrigger>
                   <TooltipContent sideOffset={5} side="bottom">
                     {tooltip}

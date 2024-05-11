@@ -12,5 +12,8 @@
   },
   "dependencies": {
     "tailwindcss": "^3.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.10"
   }
 }

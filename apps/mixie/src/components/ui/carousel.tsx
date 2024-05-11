@@ -1,19 +1,21 @@
 "use client";
-import { Button, ButtonProps } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type {
-  EmblaCarouselType as CarouselApi,
-  EmblaOptionsType as CarouselOptions,
-  EmblaPluginType as CarouselPlugin,
-} from "embla-carousel";
-import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
+import useEmblaCarousel, {
+  type UseEmblaCarouselType,
+} from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import * as React from "react";
-import Autoplay from "embla-carousel-autoplay";
+
+type CarouselApi = UseEmblaCarouselType[1];
+type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
+type CarouselOptions = UseCarouselParameters[0];
+type CarouselPlugin = UseCarouselParameters[1];
 
 type CarouselProps = {
   opts?: CarouselOptions;
-  plugins?: CarouselPlugin[];
+  plugins?: CarouselPlugin;
   orientation?: "horizontal" | "vertical";
   setApi?: (api: CarouselApi) => void;
   autoplay?: boolean;
@@ -196,16 +198,16 @@ CarouselItem.displayName = "CarouselItem";
 const CarouselPrevious = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof Button>
->(({ className, variant = "outline", size = "icon", ...props }, ref) => {
+>(({ className, variant = "link", size = "icon", ...props }, ref) => {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel();
 
   return (
     <Button
       ref={ref}
-      variant={variant as ButtonProps["variant"]}
+      variant={variant}
       size={size}
       className={cn(
-        "absolute h-12 w-12 rounded-full",
+        "text-secondary-foreground absolute h-12 w-8 shadow",
         orientation === "horizontal"
           ? "left-0 top-1/3 z-20"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -225,16 +227,16 @@ CarouselPrevious.displayName = "CarouselPrevious";
 const CarouselNext = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof Button>
->(({ className, variant = "outline", size = "icon", ...props }, ref) => {
+>(({ className, variant = "link", size = "icon", ...props }, ref) => {
   const { orientation, scrollNext, canScrollNext } = useCarousel();
 
   return (
     <Button
       ref={ref}
-      variant={variant as ButtonProps["variant"]}
+      variant={variant}
       size={size}
       className={cn(
-        "absolute h-12 w-12 rounded-full",
+        "text-secondary-foreground absolute h-12 w-8 shadow",
         orientation === "horizontal"
           ? "right-0 top-1/3 z-20"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -257,5 +259,6 @@ export {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-  type CarouselApi,
+  type CarouselApi
 };
+

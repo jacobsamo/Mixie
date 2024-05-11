@@ -54,7 +54,7 @@ const StepContainer = () => {
         onClick={() => handleAddClick()}
         name="Ingredient"
         type="button"
-        variant={"secondary"}
+        variant={"outline"}
       >
         <PlusCircleIcon className="h-5 w-5" />
         Add Step

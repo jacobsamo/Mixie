@@ -8,6 +8,7 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "clean:all": "turbo run clean:all && rm -rf node_modules/ && rm -rf .turbo",
+    "update:all": "pnpm run update:tsconfig && pnpm run update:eslint && pnpm run update:tailwind && pnpm run update:mixie",
     "update:mixie": "cd apps/mixie && pnpm up --latest && cd ../..",
     "update:tsconfig": "cd packages/tsconfig && pnpm up --latest && cd ../..",
     "update:eslint": "cd packages/eslint-config-custom && pnpm up --latest && cd ../..",
