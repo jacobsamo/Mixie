@@ -9,7 +9,6 @@ if (env.NODE_ENV === "development") {
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ["tailwind-config"],
   images: {
     remotePatterns: [{ protocol: "https", hostname: "*" }],
   },
