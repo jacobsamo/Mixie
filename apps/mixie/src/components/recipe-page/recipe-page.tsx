@@ -14,9 +14,13 @@ const RecipePrintingView = dynamic(() => import("./recipe-printing-view"));
 
 interface RecipePageComponentProps {
   recipe: Recipe;
+  viewingFrom?: "page" | "edit";
 }
 
-const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
+const RecipePageComponent = ({
+  recipe,
+  viewingFrom = "page",
+}: RecipePageComponentProps) => {
   return (
     <>
       <RecipePrintingView recipe={recipe} />
@@ -110,7 +114,7 @@ const RecipePageComponent = ({ recipe }: RecipePageComponentProps) => {
             <p className="italic">{recipe.notes}</p>
           </div>
         )}
-        <span className="my-2 mb-4 h-[0.125rem] w-full rounded-md bg-grey md:w-[800px] dark:bg-white" />
+        <span className="my-2 mb-4 h-[0.125rem] w-full rounded-md bg-grey dark:bg-white md:w-[800px]" />
         <Details
           ingredients={recipe.ingredients || []}
           steps={recipe.steps || []}
