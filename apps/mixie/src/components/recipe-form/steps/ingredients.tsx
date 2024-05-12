@@ -6,21 +6,16 @@ import * as z from "zod";
 import { recipeFormSchema, recipeSchema } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@/components/ui/textarea";
+import { ingredientsSchema } from "../actions";
 
 export interface IngredientsProps extends SharedProps {}
-
-const ingredientsSchema = recipeSchema.pick({
-  ingredients: true,
-});
-
-type IngredientsForm = z.infer<typeof ingredientsSchema>;
 
 const Ingredients = () => {
   const {
     register,
     control,
     formState: { errors },
-  } = useForm<IngredientsForm>({
+  } = useForm<z.infer<typeof ingredientsSchema>>({
     resolver: zodResolver(ingredientsSchema),
   });
 

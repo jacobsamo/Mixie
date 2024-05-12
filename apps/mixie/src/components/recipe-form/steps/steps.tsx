@@ -6,22 +6,16 @@ import * as z from "zod";
 import { recipeFormSchema, recipeSchema } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@/components/ui/textarea";
+import { stepsSchema } from "../actions";
 
 export interface StepsProps extends SharedProps {}
-
-const stepsSchema = recipeSchema.pick({
-  steps: true,
-});
-
-type StepsForm = z.infer<typeof stepsSchema>;
-
 
 const Steps = () => {
   const {
     register,
     control,
     formState: { errors },
-  } = useForm<StepsForm>({
+  } = useForm<z.infer<typeof stepsSchema>>({
     resolver: zodResolver(stepsSchema),
   });
   return <div>Steps</div>;

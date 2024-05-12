@@ -1,43 +1,39 @@
 import { Input } from "@/components/ui/input";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { SharedProps } from "./shared";
-import * as z from "zod";
-import { recipeFormSchema, recipeSchema } from "@/types";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@/components/ui/textarea";
+import { recipeSchema } from "@/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { env } from "env";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { createApi } from "unsplash-js";
+import { Photos } from "unsplash-js/src/methods/search/types/response";
+import * as z from "zod";
+import { SharedProps } from "./shared";
+import { infoSchema } from "../actions";
 
 export interface InfoProps extends SharedProps {}
-
-const infoSchema = recipeSchema.pick({
-  title: true,
-  source: true,
-  prep_time: true,
-  cook_time: true,
-  yield: true,
-  description: true,
-});
-
-type InfoForm = z.infer<typeof infoSchema>;
 
 const Info = () => {
   const {
     register,
     control,
+    setValue,
+    watch,
     formState: { errors },
-  } = useForm<InfoForm>({
+  } = useForm<z.infer<typeof infoSchema>>({
     resolver: zodResolver(infoSchema),
   });
 
+  
   return (
-    <div className="flex flex-col gap-2">
+    <form className="flex flex-col gap-2">
       <Input
         {...register("title", {
           required: true,
         })}
         error={errors.title}
         required
-        label="Title"
+        label="Recipe name"
       />
       <Textarea id="description" label="Description" control={control} />
       <Input
@@ -75,7 +71,7 @@ const Info = () => {
         label="Serves"
         type="number"
       />
-    </div>
+    </form>
   );
 };
 
