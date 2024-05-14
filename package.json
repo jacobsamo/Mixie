@@ -11,8 +11,7 @@
     "update:all": "pnpm run update:tsconfig && pnpm run update:eslint && pnpm run update:tailwind && pnpm run update:mixie",
     "update:mixie": "cd apps/mixie && pnpm up --latest && cd ../..",
     "update:tsconfig": "cd packages/tsconfig && pnpm up --latest && cd ../..",
-    "update:eslint": "cd packages/eslint-config-custom && pnpm up --latest && cd ../..",
-    "update:tailwind": "cd packages/tailwind-config && pnpm up --latest && cd ../.."
+    "update:eslint": "cd packages/eslint-config-custom && pnpm up --latest && cd ../.."
   },
   "dependencies": {
     "@manypkg/cli": "^0.21.4",

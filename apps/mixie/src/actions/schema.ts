@@ -1,6 +1,7 @@
-"use server";
 import { recipeSchema } from "@/types";
 import * as z from "zod";
+
+
 export const infoSchema = recipeSchema.pick({
   title: true,
   source: true,
@@ -28,11 +29,3 @@ export const detailsSchema = recipeSchema.pick({
   public: true,
   sweet_savoury: true,
 });
-
-async function submitInfo(data: z.infer<typeof infoSchema>) {}
-
-async function submitIngredients(data: z.infer<typeof ingredientsSchema>) {}
-
-async function submitSteps(data: z.infer<typeof stepsSchema>) {}
-
-async function submitDetails(data: z.infer<typeof detailsSchema>) {}

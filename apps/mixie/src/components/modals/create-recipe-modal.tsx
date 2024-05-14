@@ -5,9 +5,9 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle
+  DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/advanced-components/input";
 import { createRecipeSchema } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { env } from "env";

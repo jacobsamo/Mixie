@@ -3,7 +3,7 @@ import { cn, createUrl } from "@/lib/utils";
 import { SearchIcon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { Input, InputProps } from "../ui/input";
+import { Input, InputProps } from "../ui/advanced-components/input";
 
 interface RecipeSearchProps extends Omit<InputProps, "name"> {
   className?: string;

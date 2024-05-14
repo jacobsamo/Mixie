@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/advanced-components/input";
 import { createClient } from "@/server/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";

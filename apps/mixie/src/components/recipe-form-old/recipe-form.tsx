@@ -1,12 +1,9 @@
 "use client";
 import { SelectComponent } from "@/components/ui/SelectComponent";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/advanced-components/input";
 import TagInput from "@/components/ui/taginput";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  meal_times,
-  sweet_savoury
-} from "@/lib/services/data";
+import { Textarea } from "@/components/ui/advanced-components/textarea";
+import { meal_times, sweet_savoury } from "@/lib/services/data";
 import { NewRecipe, Recipe } from "@/types";
 import { recipeClientFormSchema } from "@/types/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";

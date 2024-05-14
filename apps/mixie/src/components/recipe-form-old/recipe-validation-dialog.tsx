@@ -8,10 +8,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/advanced-components/input";
 import { SwitchInput } from "@/components/ui/switch";
 import TagInput from "@/components/ui/taginput";
-import { Textarea } from "@/components/ui/textarea";
+import { Textarea } from "@/components/ui/advanced-components/textarea";
 import { recipeClientFormSchema } from "@/types/zodSchemas";
 import { ArrowLeftIcon } from "lucide-react";
 import { useState } from "react";

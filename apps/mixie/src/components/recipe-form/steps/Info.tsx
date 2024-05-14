@@ -1,5 +1,5 @@
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/advanced-components/input";
+import { Textarea } from "@/components/ui/advanced-components/textarea";
 import { recipeSchema } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { env } from "env";
@@ -9,7 +9,7 @@ import { createApi } from "unsplash-js";
 import { Photos } from "unsplash-js/src/methods/search/types/response";
 import * as z from "zod";
 import { SharedProps } from "./shared";
-import { infoSchema } from "../actions";
+import { infoSchema } from "@/actions/schema";
 
 export interface InfoProps extends SharedProps {}
 
@@ -24,7 +24,6 @@ const Info = () => {
     resolver: zodResolver(infoSchema),
   });
 
-  
   return (
     <form className="flex flex-col gap-2">
       <Input

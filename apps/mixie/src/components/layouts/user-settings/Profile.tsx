@@ -1,8 +1,8 @@
 import ImageUploadDialog from "@/components/modals/image-upload-modal";
 import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/advanced-components/input";
+import { Textarea } from "@/components/ui/advanced-components/textarea";
 import { User } from "@supabase/supabase-js";
 import Image from "next/image";
 import { useFormContext } from "react-hook-form";
@@ -80,7 +80,7 @@ const Profile = () => {
   //     />
   //   </div>
   // );
-  return <div>Profile</div>
+  return <div>Profile</div>;
 };
 
 export default Profile;

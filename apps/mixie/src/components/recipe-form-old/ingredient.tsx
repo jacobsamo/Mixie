@@ -1,6 +1,6 @@
 import { SelectComponent } from "@/components/ui/SelectComponent";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/advanced-components/input";
 import { units } from "@/lib/services/data";
 import { Ingredient as IngredientType } from "@/types";
 import { recipeClientFormSchema } from "@/types/zodSchemas";
@@ -113,4 +113,3 @@ const Ingredient = ({ index, values, handleDelete }: IngredientProps) => {
 };
 
 export { Ingredient };
-

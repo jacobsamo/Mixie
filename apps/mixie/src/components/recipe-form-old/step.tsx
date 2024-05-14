@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { Textarea } from "@/components/ui/advanced-components/textarea";
 import { recipeClientFormSchema } from "@/types/zodSchemas";
 import { Trash2Icon } from "lucide-react";
 import { useFormContext } from "react-hook-form";
@@ -48,4 +48,3 @@ const Step = ({ index, handleDelete }: StepProps) => {
 };
 
 export { Step };
-

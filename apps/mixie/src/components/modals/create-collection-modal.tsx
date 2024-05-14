@@ -9,7 +9,7 @@ import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/advanced-components/input";
 import { collectionSchema } from "@/types";
 import { useAtom } from "jotai";
 import { collectionsAtom } from "../providers/state-provider";

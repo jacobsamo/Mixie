@@ -4,9 +4,9 @@ import {
   Control,
   RegisterOptions,
   useFieldArray,
-  useForm
+  useForm,
 } from "react-hook-form";
-import { Input, InputProps } from "./input";
+import { Input, InputProps } from "./advanced-components/input";
 
 // add types for react-hook-form so that we can use the `control` prop with the types from the formschema and not have to use `any`
 export interface TagInputProps
@@ -29,7 +29,6 @@ const TagInput = ({
   const { fields, append, remove, swap, move, insert } = useFieldArray({
     control,
     name: name,
-
   });
 
   const handleKeyDown = useCallback(
