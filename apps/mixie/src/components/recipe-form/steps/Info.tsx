@@ -1,32 +1,44 @@
+import { submitInfo } from "@/actions/recipe-form/submit-info";
+import { infoSchema } from "@/actions/schema";
 import { Input } from "@/components/ui/advanced-components/input";
 import { Textarea } from "@/components/ui/advanced-components/textarea";
-import { recipeSchema } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { env } from "env";
-import { useEffect, useState } from "react";
+import { useAction } from "next-safe-action/hooks";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { createApi } from "unsplash-js";
-import { Photos } from "unsplash-js/src/methods/search/types/response";
+import toast from "react-hot-toast";
 import * as z from "zod";
-import { SharedProps } from "./shared";
-import { infoSchema } from "@/actions/schema";
+import { SharedProps, StepperFormActions } from "./shared";
+import { Button } from "@/components/ui/button";
 
 export interface InfoProps extends SharedProps {}
 
 const Info = () => {
+  const setInfo = useAction(submitInfo, {
+    onError: () => {
+      toast.error("Something went wrong pleaase try again.");
+    },
+  });
+
   const {
     register,
     control,
-    setValue,
-    watch,
     formState: { errors },
+    handleSubmit
   } = useForm<z.infer<typeof infoSchema>>({
     resolver: zodResolver(infoSchema),
   });
 
+  useEffect(() => {
+    console.log("errors: ", errors);
+  }, [errors]);
+
+  const isSubmitting =
+    setInfo.status !== "idle" && setInfo.status !== "hasErrored";
+
   return (
-    <form className="flex flex-col gap-2">
-      <Input
+    <form className="flex flex-col gap-2" onSubmit={handleSubmit(setInfo.execute)}>
+      <Input          
         {...register("title", {
           required: true,
         })}
@@ -70,6 +82,12 @@ const Info = () => {
         label="Serves"
         type="number"
       />
+
+        <Button type="submit">
+          submit
+        </Button>
+
+      <StepperFormActions isSubmitting={isSubmitting} />
     </form>
   );
 };

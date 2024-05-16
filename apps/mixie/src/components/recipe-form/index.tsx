@@ -17,7 +17,6 @@ import {
   Star,
   User,
 } from "lucide-react";
-import { StepperFormActions } from "./form-actions";
 import Info from "./steps/info";
 import Ingredients from "./steps/ingredients";
 import Steps from "./steps/steps";
@@ -30,12 +29,10 @@ const steps = [
   { label: "Details", icon: Coffee },
 ] satisfies StepItem[];
 
-
-
 const DisplayForm = ({ activeStep }: { activeStep: StepItem }) => {
   switch (activeStep.label) {
     case "Info":
-      return <Info  />;
+      return <Info />;
     case "Ingredients":
       return <Ingredients />;
     case "Steps":
@@ -53,10 +50,9 @@ export default function RecipeForm() {
       <Stepper initialStep={0} steps={steps}>
         {steps.map((step, index) => (
           <Step key={step.label} {...step}>
-            <div className="my-4 flex min-h-40 items-center justify-center rounded-md border bg-secondary text-primary">
+            <div className="my-4 flex min-h-40 items-center justify-center rounded-md border bg-secondary">
               <DisplayForm activeStep={step} />
             </div>
-            <StepperFormActions />
           </Step>
         ))}
       </Stepper>

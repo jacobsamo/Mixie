@@ -45,33 +45,13 @@ export const image_attributesSchema = z.object({
 });
 
 export const ingredientSchema = z.object({
-  isHeading: z.boolean(),
-  title: z.string(),
-  unit: selectValue
-    .extend({
-      value: unit,
-      label: unit,
-    })
-    .default({
-      label: "grams",
-      value: "grams",
-    })
-    .nullable(),
-  quantity: z.number().nullish(),
-  amount: selectValue
-    .extend({
-      value: amount,
-      label: amount,
-    })
-    .default({
-      label: "not_set",
-      value: "not_set",
-    })
-    .nullable(),
+  isHeading: z.boolean().nullish(),
+  text: z.string(),
 });
 
 export const stepSchema = z.object({
-  step_body: z.string(),
+  text: z.string(),
+  image: z.string().nullish(),
 });
 
 const recipes = z.object({
@@ -137,8 +117,9 @@ const recipes_edit = z.object({
 });
 
 export const recipeSchema = recipes_edit.extend({
-  steps: stepSchema.array().optional(),
-  ingredients: ingredientSchema.array().optional(),
+  // recipe_id: z.string(),
+  steps: stepSchema.array(),
+  ingredients: ingredientSchema.array(),
   ingredients_list: z.string().array().nullish(),
   image_url: z
     .string({
