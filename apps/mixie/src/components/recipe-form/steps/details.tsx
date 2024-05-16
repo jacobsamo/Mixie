@@ -13,22 +13,34 @@ import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
+import { useRecipeContext } from "../recipe-form-provider";
 import { StepperFormActions } from "./shared";
 
 const Details = () => {
   const { nextStep, resetSteps } = useStepper();
+  const {recipe, setRecipe} = useRecipeContext();
 
   const setDetails = useAction(submitDetails, {
     onError: () => {
       toast.error("Something went wrong pleaase try again.");
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      setRecipe(data);
       resetSteps();
     },
   });
 
   const form = useForm<z.infer<typeof detailsSchema>>({
     resolver: zodResolver(detailsSchema),
+    defaultValues: {
+      recipe_id: recipe?.recipe_id ?? undefined,
+      difficulty_level: recipe?.difficulty_level ?? "not_set",
+      public: recipe?.public ?? false,
+      sweet_savoury: recipe?.sweet_savoury ?? "not_set",
+      meal_time: recipe?.meal_time ?? null,
+      keywords: recipe?.keywords ?? null,
+      notes: recipe?.notes ?? null,
+    },
   });
   const {
     control,

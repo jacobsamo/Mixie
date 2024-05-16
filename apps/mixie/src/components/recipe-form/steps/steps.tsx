@@ -12,27 +12,24 @@ import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
 import { Step } from "../components/step";
-import { SharedProps, StepperFormActions } from "./shared";
-
-export interface StepsProps extends SharedProps {}
+import { useRecipeContext } from "../recipe-form-provider";
+import { StepperFormActions } from "./shared";
 
 const Steps = () => {
   const { nextStep } = useStepper();
+  const { recipe, setRecipe } = useRecipeContext();
 
   const form = useForm<z.infer<typeof stepsSchema>>({
     resolver: zodResolver(stepsSchema),
     defaultValues: {
-      steps: [
+      recipe_id: recipe?.recipe_id ?? undefined,
+      steps: recipe?.steps ?? [
         {
           text: "",
         },
       ],
     },
   });
-
-  useEffect(() => {
-    console.log("errors: ", form.formState.errors);
-  }, [form.formState.errors]);
 
   const { fields, append, remove, move } = useFieldArray({
     control: form.control,

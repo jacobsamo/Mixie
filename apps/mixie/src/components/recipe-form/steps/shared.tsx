@@ -1,11 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useStepper } from "@/components/ui/stepper";
-import { Recipe } from "@/types";
 import { Loader2 } from "lucide-react";
 
-export interface SharedProps {
-  recipe: Recipe;
-}
 
 interface StepperFormProps {
   isSubmitting?: boolean;

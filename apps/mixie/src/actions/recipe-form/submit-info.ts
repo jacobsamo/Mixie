@@ -3,13 +3,10 @@
 import { action } from "@/actions/safe-action";
 import { infoSchema } from "@/actions/schema";
 import { createClient } from "@/server/supabase/server";
+import { Recipe } from "@/types";
 
 export const submitInfo = action(infoSchema, async (params) => {
   const supabase = createClient();
-
-
-  console.log("values: ", params)
-
 
   const { data, error } = await supabase
     .from("recipes")
@@ -28,8 +25,9 @@ export const submitInfo = action(infoSchema, async (params) => {
     .single();
 
   if (error) {
+    console.error(error);
     throw new Error(error.message);
   }
 
-  return data;
+  return data as Recipe | null;
 });

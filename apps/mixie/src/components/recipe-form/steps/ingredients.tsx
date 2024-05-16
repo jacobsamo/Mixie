@@ -12,17 +12,18 @@ import { DropResult } from "react-beautiful-dnd";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
-import { SharedProps, StepperFormActions } from "./shared";
-
-export interface IngredientsProps extends SharedProps {}
+import { useRecipeContext } from "../recipe-form-provider";
+import { StepperFormActions } from "./shared";
 
 const Ingredients = () => {
   const { nextStep } = useStepper();
+  const { recipe, setRecipe } = useRecipeContext();
 
   const form = useForm<z.infer<typeof ingredientsSchema>>({
     resolver: zodResolver(ingredientsSchema),
     defaultValues: {
-      ingredients: [
+      recipe_id: recipe?.recipe_id ?? undefined,
+      ingredients: recipe?.ingredients ?? [
         {
           text: "",
         },
@@ -42,7 +43,8 @@ const Ingredients = () => {
     onError: () => {
       toast.error("Something went wrong pleaase try again.");
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      setRecipe(data);
       nextStep();
     },
   });

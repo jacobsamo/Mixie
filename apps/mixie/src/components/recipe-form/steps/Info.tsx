@@ -8,24 +8,37 @@ import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
-import { SharedProps, StepperFormActions } from "./shared";
-
-export interface InfoProps extends SharedProps {}
+import { useRecipeContext } from "../recipe-form-provider";
+import { StepperFormActions } from "./shared";
 
 const Info = () => {
   const { nextStep } = useStepper();
+  const { recipe, setRecipe } = useRecipeContext();
 
   const setInfo = useAction(submitInfo, {
-    onError: () => {
+    onError: (e) => {
+      console.error("Error setting info: ", e);
       toast.error("Something went wrong pleaase try again.");
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      setRecipe(data);
       nextStep();
     },
   });
 
   const form = useForm<z.infer<typeof infoSchema>>({
     resolver: zodResolver(infoSchema),
+    defaultValues: {
+      recipe_id: recipe?.recipe_id ?? undefined,
+      image_attributes: recipe?.image_attributes ?? null,
+      image_url: recipe?.image_url ?? null,
+      title: recipe?.title ?? undefined,
+      description: recipe?.description ?? null,
+      source: recipe?.source ?? null,
+      prep_time: recipe?.prep_time ?? null,
+      cook_time: recipe?.cook_time ?? null,
+      yield: recipe?.yield ?? null,
+    },
   });
 
   const {

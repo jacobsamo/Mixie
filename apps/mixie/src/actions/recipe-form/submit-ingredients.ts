@@ -3,6 +3,7 @@
 import { action } from "@/actions/safe-action";
 import { ingredientsSchema } from "@/actions/schema";
 import { createClient } from "@/server/supabase/server";
+import { Recipe } from "@/types";
 
 export const submitIngredients = action(ingredientsSchema, async (params) => {
   const supabase = createClient();
@@ -20,5 +21,5 @@ export const submitIngredients = action(ingredientsSchema, async (params) => {
     throw new Error(error.message);
   }
 
-  return data;
+  return data as Recipe | null;
 });

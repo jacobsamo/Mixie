@@ -1,19 +1,12 @@
 "use client";
-import {
-  Step,
-  Stepper,
-  type StepItem
-} from "@/components/ui/stepper";
-import {
-  ChefHat,
-  Coffee,
-  ShoppingBasket,
-  Soup
-} from "lucide-react";
+import { Step, Stepper, type StepItem } from "@/components/ui/stepper";
+import { ChefHat, Coffee, ShoppingBasket, Soup } from "lucide-react";
 import Details from "./steps/details";
 import Info from "./steps/info";
 import Ingredients from "./steps/ingredients";
 import Steps from "./steps/steps";
+import { RecipeFormProvider } from "./recipe-form-provider";
+import { Recipe } from "@/types";
 
 const steps = [
   { label: "Info", icon: ChefHat },
@@ -37,18 +30,24 @@ const DisplayForm = ({ activeStep }: { activeStep: StepItem }) => {
   }
 };
 
-export default function RecipeForm() {
+export interface RecipeFormProps {
+  recipe: Recipe;
+}
+
+export default function RecipeForm({recipe}: RecipeFormProps) {
   return (
     <div className="flex w-full flex-col gap-4">
-      <Stepper initialStep={0} steps={steps}>
-        {steps.map((step, index) => (
-          <Step key={step.label} {...step}>
-            <div className="my-4 flex min-h-40 items-center justify-center rounded-md border bg-secondary">
-              <DisplayForm activeStep={step} />
-            </div>
-          </Step>
-        ))}
-      </Stepper>
+      <RecipeFormProvider passedRecipe={recipe}>
+        <Stepper initialStep={0} steps={steps}>
+          {steps.map((step, index) => (
+            <Step key={step.label} {...step}>
+              <div className="my-4 flex min-h-40 items-center justify-center rounded-md border bg-secondary">
+                <DisplayForm activeStep={step} />
+              </div>
+            </Step>
+          ))}
+        </Stepper>
+      </RecipeFormProvider>
     </div>
   );
 }
