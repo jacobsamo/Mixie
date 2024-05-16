@@ -21,12 +21,12 @@ export async function PUT(req: NextRequest, params: { id: string }) {
 
     // get all ingredients and set them, only include ingredients that have isHeading set to false
     const ingredientsList = recipe?.ingredients
-      ?.filter((ingredient) => !ingredient.isHeading && ingredient.title)
+      ?.filter((ingredient) => !ingredient.isHeading && ingredient.text)
       .map((ingredient) => {
-        ingredient.title =
-          ingredient.title.charAt(0).toUpperCase() + ingredient.title.slice(1);
+        ingredient.text =
+          ingredient.text.charAt(0).toUpperCase() + ingredient.text.slice(1);
 
-        return ingredient.title;
+        return ingredient.text;
       });
 
     // define the new recipe

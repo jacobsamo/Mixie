@@ -1,6 +1,6 @@
 import RecipePageComponent from "@/components/recipe-page/recipe-page";
 import { getRecipes } from "@/lib/services/data_fetching";
-import { constructMetadata, displayIngredient } from "@/lib/utils";
+import { constructMetadata } from "@/lib/utils";
 import type { Recipe } from "@/types";
 import { RecipeJsonLd } from "next-seo";
 import { notFound } from "next/navigation";
@@ -31,16 +31,12 @@ export default async function RecipePage({ params }) {
           name={recipe?.title || ""}
           authorName={""}
           yields={recipe?.yield?.toString() || ""}
-          ingredients={
-            recipe?.ingredients?.map((ingredient) => {
-              return displayIngredient(ingredient);
-            }) || []
-          }
+          ingredients={recipe.ingredients.map((ingredient) => ingredient.text)}
           instructions={
             recipe?.steps?.map((step, index) => {
               return {
                 name: `Step ${index + 1}`,
-                text: step.step_body,
+                text: step.text,
               };
             }) || []
           }

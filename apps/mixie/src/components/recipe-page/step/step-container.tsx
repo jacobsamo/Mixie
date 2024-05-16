@@ -1,10 +1,8 @@
 "use client";
+import { CreateRecipeTrigger } from "@/components/open-dialogs";
+import { Ingredient, Step as StepType } from "@/types";
 import React from "react";
 import Step from "./step";
-import { Step as StepType, Ingredient } from "@/types";
-import type { ClassValue } from "clsx";
-import CreateRecipeDialog from "@/components/modals/create-recipe-modal";
-import { CreateRecipeTrigger } from "@/components/open-dialogs";
 
 interface StepContainerProps {
   steps: StepType[];

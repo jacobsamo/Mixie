@@ -40,7 +40,7 @@ const Step = ({ index, step, ingredients }: StepProps) => {
             Step {index + 1}
           </h2>
         </span>
-        <p>{step.step_body}</p>
+        <p>{step.text}</p>
         <IngredientChips step={step} ingredients={ingredients} />
       </button>
     </li>

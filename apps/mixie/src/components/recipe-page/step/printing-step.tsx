@@ -1,4 +1,4 @@
-import { displayIngredient, matchIngredients } from "@/lib/utils";
+import { matchIngredients } from "@/lib/utils";
 import type { Ingredient, Step as TStep } from "@/types";
 
 interface StepProps {
@@ -18,11 +18,11 @@ const Step = ({ index, step, ingredients }: StepProps) => {
       >
         Step {index + 1}
       </h2>
-      <p>{step.step_body}</p>
+      <p>{step.text}</p>
       <span>
         <p className="font-bold">Ingredients:</p>{" "}
         {matchedIngredients
-          .map((ingredient) => displayIngredient(ingredient))
+          .map((ingredient) => ingredient.text)
           .join(" | ")}
       </span>
     </section>

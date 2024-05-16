@@ -1,4 +1,4 @@
-import { displayIngredient, matchIngredients } from "@/lib/utils";
+import { matchIngredients } from "@/lib/utils";
 import { Ingredient, Step } from "@/types";
 
 interface IngredientChipsProps {
@@ -16,7 +16,7 @@ const IngredientChips = ({ step, ingredients }: IngredientChipsProps) => {
           key={index}
           className="h-fit w-fit rounded-lg bg-yellow p-1 text-center text-step--4 text-black opacity-80"
         >
-          {displayIngredient(ingredient)}
+          {ingredient.text}
         </p>
       ))}
     </div>

@@ -4,23 +4,6 @@ import Fraction from "fraction.js";
 import * as fuzzball from "fuzzball";
 
 /**
- * Turns an ingredient into a string that can be displayed
- * @param {Ingredient} ingredient the ingredient to be return
- * @returns {string} returns the ingredient as a string`
- */
-export const displayIngredient = (ingredient: Ingredient) =>
-  `${ingredient.quantity ?? ""} ${
-    ingredient.amount &&
-    (ingredient.amount.value == "not_set" || !ingredient.amount)
-      ? ""
-      : ingredient.amount?.label
-  } ${
-    ingredient.unit && (!ingredient.unit || ingredient.unit.value == "not_set")
-      ? ""
-      : ingredient.unit?.label.replace("item", "")
-  } ${ingredient.title}`;
-
-/**
  * Removes all non word letters e.g , . / ( )
  * @param {string} str string to input
  * @returns {string}
@@ -38,16 +21,16 @@ const normalizeString = (str: string): string =>
  * @returns {Ingredient[]} found ingredients
  */
 export function matchIngredients(ingredients: Ingredient[], step: Step) {
-  const stepWords = normalizeString(step.step_body).split(/\s+/);
+  const stepWords = normalizeString(step.text).split(/\s+/);
 
   const found: Ingredient[] = [];
 
   ingredients.forEach((passed, index, arr) => {
-    if (passed.isHeading || !passed.title) return;
+    if (passed.isHeading || !passed.text) return;
     // get rid of any unwanted characters
-    const ingredient = normalizeString(passed.title);
+    const ingredient = normalizeString(passed.text);
     // remove not word characters and split into parts
-    const ingredientArr = normalizeString(passed.title).split(/\s+|\,/);
+    const ingredientArr = normalizeString(passed.text).split(/\s+|\,/);
 
     // loop over each word
     stepWords.forEach((step_word, word_index, word_arr) => {
@@ -74,9 +57,7 @@ export function matchIngredients(ingredients: Ingredient[], step: Step) {
     });
   });
 
-  return found.filter(
-    (v, i, a) => a.findIndex((t) => t.title === v.title) === i
-  );
+  return found.filter((v, i, a) => a.findIndex((t) => t.text === v.text) === i);
 }
 
 /**
@@ -86,19 +67,8 @@ export function matchIngredients(ingredients: Ingredient[], step: Step) {
  * @param {number} batchAmount
  * @returns { quantity: Ingredient["quantity"]; amount: Amount } calculated cup units
  */
-function calculateCupUnits(
-  quantity: Ingredient["quantity"],
-  amount: Amount,
-  batchAmount: number
-): { quantity: Ingredient["quantity"]; amount: Amount } {
+function calculateCupUnits(amount: Amount, batchAmount: number): {} {
   const fr = amount.split("/");
-
-  if (fr.length <= 1) {
-    return {
-      quantity: quantity,
-      amount: amount,
-    };
-  }
 
   const value = (Number(fr[0]) / Number(fr[1])) * batchAmount;
   const fraction = new Fraction(value).toFraction(true);
@@ -123,66 +93,11 @@ export function calculateIngredient(
   ingredient: Ingredient,
   batchAmount: number
 ): Ingredient {
-  const q = ingredient.quantity || 0;
   if (ingredient.isHeading) return ingredient;
 
-  switch (ingredient.unit?.value) {
-    case "grams":
-      const gramQuantity = q * batchAmount;
-      return {
-        ...ingredient,
-        quantity: gramQuantity >= 1000 ? gramQuantity / 1000 : gramQuantity,
-        unit: {
-          value: gramQuantity >= 1000 ? "kg" : "grams",
-          label: gramQuantity >= 1000 ? "kg" : "grams",
-        },
-      };
-    case "kg":
-      return {
-        ...ingredient,
-        quantity: q * batchAmount,
-      };
-    case "cup":
-    case "tsp":
-    case "tbsp":
-      const multipliedQuantity = q * batchAmount;
-      const { quantity, amount } = calculateCupUnits(
-        multipliedQuantity,
-        ingredient.amount?.value ?? "not_set",
-        batchAmount
-      );
-      return {
-        ...ingredient,
-        quantity: quantity,
-        amount: {
-          value: amount,
-          label: amount,
-        },
-      };
-    case "ml":
-      const mlQuantity = q * batchAmount;
-      return {
-        ...ingredient,
-        quantity: mlQuantity >= 1000 ? mlQuantity / 1000 : mlQuantity,
-        unit: {
-          value: mlQuantity >= 1000 ? "litre" : "ml",
-          label: mlQuantity >= 1000 ? "litre" : "ml",
-        },
-      };
-    case "litre":
-      return {
-        ...ingredient,
-        quantity: q * batchAmount,
-      };
-    case "pinch":
-    case "item":
-      return {
-        ...ingredient,
-        quantity: q * batchAmount,
-      };
-    default:
-      return ingredient;
-  }
+  //TODO: rewrite the caluclation logic
+
+  return ingredient;
 }
 
 /**

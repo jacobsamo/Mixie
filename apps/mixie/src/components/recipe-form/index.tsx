@@ -2,11 +2,11 @@
 import { Step, Stepper, type StepItem } from "@/components/ui/stepper";
 import { ChefHat, Coffee, ShoppingBasket, Soup } from "lucide-react";
 import Details from "./steps/details";
-import Info from "./steps/info";
 import Ingredients from "./steps/ingredients";
 import Steps from "./steps/steps";
 import { RecipeFormProvider } from "./recipe-form-provider";
 import { Recipe } from "@/types";
+import Info from "./steps/Info";
 
 const steps = [
   { label: "Info", icon: ChefHat },

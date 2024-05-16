@@ -96,7 +96,7 @@ const RecipePrintingView = ({ recipe }: RecipePrintingViewProps) => {
           recipe.ingredients.map((ingredient, index) => {
             return (
               <li key={index} className="flex flex-row gap-4 whitespace-normal">
-                {index + 1}. <span>{ingredient.title}</span>
+                {index + 1}. <span>{ingredient.text}</span>
               </li>
             );
           })}
