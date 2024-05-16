@@ -1,7 +1,7 @@
-import { Recipe } from "@/types";
-import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useStepper } from "@/components/ui/stepper";
+import { Recipe } from "@/types";
+import { Loader2 } from "lucide-react";
 
 export interface SharedProps {
   recipe: Recipe;
@@ -12,22 +12,15 @@ interface StepperFormProps {
 }
 
 export function StepperFormActions({ isSubmitting = false }: StepperFormProps) {
-  const {
-    prevStep,
-    nextStep,
-    resetSteps,
-    isDisabledStep,
-    hasCompletedAllSteps,
-    isLastStep,
-    isOptionalStep,
-  } = useStepper();
+  const { prevStep, isDisabledStep, isLastStep, isOptionalStep } = useStepper();
 
   return (
     <div className="flex w-full justify-end gap-2">
       <Button
         disabled={isDisabledStep}
         onClick={prevStep}
-        size="sm" 
+        size="sm"
+        type="button"
         variant={isLastStep ? "outline" : "secondary"}
       >
         Back
@@ -35,12 +28,11 @@ export function StepperFormActions({ isSubmitting = false }: StepperFormProps) {
       {isLastStep ? (
         <>
           <Button
-            type="submit"
             aria-label="continue with creating the recipe"
             disabled={isSubmitting}
             size="sm"
             variant="secondary"
-            onClick={resetSteps}
+            type="submit"
           >
             Save draft
             {isSubmitting && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
@@ -50,7 +42,6 @@ export function StepperFormActions({ isSubmitting = false }: StepperFormProps) {
             aria-label="continue with creating the recipe"
             disabled={isSubmitting}
             size="sm"
-            onClick={resetSteps}
           >
             Publish
             {isSubmitting && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
@@ -63,7 +54,6 @@ export function StepperFormActions({ isSubmitting = false }: StepperFormProps) {
             aria-label="continue with creating the recipe"
             disabled={isSubmitting}
             size="sm"
-            onClick={nextStep}
           >
             {isOptionalStep ? "Skip" : "Next"}
             {isSubmitting && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}

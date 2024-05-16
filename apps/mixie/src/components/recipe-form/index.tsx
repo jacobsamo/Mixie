@@ -1,26 +1,19 @@
 "use client";
-import React from "react";
 import {
   Step,
   Stepper,
-  useStepper,
-  type StepItem,
+  type StepItem
 } from "@/components/ui/stepper";
-import { Button } from "../ui/button";
 import {
-  Building,
   ChefHat,
   Coffee,
-  Footprints,
   ShoppingBasket,
-  Soup,
-  Star,
-  User,
+  Soup
 } from "lucide-react";
+import Details from "./steps/details";
 import Info from "./steps/info";
 import Ingredients from "./steps/ingredients";
 import Steps from "./steps/steps";
-import Details from "./steps/details";
 
 const steps = [
   { label: "Info", icon: ChefHat },

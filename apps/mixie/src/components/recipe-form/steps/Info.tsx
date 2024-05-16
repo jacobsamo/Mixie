@@ -2,43 +2,48 @@ import { submitInfo } from "@/actions/recipe-form/submit-info";
 import { infoSchema } from "@/actions/schema";
 import { Input } from "@/components/ui/advanced-components/input";
 import { Textarea } from "@/components/ui/advanced-components/textarea";
+import { useStepper } from "@/components/ui/stepper";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAction } from "next-safe-action/hooks";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
 import { SharedProps, StepperFormActions } from "./shared";
-import { Button } from "@/components/ui/button";
 
 export interface InfoProps extends SharedProps {}
 
 const Info = () => {
+  const { nextStep } = useStepper();
+
   const setInfo = useAction(submitInfo, {
     onError: () => {
       toast.error("Something went wrong pleaase try again.");
     },
+    onSuccess: () => {
+      nextStep();
+    },
+  });
+
+  const form = useForm<z.infer<typeof infoSchema>>({
+    resolver: zodResolver(infoSchema),
   });
 
   const {
     register,
     control,
     formState: { errors },
-    handleSubmit
-  } = useForm<z.infer<typeof infoSchema>>({
-    resolver: zodResolver(infoSchema),
-  });
-
-  useEffect(() => {
-    console.log("errors: ", errors);
-  }, [errors]);
+    handleSubmit,
+  } = form;
 
   const isSubmitting =
     setInfo.status !== "idle" && setInfo.status !== "hasErrored";
 
   return (
-    <form className="flex flex-col gap-2" onSubmit={handleSubmit(setInfo.execute)}>
-      <Input          
+    <form
+      className="flex flex-col gap-2"
+      onSubmit={handleSubmit(setInfo.execute)}
+    >
+      <Input
         {...register("title", {
           required: true,
         })}
@@ -82,10 +87,6 @@ const Info = () => {
         label="Serves"
         type="number"
       />
-
-        <Button type="submit">
-          submit
-        </Button>
 
       <StepperFormActions isSubmitting={isSubmitting} />
     </form>

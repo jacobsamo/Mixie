@@ -1,23 +1,24 @@
+import { submitSteps } from "@/actions/recipe-form/submit-steps";
 import { stepsSchema } from "@/actions/schema";
 import { DraggableContainer, DraggableItem } from "@/components/dragable";
 import { Button } from "@/components/ui/button";
+import { useStepper } from "@/components/ui/stepper";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusCircleIcon } from "lucide-react";
-import { useCallback } from "react";
+import { useAction } from "next-safe-action/hooks";
+import { useCallback, useEffect } from "react";
 import { DropResult } from "react-beautiful-dnd";
-import { useFieldArray, useForm, Form, FormProvider } from "react-hook-form";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import * as z from "zod";
 import { Step } from "../components/step";
-import { SharedProps } from "./shared";
-import { useAction } from "next-safe-action/hooks";
-import { submitSteps } from "@/actions/recipe-form/submit-steps";
-import toast from "react-hot-toast";
-import { StepperFormActions } from "./shared";
-import { useEffect } from "react";
+import { SharedProps, StepperFormActions } from "./shared";
 
 export interface StepsProps extends SharedProps {}
 
 const Steps = () => {
+  const { nextStep } = useStepper();
+
   const form = useForm<z.infer<typeof stepsSchema>>({
     resolver: zodResolver(stepsSchema),
     defaultValues: {
@@ -42,6 +43,9 @@ const Steps = () => {
     onError: () => {
       toast.error("Something went wrong pleaase try again.");
     },
+    onSuccess: () => {
+      nextStep();
+    },
   });
 
   const handleDelete = useCallback(
@@ -52,7 +56,7 @@ const Steps = () => {
   );
 
   const handleAddClick = useCallback(() => {
-    append({ step_body: "" });
+    append({ text: "" });
   }, [append]);
 
   const handleSwap = useCallback(
@@ -71,10 +75,7 @@ const Steps = () => {
 
   return (
     <FormProvider {...form}>
-      <form
-        onSubmit={form.handleSubmit(setSteps.execute)}
-        className="space-y-8"
-      >
+      <form onSubmit={form.handleSubmit(setSteps.execute)}>
         <section className="flex w-full flex-col gap-2">
           <DraggableContainer droppableId="steps" onDragEnd={handleSwap}>
             {fields.map((field, index: number) => {
