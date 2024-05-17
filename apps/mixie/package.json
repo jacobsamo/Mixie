@@ -11,7 +11,7 @@
     "clean:node": "rm -rf node_modules/",
     "clean:turbo": "rm -rf .turbo",
     "clean:node_modules": "rm -rf node_modules/",
-    "clean:all": "pnpm clean:build && pnpm clean:node && pnpm clean:turbo",
+    "clean:all": "bun clean:build && bun clean:node && bun clean:turbo",
     "db:types": "supabase gen types typescript --project-id dftoidpracavvgvcbsue > database.types.ts",
     "db:push": "supabase db push",
     "db:pull": "supabase db pull",

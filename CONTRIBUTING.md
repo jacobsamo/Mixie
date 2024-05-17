@@ -63,8 +63,8 @@ BUILD: Use this keyword to indicate that you are making changes to the build pro
 Before requesting a PR please make sure you have the following:
 
 1. Made Tests for what you have added (if applicable)
-2. Run `pnpm dev`
-3. Run `pnpm up --latest && cd apps/mixie && pnpm up --latest`
-4. run `pnpm build`
+2. Run `bun dev`
+3. Run `bun update`
+4. run `bun build`
 5. Fix any issues, bugs or errors in the build step
-6. run `pnpm start` go through your change and test for every case there could be and fix any issues
+6. run `bun start` go through your change and test for every case there could be and fix any issues
