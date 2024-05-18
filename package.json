@@ -12,7 +12,7 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "clean:all": "turbo run clean:all && rm -rf node_modules/ && rm -rf .turbo",
+    "clean:all": "turbo run clean:all && rm -rf node_modules/ && rm -rf .turbo"
   },
   "dependencies": {
     "@manypkg/cli": "^0.21.4",

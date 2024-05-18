@@ -1,6 +1,8 @@
 import { submitInfo } from "@/actions/recipe-form/submit-info";
 import { infoSchema } from "@/actions/schema";
 import { Input } from "@/components/ui/advanced-components/input";
+import { Input as RegularInput } from "@/components/ui/input";
+import { InlineInput } from "@/components/ui/advanced-components/Inline-input";
 import { Textarea } from "@/components/ui/advanced-components/textarea";
 import { useStepper } from "@/components/ui/stepper";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -82,7 +84,7 @@ const Info = () => {
         label="Prep Time"
         hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
       />
-      <Input
+      {/* <Input
         {...register("cook_time", {
           pattern: {
             value: /^(\d{1,2}[hms]\s?)+$/i,
@@ -93,7 +95,9 @@ const Info = () => {
         error={errors.cook_time}
         label="Cook Time"
         hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
-      />
+      /> */}
+      <InlineInput {...register("cook_time")}  endText="minutes"/>
+
       <Input
         {...register("yield", { valueAsNumber: true })}
         error={errors.yield}
