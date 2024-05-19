@@ -1,8 +1,8 @@
 import { submitInfo } from "@/actions/recipe-form/submit-info";
 import { infoSchema } from "@/actions/schema";
-import { Input } from "@/components/ui/advanced-components/input";
-import { Input as RegularInput } from "@/components/ui/input";
-import { InlineInput } from "@/components/ui/advanced-components/Inline-input";
+// import { Input } from "@/components/ui/advanced-components/input";
+import { Input } from "@/components/ui/input";
+import { InlineInput } from "@/components/ui/inline-input";
 import { Textarea } from "@/components/ui/advanced-components/textarea";
 import { useStepper } from "@/components/ui/stepper";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,6 +12,16 @@ import toast from "react-hot-toast";
 import * as z from "zod";
 import { useRecipeContext } from "../recipe-form-provider";
 import { StepperFormActions } from "./shared";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormMessage,
+  FormLabel,
+  useFormField,
+} from "@/components/ui/form";
 
 const Info = () => {
   const { nextStep } = useStepper();
@@ -54,37 +64,38 @@ const Info = () => {
     setInfo.status !== "idle" && setInfo.status !== "hasErrored";
 
   return (
-    <form
-      className="flex flex-col gap-2"
-      onSubmit={handleSubmit(setInfo.execute)}
-    >
-      <Input
-        {...register("title", {
-          required: true,
-        })}
-        error={errors.title}
-        required
-        label="Recipe name"
-      />
-      <Textarea id="description" label="Description" control={control} />
-      <Input
-        {...register("source")}
-        label="Source"
-        tooltip="Where you got the recipe from if you got it from another website"
-      />
-      <Input
-        {...register("prep_time", {
-          pattern: {
-            value: /^(\d{1,2}[hms]\s?)+$/i,
-            message:
-              "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
-          },
-        })}
-        error={errors.prep_time}
-        label="Prep Time"
-        hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
-      />
-      {/* <Input
+    <Form {...form}>
+      <form
+        className="flex flex-col gap-2"
+        onSubmit={handleSubmit(setInfo.execute)}
+      >
+        <Input
+          {...register("title", {
+            required: true,
+          })}
+          error={errors.title}
+          required
+          label="Recipe name"
+        />
+        <Textarea id="description" label="Description" control={control} />
+        <Input
+          {...register("source")}
+          label="Source"
+          tooltip="Where you got the recipe from if you got it from another website"
+        />
+        <Input
+          {...register("prep_time", {
+            pattern: {
+              value: /^(\d{1,2}[hms]\s?)+$/i,
+              message:
+                "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
+            },
+          })}
+          error={errors.prep_time}
+          label="Prep Time"
+          hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
+        />
+        {/* <Input
         {...register("cook_time", {
           pattern: {
             value: /^(\d{1,2}[hms]\s?)+$/i,
@@ -96,17 +107,46 @@ const Info = () => {
         label="Cook Time"
         hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
       /> */}
-      <InlineInput {...register("cook_time")}  endText="minutes"/>
+        <InlineInput {...register("cook_time")} endText="minutes" />
 
-      <Input
-        {...register("yield", { valueAsNumber: true })}
-        error={errors.yield}
-        label="Serves"
-        type="number"
-      />
+        <FormField
+          control={form.control}
+          name="cook_time"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Cook time</FormLabel>
+              <FormControl className="flex">
+                <InlineInput endText="minutes" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <StepperFormActions isSubmitting={isSubmitting} />
-    </form>
+        <Input
+          {...register("yield", { valueAsNumber: true })}
+          error={errors.yield}
+          label="Serves"
+          type="number"
+        />
+
+        <FormField
+          control={form.control}
+          name="yield"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Cook time</FormLabel>
+              <FormControl className="flex">
+                <InlineInput endText="minutes" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <StepperFormActions isSubmitting={isSubmitting} />
+      </form>
+    </Form>
   );
 };
 

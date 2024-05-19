@@ -43,7 +43,7 @@ export default function RecipeForm({recipe}: RecipeFormProps) {
         <Stepper initialStep={0} steps={steps}>
           {steps.map((step, index) => (
             <Step key={step.label} {...step}>
-              <div className="my-4 flex min-h-40 overflow-auto items-center justify-center rounded-md border bg-secondary">
+              <div className="my-4 flex min-h-40 overflow-auto items-center justify-center rounded-md ">
                 <DisplayForm activeStep={step} />
               </div>
             </Step>
