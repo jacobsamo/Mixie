@@ -249,7 +249,7 @@ export default function Component() {
     } from "@/components/ui/select"
     import { Textarea } from "@/components/ui/textarea"
     
-    export default function Component() {
+    export  function Component() {
       return (
         <div
           className="relative hidden flex-col items-start gap-8 md:flex"
