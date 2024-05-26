@@ -3,10 +3,11 @@ import { stepsSchema } from "@/actions/schema";
 import { DraggableContainer, DraggableItem } from "@/components/dragable";
 import { Button } from "@/components/ui/button";
 import { useStepper } from "@/components/ui/stepper";
+import { Recipe } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusCircleIcon } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { DropResult } from "react-beautiful-dnd";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -31,8 +32,15 @@ const Steps = () => {
     },
   });
 
+  const {
+    register,
+    formState: { isDirty },
+    control,
+    handleSubmit,
+  } = form;
+
   const { fields, append, remove, move } = useFieldArray({
-    control: form.control,
+    control: control,
     name: "steps",
   });
 
@@ -40,7 +48,8 @@ const Steps = () => {
     onError: () => {
       toast.error("Something went wrong pleaase try again.");
     },
-    onSuccess: () => {
+    onSuccess: (data: Recipe) => {
+      setRecipe(data);
       nextStep();
     },
   });
@@ -70,9 +79,17 @@ const Steps = () => {
   const isSubmitting =
     setSteps.status !== "idle" && setSteps.status !== "hasErrored";
 
+  const onSubmit = (data: Recipe) => {
+    if (isDirty) {
+      setSteps.execute(data);
+    } else {
+      nextStep();
+    }
+  };
+
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(setSteps.execute)} className="w-full md:w-1/2">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full md:w-1/2">
         <section className="flex w-full flex-col gap-2">
           <DraggableContainer droppableId="steps" onDragEnd={handleSwap}>
             {fields.map((field, index: number) => {

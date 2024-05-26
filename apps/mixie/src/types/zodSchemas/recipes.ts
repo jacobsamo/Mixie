@@ -75,7 +75,7 @@ const recipes = z.object({
   public: z.boolean().default(false),
   rating: z.number().nullable(),
   recipe_id: z.string(),
-  source: z.string().nullable(),
+  source: z.string().url().nullable(),
   steps: stepSchema.array().nullable(),
   suitable_for_diet: z.string().nullable(),
   sweet_savoury: sweet_savoury.default("not_set").nullable(),
@@ -106,7 +106,7 @@ const recipes_edit = z.object({
   public: z.boolean().default(false).optional(),
   rating: z.number().nullish(),
   recipe_id: z.string().optional(),
-  source: z.string().nullish(),
+  source: z.string().url().nullish(),
   steps: stepSchema.array().nullish(),
   suitable_for_diet: z.string().nullish(),
   sweet_savoury: sweet_savoury.default("not_set").optional(),
@@ -128,20 +128,6 @@ export const recipeSchema = recipes_edit.extend({
     .url({ message: "Must be a valid url" })
     .nullish(),
   image_attributes: image_attributesSchema.nullish(),
-  prep_time: z
-    .string({ required_error: "prep_time time is required for public recipes" })
-    .regex(/^(\d{1,2}[hms]\s?)+$/i, {
-      message:
-        "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
-    })
-    .nullish(),
-  cook_time: z
-    .string({ required_error: "Cook time is required for public recipes" })
-    .regex(/^(\d{1,2}[hms]\s?)+$/i, {
-      message:
-        "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
-    })
-    .nullish(),
 });
 
 // extend the recipe schema to include the info and ingredients

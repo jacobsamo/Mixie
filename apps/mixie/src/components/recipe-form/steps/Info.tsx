@@ -1,27 +1,25 @@
 import { submitInfo } from "@/actions/recipe-form/submit-info";
 import { infoSchema } from "@/actions/schema";
-// import { Input } from "@/components/ui/advanced-components/input";
-import { Input } from "@/components/ui/input";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from "@/components/ui/form";
 import { InlineInput } from "@/components/ui/inline-input";
-import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { useStepper } from "@/components/ui/stepper";
+import { Textarea } from "@/components/ui/textarea";
+import { Recipe } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAction } from "next-safe-action/hooks";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
 import { useRecipeContext } from "../recipe-form-provider";
 import { StepperFormActions } from "./shared";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormMessage,
-  FormLabel,
-  useFormField,
-} from "@/components/ui/form";
 
 const Info = () => {
   const { nextStep } = useStepper();
@@ -32,7 +30,7 @@ const Info = () => {
       console.error("Error setting info: ", e);
       toast.error("Something went wrong pleaase try again.");
     },
-    onSuccess: (data) => {
+    onSuccess: (data: Recipe) => {
       setRecipe(data);
       nextStep();
     },
@@ -41,29 +39,35 @@ const Info = () => {
   const form = useForm<z.infer<typeof infoSchema>>({
     resolver: zodResolver(infoSchema),
     defaultValues: {
-      recipe_id: recipe?.recipe_id ?? undefined,
-      image_attributes: recipe?.image_attributes ?? null,
-      image_url: recipe?.image_url ?? null,
-      title: recipe?.title ?? undefined,
-      description: recipe?.description ?? null,
-      source: recipe?.source ?? null,
-      prep_time: recipe?.prep_time ?? null,
-      cook_time: recipe?.cook_time ?? null,
-      yield: recipe?.yield ?? null,
+      ...recipe,
     },
   });
+
+  const {
+    formState: {errors, isDirty },
+    control,
+    handleSubmit
+  } = form;
 
   const isSubmitting =
     setInfo.status !== "idle" && setInfo.status !== "hasErrored";
 
+  const onSubmit: SubmitHandler<z.infer<typeof infoSchema>> = (data) => {
+    if (isDirty) {
+      setInfo.execute(data);
+    } else {
+      nextStep();
+    }
+  };
+
   return (
     <Form {...form}>
       <form
-        className="flex flex-col gap-2 w-full md:w-1/2" 
-        onSubmit={form.handleSubmit(setInfo.execute)}
+        className="flex w-full flex-col gap-2 md:w-1/2"
+        onSubmit={handleSubmit(onSubmit)}
       >
         <FormField
-          control={form.control}
+          control={control}
           name="title"
           rules={{ required: true }}
           render={({ field }) => (
@@ -78,7 +82,7 @@ const Info = () => {
         />
 
         <FormField
-          control={form.control}
+          control={control}
           name="description"
           render={({ field }) => (
             <FormItem>
@@ -92,7 +96,7 @@ const Info = () => {
         />
 
         <FormField
-          control={form.control}
+          control={control}
           name="source"
           render={({ field }) => (
             <FormItem>
@@ -106,7 +110,7 @@ const Info = () => {
         />
 
         <FormField
-          control={form.control}
+          control={control}
           name="prep_time"
           render={({ field }) => (
             <FormItem>
@@ -120,7 +124,7 @@ const Info = () => {
         />
 
         <FormField
-          control={form.control}
+          control={control}
           name="cook_time"
           render={({ field }) => (
             <FormItem>
@@ -134,7 +138,7 @@ const Info = () => {
         />
 
         <FormField
-          control={form.control}
+          control={control}
           name="yield"
           render={({ field }) => (
             <FormItem>

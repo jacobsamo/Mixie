@@ -5,8 +5,9 @@ import {
   RegisterOptions,
   useFieldArray,
   useForm,
+  useFormContext,
 } from "react-hook-form";
-import { Input, InputProps } from "./advanced-components/input";
+import { Input, InputProps } from "./input";
 
 // add types for react-hook-form so that we can use the `control` prop with the types from the formschema and not have to use `any`
 export interface TagInputProps
@@ -25,7 +26,7 @@ const TagInput = ({
   options,
   ...props
 }: TagInputProps) => {
-  const { setValue, register } = useForm();
+  const { setValue, register } = useFormContext();
   const { fields, append, remove, swap, move, insert } = useFieldArray({
     control,
     name: name,
@@ -36,7 +37,7 @@ const TagInput = ({
       if (e.key === "," || e.key === "Enter") {
         e.preventDefault();
         append({ value: e.target.value });
-        setValue(name, "");
+        setValue(name, undefined);
       }
     },
     [append, name, setValue]
@@ -69,7 +70,6 @@ const TagInput = ({
         ))}
       </div>
       <Input
-        {...register(name, options)}
         onKeyDown={handleKeyDown}
         {...props}
       />

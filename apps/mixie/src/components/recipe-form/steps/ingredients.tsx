@@ -24,6 +24,7 @@ import {
   FormLabel,
   useFormField,
 } from "@/components/ui/form";
+import { Recipe } from "@/types";
 
 const Ingredients = () => {
   const { nextStep } = useStepper();
@@ -44,8 +45,15 @@ const Ingredients = () => {
     },
   });
 
+  const {
+    register,
+    formState: { errors, isDirty },
+    control,
+    handleSubmit,
+  } = form;
+
   const { fields, append, remove, move } = useFieldArray({
-    control: form.control,
+    control: control,
     name: "ingredients",
   });
 
@@ -53,7 +61,7 @@ const Ingredients = () => {
     onError: () => {
       toast.error("Something went wrong pleaase try again.");
     },
-    onSuccess: (data) => {
+    onSuccess: (data: Recipe) => {
       setRecipe(data);
       nextStep();
     },
@@ -88,10 +96,18 @@ const Ingredients = () => {
   const isSubmitting =
     setIngredients.status !== "idle" && setIngredients.status !== "hasErrored";
 
+  const onSubmit = (data) => {
+    if (isDirty) {
+      setIngredients.execute(data);
+    } else {
+      nextStep();
+    }
+  };
+
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(setIngredients.execute)}
+        onSubmit={handleSubmit(onSubmit)}
         className="w-full space-y-8 md:w-1/2"
       >
         <section className="flex w-full flex-col gap-2">
@@ -103,7 +119,7 @@ const Ingredients = () => {
                     <GripVertical />
 
                     <Input
-                      {...form.register(`ingredients.${index}.text`)}
+                      {...register(`ingredients.${index}.text`)}
                       placeholder={
                         field.isHeading ? "Heading..." : "Ingredient"
                       }

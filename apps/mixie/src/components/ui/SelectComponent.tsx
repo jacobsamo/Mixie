@@ -47,7 +47,7 @@ const multiValueStyles =
   "ml-1 bg-input-foreground shadow border border-grey rounded items-center py-0.5 pl-2 pr-1 gap-1.5";
 const multiValueLabelStyles = "leading-6 py-0.5";
 const multiValueRemoveStyles =
-  "border border-grey bg-white hover:bg-red hover:text-white hover:border-red rounded-md bg-input-foreground";
+  "border border-grey bg-white hover:bg-red hover:text-white hover:border-red rounded-md bg-input";
 const indicatorsContainerStyles = "p-1 gap-1 bg-input-foreground rounded-lg";
 const clearIndicatorStyles = " p-1 rounded-md hover:text-red";
 const indicatorSeparatorStyles = "bg-mutated";

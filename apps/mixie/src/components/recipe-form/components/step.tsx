@@ -1,9 +1,17 @@
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/advanced-components/textarea";
+import { Textarea } from "@/components/ui/textarea";
 import { recipeClientFormSchema } from "@/types/zodSchemas";
 import { Trash2Icon } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import * as z from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
 interface StepProps {
   index: number;
@@ -32,17 +40,17 @@ const Step = ({ index, handleDelete }: StepProps) => {
           <Trash2Icon className="h-6 w-6 text-red hover:text-white" />
         </Button>
       </div>
-      <Textarea
-        defaultValue={getValues(`steps.${index}.text`) || ""}
-        id={`steps.${index}.step_body`}
-        label=""
-        name={`steps.${index}.text`}
+      <FormField
         control={control}
-        border={false}
-        classNames={{
-          inputWrapper: "border border-solid border-white rounded-md",
-        }}
-        className="border border-solid border-white shadow-none outline outline-1"
+        name={`steps.${index}.text`}
+        rules={{ required: true }}
+        render={({ field }) => (
+          <FormItem>
+            <FormControl className="flex">
+              <Textarea id="description" {...field} className="border-none" />
+            </FormControl>
+          </FormItem>
+        )}
       />
     </div>
   );
