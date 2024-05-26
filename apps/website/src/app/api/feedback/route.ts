@@ -5,7 +5,7 @@ import { feedbackSchema } from "@/types/zodSchemas";
 import { TablesInsert } from "database.types";
 import { NextResponse, type NextRequest } from "next/server";
 import * as z from "zod";
-import NewFeedback from "transactional/emails/feedback";
+import NewFeedback from "@mixie/email/emails/feedback";
 
 export async function POST(req: NextRequest) {
   try {

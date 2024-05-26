@@ -81,7 +81,7 @@
     "sharp": "^0.33.3",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "transactional": "workspace:*",
+    "@mixie/email": "workspace:*",
     "unsplash-js": "^7.0.19",
     "uploadthing": "^6.10.4",
     "uuid": "^9.0.1",
@@ -94,11 +94,11 @@
     "@types/react": "^18.3.2",
     "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-dom": "^18.3.0",
-    "eslint-config-custom": "workspace:*",
+    "@mixie/eslint-config-custom": "workspace:*",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "tailwindcss": "^3.4.3",
-    "tsconfig": "workspace:*",
+    "@mixie/tsconfig": "workspace:*",
     "typescript": "^5.4.5"
   }
 }

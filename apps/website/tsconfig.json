@@ -1,5 +1,5 @@
 {
-  "extends": "tsconfig/nextjs.json",
+  "extends": "@mixie/tsconfig/nextjs.json",
   "compilerOptions": {
     "plugins": [{ "name": "next" }],
     "strictNullChecks": true,
@@ -7,8 +7,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "env": ["./env.mjs"],
-      "database.types": ["./database.types.ts"],
-
+      "database.types": ["./database.types.ts"]
     }
   },
   "include": [

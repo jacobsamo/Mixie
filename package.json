@@ -4,7 +4,7 @@
   "workspaces": [
     "packages/*",
     "apps/*",
-    "packages/transactional/*"
+    "packages/email/*"
   ],
   "scripts": {
     "build": "turbo run build",
@@ -16,10 +16,10 @@
   },
   "dependencies": {
     "@manypkg/cli": "^0.21.4",
+    "@mixie/eslint-config-custom": "workspace:*",
     "@turbo/gen": "^1.13.3",
     "dotenv-cli": "^7.4.2",
     "eslint": "^9.2.0",
-    "eslint-config-custom": "workspace:*",
     "prettier": "^3.2.5",
     "turbo": "^1.13.3"
   },
