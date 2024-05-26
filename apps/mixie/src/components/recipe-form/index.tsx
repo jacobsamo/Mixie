@@ -1,13 +1,24 @@
 "use client";
 import { Step, Stepper, type StepItem } from "@/components/ui/stepper";
 import { ChefHat, Coffee, ShoppingBasket, Soup } from "lucide-react";
-import Details from "./steps/details";
-import Ingredients from "./steps/ingredients";
-import Steps from "./steps/steps";
 import { RecipeFormProvider } from "./recipe-form-provider";
 import { Recipe } from "@/types";
-import Info from "./steps/Info";
-import Component from "./components/TestForm";
+import dynamic from "next/dynamic";
+import { useSearchParams } from "next/navigation";
+import Loading from "./loading";
+
+const Info = dynamic(() => import("./steps/Info"), {
+  loading: () => <Loading />,
+});
+const Ingredients = dynamic(() => import("./steps/ingredients"), {
+  loading: () => <Loading />,
+});
+const Steps = dynamic(() => import("./steps/steps"), {
+  loading: () => <Loading />,
+});
+const Details = dynamic(() => import("./steps/details"), {
+  loading: () => <Loading />,
+});
 
 const steps = [
   { label: "Info", icon: ChefHat },
@@ -20,7 +31,6 @@ const DisplayForm = ({ activeStep }: { activeStep: StepItem }) => {
   switch (activeStep.label) {
     case "Info":
       return <Info />;
-      // return <Info />;
     case "Ingredients":
       return <Ingredients />;
     case "Steps":
@@ -36,14 +46,23 @@ export interface RecipeFormProps {
   recipe: Recipe;
 }
 
-export default function RecipeForm({recipe}: RecipeFormProps) {
+export default function RecipeForm({ recipe }: RecipeFormProps) {
+  const searchParams = useSearchParams();
+  const activeStep = searchParams.get("step") ?? "Info";
+
+  const activeStepIndex = steps.findIndex((step) => step.label === activeStep);
+
   return (
     <div className="flex w-full flex-col gap-4 px-2 py-4">
       <RecipeFormProvider passedRecipe={recipe}>
-        <Stepper initialStep={0} steps={steps} mobileBreakpoint="550px">
+        <Stepper
+          initialStep={activeStepIndex}
+          steps={steps}
+          mobileBreakpoint="550px"
+        >
           {steps.map((step, index) => (
             <Step key={step.label} {...step}>
-              <div className="my-4  px-2 flex min-h-40 overflow-auto items-center justify-center rounded-md ">
+              <div className="my-4 flex min-h-40 items-center justify-center overflow-auto rounded-md px-2 ">
                 <DisplayForm activeStep={step} />
               </div>
             </Step>
