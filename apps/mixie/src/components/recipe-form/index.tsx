@@ -38,12 +38,12 @@ export interface RecipeFormProps {
 
 export default function RecipeForm({recipe}: RecipeFormProps) {
   return (
-    <div className="flex w-full flex-col gap-4">
+    <div className="flex w-full flex-col gap-4 px-2 py-4">
       <RecipeFormProvider passedRecipe={recipe}>
-        <Stepper initialStep={0} steps={steps}>
+        <Stepper initialStep={0} steps={steps} mobileBreakpoint="550px">
           {steps.map((step, index) => (
             <Step key={step.label} {...step}>
-              <div className="my-4 flex min-h-40 overflow-auto items-center justify-center rounded-md ">
+              <div className="my-4  px-2 flex min-h-40 overflow-auto items-center justify-center rounded-md ">
                 <DisplayForm activeStep={step} />
               </div>
             </Step>

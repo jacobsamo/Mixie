@@ -3,7 +3,7 @@ import { infoSchema } from "@/actions/schema";
 // import { Input } from "@/components/ui/advanced-components/input";
 import { Input } from "@/components/ui/input";
 import { InlineInput } from "@/components/ui/inline-input";
-import { Textarea } from "@/components/ui/advanced-components/textarea";
+import { Textarea } from "@/components/ui/textarea";
 import { useStepper } from "@/components/ui/stepper";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAction } from "next-safe-action/hooks";
@@ -53,61 +53,71 @@ const Info = () => {
     },
   });
 
-  const {
-    register,
-    control,
-    formState: { errors },
-    handleSubmit,
-  } = form;
-
   const isSubmitting =
     setInfo.status !== "idle" && setInfo.status !== "hasErrored";
 
   return (
     <Form {...form}>
       <form
-        className="flex flex-col gap-2"
-        onSubmit={handleSubmit(setInfo.execute)}
+        className="flex flex-col gap-2 w-full md:w-1/2" 
+        onSubmit={form.handleSubmit(setInfo.execute)}
       >
-        <Input
-          {...register("title", {
-            required: true,
-          })}
-          error={errors.title}
-          required
-          label="Recipe name"
+        <FormField
+          control={form.control}
+          name="title"
+          rules={{ required: true }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Recipe Name</FormLabel>
+              <FormControl className="flex">
+                <Input id="description" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        <Textarea id="description" label="Description" control={control} />
-        <Input
-          {...register("source")}
-          label="Source"
-          tooltip="Where you got the recipe from if you got it from another website"
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Source</FormLabel>
+              <FormControl className="flex">
+                <Textarea id="description" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        <Input
-          {...register("prep_time", {
-            pattern: {
-              value: /^(\d{1,2}[hms]\s?)+$/i,
-              message:
-                "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
-            },
-          })}
-          error={errors.prep_time}
-          label="Prep Time"
-          hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
+
+        <FormField
+          control={form.control}
+          name="source"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Source</FormLabel>
+              <FormControl className="flex">
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        {/* <Input
-        {...register("cook_time", {
-          pattern: {
-            value: /^(\d{1,2}[hms]\s?)+$/i,
-            message:
-              "Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds",
-          },
-        })}
-        error={errors.cook_time}
-        label="Cook Time"
-        hint="Must be in the format 4h 3m 4s where h = hours, m = minutes, s = seconds"
-      /> */}
-        <InlineInput {...register("cook_time")} endText="minutes" />
+
+        <FormField
+          control={form.control}
+          name="prep_time"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Prep time</FormLabel>
+              <FormControl className="flex">
+                <InlineInput endText="minutes" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}
@@ -123,21 +133,14 @@ const Info = () => {
           )}
         />
 
-        <Input
-          {...register("yield", { valueAsNumber: true })}
-          error={errors.yield}
-          label="Serves"
-          type="number"
-        />
-
         <FormField
           control={form.control}
           name="yield"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Cook time</FormLabel>
+              <FormLabel>Serves</FormLabel>
               <FormControl className="flex">
-                <InlineInput endText="minutes" {...field} />
+                <Input type="number" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

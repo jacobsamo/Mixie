@@ -35,31 +35,31 @@ const MultiValueRemove = (props: MultiValueRemoveProps) => {
 };
 
 const controlStyles = {
-  base: "border border-white rounded-lg dark:bg-grey bg-white shadow hover:cursor-pointer hover:bg-secondary",
-  focus: "border-white ring-white/70 ring-primary-500",
-  nonFocus: "border-white",
+  base: "border border-input rounded-lg bg-input-foreground shadow hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-50",
+  focus: "outline-none ring-2 ring-ring ring-offset-2",
+  nonFocus: "border-input",
 };
 const placeholderStyles = " text-sm ml-1";
 const selectInputStyles = "text-foreground text-sm ml-1";
 const valueContainerStyles = "text-foreground text-sm";
 const singleValueStyles = "ml-1";
 const multiValueStyles =
-  "ml-1 dark:bg-grey bg-white shadow border border-grey rounded items-center py-0.5 pl-2 pr-1 gap-1.5";
+  "ml-1 bg-input-foreground shadow border border-grey rounded items-center py-0.5 pl-2 pr-1 gap-1.5";
 const multiValueLabelStyles = "leading-6 py-0.5";
 const multiValueRemoveStyles =
-  "border border-grey bg-white hover:bg-red hover:text-white hover:border-red rounded-md dark:bg-grey bg-white";
-const indicatorsContainerStyles = "p-1 gap-1 dark:bg-grey bg-white rounded-lg";
+  "border border-grey bg-white hover:bg-red hover:text-white hover:border-red rounded-md bg-input-foreground";
+const indicatorsContainerStyles = "p-1 gap-1 bg-input-foreground rounded-lg";
 const clearIndicatorStyles = " p-1 rounded-md hover:text-red";
 const indicatorSeparatorStyles = "bg-mutated";
 const dropdownIndicatorStyles = "p-1 hover:text-foreground";
 const menuStyles =
-  "mt-2 p-2 border border-white dark:bg-grey bg-white text-sm rounded-lg";
+  "mt-2 p-2 border border-input bg-input-foreground text-sm rounded-lg";
 
 const menuList = "min-w-fit";
 const optionsStyle =
-  "dark:bg-grey bg-white p-2 border-0 text-base hover:bg-secondary hover:cursor-pointer";
-const groupHeadingStyles = "ml-3 mt-2 mb-1  text-sm dark:bg-grey bg-white";
-const noOptionsMessageStyles = "text-muted-foreground dark:bg-grey bg-white";
+  "bg-input-foreground p-2 border-0 text-base hover:bg-secondary hover:cursor-pointer";
+const groupHeadingStyles = "ml-3 mt-2 mb-1  text-sm bg-input-foreground";
+const noOptionsMessageStyles = "text-muted-foreground bg-input-foreground";
 
 type SelectComponentProps = {
   options: any[];

@@ -11,7 +11,7 @@ export function StepperFormActions({ isSubmitting = false }: StepperFormProps) {
   const { prevStep, isDisabledStep, isLastStep, isOptionalStep } = useStepper();
 
   return (
-    <div className="flex w-full justify-end gap-2">
+    <div className="flex w-full justify-end gap-2 pt-4">
       <Button
         disabled={isDisabledStep}
         onClick={prevStep}

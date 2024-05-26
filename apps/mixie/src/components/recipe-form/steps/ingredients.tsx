@@ -1,7 +1,7 @@
 import { submitIngredients } from "@/actions/recipe-form/submit-ingredients";
 import { ingredientsSchema } from "@/actions/schema";
 import { DraggableContainer, DraggableItem } from "@/components/dragable";
-import { Input } from "@/components/ui/advanced-components/input";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useStepper } from "@/components/ui/stepper";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,6 +14,16 @@ import toast from "react-hot-toast";
 import * as z from "zod";
 import { useRecipeContext } from "../recipe-form-provider";
 import { StepperFormActions } from "./shared";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormMessage,
+  FormLabel,
+  useFormField,
+} from "@/components/ui/form";
 
 const Ingredients = () => {
   const { nextStep } = useStepper();
@@ -79,17 +89,17 @@ const Ingredients = () => {
     setIngredients.status !== "idle" && setIngredients.status !== "hasErrored";
 
   return (
-    <FormProvider {...form}>
+    <Form {...form}>
       <form
         onSubmit={form.handleSubmit(setIngredients.execute)}
-        className="space-y-8"
+        className="w-full space-y-8 md:w-1/2"
       >
         <section className="flex w-full flex-col gap-2">
           <DraggableContainer droppableId="steps" onDragEnd={handleSwap}>
             {fields.map((field, index: number) => {
               return (
                 <DraggableItem index={index} id={field.id} key={field.id}>
-                  <div className="mt-4 flex flex-row flex-wrap items-center gap-1">
+                  <div className="mt-4 inline-flex w-full items-center gap-2">
                     <GripVertical />
 
                     <Input
@@ -97,16 +107,14 @@ const Ingredients = () => {
                       placeholder={
                         field.isHeading ? "Heading..." : "Ingredient"
                       }
-                      classNames={{
-                        container: "h-12",
-                      }}
+                      className="h-12"
                     />
 
                     <Button
                       aria-label="delete ingredient"
                       onClick={() => handleDelete(index)}
                       type="button"
-                      className="rounded-md border border-solid border-red bg-transparent  hover:bg-red"
+                      className="group rounded-md border border-solid border-red bg-transparent hover:bg-red"
                       size="icon"
                     >
                       <Trash2Icon className="h-6 w-6 text-red group-hover:text-white" />
@@ -139,7 +147,7 @@ const Ingredients = () => {
 
         <StepperFormActions isSubmitting={isSubmitting} />
       </form>
-    </FormProvider>
+    </Form>
   );
 };
 

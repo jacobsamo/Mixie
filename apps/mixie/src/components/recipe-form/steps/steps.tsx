@@ -72,7 +72,7 @@ const Steps = () => {
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(setSteps.execute)}>
+      <form onSubmit={form.handleSubmit(setSteps.execute)} className="w-full md:w-1/2">
         <section className="flex w-full flex-col gap-2">
           <DraggableContainer droppableId="steps" onDragEnd={handleSwap}>
             {fields.map((field, index: number) => {

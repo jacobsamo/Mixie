@@ -18,7 +18,7 @@ import { StepperFormActions } from "./shared";
 
 const Details = () => {
   const { nextStep, resetSteps } = useStepper();
-  const {recipe, setRecipe} = useRecipeContext();
+  const { recipe, setRecipe } = useRecipeContext();
 
   const setDetails = useAction(submitDetails, {
     onError: () => {
@@ -57,7 +57,10 @@ const Details = () => {
     setDetails.status !== "idle" && setDetails.status !== "hasErrored";
 
   return (
-    <form onSubmit={form.handleSubmit(setDetails.execute)}>
+    <form
+      onSubmit={form.handleSubmit(setDetails.execute)}
+      className="w-full md:w-1/2"
+    >
       <Controller
         control={control}
         name="sweet_savoury"
