@@ -83,12 +83,9 @@ const Ingredients = () => {
   }, [append]);
 
   const handleSwap = useCallback(
-    (drop: DropResult) => {
-      if (drop.destination == null) return;
-      const sourceIndex = drop.source.index;
-      const targetIndex = drop.destination.index;
+    (startIndex, endIndex) => {
 
-      move(sourceIndex, targetIndex);
+      move(startIndex, endIndex);
     },
     [move]
   );
