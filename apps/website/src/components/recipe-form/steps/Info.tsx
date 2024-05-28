@@ -20,6 +20,7 @@ import toast from "react-hot-toast";
 import * as z from "zod";
 import { useRecipeContext } from "../recipe-form-provider";
 import { StepperFormActions } from "./shared";
+import ImageUpload from "../components/image-upload";
 
 const Info = () => {
   const { nextStep } = useStepper();
@@ -150,6 +151,8 @@ const Info = () => {
             </FormItem>
           )}
         />
+
+        <ImageUpload />
 
         <StepperFormActions isSubmitting={isSubmitting} />
       </form>
