@@ -6,6 +6,6 @@ module.exports = {
   semi: true,
   singleQuote: false,
   printWidth: 80,
-  tailwindConfig: "./apps/mixie/tailwind.config.ts",
+  tailwindConfig: "./apps/website/tailwind.config.ts",
   plugins: ["prettier-plugin-tailwindcss"],
 };
