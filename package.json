@@ -10,14 +10,15 @@
     "build": "turbo run build",
     "start": "turbo run start",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "clean:all": "turbo run clean:all && rm -rf node_modules/ && rm -rf .turbo"
+    "clean:all": "turbo run clean:all && rm -rf node_modules/ && rm -rf .turbo",
+    "format": "biome format --write .",
+    "lint": "turbo lint && manypkg check",
+    "typecheck": "turbo typecheck"
   },
   "dependencies": {
     "@manypkg/cli": "^0.21.4",
-    "@mixie/eslint-config-custom": "workspace:*",
     "@turbo/gen": "^1.13.3",
+    "@biomejs/biome": "1.7.3",
     "dotenv-cli": "^7.4.2",
     "eslint": "^9.2.0",
     "prettier": "^3.2.5",

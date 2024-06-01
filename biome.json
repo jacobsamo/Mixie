@@ -1,0 +1,72 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.7.0/schema.json",
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 80,
+    "attributePosition": "auto",
+    "ignore": [
+      "**/*.diff",
+      "**/*.err",
+      "**/*.orig",
+      "**/*.log",
+      "**/*.rej",
+      "**/*.swo",
+      "**/*.swp",
+      "**/*.zip",
+      "**/*.vi",
+      "**/*~",
+      "**/*.sass-cache",
+      "**/*.ruby-version",
+      "**/*.ini",
+      "**/*.exe",
+      "**/*.iml",
+      "**/*.md",
+      "**/*.txt",
+      "**/*.snap",
+      "**/.DS_Store",
+      "**/._*",
+      "**/Thumbs.db",
+      "**/.cache",
+      "**/.project",
+      "**/.settings",
+      "**/.tmproj",
+      "**/*.esproj",
+      "**/nbproject",
+      "**/*.sublime-project",
+      "**/*.sublime-workspace",
+      "**/.vscode",
+      "**/.idea",
+      "**/node_modules",
+      "**/.next",
+      "**/.tmp",
+      "**/.sass-cache",
+      "**/package-lock.json"
+    ]
+  },
+  "organizeImports": { "enabled": true },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": false,
+      "a11y": { "noSvgWithoutTitle": "off" },
+      "style": { "useBlockStatements": "off" }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "trailingComma": "es5",
+      "semicolons": "always",
+      "arrowParentheses": "always",
+      "bracketSpacing": true,
+      "bracketSameLine": false,
+      "quoteStyle": "double",
+      "attributePosition": "auto"
+    }
+  }
+}
