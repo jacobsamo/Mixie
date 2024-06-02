@@ -1,10 +1,8 @@
-import React from 'react'
-import { Skeleton } from '../ui/skeleton'
+import React from "react";
+import { Skeleton } from "../ui/skeleton";
 
 const Loading = () => {
-  return (
-    <Skeleton className='w-full h-full' />
-  )
-}
+  return <Skeleton className="w-full h-full" />;
+};
 
-export default Loading
+export default Loading;

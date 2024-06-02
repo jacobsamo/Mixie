@@ -41,11 +41,12 @@ export default async function Page() {
           autoplay={true}
         >
           <CarouselContent>
-            {carouselRecipes && carouselRecipes.splice(0, 9).map((recipe) => (
-              <CarouselItem key={recipe.recipe_id}>
-                <CardRectangle key={recipe.id} recipe={recipe} />
-              </CarouselItem>
-            ))}
+            {carouselRecipes &&
+              carouselRecipes.splice(0, 9).map((recipe) => (
+                <CarouselItem key={recipe.recipe_id}>
+                  <CardRectangle key={recipe.id} recipe={recipe} />
+                </CarouselItem>
+              ))}
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />
@@ -81,9 +82,12 @@ export default async function Page() {
       </div>
 
       <div className="mt-6 flex flex-wrap items-start justify-center gap-1 sm:gap-2 ">
-        {latestRecipes && latestRecipes.splice(0, 12).map((recipe) => (
-          <CardRectangleSmall key={recipe.recipe_id} recipe={recipe} />
-        ))}
+        {latestRecipes &&
+          latestRecipes
+            .splice(0, 12)
+            .map((recipe) => (
+              <CardRectangleSmall key={recipe.recipe_id} recipe={recipe} />
+            ))}
       </div>
 
       <div className="mx-auto my-12 max-w-7xl rounded-md bg-gradient-to-tl from-yellow/80 to-white px-4 py-12 text-center text-black sm:px-6 lg:px-8">

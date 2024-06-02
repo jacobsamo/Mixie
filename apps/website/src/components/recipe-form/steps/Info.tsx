@@ -6,7 +6,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 import { InlineInput } from "@/components/ui/inline-input";
 import { Input } from "@/components/ui/input";
@@ -45,9 +45,9 @@ const Info = () => {
   });
 
   const {
-    formState: {errors, isDirty },
+    formState: { errors, isDirty },
     control,
-    handleSubmit
+    handleSubmit,
   } = form;
 
   const isSubmitting =

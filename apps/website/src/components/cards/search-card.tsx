@@ -30,7 +30,9 @@ export const SearchCard = ({
 
       <div>
         <Link
-          href={`/recipes/${edit ? `/preview/${recipe.recipe_id}/edit` : recipe.id}`}
+          href={`/recipes/${
+            edit ? `/preview/${recipe.recipe_id}/edit` : recipe.id
+          }`}
           className="text-step--2 sm:text-step--1"
         >
           {recipe.title}

@@ -133,8 +133,10 @@ export default function ProfilePage({ params }: ProfilePageProps) {
   //     </FormProvider>
   //   </>
   // );
-  return <div>
-    <h1>Profile Page</h1>
-    <h2>Coming back soon</h2>
-  </div>
+  return (
+    <div>
+      <h1>Profile Page</h1>
+      <h2>Coming back soon</h2>
+    </div>
+  );
 }

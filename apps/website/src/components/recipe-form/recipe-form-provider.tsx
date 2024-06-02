@@ -25,7 +25,10 @@ export interface RecipeProviderProps {
 }
 
 // Context provider component
-export const RecipeFormProvider = ({ children, passedRecipe }: RecipeProviderProps) => {
+export const RecipeFormProvider = ({
+  children,
+  passedRecipe,
+}: RecipeProviderProps) => {
   const [recipe, setRecipe] = useState<Recipe | null>(passedRecipe);
 
   // Context value

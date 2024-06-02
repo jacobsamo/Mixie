@@ -1,7 +1,4 @@
-import {
-  getRecipeJsonLd,
-  splitTime
-} from "@/lib/services/recipeJsonLDParsing";
+import { getRecipeJsonLd, splitTime } from "@/lib/services/recipeJsonLDParsing";
 import { recipe_id } from "@/lib/utils";
 import { getUser } from "@/lib/utils/getUser";
 import { createClient } from "@/server/supabase/server";

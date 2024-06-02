@@ -28,7 +28,7 @@ export default function WelcomeToMixie({
       <Preview>We are thrilled to have you join the Mixie community</Preview>
       <Tailwind>
         <Body className="mx-auto my-auto bg-[#F8F5F1] font-sans">
-          <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
+          <Container className="mx-auto my-10 max-w-[500px] rounded border border-gray-200 border-solid px-10 py-5">
             <Section className="mt-8">
               <Link href="https://www.mixiecooking.com">
                 <Img
@@ -40,7 +40,7 @@ export default function WelcomeToMixie({
                 />
               </Link>
             </Section>
-            <Heading as="h2" className="text-xl text-bold text-center">
+            <Heading as="h2" className="text-center text-bold text-xl">
               Welcome to Mixie, {name}!
             </Heading>
 
@@ -52,19 +52,19 @@ export default function WelcomeToMixie({
             <Text>Get started by any of the following:</Text>
 
             <Row className="">
-              <Text className="text-md text-bold">
+              <Text className="text-bold text-md">
                 1.{" "}
                 <Link href="https://www.mixiecooking.com/recipes/create">
                   Create your own recipe
                 </Link>
               </Text>
-              <Text className="text-md text-bold mt-2">
+              <Text className="mt-2 text-bold text-md">
                 2.{" "}
                 <Link href="https://www.mixiecooking.com/recipes">
                   Find your new taste sensation
                 </Link>
               </Text>
-              <Text className="text-md text-bold mt-2">
+              <Text className="mt-2 text-bold text-md">
                 3.{" "}
                 <Link href="https://forms.gle/eoYpuU8wMFUbWr5j7">
                   Give Feedback

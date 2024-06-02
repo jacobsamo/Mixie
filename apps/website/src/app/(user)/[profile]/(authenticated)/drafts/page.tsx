@@ -23,7 +23,12 @@ export default async function DraftsPage({ params }: DraftsPageProps) {
         {recipes &&
           recipes.map((recipe, index) => {
             return (
-              <SearchCard as="li" key={index} recipe={recipe as CardRecipe} edit={true} />
+              <SearchCard
+                as="li"
+                key={index}
+                recipe={recipe as CardRecipe}
+                edit={true}
+              />
             );
           })}
       </ul>

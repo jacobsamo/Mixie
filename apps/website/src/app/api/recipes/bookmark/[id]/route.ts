@@ -5,8 +5,6 @@ import { TablesInsert } from "database.types";
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 
-
-
 export async function POST(
   req: NextRequest,
   { params }: { params: { id: string } }

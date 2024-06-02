@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { useStepper } from "@/components/ui/stepper";
 import { Loader2 } from "lucide-react";
 
-
 interface StepperFormProps {
   isSubmitting?: boolean;
 }

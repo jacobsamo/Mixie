@@ -12,13 +12,12 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-          <JotaiProvider>
-              <NextThemesProvider attribute="class" enableSystem>
-                <Dialogs />
-                {children}
-              </NextThemesProvider>
-        
-          </JotaiProvider>
+        <JotaiProvider>
+          <NextThemesProvider attribute="class" enableSystem>
+            <Dialogs />
+            {children}
+          </NextThemesProvider>
+        </JotaiProvider>
         {/* {process.env.NODE_ENV === "development" && (
           <ReactQueryDevtools initialIsOpen={false} />
         )} */}

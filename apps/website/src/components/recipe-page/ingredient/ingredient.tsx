@@ -3,7 +3,6 @@ import type { Ingredient } from "@/types";
 import { CheckCircleIcon, Circle } from "lucide-react";
 import React from "react";
 
-
 interface IngredientProps {
   ingredient: Ingredient;
 }

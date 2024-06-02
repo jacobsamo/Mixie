@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 export default async function RecipePage({ params }) {
   const recipes = await getRecipes();
   const recipe = recipes?.find((recipe) => recipe.id == params.id);
-  
+
   if (recipe) {
     return (
       <>
@@ -46,9 +46,7 @@ export default async function RecipePage({ params }) {
               ? new Date(recipe.created_at).toDateString()
               : new Date().toDateString()
           }
-          keywords={
-            recipe.keywords?.map((keyword) => keyword).join(", ") || ""
-          }
+          keywords={recipe.keywords?.map((keyword) => keyword).join(", ") || ""}
         />
         <RecipePageComponent recipe={recipe as Recipe} />
       </>

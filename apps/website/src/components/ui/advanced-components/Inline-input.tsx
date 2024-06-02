@@ -83,33 +83,33 @@ const InlineInput = React.forwardRef<HTMLInputElement, InputProps>(
         )}
         <Error error={error} />
         <div className="flex">
-
-        <div
-          className={cn(
-            "flex w-full flex-row items-center rounded-md border border-black bg-white p-1 py-1 text-step--3  shadow-sm transition-colors file:border-0 file:bg-transparent file:font-medium placeholder:text-opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 dark:border-white dark:bg-grey rounded-r-none",
-            classNames?.inputWrapper,
-            { "border-red ": error }
-          )}
-          data-input="input-container"
-        >
-          {LeadingIcon && <span>{LeadingIcon}</span>}
-          <input
-            type={type}
-            id={name}
-            name={name}
-            placeholder={label}
+          <div
             className={cn(
-              "flex h-9 w-full border-none bg-transparent px-3 outline-none",
-              classNames?.input
+              "flex w-full flex-row items-center rounded-md border border-black bg-white p-1 py-1 text-step--3  shadow-sm transition-colors file:border-0 file:bg-transparent file:font-medium placeholder:text-opacity-70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 dark:border-white dark:bg-grey rounded-r-none",
+              classNames?.inputWrapper,
+              { "border-red ": error }
             )}
-            ref={ref}
-            {...props}
-          />
-          {TrailingIcon && <span>{TrailingIcon}</span>}
+            data-input="input-container"
+          >
+            {LeadingIcon && <span>{LeadingIcon}</span>}
+            <input
+              type={type}
+              id={name}
+              name={name}
+              placeholder={label}
+              className={cn(
+                "flex h-9 w-full border-none bg-transparent px-3 outline-none",
+                classNames?.input
+              )}
+              ref={ref}
+              {...props}
+            />
+            {TrailingIcon && <span>{TrailingIcon}</span>}
+          </div>
+          <span className="text-center p-1 py-1 h-9 whitespace-nowrap rounded-md font-medium text-sm ring-offset-background transition-colors border border-white hover:bg-accent hover:text-accent-foreground px-4 rounded-l-none border-l-0">
+            {endText}
+          </span>
         </div>
-        <span className="text-center p-1 py-1 h-9 whitespace-nowrap rounded-md font-medium text-sm ring-offset-background transition-colors border border-white hover:bg-accent hover:text-accent-foreground px-4 rounded-l-none border-l-0">{endText}</span>
-        </div>
-
 
         {hint && (
           <span className="text-step--3 font-extralight italic">{hint}</span>

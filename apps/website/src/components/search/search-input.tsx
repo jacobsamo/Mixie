@@ -28,7 +28,9 @@ export const SearchInput = ({ setSearchResults }: SearchInputProps) => {
     undefined
   );
 
-  const searchUrl = `${mealTime ? `&mealTime=${mealTime}` : ""}${sweetSavoury ? `&sweetSavoury=${sweetSavoury}` : ""}`;
+  const searchUrl = `${mealTime ? `&mealTime=${mealTime}` : ""}${
+    sweetSavoury ? `&sweetSavoury=${sweetSavoury}` : ""
+  }`;
 
   return (
     <div className="flex w-[90%] flex-col gap-4">

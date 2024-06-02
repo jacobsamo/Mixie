@@ -31,7 +31,7 @@ const StateProvider = ({ children }: { children: React.ReactNode }) => {
       });
 
       const bookmarks = (await data.json()) as Bookmark[];
-      console.log(bookmarks)
+      console.log(bookmarks);
       setBookmarks(bookmarks);
       return bookmarks;
     },

@@ -16,23 +16,22 @@ export function splitTime(time: string): string {
  * Metric units
  */
 const units = {
-  "tsp": ["tsp", "teaspoon", "teaspoons", "t", "tsps"],
-  "tbsp": ["tbsp", "tablespoon", "tablespoons", "T", "tbsps"],
-  "grams": ["grams", "gram", "g", "gm", "gs"],
-  "kg": ["kg", "kgs", "kilogram", "kilograms"],
-  "cup": ["cup", "cups", "c"],
-  "ml": ["ml", "milliliter", "milliliters"],
-  "litre": ["litre", "litres", "l"],
-  "slice": ["slice", "slices"],
-  "pinch": ["pinch", "pinches"],
-  "item": ["item", "items"],
-  "handful": ["handful", "handfuls"],
-  "piece": ["piece", "pieces"],
-  "can": ["can", "cans"],
-  "bunch": ["bunch", "bunches"],
-  "bottle": ["bottle", "bottles"], 
-}
-
+  tsp: ["tsp", "teaspoon", "teaspoons", "t", "tsps"],
+  tbsp: ["tbsp", "tablespoon", "tablespoons", "T", "tbsps"],
+  grams: ["grams", "gram", "g", "gm", "gs"],
+  kg: ["kg", "kgs", "kilogram", "kilograms"],
+  cup: ["cup", "cups", "c"],
+  ml: ["ml", "milliliter", "milliliters"],
+  litre: ["litre", "litres", "l"],
+  slice: ["slice", "slices"],
+  pinch: ["pinch", "pinches"],
+  item: ["item", "items"],
+  handful: ["handful", "handfuls"],
+  piece: ["piece", "pieces"],
+  can: ["can", "cans"],
+  bunch: ["bunch", "bunches"],
+  bottle: ["bottle", "bottles"],
+};
 
 export const getRecipeJsonLd = async (link: string) => {
   let recipe: any;

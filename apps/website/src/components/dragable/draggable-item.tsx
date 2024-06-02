@@ -27,5 +27,3 @@ export const DraggableItem = ({ id, index, children }: DraggableItemProps) => {
     </Draggable>
   );
 };
-
-
