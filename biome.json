@@ -53,9 +53,18 @@
     "rules": {
       "recommended": false,
       "a11y": { "noSvgWithoutTitle": "off" },
-      "style": { "useBlockStatements": "off" }
-    }
-  },
+      "style": { "useBlockStatements": "off" },
+      "nursery": {
+        "useSortedClasses": {
+            "level": "warn",
+            "options": {
+              "attributes": ["classList"],
+              "functions": ["clsx", "cva", "tw"]
+            }
+          }
+        }
+      }
+    },
   "javascript": {
     "formatter": {
       "jsxQuoteStyle": "double",
