@@ -2,7 +2,6 @@ import RecipePageComponent from "@/components/recipe-page/recipe-page";
 import { getRecipes } from "@/lib/services/data_fetching";
 import { constructMetadata } from "@/lib/utils";
 import type { Recipe } from "@/types";
-import { RecipeJsonLd } from "next-seo";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
@@ -23,31 +22,42 @@ export default async function RecipePage({ params }) {
   const recipes = await getRecipes();
   const recipe = recipes?.find((recipe) => recipe.id == params.id);
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Recipe",
+    name: recipe?.title,
+    image: recipe?.image_url,
+    description: recipe?.description,
+    recipeIngredient: recipe?.ingredients.map((ingredient) => ingredient.text),
+    recipeInstructions: recipe?.steps.map((step, index) => {
+      return {
+        "@type": "HowToStep",
+        text: step,
+        position: index + 1,
+      };
+    }),
+    recipeYield: recipe?.yield,
+    recipeCategory: recipe?.category,
+    recipeCuisine: recipe?.cuisine,
+    keywords: recipe?.keywords?.join(", ") ?? [],
+    cookTime: `PT${recipe?.cook_time}M`,
+    prepTime: `PT${recipe?.prep_time}M`,
+    totalTime: `PT${recipe?.total_time}M`,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: recipe?.rating,
+    },
+    datePublished: recipe?.created_at
+      ? new Date(recipe?.created_at)
+      : new Date(),
+  };
+
   if (recipe) {
     return (
       <>
-        <RecipeJsonLd
-          useAppDir={true}
-          name={recipe?.title || ""}
-          authorName={""}
-          yields={recipe?.yield?.toString() || ""}
-          ingredients={recipe.ingredients.map((ingredient) => ingredient.text)}
-          instructions={
-            recipe?.steps?.map((step, index) => {
-              return {
-                name: `Step ${index + 1}`,
-                text: step.text,
-              };
-            }) || []
-          }
-          description={recipe.description! || ""}
-          datePublished={
-            recipe.created_at
-              ? new Date(recipe.created_at).toDateString()
-              : new Date().toDateString()
-          }
-          keywords={recipe.keywords?.map((keyword) => keyword).join(", ") || ""}
-        />
+        <head>
+          <script type="application/ld+json">{JSON.stringify(schema)}</script>
+        </head>
         <RecipePageComponent recipe={recipe as Recipe} />
       </>
     );
