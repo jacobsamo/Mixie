@@ -44,7 +44,6 @@ const ImageUpload = () => {
     formState: { errors },
   } = useFormContext<z.infer<typeof recipeClientFormSchema>>();
 
-
   const image = watch("image_url");
   const image_attributes = watch("image_attributes");
 

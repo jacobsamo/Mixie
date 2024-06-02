@@ -51,7 +51,7 @@ const UrlUpload = () => {
           <FormItem>
             <FormLabel>Image Alt Text</FormLabel>
             <FormControl>
-              <Input {...field} required/>
+              <Input {...field} required />
             </FormControl>
             <FormDescription>A short description of the image</FormDescription>
             <FormMessage />

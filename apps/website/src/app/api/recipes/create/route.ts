@@ -79,10 +79,18 @@ export async function POST(req: NextRequest) {
           }) || null,
         ingredients: recipe.recipeIngredient,
         source: link,
-        cook_time: recipe?.cookTime ? convertTimeToMinutes(recipe.cookTime) : null,
-        prep_time: recipe?.prepTime ? convertTimeToMinutes(recipe.prepTime) : null,
-        total_time: recipe?.totalTime ? convertTimeToMinutes(recipe.totalTime) : null,
-        rating: recipe.aggregateRating?.ratingValue ? Math.round(recipe.aggregateRating?.ratingValue) : null,
+        cook_time: recipe?.cookTime
+          ? convertTimeToMinutes(recipe.cookTime)
+          : null,
+        prep_time: recipe?.prepTime
+          ? convertTimeToMinutes(recipe.prepTime)
+          : null,
+        total_time: recipe?.totalTime
+          ? convertTimeToMinutes(recipe.totalTime)
+          : null,
+        rating: recipe.aggregateRating?.ratingValue
+          ? Math.round(recipe.aggregateRating?.ratingValue)
+          : null,
         yield: recipe?.recipeYield ? Math.round(recipe.recipeYield) : null,
         image_url: recipe?.image.url ?? null,
         image_attributes: {
@@ -147,4 +155,3 @@ export async function POST(req: NextRequest) {
 function convertTimeToMinutes(cookTime: any): number | null | undefined {
   throw new Error("Function not implemented.");
 }
-

@@ -9,7 +9,11 @@ import { Recipe } from "@/types";
 export const submitInfo = action(infoSchema, async (params) => {
   const supabase = createClient();
 
-  const total_time = params.prep_time && params.cook_time && (params?.prep_time + params?.cook_time) || null;
+  const total_time =
+    (params.prep_time &&
+      params.cook_time &&
+      params?.prep_time + params?.cook_time) ||
+    null;
 
   const { data, error } = await supabase
     .from("recipes")
