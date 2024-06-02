@@ -55,12 +55,14 @@ const CreateRecipeDialog = () => {
     toast.promise(createRecipe, {
       loading: "Creating Recipe...",
       success: (data) => {
-        data.json().then((data) => {
-          setLoading(false);
-          setUserDropDownOpen(false);
-          setOpen(false);
-          router.push(`/recipes/preview/${data.id}/edit`);
-        });
+        if (data.status === 200) {
+          data.json().then((data) => {
+            setLoading(false);
+            setUserDropDownOpen(false);
+            setOpen(false);
+            router.push(`/recipes/preview/${data.id}/edit`);
+          });
+        }
 
         return "Recipe Created";
       },
