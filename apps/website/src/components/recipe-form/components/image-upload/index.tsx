@@ -44,18 +44,6 @@ const ImageUpload = () => {
     formState: { errors },
   } = useFormContext<z.infer<typeof recipeClientFormSchema>>();
 
-  const DisplayForm = () => {
-    switch (uploadType) {
-      case "url":
-        return <UrlUpload />;
-      case "upload":
-        return <Upload />;
-      case "search":
-        return <SearchUpload />;
-      default:
-        return null;
-    }
-  };
 
   const image = watch("image_url");
   const image_attributes = watch("image_attributes");
@@ -136,6 +124,7 @@ const ImageUpload = () => {
         <DialogContent
           className="max-h-[80%] w-11/12 md:w-1/2"
           showClose={false}
+          onFocus={() => console.log("focused")}
         >
           <HeaderControls
             currentStepId={uploadType}
@@ -174,7 +163,9 @@ const ImageUpload = () => {
             </div>
           )}
 
-          <DisplayForm />
+          {uploadType === "url" && <UrlUpload />}
+          {uploadType === "upload" && <Upload />}
+          {uploadType === "search" && <SearchUpload />}
 
           <DialogFooter>
             <DialogClose>Cancel</DialogClose>

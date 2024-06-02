@@ -133,8 +133,14 @@ const Info = () => {
               <FormControl className="flex">
                 <InlineInput
                   endText="minutes"
-                  {...field}
-                  value={field.value ?? undefined}
+                  type="number"
+                  inputMode="numeric"
+                  className="no-number-stepper"
+                  pattern="\d*"
+                  value={Number(field.value)}
+                  onChange={(e) => {
+                    field.onChange(Number(e.target.value));
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -151,8 +157,14 @@ const Info = () => {
               <FormControl className="flex">
                 <InlineInput
                   endText="minutes"
-                  {...field}
-                  value={field.value ?? undefined}
+                  type="number"
+                  inputMode="numeric"
+                  className="no-number-stepper"
+                  pattern="\d*"
+                  value={Number(field.value)}
+                  onChange={(e) => {
+                    field.onChange(Number(e.target.value));
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -184,12 +196,12 @@ const Info = () => {
                   <Input
                     type="number"
                     inputMode="numeric"
+                    className="no-number-stepper"
                     pattern="\d*"
                     value={Number(field.value) ?? 1}
                     onChange={(e) => {
                       field.onChange(Number(e.target.value));
                     }}
-                    className="no-number-stepper"
                   />
 
                   <Button

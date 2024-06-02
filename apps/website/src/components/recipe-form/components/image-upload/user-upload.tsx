@@ -62,7 +62,7 @@ const Upload = () => {
         render={({ field }) => (
           <FormItem>
             <FormLabel>Image Alt Text</FormLabel>
-            <FormControl className="flex">
+            <FormControl>
               <Input {...field} />
             </FormControl>
             <FormDescription>A short description of the image</FormDescription>

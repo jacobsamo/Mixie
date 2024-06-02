@@ -13,25 +13,29 @@ export function splitTime(time: string): string {
 }
 
 /**
- * Metric units
+ * Converts a time format string to minutes
+ * @param {string} time - time format string e.g. `PT1H30M` or `30M`
+ * @returns {number} - the time in minutes
  */
-const units = {
-  tsp: ["tsp", "teaspoon", "teaspoons", "t", "tsps"],
-  tbsp: ["tbsp", "tablespoon", "tablespoons", "T", "tbsps"],
-  grams: ["grams", "gram", "g", "gm", "gs"],
-  kg: ["kg", "kgs", "kilogram", "kilograms"],
-  cup: ["cup", "cups", "c"],
-  ml: ["ml", "milliliter", "milliliters"],
-  litre: ["litre", "litres", "l"],
-  slice: ["slice", "slices"],
-  pinch: ["pinch", "pinches"],
-  item: ["item", "items"],
-  handful: ["handful", "handfuls"],
-  piece: ["piece", "pieces"],
-  can: ["can", "cans"],
-  bunch: ["bunch", "bunches"],
-  bottle: ["bottle", "bottles"],
-};
+function convertTimeToMinutes(time: string): number {
+  const hoursRegex = /(\d+)H/;
+  const minutesRegex = /(\d+)M/;
+  let totalMinutes = 0;
+
+  const hoursMatch = time.match(hoursRegex);
+  if (hoursMatch) {
+    const hours = parseInt(hoursMatch[1]);
+    totalMinutes += hours * 60;
+  }
+
+  const minutesMatch = time.match(minutesRegex);
+  if (minutesMatch) {
+    const minutes = parseInt(minutesMatch[1]);
+    totalMinutes += minutes;
+  }
+
+  return totalMinutes;
+}
 
 export const getRecipeJsonLd = async (link: string) => {
   let recipe: any;

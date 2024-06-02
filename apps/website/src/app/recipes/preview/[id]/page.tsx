@@ -4,6 +4,8 @@ import { createClient } from "@/server/supabase/server";
 import type { Recipe } from "@/types";
 import { notFound, redirect } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 interface PreviewRecipePageProps {
   params: {
     id: string;

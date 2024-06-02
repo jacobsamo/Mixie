@@ -56,7 +56,7 @@ export const stepSchema = z.object({
 
 const recipes = z.object({
   category: z.string().nullable(),
-  cook_time: z.string().nullable(),
+  cook_time: z.number().nullable(),
   created_by: z.string(),
   created_at: z.string(),
   cuisine: z.string().nullable(),
@@ -71,7 +71,7 @@ const recipes = z.object({
   meal_time: selectValue.array().nullish(),
   notes: z.string().nullable(),
   nutrition: z.string().array().nullable(),
-  prep_time: z.string().nullable(),
+  prep_time: z.number().nullable(),
   public: z.boolean().default(false),
   rating: z.number().nullable(),
   recipe_id: z.string(),
@@ -80,14 +80,14 @@ const recipes = z.object({
   suitable_for_diet: z.string().nullable(),
   sweet_savoury: sweet_savoury.default("not_set").nullable(),
   title: z.string(),
-  total_time: z.string().nullable(),
+  total_time: z.number().nullable(),
   version: z.string(),
   yield: z.number().nullable(),
 });
 
 const recipes_edit = z.object({
   category: z.string().nullish(),
-  cook_time: z.string().nullish(),
+  cook_time: z.number().nullish(),
   created_at: z.string().optional(),
   created_by: z.string(),
   cuisine: z.string().nullish(),
@@ -102,7 +102,7 @@ const recipes_edit = z.object({
   meal_time: selectValue.array().nullish(),
   notes: z.string().nullish(),
   nutrition: z.string().array().nullish(),
-  prep_time: z.string().nullish(),
+  prep_time: z.number().nullish(),
   public: z.boolean().default(false).optional(),
   rating: z.number().nullish(),
   recipe_id: z.string().optional(),
@@ -111,7 +111,7 @@ const recipes_edit = z.object({
   suitable_for_diet: z.string().nullish(),
   sweet_savoury: sweet_savoury.default("not_set").optional(),
   title: z.string(),
-  total_time: z.string().nullish(),
+  total_time: z.number().nullish(),
   version: z.string(),
   yield: z.number().nullish(),
 });

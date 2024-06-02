@@ -31,7 +31,7 @@ const UrlUpload = () => {
         render={({ field }) => (
           <FormItem>
             <FormLabel>Image Url</FormLabel>
-            <FormControl className="flex">
+            <FormControl>
               <Input
                 placeholder="https://"
                 {...field}
@@ -50,8 +50,8 @@ const UrlUpload = () => {
         render={({ field }) => (
           <FormItem>
             <FormLabel>Image Alt Text</FormLabel>
-            <FormControl className="flex">
-              <Input {...field} />
+            <FormControl>
+              <Input {...field} required/>
             </FormControl>
             <FormDescription>A short description of the image</FormDescription>
             <FormMessage />

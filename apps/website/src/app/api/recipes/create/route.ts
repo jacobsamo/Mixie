@@ -1,8 +1,8 @@
-import { getRecipeJsonLd, splitTime } from "@/lib/services/recipeJsonLDParsing";
-import { recipe_id } from "@/lib/utils";
+import { getRecipeJsonLd } from "@/lib/services/recipeJsonLDParsing";
+import { recipeId } from "@/lib/utils";
 import { getUser } from "@/lib/utils/getUser";
 import { createClient } from "@/server/supabase/server";
-import { NewRecipe, Recipe, createRecipeSchema } from "@/types";
+import { createRecipeSchema, NewRecipe, Recipe } from "@/types";
 import { NextResponse, type NextRequest } from "next/server";
 import * as z from "zod";
 
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     let newRecipe: NewRecipe | null = null;
 
     if (title && !link) {
-      const id = recipe_id(title);
+      const id = recipeId(title);
 
       const newTitle = title.charAt(0).toUpperCase() + title.slice(1);
 
@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
         );
 
       newRecipe = {
-        id: recipe_id(recipe.name),
+        id: recipeId(recipe.name),
         title: recipe.name,
         description: recipe.description?.replace(/<[^>]*>?/gm, "") ?? null,
         public: false,
@@ -79,9 +79,9 @@ export async function POST(req: NextRequest) {
           }) || null,
         ingredients: recipe.recipeIngredient,
         source: link,
-        cook_time: recipe?.cookTime ? splitTime(recipe.cookTime) : null,
-        prep_time: recipe?.prepTime ? splitTime(recipe.prepTime) : null,
-        total_time: recipe?.totalTime ? splitTime(recipe.totalTime) : null,
+        cook_time: recipe?.cookTime ? convertTimeToMinutes(recipe.cookTime) : null,
+        prep_time: recipe?.prepTime ? convertTimeToMinutes(recipe.prepTime) : null,
+        total_time: recipe?.totalTime ? convertTimeToMinutes(recipe.totalTime) : null,
         rating: recipe.aggregateRating?.ratingValue ? Math.round(recipe.aggregateRating?.ratingValue) : null,
         yield: recipe?.recipeYield ? Math.round(recipe.recipeYield) : null,
         image_url: recipe?.image.url ?? null,
@@ -144,3 +144,7 @@ export async function POST(req: NextRequest) {
     });
   }
 }
+function convertTimeToMinutes(cookTime: any): number | null | undefined {
+  throw new Error("Function not implemented.");
+}
+

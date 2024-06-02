@@ -271,7 +271,7 @@ export type Database = {
       recipes: {
         Row: {
           category: string | null;
-          cook_time: string | null;
+          cook_time: number | null;
           created_at: string;
           created_by: string;
           cuisine: string | null;
@@ -286,7 +286,7 @@ export type Database = {
           meal_time: Json | null;
           notes: string | null;
           nutrition: Json | null;
-          prep_time: string | null;
+          prep_time: number | null;
           public: boolean;
           rating: number | null;
           recipe_id: string;
@@ -295,13 +295,13 @@ export type Database = {
           suitable_for_diet: string | null;
           sweet_savoury: Database["public"]["Enums"]["sweet_savoury"];
           title: string;
-          total_time: string | null;
+          total_time: number | null;
           version: string;
           yield: number | null;
         };
         Insert: {
           category?: string | null;
-          cook_time?: string | null;
+          cook_time?: number | null;
           created_at?: string;
           created_by: string;
           cuisine?: string | null;
@@ -316,7 +316,7 @@ export type Database = {
           meal_time?: Json | null;
           notes?: string | null;
           nutrition?: Json | null;
-          prep_time?: string | null;
+          prep_time?: number | null;
           public?: boolean;
           rating?: number | null;
           recipe_id?: string;
@@ -325,13 +325,13 @@ export type Database = {
           suitable_for_diet?: string | null;
           sweet_savoury?: Database["public"]["Enums"]["sweet_savoury"];
           title: string;
-          total_time?: string | null;
+          total_time?: number | null;
           version?: string;
           yield?: number | null;
         };
         Update: {
           category?: string | null;
-          cook_time?: string | null;
+          cook_time?: number | null;
           created_at?: string;
           created_by?: string;
           cuisine?: string | null;
@@ -346,7 +346,7 @@ export type Database = {
           meal_time?: Json | null;
           notes?: string | null;
           nutrition?: Json | null;
-          prep_time?: string | null;
+          prep_time?: number | null;
           public?: boolean;
           rating?: number | null;
           recipe_id?: string;
@@ -355,7 +355,7 @@ export type Database = {
           suitable_for_diet?: string | null;
           sweet_savoury?: Database["public"]["Enums"]["sweet_savoury"];
           title?: string;
-          total_time?: string | null;
+          total_time?: number | null;
           version?: string;
           yield?: number | null;
         };
