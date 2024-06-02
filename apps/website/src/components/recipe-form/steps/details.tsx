@@ -163,7 +163,7 @@ const Details = () => {
             <FormItem>
               <FormLabel>Notes, Tips or Suggestions</FormLabel>
               <FormControl className="w-full">
-                <Textarea {...field} />
+                <Textarea {...field} value={field.value ?? undefined} />
               </FormControl>
               <FormMessage />
             </FormItem>

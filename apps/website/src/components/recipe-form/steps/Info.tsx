@@ -79,7 +79,11 @@ const Info = () => {
             <FormItem>
               <FormLabel>Recipe Name</FormLabel>
               <FormControl className="flex">
-                <Input id="description" {...field} />
+                <Input
+                  id="description"
+                  {...field}
+                  value={field.value ?? undefined}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -93,7 +97,11 @@ const Info = () => {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl className="flex">
-                <Textarea id="description" {...field} />
+                <Textarea
+                  id="description"
+                  {...field}
+                  value={field.value ?? undefined}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -109,7 +117,7 @@ const Info = () => {
             <FormItem>
               <FormLabel>Source</FormLabel>
               <FormControl className="flex">
-                <Input {...field} />
+                <Input {...field} value={field.value ?? undefined} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -123,7 +131,11 @@ const Info = () => {
             <FormItem>
               <FormLabel>Prep time</FormLabel>
               <FormControl className="flex">
-                <InlineInput endText="minutes" {...field} />
+                <InlineInput
+                  endText="minutes"
+                  {...field}
+                  value={field.value ?? undefined}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -137,7 +149,11 @@ const Info = () => {
             <FormItem>
               <FormLabel>Cook time</FormLabel>
               <FormControl className="flex">
-                <InlineInput endText="minutes" {...field} />
+                <InlineInput
+                  endText="minutes"
+                  {...field}
+                  value={field.value ?? undefined}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
