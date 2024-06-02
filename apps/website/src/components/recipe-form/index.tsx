@@ -1,11 +1,11 @@
 "use client";
 import { Step, Stepper, type StepItem } from "@/components/ui/stepper";
-import { ChefHat, Coffee, ShoppingBasket, Soup } from "lucide-react";
-import { RecipeFormProvider } from "./recipe-form-provider";
 import { Recipe } from "@/types";
+import { ChefHat, Coffee, ShoppingBasket, Soup } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 import Loading from "./loading";
+import { RecipeFormProvider } from "./recipe-form-provider";
 
 const Info = dynamic(() => import("./steps/Info"), {
   loading: () => <Loading />,
@@ -62,7 +62,7 @@ export default function RecipeForm({ recipe }: RecipeFormProps) {
         >
           {steps.map((step, index) => (
             <Step key={step.label} {...step}>
-              <div className="my-4 flex min-h-40 items-center justify-center overflow-auto rounded-md px-2 ">
+              <div className="my-4 flex min-h-40 items-center justify-center overflow-auto rounded-md px-2">
                 <DisplayForm activeStep={step} />
               </div>
             </Step>

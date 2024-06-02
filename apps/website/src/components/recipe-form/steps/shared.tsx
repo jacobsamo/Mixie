@@ -4,9 +4,17 @@ import { Loader2 } from "lucide-react";
 
 interface StepperFormProps {
   isSubmitting?: boolean;
+  isPublicSubmitting?: boolean;
+  onPublish?: () => void;
+  onSaveDraft?: () => void;
 }
 
-export function StepperFormActions({ isSubmitting = false }: StepperFormProps) {
+export function StepperFormActions({
+  isSubmitting = false,
+  isPublicSubmitting = false,
+  onPublish,
+  onSaveDraft,
+}: StepperFormProps) {
   const { prevStep, isDisabledStep, isLastStep, isOptionalStep } = useStepper();
 
   return (
@@ -24,28 +32,41 @@ export function StepperFormActions({ isSubmitting = false }: StepperFormProps) {
         <>
           <Button
             aria-label="continue with creating the recipe"
-            disabled={isSubmitting}
+            disabled={isSubmitting || isPublicSubmitting}
+            form="recipe-form"
             size="sm"
             variant="secondary"
             type="submit"
+            onClick={(e) => {
+              onSaveDraft && onSaveDraft();
+            }}
           >
             Save draft
-            {isSubmitting && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
+            {isSubmitting && !isPublicSubmitting && (
+              <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+            )}
           </Button>
           <Button
             type="submit"
+            form="recipe-form"
             aria-label="continue with creating the recipe"
-            disabled={isSubmitting}
+            disabled={isSubmitting || isPublicSubmitting}
             size="sm"
+            onClick={(e) => {
+              onPublish && onPublish();
+            }}
           >
             Publish
-            {isSubmitting && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
+            {isPublicSubmitting && (
+              <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+            )}
           </Button>
         </>
       ) : (
         <>
           <Button
             type="submit"
+            // form="recipe-form"
             aria-label="continue with creating the recipe"
             disabled={isSubmitting}
             size="sm"
