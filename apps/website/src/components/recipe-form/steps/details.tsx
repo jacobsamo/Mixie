@@ -36,7 +36,6 @@ const Details = () => {
     onSuccess: (data: Recipe) => {
       setRecipe(data);
       resetSteps();
-      console.log("data: ", data);
       router.push(`/recipes/preview/${data.recipe_id}`);
     },
   });

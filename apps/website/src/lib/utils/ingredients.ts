@@ -3,6 +3,16 @@ import { Amount, Step, type Ingredient } from "@/types";
 import Fraction from "fraction.js";
 import * as fuzzball from "fuzzball";
 
+export const units = {
+  tsp: ["tsp", "teaspoon", "teaspoons", "t", "tsps"],
+  tbsp: ["tbsp", "tablespoon", "tablespoons", "T", "tbsps"],
+  grams: ["grams", "gram", "g", "gm", "gs"],
+  kg: ["kg", "kgs", "kilogram", "kilograms"],
+  cup: ["cup", "cups", "c"],
+  ml: ["ml", "milliliter", "milliliters"],
+  litre: ["litre", "litres", "l"],
+};
+
 /**
  * Removes all non word letters e.g , . / ( )
  * @param {string} str string to input
@@ -61,26 +71,16 @@ export function matchIngredients(ingredients: Ingredient[], step: Step) {
 }
 
 /**
- * Takes in a cup unit e.g cup, tsp, tbsp and return it. as we have to calculate fractions
- * @param {Ingredient["quantity"]} quantity
- * @param {Amount} amount
+ * Takes in fraction and a times amount and returns a new fraction
+ * @param {string} amount
  * @param {number} batchAmount
- * @returns { quantity: Ingredient["quantity"]; amount: Amount } calculated cup units
  */
-function calculateCupUnits(amount: Amount, batchAmount: number): {} {
-  const fr = amount.split("/");
-
-  const value = (Number(fr[0]) / Number(fr[1])) * batchAmount;
-  const fraction = new Fraction(value).toFraction(true);
-  const split = fraction.split(" ");
-  const newQuantity = split.length > 1 ? parseInt(split[0]) : null;
-  const newMeasurement =
-    split.length > 1 ? (split[1] as Amount) : (split[0] as Amount);
-
-  return {
-    quantity: newQuantity,
-    amount: newMeasurement,
-  };
+function calculateFractionalUnit(amount: string, batchAmount: number): string {
+  const [numerator, denominator] = amount.split("/").map(Number);
+  const value = denominator
+    ? (numerator / denominator) * batchAmount
+    : numerator * batchAmount;
+  return new Fraction(value).toFraction(true);
 }
 
 /**
@@ -95,9 +95,43 @@ export function calculateIngredient(
 ): Ingredient {
   if (ingredient.isHeading) return ingredient;
 
-  //TODO: rewrite the caluclation logic
+  // will match the first digit in a string and the value after it
+  const match = ingredient.text.match(/(\d+(?:\/\d+)?)(?:\s*([a-zA-Z]+))?/i);
+  if (!match) return ingredient;
 
-  return ingredient;
+  const [fullMatch, amount, unit] = match;
+  const unitKey = Object.keys(units).find((key) =>
+    units[key].includes(unit.toLowerCase())
+  );
+
+  let newAmount = amount;
+  switch (unitKey) {
+    case "tsp":
+    case "tbsp":
+    case "cup":
+      newAmount = `${calculateFractionalUnit(amount, batchAmount)} ${unitKey}`;
+      break;
+    case "grams":
+      const gramQuantity = Number(amount) * batchAmount;
+      newAmount = `${
+        gramQuantity >= 1000 ? gramQuantity / 1000 : gramQuantity
+      } ${gramQuantity >= 1000 ? "kg" : "grams"}`;
+      break;
+    case "ml":
+      const mlQuantity = Number(amount) * batchAmount;
+      newAmount = `${mlQuantity >= 1000 ? mlQuantity / 1000 : mlQuantity} ${
+        mlQuantity >= 1000 ? "litre" : "ml"
+      }`;
+      break;
+    default:
+      newAmount = `${Number(amount) * batchAmount} ${unit}`;
+      break;
+  }
+
+  return {
+    isHeading: false,
+    text: ingredient.text.replace(fullMatch, newAmount),
+  };
 }
 
 /**
