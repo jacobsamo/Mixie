@@ -16,8 +16,8 @@
 
 ## First have you done these steps?
 
-- [ ] Run `pnpm up --latest` to upgrade all packages
-- [ ] Run a `pnpm build` and fixed any bugs or errors found in this process
+- [ ] Run `bun update` to upgrade all packages
+- [ ] Run a `bun build` and fixed any bugs or errors found in this process
 
 ## What type of PR is this? (check all applicable)
 

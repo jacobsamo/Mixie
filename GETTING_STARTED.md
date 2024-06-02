@@ -10,19 +10,19 @@ First clone the repository and then cd into it
 Then install the dependencies
 
 ```bash
-    pnpm i
+    bun i
 ```
 
 Then start the all apps
 
 ```bash
-    pnpm dev
+    bun dev
 ```
 
 start just the one you want
 
 ```bash
-    pnpm run dev --filter *app name*
+    bun run dev --filter *app name*
 ```
 
 ## Contributing
@@ -40,7 +40,7 @@ All apps live under the [apps directory](./apps/) and packages that are shared b
 
 ## Workspaces
 
-If you aren't familiar with Workspaces they are pretty much ways of separating where things are in a project. so when installing into a certain workspace it will only install into that workspace and not the others, E.x `pnpm add React --filter mixie`. 
+If you aren't familiar with Workspaces they are pretty much ways of separating where things are in a project. so when installing into a certain workspace it will only install into that workspace and not the others, E.x `bun add React --filter mixie`. 
 
 ## Consistent coding style
 
