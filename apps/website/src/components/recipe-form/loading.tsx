@@ -2,7 +2,7 @@ import React from "react";
 import { Skeleton } from "../ui/skeleton";
 
 const Loading = () => {
-  return <Skeleton className="w-full h-full" />;
+  return <Skeleton className="h-full w-full" />;
 };
 
 export default Loading;

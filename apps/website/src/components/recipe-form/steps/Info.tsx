@@ -21,6 +21,9 @@ import * as z from "zod";
 import { useRecipeContext } from "../recipe-form-provider";
 import { StepperFormActions } from "./shared";
 import ImageUpload from "../components/image-upload";
+import NumberInput from "@/components/ui/number-input";
+import { Button } from "@/components/ui/button";
+import { MinusIcon, PlusIcon } from "lucide-react";
 
 const Info = () => {
   const { nextStep } = useStepper();
@@ -45,8 +48,9 @@ const Info = () => {
   });
 
   const {
-    formState: { errors, isDirty },
+    formState: { isDirty },
     control,
+    setValue,
     handleSubmit,
   } = form;
 
@@ -87,7 +91,7 @@ const Info = () => {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Source</FormLabel>
+              <FormLabel>Description</FormLabel>
               <FormControl className="flex">
                 <Textarea id="description" {...field} />
               </FormControl>
@@ -95,6 +99,8 @@ const Info = () => {
             </FormItem>
           )}
         />
+
+        <ImageUpload />
 
         <FormField
           control={control}
@@ -141,18 +147,51 @@ const Info = () => {
         <FormField
           control={control}
           name="yield"
+          rules={{ pattern: /\d*/ }}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Serves</FormLabel>
-              <FormControl className="flex">
-                <Input type="number" {...field} />
+              <FormControl>
+                <div className="flex items-center gap-1">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    type="button"
+                    className="h-8 w-8 shrink-0"
+                    onClick={() => setValue("yield", Number(field.value) - 1)}
+                    disabled={Number(field.value) <= 1 ?? true}
+                  >
+                    <MinusIcon className="h-4 w-4" />
+                    <span className="sr-only">Decrease</span>
+                  </Button>
+
+                  <Input
+                    type="number"
+                    inputMode="numeric"
+                    pattern="\d*"
+                    value={Number(field.value) ?? 1}
+                    onChange={(e) => {
+                      field.onChange(Number(e.target.value));
+                    }}
+                    className="no-number-stepper"
+                  />
+
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    type="button"
+                    className="h-8 w-8 shrink-0"
+                    onClick={() => setValue("yield", Number(field.value) + 1)}
+                  >
+                    <PlusIcon className="h-4 w-4" />
+                    <span className="sr-only">Decrease</span>
+                  </Button>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
-        <ImageUpload />
 
         <StepperFormActions isSubmitting={isSubmitting} />
       </form>

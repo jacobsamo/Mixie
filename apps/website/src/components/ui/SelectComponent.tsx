@@ -41,13 +41,13 @@ const controlStyles = {
 };
 const placeholderStyles = " text-sm ml-1";
 const selectInputStyles = "text-foreground text-sm ml-1";
-const valueContainerStyles = "text-foreground text-sm";
+const valueContainerStyles = "text-foreground text-sm overflow-y-auto";
 const singleValueStyles = "ml-1";
 const multiValueStyles =
   "ml-1 bg-input-foreground shadow border border-grey rounded items-center py-0.5 pl-2 pr-1 gap-1.5";
 const multiValueLabelStyles = "leading-6 py-0.5";
 const multiValueRemoveStyles =
-  "border border-grey bg-white hover:bg-red hover:text-white hover:border-red rounded-md bg-input";
+  "border border-grey hover:bg-red hover:text-white hover:border-red rounded-md bg-input";
 const indicatorsContainerStyles = "p-1 gap-1 bg-input-foreground rounded-lg";
 const clearIndicatorStyles = " p-1 rounded-md hover:text-red";
 const indicatorSeparatorStyles = "bg-mutated";
@@ -55,7 +55,7 @@ const dropdownIndicatorStyles = "p-1 hover:text-foreground";
 const menuStyles =
   "mt-2 p-2 border border-input bg-input-foreground text-sm rounded-lg";
 
-const menuList = "min-w-fit";
+const menuList = "min-w-fit overflow-y-auto max-h-60";
 const optionsStyle =
   "bg-input-foreground p-2 border-0 text-base hover:bg-secondary hover:cursor-pointer";
 const groupHeadingStyles = "ml-3 mt-2 mb-1  text-sm bg-input-foreground";

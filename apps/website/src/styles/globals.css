@@ -45,6 +45,19 @@ p {
   -webkit-backdrop-filter: blur(5px);
 }
 
+
+/* Hide the number stepper in input[type="number"] */
+.no-number-stepper::-webkit-outer-spin-button,
+.no-number-stepper::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide the number stepper in input[type="number"] */
+.no-number-stepper {
+  -moz-appearance: textfield; /* Hides the stepper buttons in Firefox */
+}
+
 @layer base {
   :root {
     --background: 30 36% 96%;
@@ -126,9 +139,4 @@ p {
     @apply bg-background text-foreground;
     min-height: 100dvh;
   }
-}
-
-
-.test {
-  background: hsl(224 19% 12%);
 }
