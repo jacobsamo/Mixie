@@ -17,7 +17,7 @@ export function splitTime(time: string): string {
  * @param {string} time - time format string e.g. `PT1H30M` or `30M`
  * @returns {number} - the time in minutes
  */
-function convertTimeToMinutes(time: string): number {
+export function convertTimeToMinutes(time: string): number {
   const hoursRegex = /(\d+)H/;
   const minutesRegex = /(\d+)M/;
   let totalMinutes = 0;

@@ -22,6 +22,8 @@ import FeedbackDialog from "../modals/feedback-modal";
 import { createRecipeOpen } from "../providers/dialogs";
 import { userDropDownOpen } from "../providers/state-provider";
 import VersionChip from "../versioning-chips";
+import { createRecipeFromImage } from "@/actions/recipe-imports/image";
+import { useAction } from "next-safe-action/hooks";
 
 const CreateRecipeDialog = () => {
   const router = useRouter();
@@ -29,6 +31,32 @@ const CreateRecipeDialog = () => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useAtom(createRecipeOpen);
   const [, setUserDropDownOpen] = useAtom(userDropDownOpen);
+  const [base64String, setBase64String] = useState<string>();
+  const [files, setFiles] = useState();
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setBase64String(
+          reader.result?.toString().replace(/^data:image\/[a-z]+;base64,/, "")
+        );
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const setInfo = useAction(createRecipeFromImage, {
+    onError: (e) => {
+      console.error("Error setting info: ", e);
+      toast.error("Something went wrong pleaase try again.");
+    },
+    onSuccess: (data) => {
+      console.log("return result", data);
+    },
+  });
 
   const methods = useForm<z.infer<typeof createRecipeSchema>>({
     resolver: zodResolver(createRecipeSchema),
@@ -129,6 +157,20 @@ const CreateRecipeDialog = () => {
             {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
           </Button>
         </form>
+
+        <div>
+          Upload image
+          <input type="file" accept="image/*" onChange={handleFileChange} />
+          <Button
+            type="button"
+            onClick={() => {
+              console.log("Base64string: ", base64String);
+              setInfo.execute({ image: base64String as string });
+            }}
+          >
+            Create Recipe from Image
+          </Button>
+        </div>
 
         <FeedbackDialog />
       </DialogContent>

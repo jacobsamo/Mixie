@@ -152,6 +152,3 @@ export async function POST(req: NextRequest) {
     });
   }
 }
-function convertTimeToMinutes(cookTime: any): number | null | undefined {
-  throw new Error("Function not implemented.");
-}
