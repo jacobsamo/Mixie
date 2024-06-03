@@ -11,6 +11,7 @@ export const env = createEnv({
     UPLOADTHING_SECRET: z.string().min(1),
     UPLOADTHING_APP_ID: z.string().min(1),
     SUPABASE_SERVICE_ROLE: z.string().min(1),
+    GOOGLE_AI_API_KEY: z.string(),
   },
   client: {
     NEXT_PUBLIC_API_APP_TOKEN: z.string().min(1),
@@ -29,6 +30,7 @@ export const env = createEnv({
     UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,
     UPLOADTHING_APP_ID: process.env.UPLOADTHING_APP_ID,
     SUPABASE_URI: process.env.SUPABASE_URI,
+    GOOGLE_AI_API_KEY: process.env.GOOGLE_AI_API_KEY,
 
     // Client
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
