@@ -56,7 +56,7 @@ const LoginPage = () => {
     <>
       <div className="flex flex-col items-center">
         <Image
-          src="/icons/icon_x128"
+          src="/icons/icon_x128.jpg"
           alt="Logo"
           width={128}
           height={128}

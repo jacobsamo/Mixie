@@ -81,7 +81,7 @@ export default async function RecipeViewPage({
       )}
 
       <section className="flex flex-wrap gap-2 p-3">
-        {(mealTimeRecipes || recipes).map((recipe) => {
+        {((collection && mealTimeRecipes) || recipes).map((recipe) => {
           return (
             <CardSquare
               key={recipe.id}

@@ -76,6 +76,5 @@ export const displayMinutes = (minutes: number | null | undefined) => {
   const hours = Math.floor(minutes / 60);
   const remandingMinutes = minutes % 60;
 
-  console.log("time", remandingMinutes, hours);
   return hours > 0 ? `${hours}h ${remandingMinutes}m` : `${remandingMinutes}m`;
 }
