@@ -72,9 +72,10 @@ export async function calculateTotalTime(prep_time: string, cook: string) {
 }
 
 export const displayMinutes = (minutes: number | null | undefined) => {
-  if (!minutes) return null
+  if (!minutes) return null;
   const hours = Math.floor(minutes / 60);
   const remandingMinutes = minutes % 60;
 
-  return `${remandingMinutes}M ${hours}H`;
-};
+  console.log("time", remandingMinutes, hours);
+  return hours > 0 ? `${hours}h ${remandingMinutes}m` : `${remandingMinutes}m`;
+}
