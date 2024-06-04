@@ -1,5 +1,6 @@
 "use client";
 import useUser from "@/hooks/useUser";
+import { displayMinutes } from "@/lib/utils";
 import type { Recipe } from "@/types";
 import { AlarmClock, Clock, PencilIcon, PieChart, Timer } from "lucide-react";
 import Link from "next/link";
@@ -25,15 +26,15 @@ const Info = ({ info }: InfoProps) => {
         </li>
         <li className="flex flex-row items-center gap-1">
           <Clock className="h-6 w-6" />
-          Prep {info.prep_time}
+          Prep {displayMinutes(info.prep_time)}
         </li>
         <li className="flex flex-row items-center gap-1">
           <AlarmClock className="h-6 w-6" />
-          Cook {info.cook_time}
+          Cook {displayMinutes(info.cook_time)}
         </li>
         <li className="flex flex-row items-center gap-1">
           <Timer className="h-6 w-6" />
-          Total {info.total_time}
+          Total {displayMinutes(info.total_time)}
         </li>
         {showEdit && (
           <li>
