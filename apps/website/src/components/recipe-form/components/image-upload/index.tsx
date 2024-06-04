@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { createApi } from "unsplash-js";
-import { HeaderControls } from "./header-controls";
+import { HeaderControls } from "../../../header-controls";
 import SearchUpload from "./search-upload";
 import UrlUpload from "./url-upload";
 import Upload from "./user-upload";
