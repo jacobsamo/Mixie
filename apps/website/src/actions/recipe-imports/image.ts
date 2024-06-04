@@ -1,44 +1,55 @@
 "use server";
 import { action } from "@/actions/safe-action";
-import { infoSchema } from "@/actions/schema";
+import { recipeId } from "@/lib/utils";
+import { getUser } from "@/lib/utils/getUser";
 import { createClient } from "@/server/supabase/server";
-import { createVertex } from "@ai-sdk/google-vertex";
+import { NewRecipe, recipeSchema } from "@/types";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { generateObject, generateText } from "ai";
-import {
-  GenerateContentRequest,
-  GoogleGenerativeAI,
-  InlineDataPart,
-  Part,
-} from "@google/generative-ai";
-import { VertexAI } from "@google-cloud/vertexai";
 import { env } from "env";
-
-const genAi = new GoogleGenerativeAI(env.GOOGLE_AI_API_KEY);
-
 import { z } from "zod";
-import { contents } from "cheerio/lib/api/traversing";
+
+const googleGenAi = createGoogleGenerativeAI({ apiKey: env.GOOGLE_AI_API_KEY });
 
 const schema = z.object({
   image: z.string(),
 });
 
+const recipeImportSchema = recipeSchema.pick({
+  category: true,
+  title: true,
+  cook_time: true,
+  prep_time: true,
+  ingredients: true,
+  steps: true,
+  keywords: true,
+  description: true,
+  cuisine: true,
+  sweet_savoury: true,
+  yield: true,
+  meal_time: true,
+  notes: true,
+  difficulty_level: true,
+  suitable_for_diet: true,
+});
+
 export const createRecipeFromImage = action(schema, async (params) => {
-  // const supabase = createClient();
+  const supabase = createClient();
+  const user = await getUser();
 
-  console.log("Sending request", params);
-  const settings = {
-    system: `\
-    You are a helful asssitant in Mixie that helps you fill out information about recipes, if the image is not clear or a recipe is not available, throw an error.\
-    `,
+  if (!user) return "Need to be authenticated";
 
+  const val = await generateObject({
+    model: googleGenAi("models/gemini-1.5-flash-latest"),
+    schema: recipeImportSchema,
     messages: [
       {
         role: "user",
         content: [
-          // {
-          //   type: "text",
-          //   text: ,
-          // },
+          {
+            type: "text",
+            text: "Convert the recipe in the image to recipe.org/Recipe schema with ingredients as string[] and steps HowToStep",
+          },
           {
             type: "image",
             image: params.image,
@@ -46,49 +57,27 @@ export const createRecipeFromImage = action(schema, async (params) => {
         ],
       },
     ],
+  });
+
+  const { object } = val;
+
+  const newRecipe: NewRecipe = {
+    ...object,
+    id: recipeId(object.title),
+    created_by: user.id,
+    version: "1.0",
   };
 
-  const geminiProVisionConfig = {
-    model: "gemini-pro-vision",
-    // systemInstruction: settings.system,
-    // generationConfig: {
-    //   responseMimeType: "application/json",
-    // },
-  };
+  const { data } = await supabase
+    .from("recipes")
+    .insert(newRecipe)
+    .select()
+    .single();
 
-  const geminiFlashConfig = {
-    model: "gemini-1.5-flash",
-    systemInstruction: settings.system,
-    generationConfig: {
-      responseMimeType: "application/json",
-    },
-  };
+  console.log("Response", {
+    object: JSON.stringify(object),
+    recipe_created: JSON.stringify(data),
+  });
 
-  const model = genAi.getGenerativeModel(geminiFlashConfig);
-  const filePart: InlineDataPart = {
-    inlineData: { data: params.image, mimeType: "image/jpeg" },
-  };
-  const textPart = {
-    text: "Convert the recipe in the image to recipe.org/Recipe schema with ingredients as string[] and steps HowToStep",
-  };
-  const request: GenerateContentRequest = {
-    contents: [
-      {
-        role: "user",
-        parts: [textPart, filePart],
-      },
-    ],
-  };
-
-  const val = await model.generateContent(request);
-
-  console.log(
-    "Response",
-    JSON.stringify({
-      val: val.response,
-      text: val.response.text,
-    })
-  );
-
-  return val;
+  return data?.recipe_id;
 });
