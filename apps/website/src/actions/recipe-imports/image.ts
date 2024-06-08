@@ -14,9 +14,14 @@ import { headers } from "next/headers";
 
 const googleGenAi = createGoogleGenerativeAI({ apiKey: env.GOOGLE_AI_API_KEY });
 
+const redis = new Redis({
+  url: env.UPSTASH_REDIS_REST_URL,
+  token: env.UPSTASH_REDIS_REST_TOKEN,
+});
+
 const ratelimit = new Ratelimit({
-  redis: Redis.fromEnv(),
-  limiter: Ratelimit.slidingWindow(10, "10 s"),
+  redis: redis,
+  limiter: Ratelimit.slidingWindow(3, "500 s"),
   analytics: true,
   /**
    * Optional prefix for the keys used in redis. This is useful if you want to share a redis
@@ -26,7 +31,7 @@ const ratelimit = new Ratelimit({
   prefix: "@upstash/ratelimit",
 });
 
-export const schema = z.object({
+const schema = z.object({
   image: z.string().base64(),
 });
 
