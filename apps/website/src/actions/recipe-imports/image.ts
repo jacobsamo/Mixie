@@ -9,7 +9,7 @@ import { generateObject, generateText } from "ai";
 import { env } from "env";
 import { z } from "zod";
 import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis"; 
+import { Redis } from "@upstash/redis";
 import { headers } from "next/headers";
 
 const googleGenAi = createGoogleGenerativeAI({ apiKey: env.GOOGLE_AI_API_KEY });
@@ -26,9 +26,8 @@ const ratelimit = new Ratelimit({
   prefix: "@upstash/ratelimit",
 });
 
-
-const schema = z.object({
-  image: z.string(),
+export const schema = z.object({
+  image: z.string().base64(),
 });
 
 const recipeImportSchema = recipeSchema.pick({
@@ -54,7 +53,7 @@ export const createRecipeFromImage = action(schema, async (params) => {
   const user = await getUser();
 
   if (!user) return "Need to be authenticated";
-  
+
   const ip = headers().get("x-forwarded-for");
 
   const { success } = await ratelimit.limit(ip);

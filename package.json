@@ -15,6 +15,7 @@
     "@manypkg/cli": "^0.21.4",
     "@turbo/gen": "^1.13.3",
     "dotenv-cli": "^7.4.2",
+    "react-dropzone": "^14.2.3",
     "turbo": "^1.13.3"
   },
   "devDependencies": {

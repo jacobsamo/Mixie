@@ -11,7 +11,7 @@ import { NewRecipe } from "@/types";
 import { NextResponse } from "next/server";
 import * as z from "zod";
 
-const schema = z.object({
+export const schema = z.object({
   link: z.string().url(),
 });
 /**

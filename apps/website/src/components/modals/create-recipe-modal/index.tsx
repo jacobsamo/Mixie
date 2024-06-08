@@ -1,98 +1,124 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { recipeClientFormSchema } from "@/types";
 import {
-    LinkIcon,
-    SearchIcon,
-    UploadIcon
+  ClipboardType,
+  ClipboardTypeIcon,
+  Image,
+  Link,
+  LinkIcon,
+  Pen,
+  SearchIcon,
+  UploadIcon,
 } from "lucide-react";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import * as z from "zod";
 import { HeaderControls } from "@/components/header-controls";
-
+import { useAtom } from "jotai";
+import { createRecipeOpen } from "@/components/providers/dialogs";
+import { Slot } from "@radix-ui/react-slot";
+import ImageForm from "./image-form";
+import TitleForm from "./title-form";
+import LinkForm from "./link-form";
+import TextForm from "./text-form";
 
 type RecipeCreationMode = "title" | "text" | "link" | "image";
+interface CreateRecipeModesProps {
+  value: RecipeCreationMode;
+  Label: string;
+  description: string;
+  Icon: React.ReactNode;
+}
 
-const ImageUpload = () => {
-  const [uploadType, setUploadType] = useState<RecipeCreationMode | null>(null);
+const CreateRecipeDialog = () => {
+  const [createRecipeType, setCreateRecipeType] =
+    useState<RecipeCreationMode | null>(null);
+  const [open, setOpen] = useAtom(createRecipeOpen);
 
-  const {
-    register,
-    setValue,
-    getValues,
-    watch,
-    control,
-    formState: { errors },
-  } = useFormContext<z.infer<typeof recipeClientFormSchema>>();
+  const createRecipeModes: CreateRecipeModesProps[] = [
+    {
+      value: "title",
+      Label: "Title",
+      Icon: <Pen className="h-5 w-5" />,
+      description: "Create manually",
+    },
+    {
+      value: "text",
+      Label: "Text",
+      Icon: <ClipboardType className="h-5 w-5" />,
+      description: "Paste from a document",
+    },
+    {
+      value: "link",
+      Label: "Import",
+      Icon: <Link className="h-5 w-5" />,
+      description: "Import from another website",
+    },
+    {
+      value: "image",
+      Label: "Image",
+      Icon: <Image className="h-5 w-5" />,
+      description: "Upload or take a photo",
+    },
+  ];
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger></DialogTrigger>
       <DialogContent
-        className="max-h-[80%] w-11/12 md:w-1/2"
+        className="max-h-[80%] min-h-[50%] w-11/12 md:w-1/2"
         showClose={false}
         onFocus={() => console.log("focused")}
       >
         <HeaderControls
-          currentStepId={uploadType}
-          goToPreviousStep={() => setUploadType(null)}
+          currentStepId={createRecipeType}
+          goToPreviousStep={() => setCreateRecipeType(null)}
         />
-
-        <DialogHeader className="py-1">
-          <DialogTitle>Upload Image</DialogTitle>
+        <DialogHeader>
+          <DialogTitle>Create recipe</DialogTitle>
+          {/* <DialogDescription></DialogDescription> */}
         </DialogHeader>
-        {!uploadType && (
-          <div className="flex flex-col gap-4 py-4">
-            <Button
-              className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 peer-checked:border-primary hover:bg-accent hover:text-accent-foreground"
-              variant="outline"
-              onClick={() => setUploadType("url")}
-            >
-              <LinkIcon className="h-5 w-5" />
-              Upload from URL
-            </Button>
-            <Button
-              className="justify-start gap-2"
-              variant="outline"
-              onClick={() => setUploadType("upload")}
-            >
-              <UploadIcon className="h-5 w-5" />
-              Upload from File
-            </Button>
-            <Button
-              className="justify-start gap-2"
-              variant="outline"
-              onClick={() => setUploadType("search")}
-            >
-              <SearchIcon className="h-5 w-5" />
-              Search for Image
-            </Button>
+
+        {!createRecipeType && (
+          <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-2">
+            {createRecipeModes.map((mode) => (
+              <Button
+                className="flex h-full w-full flex-col gap-2"
+                variant="outline"
+                onClick={() => setCreateRecipeType(mode.value)}
+              >
+                <Slot>{mode.Icon}</Slot>
+                <h3>{mode.Label}</h3>
+                <p>{mode.description}</p>
+              </Button>
+            ))}
           </div>
         )}
 
-        {uploadType === "url" && <UrlUpload />}
-        {uploadType === "upload" && <Upload />}
-        {uploadType === "search" && <SearchUpload />}
+        {createRecipeType == "image" && <ImageForm />}
+        {createRecipeType == "title" && <TitleForm />}
+        {createRecipeType == "link" && <LinkForm />}
+        {createRecipeType == "text" && <TextForm />}
 
-        <DialogFooter>
-          <DialogClose>Cancel</DialogClose>
-          <DialogClose>
-            <Button>Save</Button>
-          </DialogClose>
-        </DialogFooter>
+        {createRecipeType === null && (
+          <DialogFooter>
+            <DialogClose>Cancel</DialogClose>
+          </DialogFooter>
+        )}
       </DialogContent>
     </Dialog>
   );
 };
 
-export default ImageUpload;
+export default CreateRecipeDialog;

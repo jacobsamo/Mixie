@@ -1,10 +1,13 @@
 "use server";
 import { action } from "@/actions/safe-action";
-import { infoSchema } from "@/actions/schema";
 import { createClient } from "@/server/supabase/server";
+import * as z from "zod";
 
+export const schema = z.object({
+  content: z.string(),
+});
 
-export const createRecipeFromText = action(infoSchema, async (params) => {
+export const createRecipeFromText = action(schema, async (params) => {
   const supabase = createClient();
 
   const recipe = []

@@ -5,7 +5,7 @@ import { getUser } from "@/lib/utils/getUser";
 import { createClient } from "@/server/supabase/server";
 import * as z from "zod";
 
-const schema = z.object({
+export const schema = z.object({
   title: z.string(),
 });
 
