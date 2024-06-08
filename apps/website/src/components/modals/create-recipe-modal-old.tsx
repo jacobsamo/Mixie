@@ -157,21 +157,7 @@ const CreateRecipeDialog = () => {
             {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
           </Button>
         </form>
-
-        <div>
-          Upload image
-          <input type="file" accept="image/*" onChange={handleFileChange} />
-          <Button
-            type="button"
-            onClick={() => {
-              console.log("Base64string: ", base64String);
-              setInfo.execute({ image: base64String as string });
-            }}
-          >
-            Create Recipe from Image
-          </Button>
-        </div>
-
+        
         <FeedbackDialog />
       </DialogContent>
     </Dialog>

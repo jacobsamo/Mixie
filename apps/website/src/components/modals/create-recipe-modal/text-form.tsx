@@ -1,9 +1,6 @@
 import React from "react";
-import { useForm } from "react-hook-form";
-import { createRecipeFromText, schema } from "@/actions/recipe-imports/text";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useAction } from "next-safe-action/hooks";
-import { z } from "zod";
+import { useFormContext } from "react-hook-form";
+import { CreateRecipeSchema } from "./form";
 import {
   Form,
   FormControl,
@@ -13,64 +10,49 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { DialogClose, DialogFooter } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
 const TextForm = () => {
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
-  });
-
-  const createRecipe = useAction(createRecipeFromText, {
-    onError: (error) => {
-      console.error(error);
-    },
-  });
-
-  const onSubmit = (data: z.infer<typeof schema>) => {
-    createRecipe.execute(data);
-  };
+  const { register, control } = useFormContext<CreateRecipeSchema>();
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <FormField
-          control={form.control}
-          name="content"
-          rules={{ required: true }}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Recipe Url</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder={`
-                    ingredients: 
-                    1 cup of sugar
-                    2 cups of flour
-                    3 eggs
-                    ...
+    <>
+      <FormField
+        control={control}
+        name="content"
+        rules={{ required: true }}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Recipes text</FormLabel>
+            <FormControl>
+              <Textarea
+                placeholder={`ingredients:\n1 cup of sugar\n2 cups of flour\n3 eggs\n...\n\nSteps:\n 1. Mix sugar and flour\n 2. Add eggs\n 3. ...`}
+                {...field}
+                className="h-48 resize-none"
+                value={field.value ?? undefined}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
 
-                    Steps:
-                    1. Mix sugar and flour
-                    2. Add eggs
-                    3. ...
-                    `}
-                  {...field}
-                  value={field.value ?? undefined}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      {/* <Textarea
+        placeholder={`
+                ingredients: 
+                1 cup of sugar
+                2 cups of flour
+                3 eggs
+                ...
 
-        <DialogFooter>
-          <DialogClose>Cancel</DialogClose>
-          <Button type="submit">Create Recipe</Button>
-        </DialogFooter>
-      </form>
-    </Form>
+                Steps:
+                1. Mix sugar and flour
+                2. Add eggs
+                3. ...
+                `}
+        {...register("content")}
+      /> */}
+    </>
   );
 };
 

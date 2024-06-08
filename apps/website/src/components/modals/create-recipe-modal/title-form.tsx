@@ -1,9 +1,5 @@
 import React from "react";
-import { useForm } from "react-hook-form";
-import {createRecipeFromTitle, schema} from '@/actions/recipe-imports/title'
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useAction } from "next-safe-action/hooks";
-import { z } from "zod";
+import { useFormContext } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -13,37 +9,33 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { DialogClose, DialogFooter } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-
+import { Input } from "@/components/ui/input";
+import { CreateRecipeSchema } from "./form";
 
 const TitleForm = () => {
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
-  })
-
-
-  const createRecipe = useAction(createRecipeFromTitle, {
-    onError: (error) => {
-      console.error(error);
-    },
-  });
-
-  const onSubmit = (data: z.infer<typeof schema>) => {
-    createRecipe.execute(data);
-  };
+  const { register, control } = useFormContext<CreateRecipeSchema>();
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-
-
-      <DialogFooter>
-        <DialogClose>Cancel</DialogClose>
-        <Button type="submit">Create Recipe</Button>
-      </DialogFooter>
-    </form>
-    </Form>
+    <>
+      <FormField
+        control={control}
+        name="link"
+        rules={{ required: true }}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Recipe Title</FormLabel>
+            <FormControl>
+              <Input
+                placeholder="Title"
+                {...field}
+                value={field.value ?? undefined}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </>
   );
 };
 
