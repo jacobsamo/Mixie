@@ -45,9 +45,6 @@ const Info = () => {
     resolver: zodResolver(infoSchema),
     defaultValues: {
       ...recipe,
-      // prep_time: undefined,
-      // cook_time: undefined,
-      // yield: undefined,
     },
   });
 
@@ -62,8 +59,6 @@ const Info = () => {
     setInfo.status !== "idle" && setInfo.status !== "hasErrored";
 
   const onSubmit: SubmitHandler<z.infer<typeof infoSchema>> = (data) => {
-    console.log("Formdata: ", data);
-
     if (isDirty) {
       setInfo.execute(data);
     } else {
