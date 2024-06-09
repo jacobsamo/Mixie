@@ -44,6 +44,9 @@ const Info = () => {
     resolver: zodResolver(infoSchema),
     defaultValues: {
       ...recipe,
+      // prep_time: undefined,
+      // cook_time: undefined,
+      // yield: undefined,
     },
   });
 
@@ -58,6 +61,8 @@ const Info = () => {
     setInfo.status !== "idle" && setInfo.status !== "hasErrored";
 
   const onSubmit: SubmitHandler<z.infer<typeof infoSchema>> = (data) => {
+    console.log("Formdata: ", data);
+
     if (isDirty) {
       setInfo.execute(data);
     } else {
@@ -127,6 +132,7 @@ const Info = () => {
         <FormField
           control={control}
           name="prep_time"
+          rules={{ pattern: /[0-9]*/ }}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Prep time</FormLabel>
@@ -136,11 +142,14 @@ const Info = () => {
                   type="number"
                   inputMode="numeric"
                   className="no-number-stepper"
-                  pattern="\d*"
-                  value={Number(field.value)}
-                  onChange={(e) => {
-                    field.onChange(Number(e.target.value));
-                  }}
+                  pattern="[0-9]*"
+                  min={0}
+                  value={field.value ? Number(field.value) : undefined}
+                  onChange={(e) =>
+                    field.onChange(
+                      e.target?.value ? Number(e.target.value) : null
+                    )
+                  }
                 />
               </FormControl>
               <FormMessage />
@@ -151,6 +160,7 @@ const Info = () => {
         <FormField
           control={control}
           name="cook_time"
+          rules={{ pattern: /[0-9]*/, min: 0 }}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Cook time</FormLabel>
@@ -160,11 +170,14 @@ const Info = () => {
                   type="number"
                   inputMode="numeric"
                   className="no-number-stepper"
-                  pattern="\d*"
-                  value={Number(field.value)}
-                  onChange={(e) => {
-                    field.onChange(Number(e.target.value));
-                  }}
+                  pattern="[0-9]*"
+                  min={0}
+                  value={field.value ? Number(field.value) : undefined}
+                  onChange={(e) =>
+                    field.onChange(
+                      e.target?.value ? Number(e.target.value) : null
+                    )
+                  }
                 />
               </FormControl>
               <FormMessage />
@@ -175,7 +188,7 @@ const Info = () => {
         <FormField
           control={control}
           name="yield"
-          rules={{ pattern: /\d*/ }}
+          rules={{ pattern: /[0-9]*/, min: 0 }}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Serves</FormLabel>
@@ -197,11 +210,14 @@ const Info = () => {
                     type="number"
                     inputMode="numeric"
                     className="no-number-stepper"
-                    pattern="\d*"
-                    value={Number(field.value) ?? 1}
-                    onChange={(e) => {
-                      field.onChange(Number(e.target.value));
-                    }}
+                    pattern="[0-9]*"
+                    min={0}
+                    value={field.value ? Number(field.value) : undefined}
+                    onChange={(e) =>
+                      field.onChange(
+                        e.target?.value ? Number(e.target.value) : null
+                      )
+                    }
                   />
 
                   <Button
