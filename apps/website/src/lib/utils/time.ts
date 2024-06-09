@@ -70,3 +70,11 @@ export async function calculateTotalTime(prep_time: string, cook: string) {
 
   return parseSecondsToTime(totalTime);
 }
+
+export const displayMinutes = (minutes: number | null | undefined) => {
+  if (!minutes) return null;
+  const hours = Math.floor(minutes / 60);
+  const remandingMinutes = minutes % 60;
+
+  return hours > 0 ? `${hours}h ${remandingMinutes}m` : `${remandingMinutes}m`;
+}

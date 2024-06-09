@@ -56,7 +56,10 @@ export const stepSchema = z.object({
 
 const recipes = z.object({
   category: z.string().nullable(),
-  cook_time: z.number().nullable(),
+  cook_time: z
+    .number()
+    .min(0, { message: "Cook time must be a positive number" })
+    .nullable(),
   created_by: z.string(),
   created_at: z.string(),
   cuisine: z.string().nullable(),
@@ -71,11 +74,17 @@ const recipes = z.object({
   meal_time: selectValue.array().nullish(),
   notes: z.string().nullable(),
   nutrition: z.string().array().nullable(),
-  prep_time: z.number().nullable(),
+  prep_time: z
+    .number()
+    .min(0, { message: "Prep time must be a positive number" })
+    .nullable(),
   public: z.boolean().default(false),
   rating: z.number().nullable(),
   recipe_id: z.string(),
-  source: z.string().url().nullable(),
+  source: z
+    .string()
+    .url({ message: "Should be the url of the recipe" })
+    .nullable(),
   steps: stepSchema.array().nullable(),
   suitable_for_diet: z.string().nullable(),
   sweet_savoury: sweet_savoury.default("not_set").nullable(),
@@ -87,7 +96,10 @@ const recipes = z.object({
 
 const recipes_edit = z.object({
   category: z.string().nullish(),
-  cook_time: z.number().nullish(),
+  cook_time: z
+    .number()
+    .min(0, { message: "Cook time must be a positive number" })
+    .nullish(),
   created_at: z.string().optional(),
   created_by: z.string(),
   cuisine: z.string().nullish(),
@@ -102,11 +114,17 @@ const recipes_edit = z.object({
   meal_time: selectValue.array().nullish(),
   notes: z.string().nullish(),
   nutrition: z.string().array().nullish(),
-  prep_time: z.number().nullish(),
+  prep_time: z
+    .number()
+    .min(0, { message: "Prep time must be a positive number" })
+    .nullish(),
   public: z.boolean().default(false).optional(),
   rating: z.number().nullish(),
   recipe_id: z.string().optional(),
-  source: z.string().url().nullish(),
+  source: z
+    .string()
+    .url({ message: "Should be the url of the recipe" })
+    .nullish(),
   steps: stepSchema.array().nullish(),
   suitable_for_diet: z.string().nullish(),
   sweet_savoury: sweet_savoury.default("not_set").optional(),

@@ -12,7 +12,7 @@ import { Recipe } from "@/types";
 import { motion } from "framer-motion";
 import { useAtom } from "jotai";
 import { X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SearchCard } from "../cards";
 import { SearchInput } from "./search-input";
 
@@ -31,6 +31,13 @@ type PartialRecipe = Pick<
 export const SearchDialog = () => {
   const [searchResults, setSearchResults] = useState<PartialRecipe[]>([]);
   const [open, setOpen] = useAtom(searchOpen);
+
+  useEffect(() => {
+    console.log("SearchResults: ", {
+      searchResults,
+      length: searchResults.length > 0,
+    });
+  }, [searchResults]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -51,11 +58,13 @@ export const SearchDialog = () => {
               className="flex  flex-col gap-2 overflow-scroll"
               transition={{ duration: 0.2 }}
             >
-              {searchResults.splice(0, 4).map((recipe, index) => (
-                <DialogClose key={index}>
-                  <SearchCard as="li" recipe={recipe} />
-                </DialogClose>
-              ))}
+              {searchResults.length > 0 &&
+                searchResults &&
+                searchResults.map((recipe, index) => (
+                  <DialogClose key={index}>
+                    <SearchCard as="li" recipe={recipe} />
+                  </DialogClose>
+                ))}
             </motion.ul>
           )}
         </div>
