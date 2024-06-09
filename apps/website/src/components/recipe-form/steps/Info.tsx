@@ -3,6 +3,7 @@ import { infoSchema } from "@/actions/schema";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -122,8 +123,13 @@ const Info = () => {
             <FormItem>
               <FormLabel>Source</FormLabel>
               <FormControl className="flex">
-                <Input {...field} value={field.value ?? undefined} />
+                <Input
+                  {...field}
+                  value={field.value ?? undefined}
+                  placeholder="https://"
+                />
               </FormControl>
+              <FormDescription>The url of the recipe source</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -142,8 +148,6 @@ const Info = () => {
                   type="number"
                   inputMode="numeric"
                   className="no-number-stepper"
-                  pattern="[0-9]*"
-                  min={0}
                   value={field.value ? Number(field.value) : undefined}
                   onChange={(e) =>
                     field.onChange(
@@ -170,8 +174,6 @@ const Info = () => {
                   type="number"
                   inputMode="numeric"
                   className="no-number-stepper"
-                  pattern="[0-9]*"
-                  min={0}
                   value={field.value ? Number(field.value) : undefined}
                   onChange={(e) =>
                     field.onChange(
