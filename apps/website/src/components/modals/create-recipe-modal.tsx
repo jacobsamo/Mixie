@@ -103,7 +103,7 @@ const CreateRecipeDialog = () => {
             error={errors.title}
           />
 
-          <p className="mx-auto">OR</p>
+          {/* <p className="mx-auto">OR</p>
 
           <div>
             <div className="flex flex-row items-center gap-4">
@@ -116,7 +116,7 @@ const CreateRecipeDialog = () => {
               label="Recipe Url"
               placeholder="https://"
             />
-          </div>
+          </div> */}
           <Button
             type="submit"
             aria-label="continue with creating the recipe"

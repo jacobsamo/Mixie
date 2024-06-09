@@ -126,7 +126,7 @@ export function calculateIngredient(
     default:
       const isFraction = amount.includes("/");
       if (isFraction) {
-        newAmount = calculateFractionalUnit(amount, batchAmount);
+        newAmount = `${calculateFractionalUnit(amount, batchAmount)} ${unit}`;
         break;
       }
       newAmount = `${Number(amount) * batchAmount} ${unit}`;
