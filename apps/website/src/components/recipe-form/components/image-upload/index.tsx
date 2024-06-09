@@ -62,8 +62,6 @@ const ImageUpload = () => {
           <Image
             src={image ?? "/images/placeholder.webp"}
             alt={image_attributes?.alt ?? ""}
-            placeholder="blur"
-            blurDataURL={image ?? "/images/placeholder.webp"}
             width={800}
             height={600}
             priority

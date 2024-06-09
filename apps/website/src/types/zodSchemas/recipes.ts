@@ -55,11 +55,11 @@ export const stepSchema = z.object({
 });
 
 const recipes = z.object({
-  category: z.string().nullable(),
+  category: z.string().array().nullable(),
   cook_time: z.number().nullable(),
   created_by: z.string(),
   created_at: z.string(),
-  cuisine: z.string().nullable(),
+  cuisine: z.string().array().nullable(),
   description: z.string().nullable(),
   difficulty_level: difficulty_level.default("not_set").nullable(),
   id: z.string(),
@@ -86,11 +86,11 @@ const recipes = z.object({
 });
 
 const recipes_edit = z.object({
-  category: z.string().nullish(),
+  category: z.string().array().nullish(),
   cook_time: z.number().nullish(),
   created_at: z.string().optional(),
   created_by: z.string(),
-  cuisine: z.string().nullish(),
+  cuisine: z.string().array().nullish(),
   description: z.string().nullish(),
   difficulty_level: difficulty_level.default("not_set").optional(),
   id: z.string(),

@@ -31,6 +31,7 @@ const ImageForm = () => {
           handleFileChange(acceptedFiles[0]);
         }}
         maxFiles={1}
+        accept={{ "image/*": [".jpg", ".jpeg", ".png"] }}
       >
         {({ getRootProps, getInputProps }) => (
           <div
@@ -44,15 +45,13 @@ const ImageForm = () => {
                   <span className="font-semibold">Click to upload</span> or drag
                   and drop
                 </p>
-                <p className="text-gray-400 text-xs">
-                  SVG, PNG, JPG or GIF (MAX. 800x400px)
-                </p>
+                <p className="text-gray-400 text-xs">PNG, JPG</p>
               </div>
             )}
             {uploadedImage && (
               <img
                 src={uploadedImage}
-                className="h-full w-full object-cover rounded-lg"
+                className="h-full w-full rounded-lg object-cover"
               />
             )}
             <input {...getInputProps()} />

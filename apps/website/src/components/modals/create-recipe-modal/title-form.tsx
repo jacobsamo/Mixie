@@ -19,7 +19,7 @@ const TitleForm = () => {
     <>
       <FormField
         control={control}
-        name="link"
+        name="title"
         rules={{ required: true }}
         render={({ field }) => (
           <FormItem>

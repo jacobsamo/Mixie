@@ -35,23 +35,27 @@ const schema = z.object({
   image: z.string().base64(),
 });
 
-const recipeImportSchema = recipeSchema.pick({
-  category: true,
-  title: true,
-  cook_time: true,
-  prep_time: true,
-  ingredients: true,
-  steps: true,
-  keywords: true,
-  description: true,
-  cuisine: true,
-  sweet_savoury: true,
-  yield: true,
-  meal_time: true,
-  notes: true,
-  difficulty_level: true,
-  suitable_for_diet: true,
-});
+const recipeImportSchema = recipeSchema
+  .pick({
+    category: true,
+    title: true,
+    cook_time: true,
+    prep_time: true,
+    ingredients: true,
+    steps: true,
+    keywords: true,
+    description: true,
+    cuisine: true,
+    sweet_savoury: true,
+    yield: true,
+    meal_time: true,
+    notes: true,
+    difficulty_level: true,
+    suitable_for_diet: true,
+  })
+  .extend({
+    ingredients: z.string().array(),
+  });
 
 export const createRecipeFromImage = action(schema, async (params) => {
   const supabase = createClient();
@@ -66,6 +70,8 @@ export const createRecipeFromImage = action(schema, async (params) => {
   if (!success) {
     throw new Error("Rate limit exceeded");
   }
+
+  console.log("starting ai request");
 
   const val = await generateObject({
     model: googleGenAi("models/gemini-1.5-flash-latest"),
@@ -89,11 +95,16 @@ export const createRecipeFromImage = action(schema, async (params) => {
 
   const { object } = val;
 
+  const ingredients = object.ingredients.map((ingredient) => {
+    return { text: ingredient };
+  });
+
   const newRecipe: NewRecipe = {
     ...object,
     id: recipeId(object.title),
     created_by: user.id,
     version: "1.0",
+    ingredients: ingredients,
   };
 
   const { data } = await supabase
@@ -101,11 +112,6 @@ export const createRecipeFromImage = action(schema, async (params) => {
     .insert(newRecipe)
     .select()
     .single();
-
-  console.log("Response", {
-    object: JSON.stringify(object),
-    recipe_created: JSON.stringify(data),
-  });
 
   return data?.recipe_id;
 });

@@ -32,6 +32,7 @@ import ImageForm from "./image-form";
 import LinkForm from "./link-form";
 import TextForm from "./text-form";
 import TitleForm from "./title-form";
+import { useRouter } from "next/navigation";
 
 type RecipeCreationMode = "title" | "text" | "link" | "image";
 interface CreateRecipeModesProps {
@@ -45,6 +46,7 @@ const CreateRecipeDialog = () => {
   const [createRecipeType, setCreateRecipeType] =
     useState<RecipeCreationMode | null>(null);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const [open, setOpen] = useAtom(createRecipeOpen);
 
@@ -57,7 +59,9 @@ const CreateRecipeDialog = () => {
       console.error(error);
       toast.error("Failed to create recipe");
     },
-    onSuccess: (data) => {},
+    onSuccess: (data) => {
+      router.push(`/recipes/preview/${data}/edit`);
+    },
   });
 
   const titleToRecipe = useAction(createRecipeFromTitle, {
@@ -65,7 +69,9 @@ const CreateRecipeDialog = () => {
       console.error(error);
       toast.error("Failed to create recipe");
     },
-    onSuccess: (data) => {},
+    onSuccess: (data) => {
+      router.push(`/recipes/preview/${data}/edit`);
+    },
   });
 
   const linkToRecipe = useAction(createRecipeFromLink, {
@@ -73,7 +79,9 @@ const CreateRecipeDialog = () => {
       console.error(error);
       toast.error("Failed to create recipe");
     },
-    onSuccess: (data) => {},
+    onSuccess: (data) => {
+      router.push(`/recipes/preview/${data}/edit`);
+    },
   });
 
   const textToRecipe = useAction(createRecipeFromText, {
@@ -81,7 +89,9 @@ const CreateRecipeDialog = () => {
       console.error(error);
       toast.error("Failed to create recipe");
     },
-    onSuccess: (data) => {},
+    onSuccess: (data) => {
+      router.push(`/recipes/preview/${data}/edit`);
+    },
   });
 
   const onSubmit = (data: z.infer<typeof schema>) => {

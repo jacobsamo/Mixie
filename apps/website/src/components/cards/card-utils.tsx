@@ -45,8 +45,6 @@ export const RecipeImage = (
 ) => (
   <Image
     loading="lazy"
-    placeholder="blur"
-    blurDataURL={props.src as string}
     className={cn("object-cover object-center", className)}
     {...props}
   />
