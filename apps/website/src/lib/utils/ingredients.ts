@@ -124,6 +124,11 @@ export function calculateIngredient(
       }`;
       break;
     default:
+      const isFraction = amount.includes("/");
+      if (isFraction) {
+        newAmount = `${calculateFractionalUnit(amount, batchAmount)} ${unit}`;
+        break;
+      }
       newAmount = `${Number(amount) * batchAmount} ${unit}`;
       break;
   }

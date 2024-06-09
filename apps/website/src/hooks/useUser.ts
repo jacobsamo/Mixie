@@ -8,14 +8,12 @@ const useUser = () => {
     queryFn: async () => {
       const supabase = createClient();
       const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      return user;
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      return session?.user;
     },
   });
-
-  const supabase = createClient();
-  supabase.auth.getUser();
 
   return user ?? null;
 };

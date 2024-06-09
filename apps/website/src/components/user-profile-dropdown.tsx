@@ -1,4 +1,5 @@
 "use client";
+import FeedbackDialog from "@/components/modals/feedback-modal";
 import {
   Popover,
   PopoverContent,
@@ -7,17 +8,14 @@ import {
 import { useAtom } from "jotai";
 import {
   ArrowUpRightSquare,
-  Bookmark,
   ScrollText,
-  Settings,
-  UserCircle2,
+  UserCircle2
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import useUser from "../hooks/useUser";
 import { CreateRecipeTrigger } from "./open-dialogs";
 import { userDropDownOpen } from "./providers/state-provider";
-import FeedbackDialog from "@/components/modals/feedback-modal";
 
 const UserProfile = () => {
   const user = useUser();
