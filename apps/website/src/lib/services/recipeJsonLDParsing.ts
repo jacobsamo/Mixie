@@ -1,23 +1,13 @@
-import { parseSecondsToTime } from "@/lib/utils";
-import { Ingredient } from "@/types";
-import * as cheerio from "cheerio";
-
-/**
- * Parses the time from the recipe jsonld
- * @param {string} time - time string e.g `PT1H30M`
- * @returns {string} - return a string matching `/^(\d{1,2}[hms]\s?)+$/i` as a time string
- */
-export function splitTime(time: string): string {
-  const string = time.replace("PT", "").replace("M", "");
-  return parseSecondsToTime(parseInt(string) * 60);
-}
+import { recipeId } from "@/lib/utils";
+import { Ingredient, NewRecipe } from "@/types";
+import { Recipe as SchemaRecipe } from "schema-dts";
 
 /**
  * Converts a time format string to minutes
  * @param {string} time - time format string e.g. `PT1H30M` or `30M`
  * @returns {number} - the time in minutes
  */
-export function convertTimeToMinutes(time: string): number {
+export function parseDuration(time: string): number {
   const hoursRegex = /(\d+)H/;
   const minutesRegex = /(\d+)M/;
   let totalMinutes = 0;
@@ -37,47 +27,206 @@ export function convertTimeToMinutes(time: string): number {
   return totalMinutes;
 }
 
+/**
+ * Gets the recipe json-ld from a given link
+ * @param link the url of the recipe
+ * @returns {SchemaRecipe | null} the recipe object or null if the recipe could not be parsed
+ */
 export const getRecipeJsonLd = async (link: string) => {
-  let recipe: any;
-  const data = await fetch(link).then((x) => x.text());
-  const $ = cheerio.load(data);
+  const res = await fetch(link);
+  const html = await res.text();
 
-  // Get all tags with type application/ld+json
-  const tags = $('script[type="application/ld+json"]');
+  const parse = (await import("node-html-parser")).parse;
+  const doc = parse(html);
+  const scripts = doc.querySelectorAll('script[type="application/ld+json"]');
+  let recipe = null;
 
-  // Iterate over each tag and check if it contains a recipe
-  tags.each((i, el) => {
-    const jsonLdObject = JSON.parse($(el).html() || "");
-    // console.log("parsedData: ", jsonLdObject);
+  scripts.forEach((script) => {
+    if (script.textContent) {
+      try {
+        const jsonLdObject = JSON.parse(script.textContent);
 
-    if (jsonLdObject) {
-      if (Array.isArray(jsonLdObject)) {
-        // Handle case 2: Array of recipes
-        recipe = jsonLdObject.find(
-          (item) =>
-            item["@type"] === "Recipe" || item["@type"].includes("Recipe")
-        );
-      } else if (
-        jsonLdObject["@context"] === "https://schema.org" &&
-        jsonLdObject["@type"] === "Recipe"
-      ) {
-        // Handle case 1: Single recipe object
-        recipe = jsonLdObject;
-      } else if (jsonLdObject["@graph"]) {
-        recipe = jsonLdObject["@graph"].find(
-          (item: any) =>
-            item["@type"] === "Recipe" || item["@type"].includes("Recipe")
-        );
+        const extractRecipes = (obj: any): any[] => {
+          let recipes: any[] = [];
+
+          if (Array.isArray(obj)) {
+            obj.forEach((item) => {
+              recipes = recipes.concat(extractRecipes(item));
+            });
+          } else if (obj && typeof obj === "object") {
+            if (obj["@type"]) {
+              if (
+                Array.isArray(obj["@type"]) &&
+                obj["@type"].includes("Recipe")
+              ) {
+                recipes.push(obj);
+              } else if (obj["@type"] === "Recipe") {
+                recipes.push(obj);
+              }
+            }
+            if (obj["@graph"]) {
+              recipes = recipes.concat(extractRecipes(obj["@graph"]));
+            }
+            Object.keys(obj).forEach((key) => {
+              if (key !== "@type" && key !== "@graph") {
+                recipes = recipes.concat(extractRecipes(obj[key]));
+              }
+            });
+          }
+
+          return recipes;
+        };
+
+        const recipes = extractRecipes(jsonLdObject);
+
+        recipe = recipes[0];
+      } catch (error) {
+        console.error(`Error parsing JSON-LD: ${error}`);
       }
     }
-
-    // If a recipe is found, break out of the loop
-    if (recipe) {
-      return false;
-    }
-
-    return false;
   });
 
-  return recipe;
+  return recipe as SchemaRecipe | null;
+};
+
+/**
+ *
+ * @param {string | string[] | { text: string }}  ingredients
+ * @returns {text: string}
+ */
+function parseIngredients(
+  ingredients: string | string[] | { text: string }
+): Ingredient[] {
+  if (typeof ingredients === "string") {
+    return [{ text: ingredients }];
+  } else if (Array.isArray(ingredients)) {
+    return ingredients.map((ingredient) => ({ text: ingredient }));
+  } else {
+    return [{ text: ingredients.text }];
+  }
+}
+
+function parseSteps(
+  steps: any
+): Array<{ text: string; image?: string | null; url?: string | null }> {
+  if (typeof steps === "string") {
+    return [{ text: steps }];
+  } else if (Array.isArray(steps)) {
+    return steps
+      .map((step) => {
+        if (typeof step === "string") {
+          return { text: step };
+        } else if (
+          step["@type"] === "HowToStep" ||
+          step["@type"] === "CreativeWork"
+        ) {
+          return {
+            text: step.text,
+            image: step.image || null,
+            url: step.url || null,
+          };
+        } else if (step["@type"] === "HowToSection") {
+          return step.itemListElement.map((subStep: any) => ({
+            text: subStep.text,
+            image: subStep.image || null,
+            url: subStep.url || null,
+          }));
+        }
+      })
+      .flat();
+  } else {
+    return [{ text: steps.text }];
+  }
+}
+
+function parseImage(image: any): {
+  image: NewRecipe["image_url"];
+  attributes: NewRecipe["image_attributes"];
+} {
+  let foundImage: string | null = null;
+  let attributes: NewRecipe["image_attributes"] | null = null;
+
+  if (typeof image === "string") {
+    foundImage = image;
+  } else if (Array.isArray(image)) {
+    foundImage = image[0];
+  } else if (typeof image === "object" && image["@type"] === "ImageObject") {
+    foundImage = image.url || null;
+    attributes = {
+      alt: image.caption || null,
+      source: "other",
+      height: image.height || null,
+      width: image.width || null,
+    };
+  }
+
+  return {
+    image: foundImage,
+    attributes,
+  };
+}
+
+type TransformRecipe = Omit<NewRecipe, "created_by">;
+
+/**
+ * Transforms a recipe from json-ld to a new recipe object
+ * @param recipe the recipe object from json-ld
+ * @returns {TransformRecipe} the transformed recipe object
+ */
+export const transformRecipe = (recipe: any): TransformRecipe => {
+  const prep = recipe.prepTime
+    ? parseDuration(recipe.prepTime.toString())
+    : null;
+  const cook = recipe.cookTime
+    ? parseDuration(recipe.cookTime.toString())
+    : null;
+  const total = prep && cook ? prep + cook : null;
+
+  const { attributes, image } = parseImage(recipe.image);
+
+  const title = recipe.name || "";
+
+  return {
+    id: recipeId(title),
+    title: title,
+    version: "1.0",
+    category: recipe?.recipeCategory ?? null,
+    cuisine: recipe?.recipeCuisine ?? null,
+    description: recipe.description || null,
+    image_attributes: {
+      ...attributes,
+      alt: attributes?.alt ?? title,
+    },
+    image_url: image,
+    ingredients: recipe?.recipeIngredient
+      ? parseIngredients(recipe.recipeIngredient)
+      : [{ text: "" }],
+    keywords:
+      typeof recipe?.keywords === "string" ? recipe.keywords.split(", ") : null,
+    nutrition: recipe.nutrition
+      ? [
+          `Calories: ${recipe.nutrition.calories}`,
+          `Carbohydrate Content: ${recipe.nutrition.carbohydrateContent}`,
+          `Protein Content: ${recipe.nutrition.proteinContent}`,
+          `Fat Content: ${recipe.nutrition.fatContent}`,
+          `Saturated Fat Content: ${recipe.nutrition.saturatedFatContent}`,
+          `Cholesterol Content: ${recipe.nutrition.cholesterolContent}`,
+          `Sodium Content: ${recipe.nutrition.sodiumContent}`,
+          `Fiber Content: ${recipe.nutrition.fiberContent}`,
+          `Sugar Content: ${recipe.nutrition.sugarContent}`,
+        ]
+      : null,
+    public: false,
+    rating: recipe.aggregateRating
+      ? recipe.aggregateRating.ratingValue
+        ? parseFloat(recipe.aggregateRating.ratingValue)
+        : null
+      : null,
+    steps: parseSteps(recipe.recipeInstructions),
+    suitable_for_diet: recipe.suitableForDiet || null,
+    total_time: total,
+    prep_time: prep,
+    cook_time: cook,
+    yield: recipe.recipeYield ? parseInt(recipe.recipeYield[0], 10) : null,
+  };
 };

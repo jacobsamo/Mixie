@@ -2,34 +2,14 @@
 import { action } from "@/actions/safe-action";
 import { recipeId } from "@/lib/utils";
 import { getUser } from "@/lib/utils/getUser";
+import { googleGenAi } from "@/server/ai/google_ai";
+import { ratelimit } from "@/server/kv";
 import { createClient } from "@/server/supabase/server";
 import { NewRecipe, recipeSchema } from "@/types";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import { generateObject, generateText } from "ai";
-import { env } from "env";
-import { z } from "zod";
-import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
+import { generateObject } from "ai";
 import { headers } from "next/headers";
+import { z } from "zod";
 
-const googleGenAi = createGoogleGenerativeAI({ apiKey: env.GOOGLE_AI_API_KEY });
-
-const redis = new Redis({
-  url: env.UPSTASH_REDIS_REST_URL,
-  token: env.UPSTASH_REDIS_REST_TOKEN,
-});
-
-const ratelimit = new Ratelimit({
-  redis: redis,
-  limiter: Ratelimit.slidingWindow(3, "500 s"),
-  analytics: true,
-  /**
-   * Optional prefix for the keys used in redis. This is useful if you want to share a redis
-   * instance with other applications and want to avoid key collisions. The default prefix is
-   * "@upstash/ratelimit"
-   */
-  prefix: "@upstash/ratelimit",
-});
 
 const schema = z.object({
   image: z.string().base64(),
@@ -82,7 +62,7 @@ export const createRecipeFromImage = action(schema, async (params) => {
         content: [
           {
             type: "text",
-            text: "Convert the recipe in the image to recipe.org/Recipe schema with ingredients as string[] and steps HowToStep",
+            text: "Convert the recipe in the image",
           },
           {
             type: "image",

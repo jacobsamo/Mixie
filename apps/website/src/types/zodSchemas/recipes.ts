@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { amount, difficulty_level, sweet_savoury, unit } from "./enums";
+import { difficulty_level, sweet_savoury } from "./enums";
 
 const selectValue = z.object({
   value: z.string(),
@@ -50,8 +50,18 @@ export const ingredientSchema = z.object({
 });
 
 export const stepSchema = z.object({
+  /**
+   * The step instructions
+   */
   text: z.string(),
+  /**
+   * A image to help visualize the step
+   */
   image: z.string().nullish(),
+  /**
+   * The url of the step
+   */
+  url: z.string().url().nullish(),
 });
 
 const recipes = z.object({
