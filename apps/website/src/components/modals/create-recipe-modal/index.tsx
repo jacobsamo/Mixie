@@ -57,17 +57,17 @@ const CreateRecipeDialog = () => {
   const imageToRecipe = useAction(createRecipeFromImage, {
     onError: (error) => {
       console.error(error);
-      toast.error("Failed to create recipe");
+      toast.error("Either the content wasn't a recipe or creation failed");
     },
     onSuccess: (data) => {
-      router.push(`/recipes/preview/${data}/edit`);
+      // router.push(`/recipes/preview/${data}/edit`);
     },
   });
 
   const titleToRecipe = useAction(createRecipeFromTitle, {
     onError: (error) => {
       console.error(error);
-      toast.error("Failed to create recipe");
+      toast.error("Failed to create recipe by title");
     },
     onSuccess: (data) => {
       router.push(`/recipes/preview/${data}/edit`);
@@ -77,7 +77,7 @@ const CreateRecipeDialog = () => {
   const linkToRecipe = useAction(createRecipeFromLink, {
     onError: (error) => {
       console.error(error);
-      toast.error("Failed to create recipe");
+      toast.error("Couldn't find recipe by link");
     },
     onSuccess: (data) => {
       router.push(`/recipes/preview/${data}/edit`);
@@ -87,7 +87,7 @@ const CreateRecipeDialog = () => {
   const textToRecipe = useAction(createRecipeFromText, {
     onError: (error) => {
       console.error(error);
-      toast.error("Failed to create recipe");
+      toast.error("Either the content wasn't a recipe or creation failed");
     },
     onSuccess: (data) => {
       router.push(`/recipes/preview/${data}/edit`);
@@ -96,21 +96,30 @@ const CreateRecipeDialog = () => {
 
   const onSubmit = (data: z.infer<typeof schema>) => {
     setLoading(true);
+    console.log("formdata: ", {
+      data,
+      createRecipeType
+    });
     switch (createRecipeType) {
       case "title":
         if (!data.title) return;
         titleToRecipe.execute({ title: data.title });
         break;
       case "text":
-        textToRecipe.execute({ content: data.content });
+        console.log("text", data.content);
+        if (!data.content) return;
+        textToRecipe.execute({ text: data.content });
         break;
       case "link":
+        if (!data.link) return;
         linkToRecipe.execute({ link: data.link });
         break;
       case "image":
+        if (!data.image) return;
         imageToRecipe.execute({ image: data.image });
         break;
     }
+    form.reset();
     setLoading(false);
   };
 
@@ -191,7 +200,7 @@ const CreateRecipeDialog = () => {
                 <Button
                   type="submit"
                   aria-label="continue with creating the recipe"
-                  disabled={loading}
+                  // disabled={loading}
                 >
                   Create Recipe
                   {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}

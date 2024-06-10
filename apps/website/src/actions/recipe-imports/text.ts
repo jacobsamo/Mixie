@@ -47,7 +47,7 @@ export const createRecipeFromText = action(schema, async (params) => {
   const { success } = await ratelimit.limit(ip);
 
   if (!success) {
-    throw new Error("Rate limit exceeded");
+    throw new Error("Limit exceeded, wait a little bit before creating again");
   }
 
   console.log("starting ai request");
@@ -83,11 +83,15 @@ export const createRecipeFromText = action(schema, async (params) => {
     ingredients: ingredients,
   };
 
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("recipes")
     .insert(newRecipe)
     .select("recipe_id")
     .single();
+
+  if (error) {
+    return new Error("Something went wrong");
+  }
 
   return data?.recipe_id;
 });

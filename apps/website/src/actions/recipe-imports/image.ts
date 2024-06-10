@@ -14,27 +14,23 @@ const schema = z.object({
   image: z.string().base64(),
 });
 
-const recipeImportSchema = recipeSchema
-  .pick({
-    category: true,
-    title: true,
-    cook_time: true,
-    prep_time: true,
-    ingredients: true,
-    steps: true,
-    keywords: true,
-    description: true,
-    cuisine: true,
-    sweet_savoury: true,
-    yield: true,
-    meal_time: true,
-    notes: true,
-    difficulty_level: true,
-    suitable_for_diet: true,
-  })
-  .extend({
-    ingredients: z.string().array(),
-  });
+const recipeImportSchema = recipeSchema.pick({
+  category: true,
+  title: true,
+  cook_time: true,
+  prep_time: true,
+  ingredients: true,
+  steps: true,
+  keywords: true,
+  description: true,
+  cuisine: true,
+  sweet_savoury: true,
+  yield: true,
+  meal_time: true,
+  notes: true,
+  difficulty_level: true,
+  suitable_for_diet: true,
+});
 
 export const createRecipeFromImage = action(schema, async (params) => {
   const supabase = createClient();
@@ -47,7 +43,7 @@ export const createRecipeFromImage = action(schema, async (params) => {
   const { success } = await ratelimit.limit(ip);
 
   if (!success) {
-    throw new Error("Rate limit exceeded");
+    throw new Error("Limit exceeded, wait a little bit before creating again");
   }
 
   console.log("starting ai request");
@@ -55,7 +51,7 @@ export const createRecipeFromImage = action(schema, async (params) => {
   const val = await generateObject({
     model: googleGenAi("models/gemini-1.5-flash-latest"),
     system: "if not a recipe return null",
-    schema: recipeImportSchema,
+    schema: z.union([recipeImportSchema, z.null()]),
     messages: [
       {
         role: "user",
@@ -75,23 +71,24 @@ export const createRecipeFromImage = action(schema, async (params) => {
 
   const { object } = val;
 
-  const ingredients = object.ingredients.map((ingredient) => {
-    return { text: ingredient };
-  });
+  console.log('Return val: ', val);
 
   const newRecipe: NewRecipe = {
     ...object,
     id: recipeId(object.title),
     created_by: user.id,
     version: "1.0",
-    ingredients: ingredients,
   };
 
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("recipes")
     .insert(newRecipe)
     .select("recipe_id")
     .single();
+
+  if (error) {
+    return new Error("Something went wrong");
+  }
 
   return data?.recipe_id;
 });

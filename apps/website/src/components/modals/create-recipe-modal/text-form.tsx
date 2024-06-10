@@ -26,10 +26,10 @@ const TextForm = () => {
             <FormLabel>Recipes text</FormLabel>
             <FormControl>
               <Textarea
-                placeholder={`ingredients:\n1 cup of sugar\n2 cups of flour\n3 eggs\n...\n\nSteps:\n 1. Mix sugar and flour\n 2. Add eggs\n 3. ...`}
                 {...field}
+                placeholder={`ingredients:\n1 cup of sugar\n2 cups of flour\n3 eggs\n...\n\nSteps:\n 1. Mix sugar and flour\n 2. Add eggs\n 3. ...`}
                 className="h-48 resize-none"
-                value={field.value ?? undefined}
+                value={field?.value ?? undefined}
               />
             </FormControl>
             <FormMessage />

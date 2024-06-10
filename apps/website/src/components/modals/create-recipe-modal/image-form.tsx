@@ -31,6 +31,7 @@ const ImageForm = () => {
           handleFileChange(acceptedFiles[0]);
         }}
         maxFiles={1}
+        maxSize="3mb"
         accept={{ "image/*": [".jpg", ".jpeg", ".png"] }}
       >
         {({ getRootProps, getInputProps }) => (
