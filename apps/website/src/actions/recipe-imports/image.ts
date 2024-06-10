@@ -10,7 +10,6 @@ import { generateObject } from "ai";
 import { headers } from "next/headers";
 import { z } from "zod";
 
-
 const schema = z.object({
   image: z.string().base64(),
 });
@@ -55,6 +54,7 @@ export const createRecipeFromImage = action(schema, async (params) => {
 
   const val = await generateObject({
     model: googleGenAi("models/gemini-1.5-flash-latest"),
+    system: "if not a recipe return null",
     schema: recipeImportSchema,
     messages: [
       {
@@ -90,7 +90,7 @@ export const createRecipeFromImage = action(schema, async (params) => {
   const { data } = await supabase
     .from("recipes")
     .insert(newRecipe)
-    .select()
+    .select("recipe_id")
     .single();
 
   return data?.recipe_id;

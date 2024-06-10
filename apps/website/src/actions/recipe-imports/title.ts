@@ -21,15 +21,14 @@ export const createRecipeFromTitle = action(schema, async (params) => {
 
   const newTitle = params.title.charAt(0).toUpperCase() + params.title.slice(1);
 
-  // the recipe itself
   const newRecipe = {
     id,
     title: newTitle,
     created_by: user.id,
     public: false,
     version: "1.0",
-    ingredients: [],
-    steps: [],
+    ingredients: [{text: ""}, {text: ""}],
+    steps: [{text: ""}, {text: ""}],
   };
 
   const { data, error } = await supabase
