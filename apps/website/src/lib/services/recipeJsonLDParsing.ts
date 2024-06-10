@@ -46,47 +46,54 @@ export const getRecipeJsonLd = async (link: string) => {
       try {
         const jsonLdObject = JSON.parse(script.textContent);
 
-        const extractRecipes = (obj: any): any[] => {
-          let recipes: any[] = [];
-
+        const extractRecipe = (obj) => {
           if (Array.isArray(obj)) {
-            obj.forEach((item) => {
-              recipes = recipes.concat(extractRecipes(item));
-            });
+            for (let item of obj) {
+              const foundRecipe = extractRecipe(item);
+              if (foundRecipe) {
+                return foundRecipe;
+              }
+            }
           } else if (obj && typeof obj === "object") {
-            if (obj["@type"]) {
+            if (obj["@type"] && obj["@context"] === "https://schema.org") {
               if (
-                Array.isArray(obj["@type"]) &&
-                obj["@type"].includes("Recipe")
+                (Array.isArray(obj["@type"]) &&
+                  obj["@type"].includes("Recipe")) ||
+                obj["@type"] === "Recipe"
               ) {
-                recipes.push(obj);
-              } else if (obj["@type"] === "Recipe") {
-                recipes.push(obj);
+                return obj;
               }
             }
             if (obj["@graph"]) {
-              recipes = recipes.concat(extractRecipes(obj["@graph"]));
-            }
-            Object.keys(obj).forEach((key) => {
-              if (key !== "@type" && key !== "@graph") {
-                recipes = recipes.concat(extractRecipes(obj[key]));
+              const foundRecipe = extractRecipe(obj["@graph"]);
+              if (foundRecipe) {
+                return foundRecipe;
               }
-            });
+            }
+            for (let key of Object.keys(obj)) {
+              if (key !== "@type" && key !== "@graph") {
+                const foundRecipe = extractRecipe(obj[key]);
+                if (foundRecipe) {
+                  return foundRecipe;
+                }
+              }
+            }
           }
-
-          return recipes;
+          return null;
         };
 
-        const recipes = extractRecipes(jsonLdObject);
-
-        recipe = recipes[0];
+        const foundRecipe = extractRecipe(jsonLdObject);
+        if (foundRecipe) {
+          recipe = foundRecipe;
+        }
       } catch (error) {
         console.error(`Error parsing JSON-LD: ${error}`);
       }
     }
   });
 
-  return recipe as SchemaRecipe | null;
+
+  return recipe;
 };
 
 /**
@@ -190,8 +197,8 @@ export const transformRecipe = (recipe: any): TransformRecipe => {
     id: recipeId(title),
     title: title,
     version: "1.0",
-    category: recipe?.recipeCategory ?? null,
-    cuisine: recipe?.recipeCuisine ?? null,
+    category: recipe?.recipeCategory ? [recipe.recipeCategory] : null,
+    cuisine: recipe?.recipeCuisine ? [recipe.recipeCuisine] : null,
     description: recipe.description || null,
     image_attributes: {
       ...attributes,
@@ -219,7 +226,7 @@ export const transformRecipe = (recipe: any): TransformRecipe => {
     public: false,
     rating: recipe.aggregateRating
       ? recipe.aggregateRating.ratingValue
-        ? parseFloat(recipe.aggregateRating.ratingValue)
+        ? parseInt(recipe.aggregateRating.ratingValue)
         : null
       : null,
     steps: parseSteps(recipe.recipeInstructions),
@@ -227,6 +234,10 @@ export const transformRecipe = (recipe: any): TransformRecipe => {
     total_time: total,
     prep_time: prep,
     cook_time: cook,
-    yield: recipe.recipeYield ? parseInt(recipe.recipeYield[0], 10) : null,
+    yield: recipe.recipeYield
+      ? Array.isArray(recipe.recipeYield)
+        ? parseInt(recipe.recipeYield[0], 10)
+        : parseInt(recipe.recipeYield)
+      : null,
   };
 };

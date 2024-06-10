@@ -60,7 +60,7 @@ const CreateRecipeDialog = () => {
       toast.error("Failed to create recipe");
     },
     onSuccess: (data) => {
-      // router.push(`/recipes/preview/${data}/edit`);
+      router.push(`/recipes/preview/${data}/edit`);
     },
   });
 
@@ -80,7 +80,7 @@ const CreateRecipeDialog = () => {
       toast.error("Failed to create recipe");
     },
     onSuccess: (data) => {
-      // router.push(`/recipes/preview/${data}/edit`);
+      router.push(`/recipes/preview/${data}/edit`);
     },
   });
 
