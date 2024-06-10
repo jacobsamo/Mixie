@@ -84,6 +84,7 @@
     "react-hot-toast": "^2.4.1",
     "react-select": "^5.8.0",
     "resend": "^3.2.0",
+    "secure-json-parse": "^2.7.0",
     "sharp": "^0.33.4",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
