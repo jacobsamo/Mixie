@@ -96,10 +96,6 @@ const CreateRecipeDialog = () => {
 
   const onSubmit = (data: z.infer<typeof schema>) => {
     setLoading(true);
-    console.log("formdata: ", {
-      data,
-      createRecipeType
-    });
     switch (createRecipeType) {
       case "title":
         if (!data.title) return;
@@ -200,7 +196,7 @@ const CreateRecipeDialog = () => {
                 <Button
                   type="submit"
                   aria-label="continue with creating the recipe"
-                  // disabled={loading}
+                  disabled={loading}
                 >
                   Create Recipe
                   {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}

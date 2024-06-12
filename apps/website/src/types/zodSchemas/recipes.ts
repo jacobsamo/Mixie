@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { difficulty_level, sweet_savoury } from "./enums";
+import { difficulty_level, recipe_creation_type, sweet_savoury } from "./enums";
 
 const selectValue = z.object({
   value: z.string(),
@@ -90,6 +90,7 @@ const recipes = z.object({
     .nullable(),
   public: z.boolean().default(false),
   rating: z.number().nullable(),
+  recipe_creation_type: recipe_creation_type.default("title"),
   recipe_id: z.string(),
   source: z
     .string()
@@ -130,6 +131,7 @@ const recipes_edit = z.object({
     .nullish(),
   public: z.boolean().default(false).optional(),
   rating: z.number().nullish(),
+  recipe_creation_type: recipe_creation_type.default("title").optional(),
   recipe_id: z.string().optional(),
   source: z
     .string()

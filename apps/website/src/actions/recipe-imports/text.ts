@@ -1,12 +1,14 @@
 "use server";
 import { action } from "@/actions/safe-action";
 import { recipeId } from "@/lib/utils";
+import { constructJsonSchemaPrompt } from "@/lib/utils/ai-convert/zod-to-json";
 import { getUser } from "@/lib/utils/getUser";
 import { googleGenAi } from "@/server/ai/google_ai";
 import { ratelimit } from "@/server/kv";
 import { createClient } from "@/server/supabase/server";
 import { NewRecipe, recipeSchema } from "@/types";
-import { generateObject } from "ai";
+import { safeParseJSON } from "@ai-sdk/provider-utils";
+import { generateText } from "ai";
 import { headers } from "next/headers";
 import { z } from "zod";
 
@@ -44,18 +46,21 @@ export const createRecipeFromText = action(schema, async (params) => {
 
   const ip = headers().get("x-forwarded-for");
 
-  const { success } = await ratelimit.limit(ip);
+  const { success } = await ratelimit.limit(ip || user.id);
 
   if (!success) {
     throw new Error("Limit exceeded, wait a little bit before creating again");
   }
 
-  console.log("starting ai request");
+  const system_prompt = constructJsonSchemaPrompt({
+    zodSchema: recipeImportSchema,
+    schemaSuffix:
+      "You MUST answer with a JSON object that matches the JSON schema above however if the image is not a recipe then return just null, start your response with { and end it with }",
+  });
 
-  const val = await generateObject({
+  const val = await generateText({
     model: googleGenAi("models/gemini-1.5-flash-latest"),
-    system: "if not a recipe return null",
-    schema: recipeImportSchema,
+    system: system_prompt,
     messages: [
       {
         role: "user",
@@ -69,18 +74,26 @@ export const createRecipeFromText = action(schema, async (params) => {
     ],
   });
 
-  const { object } = val;
+  const parseResult = safeParseJSON<z.infer<typeof recipeImportSchema>>({
+    text: val.text,
+    schema: recipeImportSchema,
+  });
 
-  const ingredients = object.ingredients.map((ingredient) => {
+  if (!parseResult.success) {
+    throw Error("Recipe couldn't be created, make sure the image is a recipe");
+  }
+
+  const ingredients = parseResult.value.ingredients.map((ingredient) => {
     return { text: ingredient };
   });
 
   const newRecipe: NewRecipe = {
-    ...object,
-    id: recipeId(object.title),
+    ...parseResult.value,
+    id: recipeId(parseResult.value.title),
+    ingredients: ingredients,
     created_by: user.id,
     version: "1.0",
-    ingredients: ingredients,
+    recipe_creation_type: "upload",
   };
 
   const { data, error } = await supabase

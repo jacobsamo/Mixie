@@ -62,6 +62,7 @@ export const createRecipeFromLink = action(schema, async (params) => {
     source: params.link,
     public: false,
     created_by: user.id,
+    recipe_creation_type: "link",
   };
 
   const { data, error } = await supabase

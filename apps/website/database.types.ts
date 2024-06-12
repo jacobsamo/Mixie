@@ -289,6 +289,7 @@ export type Database = {
           prep_time: number | null;
           public: boolean;
           rating: number | null;
+          recipe_creation_type: Database["public"]["Enums"]["recipe_creation_type"];
           recipe_id: string;
           source: string | null;
           steps: Json | null;
@@ -319,6 +320,7 @@ export type Database = {
           prep_time?: number | null;
           public?: boolean;
           rating?: number | null;
+          recipe_creation_type?: Database["public"]["Enums"]["recipe_creation_type"];
           recipe_id?: string;
           source?: string | null;
           steps?: Json | null;
@@ -349,6 +351,7 @@ export type Database = {
           prep_time?: number | null;
           public?: boolean;
           rating?: number | null;
+          recipe_creation_type?: Database["public"]["Enums"]["recipe_creation_type"];
           recipe_id?: string;
           source?: string | null;
           steps?: Json | null;
@@ -464,6 +467,7 @@ export type Database = {
         | "dinner"
         | "snack"
         | "dessert";
+      recipe_creation_type: "title" | "image" | "link" | "upload";
       sweet_savoury: "not_set" | "sweet" | "savoury" | "both";
       theme: "system" | "light" | "dark";
       unit:
