@@ -1,5 +1,6 @@
 "use server";
 import { action } from "@/actions/safe-action";
+import logger from "@/lib/services/logger";
 import { recipeId } from "@/lib/utils";
 import { constructJsonSchemaPrompt } from "@/lib/utils/ai-convert/zod-to-json";
 import { getUser } from "@/lib/utils/getUser";
@@ -49,6 +50,7 @@ export const createRecipeFromText = action(schema, async (params) => {
   const { success } = await ratelimit.limit(ip || user.id);
 
   if (!success) {
+    logger.info(`Limit was exceeded for ${ip || user.id}`);
     throw new Error("Limit exceeded, wait a little bit before creating again");
   }
 
@@ -80,6 +82,15 @@ export const createRecipeFromText = action(schema, async (params) => {
   });
 
   if (!parseResult.success) {
+    logger.error(`Failed to parse JSON: ${parseResult.error.message}`, {
+      location: "recipe-imports/text",
+      message: JSON.stringify({
+        image: params.text,
+        text: val.text,
+        error: parseResult.error.message,
+      }),
+      statusCode: 500,
+    });
     throw Error("Recipe couldn't be created, make sure the image is a recipe");
   }
 
@@ -103,6 +114,14 @@ export const createRecipeFromText = action(schema, async (params) => {
     .single();
 
   if (error) {
+    logger.error(`Database error occurred: ${error.message}`, {
+      location: "recipe-imports/text",
+      message: JSON.stringify({
+        image: params.text,
+        error: error.message,
+      }),
+      statusCode: 500,
+    });
     return new Error("Something went wrong");
   }
 

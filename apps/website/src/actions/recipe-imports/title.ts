@@ -1,5 +1,6 @@
 "use server";
 import { action } from "@/actions/safe-action";
+import logger from "@/lib/services/logger";
 import { recipeId } from "@/lib/utils";
 import { getUser } from "@/lib/utils/getUser";
 import { createClient } from "@/server/supabase/server";
@@ -40,7 +41,14 @@ export const createRecipeFromTitle = action(schema, async (params) => {
     .single();
 
   if (error) {
-    console.error(error);
+    logger.error(`Database error occurred: ${error.message}`, {
+      location: "recipe-imports/title",
+      message: JSON.stringify({
+        image: params.title,
+        error: error.message,
+      }),
+      statusCode: 500,
+    });
     throw new Error(error.message);
   }
 

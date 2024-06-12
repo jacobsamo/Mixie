@@ -10,6 +10,7 @@ import { createClient } from "@/server/supabase/server";
 import { NewRecipe } from "@/types";
 import { NextResponse } from "next/server";
 import * as z from "zod";
+import logger from "@/lib/services/logger";
 
 const schema = z.object({
   link: z.string().url(),
@@ -47,13 +48,16 @@ export const createRecipeFromLink = action(schema, async (params) => {
 
   const recipe = await getRecipeJsonLd(params.link);
 
-  if (!recipe)
-    return NextResponse.json(
-      { message: `No recipe found at ${params.link}` },
-      {
-        status: 404,
-      }
-    );
+  if (!recipe) {
+    logger.warn(`No recipe found at ${params.link}`, {
+      location: "recipe-imports/link",
+      message: JSON.stringify({
+        link: params.link,
+        user: user.id,
+      }),
+    });
+    return new Error(`No recipe found at ${params.link}`);
+  }
 
   const transform = transformRecipe(recipe);
 
@@ -72,7 +76,14 @@ export const createRecipeFromLink = action(schema, async (params) => {
     .single();
 
   if (error) {
-    console.error(error);
+    logger.error(`Database error occurred: ${error.message}`, {
+      location: "recipe-imports/link",
+      message: JSON.stringify({
+        image: params.link,
+        error: error.message,
+      }),
+      statusCode: 500,
+    })
     throw new Error(error.message);
   }
 

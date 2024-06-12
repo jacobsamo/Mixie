@@ -19,10 +19,9 @@ import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Slot } from "@radix-ui/react-slot";
 import { useAtom } from "jotai";
-import { ClipboardType, Image, Link, Pen } from "lucide-react";
-import { Loader2 } from "lucide-react";
+import { ClipboardType, Image, Link, Loader2, Pen } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
-import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -32,7 +31,6 @@ import ImageForm from "./image-form";
 import LinkForm from "./link-form";
 import TextForm from "./text-form";
 import TitleForm from "./title-form";
-import { useRouter } from "next/navigation";
 
 type RecipeCreationMode = "title" | "text" | "link" | "image";
 interface CreateRecipeModesProps {
@@ -60,7 +58,7 @@ const CreateRecipeDialog = () => {
       toast.error("Either the content wasn't a recipe or creation failed");
     },
     onSuccess: (data) => {
-      // router.push(`/recipes/preview/${data}/edit`);
+      router.push(`/recipes/preview/${data}/edit`);
     },
   });
 
