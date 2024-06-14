@@ -12,6 +12,11 @@ const nextConfig = {
   images: {
     remotePatterns: [{ protocol: "https", hostname: "*" }],
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "3mb",
+    },
+  },
 };
 
 export default withAxiom(nextConfig);

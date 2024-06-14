@@ -270,11 +270,11 @@ export type Database = {
       };
       recipes: {
         Row: {
-          category: string | null;
+          category: string[] | null;
           cook_time: number | null;
           created_at: string;
           created_by: string;
-          cuisine: string | null;
+          cuisine: string[] | null;
           description: string | null;
           difficulty_level: Database["public"]["Enums"]["difficulty_level"];
           id: string;
@@ -289,6 +289,7 @@ export type Database = {
           prep_time: number | null;
           public: boolean;
           rating: number | null;
+          recipe_creation_type: Database["public"]["Enums"]["recipe_creation_type"];
           recipe_id: string;
           source: string | null;
           steps: Json | null;
@@ -300,11 +301,11 @@ export type Database = {
           yield: number | null;
         };
         Insert: {
-          category?: string | null;
+          category?: string[] | null;
           cook_time?: number | null;
           created_at?: string;
           created_by: string;
-          cuisine?: string | null;
+          cuisine?: string[] | null;
           description?: string | null;
           difficulty_level?: Database["public"]["Enums"]["difficulty_level"];
           id: string;
@@ -319,6 +320,7 @@ export type Database = {
           prep_time?: number | null;
           public?: boolean;
           rating?: number | null;
+          recipe_creation_type?: Database["public"]["Enums"]["recipe_creation_type"];
           recipe_id?: string;
           source?: string | null;
           steps?: Json | null;
@@ -330,11 +332,11 @@ export type Database = {
           yield?: number | null;
         };
         Update: {
-          category?: string | null;
+          category?: string[] | null;
           cook_time?: number | null;
           created_at?: string;
           created_by?: string;
-          cuisine?: string | null;
+          cuisine?: string[] | null;
           description?: string | null;
           difficulty_level?: Database["public"]["Enums"]["difficulty_level"];
           id?: string;
@@ -349,6 +351,7 @@ export type Database = {
           prep_time?: number | null;
           public?: boolean;
           rating?: number | null;
+          recipe_creation_type?: Database["public"]["Enums"]["recipe_creation_type"];
           recipe_id?: string;
           source?: string | null;
           steps?: Json | null;
@@ -359,7 +362,15 @@ export type Database = {
           version?: string;
           yield?: number | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "recipes_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
       };
     };
     Views: {
@@ -456,6 +467,7 @@ export type Database = {
         | "dinner"
         | "snack"
         | "dessert";
+      recipe_creation_type: "title" | "image" | "link" | "upload";
       sweet_savoury: "not_set" | "sweet" | "savoury" | "both";
       theme: "system" | "light" | "dark";
       unit:

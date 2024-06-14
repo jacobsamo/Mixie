@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { amount, difficulty_level, sweet_savoury, unit } from "./enums";
+import { difficulty_level, recipe_creation_type, sweet_savoury } from "./enums";
 
 const selectValue = z.object({
   value: z.string(),
@@ -50,19 +50,29 @@ export const ingredientSchema = z.object({
 });
 
 export const stepSchema = z.object({
+  /**
+   * The step instructions
+   */
   text: z.string(),
+  /**
+   * A image to help visualize the step
+   */
   image: z.string().nullish(),
+  /**
+   * The url of the step
+   */
+  url: z.string().url().nullish(),
 });
 
 const recipes = z.object({
-  category: z.string().nullable(),
+  category: z.string().array().nullable(),
   cook_time: z
     .number()
     .min(0, { message: "Cook time must be a positive number" })
     .nullable(),
   created_by: z.string(),
   created_at: z.string(),
-  cuisine: z.string().nullable(),
+  cuisine: z.string().array().nullable(),
   description: z.string().nullable(),
   difficulty_level: difficulty_level.default("not_set").nullable(),
   id: z.string(),
@@ -80,6 +90,7 @@ const recipes = z.object({
     .nullable(),
   public: z.boolean().default(false),
   rating: z.number().nullable(),
+  recipe_creation_type: recipe_creation_type.default("title"),
   recipe_id: z.string(),
   source: z
     .string()
@@ -95,14 +106,14 @@ const recipes = z.object({
 });
 
 const recipes_edit = z.object({
-  category: z.string().nullish(),
+  category: z.string().array().nullish(),
   cook_time: z
     .number()
     .min(0, { message: "Cook time must be a positive number" })
     .nullish(),
   created_at: z.string().optional(),
   created_by: z.string(),
-  cuisine: z.string().nullish(),
+  cuisine: z.string().array().nullish(),
   description: z.string().nullish(),
   difficulty_level: difficulty_level.default("not_set").optional(),
   id: z.string(),
@@ -120,6 +131,7 @@ const recipes_edit = z.object({
     .nullish(),
   public: z.boolean().default(false).optional(),
   rating: z.number().nullish(),
+  recipe_creation_type: recipe_creation_type.default("title").optional(),
   recipe_id: z.string().optional(),
   source: z
     .string()

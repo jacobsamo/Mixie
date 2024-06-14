@@ -101,7 +101,7 @@ export function calculateIngredient(
 
   const [fullMatch, amount, unit] = match;
   const unitKey = Object.keys(units).find((key) =>
-    units[key].includes(unit.toLowerCase())
+    units[key].includes(unit?.toLowerCase())
   );
 
   let newAmount = amount;

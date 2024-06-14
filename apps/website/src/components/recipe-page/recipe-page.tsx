@@ -46,8 +46,6 @@ const RecipePageComponent = ({
               height={600}
               className="aspect-video rounded-xl object-cover"
               priority
-              placeholder="blur"
-              blurDataURL={recipe.image_url || "/images/placeholder.webp"}
             />
             {recipe.image_attributes?.photographer &&
               recipe.image_attributes.photographer_link && (
