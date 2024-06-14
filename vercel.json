@@ -1,0 +1,13 @@
+{
+  "framework": "nextjs",
+  "devCommand": "turbo run dev",
+  "installCommand": "bun i",
+  "buildCommand": "turbo run build",
+  "outputDirectory": null,
+  "rootDirectory": "apps/website",
+  "functions": {
+    "apps/website/src/actions/recipe-imports/*.ts": {
+      "maxDuration": 60
+    }
+  }
+}

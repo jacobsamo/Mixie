@@ -2,6 +2,9 @@
   "name": "mixie",
   "private": true,
   "workspaces": ["packages/*", "apps/*", "packages/email/*"],
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "build": "turbo run build",
     "start": "turbo run start",
