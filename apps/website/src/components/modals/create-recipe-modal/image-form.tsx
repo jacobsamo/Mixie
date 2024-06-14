@@ -4,9 +4,12 @@ import Dropzone from "react-dropzone";
 import { useFormContext } from "react-hook-form";
 import { CreateRecipeSchema } from "./form";
 
-const ImageForm = () => {
-  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+interface ImageFormProps {
+  uploadedImage: string | null;
+  setUploadedImage: React.Dispatch<React.SetStateAction<string | null>>;
+}
 
+const ImageForm = ({ uploadedImage, setUploadedImage }: ImageFormProps) => {
   const form = useFormContext<CreateRecipeSchema>();
 
   const handleFileChange = (file: File) => {

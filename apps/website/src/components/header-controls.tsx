@@ -7,11 +7,13 @@ import { DialogClose } from "@/components/ui/dialog";
 interface HeaderControlsProps {
   currentStepId: string | null;
   goToPreviousStep: () => void;
+  closeModal?: () => void;
 }
 
 export const HeaderControls: FC<HeaderControlsProps> = ({
   currentStepId,
   goToPreviousStep,
+  closeModal,
 }) => {
   return (
     <div className="flex items-center justify-between">
@@ -29,7 +31,10 @@ export const HeaderControls: FC<HeaderControlsProps> = ({
       )}
 
       {/* Close button */}
-      <DialogClose className="absolute top-4 right-4 rounded-sm opacity-70 ring-offset-background transition-opacity disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+      <DialogClose
+        onClick={() => (closeModal ? closeModal() : undefined)}
+        className="absolute top-4 right-4 rounded-sm opacity-70 ring-offset-background transition-opacity disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+      >
         <X className="h-6 w-6" />
         <span className="sr-only">Close</span>
       </DialogClose>

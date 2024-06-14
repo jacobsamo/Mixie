@@ -48,23 +48,32 @@ interface CreateRecipeModesProps {
 }
 
 const CreateRecipeDialog = () => {
+  const [open, setOpen] = useAtom(createRecipeOpen);
   const [createRecipeType, setCreateRecipeType] =
     useState<RecipeCreationMode | null>(null);
   const [loading, setLoading] = useState(false);
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const router = useRouter();
-
-  const [open, setOpen] = useAtom(createRecipeOpen);
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
 
+  const clearForm = () => {
+    setLoading(false);
+    form.reset();
+    setUploadedImage(null);
+  };
+
   const imageToRecipe = useAction(createRecipeFromImage, {
     onError: (error) => {
       console.error(error);
+      setLoading(false);
       toast.error("Either the content wasn't a recipe or creation failed");
     },
     onSuccess: (data) => {
+      clearForm();
+      setOpen(false);
       router.push(`/recipes/preview/${data}/edit`);
     },
   });
@@ -72,9 +81,13 @@ const CreateRecipeDialog = () => {
   const titleToRecipe = useAction(createRecipeFromTitle, {
     onError: (error) => {
       console.error(error);
+      setLoading(false);
       toast.error("Failed to create recipe by title");
     },
+
     onSuccess: (data) => {
+      clearForm();
+      setOpen(false);
       router.push(`/recipes/preview/${data}/edit`);
     },
   });
@@ -82,9 +95,13 @@ const CreateRecipeDialog = () => {
   const linkToRecipe = useAction(createRecipeFromLink, {
     onError: (error) => {
       console.error(error);
+      setLoading(false);
       toast.error("Couldn't find recipe by link");
     },
+
     onSuccess: (data) => {
+      clearForm();
+      setOpen(false);
       router.push(`/recipes/preview/${data}/edit`);
     },
   });
@@ -92,36 +109,38 @@ const CreateRecipeDialog = () => {
   const textToRecipe = useAction(createRecipeFromText, {
     onError: (error) => {
       console.error(error);
+      setLoading(false);
       toast.error("Either the content wasn't a recipe or creation failed");
     },
+
     onSuccess: (data) => {
+      clearForm();
+      setOpen(false);
       router.push(`/recipes/preview/${data}/edit`);
     },
   });
 
-  const onSubmit = (data: z.infer<typeof schema>) => {
+  const onSubmit = async (data: z.infer<typeof schema>) => {
     setLoading(true);
     switch (createRecipeType) {
       case "title":
         if (!data.title) return;
-        titleToRecipe.execute({ title: data.title });
+        await titleToRecipe.execute({ title: data.title });
         break;
       case "upload":
         console.log("text", data.content);
         if (!data.content) return;
-        textToRecipe.execute({ text: data.content });
+        await textToRecipe.execute({ text: data.content });
         break;
       case "link":
         if (!data.link) return;
-        linkToRecipe.execute({ link: data.link });
+        await linkToRecipe.execute({ link: data.link });
         break;
       case "image":
         if (!data.image) return;
-        imageToRecipe.execute({ image: data.image });
+        await imageToRecipe.execute({ image: data.image });
         break;
     }
-    form.reset();
-    setLoading(false);
   };
 
   const createRecipeModes: CreateRecipeModesProps[] = [
@@ -163,6 +182,7 @@ const CreateRecipeDialog = () => {
           <HeaderControls
             currentStepId={createRecipeType}
             goToPreviousStep={() => setCreateRecipeType(null)}
+            closeModal={() => clearForm()}
           />
           <DialogTitle>Create recipe</DialogTitle>
           {/* <DialogDescription></DialogDescription> */}
@@ -209,10 +229,25 @@ const CreateRecipeDialog = () => {
               </div>
             )}
 
-            {createRecipeType == "title" && <TitleForm />}
-            {createRecipeType == "link" && <LinkForm />}
-            {createRecipeType == "upload" && <UploadForm />}
-            {createRecipeType == "image" && <ImageForm />}
+            {createRecipeType && loading && (
+              <div className="transition-transform rounded-lg bg-muted p-4 flex flex-col items-center justify-center text-center h-48">
+                <Loader2 className="ml-2 h-16 w-16 animate-spin" />
+                <p>
+                  Your recipe is being created. This may take a few seconds to a
+                  few minutes.
+                </p>
+              </div>
+            )}
+
+            {createRecipeType == "title" && !loading && <TitleForm />}
+            {createRecipeType == "link" && !loading && <LinkForm />}
+            {createRecipeType == "upload" && !loading && <UploadForm />}
+            {createRecipeType == "image" && !loading && (
+              <ImageForm
+                uploadedImage={uploadedImage}
+                setUploadedImage={setUploadedImage}
+              />
+            )}
 
             {createRecipeType && (
               <DialogFooter>
@@ -230,7 +265,7 @@ const CreateRecipeDialog = () => {
 
             {!createRecipeType && (
               <DialogFooter>
-                <DialogClose>Cancel</DialogClose>
+                <DialogClose onClick={() => clearForm()}>Cancel</DialogClose>
               </DialogFooter>
             )}
           </form>

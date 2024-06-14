@@ -1,4 +1,4 @@
-"use server";
+import "server-only";
 import { env } from "env";
 import { log as axiomLog } from "next-axiom";
 
