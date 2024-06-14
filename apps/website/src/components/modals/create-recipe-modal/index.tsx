@@ -29,10 +29,10 @@ import * as z from "zod";
 import { schema } from "./form";
 import ImageForm from "./image-form";
 import LinkForm from "./link-form";
-import TextForm from "./text-form";
 import TitleForm from "./title-form";
+import UploadForm from "./upload-form";
 
-type RecipeCreationMode = "title" | "text" | "link" | "image";
+type RecipeCreationMode = "title" | "upload" | "link" | "image";
 interface CreateRecipeModesProps {
   value: RecipeCreationMode;
   Label: string;
@@ -99,7 +99,7 @@ const CreateRecipeDialog = () => {
         if (!data.title) return;
         titleToRecipe.execute({ title: data.title });
         break;
-      case "text":
+      case "upload":
         console.log("text", data.content);
         if (!data.content) return;
         textToRecipe.execute({ text: data.content });
@@ -131,8 +131,8 @@ const CreateRecipeDialog = () => {
       description: "Import from another website",
     },
     {
-      value: "text",
-      Label: "Text",
+      value: "upload",
+      Label: "Upload",
       Icon: <ClipboardType className="h-5 w-5" />,
       description: "Paste from a document",
     },
@@ -185,7 +185,7 @@ const CreateRecipeDialog = () => {
 
             {createRecipeType == "title" && <TitleForm />}
             {createRecipeType == "link" && <LinkForm />}
-            {createRecipeType == "text" && <TextForm />}
+            {createRecipeType == "upload" && <UploadForm />}
             {createRecipeType == "image" && <ImageForm />}
 
             {createRecipeType && (

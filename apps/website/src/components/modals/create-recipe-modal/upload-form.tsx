@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 
-const TextForm = () => {
+const UploadForm = () => {
   const { register, control } = useFormContext<CreateRecipeSchema>();
 
   return (
@@ -56,4 +56,4 @@ const TextForm = () => {
   );
 };
 
-export default TextForm;
+export default UploadForm;
