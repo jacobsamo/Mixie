@@ -19,7 +19,14 @@ import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Slot } from "@radix-ui/react-slot";
 import { useAtom } from "jotai";
-import { ClipboardType, Image, Link, Loader2, Pen } from "lucide-react";
+import {
+  BadgeAlertIcon,
+  ClipboardType,
+  Image,
+  Link,
+  Loader2,
+  Pen,
+} from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -180,6 +187,25 @@ const CreateRecipeDialog = () => {
                     <p className="font-normal text-sm">{mode.description}</p>
                   </Button>
                 ))}
+              </div>
+            )}
+
+            {/*Disclaimer */}
+            {createRecipeType && (
+              <div className="rounded-lg bg-yellow/20 border border-yellow-300 p-4">
+                <div className="flex items-start gap-4">
+                  <BadgeAlertIcon className="h-6 w-6 text-yellow-500" />
+                  <div className="flex-1">
+                    <h3 className="text-sm font-semibold text-yellow-900">
+                      Disclaimer
+                    </h3>
+                    <p className="text-sm text-yellow-800">
+                      By creating a recipe, you confirm that the content is your
+                      own original creation or that you have obtained permission
+                      to use and share it.
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
 

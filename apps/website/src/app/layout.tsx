@@ -3,7 +3,6 @@ import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Viewport } from "next";
-import { AxiomWebVitals } from "next-axiom";
 import dynamic from "next/dynamic";
 import { Toaster } from "react-hot-toast";
 
@@ -47,7 +46,6 @@ export default async function RootLayout({
 
         <Analytics />
         <SpeedInsights />
-        <AxiomWebVitals />
       </body>
     </html>
   );
