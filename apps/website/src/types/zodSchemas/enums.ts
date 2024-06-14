@@ -1,5 +1,9 @@
 import { z } from "zod";
 
+export const recipe_creation_type = z
+  .enum(["title", "image", "link", "upload"])
+  .default("title");
+
 export const unit = z
   .enum([
     "not_set",

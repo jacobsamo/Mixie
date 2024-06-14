@@ -101,7 +101,7 @@ export function calculateIngredient(
 
   const [fullMatch, amount, unit] = match;
   const unitKey = Object.keys(units).find((key) =>
-    units[key].includes(unit.toLowerCase())
+    units[key].includes(unit?.toLowerCase())
   );
 
   let newAmount = amount;
@@ -124,6 +124,11 @@ export function calculateIngredient(
       }`;
       break;
     default:
+      const isFraction = amount.includes("/");
+      if (isFraction) {
+        newAmount = `${calculateFractionalUnit(amount, batchAmount)} ${unit}`;
+        break;
+      }
       newAmount = `${Number(amount) * batchAmount} ${unit}`;
       break;
   }
