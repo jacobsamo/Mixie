@@ -1,16 +1,13 @@
-import React from "react";
-import { useFormContext } from "react-hook-form";
-import { CreateRecipeSchema } from "./form";
 import {
-  Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
+import { CreateRecipeSchema } from "@/lib/utils/recipe-imports";
+import { useFormContext } from "react-hook-form";
 
 const UploadForm = () => {
   const { register, control } = useFormContext<CreateRecipeSchema>();

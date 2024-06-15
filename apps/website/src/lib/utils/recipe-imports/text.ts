@@ -1,19 +1,15 @@
 "use server";
-import { action } from "@/actions/safe-action";
-import logger from "@/lib/services/logger";
 import { recipeId } from "@/lib/utils";
 import { constructJsonSchemaPrompt } from "@/lib/utils/ai-convert/zod-to-json";
-import { getUser } from "@/lib/utils/getUser";
 import { googleGenAi } from "@/server/ai/google_ai";
 import { ratelimit } from "@/server/kv";
-import { createClient } from "@/server/supabase/server";
 import { NewRecipe, recipeSchema } from "@/types";
 import { safeParseJSON } from "@ai-sdk/provider-utils";
 import { generateText } from "ai";
-import { headers } from "next/headers";
 import { z } from "zod";
 
 const schema = z.object({
+  user_id: z.string(),
   text: z.string(),
 });
 
@@ -39,19 +35,15 @@ const recipeImportSchema = recipeSchema
     ingredients: z.string().array(),
   });
 
-export const createRecipeFromText = action(schema, async (params) => {
-  const supabase = createClient();
-  const user = await getUser();
+export const createRecipeFromText = async (
+  params: z.infer<typeof schema>
+): Promise<NewRecipe> => {
 
-  if (!user) return "Need to be authenticated";
-
-  const ip = headers().get("x-forwarded-for");
-
-  const { success } = await ratelimit.limit(ip || user.id);
+  const { success } = await ratelimit.limit(params.user_id);
 
   if (!success) {
-    logger.info(`Limit was exceeded for ${ip || user.id}`);
-    throw new Error("Limit exceeded, wait a little bit before creating again");
+    console.info(`Limit was exceeded for ${params.user_id}`);
+    throw new Error("Limit exceeded, wait a little bit before creating again", {cause: 429});
   }
 
   const system_prompt = constructJsonSchemaPrompt({
@@ -82,7 +74,7 @@ export const createRecipeFromText = action(schema, async (params) => {
   });
 
   if (!parseResult.success) {
-    logger.error(`Failed to parse JSON: ${parseResult.error.message}`, {
+    console.error(`Failed to parse JSON: ${parseResult.error.message}`, {
       location: "recipe-imports/text",
       message: JSON.stringify({
         image: params.text,
@@ -91,7 +83,7 @@ export const createRecipeFromText = action(schema, async (params) => {
       }),
       statusCode: 500,
     });
-    throw Error("Recipe couldn't be created, make sure the image is a recipe");
+    throw Error("Recipe couldn't be created, make sure the image is a recipe", {cause: 422});
   }
 
   const ingredients = parseResult.value.ingredients.map((ingredient) => {
@@ -102,28 +94,10 @@ export const createRecipeFromText = action(schema, async (params) => {
     ...parseResult.value,
     id: recipeId(parseResult.value.title),
     ingredients: ingredients,
-    created_by: user.id,
+    created_by: params.user_id,
     version: "1.0",
     recipe_creation_type: "upload",
   };
 
-  const { data, error } = await supabase
-    .from("recipes")
-    .insert(newRecipe)
-    .select("recipe_id")
-    .single();
-
-  if (error) {
-    logger.error(`Database error occurred: ${error.message}`, {
-      location: "recipe-imports/text",
-      message: JSON.stringify({
-        image: params.text,
-        error: error.message,
-      }),
-      statusCode: 500,
-    });
-    return new Error("Something went wrong");
-  }
-
-  return data?.recipe_id;
-});
+  return newRecipe;
+};

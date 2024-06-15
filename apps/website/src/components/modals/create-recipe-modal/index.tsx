@@ -1,8 +1,4 @@
 "use client";
-import { createRecipeFromImage } from "@/actions/recipe-imports/image";
-import { createRecipeFromLink } from "@/actions/recipe-imports/link";
-import { createRecipeFromText } from "@/actions/recipe-imports/text";
-import { createRecipeFromTitle } from "@/actions/recipe-imports/title";
 import { HeaderControls } from "@/components/header-controls";
 import { createRecipeOpen } from "@/components/providers/dialogs";
 import { Button } from "@/components/ui/button";
@@ -16,8 +12,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
+import { requestSchema } from "@/lib/utils/recipe-imports";
+import { RecipeCreationType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Slot } from "@radix-ui/react-slot";
+import { useMutation } from "@tanstack/react-query";
+import { env } from "env";
 import { useAtom } from "jotai";
 import {
   BadgeAlertIcon,
@@ -27,21 +27,18 @@ import {
   Loader2,
   Pen,
 } from "lucide-react";
-import { useAction } from "next-safe-action/hooks";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
-import { schema } from "./form";
 import ImageForm from "./image-form";
 import LinkForm from "./link-form";
 import TitleForm from "./title-form";
 import UploadForm from "./upload-form";
 
-type RecipeCreationMode = "title" | "upload" | "link" | "image";
 interface CreateRecipeModesProps {
-  value: RecipeCreationMode;
+  value: RecipeCreationType;
   Label: string;
   description: string;
   Icon: React.ReactNode;
@@ -50,96 +47,64 @@ interface CreateRecipeModesProps {
 const CreateRecipeDialog = () => {
   const [open, setOpen] = useAtom(createRecipeOpen);
   const [createRecipeType, setCreateRecipeType] =
-    useState<RecipeCreationMode | null>(null);
+    useState<RecipeCreationType | null>(null);
   const [loading, setLoading] = useState(false);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+  const form = useForm<z.infer<typeof requestSchema>>({
+    resolver: zodResolver(requestSchema),
   });
 
   const clearForm = () => {
     setLoading(false);
     form.reset();
+    setCreateRecipeType(null);
     setUploadedImage(null);
   };
 
-  const imageToRecipe = useAction(createRecipeFromImage, {
-    onError: (error) => {
-      console.error(error);
-      setLoading(false);
-      toast.error("Either the content wasn't a recipe or creation failed");
+  const createRecipe = useMutation({
+    mutationKey: ["createRecipe"],
+    mutationFn: async (data: z.infer<typeof requestSchema>) => {
+      const req = await fetch("/api/recipes/create", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+        },
+      });
+
+      if (!req.ok) {
+        throw Error(await req.json());
+      }
+
+      const res = await req.json();
+
+      return res;
     },
     onSuccess: (data) => {
+      toast.success(data.message);
       clearForm();
       setOpen(false);
-      router.push(`/recipes/preview/${data}/edit`);
+      router.push(`/recipes/preview/${data.recipe_id}/edit`);
+    },
+    onError: (error) => {
+      setLoading(false);
+      toast.error(error.message);
     },
   });
 
-  const titleToRecipe = useAction(createRecipeFromTitle, {
-    onError: (error) => {
-      console.error(error);
-      setLoading(false);
-      toast.error("Failed to create recipe by title");
-    },
-
-    onSuccess: (data) => {
-      clearForm();
-      setOpen(false);
-      router.push(`/recipes/preview/${data}/edit`);
-    },
-  });
-
-  const linkToRecipe = useAction(createRecipeFromLink, {
-    onError: (error) => {
-      console.error(error);
-      setLoading(false);
-      toast.error("Couldn't find recipe by link");
-    },
-
-    onSuccess: (data) => {
-      clearForm();
-      setOpen(false);
-      router.push(`/recipes/preview/${data}/edit`);
-    },
-  });
-
-  const textToRecipe = useAction(createRecipeFromText, {
-    onError: (error) => {
-      console.error(error);
-      setLoading(false);
-      toast.error("Either the content wasn't a recipe or creation failed");
-    },
-
-    onSuccess: (data) => {
-      clearForm();
-      setOpen(false);
-      router.push(`/recipes/preview/${data}/edit`);
-    },
-  });
-
-  const onSubmit = async (data: z.infer<typeof schema>) => {
+  const onSubmit = async (data: z.infer<typeof requestSchema>) => {
     setLoading(true);
-    switch (createRecipeType) {
-      case "title":
-        if (!data.title) return;
-        await titleToRecipe.execute({ title: data.title });
-        break;
-      case "upload":
-        console.log("text", data.content);
-        if (!data.content) return;
-        await textToRecipe.execute({ text: data.content });
-        break;
-      case "link":
-        if (!data.link) return;
-        await linkToRecipe.execute({ link: data.link });
-        break;
-      case "image":
-        if (!data.image) return;
-        await imageToRecipe.execute({ image: data.image });
-        break;
+
+    if (createRecipeType) {
+      await createRecipe.mutate({
+        ...data,
+        creation_type: createRecipeType,
+      });
+    } else {
+      toast.error("No recipe type selected, select one to create a recipe");
     }
   };
 
@@ -251,7 +216,7 @@ const CreateRecipeDialog = () => {
 
             {createRecipeType && (
               <DialogFooter>
-                <DialogClose>Cancel</DialogClose>
+                <DialogClose onClick={() => clearForm()}>Cancel</DialogClose>
                 <Button
                   type="submit"
                   aria-label="continue with creating the recipe"

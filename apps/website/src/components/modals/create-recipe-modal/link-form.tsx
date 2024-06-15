@@ -6,8 +6,8 @@ import {
   FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { CreateRecipeSchema } from "@/lib/utils/recipe-imports";
 import { useFormContext } from "react-hook-form";
-import { CreateRecipeSchema } from "./form";
 
 const LinkForm = () => {
   const { control, register } = useFormContext<CreateRecipeSchema>();
