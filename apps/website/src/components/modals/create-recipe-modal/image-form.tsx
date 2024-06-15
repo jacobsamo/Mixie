@@ -1,8 +1,7 @@
+import { CreateRecipeSchema } from "@/lib/utils/recipe-imports";
 import { Upload } from "lucide-react";
-import { useState } from "react";
 import Dropzone from "react-dropzone";
 import { useFormContext } from "react-hook-form";
-import { CreateRecipeSchema } from "./form";
 
 interface ImageFormProps {
   uploadedImage: string | null;

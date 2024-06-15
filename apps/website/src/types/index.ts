@@ -1,16 +1,14 @@
-import { Tables } from "database.types";
 import { z } from "zod";
-import { amount } from "./zodSchemas/enums";
+import { amount, recipe_creation_type } from "./zodSchemas/enums";
 import {
+  bookmarksWithLinkSchema,
+  collectionSchema,
   image_attributesSchema,
   ingredientSchema,
+  ratingsSchema,
   recipeFormSchema,
   recipeSchema,
-  stepSchema,
-  bookmarkSchema,
-  collectionSchema,
-  ratingsSchema,
-  bookmarksWithLinkSchema,
+  stepSchema
 } from "./zodSchemas/recipes";
 
 export * from "./zodSchemas/recipes";
@@ -38,3 +36,5 @@ export type Rating = z.infer<typeof ratingsSchema>;
 // bookmarks
 export type Bookmark = z.infer<typeof bookmarksWithLinkSchema>;
 export type Collection = z.infer<typeof collectionSchema>;
+
+export type RecipeCreationType = z.infer<typeof recipe_creation_type>;

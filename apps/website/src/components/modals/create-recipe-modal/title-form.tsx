@@ -1,16 +1,13 @@
-import React from "react";
-import { useFormContext } from "react-hook-form";
 import {
-  Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { CreateRecipeSchema } from "./form";
+import { CreateRecipeSchema } from "@/lib/utils/recipe-imports";
+import { useFormContext } from "react-hook-form";
 
 const TitleForm = () => {
   const { register, control } = useFormContext<CreateRecipeSchema>();
