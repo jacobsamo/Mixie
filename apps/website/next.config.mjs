@@ -1,5 +1,6 @@
 import "./env.mjs";
 import { env } from "./env.mjs";
+import { withAxiom } from "next-axiom";
 
 if (env.NODE_ENV === "development") {
   process.env.VERCEL_URL = "http://localhost:3000";
@@ -15,7 +16,8 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: "3mb",
     },
+    optimizePackageImports: ["posthog-js", "posthog-node", "next-axiom"],
   },
 };
 
-export default nextConfig;
+export default withAxiom(nextConfig);
