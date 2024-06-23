@@ -37,7 +37,7 @@ const AddBatch = ({ add, setAdd }: AddBatchProps) => {
         >
           <MinusCircleIcon
             className={`h-9 w-9 ${
-              add < 2 ? "pointer-events-none bg-none text-white opacity-20" : ""
+              add < 2 ? "pointer-events-none bg-none text-foreground opacity-20" : ""
             }`}
           />
         </button>

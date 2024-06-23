@@ -162,7 +162,7 @@ const CreateRecipeDialog = () => {
               <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-2">
                 {createRecipeModes.map((mode) => (
                   <Button
-                    className="flex h-full w-full flex-col gap-2"
+                    className="flex h-full w-full flex-col gap-2 shadow border border-secondary/30"
                     variant="outline"
                     type="button"
                     onClick={() => setCreateRecipeType(mode.value)}
