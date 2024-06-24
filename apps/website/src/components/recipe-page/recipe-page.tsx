@@ -24,7 +24,7 @@ const RecipePageComponent = ({
   return (
     <>
       <RecipePrintingView recipe={recipe} />
-      <div className="mb-14 flex flex-col  items-start lg:ml-[20%] print:hidden">
+      <div className="mb-14 flex flex-col justify-center items-center print:hidden">
         <div className="flex flex-wrap items-center gap-4">
           <h1 id="title" className="text-center text-step2 font-semibold">
             {recipe.title}
@@ -35,7 +35,7 @@ const RecipePageComponent = ({
           />
         </div>
         <Info info={recipe} />
-        <div className="w-full">
+        <div>
           <div className="relative">
             <Image
               src={recipe?.image_url || "/images/placeholder.webp"}

@@ -1,4 +1,5 @@
 "use client";
+import { cn } from "@/lib/utils";
 import type { Ingredient } from "@/types";
 import { CheckCircleIcon, Circle } from "lucide-react";
 import React from "react";
@@ -27,7 +28,11 @@ const Ingredient = ({ ingredient }: IngredientProps) => {
         ) : (
           <Circle className="shrink-0" />
         )}
-        <h3 className={checked ? "line-through opacity-60" : ""}>
+        <h3
+          className={cn("text-left text-wrap", {
+            "line-through opacity-60 text-left": checked,
+          })}
+        >
           {ingredient.text}
         </h3>
       </button>

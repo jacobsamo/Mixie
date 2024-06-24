@@ -13,6 +13,10 @@ export const units = {
   litre: ["litre", "litres", "l"],
 };
 
+const findUnitMatch = (ingredient: string) => {
+  return ingredient.match(/(\d+(?:\s\d+\/\d+|\/\d+)?)(?:\s*([a-zA-Z]+))?/i);
+};
+
 /**
  * Removes all non word letters e.g , . / ( )
  * @param {string} str string to input
@@ -36,11 +40,15 @@ export function matchIngredients(ingredients: Ingredient[], step: Step) {
   const found: Ingredient[] = [];
 
   ingredients.forEach((passed, index, arr) => {
-    if (passed.isHeading || !passed.text) return;
+    let text = passed.text;
+
+    const unitMatch = findUnitMatch(text);
+    if (unitMatch) text = text.replace(unitMatch[0], "");
+    if (passed.isHeading || !text) return;
     // get rid of any unwanted characters
-    const ingredient = normalizeString(passed.text);
+    const ingredient = normalizeString(text);
     // remove not word characters and split into parts
-    const ingredientArr = normalizeString(passed.text).split(/\s+|\,/);
+    const ingredientArr = normalizeString(text).split(/\s+|\,/);
 
     // loop over each word
     stepWords.forEach((step_word, word_index, word_arr) => {
@@ -53,7 +61,7 @@ export function matchIngredients(ingredients: Ingredient[], step: Step) {
       if (ingredientArr.includes(step_word)) {
         /*
         Find the index of the word, get the length of the ingredient 
-        get a certain number of chacters before asnd after, 
+        get a certain number of chacters before and after, 
         get rid of spaces
         */
         const newString = stepWords
@@ -62,12 +70,14 @@ export function matchIngredients(ingredients: Ingredient[], step: Step) {
 
         const ratio = fuzzball.ratio(newString, ingredient);
 
-        if (ratio >= 45) found.push(passed);
+        if (ratio >= 50) found.push(passed);
+        return;
       }
+      return;
     });
   });
 
-  return found.filter((v, i, a) => a.findIndex((t) => t.text === v.text) === i);
+  return found.filter((v, i, a) => a.findIndex((t) => t.text == v.text) == i);
 }
 
 /**
@@ -118,9 +128,7 @@ export function calculateIngredient(
   if (ingredient.isHeading) return ingredient;
 
   // will match the first digit in a string and the value after it
-  const match = ingredient.text.match(
-    /(\d+(?:\s\d+\/\d+|\/\d+)?)(?:\s*([a-zA-Z]+))?/i
-  );
+  const match = findUnitMatch(ingredient.text);
 
   if (!match) return ingredient;
 

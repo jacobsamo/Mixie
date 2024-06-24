@@ -1,5 +1,5 @@
 "use client";
-import { calculateAllIngredients } from "@/lib/utils";
+import { calculateAllIngredients, cn } from "@/lib/utils";
 import type { Ingredient as IngredientType, Step } from "@/types";
 import { cva } from "class-variance-authority";
 import { useEffect, useMemo, useState } from "react";
@@ -16,8 +16,8 @@ interface DetailsProps {
 const titleStyles = cva("md:cursor-default", {
   variants: {
     variant: {
-      true: "underline underline-offset-2",
-      false: "underline-none",
+      true: "underline underline-offset-2 dark:bg-background bg-secondary/50 p-2 rounded-md",
+      false: "underline-none p-2 rounded-md",
     },
   },
   defaultVariants: {
@@ -57,7 +57,14 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
 
   return (
     <>
-      <div className="flex w-full flex-row items-center gap-x-[50%] px-2 pb-2 md:w-[800px]">
+      <div
+        className={cn(
+          "flex w-full flex-row items-center gap-x-[50%] px-2 pb-2 md:w-[800px]",
+          {
+            "dark:bg-grey shadow border mx-2 my-2 rounded-md p-1": window.innerWidth <= 768,
+          }
+        )}
+      >
         <button
           onClick={() => {
             if (window.innerWidth <= 768) {

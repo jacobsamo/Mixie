@@ -61,7 +61,7 @@ const ShareDialog = ({
 
   return (
     <Dialog>
-      <DialogTrigger className="flex cursor-pointer flex-row items-center gap-1 rounded-lg bg-white p-1 px-2 dark:bg-grey">
+      <DialogTrigger className="flex cursor-pointer flex-row items-center gap-1 rounded-lg bg-white px-2 dark:bg-grey">
         <Share2 /> Share
       </DialogTrigger>
       <DialogContent className="print:hidden">
@@ -71,8 +71,8 @@ const ShareDialog = ({
             Share this recipes to your friends
           </DialogDescription>
         </DialogHeader>
-        <div className="flex flex-row gap-4 overflow-scroll">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white">
+        <div className="flex flex-row gap-4 overflow-y-auto">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-secondary/30">
             <CopyButton aria-label="Copy url" text={url} autoFocus={true} />
           </div>
 
@@ -80,7 +80,7 @@ const ShareDialog = ({
             href={facebookLink}
             target="_blank"
             aria-label="Share to Facebook"
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-white"
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-secondary/30"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -93,7 +93,7 @@ const ShareDialog = ({
             </svg>
           </Link>
           <Link
-            className="flex h-12 w-12  items-center justify-center rounded-full bg-white"
+            className="flex h-12 w-12  items-center justify-center rounded-full bg-secondary/30"
             target="_blank"
             aria-label="Share to Twitter"
             href={twitterLink}
@@ -110,7 +110,7 @@ const ShareDialog = ({
             </svg>
           </Link>
           <Link
-            className="flex h-12 w-12  items-center justify-center rounded-full bg-white"
+            className="flex h-12 w-12  items-center justify-center rounded-full bg-secondary/30"
             href={pinterestLink}
             target="_blank"
             aria-label="Share to Pinterest"
@@ -140,9 +140,9 @@ const ShareDialog = ({
             unstyled={true}
             onClick={() => print()}
             aria-label="Print recipe"
-            className="h-12 w-12 rounded-full bg-white"
+            className="size-12 flex items-center justify-center rounded-full bg-secondary/30"
           >
-            <PrinterIcon className="m-auto text-black" />
+            <PrinterIcon className="m-auto text-foreground" />
           </Button>
         </div>
       </DialogContent>
