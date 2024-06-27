@@ -1,3 +1,4 @@
+"use client";
 import type { Recipe } from "@/types";
 import { ExternalLinkIcon } from "lucide-react";
 import Image from "next/image";
@@ -6,6 +7,7 @@ import Details from "./details";
 import Info from "./info";
 import StarRating from "./star-rating";
 import dynamic from "next/dynamic";
+import { RecipeProvider } from "./recipe-provider";
 
 const ShareDialog = dynamic(
   () => import("@/components/modals/share-resource-modal")
@@ -14,27 +16,24 @@ const RecipePrintingView = dynamic(() => import("./recipe-printing-view"));
 
 interface RecipePageComponentProps {
   recipe: Recipe;
-  viewingFrom?: "page" | "edit";
+  viewMode?: "page" | "preview";
 }
 
 const RecipePageComponent = ({
   recipe,
-  viewingFrom = "page",
+  viewMode = "page",
 }: RecipePageComponentProps) => {
   return (
-    <>
-      <RecipePrintingView recipe={recipe} />
+    <RecipeProvider recipe={recipe} viewMode={viewMode}>
+      <RecipePrintingView />
       <div className="mb-14 flex flex-col justify-center items-center print:hidden">
         <div className="flex flex-wrap items-center gap-4">
           <h1 id="title" className="text-center text-step2 font-semibold">
             {recipe.title}
           </h1>
-          <StarRating
-            rating={recipe.rating || 0}
-            recipe_id={recipe?.recipe_id ?? ""}
-          />
+          {viewMode === "page" && <StarRating />}
         </div>
-        <Info info={recipe} />
+        <Info />
         <div>
           <div className="relative">
             <Image
@@ -113,12 +112,9 @@ const RecipePageComponent = ({
           </div>
         )}
         <span className="my-2 mb-4 h-[0.125rem] w-full rounded-md bg-grey dark:bg-white md:w-[800px]" />
-        <Details
-          ingredients={recipe.ingredients || []}
-          steps={recipe.steps || []}
-        />
+        <Details />
       </div>
-    </>
+    </RecipeProvider>
   );
 };
 

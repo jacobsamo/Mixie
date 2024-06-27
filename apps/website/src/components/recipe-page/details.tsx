@@ -6,11 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import AddBatch from "./ingredient/add-batch";
 import Ingredient from "./ingredient/ingredient";
 import StepContainer from "./step/step-container";
-
-interface DetailsProps {
-  ingredients: IngredientType[];
-  steps: Step[];
-}
+import { useRecipeContext } from "./recipe-provider";
 
 //title styles for the ingredients and steps section with cva (class variance authority) to remove the underline from the h2
 const titleStyles = cva("md:cursor-default", {
@@ -25,14 +21,15 @@ const titleStyles = cva("md:cursor-default", {
   },
 });
 
-const Details = ({ ingredients, steps }: DetailsProps) => {
+const Details = () => {
+  const { recipe } = useRecipeContext();
   const [add, setAdd] = useState(0);
   const [ingredientOpen, setIngredientOpen] = useState(true);
   const [stepsOpen, setStepsOpen] = useState(true);
 
   const calculatedIngredients = useMemo(() => {
-    return calculateAllIngredients(ingredients, add);
-  }, [add, ingredients]);
+    return calculateAllIngredients(recipe.ingredients, add);
+  }, [add, recipe.ingredients]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 768px)");
@@ -61,7 +58,8 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
         className={cn(
           "flex w-full flex-row items-center gap-x-[50%] px-2 pb-2 md:w-[800px]",
           {
-            "dark:bg-grey shadow border mx-2 my-2 rounded-md p-1": window.innerWidth <= 768,
+            "dark:bg-grey shadow border mx-2 my-2 rounded-md p-1":
+              window.innerWidth <= 768,
           }
         )}
       >
@@ -74,10 +72,10 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
           }}
         >
           <h2 className={titleStyles({ variant: ingredientOpen })}>
-            {ingredients.length > 0 ? (
+            {recipe.ingredients.length > 0 ? (
               <>
-                {ingredients.length}{" "}
-                {ingredients.length === 1 ? "Ingredient" : "Ingredients"}
+                {recipe.ingredients.length}{" "}
+                {recipe.ingredients.length === 1 ? "Ingredient" : "Ingredients"}
               </>
             ) : (
               "No Ingredients"
@@ -93,9 +91,10 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
           }}
         >
           <h2 className={titleStyles({ variant: stepsOpen })}>
-            {steps.length > 0 ? (
+            {recipe.steps.length > 0 ? (
               <>
-                {steps.length} {steps.length === 1 ? "Step" : "Steps"}
+                {recipe.steps.length}{" "}
+                {recipe.steps.length === 1 ? "Step" : "Steps"}
               </>
             ) : (
               "No Steps"
@@ -122,7 +121,10 @@ const Details = ({ ingredients, steps }: DetailsProps) => {
           </div>
         )}
         {stepsOpen && (
-          <StepContainer steps={steps} ingredients={calculatedIngredients} />
+          <StepContainer
+            steps={recipe.steps}
+            ingredients={calculatedIngredients}
+          />
         )}
       </section>
     </>
