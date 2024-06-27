@@ -1,4 +1,4 @@
-import RecipePageComponent from "@/components/recipe-page/recipe-page";
+import RecipePageComponent from "@/components/recipe-page";
 import { getRecipes } from "@/lib/services/data_fetching";
 import { constructMetadata } from "@/lib/utils";
 import type { Recipe } from "@/types";
@@ -19,7 +19,9 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   });
 }
 
-export default async function RecipePage({ params }: { params: { id: string } }) {
+export default async function RecipePage({
+  params,
+}: { params: { id: string } }) {
   const recipes = await getRecipes();
   const recipe = recipes?.find((recipe) => recipe.id == params.id);
 

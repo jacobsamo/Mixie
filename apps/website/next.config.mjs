@@ -16,6 +16,7 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: "3mb",
     },
+    optimizePackageImports: ["posthog-js", "posthog-node", "next-axiom"],
   },
 };
 
