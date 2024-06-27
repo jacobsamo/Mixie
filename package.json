@@ -1,7 +1,11 @@
 {
   "name": "mixie",
   "private": true,
-  "workspaces": ["packages/*", "apps/*", "packages/email/*"],
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "packages/email/*"
+  ],
   "engines": {
     "node": "20.x"
   },
@@ -16,18 +20,17 @@
   },
   "dependencies": {
     "@manypkg/cli": "^0.21.4",
-    "@turbo/gen": "^1.13.3",
+    "@turbo/gen": "^1.13.4",
     "dotenv-cli": "^7.4.2",
-    "react-dropzone": "^14.2.3",
-    "turbo": "^1.13.3"
+    "turbo": "2.0.4"
   },
   "devDependencies": {
-    "prettier-plugin-tailwindcss": "^0.6.1",
     "@biomejs/biome": "1.7.3"
   },
   "trustedDependencies": [
     "@biomejs/biome",
     "@vercel/speed-insights",
     "core-js-pure"
-  ]
+  ],
+  "packageManager": "bun@1.1.17"
 }

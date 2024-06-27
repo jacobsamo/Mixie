@@ -1,6 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { PlusCircleIcon, MinusCircleIcon } from "lucide-react";
+import {
+  PlusCircleIcon,
+  MinusCircleIcon,
+  MinusIcon,
+  PlusIcon,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface AddBatchProps {
   add: number;
@@ -21,29 +28,42 @@ const AddBatch = ({ add, setAdd }: AddBatchProps) => {
 
   return (
     <>
-      <div className="flew-row flex items-center py-2" aria-label="Add a batch">
-        <button
-          aria-label="Add a batch"
-          data-testid="plus_button"
-          onClick={addBatch}
-        >
-          <PlusCircleIcon className="h-9 w-9" />
-        </button>
-        <button
-          data-testid="minus_button"
-          aria-label="Remove a batch"
-          onClick={minusBatch}
-          disabled={add < 2}
-        >
-          <MinusCircleIcon
-            className={`h-9 w-9 ${
-              add < 2 ? "pointer-events-none bg-none text-white opacity-20" : ""
-            }`}
-          />
-        </button>
-        <p data-testid="title">
+      <div
+        className="flew-row justify-between flex items-center py-2 w-full gap-3 mx-auto"
+        aria-label="Add a batch"
+      >
+        <p data-testid="title" className="text-step--2 font-bold">
           {add} {add > 1 ? "Batches" : "Batch"}
         </p>
+        <div>
+          <Button
+            variant="outline"
+            size="icon"
+            type="button"
+            aria-label="Remove a batch"
+            className="size-8"
+            onClick={minusBatch}
+            disabled={add < 2}
+          >
+            <MinusIcon
+              className={cn("size-9", {
+                "pointer-events-none bg-none text-foreground opacity-20":
+                  add < 2,
+              })}
+            />
+            <span className="sr-only">Decrease</span>
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            type="button"
+            aria-label="Add a batch"
+            className="size-8"
+            onClick={addBatch}
+          >
+            <PlusIcon className="size-9" />
+          </Button>
+        </div>
       </div>
     </>
   );

@@ -12,14 +12,11 @@ import { StarIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useRecipeContext } from "./recipe-provider";
 
-interface StarRatingProps {
-  recipe_id: string;
-  rating: number | undefined;
-}
-
-const StarRating = ({ recipe_id, rating }: StarRatingProps) => {
+const StarRating = () => {
   const user = useUser();
+  const { recipe } = useRecipeContext();
   const [hoverRating, setHoverRating] = useState<number>(0);
   const [internalRating, setInternalRating] = useState<number>(0);
   const [showSignInPrompt, setShowSignInPrompt] = useState(false);
@@ -31,10 +28,10 @@ const StarRating = ({ recipe_id, rating }: StarRatingProps) => {
       return;
     }
     setInternalRating(rating);
-    const setRating = fetch(`/api/recipes/${recipe_id}/setRating`, {
+    const setRating = fetch(`/api/recipes/${recipe.recipe_id}/setRating`, {
       method: "POST",
       body: JSON.stringify({
-        recipe_id: recipe_id,
+        recipe_id: recipe.recipe_id,
         rating: rating,
         user_id: user.id,
       } as Rating),
@@ -61,13 +58,13 @@ const StarRating = ({ recipe_id, rating }: StarRatingProps) => {
             type="button"
             key={index}
             className={
-              index <= (hoverRating || internalRating || rating || -1)
+              index <= (hoverRating || internalRating || recipe.rating || -1)
                 ? "fill-[#ffe14cf6] text-[#ffe14cf6]"
                 : ""
             }
             onClick={() => setRating(index)}
             onMouseEnter={() => setHoverRating(index)}
-            onMouseLeave={() => setHoverRating(rating! || 0)}
+            onMouseLeave={() => setHoverRating(recipe.rating! || 0)}
             aria-label={`Rating ${index} of 5`}
           >
             <StarIcon className="h-w-8 w-8" />
