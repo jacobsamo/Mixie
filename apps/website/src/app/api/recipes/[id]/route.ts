@@ -11,10 +11,11 @@ export async function GET(req: NextRequest, params: { id: string }) {
 
   const supabase = createClient();
 
-  const recipe = await supabase
+  const { data: recipe } = await supabase
     .from("recipes")
     .select()
-    .or(`id.eq.${params.id},recipe_id.eq.${params.id}`);
+    .or(`id.eq.${params.id},recipe_id.eq.${params.id}`)
+    .single();
 
-  return NextResponse.json(recipe[0]);
+  return NextResponse.json(recipe);
 }
