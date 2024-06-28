@@ -26,17 +26,18 @@ export const createRecipeFromLink = async (
     const recipe_id = params.link.split("/").pop();
     if (!recipe_id) throw Error("Recipe ID not found");
 
-    const findRecipe = await supabase
+    const { data: findRecipe } = await supabase
       .from("recipes")
       .select()
-      .or(`id.eq.${recipe_id},recipe_id.eq.${recipe_id}`);
+      .or(`id.eq.${recipe_id},recipe_id.eq.${recipe_id}`)
+      .single();
 
     if (!findRecipe) {
-      throw Error("Recipe ID not found", {cause: 404});
+      throw Error("Recipe ID not found", { cause: 404 });
     }
 
     newRecipe = {
-      ...(findRecipe[0] as NewRecipe),
+      ...(findRecipe as NewRecipe),
     };
   }
 
@@ -51,7 +52,7 @@ export const createRecipeFromLink = async (
       }),
       statusCode: 404,
     });
-    throw new Error(`No recipe found at ${params.link}`, {cause: 404});
+    throw new Error(`No recipe found at ${params.link}`, { cause: 404 });
   }
 
   const transform = transformRecipe(recipe);

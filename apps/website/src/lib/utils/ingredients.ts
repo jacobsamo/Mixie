@@ -3,7 +3,7 @@ import { Amount, Step, type Ingredient } from "@/types";
 import Fraction from "fraction.js";
 import * as fuzzball from "fuzzball";
 
-export const units = {
+export const units: { [key: string]: string[] } = {
   tsp: ["tsp", "teaspoon", "teaspoons", "t", "tsps"],
   tbsp: ["tbsp", "tablespoon", "tablespoons", "T", "tbsps"],
   grams: ["grams", "gram", "g", "gm", "gs"],
