@@ -1,4 +1,3 @@
-"use client";
 import type { Recipe } from "@/types";
 import { ExternalLinkIcon } from "lucide-react";
 import Image from "next/image";
@@ -7,7 +6,6 @@ import Details from "./details";
 import Info from "./info";
 import StarRating from "./star-rating";
 import dynamic from "next/dynamic";
-import { RecipeProvider } from "./recipe-provider";
 
 const ShareDialog = dynamic(
   () => import("@/components/modals/share-resource-modal")
@@ -16,25 +14,28 @@ const RecipePrintingView = dynamic(() => import("./recipe-printing-view"));
 
 interface RecipePageComponentProps {
   recipe: Recipe;
-  viewMode?: "page" | "preview";
+  viewingFrom?: "page" | "edit";
 }
 
 const RecipePageComponent = ({
   recipe,
-  viewMode = "page",
+  viewingFrom = "page",
 }: RecipePageComponentProps) => {
   return (
-    <RecipeProvider recipe={recipe} viewMode={viewMode}>
-      <RecipePrintingView />
-      <div className="mb-14 flex flex-col justify-center items-center print:hidden">
+    <>
+      <RecipePrintingView recipe={recipe} />
+      <div className="mb-14 flex flex-col  items-start lg:ml-[20%] print:hidden">
         <div className="flex flex-wrap items-center gap-4">
           <h1 id="title" className="text-center text-step2 font-semibold">
             {recipe.title}
           </h1>
-          {viewMode === "page" && <StarRating />}
+          <StarRating
+            rating={recipe.rating || 0}
+            recipe_id={recipe?.recipe_id ?? ""}
+          />
         </div>
-        <Info />
-        <div>
+        <Info info={recipe} />
+        <div className="w-full">
           <div className="relative">
             <Image
               src={recipe?.image_url || "/images/placeholder.webp"}
@@ -112,9 +113,12 @@ const RecipePageComponent = ({
           </div>
         )}
         <span className="my-2 mb-4 h-[0.125rem] w-full rounded-md bg-grey dark:bg-white md:w-[800px]" />
-        <Details />
+        <Details
+          ingredients={recipe.ingredients || []}
+          steps={recipe.steps || []}
+        />
       </div>
-    </RecipeProvider>
+    </>
   );
 };
 

@@ -1,12 +1,14 @@
+import { Recipe } from "@/types";
 import { StarIcon } from "lucide-react";
 import Image from "next/image";
 import Info from "./info";
-import { useRecipeContext } from "./recipe-provider";
 import PrintingStep from "./step/printing-step";
 
-const RecipePrintingView = () => {
-  const { recipe } = useRecipeContext();
+interface RecipePrintingViewProps {
+  recipe: Recipe;
+}
 
+const RecipePrintingView = ({ recipe }: RecipePrintingViewProps) => {
   return (
     <div className="hidden w-full flex-col items-start print:flex">
       <span className="flex flex-row gap-1">
@@ -41,7 +43,7 @@ const RecipePrintingView = () => {
             );
           })}
         </span>
-        <Info />
+        <Info info={recipe} />
       </section>
 
       <section className="w-full pb-12">

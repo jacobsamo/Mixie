@@ -17,18 +17,11 @@ export function StepperFormActions({
 }: StepperFormProps) {
   const { prevStep, isDisabledStep, isLastStep, isOptionalStep } = useStepper();
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
     <div className="flex w-full justify-end gap-2 pt-4">
       <Button
         disabled={isDisabledStep}
-        onClick={() => {
-          prevStep();
-          scrollToTop();
-        }}
+        onClick={prevStep}
         size="sm"
         type="button"
         variant={isLastStep ? "outline" : "secondary"}
@@ -46,7 +39,6 @@ export function StepperFormActions({
             type="submit"
             onClick={(e) => {
               onSaveDraft && onSaveDraft();
-              scrollToTop();
             }}
           >
             Save draft
@@ -62,7 +54,6 @@ export function StepperFormActions({
             size="sm"
             onClick={(e) => {
               onPublish && onPublish();
-              scrollToTop();
             }}
           >
             Publish
@@ -79,9 +70,6 @@ export function StepperFormActions({
             aria-label="continue with creating the recipe"
             disabled={isSubmitting}
             size="sm"
-            onClick={(e) => {
-              scrollToTop();
-            }}
           >
             {isOptionalStep ? "Skip" : "Next"}
             {isSubmitting && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}

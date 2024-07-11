@@ -47,7 +47,7 @@ export const createUrl = (
   return `${pathname}${queryString}`;
 };
 
-export const createQueryString = (name: string, value: string) => {
+export const createQueryString = (name, value) => {
   const params = new URLSearchParams();
   params.set(name, value);
 
