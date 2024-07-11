@@ -53,20 +53,20 @@ export const parseSecondsToTime = (seconds: number): string => {
  * @param {string} cook - cook time string matching `/^(\d{1,2}[hms]\s?)+$/i`
  * @returns {string} total time in the same format
  */
-export async function calculateTotalTime(prep: string, cook: string) {
+export async function calculateTotalTime(prep_time: string, cook: string) {
   const matchRegex = /^(\d{1,2}[hms]\s?)+$/i;
 
-  const prep_time = prep.match(matchRegex);
-  const cook_time = cook.match(matchRegex);
+  const prep_timeT = prep_time.match(matchRegex);
+  const cookT = cook.match(matchRegex);
 
-  if (!prep_time || !cook_time) {
+  if (!prep_timeT || !cookT) {
     throw new Error("Invalid time string format");
   }
 
-  const prepTime = parseTimeToSeconds(prep_time);
-  const cookTime = parseTimeToSeconds(cook_time);
+  const prep_timeTime = parseTimeToSeconds(prep_timeT);
+  const cookTime = parseTimeToSeconds(cookT);
 
-  const totalTime = prepTime! + cookTime!;
+  const totalTime = prep_timeTime! + cookTime!;
 
   return parseSecondsToTime(totalTime);
 }
@@ -74,13 +74,7 @@ export async function calculateTotalTime(prep: string, cook: string) {
 export const displayMinutes = (minutes: number | null | undefined) => {
   if (!minutes) return null;
   const hours = Math.floor(minutes / 60);
-  const remainingMinutes = minutes % 60;
+  const remandingMinutes = minutes % 60;
 
-  if (hours > 0) {
-    return remainingMinutes > 0
-      ? `${hours}h ${remainingMinutes}m`
-      : `${hours}h`;
-  }
-
-  return remainingMinutes > 0 ? `${remainingMinutes}m` : null;
-};
+  return hours > 0 ? `${hours}h ${remandingMinutes}m` : `${remandingMinutes}m`;
+}

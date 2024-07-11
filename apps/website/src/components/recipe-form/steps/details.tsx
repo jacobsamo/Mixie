@@ -33,9 +33,8 @@ const Details = () => {
     onError: () => {
       toast.error("Something went wrong pleaase try again.");
     },
-    onSuccess: ({ data }) => {
-      if (!data) return;
-      setRecipe(data as Recipe);
+    onSuccess: (data: Recipe) => {
+      setRecipe(data);
       resetSteps();
       router.push(`/recipes/preview/${data.recipe_id}`);
     },
@@ -78,7 +77,7 @@ const Details = () => {
     setDetails.status !== "hasErrored" &&
     isPublic == false;
 
-  const onSubmit = (data: z.infer<typeof detailsSchema>) => {
+  const onSubmit = (data) => {
     setDetails.execute(data);
   };
 
