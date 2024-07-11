@@ -46,7 +46,7 @@ export const getRecipeJsonLd = async (link: string) => {
       try {
         const jsonLdObject = JSON.parse(script.textContent);
 
-        const extractRecipe = (obj) => {
+        const extractRecipe = (obj: any): any => {
           if (Array.isArray(obj)) {
             for (let item of obj) {
               const foundRecipe = extractRecipe(item);
