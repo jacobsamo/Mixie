@@ -1,8 +1,0 @@
-ALTER TABLE recipes
-ALTER COLUMN cook_time TYPE INTEGER USING cook_time::INTEGER;
-
-ALTER TABLE recipes
-ALTER COLUMN prep_time TYPE INTEGER USING prep_time::INTEGER;
-
-ALTER TABLE recipes
-ALTER COLUMN total_time TYPE INTEGER USING total_time::INTEGER;

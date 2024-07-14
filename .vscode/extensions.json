@@ -1,9 +1,0 @@
-{
-  "recommendations": [
-    "bradlc.vscode-tailwindcss",
-    "EditorConfig.EditorConfig",
-    "biomejs.biome",
-    "streetsidesoftware.code-spell-checker",
-    "YoavBls.pretty-ts-errors"
-  ]
-}
