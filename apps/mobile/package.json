@@ -1,0 +1,9 @@
+{
+  "name": "mobile",
+  "version": "1.0.0",
+  "description": "In the future this will be the mobile app for Mixie and will be using [Expo](https://expo.dev/).",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": ""
+}

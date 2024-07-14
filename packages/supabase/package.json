@@ -1,0 +1,27 @@
+{
+  "name": "supabase",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "clean:all": "rm -rf node_modules/",
+    "login": "supabase login",
+    "db:push": "supabase db push",
+    "db:pull": "supabase db pull",
+    "db:stop": "supabase stop",
+    "db:types": "supabase gen types typescript --project-id dftoidpracavvgvcbsue --schema public > src/types/db.ts"
+  },
+  "devDependencies": {
+    "@supabase/supabase-js": "^2.44.3",
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.4.0",
+    "supabase": "^1.183.5"
+  },
+  "exports": {
+    "./server": "./src/client/server.ts",
+    "./client": "./src/client/client.ts",
+    "./middleware": "./src/client/middleware.ts",
+    "./types": "./src/types/db.ts"
+  }
+}

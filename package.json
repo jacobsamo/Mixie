@@ -1,8 +1,9 @@
 {
-  "name": "Mixie",
+  "name": "mixie",
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "start": "turbo start",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
@@ -10,7 +11,8 @@
   "devDependencies": {
     "prettier": "^3.2.5",
     "turbo": "^2.0.6",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "@manypkg/cli": "^0.21.4"
   },
   "engines": {
     "node": ">=18"
