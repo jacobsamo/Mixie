@@ -1,19 +1,23 @@
 "use client";
-import { calculateAllIngredients, cn } from "@/lib/utils";
+import { calculateAllIngredients } from "@/lib/utils";
 import type { Ingredient as IngredientType, Step } from "@/types";
 import { cva } from "class-variance-authority";
 import { useEffect, useMemo, useState } from "react";
 import AddBatch from "./ingredient/add-batch";
 import Ingredient from "./ingredient/ingredient";
 import StepContainer from "./step/step-container";
-import { useRecipeContext } from "./recipe-provider";
+
+interface DetailsProps {
+  ingredients: IngredientType[];
+  steps: Step[];
+}
 
 //title styles for the ingredients and steps section with cva (class variance authority) to remove the underline from the h2
 const titleStyles = cva("md:cursor-default", {
   variants: {
     variant: {
-      true: "underline underline-offset-2 dark:bg-background bg-secondary/50 p-2 rounded-md",
-      false: "underline-none p-2 rounded-md",
+      true: "underline underline-offset-2",
+      false: "underline-none",
     },
   },
   defaultVariants: {
@@ -21,15 +25,14 @@ const titleStyles = cva("md:cursor-default", {
   },
 });
 
-const Details = () => {
-  const { recipe } = useRecipeContext();
+const Details = ({ ingredients, steps }: DetailsProps) => {
   const [add, setAdd] = useState(0);
   const [ingredientOpen, setIngredientOpen] = useState(true);
   const [stepsOpen, setStepsOpen] = useState(true);
 
   const calculatedIngredients = useMemo(() => {
-    return calculateAllIngredients(recipe.ingredients, add);
-  }, [add, recipe.ingredients]);
+    return calculateAllIngredients(ingredients, add);
+  }, [add, ingredients]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 768px)");
@@ -54,15 +57,7 @@ const Details = () => {
 
   return (
     <>
-      <div
-        className={cn(
-          "flex w-full flex-row items-center gap-x-[50%] px-2 pb-2 md:w-[800px]",
-          {
-            "dark:bg-grey shadow border mx-2 my-2 rounded-md p-1":
-              window.innerWidth <= 768,
-          }
-        )}
-      >
+      <div className="flex w-full flex-row items-center gap-x-[50%] px-2 pb-2 md:w-[800px]">
         <button
           onClick={() => {
             if (window.innerWidth <= 768) {
@@ -72,10 +67,10 @@ const Details = () => {
           }}
         >
           <h2 className={titleStyles({ variant: ingredientOpen })}>
-            {recipe.ingredients.length > 0 ? (
+            {ingredients.length > 0 ? (
               <>
-                {recipe.ingredients.length}{" "}
-                {recipe.ingredients.length === 1 ? "Ingredient" : "Ingredients"}
+                {ingredients.length}{" "}
+                {ingredients.length === 1 ? "Ingredient" : "Ingredients"}
               </>
             ) : (
               "No Ingredients"
@@ -91,10 +86,9 @@ const Details = () => {
           }}
         >
           <h2 className={titleStyles({ variant: stepsOpen })}>
-            {recipe.steps.length > 0 ? (
+            {steps.length > 0 ? (
               <>
-                {recipe.steps.length}{" "}
-                {recipe.steps.length === 1 ? "Step" : "Steps"}
+                {steps.length} {steps.length === 1 ? "Step" : "Steps"}
               </>
             ) : (
               "No Steps"
@@ -121,10 +115,7 @@ const Details = () => {
           </div>
         )}
         {stepsOpen && (
-          <StepContainer
-            steps={recipe.steps}
-            ingredients={calculatedIngredients}
-          />
+          <StepContainer steps={steps} ingredients={calculatedIngredients} />
         )}
       </section>
     </>

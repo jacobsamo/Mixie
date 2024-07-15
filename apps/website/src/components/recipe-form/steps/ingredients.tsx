@@ -61,9 +61,8 @@ const Ingredients = () => {
     onError: () => {
       toast.error("Something went wrong pleaase try again.");
     },
-    onSuccess: ({ data }) => {
-      if (!data) return;
-      setRecipe(data as Recipe);
+    onSuccess: (data: Recipe) => {
+      setRecipe(data);
       nextStep();
     },
   });
@@ -97,7 +96,7 @@ const Ingredients = () => {
   const isSubmitting =
     setIngredients.status !== "idle" && setIngredients.status !== "hasErrored";
 
-  const onSubmit = (data: z.infer<typeof ingredientsSchema>) => {
+  const onSubmit = (data) => {
     if (isDirty) {
       setIngredients.execute(data);
     } else {
