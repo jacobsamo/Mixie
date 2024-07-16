@@ -22,5 +22,9 @@
     "packages/*",
     "apps/*",
     "packages/email/*"
+  ],
+  "trustedDependencies": [
+    "@vercel/speed-insights",
+    "core-js-pure"
   ]
 }
