@@ -53,7 +53,7 @@ export default async function Page() {
         </Carousel>
       </section>
 
-      <div className="flex flex-wrap items-center justify-center gap-2">
+      {/* <div className="flex flex-wrap items-center justify-center gap-2">
         {meal_times.map((meal_time) => {
           const DisplayIcon = () => {
             switch (meal_time.value) {
@@ -79,7 +79,7 @@ export default async function Page() {
             />
           );
         })}
-      </div>
+      </div> */}
 
       <div className="mt-6 flex flex-wrap items-start justify-center gap-1 sm:gap-2 ">
         {latestRecipes &&
