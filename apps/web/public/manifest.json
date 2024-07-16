@@ -1,1 +1,40 @@
-{}
+{
+  "name": "Mixie",
+  "short_name": "Mixie",
+  "id": "mixiecooking",
+  "lang": "en",
+  "description": "Mixie is to have community-driven recipe platform where home cooks and food enthusiasts can collaborate on unique and delicious recipes.",
+  "start_url": "/?pwa=true",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "landscape",
+  "theme_color": "#fcfcfc",
+  "background_color": "#fcfcfc",
+  "splash_pages": null,
+  "icons": [
+    {
+      "src": "/icons/icon_x48.jpg",
+      "type": "image/jpg",
+      "sizes": "48x48",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon_x72.jpg",
+      "type": "image/jpg",
+      "sizes": "72x72",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon_x128.jpg",
+      "type": "image/jpg",
+      "sizes": "128x128",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon_x512.jpg",
+      "type": "image/jpg",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+  ]
+}

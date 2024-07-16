@@ -13,6 +13,7 @@ const nextConfig = {
     },
     optimizePackageImports: ["posthog-js", "next-axiom"],
   },
+  transpilePackages: ["@mixie/tailwind-config", "@mixie/supabase"]
 };
 
 export default withAxiom(nextConfig);
