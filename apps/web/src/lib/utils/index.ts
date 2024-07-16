@@ -2,6 +2,11 @@ import { clsx, type ClassValue } from "clsx";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
+// export from other files
+export * from "./ingredients";
+export * from "./metadata";
+export * from "./time";
+
 /**
  * @param {ClassValue[]} inputs
  * @returns {string}
