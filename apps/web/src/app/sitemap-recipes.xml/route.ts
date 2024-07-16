@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic"; // defaults to force-static
-import { createClient } from "@/server/supabase/server";
+import { createClient } from "@mixie/supabase/server";
 
 export async function GET() {
   const supabase = createClient();

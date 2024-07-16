@@ -30,7 +30,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import * as z from "zod";
 import ImageForm from "./image-form";
 import LinkForm from "./link-form";
@@ -161,6 +161,7 @@ const CreateRecipeDialog = () => {
               <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-2">
                 {createRecipeModes.map((mode) => (
                   <Button
+                    key={mode.value}
                     className="flex h-full w-full flex-col gap-2 shadow border border-secondary/30"
                     variant="outline"
                     type="button"

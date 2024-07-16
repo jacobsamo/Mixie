@@ -1,6 +1,6 @@
 import { isApp } from "@/lib/services/apiMiddleware";
 import { getUser } from "@/lib/utils/getUser";
-import { createAdminClient } from "@/server/supabase/server";
+import { createAdminClient } from "@mixie/supabase/server";
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 

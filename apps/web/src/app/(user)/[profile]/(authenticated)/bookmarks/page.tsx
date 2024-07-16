@@ -1,7 +1,7 @@
 import { getUser } from "@/lib/utils/getUser";
 import { notFound } from "next/navigation";
 import DisplayElements, { BookmarkWithRecipe } from "./_DisplayElements";
-import { createClient } from "@/server/supabase/server";
+import { createClient } from "@mixie/supabase/server";
 
 export default async function BookmarksPage() {
   const user = await getUser();

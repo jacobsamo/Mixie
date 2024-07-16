@@ -1,6 +1,6 @@
 import RecipeForm from "@/components/recipe-form";
 import { getUser } from "@/lib/utils/getUser";
-import { createClient } from "@/server/supabase/server";
+import { createClient } from "@mixie/supabase/server";
 import { Recipe } from "@/types";
 import { notFound, redirect } from "next/navigation";
 

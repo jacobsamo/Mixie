@@ -1,113 +1,115 @@
-import Image from "next/image";
+import { CardRectangle, CardRectangleSmall } from "@/components/cards";
+import CollectionCard from "@/components/collection-card";
+import LandingText from "@/components/landing-page-text";
+import {
+  CreateRecipeTrigger,
+  SearchBarTrigger,
+} from "@/components/open-dialogs";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { meal_times } from "@/lib/services/data";
+import { getRecipes } from "@/lib/services/data_fetching";
+import { getUser } from "@/lib/utils/getUser";
+import { Donut, EggFried, Salad, Sandwich, Soup } from "lucide-react";
+import Link from "next/link";
 
-export default function Home() {
+export default async function Page() {
+  const user = await getUser();
+  const latestRecipes = await getRecipes();
+  const carouselRecipes = latestRecipes && latestRecipes.slice(0, 9);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+    <>
+      <section className="flex h-52 flex-col items-center justify-center">
+        <LandingText delay={0.2} />
+
+        <SearchBarTrigger />
+      </section>
+      <section className="pb-10 pt-9">
+        <h2 className="pb-4 text-center text-step--1">Top Recipes</h2>
+        <Carousel
+          className="w-full"
+          opts={{
+            align: "center",
+            loop: true,
+          }}
+          autoplay={true}
+        >
+          <CarouselContent>
+            {carouselRecipes &&
+              carouselRecipes.splice(0, 9).map((recipe) => (
+                <CarouselItem key={recipe.recipe_id}>
+                  <CardRectangle key={recipe.id} recipe={recipe} />
+                </CarouselItem>
+              ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      </section>
+
+      <div className="flex flex-wrap items-center justify-center gap-2">
+        {meal_times.map((meal_time) => {
+          const DisplayIcon = () => {
+            switch (meal_time.value) {
+              case "breakfast":
+                return <EggFried />;
+              case "lunch":
+                return <Sandwich />;
+              case "dinner":
+                return <Soup />;
+              case "snack":
+                return <Donut />;
+              default:
+                return <Salad />;
+            }
+          };
+
+          return (
+            <CollectionCard
+              key={meal_time.value}
+              href={`/recipes?mealTime=${meal_time.value}`}
+              title={meal_time.label}
+              icon={<DisplayIcon />}
             />
-          </a>
+          );
+        })}
+      </div>
+
+      <div className="mt-6 flex flex-wrap items-start justify-center gap-1 sm:gap-2 ">
+        {latestRecipes &&
+          latestRecipes
+            .splice(0, 12)
+            .map((recipe) => (
+              <CardRectangleSmall key={recipe.recipe_id} recipe={recipe} />
+            ))}
+      </div>
+
+      <div className="mx-auto my-12 max-w-7xl rounded-md bg-gradient-to-tl from-yellow/80 to-white px-4 py-12 text-center text-black sm:px-6 lg:px-8">
+        <h2 className="text-step--1 font-bold">Join the Mixie Community</h2>
+        <p className="mt-4 text-step--2">
+          Share your recipes with fellow food enthusiasts and explore new
+          flavors together!
+        </p>
+        <div className="flex flex-col items-center gap-2">
+          {!user ? (
+            <Link
+              className="text-base mt-3 inline-flex w-11/12 items-center justify-center rounded-md border border-transparent bg-yellow px-4 py-2 text-step--2 font-medium text-black shadow-sm transition-colors duration-200 ease-in-out hover:bg-yellow/90 focus:outline-none focus:ring-2 focus:ring-yellow/90 focus:ring-offset-2 sm:w-2/5"
+              href={"/auth/login"}
+            >
+              Join now
+            </Link>
+          ) : (
+            <CreateRecipeTrigger className="mt-3 w-11/12 sm:w-2/5" />
+          )}
         </div>
+        {/* <FeedbackButton className="mt-4 bg-none text-step--4 hover:bg-none" /> */}
       </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </>
   );
 }

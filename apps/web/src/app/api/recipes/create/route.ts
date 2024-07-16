@@ -5,7 +5,7 @@ import { createRecipeFromImage } from "@/lib/utils/recipe-imports/image";
 import { createRecipeFromLink } from "@/lib/utils/recipe-imports/link";
 import { createRecipeFromText } from "@/lib/utils/recipe-imports/text";
 import { createRecipeFromTitle } from "@/lib/utils/recipe-imports/title";
-import { createClient } from "@/server/supabase/server";
+import { createClient } from "@mixie/supabase/server";
 import { NewRecipe } from "@/types";
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";

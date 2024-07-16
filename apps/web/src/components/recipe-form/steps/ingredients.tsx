@@ -10,7 +10,7 @@ import { useAction } from "next-safe-action/hooks";
 import { useCallback } from "react";
 import { DropResult } from "react-beautiful-dnd";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import * as z from "zod";
 import { useRecipeContext } from "../recipe-form-provider";
 import { StepperFormActions } from "./shared";

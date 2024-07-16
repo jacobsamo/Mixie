@@ -12,7 +12,7 @@ import { UploadDropzone } from "@/lib/utils/uploadthing";
 import "@uploadthing/react/styles.css";
 import { Loader2, UploadIcon } from "lucide-react";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
 interface ImageUploadDialogProps {

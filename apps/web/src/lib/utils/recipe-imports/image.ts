@@ -1,8 +1,8 @@
 "use server";
 import { recipeId } from "@/lib/utils";
 import { constructJsonSchemaPrompt } from "@/lib/utils/ai-convert/zod-to-json";
-import { googleGenAi } from "@/server/ai/google_ai";
-import { ratelimit } from "@/server/kv";
+import { googleGenAi } from "@/lib/server/ai/google_ai";
+import { ratelimit } from "@/lib/server/kv";
 import { NewRecipe, recipeSchema } from "@/types";
 import { safeParseJSON } from "@ai-sdk/provider-utils";
 import { generateText } from "ai";

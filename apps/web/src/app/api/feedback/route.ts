@@ -1,8 +1,8 @@
 import { getUser } from "@/lib/utils/getUser";
-import { resend, sendEmail } from "@/server/send";
-import { createClient } from "@/server/supabase/server";
+import { resend, sendEmail } from "@/lib/server/send";
+import { createClient } from "@mixie/supabase/server";
 import { feedbackSchema } from "@/types/zodSchemas";
-import { TablesInsert } from "database.types";
+import { TablesInsert } from "@mixie/supabase/types";
 import { NextResponse, type NextRequest } from "next/server";
 import * as z from "zod";
 import NewFeedback from "@mixie/email/emails/feedback";

@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { createClient } from "@/server/supabase/client";
+import { createClient } from "@mixie/supabase/client";
 import { revalidatePath } from "next/cache";
 import Image from "next/image";
 import { useRouter } from "next/navigation";

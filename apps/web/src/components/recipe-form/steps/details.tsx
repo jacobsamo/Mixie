@@ -9,7 +9,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { SelectComponent } from "@/components/ui/SelectComponent";
+import { SelectComponent } from "@/components/ui/select";
 import { useStepper } from "@/components/ui/stepper";
 import { Textarea } from "@/components/ui/textarea";
 import { sweet_savoury } from "@/lib/services/data";
@@ -19,7 +19,7 @@ import { useAction } from "next-safe-action/hooks";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import * as z from "zod";
 import { useRecipeContext } from "../recipe-form-provider";
 import { StepperFormActions } from "./shared";

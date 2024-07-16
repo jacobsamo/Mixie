@@ -4,7 +4,7 @@ import CreateCollectionDialog from "@/components/modals/create-collection-modal"
 import { createQueryString } from "@/lib/utils";
 import type { Bookmark } from "@/types";
 import { User } from "@supabase/supabase-js";
-import { Tables } from "database.types";
+import { Tables } from "@mixie/supabase/types";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 

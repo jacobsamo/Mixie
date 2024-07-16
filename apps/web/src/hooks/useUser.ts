@@ -1,5 +1,5 @@
 "use client";
-import { createClient } from "@/server/supabase/client";
+import { createClient } from "@mixie/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 
 const useUser = () => {

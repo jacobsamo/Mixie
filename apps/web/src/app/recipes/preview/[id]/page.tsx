@@ -1,6 +1,6 @@
 import RecipePageComponent from "@/components/recipe-page";
 import { getUser } from "@/lib/utils/getUser";
-import { createClient } from "@/server/supabase/server";
+import { createClient } from "@mixie/supabase/server";
 import type { Recipe } from "@/types";
 import { notFound, redirect } from "next/navigation";
 

@@ -2,7 +2,7 @@ import { CardRecipe, SearchCard } from "@/components/cards";
 import { getUsers } from "@/lib/services/data_fetching";
 import { constructMetadata } from "@/lib/utils/";
 import { getUser } from "@/lib/utils/getUser";
-import { createClient } from "@/server/supabase/server";
+import { createClient } from "@mixie/supabase/server";
 import { User } from "@supabase/supabase-js";
 import { Heart, Pencil, ScrollText } from "lucide-react";
 import { Metadata } from "next";

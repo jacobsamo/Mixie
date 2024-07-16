@@ -12,7 +12,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/advanced-components/input";
 import CopyButton from "../copy-to-clipboard";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 interface ShareDialogProps {
   /**

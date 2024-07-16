@@ -1,4 +1,4 @@
-import { createClient } from "@/server/supabase/server";
+import { createClient } from "@mixie/supabase/server";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {

@@ -1,7 +1,7 @@
 "use client";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { CopyIcon } from "lucide-react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 export interface CopyButtonProps extends ButtonProps {
   /**

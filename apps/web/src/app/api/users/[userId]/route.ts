@@ -1,8 +1,6 @@
 import { isApp } from "@/lib/services/apiMiddleware";
 import { getUser } from "@/lib/utils/getUser";
-import { createAdminClient } from "@/server/supabase/server";
 import { createClient } from "@mixie/supabase/server";
-import { User } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function GET(

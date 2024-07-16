@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { createClient } from "@/server/supabase/client";
+import { createClient } from "@mixie/supabase/client";
 
 interface CodeFormProps {
   code: string;

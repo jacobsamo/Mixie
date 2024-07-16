@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { UploadDropzone } from "@/lib/utils/uploadthing";
 import { recipeClientFormSchema } from "@/types/zodSchemas";
 import { useFormContext } from "react-hook-form";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import * as z from "zod";
 
 const Upload = () => {

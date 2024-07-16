@@ -18,18 +18,18 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { createClient } from "@/server/supabase/client";
+import { createClient } from "@mixie/supabase/client";
 import { feedbackSchema } from "@/types/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { TablesInsert } from "database.types";
+import { TablesInsert } from "@mixie/supabase/types";
 import { env } from "env";
 import { useAtom } from "jotai";
 import { Bug, CircleHelp, Lightbulb, MessageCirclePlus } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import { giveFeedbackOpen } from "../providers/dialogs";
 import { cn } from "@/lib/utils";
 

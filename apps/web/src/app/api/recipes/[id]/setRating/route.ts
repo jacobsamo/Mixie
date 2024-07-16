@@ -1,5 +1,5 @@
 import { getUser } from "@/lib/utils/getUser";
-import { createClient } from "@/server/supabase/server";
+import { createClient } from "@mixie/supabase/server";
 import { ratingsSchema } from "@/types/zodSchemas";
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";

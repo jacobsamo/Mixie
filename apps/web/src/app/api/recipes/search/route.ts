@@ -1,7 +1,7 @@
 import { isApp } from "@/lib/services/apiMiddleware";
 import { getRecipes } from "@/lib/services/data_fetching";
 import { searchRecipes } from "@/lib/services/seach";
-import { createClient } from "@/server/supabase/server";
+import { createClient } from "@mixie/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {

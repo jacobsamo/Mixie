@@ -11,7 +11,7 @@ import { Rating } from "@/types";
 import { StarIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { useRecipeContext } from "./recipe-provider";
 
 const StarRating = () => {

@@ -1,5 +1,5 @@
 import { isApp } from "@/lib/services/apiMiddleware";
-import { createClient } from "@/server/supabase/server";
+import { createClient } from "@mixie/supabase/server";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function GET(req: NextRequest, params: { id: string }) {

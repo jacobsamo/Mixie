@@ -17,7 +17,7 @@ import { Recipe } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAction } from "next-safe-action/hooks";
 import { SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import * as z from "zod";
 import { useRecipeContext } from "../recipe-form-provider";
 import { StepperFormActions } from "./shared";
@@ -35,7 +35,7 @@ const Info = () => {
       console.error("Error setting info: ", e);
       toast.error("Something went wrong pleaase try again.");
     },
-    onSuccess: ({data}) => {
+    onSuccess: ({ data }) => {
       if (!data) return;
       setRecipe(data as Recipe);
       nextStep();
