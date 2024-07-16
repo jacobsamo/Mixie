@@ -4,6 +4,7 @@ import { Ingredient, Step as StepType } from "@/types";
 import React from "react";
 import Step from "./step";
 import useUser from "@/hooks/useUser";
+import { useRecipeContext } from "../recipe-provider";
 
 interface StepContainerProps {
   steps: StepType[];
@@ -16,6 +17,7 @@ const StepContainer = ({
   ingredients,
   className,
 }: StepContainerProps) => {
+  const { viewMode } = useRecipeContext();
   const [checked, setChecked] = React.useState(false);
   const user = useUser();
 
@@ -31,7 +33,7 @@ const StepContainer = ({
           />
         ))}
       </ul>
-      {user && (
+      {user && viewMode === "page" && (
         <CreateRecipeTrigger
           className="mx-auto w-10/12 sm:w-1/2"
           text="Create your own recipe"

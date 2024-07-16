@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Recipe } from "@/types";
-import { User } from "@supabase/supabase-js";
-import clsx from "clsx";
+import type { ClassValue } from "clsx";
 import dynamic from "next/dynamic";
 import Image, { type ImageProps } from "next/image";
 
@@ -41,7 +40,7 @@ export interface CardProps {
 
 export const RecipeImage = (
   props: ImageProps,
-  { className }: { className: clsx.ClassValue }
+  { className }: { className: ClassValue }
 ) => (
   <Image
     loading="lazy"

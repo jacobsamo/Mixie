@@ -35,8 +35,9 @@ const Info = () => {
       console.error("Error setting info: ", e);
       toast.error("Something went wrong pleaase try again.");
     },
-    onSuccess: (data: Recipe) => {
-      setRecipe(data);
+    onSuccess: ({data}) => {
+      if (!data) return;
+      setRecipe(data as Recipe);
       nextStep();
     },
   });

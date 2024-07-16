@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body,
 body > div:first-child,
@@ -72,7 +76,7 @@ p {
     --primary: 42 100% 54%;
     --primary-foreground: 26 83.3% 14.1%;
 
-    --secondary: 60 4.8% 95.9%;
+    --secondary: 25 4.8% 45%;
     --secondary-foreground: 24 9.8% 10%;
 
     --muted: 60 4.8% 95.9%;
@@ -84,7 +88,7 @@ p {
     --destructive: 355 78% 56%;
     --destructive-foreground: 60 9.1% 97.8%;
 
-    --input: 60 4.8% 95.9%;
+    --input: 12 6.5% 15.1%;
     --input-foreground: 30 36%, 96%;
 
     --border: 20 5.9% 90%;

@@ -28,7 +28,7 @@ export const BaseCard = ({
   return (
     <div
       className={cn(
-        "relative flex h-56 w-56 flex-col items-center justify-between rounded-xl p-2 text-white",
+        "relative flex h-56 w-56 flex-col items-center justify-between rounded-xl p-2 text-white shadow",
         classNames?.container
       )}
     >

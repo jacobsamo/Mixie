@@ -3,7 +3,7 @@ import { Amount, Step, type Ingredient } from "@/types";
 import Fraction from "fraction.js";
 import * as fuzzball from "fuzzball";
 
-export const units = {
+export const units: { [key: string]: string[] } = {
   tsp: ["tsp", "teaspoon", "teaspoons", "t", "tsps"],
   tbsp: ["tbsp", "tablespoon", "tablespoons", "T", "tbsps"],
   grams: ["grams", "gram", "g", "gm", "gs"],
@@ -11,6 +11,10 @@ export const units = {
   cup: ["cup", "cups", "c"],
   ml: ["ml", "milliliter", "milliliters"],
   litre: ["litre", "litres", "l"],
+};
+
+const findUnitMatch = (ingredient: string) => {
+  return ingredient.match(/(\d+(?:\s\d+\/\d+|\/\d+)?)(?:\s*([a-zA-Z]+))?/i);
 };
 
 /**
@@ -36,11 +40,15 @@ export function matchIngredients(ingredients: Ingredient[], step: Step) {
   const found: Ingredient[] = [];
 
   ingredients.forEach((passed, index, arr) => {
-    if (passed.isHeading || !passed.text) return;
+    let text = passed.text;
+
+    const unitMatch = findUnitMatch(text);
+    if (unitMatch) text = text.replace(unitMatch[0], "");
+    if (passed.isHeading || !text) return;
     // get rid of any unwanted characters
-    const ingredient = normalizeString(passed.text);
+    const ingredient = normalizeString(text);
     // remove not word characters and split into parts
-    const ingredientArr = normalizeString(passed.text).split(/\s+|\,/);
+    const ingredientArr = normalizeString(text).split(/\s+|\,/);
 
     // loop over each word
     stepWords.forEach((step_word, word_index, word_arr) => {
@@ -53,7 +61,7 @@ export function matchIngredients(ingredients: Ingredient[], step: Step) {
       if (ingredientArr.includes(step_word)) {
         /*
         Find the index of the word, get the length of the ingredient 
-        get a certain number of chacters before asnd after, 
+        get a certain number of chacters before and after, 
         get rid of spaces
         */
         const newString = stepWords
@@ -62,25 +70,49 @@ export function matchIngredients(ingredients: Ingredient[], step: Step) {
 
         const ratio = fuzzball.ratio(newString, ingredient);
 
-        if (ratio >= 45) found.push(passed);
+        if (ratio >= 50) found.push(passed);
+        return;
       }
+      return;
     });
   });
 
-  return found.filter((v, i, a) => a.findIndex((t) => t.text === v.text) === i);
+  return found.filter((v, i, a) => a.findIndex((t) => t.text == v.text) == i);
 }
 
 /**
- * Takes in fraction and a times amount and returns a new fraction
- * @param {string} amount
- * @param {number} batchAmount
+ * Takes in a fraction or whole number as a string and multiplies it by batchAmount,
+ * returning the result as a formatted fraction.
+ * @param {string} amount - The amount string representing a fraction or whole number.
+ * @param {number} batchAmount - The amount to multiply by.
+ * @returns {string} - The formatted result as a fraction.
  */
 function calculateFractionalUnit(amount: string, batchAmount: number): string {
-  const [numerator, denominator] = amount.split("/").map(Number);
-  const value = denominator
-    ? (numerator / denominator) * batchAmount
-    : numerator * batchAmount;
-  return new Fraction(value).toFraction(true);
+  const amountTrimmed = amount.trim();
+
+  // Check if the amount is a mixed number (e.g., "2 2/3")
+  if (amountTrimmed.includes(" ")) {
+    const parts = amountTrimmed.split(" ");
+    const wholeNumber = Number(parts[0]);
+    const fractionPart = parts[1];
+    const [numerator, denominator] = fractionPart.split("/").map(Number);
+
+    // Calculate the value as a mixed number
+    const totalValue = wholeNumber + numerator / denominator;
+    const multipliedValue = totalValue * batchAmount;
+
+    // Return the formatted fraction
+    return new Fraction(multipliedValue).toFraction(true);
+  } else if (amountTrimmed.includes("/")) {
+    // Handle normal fractions (e.g., "1/2")
+    const [numerator, denominator] = amountTrimmed.split("/").map(Number);
+    const multipliedValue = (numerator / denominator) * batchAmount;
+    return new Fraction(multipliedValue).toFraction(true);
+  } else {
+    // Handle simple whole numbers (e.g., "3")
+    const value = parseInt(amountTrimmed, 10) * batchAmount;
+    return new Fraction(value).toFraction(true);
+  }
 }
 
 /**
@@ -96,7 +128,8 @@ export function calculateIngredient(
   if (ingredient.isHeading) return ingredient;
 
   // will match the first digit in a string and the value after it
-  const match = ingredient.text.match(/(\d+(?:\/\d+)?)(?:\s*([a-zA-Z]+))?/i);
+  const match = findUnitMatch(ingredient.text);
+
   if (!match) return ingredient;
 
   const [fullMatch, amount, unit] = match;
