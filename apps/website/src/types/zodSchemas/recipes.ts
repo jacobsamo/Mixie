@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { difficulty_level, recipe_creation_type, sweet_savoury } from "./enums";
+import { NewRecipe } from "..";
 
 const selectValue = z.object({
   value: z.string(),
@@ -173,7 +174,7 @@ export const recipeClientFormSchema = recipeSchema
   .superRefine((values, ctx) => {
     if (values.public) {
       ["cook_time", "prep_time", "image_url"].forEach((field) => {
-        if (!values[field]) {
+        if (!(values as { [key: string]: any })[field]) {
           ctx.addIssue({
             code: "custom",
             message: `${field} is required for public recipes`,
@@ -212,7 +213,7 @@ export const recipeClientFormSchema = recipeSchema
 export const recipeFormSchema = recipeSchema.superRefine((values, ctx) => {
   if (values.public) {
     ["cook_time", "prep_time", "image_url"].forEach((field) => {
-      if (!values[field]) {
+      if (!(values as { [key: string]: any })[field]) {
         ctx.addIssue({
           code: "custom",
           message: `${field} is required for public recipes`,

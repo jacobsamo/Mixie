@@ -48,8 +48,9 @@ const Steps = () => {
     onError: () => {
       toast.error("Something went wrong pleaase try again.");
     },
-    onSuccess: (data: Recipe) => {
-      setRecipe(data);
+    onSuccess: ({ data }) => {
+      if (!data) return;
+      setRecipe(data as Recipe);
       nextStep();
     },
   });
@@ -79,7 +80,7 @@ const Steps = () => {
   const isSubmitting =
     setSteps.status !== "idle" && setSteps.status !== "hasErrored";
 
-  const onSubmit = (data: Recipe) => {
+  const onSubmit = (data: z.infer<typeof stepsSchema>) => {
     if (isDirty) {
       setSteps.execute(data);
     } else {
