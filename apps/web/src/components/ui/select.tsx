@@ -1,160 +1,134 @@
-"use client"
+"use client";
+import { type ClassValue, clsx } from "clsx";
+import { ChevronDownIcon, X } from "lucide-react";
+import Select, {
+  ClearIndicatorProps,
+  DropdownIndicatorProps,
+  MultiValueRemoveProps,
+  components,
+} from "react-select";
+import makeAnimated from "react-select/animated";
+import CreatableSelect from "react-select/creatable";
 
-import * as React from "react"
-import * as SelectPrimitive from "@radix-ui/react-select"
-import { Check, ChevronDown, ChevronUp } from "lucide-react"
+const DropdownIndicator = (props: DropdownIndicatorProps) => {
+  return (
+    <components.DropdownIndicator {...props}>
+      <ChevronDownIcon />
+    </components.DropdownIndicator>
+  );
+};
 
-import { cn } from "@/lib/utils/index.ts"
+const ClearIndicator = (props: ClearIndicatorProps) => {
+  return (
+    <components.ClearIndicator {...props}>
+      <X />
+    </components.ClearIndicator>
+  );
+};
 
-const Select = SelectPrimitive.Root
+const MultiValueRemove = (props: MultiValueRemoveProps) => {
+  return (
+    <components.MultiValueRemove {...props}>
+      <X />
+    </components.MultiValueRemove>
+  );
+};
 
-const SelectGroup = SelectPrimitive.Group
+const controlStyles = {
+  base: "border border-input rounded-md bg-input-foreground z-50",
+  focus: "outline-none ring-2 ring-ring ring-offset-2",
+  nonFocus: "border-input",
+};
+const placeholderStyles = " text-sm ml-1";
+const selectInputStyles = "text-foreground text-sm ml-1";
+const valueContainerStyles = "text-foreground text-sm";
+const singleValueStyles = "ml-1";
+const multiValueStyles =
+  "ml-1 bg-input-foreground shadow border border-input rounded items-center py-0.5 pl-2 pr-1 gap-1.5";
+const multiValueLabelStyles = "leading-6 py-0.5";
+const multiValueRemoveStyles =
+  "border border-input hover:bg-destructive hover:text-white hover:border-destructive rounded-md bg-input-foreground";
+const indicatorsContainerStyles = "p-1 gap-1 bg-input-foreground rounded-lg";
+const clearIndicatorStyles = " p-1 rounded-md hover:text-destructive";
+const indicatorSeparatorStyles = "bg-muted";
+const dropdownIndicatorStyles = "p-1 hover:text-foreground";
+const menuStyles =
+  "mt-2 p-2 border border-input bg-input-foreground text-sm rounded-lg max-h-[200px]";
 
-const SelectValue = SelectPrimitive.Value
+const menuList = "min-w-fit h-full overflow-y-auto";
+const optionsStyle =
+  "bg-input-foreground p-2 border-0 text-base hover:bg-secondary hover:cursor-pointer";
+const groupHeadingStyles = "ml-3 mt-2 mb-1  text-sm bg-input-foreground";
+const noOptionsMessageStyles = "text-muted-foreground bg-input-foreground";
 
-const SelectTrigger = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Trigger
-    ref={ref}
-    className={cn(
-      "flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-      className
-    )}
-    {...props}
-  >
-    {children}
-    <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 opacity-50" />
-    </SelectPrimitive.Icon>
-  </SelectPrimitive.Trigger>
-))
-SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
+type SelectComponentProps = {
+  options: any[];
+  value?: any;
+  onChange?: (value: any) => void;
+  isMulti?: boolean;
+  isDisabled?: boolean;
+  isLoading?: boolean;
+  createAble?: boolean;
+  placeholder?: string;
+  clearable?: boolean;
+};
 
-const SelectScrollUpButton = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.ScrollUpButton
-    ref={ref}
-    className={cn(
-      "flex cursor-default items-center justify-center py-1",
-      className
-    )}
-    {...props}
-  >
-    <ChevronUp className="h-4 w-4" />
-  </SelectPrimitive.ScrollUpButton>
-))
-SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName
-
-const SelectScrollDownButton = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.ScrollDownButton
-    ref={ref}
-    className={cn(
-      "flex cursor-default items-center justify-center py-1",
-      className
-    )}
-    {...props}
-  >
-    <ChevronDown className="h-4 w-4" />
-  </SelectPrimitive.ScrollDownButton>
-))
-SelectScrollDownButton.displayName =
-  SelectPrimitive.ScrollDownButton.displayName
-
-const SelectContent = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
->(({ className, children, position = "popper", ...props }, ref) => (
-  <SelectPrimitive.Portal>
-    <SelectPrimitive.Content
-      ref={ref}
-      className={cn(
-        "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-        position === "popper" &&
-          "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
-        className
-      )}
-      position={position}
-      {...props}
-    >
-      <SelectScrollUpButton />
-      <SelectPrimitive.Viewport
-        className={cn(
-          "p-1",
-          position === "popper" &&
-            "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"
-        )}
-      >
-        {children}
-      </SelectPrimitive.Viewport>
-      <SelectScrollDownButton />
-    </SelectPrimitive.Content>
-  </SelectPrimitive.Portal>
-))
-SelectContent.displayName = SelectPrimitive.Content.displayName
-
-const SelectLabel = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Label>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.Label
-    ref={ref}
-    className={cn("py-1.5 pl-8 pr-2 text-sm font-semibold", className)}
-    {...props}
-  />
-))
-SelectLabel.displayName = SelectPrimitive.Label.displayName
-
-const SelectItem = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Item
-    ref={ref}
-    className={cn(
-      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      className
-    )}
-    {...props}
-  >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-      <SelectPrimitive.ItemIndicator>
-        <Check className="h-4 w-4" />
-      </SelectPrimitive.ItemIndicator>
-    </span>
-
-    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
-  </SelectPrimitive.Item>
-))
-SelectItem.displayName = SelectPrimitive.Item.displayName
-
-const SelectSeparator = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Separator>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.Separator
-    ref={ref}
-    className={cn("-mx-1 my-1 h-px bg-muted", className)}
-    {...props}
-  />
-))
-SelectSeparator.displayName = SelectPrimitive.Separator.displayName
-
-export {
-  Select,
-  SelectGroup,
-  SelectValue,
-  SelectTrigger,
-  SelectContent,
-  SelectLabel,
-  SelectItem,
-  SelectSeparator,
-  SelectScrollUpButton,
-  SelectScrollDownButton,
-}
+export const SelectComponent = ({
+  options,
+  value,
+  onChange,
+  isMulti = false,
+  isDisabled,
+  isLoading,
+  createAble = false,
+  placeholder,
+  clearable = true,
+  ...props
+}: SelectComponentProps) => {
+  const animatedComponents = makeAnimated();
+  const Comp = createAble ? CreatableSelect : Select;
+  return (
+    <>
+      <Comp
+        unstyled
+        isClearable={clearable}
+        isSearchable
+        value={value}
+        isDisabled={isDisabled}
+        isMulti={isMulti}
+        isLoading={isLoading}
+        placeholder={placeholder}
+        components={animatedComponents}
+        // defaultInputValue={defaultValue}
+        defaultValue={value}
+        options={options}
+        noOptionsMessage={() => "No options found !!"}
+        onChange={onChange}
+        classNames={{
+          control: ({ isFocused }) =>
+            clsx(
+              isFocused ? controlStyles.focus : controlStyles.nonFocus,
+              controlStyles.base
+            ),
+          placeholder: () => placeholderStyles,
+          input: () => selectInputStyles,
+          option: () => optionsStyle,
+          menu: () => menuStyles,
+          menuList: () => menuList,
+          valueContainer: () => valueContainerStyles,
+          singleValue: () => singleValueStyles,
+          multiValue: () => multiValueStyles,
+          multiValueLabel: () => multiValueLabelStyles,
+          multiValueRemove: () => multiValueRemoveStyles,
+          indicatorsContainer: () => indicatorsContainerStyles,
+          clearIndicator: () => clearIndicatorStyles,
+          indicatorSeparator: () => indicatorSeparatorStyles,
+          dropdownIndicator: () => dropdownIndicatorStyles,
+          groupHeading: () => groupHeadingStyles,
+          noOptionsMessage: () => noOptionsMessageStyles,
+        }}
+        {...props}
+      />
+    </>
+  );
+};
