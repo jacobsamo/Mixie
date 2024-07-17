@@ -6,7 +6,7 @@ export default async function NotFoundUser() {
 
   return (
     <>
-      <h1>You can&apos;t access this page </h1>
+      <h1>You can't access this page </h1>
       {user && (
         <Link href={`/${user.id}/settings?activeLink=profile`}>
           View your settings

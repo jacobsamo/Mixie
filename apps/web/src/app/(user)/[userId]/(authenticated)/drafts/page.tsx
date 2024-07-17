@@ -1,9 +1,9 @@
 import { CardRecipe, SearchCard } from "@/components/cards";
-import { createClient } from "@mixie/supabase/server";
+import { createClient } from "@/server/supabase/server";
 
 interface DraftsPageProps {
   params: {
-    profile: string;
+    userId: string;
   };
 }
 
@@ -14,7 +14,7 @@ export default async function DraftsPage({ params }: DraftsPageProps) {
     .select(
       "recipe_id, id, title, image_url, image_attributes, total_time, keywords"
     )
-    .eq("created_by", params.profile);
+    .eq("created_by", params.userId);
 
   return (
     <div className="mt-4">

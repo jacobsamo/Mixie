@@ -4,7 +4,7 @@ import CreateCollectionDialog from "@/components/modals/create-collection-modal"
 import { createQueryString } from "@/lib/utils";
 import type { Bookmark } from "@/types";
 import { User } from "@supabase/supabase-js";
-import { Tables } from "@mixie/supabase/types";
+import { Tables } from "database.types";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -53,7 +53,7 @@ const CollectionCard = ({
 
   return (
     <button
-      className="relative w-1/2 max-w-56 flex-1 flex-shrink-0 resize-y rounded-md shadow outline outline-1 outline-slate-700 dark:shadow-none sm:w-1/3"
+      className="relative w-1/2 max-w-56 flex-1 flex-shrink-0 resize-y rounded-md shadow outline outline-1 outline-slate-700 sm:w-1/3 dark:shadow-none"
       onClick={() => {
         router.push("?" + createQueryString("collection", collectionId));
       }}
@@ -61,7 +61,7 @@ const CollectionCard = ({
       <Image
         src="/images/placeholder.webp"
         alt="collection image"
-        className="top-0 h-1/2 w-full rounded-t-md object-cover object-center opacity-90"
+        className="top-0 h-1/2 w-full  rounded-t-md  object-cover object-center opacity-90"
         width={128}
         height={96}
       />

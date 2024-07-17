@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
 interface SettingsParams {
-  profile: string;
+  userId: string;
 }
 
 const linkStyles = cva("text-step--2", {
@@ -31,7 +31,7 @@ export default function SettingsLayout({
 
   return (
     <>
-      <header className="shadow-main mx-auto mt-2 flex w-full flex-row justify-center gap-4 rounded-md bg-white p-1 dark:bg-grey md:w-2/4">
+      <header className="mx-auto mt-2 flex w-full flex-row justify-center gap-4 rounded-md bg-white p-1 shadow-main md:w-2/4 dark:bg-grey">
         <Button
           unstyled
           aria-label="Go to edit profile page"

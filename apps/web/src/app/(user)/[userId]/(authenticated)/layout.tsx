@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import React from "react";
 
 interface SettingsParams {
-  profile: string;
+  userId: string;
 }
 
 export default async function UserLayout({
@@ -15,7 +15,7 @@ export default async function UserLayout({
 }) {
   const user = await getUser();
 
-  if (!user && user!.id != params.profile) return notFound();
+  if (!user && user!.id != params.userId) return notFound();
 
   return <div className="h-fit min-h-full w-full">{children}</div>;
 }
