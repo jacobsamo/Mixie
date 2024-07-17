@@ -26,12 +26,12 @@ export default async function RecipeViewPage({
   });
 
   return (
-    <div className="h-fit min-h-full w-full">
+    <div className="h-fit min-h-full w-full items-center">
       <section className="mb-2 flex h-52 items-center justify-center">
         <SearchBarTrigger />
       </section>
 
-      <div className="mb-12 flex flex-wrap items-center justify-center gap-2">
+      {/* <div className="mb-12 flex flex-wrap items-center justify-center gap-2">
         <CollectionCard
           key="all"
           href="/recipes"
@@ -73,8 +73,8 @@ export default async function RecipeViewPage({
               }
             />
           );
-        })} */}
-      </div>
+        })}
+      </div> */}
 
       {mealTime && (
         <h2 className="text-center text-step--1">{mealTime.label} Recipes</h2>
