@@ -1,0 +1,5 @@
+{
+  "dotenv.enableAutocloaking": false,
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "editor.formatOnSave": true
+}
