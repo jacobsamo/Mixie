@@ -11,7 +11,6 @@ export async function PUT(
   try {
     const app = await isApp(req);
     const user = await getUser();
-  
 
     const requestedUserData = user ? user.id === params.userId : null;
 
@@ -22,7 +21,6 @@ export async function PUT(
     const json = await req.json();
     json.emailVerified = new Date(json.emailVerified);
     console.log("Body: ", json);
-
 
     const supabase = createAdminClient();
 

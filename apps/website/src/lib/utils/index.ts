@@ -23,8 +23,12 @@ export function cn(...inputs: ClassValue[]) {
  * @example
  * recipe_id('Chicken Tikka Masala') // 'chicken-tikka-masala'
  */
-export function recipe_id(title: string): string {
-  return title.trim().replace(/\s/g, "-").toLowerCase();
+export function recipeId(title: string): string {
+  return title
+    .replace(/\s{2,}/, " ")
+    .trim()
+    .replace(/\s/g, "-")
+    .toLowerCase();
 }
 
 /**
@@ -43,7 +47,7 @@ export const createUrl = (
   return `${pathname}${queryString}`;
 };
 
-export const createQueryString = (name, value) => {
+export const createQueryString = (name: string, value: string) => {
   const params = new URLSearchParams();
   params.set(name, value);
 

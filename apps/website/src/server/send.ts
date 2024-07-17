@@ -39,7 +39,7 @@ export const sendEmail = async ({
       react,
     });
     if (error) throw error;
-    
+
     console.log("Email sent", data);
   } catch (error) {
     console.log("Error sending email", error);

@@ -1,3 +1,6 @@
 {
   "dotenv.enableAutocloaking": false,
+  "editor.defaultFormatter": "biomejs.biome",
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "editor.formatOnSave": true
 }

@@ -13,12 +13,14 @@ export async function GET(
 
     const requestedUserData = user ? user.id === params.userId : null;
 
-    if ((!app) && !requestedUserData) {
+    if (!app && !requestedUserData) {
       return NextResponse.json("Unauthorized", { status: 401 });
     }
     const supabase = createClient();
-    const foundCollections = await supabase.from("collections").select().eq("user_id", params.userId)
-
+    const foundCollections = await supabase
+      .from("collections")
+      .select()
+      .eq("user_id", params.userId);
 
     return NextResponse.json(foundCollections);
   } catch (error) {

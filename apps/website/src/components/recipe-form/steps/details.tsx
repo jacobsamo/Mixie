@@ -12,10 +12,11 @@ import {
 import { SelectComponent } from "@/components/ui/SelectComponent";
 import { useStepper } from "@/components/ui/stepper";
 import { Textarea } from "@/components/ui/textarea";
-import { meal_times, sweet_savoury } from "@/lib/services/data";
+import { sweet_savoury } from "@/lib/services/data";
 import { Recipe } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAction } from "next-safe-action/hooks";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -26,14 +27,17 @@ import { StepperFormActions } from "./shared";
 const Details = () => {
   const { nextStep, resetSteps } = useStepper();
   const { recipe, setRecipe } = useRecipeContext();
+  const router = useRouter();
 
   const setDetails = useAction(submitDetails, {
     onError: () => {
       toast.error("Something went wrong pleaase try again.");
     },
-    onSuccess: (data: Recipe) => {
-      setRecipe(data);
+    onSuccess: ({ data }) => {
+      if (!data) return;
+      setRecipe(data as Recipe);
       resetSteps();
+      router.push(`/recipes/preview/${data.recipe_id}`);
     },
   });
 
@@ -54,6 +58,7 @@ const Details = () => {
     control,
     register,
     setValue,
+    watch,
     formState: { errors, isDirty },
   } = form;
 
@@ -61,20 +66,29 @@ const Details = () => {
     console.log("errors: ", errors);
   }, [errors]);
 
-  const isSubmitting =
-    setDetails.status !== "idle" && setDetails.status !== "hasErrored";
+  const isPublic = watch("public");
 
-  const onSubmit = (data) => {
-    if (isDirty) {
-      setDetails.execute(data);
-    } else {
-      nextStep();
-    }
+  const isPublicSubmitting =
+    setDetails.status !== "idle" &&
+    setDetails.status !== "hasErrored" &&
+    isPublic == true;
+
+  const isDraftSubmitting =
+    setDetails.status !== "idle" &&
+    setDetails.status !== "hasErrored" &&
+    isPublic == false;
+
+  const onSubmit = (data: z.infer<typeof detailsSchema>) => {
+    setDetails.execute(data);
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full md:w-1/2">
+      <form
+        id="recipe-form"
+        className="w-full md:w-1/2"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <FormField
           control={control}
           name="sweet_savoury"
@@ -99,7 +113,7 @@ const Details = () => {
           )}
         />
 
-        <FormField
+        {/* <FormField
           control={control}
           name="meal_time"
           rules={{ required: true }}
@@ -128,7 +142,7 @@ const Details = () => {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
         {/* <div className="pb-2">
           <TagInput
@@ -149,14 +163,23 @@ const Details = () => {
             <FormItem>
               <FormLabel>Notes, Tips or Suggestions</FormLabel>
               <FormControl className="w-full">
-                <Textarea {...field} />
+                <Textarea {...field} value={field.value ?? undefined} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <StepperFormActions isSubmitting={isSubmitting} />
+        <StepperFormActions
+          isSubmitting={isDraftSubmitting}
+          isPublicSubmitting={isPublicSubmitting}
+          onPublish={() => {
+            setValue("public", true);
+          }}
+          onSaveDraft={() => {
+            setValue("public", false);
+          }}
+        />
       </form>
     </Form>
   );

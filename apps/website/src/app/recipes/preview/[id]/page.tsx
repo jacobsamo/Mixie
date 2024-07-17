@@ -1,8 +1,10 @@
-import RecipePageComponent from "@/components/recipe-page/recipe-page";
+import RecipePageComponent from "@/components/recipe-page";
 import { getUser } from "@/lib/utils/getUser";
 import { createClient } from "@/server/supabase/server";
 import type { Recipe } from "@/types";
 import { notFound, redirect } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 
 interface PreviewRecipePageProps {
   params: {
@@ -37,7 +39,7 @@ export default async function PreviewRecipePage({
 
   return (
     <>
-      <RecipePageComponent recipe={foundRecipe as Recipe} />
+      <RecipePageComponent recipe={foundRecipe as Recipe} viewMode="preview" />
     </>
   );
 }

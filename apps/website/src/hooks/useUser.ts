@@ -3,21 +3,19 @@ import { createClient } from "@/server/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 
 const useUser = () => {
-  const {data: user} = useQuery({
+  const { data: user } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
       const supabase = createClient();
-      const {data: {
-        user
-      }} = await supabase.auth.getUser();
-      return user;
-    }
-  })
-  
-  const supabase = createClient();
-  supabase.auth.getUser();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
 
-  return user ?? null
+      return session?.user;
+    },
+  });
+
+  return user ?? null;
 };
 
 export default useUser;

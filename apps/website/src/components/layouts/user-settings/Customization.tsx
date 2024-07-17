@@ -1,4 +1,3 @@
-
 import { User } from "@supabase/supabase-js";
 import { cva } from "class-variance-authority";
 import { useFormContext } from "react-hook-form";
@@ -94,9 +93,7 @@ const Customization = () => {
   //     </div>
   //   </div>
   // );
-  return <div>
-    Customization
-  </div>
+  return <div>Customization</div>;
 };
 
 export default Customization;

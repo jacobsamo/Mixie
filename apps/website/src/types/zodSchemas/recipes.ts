@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { amount, difficulty_level, sweet_savoury, unit } from "./enums";
+import { difficulty_level, recipe_creation_type, sweet_savoury } from "./enums";
+import { NewRecipe } from "..";
 
 const selectValue = z.object({
   value: z.string(),
@@ -50,16 +51,29 @@ export const ingredientSchema = z.object({
 });
 
 export const stepSchema = z.object({
+  /**
+   * The step instructions
+   */
   text: z.string(),
+  /**
+   * A image to help visualize the step
+   */
   image: z.string().nullish(),
+  /**
+   * The url of the step
+   */
+  url: z.string().url().nullish(),
 });
 
 const recipes = z.object({
-  category: z.string().nullable(),
-  cook_time: z.string().nullable(),
+  category: z.string().array().nullable(),
+  cook_time: z
+    .number()
+    .min(0, { message: "Cook time must be a positive number" })
+    .nullable(),
   created_by: z.string(),
   created_at: z.string(),
-  cuisine: z.string().nullable(),
+  cuisine: z.string().array().nullable(),
   description: z.string().nullable(),
   difficulty_level: difficulty_level.default("not_set").nullable(),
   id: z.string(),
@@ -71,26 +85,36 @@ const recipes = z.object({
   meal_time: selectValue.array().nullish(),
   notes: z.string().nullable(),
   nutrition: z.string().array().nullable(),
-  prep_time: z.string().nullable(),
+  prep_time: z
+    .number()
+    .min(0, { message: "Prep time must be a positive number" })
+    .nullable(),
   public: z.boolean().default(false),
   rating: z.number().nullable(),
+  recipe_creation_type: recipe_creation_type.default("title"),
   recipe_id: z.string(),
-  source: z.string().url().nullable(),
+  source: z
+    .string()
+    .url({ message: "Should be the url of the recipe" })
+    .nullable(),
   steps: stepSchema.array().nullable(),
   suitable_for_diet: z.string().nullable(),
   sweet_savoury: sweet_savoury.default("not_set").nullable(),
   title: z.string(),
-  total_time: z.string().nullable(),
+  total_time: z.number().nullable(),
   version: z.string(),
   yield: z.number().nullable(),
 });
 
 const recipes_edit = z.object({
-  category: z.string().nullish(),
-  cook_time: z.string().nullish(),
+  category: z.string().array().nullish(),
+  cook_time: z
+    .number()
+    .min(0, { message: "Cook time must be a positive number" })
+    .nullish(),
   created_at: z.string().optional(),
   created_by: z.string(),
-  cuisine: z.string().nullish(),
+  cuisine: z.string().array().nullish(),
   description: z.string().nullish(),
   difficulty_level: difficulty_level.default("not_set").optional(),
   id: z.string(),
@@ -102,16 +126,23 @@ const recipes_edit = z.object({
   meal_time: selectValue.array().nullish(),
   notes: z.string().nullish(),
   nutrition: z.string().array().nullish(),
-  prep_time: z.string().nullish(),
+  prep_time: z
+    .number()
+    .min(0, { message: "Prep time must be a positive number" })
+    .nullish(),
   public: z.boolean().default(false).optional(),
   rating: z.number().nullish(),
+  recipe_creation_type: recipe_creation_type.default("title").optional(),
   recipe_id: z.string().optional(),
-  source: z.string().url().nullish(),
+  source: z
+    .string()
+    .url({ message: "Should be the url of the recipe" })
+    .nullish(),
   steps: stepSchema.array().nullish(),
   suitable_for_diet: z.string().nullish(),
   sweet_savoury: sweet_savoury.default("not_set").optional(),
   title: z.string(),
-  total_time: z.string().nullish(),
+  total_time: z.number().nullish(),
   version: z.string(),
   yield: z.number().nullish(),
 });
@@ -143,7 +174,7 @@ export const recipeClientFormSchema = recipeSchema
   .superRefine((values, ctx) => {
     if (values.public) {
       ["cook_time", "prep_time", "image_url"].forEach((field) => {
-        if (!values[field]) {
+        if (!(values as { [key: string]: any })[field]) {
           ctx.addIssue({
             code: "custom",
             message: `${field} is required for public recipes`,
@@ -182,7 +213,7 @@ export const recipeClientFormSchema = recipeSchema
 export const recipeFormSchema = recipeSchema.superRefine((values, ctx) => {
   if (values.public) {
     ["cook_time", "prep_time", "image_url"].forEach((field) => {
-      if (!values[field]) {
+      if (!(values as { [key: string]: any })[field]) {
         ctx.addIssue({
           code: "custom",
           message: `${field} is required for public recipes`,

@@ -21,9 +21,7 @@ const Step = ({ index, step, ingredients }: StepProps) => {
       <p>{step.text}</p>
       <span>
         <p className="font-bold">Ingredients:</p>{" "}
-        {matchedIngredients
-          .map((ingredient) => ingredient.text)
-          .join(" | ")}
+        {matchedIngredients.map((ingredient) => ingredient.text).join(" | ")}
       </span>
     </section>
   );

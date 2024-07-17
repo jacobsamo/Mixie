@@ -35,12 +35,6 @@
       "type": "image/jpg",
       "sizes": "512x512",
       "purpose": "any"
-    },
-    {
-      "src": "/icons/icon.jpg",
-      "type": "image/jpg",
-      "sizes": "512x512",
-      "purpose": "any"
     }
   ]
 }

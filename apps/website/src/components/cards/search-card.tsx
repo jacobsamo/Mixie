@@ -13,7 +13,6 @@ export const SearchCard = ({
   edit = false,
   recipe,
 }: SearchCardProps) => {
-  const user = useUser();
 
   const Tag = as;
   return (
@@ -23,14 +22,16 @@ export const SearchCard = ({
         alt={recipe?.image_attributes?.alt ?? ""}
         width={100}
         height={100}
-        className="h-32 w-2/5 min-w-32 rounded-lg"
+        className="h-32 w-2/5 min-w-32 rounded-lg object-cover object-center"
       />
 
       {/* {<BookmarkButton user={user} recipe={recipe} />} */}
 
       <div>
         <Link
-          href={`/recipes/${edit ? `/preview/${recipe.recipe_id}/edit` : recipe.id}`}
+          href={`/recipes/${
+            edit ? `/preview/${recipe.recipe_id}/edit` : recipe.id
+          }`}
           className="text-step--2 sm:text-step--1"
         >
           {recipe.title}

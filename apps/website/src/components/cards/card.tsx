@@ -1,6 +1,6 @@
 "use client";
 import useUser from "@/hooks/useUser";
-import { cn } from "@/lib/utils";
+import { cn, displayMinutes } from "@/lib/utils";
 import Link from "next/link";
 import { CardProps, RecipeImage } from "./card-utils";
 
@@ -28,7 +28,7 @@ export const BaseCard = ({
   return (
     <div
       className={cn(
-        "relative flex h-56 w-56 flex-col items-center justify-between rounded-xl  p-2 text-white",
+        "relative flex h-56 w-56 flex-col items-center justify-between rounded-xl p-2 text-white shadow",
         classNames?.container
       )}
     >
@@ -55,7 +55,7 @@ export const BaseCard = ({
               classNames?.cookTime
             )}
           >
-            {recipe.total_time}
+            {displayMinutes(recipe.total_time)}
           </h3>
           {/* {<BookmarkButton user={user} recipe={recipe} />} */}
         </div>
@@ -118,4 +118,3 @@ const CardRectangle = ({ recipe }: CardProps) => {
 };
 
 export { CardRectangle, CardRectangleSmall, CardSquare };
-

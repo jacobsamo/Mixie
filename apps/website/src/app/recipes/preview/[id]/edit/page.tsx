@@ -4,7 +4,7 @@ import { createClient } from "@/server/supabase/server";
 import { Recipe } from "@/types";
 import { notFound, redirect } from "next/navigation";
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 interface EditPageProps {
   params: {

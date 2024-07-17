@@ -28,7 +28,9 @@ export const SearchInput = ({ setSearchResults }: SearchInputProps) => {
     undefined
   );
 
-  const searchUrl = `${mealTime ? `&mealTime=${mealTime}` : ""}${sweetSavoury ? `&sweetSavoury=${sweetSavoury}` : ""}`;
+  const searchUrl = `${mealTime ? `&mealTime=${mealTime}` : ""}${
+    sweetSavoury ? `&sweetSavoury=${sweetSavoury}` : ""
+  }`;
 
   return (
     <div className="flex w-[90%] flex-col gap-4">
@@ -42,7 +44,7 @@ export const SearchInput = ({ setSearchResults }: SearchInputProps) => {
             container: "w-full max-w-full shadow-none",
           }}
           onChange={async (e) => {
-            if (!setSearchResults) return;
+            if (!setSearchResults || e.target.value.length <= 0) return;
 
             const req = await fetch(
               `/api/recipes/search?q=${e.target.value}${searchUrl}`,
@@ -55,6 +57,8 @@ export const SearchInput = ({ setSearchResults }: SearchInputProps) => {
             );
 
             const recipes = await req.json();
+
+            console.log("Recipes-2: ", JSON.stringify(recipes));
             setSearch(e.target.value);
             setSearchResults(recipes);
           }}
@@ -71,7 +75,7 @@ export const SearchInput = ({ setSearchResults }: SearchInputProps) => {
           <FilterIcon />
         </button>
       </div>
-      {showFilters && (
+      {/* {showFilters && (
         <div className="inline-flex w-full gap-2">
           <Select value={mealTime} onValueChange={setMealTime}>
             <SelectTrigger>
@@ -102,7 +106,7 @@ export const SearchInput = ({ setSearchResults }: SearchInputProps) => {
             </SelectContent>
           </Select>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

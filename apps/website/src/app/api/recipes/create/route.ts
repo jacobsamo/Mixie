@@ -1,141 +1,96 @@
-import {
-  getRecipeJsonLd,
-  splitTime
-} from "@/lib/services/recipeJsonLDParsing";
-import { recipe_id } from "@/lib/utils";
+import { isApp } from "@/lib/services/apiMiddleware";
 import { getUser } from "@/lib/utils/getUser";
+import { requestSchema } from "@/lib/utils/recipe-imports";
+import { createRecipeFromImage } from "@/lib/utils/recipe-imports/image";
+import { createRecipeFromLink } from "@/lib/utils/recipe-imports/link";
+import { createRecipeFromText } from "@/lib/utils/recipe-imports/text";
+import { createRecipeFromTitle } from "@/lib/utils/recipe-imports/title";
 import { createClient } from "@/server/supabase/server";
-import { NewRecipe, Recipe, createRecipeSchema } from "@/types";
+import { NewRecipe } from "@/types";
 import { NextResponse, type NextRequest } from "next/server";
-import * as z from "zod";
+import { z } from "zod";
 
-export async function POST(req: NextRequest) {
+// Max duration in seconds
+export const maxDuration = 60;
+
+export async function POST(req: NextRequest, params: { id: string }) {
   try {
+    const app = await isApp(req);
     const user = await getUser();
 
-    if (!user) {
+    if (!user || !app) {
       return NextResponse.json("Unauthorized", { status: 401 });
     }
+
     const json = await req.json();
-    const { title, link } = createRecipeSchema.parse(json);
+    const request = requestSchema.parse(json);
     const supabase = createClient();
 
-    // set global variables
-    let newRecipe: NewRecipe | null = null;
+    let newRecipe: NewRecipe;
 
-    if (title && !link) {
-      const id = recipe_id(title);
-
-      const newTitle = title.charAt(0).toUpperCase() + title.slice(1);
-
-      // the recipe itself
-      newRecipe = {
-        id,
-        title: newTitle,
-        created_by: user.id,
-        public: false,
-        version: "1.0",
-        ingredients: [],
-        steps: [],
-      };
+    switch (request.creation_type) {
+      case "title":
+        if (!request.title) throw Error("Title is required");
+        newRecipe = await createRecipeFromTitle({
+          title: request.title,
+          user_id: user.id,
+        });
+        break;
+      case "image":
+        if (!request.image) throw Error("Image is required", { cause: 400 });
+        newRecipe = await createRecipeFromImage({
+          image: request.image,
+          user_id: user.id,
+        });
+        break;
+      case "link":
+        if (!request.link) throw Error("Link is required", { cause: 400 });
+        newRecipe = await createRecipeFromLink({
+          link: request.link,
+          user_id: user.id,
+        });
+        break;
+      case "upload":
+        if (!request.content)
+          throw Error("Content is required", { cause: 400 });
+        newRecipe = await createRecipeFromText({
+          text: request.content,
+          user_id: user.id,
+        });
+        break;
     }
 
-    if (link) {
-      if (link.includes("mixiecooking.com")) {
-        // split a mixie link to get the recipe id this id would be after /recipes/<recipe_id> a recipe link might look like this: https://mixiecooking.com/recipes/5f9b1b5e-5b1a-4b9e-9b9e-9b9e9b9e9b9e
-        const recipe_id = link.split("/").pop();
-        if (!recipe_id) return NextResponse.json(null, { status: 404 });
-
-        const findRecipe = await supabase
-          .from("recipes")
-          .select()
-          .or(`id.eq.${recipe_id},recipe_id.eq.${recipe_id}`);
-
-        if (!findRecipe) {
-          return NextResponse.json(null, { status: 404 });
-        }
-
-        newRecipe = {
-          ...(findRecipe[0] as Recipe),
-        };
-      }
-
-      // parse the recipe
-      const recipe = await getRecipeJsonLd(link);
-
-      if (!recipe)
-        return NextResponse.json(
-          { message: `No recipe found at ${link}` },
-          {
-            status: 404,
-          }
-        );
-
-      newRecipe = {
-        id: recipe_id(recipe.name),
-        title: recipe.name,
-        description: recipe.description.replace(/<[^>]*>?/gm, "") || null,
-        public: false,
-        steps:
-          recipe.recipeInstructions.map((step: string) => {
-            return { step_body: step };
-          }) || null,
-        ingredients: recipe.recipeIngredient,
-        source: link,
-        cook_time: splitTime(recipe.cookTime),
-        prep_time: splitTime(recipe.prep_timeTime),
-        total_time: splitTime(recipe.totalTime),
-        rating: recipe.aggregateRating?.ratingValue || null,
-        yield: recipe.recipeYield || null,
-        image_url: recipe.image.url || null,
-        image_attributes: recipe.image.alt || recipe.name || "recipe image",
-        keywords: recipe.keywords.split(",").map((keyword: string) => {
-          return { value: keyword };
-        }),
-        ingredients_list: recipe.recipeIngredient.join(", "),
-        created_by: user.id,
-        version: "1.0",
-      };
-    }
-
-    if (!newRecipe)
-      return NextResponse.json(
-        { message: "Error could not create recipe" },
-        { status: 404 }
-      );
-
-    const { data, error } = await supabase
+    const { data: createRecipe, error } = await supabase
       .from("recipes")
-      .insert(newRecipe)
+      .insert({
+        ...newRecipe,
+        created_by: user.id,
+        public: false,
+        version: "1.0",
+      })
       .select()
       .single();
 
     if (error) {
-      console.error("Error on /recipes/create", error);
-      return NextResponse.json(
-        "A database error occurred, contact support at support@mixiecooking.com or head to github to log an issue https://github.com/Eirfire/Mixie/issues",
-        { status: 422 }
-      );
+      console.error("Error on /recipes/[id]/create", error);
+      return NextResponse.json(null, { status: 500 });
     }
 
-    console.log(`Created recipe by link: ${data?.recipe_id}`, {
-      message: `Recipe successfully created`,
-      recipe: data,
+    return NextResponse.json({
+      message: "Rating updated successfully",
+      recipe_id: createRecipe.recipe_id,
     });
-
-    return NextResponse.json(
-      {
-        message: `Recipe successfully created using link`,
-        id: data?.recipe_id,
-      },
-      {
-        status: 200,
-      }
-    );
   } catch (error) {
-    console.error("Error on /recipes/create", error);
+    console.error("Error on /recipes/[id]/setRating", error);
+
     if (error instanceof z.ZodError) {
       return NextResponse.json(JSON.stringify(error.issues), { status: 422 });
+    }
+
+    if (error instanceof Error) {
+      return NextResponse.json(error.message, {
+        status: error.cause as number,
+      });
     }
 
     return NextResponse.json(null, { status: 500 });

@@ -1,9 +1,9 @@
-import RecipePageComponent from "@/components/recipe-page/recipe-page";
+import RecipePageComponent from "@/components/recipe-page";
 import { getRecipes } from "@/lib/services/data_fetching";
 import { constructMetadata } from "@/lib/utils";
 import type { Recipe } from "@/types";
-import { RecipeJsonLd } from "next-seo";
 import { notFound } from "next/navigation";
+import { HowToStep, Recipe as RecipeSchema } from "schema-dts";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const recipes = await getRecipes();
@@ -19,37 +19,63 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   });
 }
 
-export default async function RecipePage({ params }) {
+export default async function RecipePage({
+  params,
+}: { params: { id: string } }) {
   const recipes = await getRecipes();
   const recipe = recipes?.find((recipe) => recipe.id == params.id);
-  
+
+  const date = recipe?.created_at
+    ? new Date(recipe?.created_at).toString()
+    : new Date().toString();
+
+  const schema: RecipeSchema = {
+    "@type": "Recipe",
+    name: recipe?.title,
+    image: {
+      "@type": "ImageObject",
+      url:
+        recipe?.image_url ??
+        `https://www.mixiecooking.com/recipes/${recipe?.id}/og`,
+      width: recipe?.image_attributes?.width?.toString() ?? "800",
+      height: recipe?.image_attributes?.height?.toString() ?? "600",
+    },
+    description: recipe?.description || "",
+    recipeIngredient: recipe?.ingredients.map((ingredient) => ingredient.text),
+    recipeInstructions: recipe?.steps.map((step, index) => {
+      return {
+        "@type": "HowToStep",
+        text: step.text,
+      } as HowToStep;
+    }),
+    recipeYield: recipe?.yield?.toString() ?? "1",
+    recipeCategory: recipe?.category ?? "Main Course",
+    recipeCuisine: recipe?.cuisine ?? "International",
+    keywords: recipe?.keywords?.join(", ") ?? [],
+    cookTime: `PT${recipe?.cook_time}M`,
+    prepTime: `PT${recipe?.prep_time}M`,
+    totalTime: `PT${recipe?.total_time}M`,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: recipe?.rating ?? 0,
+    },
+    datePublished: date,
+    dateCreated: date,
+    dateModified: date,
+    version: recipe?.version,
+  };
+
   if (recipe) {
     return (
       <>
-        <RecipeJsonLd
-          useAppDir={true}
-          name={recipe?.title || ""}
-          authorName={""}
-          yields={recipe?.yield?.toString() || ""}
-          ingredients={recipe.ingredients.map((ingredient) => ingredient.text)}
-          instructions={
-            recipe?.steps?.map((step, index) => {
-              return {
-                name: `Step ${index + 1}`,
-                text: step.text,
-              };
-            }) || []
-          }
-          description={recipe.description! || ""}
-          datePublished={
-            recipe.created_at
-              ? new Date(recipe.created_at).toDateString()
-              : new Date().toDateString()
-          }
-          keywords={
-            recipe.keywords?.map((keyword) => keyword).join(", ") || ""
-          }
-        />
+        <head>
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org/",
+              ...schema,
+            })}
+          </script>
+        </head>
         <RecipePageComponent recipe={recipe as Recipe} />
       </>
     );

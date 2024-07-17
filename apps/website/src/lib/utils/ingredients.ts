@@ -3,6 +3,20 @@ import { Amount, Step, type Ingredient } from "@/types";
 import Fraction from "fraction.js";
 import * as fuzzball from "fuzzball";
 
+export const units: { [key: string]: string[] } = {
+  tsp: ["tsp", "teaspoon", "teaspoons", "t", "tsps"],
+  tbsp: ["tbsp", "tablespoon", "tablespoons", "T", "tbsps"],
+  grams: ["grams", "gram", "g", "gm", "gs"],
+  kg: ["kg", "kgs", "kilogram", "kilograms"],
+  cup: ["cup", "cups", "c"],
+  ml: ["ml", "milliliter", "milliliters"],
+  litre: ["litre", "litres", "l"],
+};
+
+const findUnitMatch = (ingredient: string) => {
+  return ingredient.match(/(\d+(?:\s\d+\/\d+|\/\d+)?)(?:\s*([a-zA-Z]+))?/i);
+};
+
 /**
  * Removes all non word letters e.g , . / ( )
  * @param {string} str string to input
@@ -26,11 +40,15 @@ export function matchIngredients(ingredients: Ingredient[], step: Step) {
   const found: Ingredient[] = [];
 
   ingredients.forEach((passed, index, arr) => {
-    if (passed.isHeading || !passed.text) return;
+    let text = passed.text;
+
+    const unitMatch = findUnitMatch(text);
+    if (unitMatch) text = text.replace(unitMatch[0], "");
+    if (passed.isHeading || !text) return;
     // get rid of any unwanted characters
-    const ingredient = normalizeString(passed.text);
+    const ingredient = normalizeString(text);
     // remove not word characters and split into parts
-    const ingredientArr = normalizeString(passed.text).split(/\s+|\,/);
+    const ingredientArr = normalizeString(text).split(/\s+|\,/);
 
     // loop over each word
     stepWords.forEach((step_word, word_index, word_arr) => {
@@ -43,7 +61,7 @@ export function matchIngredients(ingredients: Ingredient[], step: Step) {
       if (ingredientArr.includes(step_word)) {
         /*
         Find the index of the word, get the length of the ingredient 
-        get a certain number of chacters before asnd after, 
+        get a certain number of chacters before and after, 
         get rid of spaces
         */
         const newString = stepWords
@@ -52,35 +70,49 @@ export function matchIngredients(ingredients: Ingredient[], step: Step) {
 
         const ratio = fuzzball.ratio(newString, ingredient);
 
-        if (ratio >= 45) found.push(passed);
+        if (ratio >= 50) found.push(passed);
+        return;
       }
+      return;
     });
   });
 
-  return found.filter((v, i, a) => a.findIndex((t) => t.text === v.text) === i);
+  return found.filter((v, i, a) => a.findIndex((t) => t.text == v.text) == i);
 }
 
 /**
- * Takes in a cup unit e.g cup, tsp, tbsp and return it. as we have to calculate fractions
- * @param {Ingredient["quantity"]} quantity
- * @param {Amount} amount
- * @param {number} batchAmount
- * @returns { quantity: Ingredient["quantity"]; amount: Amount } calculated cup units
+ * Takes in a fraction or whole number as a string and multiplies it by batchAmount,
+ * returning the result as a formatted fraction.
+ * @param {string} amount - The amount string representing a fraction or whole number.
+ * @param {number} batchAmount - The amount to multiply by.
+ * @returns {string} - The formatted result as a fraction.
  */
-function calculateCupUnits(amount: Amount, batchAmount: number): {} {
-  const fr = amount.split("/");
+function calculateFractionalUnit(amount: string, batchAmount: number): string {
+  const amountTrimmed = amount.trim();
 
-  const value = (Number(fr[0]) / Number(fr[1])) * batchAmount;
-  const fraction = new Fraction(value).toFraction(true);
-  const split = fraction.split(" ");
-  const newQuantity = split.length > 1 ? parseInt(split[0]) : null;
-  const newMeasurement =
-    split.length > 1 ? (split[1] as Amount) : (split[0] as Amount);
+  // Check if the amount is a mixed number (e.g., "2 2/3")
+  if (amountTrimmed.includes(" ")) {
+    const parts = amountTrimmed.split(" ");
+    const wholeNumber = Number(parts[0]);
+    const fractionPart = parts[1];
+    const [numerator, denominator] = fractionPart.split("/").map(Number);
 
-  return {
-    quantity: newQuantity,
-    amount: newMeasurement,
-  };
+    // Calculate the value as a mixed number
+    const totalValue = wholeNumber + numerator / denominator;
+    const multipliedValue = totalValue * batchAmount;
+
+    // Return the formatted fraction
+    return new Fraction(multipliedValue).toFraction(true);
+  } else if (amountTrimmed.includes("/")) {
+    // Handle normal fractions (e.g., "1/2")
+    const [numerator, denominator] = amountTrimmed.split("/").map(Number);
+    const multipliedValue = (numerator / denominator) * batchAmount;
+    return new Fraction(multipliedValue).toFraction(true);
+  } else {
+    // Handle simple whole numbers (e.g., "3")
+    const value = parseInt(amountTrimmed, 10) * batchAmount;
+    return new Fraction(value).toFraction(true);
+  }
 }
 
 /**
@@ -95,9 +127,49 @@ export function calculateIngredient(
 ): Ingredient {
   if (ingredient.isHeading) return ingredient;
 
-  //TODO: rewrite the caluclation logic
+  // will match the first digit in a string and the value after it
+  const match = findUnitMatch(ingredient.text);
 
-  return ingredient;
+  if (!match) return ingredient;
+
+  const [fullMatch, amount, unit] = match;
+  const unitKey = Object.keys(units).find((key) =>
+    units[key].includes(unit?.toLowerCase())
+  );
+
+  let newAmount = amount;
+  switch (unitKey) {
+    case "tsp":
+    case "tbsp":
+    case "cup":
+      newAmount = `${calculateFractionalUnit(amount, batchAmount)} ${unitKey}`;
+      break;
+    case "grams":
+      const gramQuantity = Number(amount) * batchAmount;
+      newAmount = `${
+        gramQuantity >= 1000 ? gramQuantity / 1000 : gramQuantity
+      } ${gramQuantity >= 1000 ? "kg" : "grams"}`;
+      break;
+    case "ml":
+      const mlQuantity = Number(amount) * batchAmount;
+      newAmount = `${mlQuantity >= 1000 ? mlQuantity / 1000 : mlQuantity} ${
+        mlQuantity >= 1000 ? "litre" : "ml"
+      }`;
+      break;
+    default:
+      const isFraction = amount.includes("/");
+      if (isFraction) {
+        newAmount = `${calculateFractionalUnit(amount, batchAmount)} ${unit}`;
+        break;
+      }
+      newAmount = `${Number(amount) * batchAmount} ${unit}`;
+      break;
+  }
+
+  return {
+    isHeading: false,
+    text: ingredient.text.replace(fullMatch, newAmount),
+  };
 }
 
 /**

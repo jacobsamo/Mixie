@@ -3,6 +3,8 @@ import { CreateRecipeTrigger } from "@/components/open-dialogs";
 import { Ingredient, Step as StepType } from "@/types";
 import React from "react";
 import Step from "./step";
+import useUser from "@/hooks/useUser";
+import { useRecipeContext } from "../recipe-provider";
 
 interface StepContainerProps {
   steps: StepType[];
@@ -15,7 +17,9 @@ const StepContainer = ({
   ingredients,
   className,
 }: StepContainerProps) => {
+  const { viewMode } = useRecipeContext();
   const [checked, setChecked] = React.useState(false);
+  const user = useUser();
 
   return (
     <div className="flex flex-col gap-8">
@@ -29,10 +33,12 @@ const StepContainer = ({
           />
         ))}
       </ul>
-      <CreateRecipeTrigger
-        className="mx-auto w-10/12 sm:w-1/2"
-        text="Create your own recipe"
-      />
+      {user && viewMode === "page" && (
+        <CreateRecipeTrigger
+          className="mx-auto w-10/12 sm:w-1/2"
+          text="Create your own recipe"
+        />
+      )}
     </div>
   );
 };

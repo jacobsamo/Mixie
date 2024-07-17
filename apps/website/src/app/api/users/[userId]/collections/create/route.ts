@@ -22,13 +22,16 @@ export async function POST(
     const json = await req.json();
     const collection = collectionSchema.parse(json);
 
-
     const newCollection: Collection = {
       ...collection,
       user_id: user!.id,
     };
     const supabase = createClient();
-    const {data} = await supabase.from("collections").insert(newCollection).select().single();
+    const { data } = await supabase
+      .from("collections")
+      .insert(newCollection)
+      .select()
+      .single();
 
     console.log(`Created collection: ${data!.collection_id}`, {
       message: `Collection successfully created`,

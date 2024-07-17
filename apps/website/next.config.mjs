@@ -12,6 +12,12 @@ const nextConfig = {
   images: {
     remotePatterns: [{ protocol: "https", hostname: "*" }],
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "3mb",
+    },
+    optimizePackageImports: ["posthog-js", "posthog-node", "next-axiom"],
+  },
 };
 
 export default withAxiom(nextConfig);

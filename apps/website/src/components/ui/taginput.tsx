@@ -69,10 +69,7 @@ const TagInput = ({
           </span>
         ))}
       </div>
-      <Input
-        onKeyDown={handleKeyDown}
-        {...props}
-      />
+      <Input onKeyDown={handleKeyDown} {...props} />
     </div>
   );
 };
