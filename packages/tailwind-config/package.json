@@ -1,0 +1,16 @@
+{
+  "name": "@mixie/tailwind-config",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": "./tailwind.config.ts"
+  },
+  "devDependencies": {
+    "@mixie/tsconfig": "workspace:*"
+
+  }
+}

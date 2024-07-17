@@ -1,36 +1,32 @@
 {
   "name": "mixie",
   "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "start": "turbo start",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "@manypkg/cli": "^0.21.4",
+    "eslint": "^9.7.0",
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.6.5",
+    "turbo": "^2.0.6",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "bun@1.1.20",
   "workspaces": [
     "packages/*",
     "apps/*",
     "packages/email/*"
   ],
-  "engines": {
-    "node": "20.x"
-  },
-  "scripts": {
-    "build": "turbo run build",
-    "start": "turbo run start",
-    "dev": "turbo run dev",
-    "clean:all": "turbo run clean:all && rm -rf node_modules/ && rm -rf .turbo",
-    "format": "biome format --write .",
-    "lint": "turbo lint && manypkg check",
-    "typecheck": "turbo typecheck"
-  },
-  "dependencies": {
-    "@manypkg/cli": "^0.21.4",
-    "@turbo/gen": "^1.13.4",
-    "dotenv-cli": "^7.4.2",
-    "turbo": "2.0.4"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.7.3"
-  },
   "trustedDependencies": [
-    "@biomejs/biome",
     "@vercel/speed-insights",
     "core-js-pure"
-  ],
-  "packageManager": "bun@1.1.17"
+  ]
 }

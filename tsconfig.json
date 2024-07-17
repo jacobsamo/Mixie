@@ -1,0 +1,3 @@
+{
+  "extends": "@mixie/tsconfig/base.json"
+}

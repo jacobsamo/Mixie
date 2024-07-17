@@ -1,13 +1,10 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": [
-    "**/.env.*local"
-  ],
+  "globalDependencies": ["**/.env.*local"],
   "tasks": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "env": [
         "NEXT_PUBLIC_*",
         "NODE_ENV",
@@ -21,21 +18,10 @@
         "RESEND_API_KEY",
         "VERCEL_URL"
       ],
-      "outputs": [
-        ".next/**",
-        "!.next/cache/**"
-      ]
-    },
-    "start": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "dist/**",
-        ".next/**"
-      ]
+      "outputs": [".next/**", "!.next/cache/**"]
     },
     "lint": {
+      "dependsOn": ["^lint"],
       "cache": false
     },
     "dev": {
