@@ -42,7 +42,7 @@ const Upload = () => {
         // onUploadBegin={() => setLoading(true)}
         onClientUploadComplete={(res) => {
           // Do something with the response
-          res && setImages(res[0].url);
+          res && res[0] && setImages(res[0].serverData.url);
 
           // setLoading(false);
           toast.success("Image uploaded!");

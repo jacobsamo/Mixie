@@ -1,6 +1,6 @@
 "use client";
-
 import * as React from "react";
+import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react";
@@ -19,6 +19,7 @@ type CarouselProps = {
   plugins?: CarouselPlugin;
   orientation?: "horizontal" | "vertical";
   setApi?: (api: CarouselApi) => void;
+  autoplay?: boolean;
 };
 
 type CarouselContextProps = {
@@ -54,6 +55,7 @@ const Carousel = React.forwardRef<
       plugins,
       className,
       children,
+      autoplay = false,
       ...props
     },
     ref
@@ -63,7 +65,7 @@ const Carousel = React.forwardRef<
         ...opts,
         axis: orientation === "horizontal" ? "x" : "y",
       },
-      plugins
+      autoplay == true ? [Autoplay({ delay: 3000 })] : plugins
     );
     const [canScrollPrev, setCanScrollPrev] = React.useState(false);
     const [canScrollNext, setCanScrollNext] = React.useState(false);
@@ -137,7 +139,7 @@ const Carousel = React.forwardRef<
         <div
           ref={ref}
           onKeyDownCapture={handleKeyDown}
-          className={cn("relative", className)}
+          className={cn("relative w-full", className)}
           role="region"
           aria-roledescription="carousel"
           {...props}

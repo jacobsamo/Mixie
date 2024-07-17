@@ -29,8 +29,8 @@ const ImageForm = ({ uploadedImage, setUploadedImage }: ImageFormProps) => {
   return (
     <>
       <Dropzone
-        onDrop={(acceptedFiles) => {
-          handleFileChange(acceptedFiles[0]);
+        onDrop={(acceptedFiles: File[]) => {
+          handleFileChange(acceptedFiles[0]!);
         }}
         maxFiles={1}
         maxSize={1024 * 1024 * 3}
@@ -53,8 +53,10 @@ const ImageForm = ({ uploadedImage, setUploadedImage }: ImageFormProps) => {
               </div>
             )}
             {uploadedImage && (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={uploadedImage}
+                alt="uploaded image"
                 className="h-full w-full rounded-lg object-cover"
               />
             )}

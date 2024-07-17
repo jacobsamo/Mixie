@@ -94,11 +94,11 @@ function calculateFractionalUnit(amount: string, batchAmount: number): string {
   if (amountTrimmed.includes(" ")) {
     const parts = amountTrimmed.split(" ");
     const wholeNumber = Number(parts[0]);
-    const fractionPart = parts[1];
+    const fractionPart = parts[1]!;
     const [numerator, denominator] = fractionPart.split("/").map(Number);
 
     // Calculate the value as a mixed number
-    const totalValue = wholeNumber + numerator / denominator;
+    const totalValue = wholeNumber + numerator! / denominator!;
     const multipliedValue = totalValue * batchAmount;
 
     // Return the formatted fraction
@@ -106,7 +106,7 @@ function calculateFractionalUnit(amount: string, batchAmount: number): string {
   } else if (amountTrimmed.includes("/")) {
     // Handle normal fractions (e.g., "1/2")
     const [numerator, denominator] = amountTrimmed.split("/").map(Number);
-    const multipliedValue = (numerator / denominator) * batchAmount;
+    const multipliedValue = (numerator! / denominator!) * batchAmount;
     return new Fraction(multipliedValue).toFraction(true);
   } else {
     // Handle simple whole numbers (e.g., "3")
@@ -134,7 +134,7 @@ export function calculateIngredient(
 
   const [fullMatch, amount, unit] = match;
   const unitKey = Object.keys(units).find((key) =>
-    units[key].includes(unit?.toLowerCase())
+    units[key]!.includes(unit?.toLowerCase()!)
   );
 
   let newAmount = amount;
@@ -142,7 +142,7 @@ export function calculateIngredient(
     case "tsp":
     case "tbsp":
     case "cup":
-      newAmount = `${calculateFractionalUnit(amount, batchAmount)} ${unitKey}`;
+      newAmount = `${calculateFractionalUnit(amount!, batchAmount)} ${unitKey}`;
       break;
     case "grams":
       const gramQuantity = Number(amount) * batchAmount;
@@ -157,9 +157,9 @@ export function calculateIngredient(
       }`;
       break;
     default:
-      const isFraction = amount.includes("/");
+      const isFraction = amount!.includes("/");
       if (isFraction) {
-        newAmount = `${calculateFractionalUnit(amount, batchAmount)} ${unit}`;
+        newAmount = `${calculateFractionalUnit(amount!, batchAmount)} ${unit}`;
         break;
       }
       newAmount = `${Number(amount) * batchAmount} ${unit}`;

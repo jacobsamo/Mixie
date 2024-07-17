@@ -21,7 +21,7 @@ function getRandomTexts() {
   const randomTexts: string[] = [];
   for (let i = 0; i < 3; i++) {
     const randomIndex = Math.floor(Math.random() * texts.length);
-    randomTexts.push(texts[randomIndex]);
+    randomTexts.push(texts.at(randomIndex)!);
   }
   return randomTexts;
 }
@@ -61,7 +61,7 @@ export default function LandingText({ delay }: IAnimTextProps) {
     });
 
     return () => controls.stop();
-  }, [delay]);
+  }, [count, delay]);
 
   useEffect(() => {
     animate(textsCount, 60, {

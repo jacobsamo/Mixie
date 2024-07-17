@@ -44,7 +44,7 @@ export default async function RecipeViewPage({
           }
         />
 
-        {meal_times.map((meal_time) => {
+        {/* {meal_times.map((meal_time) => {
           const DisplayIcon = () => {
             switch (meal_time.value) {
               case "breakfast":
@@ -73,7 +73,7 @@ export default async function RecipeViewPage({
               }
             />
           );
-        })}
+        })} */}
       </div>
 
       {mealTime && (

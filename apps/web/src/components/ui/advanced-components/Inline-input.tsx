@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/tooltip";
 import { HelpCircleIcon } from "lucide-react";
 import type { FieldError } from "react-hook-form";
-import Error from "../Error";
+import Error from "../error";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {

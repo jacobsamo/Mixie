@@ -14,13 +14,13 @@ export function parseDuration(time: string): number {
 
   const hoursMatch = time.match(hoursRegex);
   if (hoursMatch) {
-    const hours = parseInt(hoursMatch[1]);
+    const hours = parseInt(hoursMatch[1]!);
     totalMinutes += hours * 60;
   }
 
   const minutesMatch = time.match(minutesRegex);
   if (minutesMatch) {
-    const minutes = parseInt(minutesMatch[1]);
+    const minutes = parseInt(minutesMatch[1]!);
     totalMinutes += minutes;
   }
 

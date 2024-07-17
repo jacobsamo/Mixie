@@ -38,7 +38,7 @@ const SearchUpload = () => {
 
   useEffect(() => {
     refetchImages();
-  }, [unsplashImageSearch]);
+  }, [refetchImages, unsplashImageSearch]);
 
   const imageUrl = watch("image_url");
 

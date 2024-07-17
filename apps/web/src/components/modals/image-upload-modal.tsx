@@ -62,7 +62,7 @@ const ImageUploadDialog = ({
             onUploadBegin={() => setLoading(true)}
             onClientUploadComplete={(res) => {
               // Do something with the response
-              setImage && res && setImage(res[0].url);
+              setImage && res && res[0] && setImage(res[0].serverData.url);
 
               setLoading(false);
               toast.success("Image uploaded!");

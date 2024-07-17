@@ -97,7 +97,7 @@ export default function Privacy_PolicyPage() {
               marketing purposes. However, we may share your information with
               service providers who assist us in delivering our products and
               services. We will also disclose information if required by law or
-              if we believe it's necessary to protect our rights or the rights
+              if we believe it&apos;s necessary to protect our rights or the rights
               of others.
             </p>
           </li>
@@ -119,7 +119,7 @@ export default function Privacy_PolicyPage() {
               updates. You can request access to your information, which may
               take up to 24 hours to process. Additionally, you have the option
               to delete your MixieCooking account; however, please note that
-              this action won't delete your recipes. For more details.
+              this action won&apos;t delete your recipes. For more details.
               {/* For more details, please read
               our [Account Deletion Policy](#link-to-account-deletion-policy). */}
             </p>

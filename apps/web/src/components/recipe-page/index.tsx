@@ -26,15 +26,17 @@ const RecipePageComponent = ({
   return (
     <RecipeProvider recipe={recipe} viewMode={viewMode}>
       <RecipePrintingView />
-      <div className="mb-14 flex flex-col justify-center items-center print:hidden">
-        <div className="flex flex-wrap items-center gap-4">
+      <div className="mb-14 flex flex-col w-full justify-center items-center print:hidden">
+        <span className="flex flex-wrap items-center gap-4">
           <h1 id="title" className="text-center text-step2 font-semibold">
             {recipe.title}
           </h1>
           {viewMode === "page" && <StarRating />}
-        </div>
+        </span>
+
         <Info />
-        <div>
+
+        <div className="md:max-w-[800px]">
           <div className="relative">
             <Image
               src={recipe?.image_url || "/images/placeholder.webp"}
@@ -70,6 +72,7 @@ const RecipePageComponent = ({
                 </div>
               )}
           </div>
+
           <div className="py-2">
             <span className="relative flex flex-wrap gap-2">
               {recipe?.keywords?.splice(0, 5).map((keyword, index) => (
@@ -103,15 +106,16 @@ const RecipePageComponent = ({
               />
             </span>
           </div>
-          <p className="md:w-9/12">{recipe.description}</p>
+          <p className="text-wrap w-full">{recipe.description}</p>
         </div>
         {recipe.notes && (
-          <div className="mt-4">
+          <div className="mt-4  md:max-w-[800px]">
             <h2 className="font-bold">Notes*: </h2>
-            <p className="italic">{recipe.notes}</p>
+            <p className="italic text-wrap">{recipe.notes}</p>
           </div>
         )}
         <span className="my-2 mb-4 h-[0.125rem] w-full rounded-md bg-grey dark:bg-white md:w-[800px]" />
+
         <Details />
       </div>
     </RecipeProvider>

@@ -18,7 +18,7 @@ export default function Terms_ServicesPage() {
             our various properties.
           </p>
           <p>
-            These Terms of Service ("Agreement") govern your use of the
+            These Terms of Service (&quot;Agreement&quot;) govern your use of the
             MixieCooking website, app located at{" "}
             <Link
               href="https://mixiecooking.com"
@@ -28,7 +28,7 @@ export default function Terms_ServicesPage() {
               https://mixiecooking.com
             </Link>{" "}
             and any related services provided by MixieCooking (collectively, the
-            "Service").
+            &quot;Service&quot;).
           </p>
 
           <p>
@@ -140,7 +140,7 @@ export default function Terms_ServicesPage() {
             <section>
               <p>
                 Our website and the materials on our website are provided on an
-                'as is' basis. To the extent permitted by law, MixieCooking
+                &apos;as is&apos; basis. To the extent permitted by law, MixieCooking
                 makes no warranties, expressed or implied, and hereby disclaims
                 and negates all other warranties including, without limitation,
                 implied warranties or conditions of merchantability, fitness for
@@ -158,7 +158,7 @@ export default function Terms_ServicesPage() {
               </p>
               <br />
               <p>
-                In the context of this agreement, "consequential loss" includes
+                In the context of this agreement, &quot;consequential loss&quot; includes
                 any consequential loss, indirect loss, real or anticipated loss
                 of profit, loss of benefit, loss of revenue, loss of business,
                 loss of goodwill, loss of opportunity, loss of savings, loss of
@@ -212,7 +212,7 @@ export default function Terms_ServicesPage() {
             Third-Party Links
             <section>
               The Services may contain links to third-party services such as
-              third-party websites, applications, or ads ("Third-Party Links").
+              third-party websites, applications, or ads (&quot;Third-Party Links&quot;).
               When you click on such a link, we will not warn you that you are
               about to or have left the Services. MixieCooking does not control
               and is not responsible for Third-Party Links. We provide these

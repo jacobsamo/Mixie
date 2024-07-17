@@ -1,17 +1,5 @@
 "use client";
 import { Input } from "@/components/ui/advanced-components/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  dietaryRequirements,
-  meal_times,
-  sweet_savoury,
-} from "@/lib/services/data";
 import { env } from "env";
 import { FilterIcon } from "lucide-react";
 import React, { useState } from "react";

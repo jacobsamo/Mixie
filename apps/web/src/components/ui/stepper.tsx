@@ -460,6 +460,7 @@ const Step = React.forwardRef<HTMLLIElement, StepProps>(
     return renderStep();
   }
 );
+Step.displayName = "Step";
 
 // <---------- VERTICAL STEP ---------->
 
@@ -639,6 +640,7 @@ const VerticalStep = React.forwardRef<HTMLDivElement, VerticalStepProps>(
     );
   }
 );
+VerticalStep.displayName = "Vertical Step";
 
 // <---------- HORIZONTAL STEP ---------->
 
@@ -745,6 +747,7 @@ const HorizontalStep = React.forwardRef<HTMLDivElement, StepSharedProps>(
     );
   }
 );
+HorizontalStep.displayName = "Horizontal Step";
 
 // <---------- STEP BUTTON CONTAINER ---------->
 
@@ -929,7 +932,7 @@ const StepIcon = React.forwardRef<HTMLDivElement, StepIconProps>(
     ]);
   }
 );
-
+StepIcon.displayName = "Step Icon";
 // <---------- STEP LABEL ---------->
 
 interface StepLabelProps {
