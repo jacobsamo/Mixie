@@ -2,7 +2,7 @@ import { CardRecipe, SearchCard } from "@/components/cards";
 import { getUsers } from "@/lib/services/data_fetching";
 import { constructMetadata } from "@/lib/utils/";
 import { getUser } from "@/lib/utils/getUser";
-import { createClient } from "@/server/supabase/server";
+import { createClient } from "@mixie/supabase/server";
 import { User } from "@supabase/supabase-js";
 import { Heart, Pencil, ScrollText } from "lucide-react";
 import { Metadata } from "next";
@@ -54,7 +54,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   if (user) {
     return (
       <>
-        <div className="m-auto mt-4 flex flex-col items-center justify-center rounded-xl bg-white p-1 shadow-main sm:w-full md:w-3/5 lg:h-80 dark:bg-grey dark:shadow-none">
+        <div className="shadow-main m-auto mt-4 flex flex-col items-center justify-center rounded-xl bg-white p-1 dark:bg-grey dark:shadow-none sm:w-full md:w-3/5 lg:h-80">
           <Image
             src={user.profile_picture || "/images/placeholder.webp"}
             alt={user.full_name || "default-profile"}

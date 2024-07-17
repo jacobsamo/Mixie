@@ -1,5 +1,5 @@
 import { CardRecipe, SearchCard } from "@/components/cards";
-import { createClient } from "@/server/supabase/server";
+import { createClient } from "@mixie/supabase/server";
 
 interface DraftsPageProps {
   params: {

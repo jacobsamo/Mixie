@@ -173,7 +173,7 @@ const LoginPage = () => {
                 <Link
                   href="https://mixiecooking.com/info/terms_service"
                   target="_blank"
-                  className="text-[#188FA7] underline underline-offset-2"
+                  className="text-yellow underline underline-offset-2"
                 >
                   Terms of Service
                 </Link>{" "}
@@ -181,7 +181,7 @@ const LoginPage = () => {
                 <Link
                   href="https://mixiecooking.com/info/privacy_policy"
                   target="_blank"
-                  className="text-[#188FA7] underline underline-offset-2"
+                  className="text-yellow underline underline-offset-2"
                 >
                   Privacy Policy
                 </Link>
