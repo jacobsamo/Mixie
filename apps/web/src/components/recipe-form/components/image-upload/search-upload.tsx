@@ -70,7 +70,7 @@ const SearchUpload = () => {
             className={cn(
               "relative flex aspect-video h-[150px] w-[200px] flex-col items-center justify-center rounded-xl",
               {
-                "ring-2 ring-ring ring-offset-2":
+                "ring-ring ring-2 ring-offset-2":
                   photo.urls.regular === imageUrl,
                 "opacity-80": photo.urls.regular !== imageUrl,
               }

@@ -58,7 +58,7 @@ const Details = () => {
         className={cn(
           "flex w-full flex-row items-center gap-x-[50%] px-2 pb-2 md:w-[800px]",
           {
-            "dark:bg-grey shadow border mx-2 my-2 rounded-md p-1":
+            "mx-2 my-2 rounded-md border p-1 shadow dark:bg-grey":
               window.innerWidth <= 768,
           }
         )}
@@ -105,7 +105,7 @@ const Details = () => {
 
       <section className="flex w-full flex-row md:w-[800px] md:gap-4 lg:gap-8">
         {ingredientOpen && (
-          <div className="flex h-fit w-full min-w-[250px] flex-col items-start rounded-lg bg-white p-2 shadow md:w-60 dark:bg-grey ">
+          <div className="flex h-fit w-full min-w-[250px] flex-col items-start rounded-lg bg-white p-2 shadow dark:bg-grey md:w-60">
             <AddBatch add={add} setAdd={setAdd} />
             <ul>
               {calculatedIngredients.map((ingredient, index) => {

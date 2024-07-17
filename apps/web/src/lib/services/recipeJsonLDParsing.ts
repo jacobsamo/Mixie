@@ -92,7 +92,6 @@ export const getRecipeJsonLd = async (link: string) => {
     }
   });
 
-
   return recipe;
 };
 

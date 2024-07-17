@@ -39,17 +39,17 @@ const ImageForm = ({ uploadedImage, setUploadedImage }: ImageFormProps) => {
         {({ getRootProps, getInputProps }) => (
           <div
             {...getRootProps()}
-            className="flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-gray-300 border-dashed bg-gray-700 hover:bg-gray-600"
+            className="flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-700 hover:bg-gray-600"
           >
             {!uploadedImage && (
-              <div className="flex flex-col items-center justify-center pt-5 pb-6">
+              <div className="flex flex-col items-center justify-center pb-6 pt-5">
                 <Upload className="mb-3 h-10 w-10 text-gray-400" />
-                <p className="mb-2 text-gray-400 text-sm">
+                <p className="mb-2 text-sm text-gray-400">
                   <span className="font-semibold">Click to upload</span> or drag
                   and drop
                 </p>
-                <p className="text-gray-400 text-xs">PNG, JPG</p>
-                <p className="text-gray-400 text-xs">Max size 3mb</p>
+                <p className="text-xs text-gray-400">PNG, JPG</p>
+                <p className="text-xs text-gray-400">Max size 3mb</p>
               </div>
             )}
             {uploadedImage && (

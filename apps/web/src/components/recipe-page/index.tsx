@@ -26,7 +26,7 @@ const RecipePageComponent = ({
   return (
     <RecipeProvider recipe={recipe} viewMode={viewMode}>
       <RecipePrintingView />
-      <div className="mb-14 flex flex-col w-full justify-center items-center print:hidden">
+      <div className="mb-14 flex w-full flex-col items-center justify-center print:hidden">
         <span className="flex flex-wrap items-center gap-4">
           <h1 id="title" className="text-center text-step2 font-semibold">
             {recipe.title}
@@ -106,12 +106,12 @@ const RecipePageComponent = ({
               />
             </span>
           </div>
-          <p className="text-wrap w-full">{recipe.description}</p>
+          <p className="w-full text-wrap">{recipe.description}</p>
         </div>
         {recipe.notes && (
-          <div className="mt-4  md:max-w-[800px]">
+          <div className="mt-4 md:max-w-[800px]">
             <h2 className="font-bold">Notes*: </h2>
-            <p className="italic text-wrap">{recipe.notes}</p>
+            <p className="text-wrap italic">{recipe.notes}</p>
           </div>
         )}
         <span className="my-2 mb-4 h-[0.125rem] w-full rounded-md bg-grey dark:bg-white md:w-[800px]" />

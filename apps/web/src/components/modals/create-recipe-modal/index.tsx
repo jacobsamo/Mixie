@@ -162,14 +162,14 @@ const CreateRecipeDialog = () => {
                 {createRecipeModes.map((mode) => (
                   <Button
                     key={mode.value}
-                    className="flex h-full w-full flex-col gap-2 shadow border border-secondary/30"
+                    className="border-secondary/30 flex h-full w-full flex-col gap-2 border shadow"
                     variant="outline"
                     type="button"
                     onClick={() => setCreateRecipeType(mode.value)}
                   >
                     <Slot>{mode.Icon}</Slot>
                     <h3>{mode.Label}</h3>
-                    <p className="font-normal text-sm">{mode.description}</p>
+                    <p className="text-sm font-normal">{mode.description}</p>
                   </Button>
                 ))}
               </div>
@@ -177,14 +177,14 @@ const CreateRecipeDialog = () => {
 
             {/*Disclaimer */}
             {createRecipeType && (
-              <div className="rounded-lg bg-yellow/20 border border-yellow-300 p-4">
+              <div className="border-yellow-300 rounded-lg border bg-yellow/20 p-4">
                 <div className="flex items-start gap-4">
-                  <BadgeAlertIcon className="h-6 w-6 text-yellow-500" />
+                  <BadgeAlertIcon className="text-yellow-500 h-6 w-6" />
                   <div className="flex-1">
-                    <h3 className="text-sm font-semibold text-yellow-900">
+                    <h3 className="text-yellow-900 text-sm font-semibold">
                       Disclaimer
                     </h3>
-                    <p className="text-sm text-yellow-800">
+                    <p className="text-yellow-800 text-sm">
                       By creating a recipe, you confirm that the content is your
                       own original creation or that you have obtained permission
                       to use and share it.
@@ -195,7 +195,7 @@ const CreateRecipeDialog = () => {
             )}
 
             {createRecipeType && loading && (
-              <div className="transition-transform rounded-lg bg-muted p-4 flex flex-col items-center justify-center text-center h-48">
+              <div className="bg-muted flex h-48 flex-col items-center justify-center rounded-lg p-4 text-center transition-transform">
                 <Loader2 className="ml-2 h-16 w-16 animate-spin" />
                 <p>
                   Your recipe is being created. This may take a few seconds to a

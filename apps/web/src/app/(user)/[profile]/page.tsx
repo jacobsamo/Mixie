@@ -51,7 +51,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   if (user) {
     return (
       <>
-        <div className="m-auto mt-4 flex flex-col items-center justify-center rounded-xl bg-white p-1 shadow-main sm:w-full md:w-3/5 lg:h-80 dark:bg-grey dark:shadow-none">
+        <div className="shadow-main m-auto mt-4 flex flex-col items-center justify-center rounded-xl bg-white p-1 dark:bg-grey dark:shadow-none sm:w-full md:w-3/5 lg:h-80">
           <Image
             src={user.user_metadata.picture || "/images/placeholder.webp"}
             alt={user.user_metadata.name || "default-profile"}

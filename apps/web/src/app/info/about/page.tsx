@@ -52,10 +52,10 @@ export default function AboutPage() {
         open source approach means that anyone can contribute to the Mixie
         library, whether by submitting their own recipes, editing and updating
         existing ones, or simply sharing their thoughts and feedback. We believe
-        that cooking is a journey, and we&apos;re dedicated to providing the tools
-        and resources our users need to explore new culinary horizons and create
-        memorable meals for themselves and their loved ones. Join us on Mixie
-        and let&apos;s cook together!
+        that cooking is a journey, and we&apos;re dedicated to providing the
+        tools and resources our users need to explore new culinary horizons and
+        create memorable meals for themselves and their loved ones. Join us on
+        Mixie and let&apos;s cook together!
       </p>
     </div>
   );

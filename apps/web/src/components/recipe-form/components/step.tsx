@@ -33,7 +33,7 @@ const Step = ({ index, handleDelete }: StepProps) => {
           aria-label="delete ingredient"
           onClick={() => handleDelete(index)}
           type="button"
-          className="rounded-md border border-solid border-red bg-transparent  hover:bg-red"
+          className="rounded-md border border-solid border-red bg-transparent hover:bg-red"
           // variant={'secondary'}
           size="icon"
         >

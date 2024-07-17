@@ -55,7 +55,7 @@ export const SearchDialog = () => {
         <div className="h-4/5">
           {searchResults.length > 0 && (
             <motion.ul
-              className="flex  flex-col gap-2 overflow-scroll"
+              className="flex flex-col gap-2 overflow-scroll"
               transition={{ duration: 0.2 }}
             >
               {searchResults.length > 0 &&

@@ -97,8 +97,8 @@ export default function Privacy_PolicyPage() {
               marketing purposes. However, we may share your information with
               service providers who assist us in delivering our products and
               services. We will also disclose information if required by law or
-              if we believe it&apos;s necessary to protect our rights or the rights
-              of others.
+              if we believe it&apos;s necessary to protect our rights or the
+              rights of others.
             </p>
           </li>
           <li className="mb-5 text-step--3">

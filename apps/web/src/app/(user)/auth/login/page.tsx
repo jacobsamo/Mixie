@@ -131,7 +131,7 @@ const LoginPage = () => {
       <span className="my-2 mb-4 h-[0.125rem] w-3/4 rounded-md bg-grey dark:bg-white"></span>
 
       <form
-        className="flex w-2/3 flex-col  gap-4"
+        className="flex w-2/3 flex-col gap-4"
         onSubmit={handleSubmit(onSubmit)}
       >
         <Input
@@ -146,7 +146,7 @@ const LoginPage = () => {
           defaultValue={false}
           rules={{ required: true }}
           render={({ field }) => (
-            <div className=" flex flex-col items-start gap-2">
+            <div className="flex flex-col items-start gap-2">
               <div className="flex flex-row items-center gap-3">
                 <Checkbox
                   name="acceptTerms"

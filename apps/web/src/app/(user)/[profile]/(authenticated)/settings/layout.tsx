@@ -31,7 +31,7 @@ export default function SettingsLayout({
 
   return (
     <>
-      <header className="mx-auto mt-2 flex w-full flex-row justify-center gap-4 rounded-md bg-white p-1 shadow-main md:w-2/4 dark:bg-grey">
+      <header className="shadow-main mx-auto mt-2 flex w-full flex-row justify-center gap-4 rounded-md bg-white p-1 dark:bg-grey md:w-2/4">
         <Button
           unstyled
           aria-label="Go to edit profile page"

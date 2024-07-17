@@ -53,7 +53,7 @@ const CollectionCard = ({
 
   return (
     <button
-      className="relative w-1/2 max-w-56 flex-1 flex-shrink-0 resize-y rounded-md shadow outline outline-1 outline-slate-700 sm:w-1/3 dark:shadow-none"
+      className="relative w-1/2 max-w-56 flex-1 flex-shrink-0 resize-y rounded-md shadow outline outline-1 outline-slate-700 dark:shadow-none sm:w-1/3"
       onClick={() => {
         router.push("?" + createQueryString("collection", collectionId));
       }}
@@ -61,7 +61,7 @@ const CollectionCard = ({
       <Image
         src="/images/placeholder.webp"
         alt="collection image"
-        className="top-0 h-1/2 w-full  rounded-t-md  object-cover object-center opacity-90"
+        className="top-0 h-1/2 w-full rounded-t-md object-cover object-center opacity-90"
         width={128}
         height={96}
       />

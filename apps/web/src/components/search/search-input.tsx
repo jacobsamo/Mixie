@@ -57,7 +57,7 @@ export const SearchInput = ({ setSearchResults }: SearchInputProps) => {
           }}
         />
         <button
-          className="h-12 w-12 "
+          className="h-12 w-12"
           onClick={() => setShowFilters(!showFilters)}
         >
           <FilterIcon />

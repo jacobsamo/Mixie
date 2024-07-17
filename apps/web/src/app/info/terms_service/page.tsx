@@ -18,8 +18,8 @@ export default function Terms_ServicesPage() {
             our various properties.
           </p>
           <p>
-            These Terms of Service (&quot;Agreement&quot;) govern your use of the
-            MixieCooking website, app located at{" "}
+            These Terms of Service (&quot;Agreement&quot;) govern your use of
+            the MixieCooking website, app located at{" "}
             <Link
               href="https://mixiecooking.com"
               target="_blank"
@@ -140,12 +140,13 @@ export default function Terms_ServicesPage() {
             <section>
               <p>
                 Our website and the materials on our website are provided on an
-                &apos;as is&apos; basis. To the extent permitted by law, MixieCooking
-                makes no warranties, expressed or implied, and hereby disclaims
-                and negates all other warranties including, without limitation,
-                implied warranties or conditions of merchantability, fitness for
-                a particular purpose, or non-infringement of intellectual
-                property, or other violation of rights.
+                &apos;as is&apos; basis. To the extent permitted by law,
+                MixieCooking makes no warranties, expressed or implied, and
+                hereby disclaims and negates all other warranties including,
+                without limitation, implied warranties or conditions of
+                merchantability, fitness for a particular purpose, or
+                non-infringement of intellectual property, or other violation of
+                rights.
               </p>
               <br />
               <p>
@@ -158,13 +159,13 @@ export default function Terms_ServicesPage() {
               </p>
               <br />
               <p>
-                In the context of this agreement, &quot;consequential loss&quot; includes
-                any consequential loss, indirect loss, real or anticipated loss
-                of profit, loss of benefit, loss of revenue, loss of business,
-                loss of goodwill, loss of opportunity, loss of savings, loss of
-                reputation, loss of use and/or loss or corruption of data,
-                whether under statute, contract, equity, tort (including
-                negligence), indemnity, or otherwise.
+                In the context of this agreement, &quot;consequential loss&quot;
+                includes any consequential loss, indirect loss, real or
+                anticipated loss of profit, loss of benefit, loss of revenue,
+                loss of business, loss of goodwill, loss of opportunity, loss of
+                savings, loss of reputation, loss of use and/or loss or
+                corruption of data, whether under statute, contract, equity,
+                tort (including negligence), indemnity, or otherwise.
               </p>
               <br />
               <p>
@@ -212,15 +213,15 @@ export default function Terms_ServicesPage() {
             Third-Party Links
             <section>
               The Services may contain links to third-party services such as
-              third-party websites, applications, or ads (&quot;Third-Party Links&quot;).
-              When you click on such a link, we will not warn you that you are
-              about to or have left the Services. MixieCooking does not control
-              and is not responsible for Third-Party Links. We provide these
-              Third-Party Links only as a convenience and do not review,
-              approve, monitor, endorse, warrant, or make any representations
-              with respect to them, or any content, products, or services
-              accessible through such links. Your use of all Third-Party Links
-              is at your own risk.
+              third-party websites, applications, or ads (&quot;Third-Party
+              Links&quot;). When you click on such a link, we will not warn you
+              that you are about to or have left the Services. MixieCooking does
+              not control and is not responsible for Third-Party Links. We
+              provide these Third-Party Links only as a convenience and do not
+              review, approve, monitor, endorse, warrant, or make any
+              representations with respect to them, or any content, products, or
+              services accessible through such links. Your use of all
+              Third-Party Links is at your own risk.
             </section>
           </li>
           <li className="mb-5 text-step--3">

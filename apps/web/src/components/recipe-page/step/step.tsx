@@ -20,7 +20,7 @@ const Step = ({ index, step, ingredients }: StepProps) => {
     <li className="">
       <button
         className={cn(
-          "flex w-full  flex-grow flex-col gap-1 rounded-2xl bg-white p-4 text-left shadow dark:bg-grey",
+          "flex w-full flex-grow flex-col gap-1 rounded-2xl bg-white p-4 text-left shadow dark:bg-grey",
           {
             "opacity-60": checked,
             "cursor-default": viewMode === "preview",

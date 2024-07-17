@@ -31,7 +31,7 @@ const NumberInput = ({
         <span className="sr-only">Decrease</span>
       </Button>
       <div className="flex-1 text-center">
-        <div className="font-bold text-5xl tracking-tighter">{value}</div>
+        <div className="text-5xl font-bold tracking-tighter">{value}</div>
         {/* <div className="text-[0.70rem] text-muted-foreground uppercase">
           Calories/day
         </div> */}

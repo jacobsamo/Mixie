@@ -81,7 +81,7 @@ export default async function Page() {
         })}
       </div> */}
 
-      <div className="mt-6 flex flex-wrap items-start justify-center gap-1 sm:gap-2 ">
+      <div className="mt-6 flex flex-wrap items-start justify-center gap-1 sm:gap-2">
         {latestRecipes &&
           latestRecipes
             .splice(0, 12)
@@ -99,7 +99,7 @@ export default async function Page() {
         <div className="flex flex-col items-center gap-2">
           {!user ? (
             <Link
-              className="text-base mt-3 inline-flex w-11/12 items-center justify-center rounded-md border border-transparent bg-yellow px-4 py-2 text-step--2 font-medium text-black shadow-sm transition-colors duration-200 ease-in-out hover:bg-yellow/90 focus:outline-none focus:ring-2 focus:ring-yellow/90 focus:ring-offset-2 sm:w-2/5"
+              className="mt-3 inline-flex w-11/12 items-center justify-center rounded-md border border-transparent bg-yellow px-4 py-2 text-base text-step--2 font-medium text-black shadow-sm transition-colors duration-200 ease-in-out hover:bg-yellow/90 focus:outline-none focus:ring-2 focus:ring-yellow/90 focus:ring-offset-2 sm:w-2/5"
               href={"/auth/login"}
             >
               Join now

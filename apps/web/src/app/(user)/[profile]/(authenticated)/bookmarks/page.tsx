@@ -23,8 +23,8 @@ export default async function BookmarksPage() {
     .eq("user_id", user.id);
 
   return (
-    <div className="m-auto mt-4 flex h-fit max-h-[80%] flex-col items-center justify-center rounded-xl bg-white p-1 shadow-main sm:w-full md:w-3/5 lg:min-h-80 dark:bg-grey dark:shadow-none">
-      <h1 className="mb-2  text-step0">Bookmarked Recipes</h1>
+    <div className="shadow-main m-auto mt-4 flex h-fit max-h-[80%] flex-col items-center justify-center rounded-xl bg-white p-1 dark:bg-grey dark:shadow-none sm:w-full md:w-3/5 lg:min-h-80">
+      <h1 className="mb-2 text-step0">Bookmarked Recipes</h1>
 
       <h2 className="text-center">Coming back soon!!</h2>
 

@@ -55,7 +55,7 @@ export const SearchBarTrigger = ({ children, className }: OpenDialogsProps) => {
       }
       unstyled
       className={cn(
-        "flex w-11/12 flex-row items-center rounded-xl p-3 py-3 text-step--4 opacity-70 shadow sm:w-1/2 sm:max-w-[28rem] sm:text-step--3 dark:bg-grey",
+        "flex w-11/12 flex-row items-center rounded-xl p-3 py-3 text-step--4 opacity-70 shadow dark:bg-grey sm:w-1/2 sm:max-w-[28rem] sm:text-step--3",
         className
       )}
     >

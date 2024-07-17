@@ -21,7 +21,7 @@ export const HeaderControls: FC<HeaderControlsProps> = ({
       {currentStepId != null && (
         <Button
           variant="ghost"
-          className="absolute top-4 left-4 h-fit w-fit rounded-sm p-0 opacity-70 ring-offset-background transition-opacity disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+          className="ring-offset-background data-[state=open]:bg-accent data-[state=open]:text-muted-foreground focus:ring-ring absolute left-4 top-4 h-fit w-fit rounded-sm p-0 opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none"
           aria-label="Return to previous step"
           onClick={goToPreviousStep}
         >
@@ -33,7 +33,7 @@ export const HeaderControls: FC<HeaderControlsProps> = ({
       {/* Close button */}
       <DialogClose
         onClick={() => (closeModal ? closeModal() : undefined)}
-        className="absolute top-4 right-4 rounded-sm opacity-70 ring-offset-background transition-opacity disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+        className="ring-offset-background data-[state=open]:bg-accent data-[state=open]:text-muted-foreground focus:ring-ring absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none"
       >
         <X className="h-6 w-6" />
         <span className="sr-only">Close</span>

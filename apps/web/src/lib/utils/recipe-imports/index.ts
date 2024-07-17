@@ -1,7 +1,6 @@
 import { recipe_creation_type } from "@/types/zodSchemas";
 import { z } from "zod";
 
-
 export const requestSchema = z
   .object({
     creation_type: recipe_creation_type,

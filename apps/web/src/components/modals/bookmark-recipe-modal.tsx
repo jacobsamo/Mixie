@@ -174,7 +174,7 @@ const BookmarkRecipeDialog = ({
       <DialogTrigger asChild className="absolute bottom-2 right-2">
         {isBookmarked != undefined ? (
           <HeartIcon
-            className={`textOnBackground h-8 w-8 cursor-pointer  fill-red text-red`}
+            className={`textOnBackground h-8 w-8 cursor-pointer fill-red text-red`}
           />
         ) : (
           <HeartIcon className={`textOnBackground h-8 w-8 cursor-pointer`} />
@@ -182,7 +182,7 @@ const BookmarkRecipeDialog = ({
       </DialogTrigger>
 
       <DialogContent className="flex flex-col justify-between">
-        <DialogHeader className="flex flex-row  gap-1">
+        <DialogHeader className="flex flex-row gap-1">
           <Image
             src={recipe.image_url!}
             alt={recipe.image_attributes?.alt ?? "saved recipe"}

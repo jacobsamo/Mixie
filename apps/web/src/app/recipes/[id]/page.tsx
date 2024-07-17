@@ -21,7 +21,9 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 
 export default async function RecipePage({
   params,
-}: { params: { id: string } }) {
+}: {
+  params: { id: string };
+}) {
   const recipes = await getRecipes();
   const recipe = recipes?.find((recipe) => recipe.id == params.id);
 

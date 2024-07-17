@@ -36,8 +36,8 @@ const Ingredient = ({ ingredient }: IngredientProps) => {
             <Circle className="shrink-0" />
           ))}
         <h3
-          className={cn("text-left text-wrap", {
-            "line-through opacity-60 text-left": checked,
+          className={cn("text-wrap text-left", {
+            "text-left line-through opacity-60": checked,
           })}
         >
           {ingredient.text}

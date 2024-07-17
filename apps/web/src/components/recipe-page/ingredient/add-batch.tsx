@@ -29,7 +29,7 @@ const AddBatch = ({ add, setAdd }: AddBatchProps) => {
   return (
     <>
       <div
-        className="flew-row justify-between flex items-center py-2 w-full gap-3 mx-auto"
+        className="flew-row mx-auto flex w-full items-center justify-between gap-3 py-2"
         aria-label="Add a batch"
       >
         <p data-testid="title" className="text-step--2 font-bold">
@@ -47,7 +47,7 @@ const AddBatch = ({ add, setAdd }: AddBatchProps) => {
           >
             <MinusIcon
               className={cn("size-9", {
-                "pointer-events-none bg-none text-foreground opacity-20":
+                "text-foreground pointer-events-none bg-none opacity-20":
                   add < 2,
               })}
             />

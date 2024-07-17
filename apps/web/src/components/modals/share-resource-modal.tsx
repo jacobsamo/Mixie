@@ -72,7 +72,7 @@ const ShareDialog = ({
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-row gap-4 overflow-y-auto">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-secondary/30">
+          <div className="bg-secondary/30 flex h-12 w-12 items-center justify-center rounded-full">
             <CopyButton aria-label="Copy url" text={url} autoFocus={true} />
           </div>
 
@@ -80,7 +80,7 @@ const ShareDialog = ({
             href={facebookLink}
             target="_blank"
             aria-label="Share to Facebook"
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-secondary/30"
+            className="bg-secondary/30 flex h-12 w-12 items-center justify-center rounded-full"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -93,7 +93,7 @@ const ShareDialog = ({
             </svg>
           </Link>
           <Link
-            className="flex h-12 w-12  items-center justify-center rounded-full bg-secondary/30"
+            className="bg-secondary/30 flex h-12 w-12 items-center justify-center rounded-full"
             target="_blank"
             aria-label="Share to Twitter"
             href={twitterLink}
@@ -110,7 +110,7 @@ const ShareDialog = ({
             </svg>
           </Link>
           <Link
-            className="flex h-12 w-12  items-center justify-center rounded-full bg-secondary/30"
+            className="bg-secondary/30 flex h-12 w-12 items-center justify-center rounded-full"
             href={pinterestLink}
             target="_blank"
             aria-label="Share to Pinterest"
@@ -140,9 +140,9 @@ const ShareDialog = ({
             unstyled={true}
             onClick={() => print()}
             aria-label="Print recipe"
-            className="size-12 flex items-center justify-center rounded-full bg-secondary/30"
+            className="bg-secondary/30 flex size-12 items-center justify-center rounded-full"
           >
-            <PrinterIcon className="m-auto text-foreground" />
+            <PrinterIcon className="text-foreground m-auto" />
           </Button>
         </div>
       </DialogContent>

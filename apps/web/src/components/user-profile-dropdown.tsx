@@ -6,11 +6,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useAtom } from "jotai";
-import {
-  ArrowUpRightSquare,
-  ScrollText,
-  UserCircle2
-} from "lucide-react";
+import { ArrowUpRightSquare, ScrollText, UserCircle2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import useUser from "../hooks/useUser";

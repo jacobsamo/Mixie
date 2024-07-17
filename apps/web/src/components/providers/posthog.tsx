@@ -27,10 +27,6 @@ if (typeof window !== "undefined") {
     posthog.set_config({ disable_session_recording: true });
   }
 }
-export function PostHogProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function PostHogProvider({ children }: { children: React.ReactNode }) {
   return <PostHog client={posthog}>{children}</PostHog>;
 }
