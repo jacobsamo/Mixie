@@ -7,6 +7,7 @@
     "login": "supabase login",
     "db:push": "supabase db push",
     "db:pull": "supabase db pull",
+    "db:start": "supabase start",
     "db:stop": "supabase stop",
     "db:types": "supabase gen types typescript --project-id dftoidpracavvgvcbsue --schema public > src/types/db.ts"
   },

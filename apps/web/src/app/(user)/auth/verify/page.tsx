@@ -1,11 +1,5 @@
 "use client";
-import { env } from "env";
-import OtpInput from "@/components/otp-Input";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { createClient } from "@mixie/supabase/client";
 import {
   Form,
   FormControl,
@@ -20,14 +14,21 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { createClient } from "@mixie/supabase/client";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
-import toast from "react-hot-toast";
+import { Loader2 } from "lucide-react";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 interface CodeFormProps {
   code: string;
 }
 
 const VerificationPage = () => {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
@@ -37,6 +38,7 @@ const VerificationPage = () => {
   if (!email) router.push("/auth/login");
 
   const onSubmit: SubmitHandler<CodeFormProps> = async (data) => {
+    setLoading(true);
     const {
       data: { session },
       error,
@@ -44,9 +46,21 @@ const VerificationPage = () => {
       email: email!,
       token: data.code,
       type: "email",
+      options: {
+        redirectTo: `${window.location.origin}/`,
+      },
     });
 
-    if (error) return console.error(error);
+    if (error) {
+      form.setError("code", { message: `Failed to login, ${error.message}` });
+      toast.error(`Failed to login, ${error.message}`);
+      setLoading(false);
+    }
+
+    if (session) {
+      router.push("/");
+      setLoading(false);
+    }
   };
 
   const resendOtp = async () => {
@@ -67,7 +81,7 @@ const VerificationPage = () => {
           height={128}
           className="h-32 w-32 rounded-full"
         />
-        <h1 className="text-step--1">Welcome to Mixie</h1>
+        <h1 className="text-step--1">Continue to Mixie</h1>
       </div>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
@@ -79,7 +93,7 @@ const VerificationPage = () => {
           rules={{ pattern: new RegExp(REGEXP_ONLY_DIGITS_AND_CHARS) }}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>One-Time Code</FormLabel>
+              <FormLabel className="text-lg">One-Time Code</FormLabel>
               <FormControl>
                 <InputOTP
                   maxLength={6}
@@ -96,7 +110,7 @@ const VerificationPage = () => {
                   </InputOTPGroup>
                 </InputOTP>
               </FormControl>
-              <FormDescription className="flex flex-col gap-2">
+              <FormDescription className="flex flex-col gap-2 text-white">
                 Please enter 6 digit code sent to your email address to
                 continue.
                 {/* <Button
@@ -113,13 +127,19 @@ const VerificationPage = () => {
           )}
         />
 
-        {/* <p>Resend code</p> */}
         <Button
           type="submit"
           aria-label="submit verification code"
           className="mt-8"
         >
-          Verify
+          {loading ? (
+            <>
+              <Loader2 className="animate-spin" />
+              Verifying...
+            </>
+          ) : (
+            "Verify"
+          )}
         </Button>
       </form>
     </Form>
