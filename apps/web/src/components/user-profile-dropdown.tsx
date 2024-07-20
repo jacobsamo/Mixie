@@ -6,7 +6,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useAtom } from "jotai";
-import { ArrowUpRightSquare, ScrollText, UserCircle2 } from "lucide-react";
+import {
+  ArrowUpRightSquare,
+  ScrollText,
+  Settings,
+  UserCircle2,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import useUser from "../hooks/useUser";
@@ -76,7 +81,7 @@ const UserProfile = () => {
           props={{ unstyled: true }}
           className="inline-flex dark:text-white"
         />
-        {/* <Link
+        <Link
           onClick={() => setOpen(false)}
           href={`/${user?.id}/settings?activeLink=profile`}
           className="flex flex-row gap-1"
@@ -84,7 +89,7 @@ const UserProfile = () => {
           {" "}
           <Settings />
           Settings
-        </Link> */}
+        </Link>
         <Link
           onClick={() => setOpen(false)}
           href={"/auth/signout"}

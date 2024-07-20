@@ -63,6 +63,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
           width={100}
           height={100}
           priority
+          unoptimized
           className="m-auto h-24 w-24 rounded-full lg:h-48 lg:w-48"
         />
         <h1 className="text-center text-step0">{user.full_name}</h1>
