@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Form,
   FormControl,
@@ -17,18 +17,21 @@ import { profileEditSchema } from "@/types/zodSchemas/profile";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { updateUser } from "@/actions/user/update-user";
+import { toast } from "sonner";
 
 const OnboardForm = ({
   profile,
 }: {
   profile: z.infer<typeof profileEditSchema>;
 }) => {
+  const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof profileEditSchema>>({
     resolver: zodResolver(profileEditSchema),
     defaultValues: {
       ...profile,
-      first_name: profile?.full_name?.split(" ")[0],
-      last_name: profile?.full_name?.split(" ")[1],
+      first_name: profile?.first_name ?? profile?.full_name?.split(" ")[0],
+      last_name: profile?.last_name ?? profile?.full_name?.split(" ")[1],
     },
   });
 
@@ -38,8 +41,20 @@ const OnboardForm = ({
     formState: { errors },
   } = form;
 
-  const onSubmit: SubmitHandler<z.infer<typeof profileEditSchema>> = (data) => {
-    console.log("data: ", data);
+  const onSubmit: SubmitHandler<z.infer<typeof profileEditSchema>> = async (
+    data
+  ) => {
+    setLoading(true);
+
+    const update = await updateUser(data);
+
+    if (update?.serverError || update?.validationErrors) {
+      toast.error("Error while updating profile");
+    }
+
+    toast.success("Profile updated successfully");
+
+    setLoading(false);
   };
 
   useEffect(() => {
