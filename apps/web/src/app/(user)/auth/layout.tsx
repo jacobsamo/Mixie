@@ -14,7 +14,7 @@ export default async function SettingsLayout({
 }) {
   return (
     <div className="h-dvh w-full">
-      <div className="z-10 m-auto flex max-w-md flex-col items-center justify-center gap-3 rounded-3xl bg-grey/20 p-3 text-center shadow backdrop-blur-sm dark:bg-grey/60">
+      <div className="z-10 m-auto flex max-w-md flex-col items-center justify-center gap-3 rounded-3xl  bg-grey/20 p-3 text-center shadow backdrop-blur-sm dark:bg-grey/60">
         {children}
       </div>
       <Image
