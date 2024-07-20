@@ -15,7 +15,7 @@ export default async function UserLayout({
 }) {
   const user = await getUser();
 
-  if (!user && user!.id != params.userId) return notFound();
+  if (!user && user!.id !== params.userId) return notFound();
 
   return <div className="h-fit min-h-full w-full">{children}</div>;
 }
