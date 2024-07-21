@@ -12,7 +12,7 @@
     "db:types": "supabase gen types typescript --project-id dftoidpracavvgvcbsue --schema public > src/types/db.ts"
   },
   "devDependencies": {
-    "@supabase/supabase-js": "^2.44.3",
+    "@supabase/supabase-js": "^2.44.4",
     "typescript": "^5.5.3"
   },
   "dependencies": {

@@ -11,6 +11,5 @@
   },
   "devDependencies": {
     "@mixie/tsconfig": "workspace:*"
-
   }
 }
