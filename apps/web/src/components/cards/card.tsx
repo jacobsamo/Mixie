@@ -26,21 +26,21 @@ export const BaseCard = ({
   const user = useUser();
 
   return (
-    <div
+    <Link
+      href={`/recipes/${recipe.id}`}
       className={cn(
         "relative flex h-56 w-56 flex-col items-center justify-between rounded-xl p-2 text-white shadow",
         classNames?.container
       )}
     >
-      <Link
-        href={`/recipes/${recipe.id}`}
+      <h3
         className={cn(
           "textOnBackground max-w-full text-balance text-center text-step--2",
           classNames?.title
         )}
       >
         {recipe.title}
-      </Link>
+      </h3>
 
       {hasCookTime && (
         <div
@@ -74,7 +74,7 @@ export const BaseCard = ({
           classNames?.container
         )}
       />
-    </div>
+    </Link>
   );
 };
 
