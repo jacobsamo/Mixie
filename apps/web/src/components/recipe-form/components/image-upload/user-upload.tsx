@@ -26,8 +26,11 @@ const Upload = () => {
 
   const setImages = (image: string) => {
     // setLoading(true);
-    setValue("image_url", image);
-    setValue("image_attributes.source", "upload");
+    setValue("image_url", image, { shouldDirty: true, shouldTouch: true });
+    setValue("image_attributes.source", "upload", {
+      shouldDirty: true,
+      shouldTouch: true,
+    });
     // setLoading(false);
   };
 

@@ -9,7 +9,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { env } from "env";
+import { cn } from "@/lib/utils";
+import { recipeClientFormSchema } from "@/types";
 import {
   Edit2,
   LinkIcon,
@@ -17,18 +18,15 @@ import {
   SearchIcon,
   UploadIcon,
 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
-import { createApi } from "unsplash-js";
+import { useFormContext } from "react-hook-form";
+import * as z from "zod";
 import { HeaderControls } from "../../../header-controls";
 import SearchUpload from "./search-upload";
 import UrlUpload from "./url-upload";
 import Upload from "./user-upload";
-import { useFormContext } from "react-hook-form";
-import { recipeClientFormSchema } from "@/types";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-import * as z from "zod";
-import Link from "next/link";
 
 type ImageUploadType = "url" | "upload" | "search";
 
@@ -36,11 +34,7 @@ const ImageUpload = () => {
   const [uploadType, setUploadType] = useState<ImageUploadType | null>(null);
 
   const {
-    register,
-    setValue,
-    getValues,
     watch,
-    control,
     formState: { errors },
   } = useFormContext<z.infer<typeof recipeClientFormSchema>>();
 
@@ -164,7 +158,7 @@ const ImageUpload = () => {
           {uploadType === "upload" && <Upload />}
           {uploadType === "search" && <SearchUpload />}
 
-          <DialogFooter>
+          <DialogFooter className="sticky bottom-0 right-0 mb-4 mr-4">
             <DialogClose>Cancel</DialogClose>
             <DialogClose>
               <Button>Save</Button>

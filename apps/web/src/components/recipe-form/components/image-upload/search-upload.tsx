@@ -33,12 +33,15 @@ const SearchUpload = () => {
     },
   });
 
-  const { setValue, watch } =
-    useFormContext<z.infer<typeof recipeClientFormSchema>>();
+  const {
+    setValue,
+    watch,
+    formState: { isDirty, errors },
+  } = useFormContext<z.infer<typeof recipeClientFormSchema>>();
 
   useEffect(() => {
     refetchImages();
-  }, [refetchImages, unsplashImageSearch]);
+  }, [refetchImages, unsplashImageSearch, page]);
 
   const imageUrl = watch("image_url");
 
@@ -57,14 +60,26 @@ const SearchUpload = () => {
           <Button
             unstyled
             onClick={() => {
-              setValue("image_url", photo.urls.regular);
-              setValue("image_attributes.alt", photo.alt_description ?? "");
-              setValue("image_attributes.photographer", photo.user.name);
+              setValue("image_url", photo.urls.regular, {
+                shouldDirty: true,
+                shouldTouch: true,
+              });
+              setValue("image_attributes.alt", photo.alt_description ?? "", {
+                shouldDirty: true,
+                shouldTouch: true,
+              });
+              setValue("image_attributes.photographer", photo.user.name, {
+                shouldDirty: true,
+                shouldTouch: true,
+              });
               setValue(
                 "image_attributes.photographer_link",
                 `https://unsplash.com/${photo.user.username}?utm_source=mixie&utm_medium=referral`
               );
-              setValue("image_attributes.source", "unsplash");
+              setValue("image_attributes.source", "unsplash", {
+                shouldDirty: true,
+                shouldTouch: true,
+              });
             }}
             key={photo.id}
             className={cn(
@@ -93,6 +108,8 @@ const SearchUpload = () => {
             />
           </Button>
         ))}
+
+        
         {searchedPhotos && (
           <>
             <Button
