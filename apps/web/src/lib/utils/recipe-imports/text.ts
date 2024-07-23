@@ -102,5 +102,15 @@ export const createRecipeFromText = async (
     recipe_creation_type: "upload",
   };
 
+  console.log(`Created recipe successfully`, {
+    location: "recipe-imports/text",
+    message: JSON.stringify({
+      image: params.text,
+      text: val.text,
+      newRecipe: newRecipe,
+    }),
+    statusCode: 200,
+  });
+
   return newRecipe;
 };

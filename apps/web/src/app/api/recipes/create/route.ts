@@ -72,16 +72,18 @@ export async function POST(req: NextRequest, params: { id: string }) {
       .single();
 
     if (error) {
-      console.error("Error on /recipes/[id]/create", error);
-      return NextResponse.json(null, { status: 500 });
+      console.error("Error on /recipes/create", error);
+      return NextResponse.json("An Error occurred while creating your recipe", {
+        status: 500,
+      });
     }
 
     return NextResponse.json({
-      message: "Rating updated successfully",
+      message: "Recipe created successfully",
       recipe_id: createRecipe.recipe_id,
     });
   } catch (error) {
-    console.error("Error on /recipes/[id]/setRating", error);
+    console.error("Error on /recipes/create", error);
 
     if (error instanceof z.ZodError) {
       return NextResponse.json(JSON.stringify(error.issues), { status: 422 });
@@ -93,6 +95,8 @@ export async function POST(req: NextRequest, params: { id: string }) {
       });
     }
 
-    return NextResponse.json(null, { status: 500 });
+    return NextResponse.json("An Error occurred while creating your recipe", {
+      status: 500,
+    });
   }
 }

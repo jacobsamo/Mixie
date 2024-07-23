@@ -2,7 +2,7 @@
 import {
   getRecipeJsonLd,
   transformRecipe,
-} from "@/lib/services/recipeJsonLDParsing";
+} from "@/lib/services/json-ld-parsing";
 import logger from "@/lib/services/logger";
 import { createClient } from "@mixie/supabase/server";
 import { NewRecipe } from "@/types";
@@ -12,6 +12,7 @@ const schema = z.object({
   user_id: z.string(),
   link: z.string().url(),
 });
+
 /**
  * Creates a recipe from a link by importing it
  */
@@ -64,6 +65,8 @@ export const createRecipeFromLink = async (
     created_by: params.user_id,
     recipe_creation_type: "link",
   };
+
+  console.log(newRecipe);
 
   return newRecipe;
 };
