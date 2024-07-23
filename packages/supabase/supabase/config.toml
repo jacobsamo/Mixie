@@ -1,11 +1,9 @@
-# A string used to distinguish different Supabase projects on the same host. Defaults to the
-# working directory name when running `supabase init`.
 project_id = "mixie"
 
 [api]
 enabled = true
 port = 54321
-schemas = ["public", "storage", "graphql_public"]
+schemas = ["public", "storage"]
 extra_search_path = ["public", "extensions"]
 max_rows = 1000
 
@@ -29,11 +27,8 @@ openai_api_key = "env(OPENAI_API_KEY)"
 # are monitored, and you can view the emails that would have been sent from the web interface.
 [inbucket]
 enabled = true
-# Port to use for the email testing server web interface.
 port = 54324
-# Uncomment to expose additional ports for testing user applications that send emails.
-# smtp_port = 54325
-# pop3_port = 54326
+
 
 # currently not using storage but plan to in the future
 [storage]
@@ -44,7 +39,7 @@ file_size_limit = "5MB"
 [auth]
 enabled = true
 site_url = "http://localhost:3000"
-additional_redirect_urls = ["https://localhost:3000"]
+additional_redirect_urls = ["https://localhost:3000", "http://localhost:54321/auth/v1/callback"]
 jwt_expiry = 3600
 enable_refresh_token_rotation = true
 refresh_token_reuse_interval = 10
@@ -69,18 +64,15 @@ enable_confirmations = false
 enabled = true
 client_id="env(GOOGLE_CLIENT_ID)"
 secret="env(GOOGLE_CLIENT_SECRET)"
+redirect_uri = "http://localhost:54321/auth/v1/callback"
 
 
 # Will turn on once we have a working mobile application
 [auth.external.apple]
 enabled = false
 client_id = ""
-# DO NOT commit your OAuth provider secret to git. Use environment variable substitution instead:
 secret = "env(SUPABASE_AUTH_EXTERNAL_APPLE_SECRET)"
-# Overrides the default auth redirectUrl.
 redirect_uri = ""
-# Overrides the default auth provider URL. Used to support self-hosted gitlab, single-tenant Azure,
-# or any other third-party OIDC providers.
 url = ""
 
 

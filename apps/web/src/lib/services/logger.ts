@@ -1,9 +1,10 @@
 import "server-only";
 import { env } from "env";
-import { log as axiomLog } from "next-axiom";
+import { Logger as AxiomLogger } from "next-axiom";
 
 type LogLevel = "info" | "error" | "warn";
-type LogOptions = {
+
+interface LogOptions {
   /**
    * Log level
    */
@@ -20,7 +21,7 @@ type LogOptions = {
    * Location of the request e.g url, part of app, function, etc
    */
   location?: string;
-};
+}
 
 interface Logger {
   info(message: string, options?: LogOptions): void;
@@ -28,7 +29,7 @@ interface Logger {
   warn(message: string, options?: LogOptions): void;
 }
 
-const log = env.NODE_ENV === "production" ? axiomLog : console;
+const log = env.NODE_ENV === "production" ? new AxiomLogger() : console;
 
 class Logger implements Logger {
   info(message: string, options?: LogOptions) {

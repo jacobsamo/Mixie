@@ -5,6 +5,7 @@ import { ingredientsSchema } from "@/actions/schema";
 import { createClient } from "@mixie/supabase/server";
 import { Ingredient, Recipe } from "@/types";
 import { z } from "zod";
+import logger from "@/lib/services/logger";
 
 export const submitIngredients = action
   .schema(ingredientsSchema)
@@ -35,6 +36,14 @@ export const submitIngredients = action
       .single();
 
     if (error) {
+      logger.error(`Failed to update ingredients on recipe: ${error.message}`, {
+        location: "recipe-form/submit-ingredients",
+        message: JSON.stringify({
+          parsedInput,
+          error,
+        }),
+        statusCode: 500,
+      });
       throw new Error(error.message);
     }
 

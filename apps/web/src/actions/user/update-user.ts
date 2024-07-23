@@ -2,6 +2,7 @@
 import { profileEditSchema } from "@/types/zodSchemas/profile";
 import { authAction } from "../safe-action";
 import { revalidateTag } from "next/cache";
+import logger from "@/lib/services/logger";
 
 export const updateUser = authAction
   .schema(profileEditSchema)
@@ -19,10 +20,25 @@ export const updateUser = authAction
     });
 
     if (updateUserError) {
+      logger.error(`Failed to update user: ${updateUserError.message}`, {
+        location: "user/update-user",
+        message: JSON.stringify({
+          params,
+          updateUserError,
+        }),
+        statusCode: 500,
+      });
       throw new Error(updateUserError.message);
     }
 
-    if (!user) throw new Error("User not found");
+    if (!user) {
+      logger.error(`User not found: ${params.profile_id}`, {
+        location: "user/update-user",
+        message: "Failed to get user",
+        statusCode: 500,
+      });
+      throw new Error("User not found");
+    }
 
     const { data, error } = await ctx.supabase
       .from("profiles")
@@ -31,6 +47,14 @@ export const updateUser = authAction
       .single();
 
     if (error) {
+      logger.error(`Failed to update profile: ${error.message}`, {
+        location: "user/update-user",
+        message: JSON.stringify({
+          params,
+          error,
+        }),
+        statusCode: 500,
+      });
       throw new Error(error.message);
     }
 

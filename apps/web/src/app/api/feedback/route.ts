@@ -6,6 +6,7 @@ import { TablesInsert } from "@mixie/supabase/types";
 import { NextResponse, type NextRequest } from "next/server";
 import * as z from "zod";
 import NewFeedback from "@mixie/email/emails/feedback";
+import logger from "@/lib/services/logger";
 
 export async function POST(req: NextRequest) {
   try {
@@ -51,7 +52,12 @@ export async function POST(req: NextRequest) {
       }
     );
   } catch (error) {
-    console.error("Error on /feedback", error);
+    logger.error("Error on /feedback", {
+      location: "api/feedback/route",
+      message: JSON.stringify({
+        error,
+      }),
+    });
 
     if (error instanceof z.ZodError) {
       return NextResponse.json(JSON.stringify(error.issues), { status: 422 });

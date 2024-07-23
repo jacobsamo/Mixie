@@ -2,7 +2,7 @@
 import {
   getRecipeJsonLd,
   transformRecipe,
-} from "@/lib/services/recipeJsonLDParsing";
+} from "@/lib/services/json-ld-parsing";
 import logger from "@/lib/services/logger";
 import { createClient } from "@mixie/supabase/server";
 import { NewRecipe } from "@/types";
@@ -12,6 +12,7 @@ const schema = z.object({
   user_id: z.string(),
   link: z.string().url(),
 });
+
 /**
  * Creates a recipe from a link by importing it
  */
@@ -44,7 +45,7 @@ export const createRecipeFromLink = async (
   const recipe = await getRecipeJsonLd(params.link);
 
   if (!recipe) {
-    console.warn(`No recipe found at ${params.link}`, {
+    logger.warn(`No recipe found at ${params.link}`, {
       location: "recipe-imports/link",
       message: JSON.stringify({
         link: params.link,

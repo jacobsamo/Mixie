@@ -5,6 +5,7 @@ import { infoSchema } from "@/actions/schema";
 import { recipeId } from "@/lib/utils";
 import { createClient } from "@mixie/supabase/server";
 import { Recipe } from "@/types";
+import logger from "@/lib/services/logger";
 
 export const submitInfo = action
   .schema(infoSchema)
@@ -36,7 +37,14 @@ export const submitInfo = action
       .single();
 
     if (error) {
-      console.error(error);
+      logger.error(`Failed to update info on recipe: ${error.message}`, {
+        location: "recipe-form/submit-info",
+        message: JSON.stringify({
+          parsedInput,
+          error,
+        }),
+        statusCode: 500,
+      });
       throw new Error(error.message);
     }
 

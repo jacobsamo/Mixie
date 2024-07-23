@@ -10,7 +10,7 @@ export const redis = new Redis({
 
 export const ratelimit = new Ratelimit({
   redis: redis,
-  limiter: Ratelimit.slidingWindow(1, "3 m"),
+  limiter: Ratelimit.slidingWindow(3, "3 m"),
   analytics: true,
   /**
    * Optional prefix for the keys used in redis. This is useful if you want to share a redis

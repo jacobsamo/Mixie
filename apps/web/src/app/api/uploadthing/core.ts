@@ -1,3 +1,4 @@
+import logger from "@/lib/services/logger";
 import { getUser } from "@/lib/utils/getUser";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 
@@ -13,16 +14,22 @@ export const ourFileRouter = {
       const user = await getUser();
 
       // If you throw, the user will not be able to upload
-      if (!user) throw new Error("Unauthorized");
+      if (!user) {
+        logger.error("Unauthorized user");
+        throw new Error("Unauthorized");
+      }
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
       return { userId: user.id };
     })
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
-      console.log("Upload complete for userId:", metadata.userId);
-
-      console.log("file url", file.url);
+      logger.info("Upload complete for userId:", {
+        message: JSON.stringify({
+          userId: metadata.userId,
+          file: file.url,
+        }),
+      });
 
       // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
       return { uploadedBy: metadata.userId, url: file.url };

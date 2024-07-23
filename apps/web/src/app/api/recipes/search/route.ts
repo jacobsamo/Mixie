@@ -4,6 +4,7 @@ import { searchRecipes } from "@/lib/services/seach";
 import { createClient } from "@mixie/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
+// TODO: Get this working as a fuzzy search operator
 export async function GET(req: NextRequest) {
   const app = await isApp(req);
   const searchParams = req.nextUrl.searchParams;
@@ -21,8 +22,8 @@ export async function GET(req: NextRequest) {
       "recipe_id, id, title, image_url, image_attributes, total_time, keywords"
     )
     .textSearch("title", query, {
-      type: "websearch",
       config: "english",
+      type: "plain",
     })
     .eq("public", true)
     .limit(5);
@@ -30,8 +31,6 @@ export async function GET(req: NextRequest) {
   if (!app) return NextResponse.json("Unauthorized", { status: 401 });
   if (query === null)
     return NextResponse.json("No query provided", { status: 401 });
-
-  console.log("Recipes: ", recipes);
 
   return NextResponse.json(recipes);
 }

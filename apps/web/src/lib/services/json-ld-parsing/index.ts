@@ -1,6 +1,7 @@
 import { recipeId } from "@/lib/utils";
 import { Ingredient, NewRecipe } from "@/types";
-import { Recipe as SchemaRecipe } from "schema-dts";
+
+export * from "./find-schema";
 
 /**
  * Converts a time format string to minutes
@@ -26,74 +27,6 @@ export function parseDuration(time: string): number {
 
   return totalMinutes;
 }
-
-/**
- * Gets the recipe json-ld from a given link
- * @param link the url of the recipe
- * @returns {SchemaRecipe | null} the recipe object or null if the recipe could not be parsed
- */
-export const getRecipeJsonLd = async (link: string) => {
-  const res = await fetch(link);
-  const html = await res.text();
-
-  const parse = (await import("node-html-parser")).parse;
-  const doc = parse(html);
-  const scripts = doc.querySelectorAll('script[type="application/ld+json"]');
-  let recipe = null;
-
-  scripts.forEach((script) => {
-    if (script.textContent) {
-      try {
-        const jsonLdObject = JSON.parse(script.textContent);
-
-        const extractRecipe = (obj: any): any => {
-          if (Array.isArray(obj)) {
-            for (let item of obj) {
-              const foundRecipe = extractRecipe(item);
-              if (foundRecipe) {
-                return foundRecipe;
-              }
-            }
-          } else if (obj && typeof obj === "object") {
-            if (obj["@type"] && obj["@context"] === "https://schema.org") {
-              if (
-                (Array.isArray(obj["@type"]) &&
-                  obj["@type"].includes("Recipe")) ||
-                obj["@type"] === "Recipe"
-              ) {
-                return obj;
-              }
-            }
-            if (obj["@graph"]) {
-              const foundRecipe = extractRecipe(obj["@graph"]);
-              if (foundRecipe) {
-                return foundRecipe;
-              }
-            }
-            for (let key of Object.keys(obj)) {
-              if (key !== "@type" && key !== "@graph") {
-                const foundRecipe = extractRecipe(obj[key]);
-                if (foundRecipe) {
-                  return foundRecipe;
-                }
-              }
-            }
-          }
-          return null;
-        };
-
-        const foundRecipe = extractRecipe(jsonLdObject);
-        if (foundRecipe) {
-          recipe = foundRecipe;
-        }
-      } catch (error) {
-        console.error(`Error parsing JSON-LD: ${error}`);
-      }
-    }
-  });
-
-  return recipe;
-};
 
 /**
  *
