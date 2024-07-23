@@ -28,7 +28,7 @@ export default function LoginLink({
       <Head />
       <Preview>Your Mixie Login Link</Preview>
       <Tailwind>
-        <Body className="mx-auto my-auto bg-[#F8F5F1] font-sans">
+        <Body className="font-sans mx-auto my-auto bg-[#F8F5F1]">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
@@ -38,7 +38,7 @@ export default function LoginLink({
                 className="mx-auto h-32 w-32 rounded-full"
               />
             </Section>
-            <Heading className="text-xl mx-0 my-7 p-0 text-center font-semibold text-[#0D1017]">
+            <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-[#0D1017]">
               Your Login Link
             </Heading>
             <Text className="text-step--3 leading-6 text-[#0D1017]">

@@ -43,7 +43,7 @@ export default function NewFeedback({
       <Head />
       <Preview>New feedback from {feedback.user_email}</Preview>
       <Tailwind>
-        <Body className="mx-auto my-auto bg-[#F8F5F1] font-sans">
+        <Body className="font-sans mx-auto my-auto bg-[#F8F5F1]">
           <Container className="mx-auto my-10 max-w-[500px] rounded border border-solid border-gray-200 px-10 py-5">
             <Section className="mt-8">
               <Img
@@ -53,7 +53,7 @@ export default function NewFeedback({
                 className="mx-auto h-32 w-32 rounded-full"
               />
             </Section>
-            <Heading className="text-xl mx-0 my-7 p-0 text-center font-semibold text-[#0D1017]">
+            <Heading className="mx-0 my-7 p-0 text-center text-xl font-semibold text-[#0D1017]">
               New feedback from users
             </Heading>
             <Section className="relative flex h-[200px] flex-col gap-4">

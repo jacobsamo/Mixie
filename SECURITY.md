@@ -4,7 +4,7 @@ Apart of the security we strive to keep our users safe while on our platform how
 ## Reporting a Vulnerability
 First and for most **DON'T** report it under Bugs
 
-When reporting a vulnerability please [Email Me](jacob35422@gmail.com) straight away so i can get to fixing it ASAP, when doing so please explain the following:
+When reporting a vulnerability please send an email to [security@mixiecooking.com](mailto:security@mixiecooking.com) with the following information:
 
 1. How it occurred
 2. Steps to replicate the issue
