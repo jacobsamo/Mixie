@@ -1,7 +1,16 @@
-import { type NextRequest } from "next/server";
+import { NextFetchEvent, type NextRequest } from "next/server";
 import { updateSession } from "@mixie/supabase/middleware";
+import { Logger } from "next-axiom";
+import { env } from "env";
 
-export async function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest, event: NextFetchEvent) {
+  if (env.NODE_ENV === "production") {
+    const log = new Logger({ source: "middleware" });
+    log.middleware(request);
+
+    event.waitUntil(log.flush());
+  }
+
   return await updateSession(request);
 }
 
