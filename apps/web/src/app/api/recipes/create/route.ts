@@ -9,6 +9,7 @@ import { createClient } from "@mixie/supabase/server";
 import { NewRecipe } from "@/types";
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
+import logger from "@/lib/services/logger";
 
 // Max duration in seconds
 export const maxDuration = 60;
@@ -72,7 +73,9 @@ export async function POST(req: NextRequest, params: { id: string }) {
       .single();
 
     if (error) {
-      console.error("Error on /recipes/create", error);
+      logger.error("Error on /recipes/create", {
+        message: JSON.stringify(error)
+      });
       return NextResponse.json("An Error occurred while creating your recipe", {
         status: 500,
       });
@@ -83,7 +86,9 @@ export async function POST(req: NextRequest, params: { id: string }) {
       recipe_id: createRecipe.recipe_id,
     });
   } catch (error) {
-    console.error("Error on /recipes/create", error);
+    logger.error("Error on /recipes/create", {
+      message: JSON.stringify(error)
+    });
 
     if (error instanceof z.ZodError) {
       return NextResponse.json(JSON.stringify(error.issues), { status: 422 });

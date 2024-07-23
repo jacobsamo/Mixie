@@ -1,4 +1,5 @@
 import { Recipe as SchemaRecipe } from "schema-dts";
+import logger from "../logger";
 
 /**
  * Finds the recipe schema in a given json array or object
@@ -26,7 +27,7 @@ function findRecipeSchema(jsonString: any) {
 
     return findRecipe(data);
   } catch (error) {
-    console.error("Error parsing JSON:", error);
+    logger.error("Error parsing JSON:", error);
     return null;
   }
 }
@@ -85,7 +86,7 @@ export const getRecipeJsonLd = async (
               recipe = foundRecipe;
             }
           } catch (error) {
-            console.error(`Error parsing JSON-LD: ${error}`);
+            logger.error(`Error parsing JSON-LD: ${error}`);
           }
         }
       });
@@ -93,7 +94,7 @@ export const getRecipeJsonLd = async (
 
     return recipe;
   } catch (error) {
-    console.error(`Error fetching or parsing data: ${error}`);
+    logger.error(`Error fetching or parsing data: ${error}`);
     return null;
   }
 };

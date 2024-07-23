@@ -45,7 +45,7 @@ export const createRecipeFromLink = async (
   const recipe = await getRecipeJsonLd(params.link);
 
   if (!recipe) {
-    console.warn(`No recipe found at ${params.link}`, {
+    logger.warn(`No recipe found at ${params.link}`, {
       location: "recipe-imports/link",
       message: JSON.stringify({
         link: params.link,
@@ -65,8 +65,6 @@ export const createRecipeFromLink = async (
     created_by: params.user_id,
     recipe_creation_type: "link",
   };
-
-  console.log(newRecipe);
 
   return newRecipe;
 };

@@ -3,6 +3,7 @@ import { getUser } from "@/lib/utils/getUser";
 import { createClient } from "@mixie/supabase/server";
 import type { Recipe } from "@/types";
 import { notFound, redirect } from "next/navigation";
+import logger from "@/lib/services/logger";
 
 export const dynamic = "force-dynamic";
 
@@ -30,7 +31,9 @@ export default async function PreviewRecipePage({
     .single();
 
   if (error) {
-    console.log(`Error on /recipes/preview/[id]`, error);
+    logger.info(`Error on /recipes/preview/[id]`, {
+      message: JSON.stringify(error)
+    });
   }
 
   if (!foundRecipe) {

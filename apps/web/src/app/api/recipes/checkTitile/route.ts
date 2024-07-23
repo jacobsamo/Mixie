@@ -1,10 +1,9 @@
 import { getRecipes } from "@/lib/services/data_fetching";
+import logger from "@/lib/services/logger";
 import { recipeId } from "@/lib/utils";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
-  console.log("Title: ", req);
-
   try {
     const data = await req.json();
     const query = data.title;
@@ -42,7 +41,9 @@ export async function POST(req: NextRequest) {
       }
     );
   } catch (error) {
-    console.error("Error on /recipes/checkTitle", error);
+    logger.error("Error on /recipes/checkTitle", {
+      message: JSON.stringify(error),
+    });
 
     return NextResponse.json(error, { status: 500 });
   }

@@ -7,6 +7,7 @@ import { NewRecipe, recipeSchema } from "@/types";
 import { safeParseJSON } from "@ai-sdk/provider-utils";
 import { generateText } from "ai";
 import { z } from "zod";
+import logger from "@/lib/services/logger";
 
 const schema = z.object({
   user_id: z.string(),
@@ -37,7 +38,9 @@ export const createRecipeFromImage = async (
   const { success } = await ratelimit.limit(params.user_id);
 
   if (!success) {
-    console.info(`Limit was exceeded for ${params.user_id}`);
+    logger.warn(`Limit was exceeded for ${params.user_id}`, {
+      location: "recipe-imports/image",
+    });
     throw new Error("Limit exceeded, wait a little bit before creating again", {
       cause: 429,
     });
@@ -75,7 +78,7 @@ export const createRecipeFromImage = async (
   });
 
   if (!parseResult.success) {
-    console.error(`Failed to parse JSON: ${parseResult.error.message}`, {
+    logger.error(`Failed to parse JSON: ${parseResult.error.message}`, {
       location: "recipe-imports/image",
       message: JSON.stringify({
         image: params.image,

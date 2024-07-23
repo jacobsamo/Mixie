@@ -3,7 +3,8 @@ import { env } from "env";
 import { log as axiomLog } from "next-axiom";
 
 type LogLevel = "info" | "error" | "warn";
-type LogOptions = {
+
+interface LogOptions {
   /**
    * Log level
    */
@@ -20,8 +21,7 @@ type LogOptions = {
    * Location of the request e.g url, part of app, function, etc
    */
   location?: string;
-  [key: string]: any;
-};
+}
 
 interface Logger {
   info(message: string, options?: LogOptions): void;
