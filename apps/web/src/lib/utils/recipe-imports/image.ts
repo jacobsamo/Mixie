@@ -80,6 +80,7 @@ export const createRecipeFromImage = async (
       message: JSON.stringify({
         image: params.image,
         text: val.text,
+        system: system_prompt,
         error: parseResult.error.message,
       }),
       statusCode: 422,

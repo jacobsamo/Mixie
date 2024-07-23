@@ -4,6 +4,7 @@ import { action } from "@/actions/safe-action";
 import { stepsSchema } from "@/actions/schema";
 import { createClient } from "@mixie/supabase/server";
 import { Recipe } from "@/types";
+import logger from "@/lib/services/logger";
 
 export const submitSteps = action
   .schema(stepsSchema)
@@ -20,6 +21,14 @@ export const submitSteps = action
       .single();
 
     if (error) {
+      logger.error(`Failed to update steps on recipe: ${error.message}`, {
+        location: "recipe-form/submit-steps",
+        message: JSON.stringify({
+          parsedInput,
+          error,
+        }),
+        statusCode: 500,
+      });
       throw new Error(error.message);
     }
 

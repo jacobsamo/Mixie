@@ -3,6 +3,7 @@ import { createClient } from "@mixie/supabase/server";
 import { ratingsSchema } from "@/types/zodSchemas";
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
+import logger from "@/lib/services/logger";
 
 export async function POST(req: NextRequest, params: { id: string }) {
   try {
@@ -15,7 +16,6 @@ export async function POST(req: NextRequest, params: { id: string }) {
     const json = await req.json();
 
     const rating = ratingsSchema.parse(json);
-    console.log(rating);
     const supabase = createClient();
 
     await supabase.from("ratings").insert(rating);
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest, params: { id: string }) {
       message: "Rating updated successfully",
     });
   } catch (error) {
-    console.error("Error on /recipes/[id]/setRating", error);
+    logger.error("Error on /recipes/[id]/setRating", error);
 
     if (error instanceof z.ZodError) {
       return NextResponse.json(JSON.stringify(error.issues), { status: 422 });

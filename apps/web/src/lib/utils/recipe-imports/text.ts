@@ -80,6 +80,7 @@ export const createRecipeFromText = async (
       message: JSON.stringify({
         image: params.text,
         text: val.text,
+        system_prompt,
         error: parseResult.error.message,
       }),
       statusCode: 500,
@@ -101,16 +102,6 @@ export const createRecipeFromText = async (
     version: "1.0",
     recipe_creation_type: "upload",
   };
-
-  console.log(`Created recipe successfully`, {
-    location: "recipe-imports/text",
-    message: JSON.stringify({
-      image: params.text,
-      text: val.text,
-      newRecipe: newRecipe,
-    }),
-    statusCode: 200,
-  });
 
   return newRecipe;
 };
