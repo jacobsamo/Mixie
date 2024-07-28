@@ -13,11 +13,11 @@
   },
   "devDependencies": {
     "@supabase/supabase-js": "^2.44.4",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.4"
   },
   "dependencies": {
     "@supabase/ssr": "^0.4.0",
-    "supabase": "^1.183.5"
+    "supabase": "^1.187.3"
   },
   "exports": {
     "./server": "./src/client/server.ts",

@@ -74,7 +74,7 @@ export async function POST(req: NextRequest, params: { id: string }) {
 
     if (error) {
       logger.error("Error on /recipes/create", {
-        message: JSON.stringify(error)
+        message: JSON.stringify(error),
       });
       return NextResponse.json("An Error occurred while creating your recipe", {
         status: 500,
@@ -86,20 +86,33 @@ export async function POST(req: NextRequest, params: { id: string }) {
       recipe_id: createRecipe.recipe_id,
     });
   } catch (error) {
-    logger.error("Error on /recipes/create", {
-      message: JSON.stringify(error)
-    });
-
     if (error instanceof z.ZodError) {
+      logger.error("Error on /recipes/create", {
+        message: JSON.stringify(error.issues),
+        statusCode: 422,
+        location: "/recipes/create",
+      });
       return NextResponse.json(JSON.stringify(error.issues), { status: 422 });
     }
 
     if (error instanceof Error) {
+      logger.error("Error on /recipes/create", {
+        message: error.message,
+        statusCode: error.cause as number,
+        location: "/recipes/create",
+      });
+
       return NextResponse.json(error.message, {
         status: error.cause as number,
       });
     }
 
+    logger.error("Error on /recipes/create", {
+      message:
+        JSON.stringify(error) || "An Error occurred while creating your recipe",
+      statusCode: 500,
+      location: "/recipes/create",
+    });
     return NextResponse.json("An Error occurred while creating your recipe", {
       status: 500,
     });

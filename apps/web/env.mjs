@@ -14,6 +14,7 @@ export const env = createEnv({
     UPSTASH_REDIS_REST_URL: z.string().min(1),
     UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
     RESEND_API_KEY: z.string().min(1),
+    BASELIME_KEY: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_API_APP_TOKEN: z.string().min(1),
@@ -35,6 +36,7 @@ export const env = createEnv({
     GOOGLE_AI_API_KEY: process.env.GOOGLE_AI_API_KEY,
     UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
     UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
+    BASELIME_KEY: process.env.BASELIME_KEY,
 
     // Client
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
