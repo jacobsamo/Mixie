@@ -1,5 +1,4 @@
 import "./env.mjs";
-import { withAxiom } from "next-axiom";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -8,12 +7,14 @@ const nextConfig = {
     remotePatterns: [{ protocol: "https", hostname: "*" }],
   },
   experimental: {
+    instrumentationHook: true,
     serverActions: {
       bodySizeLimit: "3mb",
     },
-    optimizePackageImports: ["posthog-js", "next-axiom"],
+    serverComponentsExternalPackages: ["pino", "pino-pretty"],
+    optimizePackageImports: ["posthog-js", "@supabase/ssr"],
   },
   transpilePackages: ["@mixie/tailwind-config", "@mixie/supabase"],
 };
 
-export default withAxiom(nextConfig);
+export default nextConfig;

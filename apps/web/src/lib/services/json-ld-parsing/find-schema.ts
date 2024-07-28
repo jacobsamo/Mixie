@@ -28,7 +28,7 @@ function findRecipeSchema(jsonString: any) {
     return findRecipe(data);
   } catch (error) {
     logger.error("Error parsing JSON:", {
-      message: JSON.stringify(error)
+      message: JSON.stringify(error),
     });
     return null;
   }

@@ -109,7 +109,6 @@ const SearchUpload = () => {
           </Button>
         ))}
 
-        
         {searchedPhotos && (
           <>
             <Button
