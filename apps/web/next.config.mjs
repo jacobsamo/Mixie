@@ -11,6 +11,7 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: "3mb",
     },
+    serverComponentsExternalPackages: ["pino", "pino-pretty"],
     optimizePackageImports: ["posthog-js", "@supabase/ssr"],
   },
   transpilePackages: ["@mixie/tailwind-config", "@mixie/supabase"],

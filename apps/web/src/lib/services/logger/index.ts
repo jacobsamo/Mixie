@@ -1,5 +1,5 @@
-import { env } from "env";
 import "server-only";
+import { createLogger } from "./create-logger";
 
 type LogLevel = "info" | "error" | "warn";
 
@@ -28,40 +28,36 @@ interface Logger {
   warn(message: string, options?: LogOptions): void;
 }
 
-const log = console;
+const log = createLogger({ dataset: "logs" });
 
 class Logger implements Logger {
   info(message: string, options?: LogOptions) {
-    if (env.NODE_ENV === "production") {
-      log.info(
-        JSON.stringify({ message, namespace: options?.location, ...options })
-      );
-    } else {
-      log.info(message, options);
-    }
+    log.info(
+      {
+        namespace: options?.location,
+        ...options,
+      },
+      message
+    );
   }
   error(message: string, options?: LogOptions) {
-    if (env.NODE_ENV === "production") {
-      log.error(
-        JSON.stringify({
-          message,
-          error: options?.message,
-          namespace: options?.location,
-          ...options,
-        })
-      );
-    } else {
-      log.error(message, options);
-    }
+    log.error(
+      {
+        error: options?.message,
+        namespace: options?.location,
+        ...options,
+      },
+      message
+    );
   }
   warn(message: string, options?: LogOptions) {
-    if (env.NODE_ENV === "production") {
-      log.warn(
-        JSON.stringify({ message, namespace: options?.location, ...options })
-      );
-    } else {
-      log.warn(message, options);
-    }
+    log.warn(
+      {
+        namespace: options?.location,
+        ...options,
+      },
+      message
+    );
   }
 }
 

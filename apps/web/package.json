@@ -15,6 +15,7 @@
   "dependencies": {
     "@ai-sdk/google": "^0.0.27",
     "@baselime/node-opentelemetry": "^0.5.8",
+    "@baselime/pino-transport": "^0.1.5",
     "@hookform/resolvers": "^3.9.0",
     "@mixie/email": "workspace:*",
     "@mixie/supabase": "workspace:*",
@@ -58,6 +59,8 @@
     "next-safe-action": "^7.2.2",
     "next-themes": "^0.3.0",
     "node-html-parser": "^6.1.13",
+    "pino": "^9.3.2",
+    "pino-pretty": "^11.2.2",
     "posthog-js": "^1.148.0",
     "react": "^18.3.1",
     "react-beautiful-dnd": "^13.1.1",
