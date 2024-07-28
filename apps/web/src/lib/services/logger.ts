@@ -1,6 +1,5 @@
-import "server-only";
 import { env } from "env";
-import { Logger as AxiomLogger } from "next-axiom";
+import "server-only";
 
 type LogLevel = "info" | "error" | "warn";
 
@@ -29,17 +28,40 @@ interface Logger {
   warn(message: string, options?: LogOptions): void;
 }
 
-const log = env.NODE_ENV === "production" ? new AxiomLogger() : console;
+const log = console;
 
 class Logger implements Logger {
   info(message: string, options?: LogOptions) {
-    log.info(message, options);
+    if (env.NODE_ENV === "production") {
+      log.info(
+        JSON.stringify({ message, namespace: options?.location, ...options })
+      );
+    } else {
+      log.info(message, options);
+    }
   }
   error(message: string, options?: LogOptions) {
-    log.error(message, options);
+    if (env.NODE_ENV === "production") {
+      log.error(
+        JSON.stringify({
+          message,
+          error: options?.message,
+          namespace: options?.location,
+          ...options,
+        })
+      );
+    } else {
+      log.error(message, options);
+    }
   }
   warn(message: string, options?: LogOptions) {
-    log.warn(message, options);
+    if (env.NODE_ENV === "production") {
+      log.warn(
+        JSON.stringify({ message, namespace: options?.location, ...options })
+      );
+    } else {
+      log.warn(message, options);
+    }
   }
 }
 

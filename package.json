@@ -27,7 +27,12 @@
     "packages/email/*"
   ],
   "trustedDependencies": [
+    "@swc/core",
     "@vercel/speed-insights",
-    "core-js-pure"
+    "core-js-pure",
+    "esbuild",
+    "protobufjs",
+    "sharp",
+    "supabase"
   ]
 }
