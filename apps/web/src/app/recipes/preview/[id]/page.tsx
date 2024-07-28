@@ -32,7 +32,7 @@ export default async function PreviewRecipePage({
 
   if (error) {
     logger.info(`Error on /recipes/preview/[id]`, {
-      message: JSON.stringify(error)
+      message: JSON.stringify(error),
     });
   }
 
