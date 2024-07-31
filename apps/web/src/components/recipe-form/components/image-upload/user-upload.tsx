@@ -39,7 +39,8 @@ const Upload = () => {
       <UploadDropzone
         className=""
         appearance={{
-          container: "border border-white",
+          container: "cursor-pointer",
+          button: "bg-secondary text-secondary-foreground",
         }}
         endpoint="imageUploader"
         // onUploadBegin={() => setLoading(true)}
