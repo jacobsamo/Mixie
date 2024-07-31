@@ -3,6 +3,8 @@ import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import React from "react";
 import { extractRouterConfig } from "uploadthing/server";
 
+export const dynamic = "force-dynamic";
+
 const PreviewLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>

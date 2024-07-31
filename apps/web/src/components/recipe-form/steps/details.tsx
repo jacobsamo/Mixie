@@ -36,8 +36,8 @@ const Details = () => {
     onSuccess: ({ data }) => {
       if (!data) return;
       setRecipe(data as Recipe);
-      resetSteps();
       router.push(`/recipes/preview/${data.recipe_id}`);
+      resetSteps();
     },
   });
 
