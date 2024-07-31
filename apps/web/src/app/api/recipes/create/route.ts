@@ -61,20 +61,22 @@ export async function POST(req: NextRequest, params: { id: string }) {
         break;
     }
 
+    const newReicpe = {
+      ...newRecipe,
+      created_by: user.id,
+      public: false,
+      version: "1.0",
+    };
+
     const { data: createRecipe, error } = await supabase
       .from("recipes")
-      .insert({
-        ...newRecipe,
-        created_by: user.id,
-        public: false,
-        version: "1.0",
-      })
+      .insert(newReicpe)
       .select()
       .single();
 
     if (error) {
       logger.error("Error on /recipes/create", {
-        message: JSON.stringify(error),
+        message: JSON.stringify({ error, newReicpe, req: json }),
       });
       return NextResponse.json("An Error occurred while creating your recipe", {
         status: 500,
@@ -108,11 +110,11 @@ export async function POST(req: NextRequest, params: { id: string }) {
     }
 
     logger.error("Error on /recipes/create", {
-      message:
-        JSON.stringify(error) || "An Error occurred while creating your recipe",
+      message: JSON.stringify({ error, req: req.json() }),
       statusCode: 500,
       location: "/recipes/create",
     });
+
     return NextResponse.json("An Error occurred while creating your recipe", {
       status: 500,
     });
