@@ -197,7 +197,12 @@ const Info = () => {
                     size="icon"
                     type="button"
                     className="h-8 w-8 shrink-0"
-                    onClick={() => setValue("yield", Number(field.value) - 1)}
+                    onClick={() =>
+                      setValue("yield", Number(field.value) - 1, {
+                        shouldDirty: true,
+                        shouldTouch: true,
+                      })
+                    }
                     disabled={Number(field.value) <= 1 ?? true}
                   >
                     <MinusIcon className="h-4 w-4" />
@@ -223,7 +228,12 @@ const Info = () => {
                     size="icon"
                     type="button"
                     className="h-8 w-8 shrink-0"
-                    onClick={() => setValue("yield", Number(field.value) + 1)}
+                    onClick={() =>
+                      setValue("yield", Number(field.value) + 1, {
+                        shouldDirty: true,
+                        shouldTouch: true,
+                      })
+                    }
                   >
                     <PlusIcon className="h-4 w-4" />
                     <span className="sr-only">Decrease</span>

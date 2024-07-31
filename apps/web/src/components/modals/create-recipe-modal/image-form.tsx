@@ -19,7 +19,8 @@ const ImageForm = ({ uploadedImage, setUploadedImage }: ImageFormProps) => {
         "image",
         reader.result
           ?.toString()
-          .replace(/^data:image\/[a-z]+;base64,/, "") as string
+          .replace(/^data:image\/[a-z]+;base64,/, "") as string,
+        { shouldDirty: true, shouldTouch: true }
       );
       setUploadedImage(reader.result as string);
     };
