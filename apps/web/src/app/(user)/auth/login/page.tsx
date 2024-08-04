@@ -203,6 +203,7 @@ const LoginPage = () => {
             type="submit"
             aria-label="Log into Mixie"
             className="mx-auto w-full"
+            disabled={loading}
           >
             {loading ? (
               <>
