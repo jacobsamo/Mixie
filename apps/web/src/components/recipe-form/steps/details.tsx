@@ -36,8 +36,8 @@ const Details = () => {
     onSuccess: ({ data }) => {
       if (!data) return;
       setRecipe(data as Recipe);
-      resetSteps();
       router.push(`/recipes/preview/${data.recipe_id}`);
+      resetSteps();
     },
   });
 
@@ -100,7 +100,12 @@ const Details = () => {
                 <SelectComponent
                   options={sweet_savoury}
                   clearable={false}
-                  onChange={(value) => setValue("sweet_savoury", value.value)}
+                  onChange={(value) =>
+                    setValue("sweet_savoury", value.value, {
+                      shouldDirty: true,
+                      shouldTouch: true,
+                    })
+                  }
                   value={
                     sweet_savoury.find((item) => item.value === field.value) ||
                     undefined
@@ -174,10 +179,10 @@ const Details = () => {
           isSubmitting={isDraftSubmitting}
           isPublicSubmitting={isPublicSubmitting}
           onPublish={() => {
-            setValue("public", true);
+            setValue("public", true, { shouldDirty: true, shouldTouch: true });
           }}
           onSaveDraft={() => {
-            setValue("public", false);
+            setValue("public", false, { shouldDirty: true, shouldTouch: true });
           }}
         />
       </form>

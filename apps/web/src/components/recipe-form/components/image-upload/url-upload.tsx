@@ -14,10 +14,6 @@ import * as z from "zod";
 
 const UrlUpload = () => {
   const {
-    register,
-    setValue,
-    getValues,
-    watch,
     control,
     formState: { errors },
   } = useFormContext<z.infer<typeof recipeClientFormSchema>>();

@@ -28,7 +28,7 @@ interface Logger {
   warn(message: string, options?: LogOptions): void;
 }
 
-const log = createLogger({ dataset: "logs" });
+const log = console;
 
 class Logger implements Logger {
   info(message: string, options?: LogOptions) {

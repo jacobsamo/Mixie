@@ -131,7 +131,7 @@ export const transformRecipe = (recipe: any): TransformRecipe => {
     version: "1.0",
     category: recipe?.recipeCategory ? [recipe.recipeCategory] : null,
     cuisine: recipe?.recipeCuisine ? [recipe.recipeCuisine] : null,
-    description: recipe.description || null,
+    description: null,
     image_attributes: {
       ...attributes,
       alt: attributes?.alt ?? title,
