@@ -131,6 +131,7 @@ const VerificationPage = () => {
           type="submit"
           aria-label="submit verification code"
           className="mt-8"
+          disabled={loading}
         >
           {loading ? (
             <>

@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { createApi } from "unsplash-js";
+import { Basic } from "unsplash-js/dist/methods/photos/types";
 import * as z from "zod";
 
 const api = createApi({
@@ -43,6 +44,33 @@ const SearchUpload = () => {
     refetchImages();
   }, [refetchImages, unsplashImageSearch, page]);
 
+  const setImage = async (photo: Basic) => {
+    setValue("image_url", photo.urls.regular, {
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+    setValue("image_attributes.alt", photo.alt_description ?? "", {
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+    setValue("image_attributes.photographer", photo.user.name, {
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+    setValue("image_attributes.source", "unsplash", {
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+    setValue(
+      "image_attributes.photographer_link",
+      `https://unsplash.com/${photo.user.username}?utm_source=mixie&utm_medium=referral`
+    );
+
+    await api.photos.trackDownload({
+      downloadLocation: photo.links.download_location,
+    });
+  };
+
   const imageUrl = watch("image_url");
 
   return (
@@ -59,28 +87,7 @@ const SearchUpload = () => {
         {searchedPhotos?.results.map((photo) => (
           <Button
             unstyled
-            onClick={() => {
-              setValue("image_url", photo.urls.regular, {
-                shouldDirty: true,
-                shouldTouch: true,
-              });
-              setValue("image_attributes.alt", photo.alt_description ?? "", {
-                shouldDirty: true,
-                shouldTouch: true,
-              });
-              setValue("image_attributes.photographer", photo.user.name, {
-                shouldDirty: true,
-                shouldTouch: true,
-              });
-              setValue(
-                "image_attributes.photographer_link",
-                `https://unsplash.com/${photo.user.username}?utm_source=mixie&utm_medium=referral`
-              );
-              setValue("image_attributes.source", "unsplash", {
-                shouldDirty: true,
-                shouldTouch: true,
-              });
-            }}
+            onClick={async () => await setImage(photo)}
             key={photo.id}
             className={cn(
               "relative flex aspect-video h-[150px] w-[200px] flex-col items-center justify-center rounded-xl",

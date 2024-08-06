@@ -16,10 +16,7 @@ import * as z from "zod";
 
 const Upload = () => {
   const {
-    register,
     setValue,
-    getValues,
-    watch,
     control,
     formState: { errors },
   } = useFormContext<z.infer<typeof recipeClientFormSchema>>();
@@ -39,7 +36,8 @@ const Upload = () => {
       <UploadDropzone
         className=""
         appearance={{
-          container: "border border-white",
+          container: "cursor-pointer",
+          button: "bg-secondary text-secondary-foreground",
         }}
         endpoint="imageUploader"
         // onUploadBegin={() => setLoading(true)}
