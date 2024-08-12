@@ -14,5 +14,6 @@ Sentry.init({
       breadcrumbs: true,
       errors: true,
     }),
+    Sentry.connectIntegration(),
   ],
 });
