@@ -1,6 +1,11 @@
+import bundleAnalyzer from "@next/bundle-analyzer";
 import { withSentryConfig } from "@sentry/nextjs";
 import "./env.mjs";
 import { env } from "./env.mjs";
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -37,7 +42,7 @@ const nextConfig = {
   skipTrailingSlashRedirect: true,
 };
 
-export default withSentryConfig(nextConfig, {
+export default withSentryConfig(withBundleAnalyzer(nextConfig), {
   org: env.SENTRY_ORG,
   project: env.SENTRY_PROJECT,
   authToken: env.SENTRY_AUTH_TOKEN,

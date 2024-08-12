@@ -12,12 +12,12 @@
     "db:types": "supabase gen types typescript --project-id dftoidpracavvgvcbsue --schema public > src/types/db.ts"
   },
   "devDependencies": {
-    "@supabase/supabase-js": "^2.44.4",
+    "@supabase/supabase-js": "^2.45.1",
     "typescript": "^5.5.4"
   },
   "dependencies": {
     "@supabase/ssr": "^0.4.0",
-    "supabase": "^1.187.3"
+    "supabase": "^1.187.10"
   },
   "exports": {
     "./server": "./src/client/server.ts",
