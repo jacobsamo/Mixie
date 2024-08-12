@@ -22,8 +22,8 @@ const Footer = () => {
             <Link href="/recipes">Recipes</Link>
           </div>
           <div className="flex flex-row items-start gap-4">
-            <Link href="/info/privacy_policy">Privacy Policy</Link>
-            <Link href="/info/terms_service">Terms of Service</Link>
+            <Link href="/legal/privacy">Privacy Policy</Link>
+            <Link href="/legal/terms">Terms of Service</Link>
             <Link href="/info/about">About Us</Link>
           </div>
         </div>

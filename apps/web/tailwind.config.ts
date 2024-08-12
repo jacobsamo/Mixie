@@ -4,7 +4,7 @@ import { withUt } from "uploadthing/tw";
 
 const config = {
   darkMode: ["class"],
-  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}", "./mdx-components.tsx"],
   presets: [sharedConfig],
   theme: {
     container: {
