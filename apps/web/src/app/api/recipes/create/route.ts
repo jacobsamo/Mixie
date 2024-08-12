@@ -10,6 +10,7 @@ import { NewRecipe } from "@/types";
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 import logger from "@/lib/services/logger";
+import PostHogClient from "@/lib/server/posthog";
 
 // Max duration in seconds
 export const maxDuration = 60;
@@ -82,6 +83,17 @@ export async function POST(req: NextRequest, params: { id: string }) {
         status: 500,
       });
     }
+
+    const posthog = PostHogClient();
+    posthog.capture({
+      distinctId: user.id,
+      event: "recipe_created",
+      properties: {
+        recipe_id: createRecipe.recipe_id,
+        recipe_name: createRecipe.title,
+      },
+    });
+    await posthog.shutdown();
 
     return NextResponse.json({
       message: "Recipe created successfully",

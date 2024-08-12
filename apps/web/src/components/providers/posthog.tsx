@@ -2,10 +2,13 @@
 import posthog from "posthog-js";
 import { PostHogProvider as PostHog } from "posthog-js/react";
 import { env } from "env";
+import { createClient } from "@mixie/supabase/client";
+import { useEffect } from "react";
 
 if (typeof window !== "undefined") {
   posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY, {
-    api_host: env.NEXT_PUBLIC_POSTHOG_HOST,
+    api_host: "/_proxy/posthog/ingest",
+    ui_host: env.NEXT_PUBLIC_POSTHOG_HOST,
     person_profiles: "identified_only",
     enable_heatmaps: true,
     session_recording: {
@@ -28,5 +31,21 @@ if (typeof window !== "undefined") {
   }
 }
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
+  const supabase = createClient();
+
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        // use the user's id to identify them in posthog
+        // using the users id to ensure that the user can't be personally identifiable
+        posthog.identify(session.user.id);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   return <PostHog client={posthog}>{children}</PostHog>;
 }

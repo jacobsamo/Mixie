@@ -21,13 +21,26 @@ const nextConfig = {
     optimizePackageImports: ["posthog-js", "@supabase/ssr"],
   },
   transpilePackages: ["@mixie/tailwind-config", "@mixie/supabase"],
+  async rewrites() {
+    return [
+      // for posthog proxy
+      {
+        source: "/_proxy/posthog/ingest/static/:path*",
+        destination: "https://us-assets.i.posthog.com/static/:path*",
+      },
+      {
+        source: "/_proxy/posthog/ingest/:path*",
+        destination: "https://us.i.posthog.com/:path*",
+      },
+    ];
+  },
+  skipTrailingSlashRedirect: true,
 };
 
 export default withSentryConfig(nextConfig, {
   org: env.SENTRY_ORG,
   project: env.SENTRY_PROJECT,
   authToken: env.SENTRY_AUTH_TOKEN,
-  silent: !process.env.CI,
   telemetry: false,
   widenClientFileUpload: true,
   hideSourceMaps: true,

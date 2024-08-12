@@ -4,6 +4,7 @@ import { createClient } from "@mixie/supabase/client";
 import { revalidatePath } from "next/cache";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import posthog from "posthog-js";
 
 const LoginPage = () => {
   const supabase = createClient();
@@ -11,6 +12,7 @@ const LoginPage = () => {
 
   const signOut = () => {
     supabase.auth.signOut();
+    posthog.reset();
     router.push("/");
   };
 
