@@ -1,4 +1,11 @@
+import bundleAnalyzer from "@next/bundle-analyzer";
+import { withSentryConfig } from "@sentry/nextjs";
 import "./env.mjs";
+import { env } from "./env.mjs";
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -19,6 +26,28 @@ const nextConfig = {
     optimizePackageImports: ["posthog-js", "@supabase/ssr"],
   },
   transpilePackages: ["@mixie/tailwind-config", "@mixie/supabase"],
+  async rewrites() {
+    return [
+      // for posthog proxy
+      {
+        source: "/_proxy/posthog/ingest/static/:path*",
+        destination: "https://us-assets.i.posthog.com/static/:path*",
+      },
+      {
+        source: "/_proxy/posthog/ingest/:path*",
+        destination: "https://us.i.posthog.com/:path*",
+      },
+    ];
+  },
+  skipTrailingSlashRedirect: true,
 };
 
-export default nextConfig;
+export default withSentryConfig(withBundleAnalyzer(nextConfig), {
+  org: env.SENTRY_ORG,
+  project: env.SENTRY_PROJECT,
+  authToken: env.SENTRY_AUTH_TOKEN,
+  telemetry: false,
+  widenClientFileUpload: true,
+  hideSourceMaps: true,
+  disableLogger: true,
+});
