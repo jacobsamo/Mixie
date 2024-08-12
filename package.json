@@ -6,7 +6,7 @@
     "start": "turbo start",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,mdx}\"",
     "clean:all": "turbo run clean:all"
   },
   "devDependencies": {

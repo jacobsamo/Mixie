@@ -4,7 +4,8 @@ import * as z from "zod";
 import { authAction } from "../safe-action";
 
 export const getUserProfile = authAction
-  .schema(z.object({ userId: z.string() })).metadata({ name: "get-user-profile" })
+  .schema(z.object({ userId: z.string() }))
+  .metadata({ name: "get-user-profile" })
   .action(async ({ parsedInput: params, ctx }) => {
     if (params.userId != ctx.user.id)
       throw new Error("You can't request another user's profile");

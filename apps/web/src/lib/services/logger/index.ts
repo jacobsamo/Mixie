@@ -1,6 +1,5 @@
 import "server-only";
 
-
 type LogLevel = "info" | "error" | "warn";
 
 interface LogOptions {
