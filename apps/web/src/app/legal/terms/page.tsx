@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-export default function Terms_ServicesPage() {
+export default function TermsServicePage() {
   return (
     <div className="mx-auto my-0 max-w-[800px] p-10">
       <h1 className="mb-5 text-step1 font-bold">Terms and Services</h1>
