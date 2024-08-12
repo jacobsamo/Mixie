@@ -17,7 +17,7 @@ export default async function LegalPage() {
     <div className="flex h-fit w-full flex-col items-center justify-center gap-2 sm:flex-row">
       <div>
         <h1 className="text-4xl font-bold">Legal</h1>
-        <p>Explore Mixie's Legal documents and Policies</p>
+        <p>Explore Mixie&apos;s Legal documents and Policies</p>
       </div>
 
       <div className="flex w-full flex-col gap-2">
