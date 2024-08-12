@@ -1,4 +1,6 @@
+import { withSentryConfig } from "@sentry/nextjs";
 import "./env.mjs";
+import { env } from "./env.mjs";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -21,4 +23,13 @@ const nextConfig = {
   transpilePackages: ["@mixie/tailwind-config", "@mixie/supabase"],
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  org: env.SENTRY_ORG,
+  project: env.SENTRY_PROJECT,
+  authToken: env.SENTRY_AUTH_TOKEN,
+  silent: !process.env.CI,
+  telemetry: false,
+  widenClientFileUpload: true,
+  hideSourceMaps: true,
+  disableLogger: true,
+});
