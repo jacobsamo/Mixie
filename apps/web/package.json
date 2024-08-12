@@ -33,7 +33,7 @@
     "@radix-ui/react-toggle-group": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.2",
     "@react-email/components": "^0.0.22",
-    "@sentry/nextjs": "8",
+    "@sentry/nextjs": "^8.25.0",
     "@supabase/sentry-js-integration": "^0.2.0",
     "@supabase/supabase-js": "^2.45.0",
     "@t3-oss/env-nextjs": "^0.11.0",
