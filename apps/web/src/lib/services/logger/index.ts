@@ -1,5 +1,4 @@
 import "server-only";
-import { createLogger } from "./create-logger";
 
 type LogLevel = "info" | "error" | "warn";
 

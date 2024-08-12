@@ -1,5 +1,4 @@
 import { recipeSchema } from "@/types";
-import * as z from "zod";
 
 export const infoSchema = recipeSchema.pick({
   recipe_id: true,

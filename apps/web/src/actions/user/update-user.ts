@@ -1,11 +1,12 @@
 "use server";
-import { profileEditSchema } from "@/types/zodSchemas/profile";
-import { authAction } from "../safe-action";
-import { revalidateTag } from "next/cache";
 import logger from "@/lib/services/logger";
+import { profileEditSchema } from "@/types/zodSchemas/profile";
+import { revalidateTag } from "next/cache";
+import { authAction } from "../safe-action";
 
 export const updateUser = authAction
   .schema(profileEditSchema)
+  .metadata({ name: "update-user" })
   .action(async ({ parsedInput: params, ctx }) => {
     if (params.profile_id !== ctx.user.id)
       throw new Error("You can't edit another user's profile");

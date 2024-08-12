@@ -23,12 +23,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
 
     {
-      url: "https://www.mixiecooking.com/info/privacy_policy",
-      lastModified: new Date("2023-12-14"),
+      url: "https://www.mixiecooking.com/legal/privacy",
+      lastModified: new Date("2024-08-12"),
     },
     {
-      url: "https://www.mixiecooking.com/info/terms_service",
-      lastModified: new Date("2023-11-01"),
+      url: "https://www.mixiecooking.com/legal/terms",
+      lastModified: new Date("2024-08-12"),
     },
     {
       url: "https://www.mixiecooking.com/info/about",

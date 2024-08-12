@@ -6,15 +6,15 @@
     "start": "turbo start",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,mdx}\"",
     "clean:all": "turbo run clean:all"
   },
   "devDependencies": {
     "@manypkg/cli": "^0.21.4",
-    "eslint": "^9.8.0",
+    "eslint": "^9.9.0",
     "prettier": "^3.3.3",
-    "prettier-plugin-tailwindcss": "^0.6.5",
-    "turbo": "^2.0.9",
+    "prettier-plugin-tailwindcss": "^0.6.6",
+    "turbo": "^2.0.12",
     "typescript": "^5.5.4"
   },
   "engines": {
