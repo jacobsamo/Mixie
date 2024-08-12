@@ -98,10 +98,12 @@ const CreateRecipeDialog = () => {
     setLoading(true);
 
     if (createRecipeType) {
-      await createRecipe.mutate({
+      const newRecipe = {
         ...data,
         creation_type: createRecipeType,
-      });
+      };
+      // await createRecipe.mutate(newRecipe);
+      console.log("new recipe: ", newRecipe);
     } else {
       toast.error("No recipe type selected, select one to create a recipe");
     }

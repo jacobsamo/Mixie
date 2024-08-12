@@ -2,6 +2,8 @@ import { CreateRecipeSchema } from "@/lib/utils/recipe-imports";
 import { Upload } from "lucide-react";
 import Dropzone from "react-dropzone";
 import { useFormContext } from "react-hook-form";
+import heicConvert from 'heic-convert';
+import heic2any from 'heic2any';
 
 interface ImageFormProps {
   uploadedImage: string | null;
@@ -11,20 +13,60 @@ interface ImageFormProps {
 const ImageForm = ({ uploadedImage, setUploadedImage }: ImageFormProps) => {
   const form = useFormContext<CreateRecipeSchema>();
 
-  const handleFileChange = (file: File) => {
-    const reader = new FileReader();
+  const convertToJpg = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const ctx = canvas.getContext('2d');
+          ctx!.drawImage(img, 0, 0);
+          const jpgDataUrl = canvas.toDataURL('image/jpeg');
+          resolve(jpgDataUrl);
+        };
+        img.onerror = () => reject(new Error("Failed to load image"));
+        img.src = e.target?.result as string;
+      };
+      reader.onerror = () => reject(new Error("Failed to read file"));
+      reader.readAsDataURL(file);
+    });
+  };
 
-    reader.onloadend = () => {
-      form.setValue(
-        "image",
-        reader.result
-          ?.toString()
-          .replace(/^data:image\/[a-z]+;base64,/, "") as string,
-        { shouldDirty: true, shouldTouch: true }
-      );
-      setUploadedImage(reader.result as string);
-    };
-    reader.readAsDataURL(file);
+  const handleFileChange = async (file: File) => {
+    try {
+      let convertedFile = file;
+
+      console.log("convertedFile: ", {
+        type: convertedFile.type,
+        name: convertedFile.name,
+        size: convertedFile.size,
+        file: convertedFile,
+      });
+      // Handle HEIC format
+      if (file.type === "image/heic" || file.name.toLowerCase().endsWith('.heic')) {
+        const blob = await heic2any({
+          blob: file,
+          toType: "image/jpeg",
+          quality: 0.8
+        });
+        convertedFile = new File([blob as Blob], file.name.replace(/\.heic$/i, '.jpg'), { type: 'image/jpeg' });
+      }
+      console.log("convertedFile: ", {
+        type: convertedFile.type,
+        name: convertedFile.name,
+        size: convertedFile.size,
+        file: convertedFile,
+      });
+      // For other formats, convert to JPG
+      const jpgDataUrl = await convertToJpg(convertedFile);
+      setUploadedImage(jpgDataUrl);
+    } catch (error) {
+      console.error("Error processing image:", error);
+      // Handle error (e.g., show error message to user)
+    }
   };
 
   return (
@@ -35,7 +77,7 @@ const ImageForm = ({ uploadedImage, setUploadedImage }: ImageFormProps) => {
         }}
         maxFiles={1}
         maxSize={1024 * 1024 * 3}
-        accept={{ "image/*": [".jpg", ".jpeg", ".png"] }}
+        // accept={{ "image/*": [".jpg", ".jpeg", ".png"] }}
       >
         {({ getRootProps, getInputProps }) => (
           <div
