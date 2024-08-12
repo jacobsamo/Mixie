@@ -7,6 +7,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import * as z from "zod";
 import NewFeedback from "@mixie/email/emails/feedback";
 import logger from "@/lib/services/logger";
+import PostHogClient from "@/lib/server/posthog";
 
 export async function POST(req: NextRequest) {
   try {
@@ -44,6 +45,13 @@ export async function POST(req: NextRequest) {
         },
       }),
     });
+
+    const posthog = PostHogClient();
+    posthog.capture({
+      distinctId: user!.id,
+      event: "feedback_submitted",
+    });
+    await posthog.shutdown();
 
     return NextResponse.json(
       { message: `Feedback successfully created` },

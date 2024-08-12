@@ -19,6 +19,7 @@ import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import posthog from "posthog-js";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -59,6 +60,7 @@ const VerificationPage = () => {
 
     if (session) {
       router.push("/");
+      posthog.capture("user_logged_in", { user_id: session.user.id });
       setLoading(false);
     }
   };

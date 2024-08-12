@@ -1,11 +1,9 @@
 "use server";
 
-import { action, authAction } from "@/actions/safe-action";
-import { detailsSchema } from "@/actions/schema";
-import { createClient } from "@mixie/supabase/server";
+import { authAction } from "@/actions/safe-action";
+import logger from "@/lib/services/logger";
 import { Recipe } from "@/types";
 import { z } from "zod";
-import logger from "@/lib/services/logger";
 
 export const getRecipeById = authAction
   .schema(
@@ -13,6 +11,7 @@ export const getRecipeById = authAction
       recipe_id: z.string(),
     })
   )
+  .metadata({ name: "get-recipe-id" })
   .action(async ({ parsedInput, ctx: { user, supabase } }) => {
     const { data: foundRecipe, error } = await supabase
       .from("recipes")

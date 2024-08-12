@@ -1,13 +1,13 @@
 "use server";
 
-import { action } from "@/actions/safe-action";
+import { authAction } from "@/actions/safe-action";
 import { ingredientsSchema } from "@/actions/schema";
-import { createClient } from "@mixie/supabase/server";
-import { Ingredient, Recipe } from "@/types";
-import { z } from "zod";
 import logger from "@/lib/services/logger";
+import { Ingredient, Recipe } from "@/types";
+import { createClient } from "@mixie/supabase/server";
 
-export const submitIngredients = action
+export const submitIngredients = authAction
+  .metadata({ name: "submit-ingredients" })
   .schema(ingredientsSchema)
   .action(async ({ parsedInput }) => {
     const supabase = createClient();
