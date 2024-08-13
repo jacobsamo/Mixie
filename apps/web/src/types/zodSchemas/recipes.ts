@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { difficulty_level, recipe_creation_type, sweet_savoury } from "./enums";
 
-const selectValue = z.object({
+export const selectValue = z.object({
   value: z.string(),
   label: z.string(),
 });

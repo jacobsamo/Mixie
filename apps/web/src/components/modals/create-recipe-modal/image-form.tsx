@@ -2,8 +2,7 @@ import { CreateRecipeSchema } from "@/lib/utils/recipe-imports";
 import { Upload } from "lucide-react";
 import Dropzone from "react-dropzone";
 import { useFormContext } from "react-hook-form";
-import heicConvert from 'heic-convert';
-import heic2any from 'heic2any';
+import heicConvert from "heic-convert/browser";
 
 interface ImageFormProps {
   uploadedImage: string | null;
@@ -22,9 +21,9 @@ const ImageForm = ({ uploadedImage, setUploadedImage }: ImageFormProps) => {
           const canvas = document.createElement("canvas");
           canvas.width = img.width;
           canvas.height = img.height;
-          const ctx = canvas.getContext('2d');
+          const ctx = canvas.getContext("2d");
           ctx!.drawImage(img, 0, 0);
-          const jpgDataUrl = canvas.toDataURL('image/jpeg');
+          const jpgDataUrl = canvas.toDataURL("image/jpeg");
           resolve(jpgDataUrl);
         };
         img.onerror = () => reject(new Error("Failed to load image"));
@@ -46,22 +45,33 @@ const ImageForm = ({ uploadedImage, setUploadedImage }: ImageFormProps) => {
         file: convertedFile,
       });
       // Handle HEIC format
-      if (file.type === "image/heic" || file.name.toLowerCase().endsWith('.heic')) {
-        const blob = await heic2any({
-          blob: file,
-          toType: "image/jpeg",
-          quality: 0.8
+      if (
+        file.type === "image/heic" ||
+        file.name.toLowerCase().endsWith(".heic") ||
+        file.type === "image/heif" ||
+        file.name.toLowerCase().endsWith(".heif")
+      ) {
+        const blob = await heicConvert({
+          buffer: await file.arrayBuffer(),
+          format: "JPEG",
         });
-        convertedFile = new File([blob as Blob], file.name.replace(/\.heic$/i, '.jpg'), { type: 'image/jpeg' });
+        convertedFile = new File(
+          [blob],
+          file.name.replace(/\.heic$/i, ".jpg"),
+          { type: "image/jpeg" }
+        );
       }
-      console.log("convertedFile: ", {
-        type: convertedFile.type,
-        name: convertedFile.name,
-        size: convertedFile.size,
-        file: convertedFile,
-      });
+
       // For other formats, convert to JPG
       const jpgDataUrl = await convertToJpg(convertedFile);
+      form.setValue(
+        "image",
+        jpgDataUrl
+          ?.toString()
+          .replace(/^data:image\/[a-z]+;base64,/, "") as string,
+        { shouldDirty: true, shouldTouch: true }
+      );
+      console.log("jpgDataUrl: ", jpgDataUrl);
       setUploadedImage(jpgDataUrl);
     } catch (error) {
       console.error("Error processing image:", error);
