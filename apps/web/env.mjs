@@ -14,9 +14,9 @@ export const env = createEnv({
     UPSTASH_REDIS_REST_URL: z.string().min(1),
     UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
     RESEND_API_KEY: z.string().min(1),
-    SENTRY_AUTH_TOKEN: z.string().min(1),
-    SENTRY_ORG: z.string().min(1),
-    SENTRY_PROJECT: z.string().min(1),
+    SENTRY_AUTH_TOKEN: z.string().optional(),
+    SENTRY_ORG: z.string().optional(),
+    SENTRY_PROJECT: z.string().optional(),
   },
   client: {
     NEXT_PUBLIC_API_APP_TOKEN: z.string().min(1),
@@ -26,7 +26,7 @@ export const env = createEnv({
     NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
     NEXT_PUBLIC_POSTHOG_KEY: z.string().min(1),
     NEXT_PUBLIC_POSTHOG_HOST: z.string().min(1),
-    NEXT_PUBLIC_SENTRY_DSN: z.string().min(1),
+    NEXT_PUBLIC_SENTRY_DSN: z.string().optional(),
   },
   runtimeEnv: {
     // Server

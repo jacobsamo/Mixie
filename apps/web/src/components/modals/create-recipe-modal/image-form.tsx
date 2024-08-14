@@ -64,13 +64,10 @@ const ImageForm = ({ uploadedImage, setUploadedImage }: ImageFormProps) => {
 
       // For other formats, convert to JPG
       const jpgDataUrl = await convertToJpg(convertedFile);
-      form.setValue(
-        "image",
-        jpgDataUrl
-          ?.toString()
-          .replace(/^data:image\/[a-z]+;base64,/, "") as string,
-        { shouldDirty: true, shouldTouch: true }
-      );
+      form.setValue("image", jpgDataUrl, {
+        shouldDirty: true,
+        shouldTouch: true,
+      });
       console.log("jpgDataUrl: ", jpgDataUrl);
       setUploadedImage(jpgDataUrl);
     } catch (error) {

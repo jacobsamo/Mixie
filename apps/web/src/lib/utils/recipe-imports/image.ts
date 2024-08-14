@@ -1,24 +1,14 @@
 "use server";
-import { recipeId } from "@/lib/utils";
-import { constructJsonSchemaPrompt } from "@/lib/utils/ai-convert/zod-to-json";
-import { googleGenAi } from "@/lib/server/ai/google_ai";
-import { ratelimit } from "@/lib/server/kv";
-import {
-  difficulty_level,
-  image_attributesSchema,
-  ingredientSchema,
-  NewRecipe,
-  recipe_creation_type,
-  recipeSchema,
-  selectValue,
-  stepSchema,
-  sweet_savoury,
-} from "@/types";
-import { safeParseJSON } from "@ai-sdk/provider-utils";
-import { generateObject, generateText } from "ai";
-import { z } from "zod";
-import logger from "@/lib/services/logger";
 import { openAI } from "@/lib/server/ai/open_ai";
+import { ratelimit } from "@/lib/server/kv";
+import logger from "@/lib/services/logger";
+import { recipeId } from "@/lib/utils";
+import {
+  NewRecipe,
+  recipeSchema
+} from "@/types";
+import { generateObject } from "ai";
+import { z } from "zod";
 
 const schema = z.object({
   user_id: z.string(),
@@ -73,8 +63,10 @@ export const createRecipeFromImage = async (
       cause: 429,
     });
   }
+  // convert base64 to file then upload to supabase 
+  // create folder of user_id and upload to that folder `recipe-images/user_id`
 
-  const { object } = await generateObject({
+  const val = await generateObject({
     model: openAI("gpt-4o-mini-2024-07-18"),
     schemaName: "Recipe",
     schemaDescription:
@@ -96,6 +88,10 @@ export const createRecipeFromImage = async (
       },
     ],
   });
+
+  const { object } = val;
+
+  console.log("AI response", object);
 
   const newRecipe: NewRecipe = {
     ...object,
