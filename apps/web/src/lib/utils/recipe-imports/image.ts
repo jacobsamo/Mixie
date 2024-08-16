@@ -3,12 +3,11 @@ import { openAI } from "@/lib/server/ai/open_ai";
 import { ratelimit } from "@/lib/server/kv";
 import logger from "@/lib/services/logger";
 import { recipeId } from "@/lib/utils";
-import {
-  NewRecipe,
-  recipeSchema
-} from "@/types";
+import { NewRecipe, recipeSchema } from "@/types";
+import { createClient } from "@mixie/supabase/server";
 import { generateObject } from "ai";
 import { z } from "zod";
+import { convertBase64ToFile } from "../images";
 
 const schema = z.object({
   user_id: z.string(),
@@ -63,10 +62,8 @@ export const createRecipeFromImage = async (
       cause: 429,
     });
   }
-  // convert base64 to file then upload to supabase 
-  // create folder of user_id and upload to that folder `recipe-images/user_id`
 
-  const val = await generateObject({
+  const { object } = await generateObject({
     model: openAI("gpt-4o-mini-2024-07-18"),
     schemaName: "Recipe",
     schemaDescription:
@@ -89,10 +86,6 @@ export const createRecipeFromImage = async (
     ],
   });
 
-  const { object } = val;
-
-  console.log("AI response", object);
-
   const newRecipe: NewRecipe = {
     ...object,
     id: recipeId(object.title),
@@ -100,6 +93,20 @@ export const createRecipeFromImage = async (
     version: "1.0",
     recipe_creation_type: "image",
   };
+
+  const supabase = createClient();
+  const file = await convertBase64ToFile(params.image, newRecipe.title);
+  const { data, error } = await supabase.storage
+    .from("recipe-images")
+    .upload(`${params.user_id}/${newRecipe.title}`, file, {
+      contentType: "image/jpeg",
+    });
+
+  if (error) {
+    logger.error("Error on /recipes/create", {
+      message: JSON.stringify({ error, newRecipe }),
+    });
+  }
 
   return newRecipe;
 };

@@ -3,6 +3,7 @@ import { Upload } from "lucide-react";
 import Dropzone from "react-dropzone";
 import { useFormContext } from "react-hook-form";
 import heicConvert from "heic-convert/browser";
+import { toast } from "sonner";
 
 interface ImageFormProps {
   uploadedImage: string | null;
@@ -38,12 +39,6 @@ const ImageForm = ({ uploadedImage, setUploadedImage }: ImageFormProps) => {
     try {
       let convertedFile = file;
 
-      console.log("convertedFile: ", {
-        type: convertedFile.type,
-        name: convertedFile.name,
-        size: convertedFile.size,
-        file: convertedFile,
-      });
       // Handle HEIC format
       if (
         file.type === "image/heic" ||
@@ -64,15 +59,17 @@ const ImageForm = ({ uploadedImage, setUploadedImage }: ImageFormProps) => {
 
       // For other formats, convert to JPG
       const jpgDataUrl = await convertToJpg(convertedFile);
+
       form.setValue("image", jpgDataUrl, {
         shouldDirty: true,
         shouldTouch: true,
       });
-      console.log("jpgDataUrl: ", jpgDataUrl);
       setUploadedImage(jpgDataUrl);
     } catch (error) {
       console.error("Error processing image:", error);
-      // Handle error (e.g., show error message to user)
+      toast.error("Error processing image", {
+        description: "Try uploading a jpeg or png",
+      });
     }
   };
 

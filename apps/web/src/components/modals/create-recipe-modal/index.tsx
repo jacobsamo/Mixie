@@ -27,7 +27,7 @@ import {
   Pen,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
@@ -61,6 +61,11 @@ const CreateRecipeDialog = () => {
     setCreateRecipeType(null);
     setUploadedImage(null);
   };
+
+  useEffect(() => {
+    console.warn("errors: ", form.formState.errors)
+  }, [form.formState.errors]);
+  
 
   const createRecipe = useMutation({
     mutationKey: ["createRecipe"],

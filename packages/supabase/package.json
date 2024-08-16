@@ -9,7 +9,7 @@
     "db:pull": "supabase db pull",
     "db:start": "supabase start",
     "db:stop": "supabase stop",
-    "db:types": "supabase gen types typescript --project-id dftoidpracavvgvcbsue --schema public > src/types/db.ts"
+    "db:types": "supabase gen types typescript --project-id dftoidpracavvgvcbsue > src/types/db.ts"
   },
   "devDependencies": {
     "@supabase/supabase-js": "^2.45.1",
