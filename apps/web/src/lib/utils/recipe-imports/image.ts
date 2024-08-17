@@ -1,20 +1,20 @@
 "use server";
-import { recipeId } from "@/lib/utils";
-import { constructJsonSchemaPrompt } from "@/lib/utils/ai-convert/zod-to-json";
-import { googleGenAi } from "@/lib/server/ai/google_ai";
+import { openAI } from "@/lib/server/ai/open_ai";
 import { ratelimit } from "@/lib/server/kv";
-import { NewRecipe, recipeSchema } from "@/types";
-import { safeParseJSON } from "@ai-sdk/provider-utils";
-import { generateText } from "ai";
-import { z } from "zod";
 import logger from "@/lib/services/logger";
+import { recipeId } from "@/lib/utils";
+import { NewRecipe, recipeSchema } from "@/types";
+import { createClient } from "@mixie/supabase/server";
+import { generateObject } from "ai";
+import { z } from "zod";
+import { convertBase64ToFile } from "../images";
 
 const schema = z.object({
   user_id: z.string(),
   image: z.string().base64(),
 });
 
-const recipeImportSchema = recipeSchema.pick({
+const recipeImportSchemaAI = recipeSchema.pick({
   category: true,
   title: true,
   cook_time: true,
@@ -31,6 +31,23 @@ const recipeImportSchema = recipeSchema.pick({
   difficulty_level: true,
   suitable_for_diet: true,
 });
+// .extend({
+//   category: z.string().array().nullable(),
+//   cook_time: z.number().nullable(),
+//   cuisine: z.string().array().nullable(),
+//   description: z.string().nullable(),
+//   difficulty_level: difficulty_level.default("not_set").nullable(),
+//   ingredients: ingredientSchema.array().nullable(),
+//   keywords: z.string().array().nullable(),
+//   meal_time: selectValue.array().nullable(),
+//   notes: z.string().nullable(),
+//   prep_time: z.number().nullable(),
+//   recipe_creation_type: recipe_creation_type.default("title").nullable(),
+//   steps: stepSchema.array().nullable(),
+//   suitable_for_diet: z.string().nullable(),
+//   sweet_savoury: sweet_savoury.default("not_set").nullable(),
+//   yield: z.number().nullable(),
+// });
 
 export const createRecipeFromImage = async (
   params: z.infer<typeof schema>
@@ -46,15 +63,12 @@ export const createRecipeFromImage = async (
     });
   }
 
-  const system_prompt = constructJsonSchemaPrompt({
-    zodSchema: recipeImportSchema,
-    schemaSuffix:
-      "You MUST answer with a JSON object that matches the JSON schema above however if the image is not a recipe then return just null, start your response with { and end it with }",
-  });
-
-  const val = await generateText({
-    model: googleGenAi("models/gemini-1.5-flash-latest"),
-    system: system_prompt,
+  const { object } = await generateObject({
+    model: openAI("gpt-4o-mini-2024-07-18"),
+    schemaName: "Recipe",
+    schemaDescription:
+      "Extract the recipe in the image if not a recipe then return null",
+    schema: recipeImportSchemaAI,
     messages: [
       {
         role: "user",
@@ -72,34 +86,27 @@ export const createRecipeFromImage = async (
     ],
   });
 
-  const parseResult = safeParseJSON<z.infer<typeof recipeImportSchema>>({
-    text: val.text,
-    schema: recipeImportSchema,
-  });
-
-  if (!parseResult.success) {
-    logger.error(`Failed to parse JSON: ${parseResult.error.message}`, {
-      location: "recipe-imports/image",
-      message: JSON.stringify({
-        image: params.image,
-        text: val.text,
-        system: system_prompt,
-        error: parseResult.error.message,
-      }),
-      statusCode: 422,
-    });
-    throw Error("Recipe couldn't be created, make sure the image is a recipe", {
-      cause: 422,
-    });
-  }
-
   const newRecipe: NewRecipe = {
-    ...parseResult.value,
-    id: recipeId(parseResult.value.title),
+    ...object,
+    id: recipeId(object.title),
     created_by: params.user_id,
     version: "1.0",
     recipe_creation_type: "image",
   };
+
+  const supabase = createClient();
+  const file = await convertBase64ToFile(params.image, newRecipe.title);
+  const { data, error } = await supabase.storage
+    .from("recipe-images")
+    .upload(`${params.user_id}/${newRecipe.title}`, file, {
+      contentType: "image/jpeg",
+    });
+
+  if (error) {
+    logger.error("Error on /recipes/create", {
+      message: JSON.stringify({ error, newRecipe }),
+    });
+  }
 
   return newRecipe;
 };

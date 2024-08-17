@@ -27,7 +27,7 @@ import {
   Pen,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
@@ -62,6 +62,10 @@ const CreateRecipeDialog = () => {
     setUploadedImage(null);
   };
 
+  useEffect(() => {
+    console.warn("errors: ", form.formState.errors);
+  }, [form.formState.errors]);
+
   const createRecipe = useMutation({
     mutationKey: ["createRecipe"],
     mutationFn: async (data: z.infer<typeof requestSchema>) => {
@@ -83,7 +87,9 @@ const CreateRecipeDialog = () => {
       return res;
     },
     onSuccess: (data) => {
-      toast.success(data.message);
+      toast.success(data.message, {
+        description: "You will be redirected to the recipe page soon...",
+      });
       clearForm();
       setOpen(false);
       router.push(`/recipes/preview/${data.recipe_id}/edit`);
