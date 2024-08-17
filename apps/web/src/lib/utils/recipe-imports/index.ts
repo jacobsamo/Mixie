@@ -4,7 +4,7 @@ import { z } from "zod";
 export const requestSchema = z
   .object({
     creation_type: recipe_creation_type,
-    image: z.string().base64().nullable().default(null),
+    image: z.string().nullable().default(null),
     link: z.string().url().nullable().default(null),
     content: z.string().nullable().default(null),
     title: z.string().nullable().default(null),

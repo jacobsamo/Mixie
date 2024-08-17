@@ -32,7 +32,7 @@ port = 54324
 
 # currently not using storage but plan to in the future
 [storage]
-enabled = false
+enabled = true
 file_size_limit = "5MB"
 
 
