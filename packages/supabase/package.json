@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@supabase/ssr": "^0.4.0",
-    "supabase": "^1.187.10"
+    "supabase": "^1.190.0"
   },
   "exports": {
     "./server": "./src/client/server.ts",
