@@ -25,7 +25,6 @@ import { useRecipeContext } from "../recipe-form-provider";
 import { StepperFormActions } from "./shared";
 
 const Details = () => {
-  const { nextStep, resetSteps } = useStepper();
   const { recipe, setRecipe } = useRecipeContext();
   const router = useRouter();
 
@@ -37,7 +36,6 @@ const Details = () => {
       if (!data) return;
       setRecipe(data as Recipe);
       router.push(`/recipes/preview/${data.recipe_id}`);
-      resetSteps();
     },
   });
 

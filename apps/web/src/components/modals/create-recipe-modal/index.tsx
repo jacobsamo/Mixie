@@ -63,9 +63,8 @@ const CreateRecipeDialog = () => {
   };
 
   useEffect(() => {
-    console.warn("errors: ", form.formState.errors)
+    console.warn("errors: ", form.formState.errors);
   }, [form.formState.errors]);
-  
 
   const createRecipe = useMutation({
     mutationKey: ["createRecipe"],
@@ -88,7 +87,9 @@ const CreateRecipeDialog = () => {
       return res;
     },
     onSuccess: (data) => {
-      toast.success(data.message);
+      toast.success(data.message, {
+        description: "You will be redirected to the recipe page soon...",
+      });
       clearForm();
       setOpen(false);
       router.push(`/recipes/preview/${data.recipe_id}/edit`);
