@@ -13,7 +13,7 @@ import { Metadata } from "next";
 export function constructMetadata({
   title = "Mixie",
   description = "Mixie is a community-driven recipe platform where home cooks and food enthusiasts can collaborate on unique and delicious recipes",
-  image = "/images/landing-page.avif",
+  image = "/images/landing-page.jpg",
   url = "https://www.mixiecooking.com",
   noIndex = false,
   keywords = [
@@ -53,7 +53,7 @@ export function constructMetadata({
       title,
       description,
       images: {
-        url: image || "/images/landing-page.avif",
+        url: image || "/images/landing-page.jpg",
         alt: title,
       },
       url: url,
@@ -63,7 +63,7 @@ export function constructMetadata({
       card: "summary_large_image",
       title: title,
       description: description,
-      images: image || "/images/landing-page.avif",
+      images: image || "/images/landing-page.jpg",
       creator: "@mixiecooking",
     },
     icons: {

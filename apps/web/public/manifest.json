@@ -3,7 +3,7 @@
   "short_name": "Mixie",
   "id": "mixiecooking",
   "lang": "en",
-  "description": "Mixie is to have community-driven recipe platform where home cooks and food enthusiasts can collaborate on unique and delicious recipes.",
+  "description": "Mixie is to have community-driven recipe marketplace where home cooks and food enthusiasts can collaborate on unique and delicious recipes.",
   "start_url": "/?pwa=true",
   "scope": "/",
   "display": "standalone",

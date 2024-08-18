@@ -8,7 +8,7 @@ import { Donut, EggFried, Grid, Salad, Sandwich, Soup } from "lucide-react";
 
 export const metadata = constructMetadata({
   title: "Recipes",
-  image: "/images/recipes-landing-page.avif",
+  image: "/images/recipes-landing-page.jpg",
   url: "https://www.mixiecooking.com/recipes",
   description: "Find delicious recipes for any meal of the day",
 });
