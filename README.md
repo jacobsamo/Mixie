@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.mixiecooking.com/">
-    <img src="https://www.mixiecooking.com/favicon.ico" style="border-radius: 9999px" height="128">
+    <img src="https://www.mixiecooking.com/icons/icon_x128.jpg" style="border-radius: 9999px" height="128">
     <h1 align="center">Mixie</h1>
   </a>
 </p>

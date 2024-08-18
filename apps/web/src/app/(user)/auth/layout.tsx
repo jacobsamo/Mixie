@@ -4,7 +4,7 @@ import React from "react";
 
 export const metadata = constructMetadata({
   description: "join the Mixie community",
-  image: "/images/login-page.avif",
+  image: "/images/login-page.jpg",
 });
 
 export default async function SettingsLayout({
@@ -18,7 +18,7 @@ export default async function SettingsLayout({
         {children}
       </div>
       <Image
-        src="/images/auth-background.avif"
+        src="/images/auth-background.jpg"
         alt="background image"
         fill
         className="absolute -z-50 h-full w-full object-cover object-center"

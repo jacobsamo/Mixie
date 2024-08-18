@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   return constructMetadata({
     title: recipe?.title,
     description: recipe?.description || undefined,
-    image: recipe?.image_url || "/images/banner.avif",
+    image: recipe?.image_url || "/images/banner.jpg",
     url: `https://www.mixiecooking.com/recipes/${recipe?.id}`,
     keywords: recipe?.keywords?.map((keyword) => keyword) || undefined,
   });
