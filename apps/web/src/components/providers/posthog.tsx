@@ -33,21 +33,5 @@ if (typeof window !== "undefined" && process.env.NODE_ENV === "production") {
 }
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
-  const supabase = createClient();
-
-  useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        // use the user's id to identify them in posthog
-        // using the users id to ensure that the user can't be personally identifiable
-        posthog.identify(session.user.id);
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
   return <PostHog client={posthog}>{children}</PostHog>;
 }
