@@ -5,7 +5,7 @@ import { env } from "env";
 import { createClient } from "@mixie/supabase/client";
 import { useEffect } from "react";
 
-if (typeof window !== "undefined" && process.env.NODE_ENV !== "development") {
+if (typeof window !== "undefined" && process.env.NODE_ENV === "production") {
   posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY, {
     api_host: "/_proxy/posthog/ingest",
     ui_host: env.NEXT_PUBLIC_POSTHOG_HOST,
@@ -31,6 +31,7 @@ if (typeof window !== "undefined" && process.env.NODE_ENV !== "development") {
     posthog.set_config({ disable_session_recording: true });
   }
 }
+
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   const supabase = createClient();
 

@@ -39,7 +39,6 @@ export const env = createEnv({
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
     UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
-    BASELIME_KEY: process.env.BASELIME_KEY,
 
     // Sentry
     SENTRY_AUTH_TOKEN: process.env.SENTRY_AUTH_TOKEN,
