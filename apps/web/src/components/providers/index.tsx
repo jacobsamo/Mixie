@@ -4,13 +4,16 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import React, { useEffect } from "react";
 import Dialogs from "./dialogs";
 import { PostHogProvider } from "./posthog";
-import { StoreProvider } from "./store-provider";
+import { StoreProvider, useStore } from "./store-provider";
 import { createClient } from "@mixie/supabase/client";
 import posthog from "posthog-js";
+import { getUserData } from "@/actions/user/get-user-data";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = React.useState(() => new QueryClient());
+  const store = useStore((store) => store);
 
+  // listen to auth to do things around the user
   useEffect(() => {
     const supabase = createClient();
 
@@ -21,8 +24,18 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
         // use the user's id to identify them in posthog
         // using the users id to ensure that the user can't be personally identifiable
         posthog.identify(session.user.id);
+
         //TODO: fetch user data from supabase
-      } 
+        getUserData({ userId: session.user.id }).then((res) => {
+          if (res?.data) {
+            const data = res.data;
+            store.setBookmarkLinks(data.bookmark_links);
+            store.setBookmarks(data.bookmarks);
+            store.setCollections(data.collections);
+          }
+        });
+      }
+
       if (event === "SIGNED_OUT") {
         posthog.reset();
       }

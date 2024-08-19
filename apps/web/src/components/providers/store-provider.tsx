@@ -1,6 +1,6 @@
 "use client";
 
-import { type StoreState, createStore } from "@/lib/stores";
+import { type StoreState, type Store, createStore } from "@/lib/stores";
 import { type ReactNode, createContext, useContext, useRef } from "react";
 import { useStore as useZustandStore } from "zustand";
 
@@ -26,7 +26,7 @@ export const StoreProvider = ({ children }: StoreProviderProps) => {
   );
 };
 
-export const useStore = <T,>(selector: (store: StoreState) => T): T => {
+export const useStore = <T,>(selector: (store: Store) => T): T => {
   const storeContext = useContext(StoreContext);
 
   if (!storeContext) {
