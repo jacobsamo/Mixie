@@ -39,15 +39,17 @@ class Logger implements Logger {
       },
       message
     );
-    if (process.env.NODE_ENV === "production") {
-      Sentry.captureMessage(
-        JSON.stringify({
-          message,
-          namespace: options?.location,
-          ...options,
-        })
-      );
-    }
+
+    Sentry.captureMessage(
+      JSON.stringify({
+        message,
+        namespace: options?.location,
+        ...options,
+      }),
+      {
+        level: "info",
+      }
+    );
   }
   error(message: string, options?: LogOptions) {
     log.error(
@@ -58,13 +60,12 @@ class Logger implements Logger {
       },
       message
     );
-    if (process.env.NODE_ENV === "production") {
-      Sentry.captureException(message, {
-        data: {
-          ...options,
-        },
-      });
-    }
+
+    Sentry.captureException(message, {
+      data: {
+        ...options,
+      },
+    });
   }
   warn(message: string, options?: LogOptions) {
     log.warn(
@@ -74,15 +75,17 @@ class Logger implements Logger {
       },
       message
     );
-    if (process.env.NODE_ENV === "production") {
-      Sentry.captureMessage(
-        JSON.stringify({
-          message,
-          namespace: options?.location,
-          ...options,
-        })
-      );
-    }
+
+    Sentry.captureMessage(
+      JSON.stringify({
+        message,
+        namespace: options?.location,
+        ...options,
+      }),
+      {
+        level: "warning",
+      }
+    );
   }
 }
 
