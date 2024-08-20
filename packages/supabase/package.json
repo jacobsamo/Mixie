@@ -24,6 +24,7 @@
     "./server": "./src/client/server.ts",
     "./client": "./src/client/client.ts",
     "./middleware": "./src/client/middleware.ts",
-    "./types": "./src/types/db.ts"
+    "./types": "./src/types/db.ts",
+    "./queries": "./src/queries/index.ts"
   }
 }

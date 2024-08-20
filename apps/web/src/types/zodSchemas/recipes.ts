@@ -268,7 +268,7 @@ export const collectionSchema = z.object({
   created_at: z.string(),
   description: z.string().nullish(),
   title: z.string(),
-  user_id: z.string().optional(),
+  user_id: z.string().nullish(),
 });
 export const ratingsSchema = z.object({
   rating: z.number(),
