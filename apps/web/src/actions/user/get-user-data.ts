@@ -10,6 +10,12 @@ export const getUserData = authAction
   .action(async ({ parsedInput: params, ctx }) => {
     if (params.userId != ctx.user.id)
       throw new Error("You can't request another user's data");
-    const {} = await getBookmarkData();
-     return ;
+
+    const data = await getBookmarkData();
+
+    return {
+      bookmarks: data?.bookmarks ?? null,
+      bookmark_links: data?.bookmark_links ?? null,
+      collections: data?.collections ?? null,
+    };
   });
