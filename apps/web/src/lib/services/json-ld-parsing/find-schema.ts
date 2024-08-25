@@ -53,6 +53,40 @@ function extractUsingRegex(html: string): SchemaRecipe | null {
   return null;
 }
 
+const userAgents = [
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)\
+   Chrome/91.0.4472.124 Safari/537.36",
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)\
+   Version/14.0.3 Safari/605.1.15",
+  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)\
+   Chrome/90.0.4430.93 Safari/537.36",
+];
+
+const getRandomUserAgent = (): string => {
+  return (
+    userAgents[Math.floor(Math.random() * userAgents.length)] ??
+    (userAgents[0] as string)
+  );
+};
+
+
+const fetchWithRetry = async (url: string, retries = 3, backoff = 300): Promise<Response> => {
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "User-Agent": getRandomUserAgent(),
+      }
+    });
+    if (!res.ok) throw new Error(`Failed to fetch: ${res}`);
+    return await res;
+  } catch (error) {
+    if (retries === 0) throw error;
+    await new Promise((resolve) => setTimeout(resolve, backoff));
+    return fetchWithRetry(url, retries - 1, backoff * 2);
+  }
+};
+
 /**
  * Gets the recipe json-ld from a given link
  * @param link the url of the recipe
@@ -63,9 +97,9 @@ export const getRecipeJsonLd = async (
 ): Promise<SchemaRecipe | null> => {
   try {
     let recipe: SchemaRecipe | null = null;
-    const res = await fetch(link);
+    const res = await fetchWithRetry(link);
     if (!res.ok) {
-      throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`);
+      throw new Error(`Failed to fetch: ${res.status} ${res}`);
     }
     const html = await res.text();
 
@@ -96,7 +130,11 @@ export const getRecipeJsonLd = async (
 
     return recipe;
   } catch (error) {
-    logger.error(`Error fetching or parsing data: ${error}`);
+    logger.error(`Error fetching or parsing data: ${error}`, {
+      level: "error",
+      location: "find-schema.ts",
+      message: JSON.stringify(error)
+    });
     return null;
   }
 };
