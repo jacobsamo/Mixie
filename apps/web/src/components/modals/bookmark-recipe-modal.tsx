@@ -1,9 +1,6 @@
 "use client";
 import CreateCollectionDialog from "@/components/modals/create-collection-modal";
-import {
-  bookmarksAtom,
-  collectionsAtom,
-} from "@/components/providers/state-provider";
+import { useStore } from "@/components/providers/store-provider";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,10 +10,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { bookmarkRouteSchema } from "@/types/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { env } from "env";
-import { useAtom } from "jotai";
 import { CheckCircle, HeartIcon, PlusCircle } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -24,7 +21,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 import { CardRecipe } from "../cards/card-utils";
-import { bookmarkRouteSchema } from "@/types/zodSchemas";
 
 const selectCollection = z.object({
   selected: z.string().array().nullish(),
@@ -39,18 +35,25 @@ const BookmarkRecipeDialog = ({
   recipe,
   userId,
 }: BookmarkRecipeDialogProps) => {
+  const { bookmarks, setBookmarks, collections, getCollectionsForBookmark } =
+    useStore((store) => store);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [bookmarks, setBookmark] = useAtom(bookmarksAtom);
-  const [collections] = useAtom(collectionsAtom);
+
   const isBookmarked = bookmarks?.find(
     (bookmark) => bookmark.recipe_id == recipe.recipe_id
   );
 
+  const inCollections = isBookmarked?.bookmark_id
+    ? getCollectionsForBookmark(isBookmarked?.bookmark_id)?.flatMap(
+        (collection) => collection.collection_id
+      )
+    : [];
+
   const methods = useForm<z.infer<typeof selectCollection>>({
     resolver: zodResolver(selectCollection),
     defaultValues: {
-      selected: isBookmarked?.collections,
+      selected: inCollections,
     },
   });
   const {
@@ -76,11 +79,11 @@ const BookmarkRecipeDialog = ({
 
       const res = await req.json();
 
-      setBookmark((prev) =>
-        prev != undefined
-          ? [...prev, res.bookmarkedRecipe]
-          : [res.bookmarkedRecipe]
-      );
+      // setBookmarks((prev) =>
+      //   prev != undefined
+      //     ? [...prev, res.bookmarkedRecipe]
+      //     : [res.bookmarkedRecipe]
+      // );
     },
     onSuccess() {
       toast.success("Bookmark added successfully!");
@@ -114,11 +117,11 @@ const BookmarkRecipeDialog = ({
 
       const res = await req.json();
 
-      setBookmark((prev) =>
-        prev != undefined
-          ? [...prev, res.bookmarkedRecipe]
-          : [res.bookmarkedRecipe]
-      );
+      // setBookmarks((prev) =>
+      //   prev != undefined
+      //     ? [...prev, res.bookmarkedRecipe]
+      //     : [res.bookmarkedRecipe]
+      // );
     },
     onSuccess() {
       toast.success("Bookmark updated successfully!");

@@ -57,11 +57,11 @@ export const BaseCard = ({
           >
             {displayMinutes(recipe.total_time)}
           </h3>
-          {/* {<BookmarkButton user={user} recipe={recipe} />} */}
+          {<BookmarkButton user={user} recipe={recipe} />}
         </div>
       )}
 
-      {/* {!hasCookTime && <BookmarkButton user={user} recipe={recipe} />} */}
+      {!hasCookTime && <BookmarkButton user={user} recipe={recipe} />}
 
       <RecipeImage
         src={recipe.image_url || ""}

@@ -263,6 +263,15 @@ export const bookmarksWithLinkSchema = bookmarkSchema.extend({
   recipes: recipes,
 });
 
+export const bookmark_links = z.object({
+  bookmark_id: z.string(),
+  collection_id: z.string(),
+  created_at: z.string(),
+  link_id: z.string(),
+  recipe_id: z.string().nullable(),
+  user_id: z.string().nullable(),
+});
+
 export const collectionSchema = z.object({
   collection_id: z.string(),
   created_at: z.string(),
