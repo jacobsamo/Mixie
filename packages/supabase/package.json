@@ -25,6 +25,7 @@
     "./client": "./src/client/client.ts",
     "./middleware": "./src/client/middleware.ts",
     "./types": "./src/types/db.ts",
-    "./queries": "./src/queries/index.ts"
+    "./queries": "./src/queries/index.ts",
+    "./cached-queries": "./src/queries/cached-queries.ts"
   }
 }

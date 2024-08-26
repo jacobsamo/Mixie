@@ -96,11 +96,25 @@ export type Database = {
             referencedColumns: ["bookmark_id"];
           },
           {
+            foreignKeyName: "bookmark_link_bookmark_id_fkey";
+            columns: ["bookmark_id"];
+            isOneToOne: false;
+            referencedRelation: "bookmarks_with_recipes";
+            referencedColumns: ["bookmark_id"];
+          },
+          {
             foreignKeyName: "bookmark_link_collection_id_fkey";
             columns: ["collection_id"];
             isOneToOne: false;
             referencedRelation: "collections";
             referencedColumns: ["collection_id"];
+          },
+          {
+            foreignKeyName: "bookmark_link_recipe_id_fkey";
+            columns: ["recipe_id"];
+            isOneToOne: false;
+            referencedRelation: "bookmarks_with_recipes";
+            referencedColumns: ["recipe_id"];
           },
           {
             foreignKeyName: "bookmark_link_recipe_id_fkey";
@@ -147,6 +161,13 @@ export type Database = {
           user_id?: string | null;
         };
         Relationships: [
+          {
+            foreignKeyName: "bookmarks_recipe_id_fkey";
+            columns: ["recipe_id"];
+            isOneToOne: false;
+            referencedRelation: "bookmarks_with_recipes";
+            referencedColumns: ["recipe_id"];
+          },
           {
             foreignKeyName: "bookmarks_recipe_id_fkey";
             columns: ["recipe_id"];
@@ -337,6 +358,13 @@ export type Database = {
             foreignKeyName: "ratings_recipe_id_fkey";
             columns: ["recipe_id"];
             isOneToOne: false;
+            referencedRelation: "bookmarks_with_recipes";
+            referencedColumns: ["recipe_id"];
+          },
+          {
+            foreignKeyName: "ratings_recipe_id_fkey";
+            columns: ["recipe_id"];
+            isOneToOne: false;
             referencedRelation: "recipes";
             referencedColumns: ["recipe_id"];
           },
@@ -375,6 +403,13 @@ export type Database = {
           version?: string;
         };
         Relationships: [
+          {
+            foreignKeyName: "recipe_versions_recipe_id_fkey";
+            columns: ["recipe_id"];
+            isOneToOne: false;
+            referencedRelation: "bookmarks_with_recipes";
+            referencedColumns: ["recipe_id"];
+          },
           {
             foreignKeyName: "recipe_versions_recipe_id_fkey";
             columns: ["recipe_id"];
@@ -516,6 +551,31 @@ export type Database = {
           {
             foreignKeyName: "blog_author_id_fkey";
             columns: ["author_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      bookmarks_with_recipes: {
+        Row: {
+          bookmark_id: string | null;
+          id: string | null;
+          image_attributes: Json | null;
+          image_url: string | null;
+          keywords: string[] | null;
+          notes: string | null;
+          rating: number | null;
+          recipe_id: string | null;
+          tags: string[] | null;
+          title: string | null;
+          total_time: number | null;
+          user_id: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "bookmarks_user_id_fkey";
+            columns: ["user_id"];
             isOneToOne: false;
             referencedRelation: "users";
             referencedColumns: ["id"];

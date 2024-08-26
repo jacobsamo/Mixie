@@ -1,8 +1,7 @@
 "use server";
-import logger from "@/lib/services/logger";
+import { getBookmarkData } from "@mixie/supabase/cached-queries";
 import * as z from "zod";
 import { authAction } from "../safe-action";
-import { getBookmarkData } from "@mixie/supabase/queries";
 
 export const getUserData = authAction
   .schema(z.object({ userId: z.string() }))
