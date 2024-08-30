@@ -15,7 +15,7 @@ import PostHogClient from "@/lib/server/posthog";
 // Max duration in seconds
 export const maxDuration = 60;
 
-export async function POST(req: NextRequest, params: { id: string }) {
+export async function POST(req: NextRequest) {
   try {
     const app = await isApp(req);
     const user = await getUser();

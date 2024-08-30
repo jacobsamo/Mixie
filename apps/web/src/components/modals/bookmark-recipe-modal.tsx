@@ -28,12 +28,10 @@ const selectCollection = z.object({
 
 export interface BookmarkRecipeDialogProps {
   recipe: CardRecipe;
-  userId: string;
 }
 
 const BookmarkRecipeDialog = ({
   recipe,
-  userId,
 }: BookmarkRecipeDialogProps) => {
   const { bookmarks, setBookmarks, collections, getCollectionsForBookmark } =
     useStore((store) => store);
@@ -199,7 +197,7 @@ const BookmarkRecipeDialog = ({
         </DialogHeader>
         <span className="flex w-full flex-row justify-between">
           <h2 className="font-bold">Collections</h2>
-          <CreateCollectionDialog userId={userId} />
+          <CreateCollectionDialog />
         </span>
 
         <form onSubmit={handleSubmit(onSubmit)}>

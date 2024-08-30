@@ -1,7 +1,7 @@
 "use client";
-import useUser from "@/hooks/useUser";
 import { cn, displayMinutes } from "@/lib/utils";
 import Link from "next/link";
+import BookmarkRecipeDialog from "../modals/bookmark-recipe-modal";
 import { CardProps, RecipeImage } from "./card-utils";
 
 export interface BaseCardProps extends CardProps {
@@ -23,8 +23,6 @@ export const BaseCard = ({
   hasCookTime = true,
   classNames,
 }: BaseCardProps) => {
-  const user = useUser();
-
   return (
     <Link
       href={`/recipes/${recipe.id}`}
@@ -57,11 +55,11 @@ export const BaseCard = ({
           >
             {displayMinutes(recipe.total_time)}
           </h3>
-          {<BookmarkButton user={user} recipe={recipe} />}
+          {<BookmarkRecipeDialog recipe={recipe} />}
         </div>
       )}
 
-      {!hasCookTime && <BookmarkButton user={user} recipe={recipe} />}
+      {!hasCookTime && <BookmarkRecipeDialog recipe={recipe} />}
 
       <RecipeImage
         src={recipe.image_url || ""}

@@ -18,14 +18,14 @@ export default async function RecipeViewPage({
   const { q: searchValue, mealTime, sweetSavory } = searchParams!;
   const searchedRecipes =
     searchValue != undefined
-      ? await searchRecipes({
-          query: searchValue,
-          filters: {
-            mealTime,
-            sweetSavory,
-          },
-          recipes,
-        })
+      ? searchRecipes({
+        query: searchValue,
+        filters: {
+          mealTime,
+          sweetSavory,
+        },
+        recipes,
+      })
       : undefined;
 
   return (
