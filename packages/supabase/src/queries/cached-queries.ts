@@ -26,7 +26,12 @@ export const getRecipes = async () => {
 
   return unstable_cache(
     async () => {
-      return supabase.from("recipes").select().eq("public", true);
+      const { data } = await supabase
+        .from("recipes")
+        .select()
+        .order("created_at", { ascending: false })
+        .eq("public", true);
+      return data;
     },
     ["recipes"],
     {

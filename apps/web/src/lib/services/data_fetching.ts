@@ -1,21 +1,9 @@
 import { createAdminClient, createClient } from "@mixie/supabase/server";
 import { Recipe } from "@/types";
 import { unstable_cache } from "next/cache";
+import { getRecipes as getCachedRecipes } from "@mixie/supabase/cached-queries";
 
 export const getRecipes = async () => {
-  const supabase = createClient();
-  const { data: latestRecipes } = await supabase
-    .from("recipes")
-    .select()
-    .eq("public", true)
-    .order("created_at", { ascending: true });
-  return latestRecipes as Recipe[];
-};
-
-export const getUsers = async () => {
-  const supabase = createAdminClient();
-  const {
-    data: { users },
-  } = await supabase.auth.admin.listUsers();
-  return users;
+  const recipes = await getCachedRecipes();
+  return recipes as Recipe[];
 };

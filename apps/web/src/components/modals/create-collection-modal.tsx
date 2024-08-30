@@ -14,11 +14,9 @@ import { collectionSchema } from "@/types";
 import { useAtom } from "jotai";
 import { collectionsAtom } from "../providers/state-provider";
 
-export interface CreateCollectionDialogProps {
-  userId: string;
-}
 
-const CreateCollectionDialog = ({ userId }: CreateCollectionDialogProps) => {
+
+const CreateCollectionDialog = () => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [collections, setCollections] = useAtom(collectionsAtom);
@@ -41,32 +39,32 @@ const CreateCollectionDialog = ({ userId }: CreateCollectionDialogProps) => {
   ) => {
     setLoading(true);
 
-    const createCollection = fetch(`/api/users/${userId}/collections/create`, {
-      method: "POST",
-      body: JSON.stringify(values),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
-      },
-    });
+    // const createCollection = fetch(`/api/users/${userId}/collections/create`, {
+    //   method: "POST",
+    //   body: JSON.stringify(values),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
+    //   },
+    // });
 
-    toast.promise(createCollection, {
-      loading: "Creating collection...",
-      success: (data) => {
-        setLoading(false);
-        setOpen(false);
-        setCollections((prev) =>
-          prev != undefined ? [...prev, values] : [values]
-        );
-        return "Collection created successfully!";
-      },
-      error: (err) => {
-        setLoading(false);
-        setOpen(false);
-        console.error(err);
-        return "Error while creating collection";
-      },
-    });
+    // toast.promise(createCollection, {
+    //   loading: "Creating collection...",
+    //   success: (data) => {
+    //     setLoading(false);
+    //     setOpen(false);
+    //     setCollections((prev) =>
+    //       prev != undefined ? [...prev, values] : [values]
+    //     );
+    //     return "Collection created successfully!";
+    //   },
+    //   error: (err) => {
+    //     setLoading(false);
+    //     setOpen(false);
+    //     console.error(err);
+    //     return "Error while creating collection";
+    //   },
+    // });
   };
 
   return (
