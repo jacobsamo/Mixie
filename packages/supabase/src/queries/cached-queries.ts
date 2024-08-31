@@ -12,7 +12,8 @@ export const getBookmarkData = async () => {
 
   return unstable_cache(
     async () => {
-      return getBookmarksQuery(supabase, user.id);
+      const bookmarks = getBookmarksQuery(supabase, user.id);
+      return bookmarks;
     },
     ["bookmarks", user.id],
     {

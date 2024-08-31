@@ -24,22 +24,34 @@ export const BaseCard = ({
   classNames,
 }: BaseCardProps) => {
   return (
-    <Link
-      href={`/recipes/${recipe.id}`}
+    <div
       className={cn(
-        "relative flex h-56 w-56 flex-col items-center justify-between rounded-xl p-2 text-white shadow",
+        "relative flex flex-col items-center justify-between rounded-xl p-2 text-white shadow",
         classNames?.container
       )}
     >
-      <h3
-        className={cn(
-          "textOnBackground max-w-full text-balance text-center text-step--2",
-          classNames?.title
-        )}
-      >
-        {recipe.title}
-      </h3>
+      <Link href={`/recipes/${recipe.id}`} className="h-full w-full">
+        <h3
+          className={cn(
+            "textOnBackground max-w-full text-balance text-center text-step--2",
+            classNames?.title
+          )}
+        >
+          {recipe.title}
+        </h3>
 
+        <RecipeImage
+          src={recipe.image_url || ""}
+          alt={recipe?.image_attributes?.alt ?? ""}
+          fill
+          sizes="224px"
+          className={cn(
+            "-z-20 h-56 w-56 rounded-xl object-cover object-center",
+            classNames?.image,
+            classNames?.container
+          )}
+        />
+      </Link>
       {hasCookTime && (
         <div
           className={cn(
@@ -55,24 +67,11 @@ export const BaseCard = ({
           >
             {displayMinutes(recipe.total_time)}
           </h3>
-          {<BookmarkRecipeDialog recipe={recipe} />}
+          <BookmarkRecipeDialog recipe={recipe} />
         </div>
       )}
-
       {!hasCookTime && <BookmarkRecipeDialog recipe={recipe} />}
-
-      <RecipeImage
-        src={recipe.image_url || ""}
-        alt={recipe?.image_attributes?.alt ?? ""}
-        fill
-        sizes="224px"
-        className={cn(
-          "-z-20 h-56 w-56 rounded-xl object-cover object-center",
-          classNames?.image,
-          classNames?.container
-        )}
-      />
-    </Link>
+    </div>
   );
 };
 
@@ -116,3 +115,4 @@ const CardRectangle = ({ recipe }: CardProps) => {
 };
 
 export { CardRectangle, CardRectangleSmall, CardSquare };
+

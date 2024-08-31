@@ -2,8 +2,9 @@
 import { authAction } from "@/actions/safe-action";
 import { collectionSchema } from "@/types";
 import { TablesInsert } from "@mixie/supabase/types";
+import { revalidateTag } from "next/cache";
 
-export const getUserData = authAction
+export const updateCollection = authAction
   .schema(collectionSchema)
   .metadata({ name: "update-collection" })
   .action(async ({ parsedInput: params, ctx }) => {
@@ -19,6 +20,8 @@ export const getUserData = authAction
       .single();
 
     if (error) throw new Error(`Failed to create bookmark ${error.message}`);
+
+    revalidateTag(`bookmarks_${ctx.user.id}`);
 
     return collection;
   });
