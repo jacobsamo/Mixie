@@ -1,32 +1,29 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { env } from "env";
-import { Plus, PlusCircleIcon } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 
+import { createCollection } from "@/actions/user/bookmarks/create-collection";
+import { useStore } from "@/components/providers/store-provider";
+import { Input } from "@/components/ui/advanced-components/input";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/advanced-components/input";
-import { collectionSchema } from "@/types";
-import { useAtom } from "jotai";
-import { collectionsAtom } from "../providers/state-provider";
 
-
+const createCollectionSchema = z.object({
+  title: z.string(),
+  description: z.string().nullish(),
+});
 
 const CreateCollectionDialog = () => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [collections, setCollections] = useAtom(collectionsAtom);
+  const { setCollections } = useStore((store) => store);
 
-  const methods = useForm<z.infer<typeof collectionSchema>>({
-    resolver: zodResolver(collectionSchema),
-    defaultValues: {
-      collection_id: "",
-      user_id: "",
-    },
+  const methods = useForm<z.infer<typeof createCollectionSchema>>({
+    resolver: zodResolver(createCollectionSchema),
   });
   const {
     handleSubmit,
@@ -34,37 +31,19 @@ const CreateCollectionDialog = () => {
     formState: { errors },
   } = methods;
 
-  const onSubmit: SubmitHandler<z.infer<typeof collectionSchema>> = (
-    values
-  ) => {
+  const onSubmit: SubmitHandler<
+    z.infer<typeof createCollectionSchema>
+  > = async (values) => {
     setLoading(true);
+    const res = await createCollection(values);
 
-    // const createCollection = fetch(`/api/users/${userId}/collections/create`, {
-    //   method: "POST",
-    //   body: JSON.stringify(values),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
-    //   },
-    // });
+    if (res && res.data) {
+      setCollections([res.data]);
+      toast.success("Created collection");
+    }
 
-    // toast.promise(createCollection, {
-    //   loading: "Creating collection...",
-    //   success: (data) => {
-    //     setLoading(false);
-    //     setOpen(false);
-    //     setCollections((prev) =>
-    //       prev != undefined ? [...prev, values] : [values]
-    //     );
-    //     return "Collection created successfully!";
-    //   },
-    //   error: (err) => {
-    //     setLoading(false);
-    //     setOpen(false);
-    //     console.error(err);
-    //     return "Error while creating collection";
-    //   },
-    // });
+    setOpen(false);
+    setLoading(false);
   };
 
   return (
@@ -78,7 +57,10 @@ const CreateCollectionDialog = () => {
           <Input {...register("title")} label="Title" required />
           <Input {...register("description")} label="Description" />
 
-          <Button type="submit">Create Collection</Button>
+          <Button disabled={loading} type="submit">
+            Create Collection
+            {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
+          </Button>
         </form>
       </DialogContent>
     </Dialog>

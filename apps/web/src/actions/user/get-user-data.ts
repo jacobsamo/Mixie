@@ -12,6 +12,8 @@ export const getUserData = authAction
 
     const data = await getBookmarkData();
 
+    console.log('Data: ', data);
+
     return {
       bookmarks: data?.bookmarks ?? null,
       bookmark_links: data?.bookmark_links ?? null,

@@ -1,7 +1,8 @@
 "use server";
 import { authAction } from "@/actions/safe-action";
 import logger from "@/lib/services/logger";
-import { Tables, TablesInsert } from "@mixie/supabase/types";
+import { TablesInsert } from "@mixie/supabase/types";
+import { revalidateTag } from "next/cache";
 import * as z from "zod";
 
 const schema = z.object({
@@ -9,7 +10,7 @@ const schema = z.object({
   collectionIds: z.array(z.string()).optional(),
 });
 
-export const getUserData = authAction
+export const createBookmark = authAction
   .schema(schema)
   .metadata({ name: "create-bookmark" })
   .action(async ({ parsedInput: params, ctx }) => {
@@ -26,7 +27,6 @@ export const getUserData = authAction
     if (error) throw new Error(`Failed to create bookmark ${error.message}`);
       
 
-    let bookmarkLinks: Tables<"bookmark_link">[] | null = null;
     if (params.collectionIds) {
       params.collectionIds.forEach(async (collectionId) => {
         const bookmarkLink: TablesInsert<"bookmark_link"> = {
@@ -49,6 +49,8 @@ export const getUserData = authAction
       .from("bookmark_link")
       .select()
       .eq("bookmark_id", bookmark.bookmark_id);
+
+    revalidateTag(`bookmarks_${ctx.user.id}`);
 
     return {
       bookmark,
