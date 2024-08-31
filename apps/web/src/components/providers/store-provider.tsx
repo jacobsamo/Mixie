@@ -1,6 +1,6 @@
 "use client";
 
-import { type StoreState, type Store, createStore } from "@/lib/stores";
+import { type Store, createStore } from "@/lib/stores";
 import { type ReactNode, createContext, useContext, useRef } from "react";
 import { useStore as useZustandStore } from "zustand";
 
