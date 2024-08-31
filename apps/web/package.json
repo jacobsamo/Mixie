@@ -61,7 +61,6 @@
     "fuzzball": "^2.1.2",
     "heic2any": "^0.0.4",
     "input-otp": "^1.2.4",
-    "jotai": "^2.9.3",
     "lucide-react": "^0.428.0",
     "next": "14.2.5",
     "next-safe-action": "^7.7.0",

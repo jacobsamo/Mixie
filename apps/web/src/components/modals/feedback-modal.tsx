@@ -1,4 +1,6 @@
 "use client";
+import { Input } from "@/components/ui/advanced-components/input";
+import { Textarea } from "@/components/ui/advanced-components/textarea";
 import { Button, ButtonProps } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,9 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/advanced-components/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/advanced-components/textarea";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import {
   Tooltip,
@@ -18,20 +18,18 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { createClient } from "@mixie/supabase/client";
+import { cn } from "@/lib/utils";
 import { feedbackSchema } from "@/types/zodSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
+import { createClient } from "@mixie/supabase/client";
 import { TablesInsert } from "@mixie/supabase/types";
+import { useQuery } from "@tanstack/react-query";
 import { env } from "env";
-import { useAtom } from "jotai";
 import { Bug, CircleHelp, Lightbulb, MessageCirclePlus } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { giveFeedbackOpen } from "../providers/dialogs";
-import { cn } from "@/lib/utils";
 
 interface FeedbackDialogProps {
   trigger?: "icon" | "button";
@@ -47,7 +45,7 @@ const FeedbackDialog = ({
   className,
 }: FeedbackDialogProps) => {
   const path = usePathname();
-  const [open, setOpen] = useAtom(giveFeedbackOpen);
+  const [open, setOpen] = useState(false);
   const { data: user } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
@@ -113,7 +111,6 @@ const FeedbackDialog = ({
           <Tooltip>
             <TooltipTrigger
               type="button"
-              onClick={() => setOpen(true)}
               aria-label="give feedback to the mixie team"
               className={cn(
                 "flex flex-row items-center justify-center gap-1 rounded-xl border-none p-2 outline-none",
@@ -131,7 +128,6 @@ const FeedbackDialog = ({
     return (
       <Button
         LeadingIcon={<MessageCirclePlus />}
-        onClick={() => setOpen(true)}
         aria-label="give feedback to the mixie team"
         variant={"secondary"}
         className={cn(
