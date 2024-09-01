@@ -41,12 +41,7 @@ const BookmarkRecipeDialog = ({ recipe }: BookmarkRecipeDialogProps) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState<Bookmark | null>(null);
-
-  const inCollections = isBookmarked?.bookmark_id
-    ? getCollectionsForBookmark(isBookmarked?.bookmark_id)?.flatMap(
-        (collection) => collection.collection_id
-      )
-    : [];
+  const [inCollections, setInCollections] = useState<string[] | null>(null);
 
   const methods = useForm<z.infer<typeof selectCollection>>({
     resolver: zodResolver(selectCollection),
@@ -83,16 +78,11 @@ const BookmarkRecipeDialog = ({ recipe }: BookmarkRecipeDialogProps) => {
         (collectionId) => !selectedCollections.includes(collectionId)
       );
 
-      console.log("Collections to add: ", collectionsToAdd);
-      console.log("Collections to remove: ", collectionsToRemove);
-
       const res = await updateBookmark({
         bookmark_id: bookmarkId,
         collectionIds_to_add: collectionsToAdd,
         collectionIds_to_remove: collectionsToRemove,
       });
-
-      console.log("Updated bookmark: ", res);
 
       if (res && res.data) {
         setBookmarkLinks(res.data.bookmarkLinks);
@@ -138,10 +128,18 @@ const BookmarkRecipeDialog = ({ recipe }: BookmarkRecipeDialogProps) => {
   }, [errors]);
 
   useEffect(() => {
+    const bookmarked = bookmarks?.find((bookmark) => bookmark.recipe_id == recipe.recipe_id) ??
+    null
     setIsBookmarked(
-      bookmarks?.find((bookmark) => bookmark.recipe_id == recipe.recipe_id) ??
-        null
+      bookmarked
     );
+
+    const inCols =
+      getCollectionsForBookmark(bookmarked?.bookmark_id ?? null)?.map(
+        (collection) => collection.collection_id
+      ) ?? null;
+    setInCollections(inCols);
+    setValue("selected", inCols);
   }, [bookmarks]);
 
   return (

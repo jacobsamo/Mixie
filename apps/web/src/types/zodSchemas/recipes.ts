@@ -258,6 +258,21 @@ export const bookmarkSchema = z.object({
   user_id: z.string().nullable(),
 });
 
+export const cardRecipe = recipeSchema.pick({
+  recipe_id: true,
+  id: true,
+  title: true,
+  image_url: true,
+  image_attributes: true,
+  total_time: true,
+  keywords: true,
+});
+
+export const bookmarkWithRecipe = bookmarkSchema.extend({
+  ...cardRecipe.shape,
+  recipe_id: z.string(),
+});
+
 export const bookmarksWithLinkSchema = bookmarkSchema.extend({
   collections: z.string().array().nullable(),
   recipes: recipes,

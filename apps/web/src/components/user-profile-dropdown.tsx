@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/popover";
 import {
   ArrowUpRightSquare,
+  Bookmark,
   ScrollText,
   Settings,
   UserCircle2,
@@ -60,15 +61,14 @@ const UserProfile = () => {
           props={{ unstyled: true }}
           className="inline-flex dark:text-white"
         />
-        {/* <Link
+        <Link
           onClick={() => setOpen(false)}
           href={`/${user?.id}/bookmarks`}
           className="flex flex-row gap-1"
         >
-          {" "}
           <Bookmark />
           Bookmarks
-        </Link> */}
+        </Link>
         <Link
           onClick={() => setOpen(false)}
           href={`/${user?.id}/drafts`}
