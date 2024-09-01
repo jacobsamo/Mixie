@@ -1,7 +1,7 @@
 "use client";
 import { cn, displayMinutes } from "@/lib/utils";
 import Link from "next/link";
-import BookmarkRecipeDialog from "../modals/bookmark-recipe-modal";
+import { BookmarkIconButton } from "../open-dialogs";
 import { CardProps, RecipeImage } from "./card-utils";
 
 export interface BaseCardProps extends CardProps {
@@ -67,10 +67,10 @@ export const BaseCard = ({
           >
             {displayMinutes(recipe.total_time)}
           </h3>
-          <BookmarkRecipeDialog recipe={recipe} />
+          <BookmarkIconButton recipe={recipe} />
         </div>
       )}
-      {!hasCookTime && <BookmarkRecipeDialog recipe={recipe} />}
+      {!hasCookTime && <BookmarkIconButton recipe={recipe} />}
     </div>
   );
 };

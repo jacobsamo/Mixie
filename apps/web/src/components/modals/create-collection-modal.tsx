@@ -24,7 +24,7 @@ import { Switch } from "../ui/switch";
 
 const createCollectionSchema = z.object({
   title: z.string(),
-  description: z.string().nullish(),
+  description: z.string().optional(),
   public: z.boolean().default(false),
 });
 

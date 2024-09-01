@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { PlusCircleIcon, SearchIcon } from "lucide-react";
-import React from "react";
+import { HeartIcon, PlusCircleIcon, SearchIcon } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { useStore } from "./providers/store-provider";
 import { Button, ButtonProps } from "./ui/button";
 import {
@@ -10,6 +10,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
+import { CardRecipe } from "./cards";
+import { Bookmark } from "@/types";
 
 export interface OpenDialogsProps {
   children?: React.ReactNode;
@@ -26,7 +28,7 @@ export const SearchIconTrigger = ({
   children,
   className,
 }: OpenDialogsProps) => {
-  const {setSearchOpen} = useStore((store) => store);
+  const { setSearchOpen } = useStore((store) => store);
 
   return (
     <button
@@ -40,8 +42,7 @@ export const SearchIconTrigger = ({
 };
 
 export const SearchBarTrigger = ({ children, className }: OpenDialogsProps) => {
-  const {setSearchOpen} = useStore((store) => store);
-
+  const { setSearchOpen } = useStore((store) => store);
 
   return (
     <Button
@@ -65,7 +66,6 @@ export const CreateRecipeIconButton = ({
   className,
 }: OpenDialogsProps) => {
   const { setCreateRecipeOpen } = useStore((store) => store);
-
 
   return (
     <TooltipProvider>
@@ -94,7 +94,6 @@ export const CreateRecipeTrigger = ({
 }: OpenDialogWithButtonProps & { text?: string }) => {
   const { setCreateRecipeOpen } = useStore((store) => store);
 
-
   return (
     <Button
       LeadingIcon={<PlusCircleIcon />}
@@ -105,5 +104,36 @@ export const CreateRecipeTrigger = ({
     >
       {text || "Create a recipe"}
     </Button>
+  );
+};
+
+export const BookmarkIconButton = ({ recipe }: { recipe: CardRecipe }) => {
+  const [isBookmarked, setIsBookmarked] = useState<Bookmark | null>(null);
+  const { bookmarks, setBookmarkRecipe, isLoggedIn } = useStore(
+    (store) => store
+  );
+
+  useEffect(() => {
+    const bookmarked =
+      bookmarks?.find((bookmark) => bookmark.recipe_id == recipe.recipe_id) ??
+      null;
+    setIsBookmarked(bookmarked);
+  }, [bookmarks, recipe]);
+
+  if (!isLoggedIn) return null;
+
+  return (
+    <button
+      className="absolute bottom-2 right-2"
+      onClick={() => setBookmarkRecipe(true, recipe)}
+    >
+      {isBookmarked ? (
+        <HeartIcon
+          className={`textOnBackground h-8 w-8 cursor-pointer fill-red text-red`}
+        />
+      ) : (
+        <HeartIcon className={`textOnBackground h-8 w-8 cursor-pointer`} />
+      )}
+    </button>
   );
 };

@@ -1,14 +1,20 @@
+import { CardRecipe } from "@/components/cards";
 import { Store } from "@/lib/stores";
 import { StateCreator } from "zustand";
 
+interface BookmarkRecipeState {
+  open: boolean;
+  recipe: CardRecipe | null;
+}
+
 export type ModalState = {
-  bookmarkRecipeOpen: boolean;
+  bookmarkRecipe: BookmarkRecipeState;
   createRecipeOpen: boolean;
   searchOpen: boolean;
 };
 
 export type ModalActions = {
-  setBookmarkRecipeOpen: (open: boolean) => void;
+  setBookmarkRecipe: (open: boolean, recipe: CardRecipe | null) => void;
   setCreateRecipeOpen: (open: boolean) => void;
   setSearchOpen: (open: boolean) => void;
 };
@@ -16,7 +22,10 @@ export type ModalActions = {
 export type ModalSlice = ModalState & ModalActions;
 
 export const initialModalState: ModalState = {
-  bookmarkRecipeOpen: false,
+  bookmarkRecipe: {
+    open: false,
+    recipe: null,
+  },
   createRecipeOpen: false,
   searchOpen: false,
 };
@@ -25,9 +34,12 @@ export const createModalSlice: StateCreator<Store, [], [], ModalSlice> = (
   set
 ) => ({
   ...initialModalState,
-  setBookmarkRecipeOpen: (open: boolean) =>
+  setBookmarkRecipe: (open: boolean, recipe: CardRecipe | null) =>
     set(() => ({
-      bookmarkRecipeOpen: open,
+      bookmarkRecipe: {
+        open,
+        recipe,
+      },
     })),
   setCreateRecipeOpen: (open: boolean) =>
     set(() => ({
