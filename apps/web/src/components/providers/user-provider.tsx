@@ -27,12 +27,14 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
             store.setBookmarkLinks(data.bookmark_links);
             store.setBookmarks(data.bookmarks);
             store.setCollections(data.collections);
+            store.setIsLoggedIn(true);
           }
         });
       }
 
       if (event === "SIGNED_OUT") {
         posthog.reset();
+        store.setIsLoggedIn(false);
       }
     });
 

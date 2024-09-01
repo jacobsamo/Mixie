@@ -26,22 +26,20 @@ const selectCollection = z.object({
   selected: z.string().array().nullish(),
 });
 
-export interface BookmarkRecipeDialogProps {
-  recipe: CardRecipe;
-}
-
-const BookmarkRecipeDialog = ({ recipe }: BookmarkRecipeDialogProps) => {
+const BookmarkRecipeDialog = () => {
   const {
     bookmarks,
     setBookmarks,
     setBookmarkLinks,
     collections,
     getCollectionsForBookmark,
+    setBookmarkRecipe,
+    bookmarkRecipe,
   } = useStore((store) => store);
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState<Bookmark | null>(null);
   const [inCollections, setInCollections] = useState<string[] | null>(null);
+  const recipe = bookmarkRecipe.recipe;
 
   const methods = useForm<z.infer<typeof selectCollection>>({
     resolver: zodResolver(selectCollection),
@@ -90,7 +88,7 @@ const BookmarkRecipeDialog = ({ recipe }: BookmarkRecipeDialogProps) => {
       }
     }
 
-    if (!isBookmarked) {
+    if (!isBookmarked && recipe) {
       const res = await createBookmark({
         recipeId: recipe.recipe_id!,
         collectionIds: collections!,
@@ -103,7 +101,7 @@ const BookmarkRecipeDialog = ({ recipe }: BookmarkRecipeDialogProps) => {
       }
     }
 
-    setOpen(false);
+    setBookmarkRecipe(false, null);
     setLoading(false);
   };
 
@@ -128,11 +126,12 @@ const BookmarkRecipeDialog = ({ recipe }: BookmarkRecipeDialogProps) => {
   }, [errors]);
 
   useEffect(() => {
-    const bookmarked = bookmarks?.find((bookmark) => bookmark.recipe_id == recipe.recipe_id) ??
-    null
-    setIsBookmarked(
-      bookmarked
-    );
+    const bookmarked = recipe
+      ? (bookmarks?.find(
+          (bookmark) => bookmark.recipe_id == recipe.recipe_id
+        ) ?? null)
+      : null;
+    setIsBookmarked(bookmarked);
 
     const inCols =
       getCollectionsForBookmark(bookmarked?.bookmark_id ?? null)?.map(
@@ -140,33 +139,28 @@ const BookmarkRecipeDialog = ({ recipe }: BookmarkRecipeDialogProps) => {
       ) ?? null;
     setInCollections(inCols);
     setValue("selected", inCols);
-  }, [bookmarks]);
+  }, [bookmarks, bookmarkRecipe]);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild className="absolute bottom-2 right-2">
-        {isBookmarked ? (
-          <HeartIcon
-            className={`textOnBackground h-8 w-8 cursor-pointer fill-red text-red`}
-          />
-        ) : (
-          <HeartIcon className={`textOnBackground h-8 w-8 cursor-pointer`} />
-        )}
-      </DialogTrigger>
-
+    <Dialog
+      open={bookmarkRecipe.open}
+      onOpenChange={(open) => setBookmarkRecipe(open, null)}
+    >
       <DialogContent className="flex flex-col justify-between">
-        <DialogHeader className="flex flex-row gap-1">
-          <Image
-            src={recipe.image_url!}
-            alt={recipe.image_attributes?.alt ?? "saved recipe"}
-            width={64}
-            height={64}
-            className="h-16 w-16 rounded-md object-cover object-center"
-          />
-          <h1 className="w-fit text-wrap text-start text-step--2 font-bold">
-            {recipe.title}
-          </h1>
-        </DialogHeader>
+        {recipe && (
+          <DialogHeader className="flex flex-row gap-1">
+            <Image
+              src={recipe.image_url!}
+              alt={recipe.image_attributes?.alt ?? "saved recipe"}
+              width={64}
+              height={64}
+              className="h-16 w-16 rounded-md object-cover object-center"
+            />
+            <h1 className="w-fit text-wrap text-start text-step--2 font-bold">
+              {recipe.title}
+            </h1>
+          </DialogHeader>
+        )}
         <span className="flex w-full flex-row justify-between">
           <h2 className="font-bold">Collections</h2>
           <CreateCollectionDialog />

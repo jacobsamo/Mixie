@@ -11,6 +11,7 @@ export type UserState = {
   bookmarks: Bookmark[] | null;
   collections: Collection[] | null;
   bookmark_links: Tables<"bookmark_link">[] | null;
+  isLoggedIn: boolean;
 };
 
 export type UserActions = {
@@ -19,6 +20,7 @@ export type UserActions = {
   setCollections: (collections: Collection[] | null) => void;
   getCollectionsForBookmark: (bookmarkId: string | null) => Collection[] | null;
   getBookmarksForCollection: (collectionId: string) => Bookmark[] | null;
+  setIsLoggedIn: (isLoggedIn: boolean) => void;
 };
 
 export type UserSlice = UserState & UserActions;
@@ -27,6 +29,7 @@ export const initialUserState: UserState = {
   bookmarks: null,
   collections: null,
   bookmark_links: null,
+  isLoggedIn: false,
 };
 
 export const createUserSlice: StateCreator<Store, [], [], UserSlice> = (
@@ -34,6 +37,10 @@ export const createUserSlice: StateCreator<Store, [], [], UserSlice> = (
   get
 ) => ({
   ...initialUserState,
+  setIsLoggedIn: (isLoggedIn: boolean) =>
+    set(() => ({
+      isLoggedIn,
+    })),
   setBookmarks: (bookmarks: Bookmark[] | null) => {
     if (!bookmarks) return;
 

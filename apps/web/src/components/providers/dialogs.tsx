@@ -3,7 +3,6 @@ import { SearchDialog } from "@/components/search";
 
 import dynamic from "next/dynamic";
 
-
 const CreateRecipeDialog = dynamic(
   () => import("@/components/modals/create-recipe-modal"),
   {
@@ -13,6 +12,13 @@ const CreateRecipeDialog = dynamic(
 
 const FeedbackDialog = dynamic(
   () => import("@/components/modals/feedback-modal"),
+  {
+    ssr: false,
+  }
+);
+
+const BookmarkRecipeDialog = dynamic(
+  () => import("@/components/modals/bookmark-recipe-modal"),
   {
     ssr: false,
   }
@@ -31,6 +37,7 @@ const Dialogs = () => {
       <CreateRecipeDialog />
       {/* <FeedbackDialog /> */}
       <SearchDialog />
+      <BookmarkRecipeDialog />
     </>
   );
 };
