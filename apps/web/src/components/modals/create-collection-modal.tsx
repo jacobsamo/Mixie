@@ -8,13 +8,24 @@ import * as z from "zod";
 
 import { createCollection } from "@/actions/user/bookmarks/create-collection";
 import { useStore } from "@/components/providers/store-provider";
-import { Input } from "@/components/ui/advanced-components/input";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Switch } from "../ui/switch";
 
 const createCollectionSchema = z.object({
   title: z.string(),
   description: z.string().nullish(),
+  public: z.boolean().default(false),
 });
 
 const CreateCollectionDialog = () => {
@@ -22,14 +33,15 @@ const CreateCollectionDialog = () => {
   const [open, setOpen] = useState(false);
   const { setCollections } = useStore((store) => store);
 
-  const methods = useForm<z.infer<typeof createCollectionSchema>>({
+  const form = useForm<z.infer<typeof createCollectionSchema>>({
     resolver: zodResolver(createCollectionSchema),
   });
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = methods;
+    control,
+  } = form;
 
   const onSubmit: SubmitHandler<
     z.infer<typeof createCollectionSchema>
@@ -53,15 +65,62 @@ const CreateCollectionDialog = () => {
       </DialogTrigger>
 
       <DialogContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          <Input {...register("title")} label="Title" required />
-          <Input {...register("description")} label="Description" />
+        <Form {...form}>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
+            <FormField
+              control={control}
+              name="title"
+              rules={{ required: true }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Title</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="Title" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <Button disabled={loading} type="submit">
-            Create Collection
-            {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
-          </Button>
-        </form>
+            <FormField
+              control={control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="Description" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="public"
+              render={({ field }) => (
+                <FormItem className="flex items-center space-x-2 space-y-0">
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormLabel className="text-base">Public</FormLabel>
+                </FormItem>
+              )}
+            />
+
+            <Button disabled={loading} type="submit">
+              Create Collection
+              {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
+            </Button>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );

@@ -2,6 +2,10 @@ import { StateCreator } from "zustand";
 import { Bookmark, Collection } from "@/types";
 import { Tables } from "@mixie/supabase/types";
 import { Store } from "@/lib/stores";
+import {
+  getBookmarksForCollection,
+  getCollectionsForBookmark,
+} from "@/lib/utils/bookmarks";
 
 export type UserState = {
   bookmarks: Bookmark[] | null;
@@ -13,7 +17,7 @@ export type UserActions = {
   setBookmarks: (bookmarks: Bookmark[] | null) => void;
   setBookmarkLinks: (bookmark_links: Tables<"bookmark_link">[] | null) => void;
   setCollections: (collections: Collection[] | null) => void;
-  getCollectionsForBookmark: (bookmarkId: string) => Collection[] | null;
+  getCollectionsForBookmark: (bookmarkId: string | null) => Collection[] | null;
   getBookmarksForCollection: (collectionId: string) => Bookmark[] | null;
 };
 
@@ -55,36 +59,18 @@ export const createUserSlice: StateCreator<Store, [], [], UserSlice> = (
         : collections,
     }));
   },
-  getCollectionsForBookmark: (bookmarkId: string) => {
+  getCollectionsForBookmark: (bookmarkId: string | null) => {
     const links = get().bookmark_links;
     const collections = get().collections;
-    if (!links || !collections) return null;
 
-    const collectionIds = links
-      .filter((link) => link.bookmark_id === bookmarkId)
-      .map((link) => link.collection_id);
+    if (!bookmarkId) return null;
 
-    // Get the collections that match the collection IDs
-    const bookmarkCollections = collections.filter((collection) =>
-      collectionIds.includes(collection.collection_id)
-    );
-
-    return bookmarkCollections;
+    return getCollectionsForBookmark(bookmarkId, links, collections);
   },
   getBookmarksForCollection: (collectionId: string) => {
     const links = get().bookmark_links;
     const bookmarks = get().bookmarks;
-    if (!links || !bookmarks) return null;
 
-    const bookmarkIds = links
-      .filter((link) => link.collection_id === collectionId)
-      .map((link) => link.bookmark_id);
-
-    // Get the bookmarks that match the bookmark IDs
-    const collectionBookmarks = bookmarks.filter((bookmark) =>
-      bookmarkIds.includes(bookmark.bookmark_id)
-    );
-
-    return collectionBookmarks;
+    return getBookmarksForCollection(collectionId, links, bookmarks);
   },
 });

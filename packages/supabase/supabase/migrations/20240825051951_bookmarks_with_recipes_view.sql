@@ -1,10 +1,10 @@
 create view bookmarks_with_recipes as
 select
   b.bookmark_id,
+  b.user_id,
+  b.created_at,
   b.notes,
   b.tags,
-  b.rating,
-  b.user_id,
   r.recipe_id,
   r.id,
   r.title,

@@ -189,6 +189,7 @@ export type Database = {
           collection_id: string;
           created_at: string;
           description: string | null;
+          public: boolean;
           title: string;
           user_id: string | null;
         };
@@ -196,6 +197,7 @@ export type Database = {
           collection_id?: string;
           created_at?: string;
           description?: string | null;
+          public?: boolean;
           title: string;
           user_id?: string | null;
         };
@@ -203,6 +205,7 @@ export type Database = {
           collection_id?: string;
           created_at?: string;
           description?: string | null;
+          public?: boolean;
           title?: string;
           user_id?: string | null;
         };
@@ -560,6 +563,7 @@ export type Database = {
       bookmarks_with_recipes: {
         Row: {
           bookmark_id: string | null;
+          created_at: string | null;
           id: string | null;
           image_attributes: Json | null;
           image_url: string | null;
