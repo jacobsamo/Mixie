@@ -22,7 +22,7 @@ export const createRecipeFromLink = async (
   const supabase = createClient();
   let newRecipe: NewRecipe;
 
-  if (params.link.includes("https://mixiecooking.com/recipes/")) {
+  if (params.link.includes("https://www.mixiecooking.com/recipes/")) {
     // split a mixie link to get the recipe id this id would be after /recipes/<recipe_id> a recipe link might look like this: https://mixiecooking.com/recipes/5f9b1b5e-5b1a-4b9e-9b9e-9b9e9b9e9b9e
     const recipe_id = params.link.split("/").pop();
     if (!recipe_id) throw Error("Recipe ID not found");

@@ -1,72 +1,63 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { env } from "env";
-import { Plus, PlusCircleIcon } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 
+import { createCollection } from "@/actions/user/bookmarks/create-collection";
+import { useStore } from "@/components/providers/store-provider";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/advanced-components/input";
-import { collectionSchema } from "@/types";
-import { useAtom } from "jotai";
-import { collectionsAtom } from "../providers/state-provider";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Switch } from "../ui/switch";
 
-export interface CreateCollectionDialogProps {
-  userId: string;
-}
+const createCollectionSchema = z.object({
+  title: z.string(),
+  description: z.string().optional(),
+  public: z.boolean().default(false),
+});
 
-const CreateCollectionDialog = ({ userId }: CreateCollectionDialogProps) => {
+const CreateCollectionDialog = () => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [collections, setCollections] = useAtom(collectionsAtom);
+  const { setCollections } = useStore((store) => store);
 
-  const methods = useForm<z.infer<typeof collectionSchema>>({
-    resolver: zodResolver(collectionSchema),
-    defaultValues: {
-      collection_id: "",
-      user_id: "",
-    },
+  const form = useForm<z.infer<typeof createCollectionSchema>>({
+    resolver: zodResolver(createCollectionSchema),
   });
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = methods;
+    control,
+    reset,
+  } = form;
 
-  const onSubmit: SubmitHandler<z.infer<typeof collectionSchema>> = (
-    values
-  ) => {
+  const onSubmit: SubmitHandler<
+    z.infer<typeof createCollectionSchema>
+  > = async (values) => {
     setLoading(true);
+    const res = await createCollection(values);
 
-    const createCollection = fetch(`/api/users/${userId}/collections/create`, {
-      method: "POST",
-      body: JSON.stringify(values),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
-      },
-    });
+    if (res && res.data) {
+      setCollections([res.data]);
+      toast.success("Created collection");
+      reset();
+    }
 
-    toast.promise(createCollection, {
-      loading: "Creating collection...",
-      success: (data) => {
-        setLoading(false);
-        setOpen(false);
-        setCollections((prev) =>
-          prev != undefined ? [...prev, values] : [values]
-        );
-        return "Collection created successfully!";
-      },
-      error: (err) => {
-        setLoading(false);
-        setOpen(false);
-        console.error(err);
-        return "Error while creating collection";
-      },
-    });
+    setOpen(false);
+    setLoading(false);
   };
 
   return (
@@ -76,12 +67,62 @@ const CreateCollectionDialog = ({ userId }: CreateCollectionDialogProps) => {
       </DialogTrigger>
 
       <DialogContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          <Input {...register("title")} label="Title" required />
-          <Input {...register("description")} label="Description" />
+        <Form {...form}>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
+            <FormField
+              control={control}
+              name="title"
+              rules={{ required: true }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Title</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="Title" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <Button type="submit">Create Collection</Button>
-        </form>
+            <FormField
+              control={control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="Description" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="public"
+              render={({ field }) => (
+                <FormItem className="flex items-center space-x-2 space-y-0">
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormLabel className="text-base">Public</FormLabel>
+                </FormItem>
+              )}
+            />
+
+            <Button disabled={loading} type="submit">
+              Create Collection
+              {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
+            </Button>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );

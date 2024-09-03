@@ -1,10 +1,10 @@
 "use client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Provider as JotaiProvider } from "jotai";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
 import React from "react";
 import Dialogs from "./dialogs";
 import { PostHogProvider } from "./posthog";
+import { StoreProvider } from "./store-provider";
+import UserProvider from "./user-provider";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = React.useState(() => new QueryClient());
@@ -13,11 +13,12 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
     <>
       <PostHogProvider>
         <QueryClientProvider client={queryClient}>
-          <NextThemesProvider attribute="class" enableSystem>
-            <Dialogs />
-            {children}
-          </NextThemesProvider>
-
+          <StoreProvider>
+            <UserProvider>
+              <Dialogs />
+              {children}
+            </UserProvider>
+          </StoreProvider>
           {/* {process.env.NODE_ENV === "development" && (
           <ReactQueryDevtools initialIsOpen={false} />
         )} */}

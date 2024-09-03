@@ -1,13 +1,8 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { useAtom } from "jotai";
-import { MessageCirclePlus, PlusCircleIcon, SearchIcon } from "lucide-react";
-import React from "react";
-import {
-  createRecipeOpen,
-  giveFeedbackOpen,
-  searchOpen,
-} from "./providers/dialogs";
+import { HeartIcon, PlusCircleIcon, SearchIcon } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { useStore } from "./providers/store-provider";
 import { Button, ButtonProps } from "./ui/button";
 import {
   Tooltip,
@@ -15,6 +10,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
+import { CardRecipe } from "./cards";
+import { Bookmark } from "@/types";
 
 export interface OpenDialogsProps {
   children?: React.ReactNode;
@@ -31,7 +28,7 @@ export const SearchIconTrigger = ({
   children,
   className,
 }: OpenDialogsProps) => {
-  const [, setSearchOpen] = useAtom(searchOpen);
+  const { setSearchOpen } = useStore((store) => store);
 
   return (
     <button
@@ -45,7 +42,7 @@ export const SearchIconTrigger = ({
 };
 
 export const SearchBarTrigger = ({ children, className }: OpenDialogsProps) => {
-  const [, setSearchOpen] = useAtom(searchOpen);
+  const { setSearchOpen } = useStore((store) => store);
 
   return (
     <Button
@@ -64,62 +61,11 @@ export const SearchBarTrigger = ({ children, className }: OpenDialogsProps) => {
   );
 };
 
-export const FeedbackDialogTrigger = ({
-  children,
-  className,
-}: OpenDialogsProps) => {
-  const [, setFeedbackOpen] = useAtom(giveFeedbackOpen);
-
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger
-          type="button"
-          onClick={() => setFeedbackOpen(true)}
-          aria-label="give feedback to the mixie team"
-          className={cn(
-            "flex flex-row items-center justify-center gap-1 rounded-xl border-none p-2 outline-none",
-            className
-          )}
-        >
-          <MessageCirclePlus className="h-8 w-8" />
-        </TooltipTrigger>
-        <TooltipContent>Provide feedback to the Mixie team</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  );
-};
-
-export const FeedbackButton = ({
-  children,
-  className,
-  props,
-  text,
-}: OpenDialogWithButtonProps) => {
-  const [, setFeedbackOpen] = useAtom(giveFeedbackOpen);
-
-  return (
-    <Button
-      LeadingIcon={<MessageCirclePlus />}
-      onClick={() => setFeedbackOpen(true)}
-      aria-label="give feedback to the mixie team"
-      variant={"secondary"}
-      className={cn(
-        "border-none text-step--3 outline-none hover:text-white",
-        className
-      )}
-      {...props}
-    >
-      {text ? text : "Feedback"}
-    </Button>
-  );
-};
-
 export const CreateRecipeIconButton = ({
   children,
   className,
 }: OpenDialogsProps) => {
-  const [, setCreateRecipeOpen] = useAtom(createRecipeOpen);
+  const { setCreateRecipeOpen } = useStore((store) => store);
 
   return (
     <TooltipProvider>
@@ -146,7 +92,7 @@ export const CreateRecipeTrigger = ({
   props,
   text,
 }: OpenDialogWithButtonProps & { text?: string }) => {
-  const [, setCreateRecipeOpen] = useAtom(createRecipeOpen);
+  const { setCreateRecipeOpen } = useStore((store) => store);
 
   return (
     <Button
@@ -158,5 +104,36 @@ export const CreateRecipeTrigger = ({
     >
       {text || "Create a recipe"}
     </Button>
+  );
+};
+
+export const BookmarkIconButton = ({ recipe }: { recipe: CardRecipe }) => {
+  const [isBookmarked, setIsBookmarked] = useState<Bookmark | null>(null);
+  const { bookmarks, setBookmarkRecipe, isLoggedIn } = useStore(
+    (store) => store
+  );
+
+  useEffect(() => {
+    const bookmarked =
+      bookmarks?.find((bookmark) => bookmark.recipe_id == recipe.recipe_id) ??
+      null;
+    setIsBookmarked(bookmarked);
+  }, [bookmarks, recipe]);
+
+  if (!isLoggedIn) return null;
+
+  return (
+    <button
+      className="absolute bottom-2 right-2"
+      onClick={() => setBookmarkRecipe(true, recipe)}
+    >
+      {isBookmarked ? (
+        <HeartIcon
+          className={`textOnBackground h-8 w-8 cursor-pointer fill-red text-red`}
+        />
+      ) : (
+        <HeartIcon className={`textOnBackground h-8 w-8 cursor-pointer`} />
+      )}
+    </button>
   );
 };

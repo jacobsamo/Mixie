@@ -1,202 +1,175 @@
 "use client";
+import { createBookmark } from "@/actions/user/bookmarks/create-bookmark";
+import { updateBookmark } from "@/actions/user/bookmarks/update-bookmark";
 import CreateCollectionDialog from "@/components/modals/create-collection-modal";
-import {
-  bookmarksAtom,
-  collectionsAtom,
-} from "@/components/providers/state-provider";
-import { Button } from "@/components/ui/button";
+import { useStore } from "@/components/providers/store-provider";
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
-  DialogTrigger,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { Bookmark } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { env } from "env";
-import { useAtom } from "jotai";
-import { CheckCircle, HeartIcon, PlusCircle } from "lucide-react";
+import { CheckCircle, Loader2, PlusCircle } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
-import { CardRecipe } from "../cards/card-utils";
-import { bookmarkRouteSchema } from "@/types/zodSchemas";
+import { Button } from "../ui/button";
 
 const selectCollection = z.object({
   selected: z.string().array().nullish(),
 });
 
-export interface BookmarkRecipeDialogProps {
-  recipe: CardRecipe;
-  userId: string;
-}
+const BookmarkRecipeDialog = () => {
+  const {
+    bookmarks,
+    bookmark_links,
+    setBookmarks,
+    setBookmarkLinks,
+    removeBookmarkLinks,
+    collections,
+    getCollectionsForBookmark,
+    setBookmarkRecipe,
+    bookmarkRecipe,
+  } = useStore((store) => store);
 
-const BookmarkRecipeDialog = ({
-  recipe,
-  userId,
-}: BookmarkRecipeDialogProps) => {
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [bookmarks, setBookmark] = useAtom(bookmarksAtom);
-  const [collections] = useAtom(collectionsAtom);
-  const isBookmarked = bookmarks?.find(
-    (bookmark) => bookmark.recipe_id == recipe.recipe_id
-  );
+  const [isBookmarked, setIsBookmarked] = useState<Bookmark | null>(null);
+  const [inCollections, setInCollections] = useState<string[] | null>(null);
+  const recipe = bookmarkRecipe.recipe;
 
   const methods = useForm<z.infer<typeof selectCollection>>({
     resolver: zodResolver(selectCollection),
     defaultValues: {
-      selected: isBookmarked?.collections,
+      selected: inCollections,
     },
   });
   const {
     handleSubmit,
-    register,
     watch,
-    getValues,
     setValue,
+    reset,
     formState: { errors },
   } = methods;
 
-  const bookmarkRecipe = useMutation({
-    mutationKey: ["bookmarkRecipe"],
-    mutationFn: async (collections: string | null) => {
-      const req = await fetch(`/api/recipes/bookmark/${recipe.recipe_id}`, {
-        method: "POST",
-        body: JSON.stringify(collections),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
-        },
-      });
+  useEffect(() => {
+    const bookmarked = recipe
+      ? (bookmarks?.find(
+          (bookmark) => bookmark.recipe_id == recipe.recipe_id
+        ) ?? null)
+      : null;
+    setIsBookmarked(bookmarked);
 
-      const res = await req.json();
+    const inCols =
+      getCollectionsForBookmark(bookmarked?.bookmark_id ?? null)?.map(
+        (collection) => collection.collection_id
+      ) ?? null;
+    setInCollections(inCols);
+    setValue("selected", inCols);
+  }, [
+    bookmarks,
+    bookmarkRecipe,
+    bookmark_links,
+    collections,
+    recipe,
+    getCollectionsForBookmark,
+    setValue,
+  ]);
 
-      setBookmark((prev) =>
-        prev != undefined
-          ? [...prev, res.bookmarkedRecipe]
-          : [res.bookmarkedRecipe]
-      );
-    },
-    onSuccess() {
-      toast.success("Bookmark added successfully!");
-    },
-    onError(err) {
-      console.error(err);
-
-      toast.error("Error while bookmarking recipe");
-    },
-  });
-
-  const updateBookmarkedRecipe = useMutation({
-    mutationKey: ["updateBookmarkedRecipe"],
-    mutationFn: async (collections: string | null) => {
-      const req = await fetch(
-        `/api/recipes/bookmark/${recipe.recipe_id}/update`,
-        {
-          method: "PUT",
-          body: JSON.stringify({
-            collections: collections,
-            notes: null,
-            rating: null,
-            tags: null,
-          } as z.infer<typeof bookmarkRouteSchema>),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${env.NEXT_PUBLIC_API_APP_TOKEN}`,
-          },
-        }
-      );
-
-      const res = await req.json();
-
-      setBookmark((prev) =>
-        prev != undefined
-          ? [...prev, res.bookmarkedRecipe]
-          : [res.bookmarkedRecipe]
-      );
-    },
-    onSuccess() {
-      toast.success("Bookmark updated successfully!");
-    },
-    onError(err) {
-      console.error(err);
-
-      toast.error("Error while updating bookmark");
-    },
-  });
-
-  const onSubmit: SubmitHandler<z.infer<typeof selectCollection>> = (
+  const onSubmit: SubmitHandler<z.infer<typeof selectCollection>> = async (
     values
   ) => {
     setLoading(true);
+    const cols = values.selected ?? null;
 
-    const collections = values.selected ? values.selected.join(", ") : null;
+    if (isBookmarked) {
+      const bookmarkId = isBookmarked.bookmark_id;
+      const selectedCollections = values.selected ?? [];
 
-    if (isBookmarked !== undefined) {
-      updateBookmarkedRecipe.mutate(collections);
+      // Collections to add are those in the selected list but not in the current list
+      const collectionsToAdd = selectedCollections.filter(
+        (collectionId) => !inCollections!.includes(collectionId)
+      );
+
+      // Collections to remove are those in the current list but not in the selected list
+      const collectionsToRemove = inCollections!.filter(
+        (collectionId) => !selectedCollections.includes(collectionId)
+      );
+
+      const res = await updateBookmark({
+        bookmark_id: bookmarkId,
+        recipe_id: recipe!.recipe_id!,
+        collectionIds_to_add: collectionsToAdd,
+        collectionIds_to_remove: collectionsToRemove,
+      });
+
+      if (res && res.data) {
+        if (res.data.bookmarkLinksDeleted) {
+          removeBookmarkLinks(res.data.bookmarkLinksDeleted);
+        }
+        if (res.data.bookmarkLinksCreated) {
+          setBookmarkLinks(res.data.bookmarkLinksCreated);
+        }
+        toast.success("Updated Bookmark");
+      }
     }
 
-    if (isBookmarked === undefined) {
-      bookmarkRecipe.mutate(collections);
+    if (!isBookmarked && recipe?.recipe_id) {
+      const res = await createBookmark({
+        recipeId: recipe.recipe_id,
+        collectionIds: cols!,
+      });
+
+      if (res && res.data) {
+        setBookmarks([res.data.bookmark]);
+        setBookmarkLinks(res.data.bookmarkLinks);
+        toast.success("Bookmarked recipe");
+      }
     }
 
-    setOpen(false);
+    reset();
+    setBookmarkRecipe(false, null);
     setLoading(false);
   };
 
-  function handleChange(id: string) {
-    const value = watch("selected") ?? [];
-    if (watch("selected")?.includes(id)) {
-      setValue(
-        "selected",
-        value?.filter((collectionId) => collectionId !== id)
-      );
-    } else {
-      setValue("selected", [...value, id]);
-    }
-  }
-
-  useEffect(() => {
-    if (errors)
-      console.log("Errors: ", {
-        errors: errors,
-        values: getValues(),
-      });
-  }, [errors]);
+  const handleChange = (id: string) => {
+    const selected = watch("selected") ?? [];
+    setValue(
+      "selected",
+      selected.includes(id)
+        ? selected.filter((cId) => cId !== id)
+        : [...selected, id]
+    );
+  };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild className="absolute bottom-2 right-2">
-        {isBookmarked != undefined ? (
-          <HeartIcon
-            className={`textOnBackground h-8 w-8 cursor-pointer fill-red text-red`}
-          />
-        ) : (
-          <HeartIcon className={`textOnBackground h-8 w-8 cursor-pointer`} />
-        )}
-      </DialogTrigger>
-
+    <Dialog
+      open={bookmarkRecipe.open}
+      onOpenChange={(open) => setBookmarkRecipe(open, null)}
+    >
       <DialogContent className="flex flex-col justify-between">
-        <DialogHeader className="flex flex-row gap-1">
-          <Image
-            src={recipe.image_url!}
-            alt={recipe.image_attributes?.alt ?? "saved recipe"}
-            width={64}
-            height={64}
-            className="h-16 w-16 rounded-md object-cover object-center"
-          />
-          <h1 className="w-fit text-wrap text-start text-step--2 font-bold">
-            {recipe.title}
-          </h1>
-        </DialogHeader>
+        {recipe && (
+          <DialogHeader className="flex flex-row gap-1">
+            <Image
+              src={recipe.image_url!}
+              alt={recipe.image_attributes?.alt ?? "saved recipe"}
+              width={64}
+              height={64}
+              className="h-16 w-16 rounded-md object-cover object-center"
+            />
+            <DialogTitle className="w-fit text-wrap text-start text-step--2 font-bold">
+              {recipe.title}
+            </DialogTitle>
+          </DialogHeader>
+        )}
         <span className="flex w-full flex-row justify-between">
           <h2 className="font-bold">Collections</h2>
-          <CreateCollectionDialog userId={userId} />
+          <CreateCollectionDialog />
         </span>
 
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -232,7 +205,7 @@ const BookmarkRecipeDialog = ({
           )}
 
           <DialogFooter>
-            <Button type="submit">
+            <Button disabled={loading} type="submit">
               {isBookmarked != undefined
                 ? loading
                   ? "Updating..."
@@ -240,6 +213,7 @@ const BookmarkRecipeDialog = ({
                 : loading
                   ? "Bookmarking..."
                   : "Bookmark"}
+              {loading && <Loader2 className="ml-2 h-4 w-4 animate-spin" />}
             </Button>
           </DialogFooter>
         </form>

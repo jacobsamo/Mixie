@@ -5,6 +5,7 @@ import { detailsSchema } from "@/actions/schema";
 import logger from "@/lib/services/logger";
 import { Recipe } from "@/types";
 import { createClient } from "@mixie/supabase/server";
+import { revalidateTag } from "next/cache";
 
 export const submitDetails = authAction
   .metadata({ name: "submit-details" })
@@ -36,6 +37,10 @@ export const submitDetails = authAction
         statusCode: 500,
       });
       throw new Error(error.message);
+    }
+
+    if (data.public) {
+      revalidateTag("recipes");
     }
 
     return data as Recipe | null;

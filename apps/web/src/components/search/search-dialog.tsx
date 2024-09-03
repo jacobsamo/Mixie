@@ -1,19 +1,18 @@
 "use client";
+import FeedbackDialog from "@/components/modals/feedback-modal";
 import { CreateRecipeTrigger } from "@/components/open-dialogs";
-import { searchOpen } from "@/components/providers/dialogs";
 import {
   Dialog,
   DialogClose,
   DialogContent,
   DialogFooter,
 } from "@/components/ui/dialog";
-import FeedbackDialog from "@/components/modals/feedback-modal";
 import { Recipe } from "@/types";
 import { motion } from "framer-motion";
-import { useAtom } from "jotai";
 import { X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SearchCard } from "../cards";
+import { useStore } from "../providers/store-provider";
 import { SearchInput } from "./search-input";
 
 type PartialRecipe = Pick<
@@ -30,17 +29,10 @@ type PartialRecipe = Pick<
 
 export const SearchDialog = () => {
   const [searchResults, setSearchResults] = useState<PartialRecipe[]>([]);
-  const [open, setOpen] = useAtom(searchOpen);
-
-  useEffect(() => {
-    console.log("SearchResults: ", {
-      searchResults,
-      length: searchResults.length > 0,
-    });
-  }, [searchResults]);
+  const { searchOpen, setSearchOpen } = useStore((store) => store);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={searchOpen} onOpenChange={setSearchOpen}>
       <DialogContent
         className="flex h-full w-full flex-col overflow-hidden rounded-xl border-none md:h-2/3"
         showClose={false}

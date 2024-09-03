@@ -258,9 +258,33 @@ export const bookmarkSchema = z.object({
   user_id: z.string().nullable(),
 });
 
+export const cardRecipe = recipeSchema.pick({
+  recipe_id: true,
+  id: true,
+  title: true,
+  image_url: true,
+  image_attributes: true,
+  total_time: true,
+  keywords: true,
+});
+
+export const bookmarkWithRecipe = bookmarkSchema.extend({
+  ...cardRecipe.shape,
+  recipe_id: z.string(),
+});
+
 export const bookmarksWithLinkSchema = bookmarkSchema.extend({
   collections: z.string().array().nullable(),
   recipes: recipes,
+});
+
+export const bookmark_links = z.object({
+  bookmark_id: z.string(),
+  collection_id: z.string(),
+  created_at: z.string(),
+  link_id: z.string(),
+  recipe_id: z.string().nullable(),
+  user_id: z.string().nullable(),
 });
 
 export const collectionSchema = z.object({
@@ -268,7 +292,7 @@ export const collectionSchema = z.object({
   created_at: z.string(),
   description: z.string().nullish(),
   title: z.string(),
-  user_id: z.string().optional(),
+  user_id: z.string().nullish(),
 });
 export const ratingsSchema = z.object({
   rating: z.number(),

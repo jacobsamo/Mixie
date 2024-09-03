@@ -43,6 +43,10 @@ const nextConfig = {
         source: "/_proxy/posthog/ingest/:path*",
         destination: "https://us.i.posthog.com/:path*",
       },
+      {
+        source: "/_proxy/posthog/ingest/decide",
+        destination: "https://us.i.posthog.com/decide",
+      },
     ];
   },
   skipTrailingSlashRedirect: true,

@@ -4,13 +4,6 @@ import type { ClassValue } from "clsx";
 import dynamic from "next/dynamic";
 import Image, { type ImageProps } from "next/image";
 
-const BookmarkRecipeDialog = dynamic(
-  () => import("@/components/modals/bookmark-recipe-modal"),
-  {
-    ssr: true,
-  }
-);
-
 export type CardRecipe = Pick<
   Recipe,
   | "recipe_id"
@@ -44,7 +37,7 @@ export const RecipeImage = (
 ) => (
   <Image
     loading="lazy"
-    className={cn("object-cover object-center", className)}
+    className={cn("relative object-cover object-center", className)}
     {...props}
   />
 );

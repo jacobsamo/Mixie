@@ -5,22 +5,22 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useAtom } from "jotai";
 import {
   ArrowUpRightSquare,
+  Bookmark,
   ScrollText,
   Settings,
   UserCircle2,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import useUser from "../hooks/useUser";
 import { CreateRecipeTrigger } from "./open-dialogs";
-import { userDropDownOpen } from "./providers/state-provider";
 
 const UserProfile = () => {
   const user = useUser();
-  const [open, setOpen] = useAtom(userDropDownOpen);
+  const [open, setOpen] = useState(false);
 
   if (!user) {
     return (
@@ -61,15 +61,14 @@ const UserProfile = () => {
           props={{ unstyled: true }}
           className="inline-flex dark:text-white"
         />
-        {/* <Link
+        <Link
           onClick={() => setOpen(false)}
           href={`/${user?.id}/bookmarks`}
           className="flex flex-row gap-1"
         >
-          {" "}
           <Bookmark />
           Bookmarks
-        </Link> */}
+        </Link>
         <Link
           onClick={() => setOpen(false)}
           href={`/${user?.id}/drafts`}

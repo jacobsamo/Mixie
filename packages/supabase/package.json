@@ -9,20 +9,23 @@
     "db:pull": "supabase db pull",
     "db:start": "supabase start",
     "db:stop": "supabase stop",
+    "db:restart": "bun db:stop && bun db:start",
     "db:types": "supabase gen types typescript --project-id dftoidpracavvgvcbsue > src/types/db.ts"
   },
   "devDependencies": {
-    "@supabase/supabase-js": "^2.45.1",
+    "@supabase/supabase-js": "^2.45.3",
     "typescript": "^5.5.4"
   },
   "dependencies": {
-    "@supabase/ssr": "^0.4.0",
-    "supabase": "^1.190.0"
+    "@supabase/ssr": "^0.5.1",
+    "supabase": "^1.191.3"
   },
   "exports": {
     "./server": "./src/client/server.ts",
     "./client": "./src/client/client.ts",
     "./middleware": "./src/client/middleware.ts",
-    "./types": "./src/types/db.ts"
+    "./types": "./src/types/db.ts",
+    "./queries": "./src/queries/index.ts",
+    "./cached-queries": "./src/queries/cached-queries.ts"
   }
 }

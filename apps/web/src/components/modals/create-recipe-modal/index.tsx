@@ -1,6 +1,6 @@
 "use client";
 import { HeaderControls } from "@/components/header-controls";
-import { createRecipeOpen } from "@/components/providers/dialogs";
+import { useStore } from "@/components/providers/store-provider";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,7 +17,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Slot } from "@radix-ui/react-slot";
 import { useMutation } from "@tanstack/react-query";
 import { env } from "env";
-import { useAtom } from "jotai";
 import {
   BadgeAlertIcon,
   ClipboardType,
@@ -44,7 +43,7 @@ interface CreateRecipeModesProps {
 }
 
 const CreateRecipeDialog = () => {
-  const [open, setOpen] = useAtom(createRecipeOpen);
+  const { createRecipeOpen, setCreateRecipeOpen } = useStore((store) => store);
   const [createRecipeType, setCreateRecipeType] =
     useState<RecipeCreationType | null>(null);
   const [loading, setLoading] = useState(false);
@@ -91,7 +90,7 @@ const CreateRecipeDialog = () => {
         description: "You will be redirected to the recipe page soon...",
       });
       clearForm();
-      setOpen(false);
+      setCreateRecipeOpen(false);
       router.push(`/recipes/preview/${data.recipe_id}/edit`);
     },
     onError: (error) => {
@@ -141,7 +140,7 @@ const CreateRecipeDialog = () => {
   ];
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={createRecipeOpen} onOpenChange={setCreateRecipeOpen}>
       <DialogContent
         className="max-h-[80%] min-h-[50%] w-11/12 md:w-1/2"
         showClose={false}
