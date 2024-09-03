@@ -52,8 +52,8 @@ const BookmarkRecipeDialog = () => {
   const {
     handleSubmit,
     watch,
-    getValues,
     setValue,
+    reset,
     formState: { errors },
   } = methods;
 
@@ -132,6 +132,7 @@ const BookmarkRecipeDialog = () => {
       }
     }
 
+    reset();
     setBookmarkRecipe(false, null);
     setLoading(false);
   };
