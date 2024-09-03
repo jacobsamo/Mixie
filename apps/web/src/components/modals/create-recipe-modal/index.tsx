@@ -43,7 +43,7 @@ interface CreateRecipeModesProps {
 }
 
 const CreateRecipeDialog = () => {
-  const {createRecipeOpen, setCreateRecipeOpen} = useStore((store) => store);
+  const { createRecipeOpen, setCreateRecipeOpen } = useStore((store) => store);
   const [createRecipeType, setCreateRecipeType] =
     useState<RecipeCreationType | null>(null);
   const [loading, setLoading] = useState(false);

@@ -25,4 +25,3 @@ export async function getBookmarksQuery(supabase: Client, userId: string) {
     collections,
   };
 }
-

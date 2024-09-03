@@ -29,7 +29,7 @@ type PartialRecipe = Pick<
 
 export const SearchDialog = () => {
   const [searchResults, setSearchResults] = useState<PartialRecipe[]>([]);
-  const {searchOpen, setSearchOpen} = useStore((store) => store);
+  const { searchOpen, setSearchOpen } = useStore((store) => store);
 
   return (
     <Dialog open={searchOpen} onOpenChange={setSearchOpen}>
