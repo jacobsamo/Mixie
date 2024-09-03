@@ -6,6 +6,7 @@ import {
   DialogClose,
   DialogContent,
   DialogFooter,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { Recipe } from "@/types";
 import { motion } from "framer-motion";
@@ -37,12 +38,12 @@ export const SearchDialog = () => {
         className="flex h-full w-full flex-col overflow-hidden rounded-xl border-none md:h-2/3"
         showClose={false}
       >
-        <div className="relative inline-flex w-full items-center gap-2">
+        <DialogTitle className="relative inline-flex w-full items-center gap-2">
           <SearchInput setSearchResults={setSearchResults} />
           <DialogClose className="absolute right-2 top-2">
             <X className="hover:text-red" />
           </DialogClose>
-        </div>
+        </DialogTitle>
 
         <div className="h-4/5">
           {searchResults.length > 0 && (

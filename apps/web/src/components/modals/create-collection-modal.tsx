@@ -9,7 +9,7 @@ import * as z from "zod";
 import { createCollection } from "@/actions/user/bookmarks/create-collection";
 import { useStore } from "@/components/providers/store-provider";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -67,6 +67,10 @@ const CreateCollectionDialog = () => {
       </DialogTrigger>
 
       <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Create a new collection</DialogTitle>
+        </DialogHeader>
+
         <Form {...form}>
           <form
             onSubmit={handleSubmit(onSubmit)}

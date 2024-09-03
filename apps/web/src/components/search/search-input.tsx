@@ -46,7 +46,6 @@ export const SearchInput = ({ setSearchResults }: SearchInputProps) => {
 
             const recipes = await req.json();
 
-            console.log("Recipes-2: ", JSON.stringify(recipes));
             setSearch(e.target.value);
             setSearchResults(recipes);
           }}
