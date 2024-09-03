@@ -1,5 +1,5 @@
 import { CreateRecipeSchema } from "@/lib/utils/recipe-imports";
-import { convertDataContentToBase64String } from "ai";
+import { convertDataContentToBase64String } from "@/lib/utils/images";
 import imageCompress from "browser-image-compression";
 import { Loader2, Upload } from "lucide-react";
 import { useState } from "react";
