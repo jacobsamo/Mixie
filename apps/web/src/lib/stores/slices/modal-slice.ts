@@ -47,6 +47,6 @@ export const createModalSlice: StateCreator<Store, [], [], ModalSlice> = (
     })),
   setSearchOpen: (open: boolean) =>
     set(() => ({
-      createRecipeOpen: open,
+      searchOpen: open,
     })),
 });
