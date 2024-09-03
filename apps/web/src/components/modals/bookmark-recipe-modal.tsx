@@ -8,18 +8,17 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
-  DialogTrigger,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { Bookmark } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckCircle, HeartIcon, Loader2, PlusCircle } from "lucide-react";
+import { CheckCircle, Loader2, PlusCircle } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
-import { CardRecipe } from "../cards/card-utils";
 import { Button } from "../ui/button";
 
 const selectCollection = z.object({
@@ -29,13 +28,16 @@ const selectCollection = z.object({
 const BookmarkRecipeDialog = () => {
   const {
     bookmarks,
+    bookmark_links,
     setBookmarks,
     setBookmarkLinks,
+    removeBookmarkLinks,
     collections,
     getCollectionsForBookmark,
     setBookmarkRecipe,
     bookmarkRecipe,
   } = useStore((store) => store);
+
   const [loading, setLoading] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState<Bookmark | null>(null);
   const [inCollections, setInCollections] = useState<string[] | null>(null);
@@ -49,18 +51,41 @@ const BookmarkRecipeDialog = () => {
   });
   const {
     handleSubmit,
-    register,
     watch,
     getValues,
     setValue,
     formState: { errors },
   } = methods;
 
+  useEffect(() => {
+    const bookmarked = recipe
+      ? (bookmarks?.find(
+          (bookmark) => bookmark.recipe_id == recipe.recipe_id
+        ) ?? null)
+      : null;
+    setIsBookmarked(bookmarked);
+
+    const inCols =
+      getCollectionsForBookmark(bookmarked?.bookmark_id ?? null)?.map(
+        (collection) => collection.collection_id
+      ) ?? null;
+    setInCollections(inCols);
+    setValue("selected", inCols);
+  }, [
+    bookmarks,
+    bookmarkRecipe,
+    bookmark_links,
+    collections,
+    recipe,
+    getCollectionsForBookmark,
+    setValue,
+  ]);
+
   const onSubmit: SubmitHandler<z.infer<typeof selectCollection>> = async (
     values
   ) => {
     setLoading(true);
-    const collections = values.selected ?? null;
+    const cols = values.selected ?? null;
 
     if (isBookmarked) {
       const bookmarkId = isBookmarked.bookmark_id;
@@ -78,20 +103,26 @@ const BookmarkRecipeDialog = () => {
 
       const res = await updateBookmark({
         bookmark_id: bookmarkId,
+        recipe_id: recipe!.recipe_id!,
         collectionIds_to_add: collectionsToAdd,
         collectionIds_to_remove: collectionsToRemove,
       });
 
       if (res && res.data) {
-        setBookmarkLinks(res.data.bookmarkLinks);
+        if (res.data.bookmarkLinksDeleted) {
+          removeBookmarkLinks(res.data.bookmarkLinksDeleted);
+        }
+        if (res.data.bookmarkLinksCreated) {
+          setBookmarkLinks(res.data.bookmarkLinksCreated);
+        }
         toast.success("Updated Bookmark");
       }
     }
 
-    if (!isBookmarked && recipe) {
+    if (!isBookmarked && recipe?.recipe_id) {
       const res = await createBookmark({
-        recipeId: recipe.recipe_id!,
-        collectionIds: collections!,
+        recipeId: recipe.recipe_id,
+        collectionIds: cols!,
       });
 
       if (res && res.data) {
@@ -105,41 +136,15 @@ const BookmarkRecipeDialog = () => {
     setLoading(false);
   };
 
-  function handleChange(id: string) {
-    const value = watch("selected") ?? [];
-    if (watch("selected")?.includes(id)) {
-      setValue(
-        "selected",
-        value?.filter((collectionId) => collectionId !== id)
-      );
-    } else {
-      setValue("selected", [...value, id]);
-    }
-  }
-
-  useEffect(() => {
-    if (errors)
-      console.log("Errors: ", {
-        errors: errors,
-        values: getValues(),
-      });
-  }, [errors]);
-
-  useEffect(() => {
-    const bookmarked = recipe
-      ? (bookmarks?.find(
-          (bookmark) => bookmark.recipe_id == recipe.recipe_id
-        ) ?? null)
-      : null;
-    setIsBookmarked(bookmarked);
-
-    const inCols =
-      getCollectionsForBookmark(bookmarked?.bookmark_id ?? null)?.map(
-        (collection) => collection.collection_id
-      ) ?? null;
-    setInCollections(inCols);
-    setValue("selected", inCols);
-  }, [bookmarks, bookmarkRecipe]);
+  const handleChange = (id: string) => {
+    const selected = watch("selected") ?? [];
+    setValue(
+      "selected",
+      selected.includes(id)
+        ? selected.filter((cId) => cId !== id)
+        : [...selected, id]
+    );
+  };
 
   return (
     <Dialog
@@ -156,9 +161,9 @@ const BookmarkRecipeDialog = () => {
               height={64}
               className="h-16 w-16 rounded-md object-cover object-center"
             />
-            <h1 className="w-fit text-wrap text-start text-step--2 font-bold">
+            <DialogTitle className="w-fit text-wrap text-start text-step--2 font-bold">
               {recipe.title}
-            </h1>
+            </DialogTitle>
           </DialogHeader>
         )}
         <span className="flex w-full flex-row justify-between">

@@ -7,6 +7,7 @@ import * as z from "zod";
 
 const schema = z.object({
   bookmark_id: z.string(),
+  recipe_id: z.string(),
   collectionIds_to_add: z.array(z.string()).optional(),
   collectionIds_to_remove: z.array(z.string()).optional(),
 });
@@ -15,53 +16,70 @@ export const updateBookmark = authAction
   .schema(schema)
   .metadata({ name: "update-bookmark" })
   .action(async ({ parsedInput: params, ctx }) => {
+    let bookmarkLinksCreated: Tables<"bookmark_link">[] | null = null;
+    let bookmarkLinksDeleted: string[] | null = null;
+
     if (params.collectionIds_to_add) {
-      params.collectionIds_to_add.forEach(async (collectionId) => {
-        const bookmarkLink: TablesInsert<"bookmark_link"> = {
-          bookmark_id: params.bookmark_id,
-          collection_id: collectionId,
-          user_id: ctx.user.id,
-        };
+      const addPromises = params.collectionIds_to_add.map(
+        async (collectionId) => {
+          const bookmarkLink: TablesInsert<"bookmark_link"> = {
+            bookmark_id: params.bookmark_id,
+            collection_id: collectionId,
+            recipe_id: params.recipe_id,
+            user_id: ctx.user.id,
+          };
 
-        const { error } = await ctx.supabase
-          .from("bookmark_link")
-          .insert(bookmarkLink);
+          const { data: newBookmarkLink, error } = await ctx.supabase
+            .from("bookmark_link")
+            .insert(bookmarkLink)
+            .select();
 
-        logger.warn("Error creating a bookmark link", {
-          location: "create-bookmark.ts",
-          message: JSON.stringify(error),
-        });
-      });
+          if (error) {
+            logger.warn("Error creating a bookmark link", {
+              location: "update-bookmark.ts",
+              message: JSON.stringify(error),
+            });
+          }
+
+          if (newBookmarkLink) {
+            bookmarkLinksCreated = bookmarkLinksCreated ?? [];
+            bookmarkLinksCreated.push(...newBookmarkLink);
+          }
+        }
+      );
+
+      await Promise.all(addPromises);
     }
 
     if (params.collectionIds_to_remove) {
-      params.collectionIds_to_remove.forEach(async (collectionId) => {
-        const data = await ctx.supabase
-          .from("bookmark_link")
-          .delete()
-          .eq("bookmark_id", params.bookmark_id)
-          .eq("collection_id", collectionId);
+      const removePromises = params.collectionIds_to_remove.map(
+        async (collectionId) => {
+          const { error } = await ctx.supabase
+            .from("bookmark_link")
+            .delete()
+            .eq("bookmark_id", params.bookmark_id)
+            .eq("collection_id", collectionId);
 
-        logger.warn("Error deleting a bookmark link", {
-          location: "create-bookmark.ts",
-          message: JSON.stringify(data),
-        });
-      });
+          if (error) {
+            logger.warn("Error deleting a bookmark link", {
+              location: "update-bookmark.ts",
+              message: JSON.stringify(error),
+            });
+          } else {
+            bookmarkLinksDeleted = bookmarkLinksDeleted ?? [];
+            bookmarkLinksDeleted.push(collectionId);
+          }
+        }
+      );
+
+      await Promise.all(removePromises);
     }
 
-    const { data: bookmarkLinksData } = await ctx.supabase
-      .from("bookmark_link")
-      .select()
-      .eq("bookmark_id", params.bookmark_id);
 
     revalidateTag(`bookmarks_${ctx.user.id}`);
 
-    console.log("Bookmark links: ", {
-      links: bookmarkLinksData,
-      parsed: params,
-    });
-
     return {
-      bookmarkLinks: bookmarkLinksData,
+      bookmarkLinksDeleted: bookmarkLinksDeleted,
+      bookmarkLinksCreated: bookmarkLinksCreated,
     };
   });

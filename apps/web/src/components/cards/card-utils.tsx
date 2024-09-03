@@ -37,7 +37,7 @@ export const RecipeImage = (
 ) => (
   <Image
     loading="lazy"
-    className={cn("object-cover object-center", className)}
+    className={cn("relative object-cover object-center", className)}
     {...props}
   />
 );
