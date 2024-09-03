@@ -41,6 +41,7 @@ const CreateCollectionDialog = () => {
     register,
     formState: { errors },
     control,
+    reset,
   } = form;
 
   const onSubmit: SubmitHandler<
@@ -52,6 +53,7 @@ const CreateCollectionDialog = () => {
     if (res && res.data) {
       setCollections([res.data]);
       toast.success("Created collection");
+      reset();
     }
 
     setOpen(false);

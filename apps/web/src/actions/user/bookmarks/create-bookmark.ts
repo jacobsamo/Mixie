@@ -7,7 +7,7 @@ import * as z from "zod";
 
 const schema = z.object({
   recipeId: z.string(),
-  collectionIds: z.array(z.string()).optional(),
+  collectionIds: z.array(z.string()).nullish(),
 });
 
 export const createBookmark = authAction
@@ -25,24 +25,32 @@ export const createBookmark = authAction
       .single();
 
     if (error) throw new Error(`Failed to create bookmark ${error.message}`);
-      
 
     if (params.collectionIds) {
-      params.collectionIds.forEach(async (collectionId) => {
+      const linkPromises = params.collectionIds.map(async (collectionId) => {
         const bookmarkLink: TablesInsert<"bookmark_link"> = {
           bookmark_id: bookmark.bookmark_id,
           collection_id: collectionId,
+          recipe_id: params.recipeId,
           user_id: ctx.user.id,
         };
 
-        const { error } = await ctx.supabase
+        const { error: linkError } = await ctx.supabase
           .from("bookmark_link")
           .insert(bookmarkLink);
-        logger.warn("Error creating a bookmark link", {
-          location: "create-bookmark.ts",
-          message: JSON.stringify(error),
-        });
+
+        if (linkError) {
+          logger.warn("Error creating a bookmark link", {
+            location: "create-bookmark.ts - bookmark link",
+            message: JSON.stringify(linkError),
+          });
+          throw new Error(
+            `Failed to create bookmark link: ${linkError.message}`
+          );
+        }
       });
+
+      await Promise.all(linkPromises);
     }
 
     const { data: bookmarkLinksData } = await ctx.supabase
