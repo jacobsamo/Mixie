@@ -9,7 +9,7 @@ import {
   ratingsSchema,
   recipeFormSchema,
   recipeSchema,
-  stepSchema
+  stepSchema,
 } from "./zodSchemas/recipes";
 import { Tables } from "@mixie/supabase/types";
 

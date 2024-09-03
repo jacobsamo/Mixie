@@ -42,9 +42,7 @@ const CollectionRecipeModal = <T extends CardRecipe>({
         <DialogHeader>
           <DialogTitle>{collection.title}</DialogTitle>
           {collection.description && (
-            <DialogDescription>
-              {collection.description}
-            </DialogDescription>
+            <DialogDescription>{collection.description}</DialogDescription>
           )}
         </DialogHeader>
         <ScrollArea className="h-[300px] w-full">

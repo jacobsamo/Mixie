@@ -27,6 +27,5 @@ export const createCollection = authAction
 
     revalidateTag(`bookmarks_${ctx.user.id}`);
 
-
     return collection;
   });

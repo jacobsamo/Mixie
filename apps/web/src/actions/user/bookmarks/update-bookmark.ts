@@ -75,7 +75,6 @@ export const updateBookmark = authAction
       await Promise.all(removePromises);
     }
 
-
     revalidateTag(`bookmarks_${ctx.user.id}`);
 
     return {

@@ -69,14 +69,17 @@ const getRandomUserAgent = (): string => {
   );
 };
 
-
-const fetchWithRetry = async (url: string, retries = 3, backoff = 300): Promise<Response> => {
+const fetchWithRetry = async (
+  url: string,
+  retries = 3,
+  backoff = 300
+): Promise<Response> => {
   try {
     const res = await fetch(url, {
       method: "GET",
       headers: {
         "User-Agent": getRandomUserAgent(),
-      }
+      },
     });
     if (!res.ok) throw new Error(`Failed to fetch: ${res}`);
     return await res;
@@ -133,7 +136,7 @@ export const getRecipeJsonLd = async (
     logger.error(`Error fetching or parsing data: ${error}`, {
       level: "error",
       location: "find-schema.ts",
-      message: JSON.stringify(error)
+      message: JSON.stringify(error),
     });
     return null;
   }
