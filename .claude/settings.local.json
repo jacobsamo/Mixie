@@ -4,7 +4,8 @@
       "Bash(cat:*)",
       "Bash(find:*)",
       "WebSearch",
-      "WebFetch(domain:supabase.com)"
+      "WebFetch(domain:supabase.com)",
+      "Bash(bun add:*)"
     ]
   }
 }

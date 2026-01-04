@@ -1,16 +1,30 @@
 {
   "expo": {
-    "scheme": "mobile",
+    "scheme": "mixie",
     "userInterfaceStyle": "automatic",
     "orientation": "default",
     "web": {
       "bundler": "metro"
     },
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "Mixie",
+    "slug": "mixie",
+    "ios": {
+      "bundleIdentifier": "com.mixiecooking.app",
+      "usesAppleSignIn": true
+    },
+    "android": {
+      "package": "com.mixiecooking.app"
+    },
     "plugins": [
       "expo-font",
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-apple-authentication",
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.YOUR_IOS_CLIENT_ID"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

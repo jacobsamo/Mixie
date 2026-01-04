@@ -1,69 +1,95 @@
 import { supabase } from "@/lib/supabase";
-import {
-  AppleButton,
-  appleAuth,
-} from "@invertase/react-native-apple-authentication";
-import type { SignInWithIdTokenCredentials } from "@supabase/supabase-js";
+import * as AppleAuthentication from "expo-apple-authentication";
 import { router } from "expo-router";
-import { Platform } from "react-native";
-
-async function onAppleButtonPress() {
-  // Performs login request
-  const appleAuthRequestResponse = await appleAuth.performRequest({
-    requestedOperation: appleAuth.Operation.LOGIN,
-    // Note: it appears putting FULL_NAME first is important, see issue #293
-    requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
-  });
-
-  // Get the current authentication state for user
-  // Note: This method must be tested on a real device. On the iOS simulator it always throws an error.
-  const credentialState = await appleAuth.getCredentialStateForUser(
-    appleAuthRequestResponse.user
-  );
-
-  console.log("Apple sign in successful:", {
-    credentialState,
-    appleAuthRequestResponse,
-  });
-
-  if (
-    credentialState === appleAuth.State.AUTHORIZED &&
-    appleAuthRequestResponse.identityToken &&
-    appleAuthRequestResponse.authorizationCode
-  ) {
-    const signInWithIdTokenCredentials: SignInWithIdTokenCredentials = {
-      provider: "apple",
-      token: appleAuthRequestResponse.identityToken,
-      nonce: appleAuthRequestResponse.nonce,
-      access_token: appleAuthRequestResponse.authorizationCode,
-    };
-
-    const { data, error } = await supabase.auth.signInWithIdToken(
-      signInWithIdTokenCredentials
-    );
-
-    if (error) {
-      console.error("Error signing in with Apple:", error);
-    }
-
-    if (data) {
-      console.log("Apple sign in successful:", data);
-      router.navigate("/(tabs)/explore");
-    }
-  }
-}
+import { Platform, View, Text, StyleSheet } from "react-native";
+import { useState } from "react";
 
 export default function AppleSignInButton() {
+  const [isLoading, setIsLoading] = useState(false);
+
   if (Platform.OS !== "ios") {
-    return <></>;
+    return null;
   }
 
+  const handleAppleSignIn = async () => {
+    try {
+      setIsLoading(true);
+
+      const credential = await AppleAuthentication.signInAsync({
+        requestedScopes: [
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        ],
+      });
+
+      if (!credential.identityToken) {
+        throw new Error("No identity token received from Apple");
+      }
+
+      const { data, error } = await supabase.auth.signInWithIdToken({
+        provider: "apple",
+        token: credential.identityToken,
+      });
+
+      if (error) {
+        console.error("Error signing in with Apple:", error);
+        throw error;
+      }
+
+      if (data.session) {
+        router.replace("/(drawer)");
+      }
+    } catch (error: any) {
+      if (error.code === "ERR_REQUEST_CANCELED") {
+        // User cancelled the sign-in
+        return;
+      }
+      console.error("Apple Sign-In error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <AppleButton
-      buttonStyle={AppleButton.Style.BLACK}
-      buttonType={AppleButton.Type.SIGN_IN}
-      style={{ width: 160, height: 45 }}
-      onPress={() => onAppleButtonPress()}
-    />
+    <View style={styles.container}>
+      <AppleAuthentication.AppleAuthenticationButton
+        buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+        buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+        cornerRadius={8}
+        style={styles.button}
+        onPress={handleAppleSignIn}
+      />
+      {isLoading && (
+        <View style={styles.loadingOverlay}>
+          <Text style={styles.loadingText}>Signing in...</Text>
+        </View>
+      )}
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    position: "relative",
+  },
+  button: {
+    width: "100%",
+    height: 50,
+  },
+  loadingOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+  },
+  loadingText: {
+    color: "white",
+    fontSize: 14,
+  },
+});

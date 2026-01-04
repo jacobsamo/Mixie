@@ -20,9 +20,12 @@
     "@mixie/supabase": "workspace:*",
     "@mixie/tailwind-config": "workspace:*",
     "@react-native-async-storage/async-storage": "2.2.0",
+    "@react-native-google-signin/google-signin": "^16.1.1",
     "@react-navigation/drawer": "^7.3.9",
     "@react-navigation/elements": "^2.8.1",
     "@supabase/supabase-js": "^2.89.0",
+    "@tanstack/react-form": "^1.27.7",
+    "@tanstack/zod-form-adapter": "^0.42.1",
     "dotenv": "latest",
     "expo": "^54.0.23",
     "expo-apple-authentication": "~8.0.8",
@@ -35,7 +38,7 @@
     "expo-secure-store": "~15.0.8",
     "expo-splash-screen": "~31.0.13",
     "expo-status-bar": "~3.0.8",
-    "heroui-native": "^1.0.0-beta.9",
+    "heroui-native": "^1.0.0-beta.10",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.5",
@@ -52,7 +55,7 @@
     "tailwind-variants": "^3.2.2",
     "tailwindcss": "^4.1.18",
     "uniwind": "^1.2.2",
-    "zod": "latest"
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@mixie/eslint-config": "workspace:*",

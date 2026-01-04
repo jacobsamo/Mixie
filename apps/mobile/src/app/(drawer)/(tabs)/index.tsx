@@ -1,6 +1,6 @@
+import { View, Text } from "react-native";
 import SignOutButton from "@/components/social-auth-buttons/sign-out-button";
 import { useAuthContext } from "@/hooks/use-auth-context";
-
 import { Container } from "@/components/container";
 
 export default function Home() {
