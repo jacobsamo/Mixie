@@ -2,6 +2,9 @@
   "name": "@mixie/eslint-config",
   "version": "0.0.0",
   "private": true,
+  "scripts": {
+    "update": "bun update --latest"
+  },
   "files": [
     "library.js",
     "next.js",

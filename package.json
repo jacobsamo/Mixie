@@ -1,12 +1,21 @@
 {
   "name": "mixie",
   "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "bun@1.3.5",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "build": "turbo build",
     "start": "turbo start",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,mdx}\"",
+    "sherif": "bunx sherif@latest -p ./apps/mobile",
     "supabase-start": "cd packages/supabase && bun db:restart",
     "clean:all": "turbo run clean:all",
     "update:all": "bun update --latest && cd apps/web && bun update --latest && cd ../../packages/email && bun update --latest && cd ../eslint-config && bun update --latest && cd ../tsconfig && bun update --latest && cd ../supabase && bun update --latest && cd ../tailwind-config && bun update --latest && cd ../../"
@@ -20,15 +29,6 @@
     "turbo": "^2.1.1",
     "typescript": "^5.5.4"
   },
-  "engines": {
-    "node": ">=18"
-  },
-  "packageManager": "bun@1.1.26",
-  "workspaces": [
-    "packages/*",
-    "apps/*",
-    "packages/email/*"
-  ],
   "trustedDependencies": [
     "@swc/core",
     "@vercel/speed-insights",

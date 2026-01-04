@@ -12,7 +12,8 @@
     "clean:build": "rm -rf .next",
     "clean:turbo": "rm -rf .turbo",
     "clean:node_modules": "rm -rf node_modules",
-    "clean:all": "bun clean:build && bun clean:node_modules && bun clean:turbo"
+    "clean:all": "bun clean:build && bun clean:node_modules && bun clean:turbo",
+    "update": "bun update --latest"
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.54",

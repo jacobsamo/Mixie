@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "scheme": "mobile",
+    "userInterfaceStyle": "automatic",
+    "orientation": "default",
+    "web": {
+      "bundler": "metro"
+    },
+    "name": "mobile",
+    "slug": "mobile",
+    "plugins": [
+      "expo-font",
+      "expo-secure-store"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}
