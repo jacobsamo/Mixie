@@ -60,7 +60,7 @@ const CollectionRecipeModal = <T extends CardRecipe>({
                 //   />
                 //   <p className="text-sm">{bookmark.title}</p>
                 // </div>
-                <CardSquare recipe={bookmark as CardRecipe} />
+                <CardSquare key={bookmark.bookmark_id} recipe={bookmark as CardRecipe} />
               );
             })}
           </div>

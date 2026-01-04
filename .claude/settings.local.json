@@ -5,7 +5,10 @@
       "Bash(find:*)",
       "WebSearch",
       "WebFetch(domain:supabase.com)",
-      "Bash(bun add:*)"
+      "Bash(bun add:*)",
+      "Bash(bun install)",
+      "Bash(bun run lint:*)",
+      "Bash(bun pm:*)"
     ]
   }
 }

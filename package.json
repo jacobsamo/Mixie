@@ -23,11 +23,11 @@
   "devDependencies": {
     "@manypkg/cli": "^0.21.4",
     "@types/heic-convert": "^2.1.0",
-    "eslint": "^9.9.1",
-    "prettier": "^3.3.3",
-    "prettier-plugin-tailwindcss": "^0.6.6",
-    "turbo": "^2.1.1",
-    "typescript": "^5.5.4"
+    "eslint": "^8.57.0",
+    "prettier": "^3.7.0",
+    "prettier-plugin-tailwindcss": "^0.7.0",
+    "turbo": "^2.7.0",
+    "typescript": "^5.9.0"
   },
   "trustedDependencies": [
     "@swc/core",

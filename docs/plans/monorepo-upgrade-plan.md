@@ -18,24 +18,37 @@ Comprehensive upgrade plan for the Mixie monorepo, focusing on `apps/web` and sh
 
 ---
 
-## Phase 1: Foundation & Tooling (PR #1)
+## Phase 1: Foundation & Tooling (PR #1) ✅ COMPLETED
 
 ### 1.1 Root Package Updates
 **Files:** `package.json`, `turbo.json`
 
-- Update Node.js engine requirement: `>=18` → `>=20.9.0`
-- Update Bun: `1.1.26` → latest
-- Update Turbo: `^2.1.1` → latest
-- Update TypeScript: `^5.5.4` → `^5.6+`
-- Update ESLint: `^9.9.1` → latest (flat config ready)
-- Pin shared dependencies in root `package.json`
+**Completed:**
+- ✅ Node.js engine: `>=18` → `>=22`
+- ✅ Bun: `1.1.26` → `1.3.5`
+- ✅ Turbo: `^2.1.1` → `^2.7.0` (installed 2.7.2)
+- ✅ TypeScript: `^5.5.4` → `^5.9.0` (installed 5.9.3)
+- ✅ Prettier: `^3.3.3` → `^3.7.0` (installed 3.7.4)
+- ✅ prettier-plugin-tailwindcss: `^0.6.6` → `^0.7.0` (installed 0.7.2)
+- ⚠️ ESLint: Kept at `^8.57.0` (ESLint 9 upgrade deferred to Phase 2 with Next.js 15)
 
 ### 1.2 TypeScript Config Updates
 **Files:** `packages/tsconfig/*.json`
 
-- Enable `moduleResolution: "bundler"`
-- Add React 19 JSX transform settings
-- Update `target` to `ES2022`
+**Completed:**
+- ✅ base.json: Added `verbatimModuleSyntax: true`, updated lib to `ES2023`
+- ✅ nextjs.json: Added `verbatimModuleSyntax: false` override for Next.js compatibility
+- ✅ react-library.json: Added `verbatimModuleSyntax: false` for JSX compatibility
+
+### 1.3 ESLint Config Updates
+**Files:** `packages/eslint-config/package.json`
+
+**Completed:**
+- ✅ eslint-config-turbo: `^2.1.1` → `^2.7.0`
+- ✅ @typescript-eslint/parser: `^8.4.0` → `^7.18.0` (compatible with ESLint 8)
+- ✅ @typescript-eslint/eslint-plugin: `^8.4.0` → `^7.18.0`
+
+**Note:** ESLint 9 flat config migration deferred to Phase 2 when Next.js 15 is installed (has native ESLint 9 support)
 
 ---
 
